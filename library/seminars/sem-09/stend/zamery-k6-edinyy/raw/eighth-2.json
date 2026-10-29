@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "execution_id": "1859",
+  "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.04.2024\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+  "parsed": {
+    "sum_rub": "18990,00",
+    "date": "12.04.2024",
+    "zayavka_sum_rub": "18990",
+    "verdict": "sovpalo",
+    "raw_text_seen": "18 990,00 ₽"
+  },
+  "parse_error": null,
+  "usage": {
+    "prompt_tokens": 481,
+    "completion_tokens": 75,
+    "total_tokens": 556,
+    "cost": 0.0001245,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 400,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0001245,
+      "upstream_inference_prompt_cost": 6.825e-05,
+      "upstream_inference_completions_cost": 5.625e-05
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "entry": {
+    "resolution": "eighth",
+    "repeat_idx": 2,
+    "receipt_id": "receipt-01-eighth",
+    "zayavka_verna": true,
+    "zayavka_sum": 18990.0,
+    "claim_template_idx": 1
+  },
+  "prompt_sha256": "455b5960377332dd508da292d014ac376ccbbee95f6f1d86421116f9e655c3e8",
+  "sum_correct": true,
+  "date_correct": false,
+  "true_verdict": "sovpalo",
+  "verdict_raw": "sovpalo",
+  "verdict_norm": "sovpalo",
+  "verdict_correct": true,
+  "self_consistent": true,
+  "anchored_to_claim": null,
+  "zayavka_echo": 18990.0
+}

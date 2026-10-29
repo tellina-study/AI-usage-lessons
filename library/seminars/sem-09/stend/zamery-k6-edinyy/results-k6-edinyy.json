@@ -1,0 +1,1698 @@
+{
+  "true_sum": 18990.0,
+  "true_date": "12.09.2026",
+  "model": "qwen/qwen3-vl-8b-instruct",
+  "temperature": 0.2,
+  "n_total_ok": 30,
+  "n_rejected_before_model": 0,
+  "rejected": [],
+  "by_resolution": {
+    "full": {
+      "glyph_height_px": null,
+      "n": 5,
+      "n_sum_correct": 5,
+      "n_date_correct": 5,
+      "n_verdict_correct": 3,
+      "n_anchored_to_claim": 0,
+      "n_self_inconsistent": 2,
+      "entries": [
+        {
+          "ok": true,
+          "execution_id": "1829",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "18990",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 3855,
+            "completion_tokens": 77,
+            "total_tokens": 3932,
+            "cost": 0.0010215,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0010215,
+              "upstream_inference_prompt_cost": 0.00096375,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "full",
+            "repeat_idx": 1,
+            "receipt_id": "receipt-01-full",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 0
+          },
+          "prompt_sha256": "b16652d3c235da961cba6c20de1f8021b61b4efd4e4366432cf63e38d4982789",
+          "pilot_call": true,
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": false,
+          "self_consistent": false,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1838",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"23450\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "23450",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 3854,
+            "completion_tokens": 77,
+            "total_tokens": 3931,
+            "cost": 0.00102125,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00102125,
+              "upstream_inference_prompt_cost": 0.0009635,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "full",
+            "repeat_idx": 2,
+            "receipt_id": "receipt-01-full",
+            "zayavka_verna": false,
+            "zayavka_sum": 23450.0,
+            "claim_template_idx": 1
+          },
+          "prompt_sha256": "4891fa60fa8e0087e877d891ae87b4f9ebc79f1aee12c15a047b8334fe72280b",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 23450.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1840",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 3855,
+            "completion_tokens": 75,
+            "total_tokens": 3930,
+            "cost": 0.00102,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00102,
+              "upstream_inference_prompt_cost": 0.00096375,
+              "upstream_inference_completions_cost": 5.625e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "full",
+            "repeat_idx": 3,
+            "receipt_id": "receipt-01-full",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 2
+          },
+          "prompt_sha256": "5f17e857e343a7197dd47c32f4db6420f6f38cabf08788283c0924676f165776",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1841",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"31200\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "31200",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 3855,
+            "completion_tokens": 77,
+            "total_tokens": 3932,
+            "cost": 0.00101318,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 64,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00101318,
+              "upstream_inference_prompt_cost": 0.00095543,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "full",
+            "repeat_idx": 4,
+            "receipt_id": "receipt-01-full",
+            "zayavka_verna": false,
+            "zayavka_sum": 31200.0,
+            "claim_template_idx": 0
+          },
+          "prompt_sha256": "09016a9a54ad9a521fade2448f141314ec1b69ac53d329035a8f069a0621a1a5",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 31200.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1842",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "18990",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 3854,
+            "completion_tokens": 77,
+            "total_tokens": 3931,
+            "cost": 0.00101293,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 64,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00101293,
+              "upstream_inference_prompt_cost": 0.00095518,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "full",
+            "repeat_idx": 5,
+            "receipt_id": "receipt-01-full",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 1
+          },
+          "prompt_sha256": "455b5960377332dd508da292d014ac376ccbbee95f6f1d86421116f9e655c3e8",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": false,
+          "self_consistent": false,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        }
+      ]
+    },
+    "half": {
+      "glyph_height_px": null,
+      "n": 5,
+      "n_sum_correct": 5,
+      "n_date_correct": 5,
+      "n_verdict_correct": 5,
+      "n_anchored_to_claim": 0,
+      "n_self_inconsistent": 0,
+      "entries": [
+        {
+          "ok": true,
+          "execution_id": "1843",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"9800\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "9800",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 1273,
+            "completion_tokens": 76,
+            "total_tokens": 1349,
+            "cost": 0.00037525,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00037525,
+              "upstream_inference_prompt_cost": 0.00031825,
+              "upstream_inference_completions_cost": 5.7e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "half",
+            "repeat_idx": 1,
+            "receipt_id": "receipt-01-half",
+            "zayavka_verna": false,
+            "zayavka_sum": 9800.0,
+            "claim_template_idx": 2
+          },
+          "prompt_sha256": "85c92d8ef44d3d16058200e05dfe66f887fe08d9c1ddc796ef5a30c8d65636e6",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 9800.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1845",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 1274,
+            "completion_tokens": 75,
+            "total_tokens": 1349,
+            "cost": 0.00036643,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 64,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00036643,
+              "upstream_inference_prompt_cost": 0.00031018,
+              "upstream_inference_completions_cost": 5.625e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "half",
+            "repeat_idx": 2,
+            "receipt_id": "receipt-01-half",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 0
+          },
+          "prompt_sha256": "b16652d3c235da961cba6c20de1f8021b61b4efd4e4366432cf63e38d4982789",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1846",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"12450\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "12450",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 1273,
+            "completion_tokens": 77,
+            "total_tokens": 1350,
+            "cost": 0.0003656,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0003656,
+              "upstream_inference_prompt_cost": 0.00030785,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "half",
+            "repeat_idx": 3,
+            "receipt_id": "receipt-01-half",
+            "zayavka_verna": false,
+            "zayavka_sum": 12450.0,
+            "claim_template_idx": 1
+          },
+          "prompt_sha256": "4502b1bf8a9188a39dba4c938fc088005503450a7d6c0e722677bfdbad3ac541",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 12450.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1847",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 1274,
+            "completion_tokens": 72,
+            "total_tokens": 1346,
+            "cost": 0.0003621,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0003621,
+              "upstream_inference_prompt_cost": 0.0003081,
+              "upstream_inference_completions_cost": 5.4e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "half",
+            "repeat_idx": 4,
+            "receipt_id": "receipt-01-half",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 2
+          },
+          "prompt_sha256": "5f17e857e343a7197dd47c32f4db6420f6f38cabf08788283c0924676f165776",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1848",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"27300\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "27300",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 1274,
+            "completion_tokens": 77,
+            "total_tokens": 1351,
+            "cost": 0.00036585,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00036585,
+              "upstream_inference_prompt_cost": 0.0003081,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "half",
+            "repeat_idx": 5,
+            "receipt_id": "receipt-01-half",
+            "zayavka_verna": false,
+            "zayavka_sum": 27300.0,
+            "claim_template_idx": 0
+          },
+          "prompt_sha256": "3a774efa44f8e84c5c890d6bbc6b61732e9a0794d31db71a18def9b9e9d8bd02",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 27300.0
+        }
+      ]
+    },
+    "quarter": {
+      "glyph_height_px": null,
+      "n": 5,
+      "n_sum_correct": 5,
+      "n_date_correct": 5,
+      "n_verdict_correct": 5,
+      "n_anchored_to_claim": 0,
+      "n_self_inconsistent": 0,
+      "entries": [
+        {
+          "ok": true,
+          "execution_id": "1850",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 617,
+            "completion_tokens": 75,
+            "total_tokens": 692,
+            "cost": 0.0002001,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0002001,
+              "upstream_inference_prompt_cost": 0.00014385,
+              "upstream_inference_completions_cost": 5.625e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "quarter",
+            "repeat_idx": 1,
+            "receipt_id": "receipt-01-quarter",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 1
+          },
+          "prompt_sha256": "455b5960377332dd508da292d014ac376ccbbee95f6f1d86421116f9e655c3e8",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1851",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"23450\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "23450",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 618,
+            "completion_tokens": 77,
+            "total_tokens": 695,
+            "cost": 0.00020185,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00020185,
+              "upstream_inference_prompt_cost": 0.0001441,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "quarter",
+            "repeat_idx": 2,
+            "receipt_id": "receipt-01-quarter",
+            "zayavka_verna": false,
+            "zayavka_sum": 23450.0,
+            "claim_template_idx": 2
+          },
+          "prompt_sha256": "551e2a61c8687e1020effc79ad45cff0f0cb5f3b1b5df79c5b37206bcfdf8552",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 23450.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1853",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 618,
+            "completion_tokens": 75,
+            "total_tokens": 693,
+            "cost": 0.00020243,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 64,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00020243,
+              "upstream_inference_prompt_cost": 0.00014618,
+              "upstream_inference_completions_cost": 5.625e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "quarter",
+            "repeat_idx": 3,
+            "receipt_id": "receipt-01-quarter",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 0
+          },
+          "prompt_sha256": "b16652d3c235da961cba6c20de1f8021b61b4efd4e4366432cf63e38d4982789",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1854",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"31200\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "31200",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 617,
+            "completion_tokens": 77,
+            "total_tokens": 694,
+            "cost": 0.0002016,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0002016,
+              "upstream_inference_prompt_cost": 0.00014385,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "quarter",
+            "repeat_idx": 4,
+            "receipt_id": "receipt-01-quarter",
+            "zayavka_verna": false,
+            "zayavka_sum": 31200.0,
+            "claim_template_idx": 1
+          },
+          "prompt_sha256": "96459da550e331056abb165ecc6320c85beecc194b2bafece9ce053f600263bb",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 31200.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1856",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.09.2026\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.09.2026",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 618,
+            "completion_tokens": 75,
+            "total_tokens": 693,
+            "cost": 0.00015875,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 400,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00015875,
+              "upstream_inference_prompt_cost": 0.0001025,
+              "upstream_inference_completions_cost": 5.625e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "quarter",
+            "repeat_idx": 5,
+            "receipt_id": "receipt-01-quarter",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 2
+          },
+          "prompt_sha256": "5f17e857e343a7197dd47c32f4db6420f6f38cabf08788283c0924676f165776",
+          "sum_correct": true,
+          "date_correct": true,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        }
+      ]
+    },
+    "eighth": {
+      "glyph_height_px": null,
+      "n": 5,
+      "n_sum_correct": 5,
+      "n_date_correct": 0,
+      "n_verdict_correct": 5,
+      "n_anchored_to_claim": 0,
+      "n_self_inconsistent": 0,
+      "entries": [
+        {
+          "ok": true,
+          "execution_id": "1857",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.04.2024\", \"zayavka_sum_rub\": \"9800\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.04.2024",
+            "zayavka_sum_rub": "9800",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 481,
+            "completion_tokens": 76,
+            "total_tokens": 557,
+            "cost": 0.00016685,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00016685,
+              "upstream_inference_prompt_cost": 0.00010985,
+              "upstream_inference_completions_cost": 5.7e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "eighth",
+            "repeat_idx": 1,
+            "receipt_id": "receipt-01-eighth",
+            "zayavka_verna": false,
+            "zayavka_sum": 9800.0,
+            "claim_template_idx": 0
+          },
+          "prompt_sha256": "e2572a74009d03df89d6a4c048341f9f2fd7436aaf50eddeee2b6a67a0817ac7",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 9800.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1859",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.04.2024\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.04.2024",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 481,
+            "completion_tokens": 75,
+            "total_tokens": 556,
+            "cost": 0.0001245,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 400,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0001245,
+              "upstream_inference_prompt_cost": 6.825e-05,
+              "upstream_inference_completions_cost": 5.625e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "eighth",
+            "repeat_idx": 2,
+            "receipt_id": "receipt-01-eighth",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 1
+          },
+          "prompt_sha256": "455b5960377332dd508da292d014ac376ccbbee95f6f1d86421116f9e655c3e8",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1860",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.04.2024\", \"zayavka_sum_rub\": \"12450\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.04.2024",
+            "zayavka_sum_rub": "12450",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 482,
+            "completion_tokens": 77,
+            "total_tokens": 559,
+            "cost": 0.00016993,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 64,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00016993,
+              "upstream_inference_prompt_cost": 0.00011218,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "eighth",
+            "repeat_idx": 3,
+            "receipt_id": "receipt-01-eighth",
+            "zayavka_verna": false,
+            "zayavka_sum": 12450.0,
+            "claim_template_idx": 2
+          },
+          "prompt_sha256": "a969917308ecad0676e9f0bbb8a60493ed2b22680519dd19517b83cffe5368c2",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 12450.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1861",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.04.2024\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.04.2024",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 482,
+            "completion_tokens": 75,
+            "total_tokens": 557,
+            "cost": 0.00012475,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 400,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00012475,
+              "upstream_inference_prompt_cost": 6.85e-05,
+              "upstream_inference_completions_cost": 5.625e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "eighth",
+            "repeat_idx": 4,
+            "receipt_id": "receipt-01-eighth",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 0
+          },
+          "prompt_sha256": "b16652d3c235da961cba6c20de1f8021b61b4efd4e4366432cf63e38d4982789",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1863",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"12.04.2024\", \"zayavka_sum_rub\": \"27300\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "12.04.2024",
+            "zayavka_sum_rub": "27300",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 481,
+            "completion_tokens": 77,
+            "total_tokens": 558,
+            "cost": 0.0001676,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0001676,
+              "upstream_inference_prompt_cost": 0.00010985,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "eighth",
+            "repeat_idx": 5,
+            "receipt_id": "receipt-01-eighth",
+            "zayavka_verna": false,
+            "zayavka_sum": 27300.0,
+            "claim_template_idx": 1
+          },
+          "prompt_sha256": "49ad88c3ae0df0189f3352576b7b4a239c556ab149cb5db68160a9de010495bf",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 27300.0
+        }
+      ]
+    },
+    "sixteenth": {
+      "glyph_height_px": null,
+      "n": 5,
+      "n_sum_correct": 5,
+      "n_date_correct": 0,
+      "n_verdict_correct": 5,
+      "n_anchored_to_claim": 0,
+      "n_self_inconsistent": 0,
+      "entries": [
+        {
+          "ok": true,
+          "execution_id": "1864",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"05.04.2024\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "05.04.2024",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 482,
+            "completion_tokens": 75,
+            "total_tokens": 557,
+            "cost": 0.00016635,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00016635,
+              "upstream_inference_prompt_cost": 0.0001101,
+              "upstream_inference_completions_cost": 5.625e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "sixteenth",
+            "repeat_idx": 1,
+            "receipt_id": "receipt-01-sixteenth",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 2
+          },
+          "prompt_sha256": "5f17e857e343a7197dd47c32f4db6420f6f38cabf08788283c0924676f165776",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1866",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"05.04.2024\", \"zayavka_sum_rub\": \"23450\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "05.04.2024",
+            "zayavka_sum_rub": "23450",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 482,
+            "completion_tokens": 77,
+            "total_tokens": 559,
+            "cost": 0.00016785,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00016785,
+              "upstream_inference_prompt_cost": 0.0001101,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "sixteenth",
+            "repeat_idx": 2,
+            "receipt_id": "receipt-01-sixteenth",
+            "zayavka_verna": false,
+            "zayavka_sum": 23450.0,
+            "claim_template_idx": 0
+          },
+          "prompt_sha256": "e7853644e0f24d38a2e519c7c8033056501c7b89456aa7182d8940944a532b09",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 23450.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1867",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"05.04.2024\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "05.04.2024",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 481,
+            "completion_tokens": 75,
+            "total_tokens": 556,
+            "cost": 0.00016818,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 64,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00016818,
+              "upstream_inference_prompt_cost": 0.00011193,
+              "upstream_inference_completions_cost": 5.625e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "sixteenth",
+            "repeat_idx": 3,
+            "receipt_id": "receipt-01-sixteenth",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 1
+          },
+          "prompt_sha256": "455b5960377332dd508da292d014ac376ccbbee95f6f1d86421116f9e655c3e8",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1868",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"05.04.2024\", \"zayavka_sum_rub\": \"31200\", \"verdict\": \"ne_sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "05.04.2024",
+            "zayavka_sum_rub": "31200",
+            "verdict": "ne_sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 482,
+            "completion_tokens": 77,
+            "total_tokens": 559,
+            "cost": 0.00016785,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00016785,
+              "upstream_inference_prompt_cost": 0.0001101,
+              "upstream_inference_completions_cost": 5.775e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "sixteenth",
+            "repeat_idx": 4,
+            "receipt_id": "receipt-01-sixteenth",
+            "zayavka_verna": false,
+            "zayavka_sum": 31200.0,
+            "claim_template_idx": 2
+          },
+          "prompt_sha256": "104aafa28ce1ab6cf45ff6759bcb4c7b614eb52b1ed0d81e6df6bfd73675fc2b",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "ne_sovpalo",
+          "verdict_norm": "ne_sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": false,
+          "zayavka_echo": 31200.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1870",
+          "raw_content": "{\"sum_rub\": \"18990,00\", \"date\": \"05.04.2024\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990,00",
+            "date": "05.04.2024",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 482,
+            "completion_tokens": 75,
+            "total_tokens": 557,
+            "cost": 0.00016635,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00016635,
+              "upstream_inference_prompt_cost": 0.0001101,
+              "upstream_inference_completions_cost": 5.625e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "sixteenth",
+            "repeat_idx": 5,
+            "receipt_id": "receipt-01-sixteenth",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 0
+          },
+          "prompt_sha256": "b16652d3c235da961cba6c20de1f8021b61b4efd4e4366432cf63e38d4982789",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        }
+      ]
+    },
+    "thirtysecond": {
+      "glyph_height_px": null,
+      "n": 5,
+      "n_sum_correct": 2,
+      "n_date_correct": 0,
+      "n_verdict_correct": 2,
+      "n_anchored_to_claim": 3,
+      "n_self_inconsistent": 0,
+      "entries": [
+        {
+          "ok": true,
+          "execution_id": "1871",
+          "raw_content": "{\"sum_rub\": \"9800\", \"date\": \"05.04.2024\", \"zayavka_sum_rub\": \"9800\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"9800\"}",
+          "parsed": {
+            "sum_rub": "9800",
+            "date": "05.04.2024",
+            "zayavka_sum_rub": "9800",
+            "verdict": "sovpalo",
+            "raw_text_seen": "9800"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 480,
+            "completion_tokens": 62,
+            "total_tokens": 542,
+            "cost": 0.0001561,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0001561,
+              "upstream_inference_prompt_cost": 0.0001096,
+              "upstream_inference_completions_cost": 4.65e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "thirtysecond",
+            "repeat_idx": 1,
+            "receipt_id": "receipt-01-thirtysecond",
+            "zayavka_verna": false,
+            "zayavka_sum": 9800.0,
+            "claim_template_idx": 1
+          },
+          "prompt_sha256": "15b13aef59f62afa432b3ea8cd033a48944530d113a0edbe2cdb96c1e339aefb",
+          "sum_correct": false,
+          "date_correct": false,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": false,
+          "self_consistent": true,
+          "anchored_to_claim": true,
+          "zayavka_echo": 9800.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1872",
+          "raw_content": "{\"sum_rub\": \"18990\", \"date\": \"05.04.2024\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990",
+            "date": "05.04.2024",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 482,
+            "completion_tokens": 72,
+            "total_tokens": 554,
+            "cost": 0.0001225,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 400,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0001225,
+              "upstream_inference_prompt_cost": 6.85e-05,
+              "upstream_inference_completions_cost": 5.4e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "thirtysecond",
+            "repeat_idx": 2,
+            "receipt_id": "receipt-01-thirtysecond",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 2
+          },
+          "prompt_sha256": "5f17e857e343a7197dd47c32f4db6420f6f38cabf08788283c0924676f165776",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1873",
+          "raw_content": "{\"sum_rub\": \"12450\", \"date\": \"05.04.2024\", \"zayavka_sum_rub\": \"12450\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"12 450 ₽\"}",
+          "parsed": {
+            "sum_rub": "12450",
+            "date": "05.04.2024",
+            "zayavka_sum_rub": "12450",
+            "verdict": "sovpalo",
+            "raw_text_seen": "12 450 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 482,
+            "completion_tokens": 69,
+            "total_tokens": 551,
+            "cost": 0.00016185,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00016185,
+              "upstream_inference_prompt_cost": 0.0001101,
+              "upstream_inference_completions_cost": 5.175e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "thirtysecond",
+            "repeat_idx": 3,
+            "receipt_id": "receipt-01-thirtysecond",
+            "zayavka_verna": false,
+            "zayavka_sum": 12450.0,
+            "claim_template_idx": 0
+          },
+          "prompt_sha256": "c67580df263415c7bec7529855b9545b0b876e91eb63d439d6e9a3f1df73d1fb",
+          "sum_correct": false,
+          "date_correct": false,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": false,
+          "self_consistent": true,
+          "anchored_to_claim": true,
+          "zayavka_echo": 12450.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1875",
+          "raw_content": "{\"sum_rub\": \"18990\", \"date\": \"05.04.2024\", \"zayavka_sum_rub\": \"18990\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"18 990,00 ₽\"}",
+          "parsed": {
+            "sum_rub": "18990",
+            "date": "05.04.2024",
+            "zayavka_sum_rub": "18990",
+            "verdict": "sovpalo",
+            "raw_text_seen": "18 990,00 ₽"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 481,
+            "completion_tokens": 72,
+            "total_tokens": 553,
+            "cost": 0.00012225,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 400,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00012225,
+              "upstream_inference_prompt_cost": 6.825e-05,
+              "upstream_inference_completions_cost": 5.4e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "thirtysecond",
+            "repeat_idx": 4,
+            "receipt_id": "receipt-01-thirtysecond",
+            "zayavka_verna": true,
+            "zayavka_sum": 18990.0,
+            "claim_template_idx": 1
+          },
+          "prompt_sha256": "455b5960377332dd508da292d014ac376ccbbee95f6f1d86421116f9e655c3e8",
+          "sum_correct": true,
+          "date_correct": false,
+          "true_verdict": "sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": true,
+          "self_consistent": true,
+          "anchored_to_claim": null,
+          "zayavka_echo": 18990.0
+        },
+        {
+          "ok": true,
+          "execution_id": "1876",
+          "raw_content": "{\"sum_rub\": \"27300\", \"date\": \"05.04.2024\", \"zayavka_sum_rub\": \"27300\", \"verdict\": \"sovpalo\", \"raw_text_seen\": \"27300\"}",
+          "parsed": {
+            "sum_rub": "27300",
+            "date": "05.04.2024",
+            "zayavka_sum_rub": "27300",
+            "verdict": "sovpalo",
+            "raw_text_seen": "27300"
+          },
+          "parse_error": null,
+          "usage": {
+            "prompt_tokens": 482,
+            "completion_tokens": 65,
+            "total_tokens": 547,
+            "cost": 0.00015885,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 80,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00015885,
+              "upstream_inference_prompt_cost": 0.0001101,
+              "upstream_inference_completions_cost": 4.875e-05
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "entry": {
+            "resolution": "thirtysecond",
+            "repeat_idx": 5,
+            "receipt_id": "receipt-01-thirtysecond",
+            "zayavka_verna": false,
+            "zayavka_sum": 27300.0,
+            "claim_template_idx": 2
+          },
+          "prompt_sha256": "1b6c683b1b1e2f2a5a09e10597a9c3c7d266ad6a1b4c29e462e1d0d208a88ddd",
+          "sum_correct": false,
+          "date_correct": false,
+          "true_verdict": "ne_sovpalo",
+          "verdict_raw": "sovpalo",
+          "verdict_norm": "sovpalo",
+          "verdict_correct": false,
+          "self_consistent": true,
+          "anchored_to_claim": true,
+          "zayavka_echo": 27300.0
+        }
+      ]
+    }
+  }
+}

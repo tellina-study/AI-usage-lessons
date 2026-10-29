@@ -110,14 +110,14 @@ slides:
     file: slides/s06-karta-vechera.md
     type: schema_matrix
     title: "Карта вечера: шесть типов задачи, по колонке за раздел"
-    timing_min: 1.10
+    timing_min: 1.00
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
     karta_vechera: { columns: 0, to_come: 5 }
   - id: s07
     file: slides/s07-put-ot-zaprosa-k-rezultatu-skelet.md
     type: assertion_visual
     title: "Путь от запроса к результату: одна фигура на пять разделов вперёд"
-    timing_min: 0.40
+    timing_min: 0.50
     marks: { in_bucket: false, status: "собран", media_status: no_decision }
   # ─── 1. Неподвижное изображение · 18 кадров · 21.00 мин ───
   - id: s08

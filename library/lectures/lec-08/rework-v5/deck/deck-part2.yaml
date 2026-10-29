@@ -143,7 +143,7 @@ slides:
   - id: s91
     file: slides/s91-kuda-idyot-industriya.md
     type: analitika
-    title: "Куда идёт индустрия: рычаг, права и размер рынка"
+    title: "Куда идёт индустрия: чем ограничено качество, права и размер рынка"
     source: "техническая статья SD3, 2024 · карточка модели Stable Diffusion v1 · Genie 3, Google DeepMind, август 2025 · независимая проверка WRBench, 23 модели, июнь 2026 (arXiv:2606.20545) · выпуск Suno v6 от 09.09.2026 и ElevenMusic от 01.04.2026 · четыре отраслевых обзора рынка за 2026 год"
     timing_min: 0.30
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }

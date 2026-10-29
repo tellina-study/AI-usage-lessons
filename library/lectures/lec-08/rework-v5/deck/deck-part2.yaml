@@ -3,160 +3,20 @@
 
 slides:
 
-  - id: s63
-    file: slides/s63-mezhdu-kadrami-net-obekta.md
-    type: schema_architecture
-    title: "Между кадрами нет объекта, который «тот же»"
-    source: "технический отчёт Sora; CogVideoX"
-    timing_min: 0.80
-    marks: { in_bucket: true, status: "собран", media_status: needs_media }
-  - id: s63a
-    file: slides/s63a-gde-postoyanstvo-lomaetsya.md
-    type: analitika
-    title: "Где постоянство ломается, признают сами разработчики"
-    source: "технический отчёт Sora; CogVideoX; работы по смещению экспозиции"
-    timing_min: 0.70
-    marks: { in_bucket: true, status: "собран", media_status: needs_media }
-  - id: s64
-    file: slides/s64-fizika-vyuchena-kak-korrelyatsiya.md
-    type: analitika
-    title: "Физика выучена как корреляция, и это измерено"
-    source: "Physics-IQ"
-    timing_min: 1.50
-    marks: { in_bucket: true, status: "собран", media_status: needs_media }
-  - id: s65
-    file: slides/s65-instrument-ischezaet-ranshe.md
-    type: analitika
-    title: "Инструмент исчезает быстрее, чем окупается обучение команды"
-    source: "страница документации поставщика, прочитана 27.10.2026; сообщения о закрытии Sora"
-    timing_min: 1.50
-    marks: { in_bucket: true, status: "собран", media_status: needs_media }
-  - id: s66
-    file: slides/s66-skrytaya-tsena-otbora.md
-    type: analitika
-    title: "Скрытая цена отбора"
-    source: "«Air Head», апрель 2024; Toys \"R\" Us, июнь 2024"
-    timing_min: 1.00
-    marks: { in_bucket: true, status: "собран", media_status: needs_media }
-  - id: s66a
-    file: slides/s66a-karta-video.md
-    type: analitika
-    title: "Накопительная карта: дописана колонка «Видео»"
-    timing_min: 0.50
-    marks: { in_bucket: true, status: "собран", media_status: needs_media }
-    karta_vechera: { columns: 3, to_come: 2 }
-  # ─── 4. Трёхмерная сцена и реальное время · 19 кадров · 10.00 мин ───
-  - id: s67
-    file: slides/s67-divider-trekhmernaya-stsena.md
-    type: section_divider
-    title: "Раздел 4. Трёхмерная сцена и реальное время"
-    timing_min: 0.00
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
-  - id: s68
-    file: slides/s68-chto-za-rabota-trekhmernaya.md
-    type: assertion_visual
-    title: "Что это за работа и как её делали без модели"
-    source: "Mildenhall et al., ECCV 2020, arXiv:2003.08934; QuadGPT, arXiv:2509.21420"
-    timing_min: 0.60
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
-  - id: s68a
-    file: slides/s68a-klassicheskiy-konveyer-asseta-i-pyat.md
-    type: assertion_visual
-    title: "Классический конвейер ассета и пять способов получить данные"
-    source: "Mildenhall et al., ECCV 2020, arXiv:2003.08934; QuadGPT, arXiv:2509.21420"
-    timing_min: 0.30
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
-  - id: s68b
-    file: slides/s68b-pyat-sposobov-poluchit-dannye-o.md
-    type: assertion_visual
-    title: "Пять способов получить данные о реальном объекте и что из них тронула модель"
-    source: "Mildenhall et al., ECCV 2020, arXiv:2003.08934; QuadGPT, arXiv:2509.21420"
-    timing_min: 0.30
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
-  - id: s69
-    file: slides/s69-razbor-oz-v-sphere.md
-    type: analitika
-    title: "Разбор: «Волшебник страны Оз» в Sphere — свыше 90% кадра тронуто"
-    source: "Sphere Entertainment и Warner Bros., заявления о проекте 2025; https://www.thesphere.com/"
-    timing_min: 0.70
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
-  - id: s69a
-    file: slides/s69a-chto-v-etom-razbore-poschitano.md
-    type: analitika
-    title: "Что в этом разборе посчитано и что нет"
-    source: "Sphere Entertainment и Warner Bros., заявления о проекте 2025; https://www.thesphere.com/"
-    timing_min: 0.60
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
-  - id: s70
-    file: slides/s70-tri-primeneniya-trekhmernoe.md
-    type: assertion_visual
-    title: "Светодиодная сцена, генератор ассета, среда по описанию"
-    source: "Google DeepMind, Genie 3, август 2025"
-    timing_min: 1.00
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
-  - id: s71
-    file: slides/s71-nerf-i-gaussovo-spryskivanie.md
-    type: analitika
-    title: "NeRF и гауссово спрыскивание: что разменяли на скорость"
-    source: "Kerbl et al., SIGGRAPH 2023, arXiv:2308.04079; Mildenhall et al., ECCV 2020, arXiv:2003.08934; https://arxiv.org/abs/2308.04079"
-    timing_min: 0.70
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
-  - id: s71a
-    file: slides/s71a-pole-izlucheniya-i-gaussovo-spryskivanie.md
-    type: analitika
-    title: "Поле излучения и гауссово спрыскивание: два устройства одной сцены"
-    source: "Kerbl et al., SIGGRAPH 2023, arXiv:2308.04079; Mildenhall et al., ECCV 2020, arXiv:2003.08934; https://arxiv.org/abs/2308.04079"
-    timing_min: 0.60
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
-  - id: s72
-    file: slides/s72-chem-zaplacheno-razmer.md
-    type: assertion_visual
-    title: "Ответ: заплачено размером сцены"
-    source: "Kerbl et al., SIGGRAPH 2023, arXiv:2308.04079"
-    timing_min: 0.40
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
-  - id: s73
-    file: slides/s73-diffuziya-srazu-v-trekhmernom.md
-    type: analitika
-    title: "Генерация объекта: диффузия сразу в трёхмерном против оптимизации через рендер"
-    source: "Poole et al., arXiv:2209.14988; Microsoft Research TRELLIS, arXiv:2412.01506; https://arxiv.org/abs/2412.01506"
-    timing_min: 0.60
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
-  - id: s73a
-    file: slides/s73a-kak-ustroeny-oba-sposoba-poluchit.md
-    type: analitika
-    title: "Как устроены оба способа получить объект"
-    source: "Poole et al., arXiv:2209.14988; Microsoft Research TRELLIS, arXiv:2412.01506; https://arxiv.org/abs/2412.01506"
-    timing_min: 0.50
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
   - id: s74
     file: slides/s74-dva-masshtaba-odnoy-tekhniki.md
     type: schema_layered
     title: "Два масштаба одной техники: тридцать секунд на кадр и одна миллисекунда на кадр"
-    source: "Mildenhall et al., ECCV 2020; RIFE, ECCV 2022, arXiv:2011.06294"
-    timing_min: 0.60
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
-  - id: s74a
-    file: slides/s74a-chto-neyrosetevaya-grafika-realnogo-vremeni.md
-    type: schema_layered
-    title: "Что нейросетевая графика реального времени умеет и чего не умеет"
-    source: "Mildenhall et al., ECCV 2020; RIFE, ECCV 2022, arXiv:2011.06294"
-    timing_min: 0.60
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+    source: "Mildenhall et al., ECCV 2020; RIFE, ECCV 2022, arXiv:2011.06294; Waymo World Model, февраль 2026 (демонстрация без независимой проверки)"
+    timing_min: 1.20
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
   - id: s75
     file: slides/s75-setka-idyot-na-peredelku.md
     type: schema_pipeline
     title: "Сгенерированная сетка идёт на переделку: ретопология, развёртка, риггинг"
     source: "QuadGPT, Tencent Hunyuan и HKUST, arXiv:2509.21420 (2025); https://arxiv.org/abs/2509.21420"
-    timing_min: 0.50
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: wired }
-  - id: s75a
-    file: slides/s75a-chto-proishodit-s-assetom-posle.md
-    type: schema_pipeline
-    title: "Что происходит с ассетом после «восьми секунд»"
-    source: "QuadGPT, Tencent Hunyuan и HKUST, arXiv:2509.21420 (2025); https://arxiv.org/abs/2509.21420"
-    timing_min: 0.50
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
+    timing_min: 1.00
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
   - id: s76
     file: slides/s76-net-razmerov.md
     type: assertion_visual
@@ -176,7 +36,7 @@ slides:
     timing_min: 0.20
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
     karta_vechera: { columns: 4, to_come: 1 }
-  # ─── 5. Распознавание и происхождение · 16 кадров · 8.00 мин ───
+  # ─── 5. Распознавание и происхождение · 11 кадров · 8.00 мин ───
   - id: s78
     file: slides/s78-divider-raspoznavanie-proiskhozhdenie.md
     type: section_divider
@@ -188,56 +48,35 @@ slides:
     type: assertion_visual
     title: "Что это за работа и как её делали без модели"
     source: "независимые аудиты точности газетных материалов"
-    timing_min: 0.40
+    timing_min: 0.80
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
-  - id: s79a
-    file: slides/s79a-tri-voprosa-o-proishozhdenii-i.md
-    type: assertion_visual
-    title: "Три вопроса о происхождении и четыре классических способа ответить"
-    source: "независимые аудиты точности газетных материалов"
-    timing_min: 0.40
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
   - id: s80
     file: slides/s80-razbor-svitki-gerkulanuma.md
     type: analitika
     title: "Разбор: свитки Геркуланума — свиток прочитан целиком"
     source: "Vesuvius Challenge и EduceLab, проф. Брент Силз, Университет Кентукки, совместно с Национальной библиотекой Неаполя; https://scrollprize.org/"
     timing_min: 0.40
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
   - id: s80a
     file: slides/s80a-kak-chitayut-nerazvyornutyy-svitok.md
     type: analitika
-    title: "Как читают неразвёрнутый свиток"
+    title: "Как читают неразвёрнутый свиток — и по каким датам"
     source: "Vesuvius Challenge и EduceLab, проф. Брент Силз, Университет Кентукки, совместно с Национальной библиотекой Неаполя; https://scrollprize.org/"
-    timing_min: 0.40
+    timing_min: 0.80
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s80b
-    file: slides/s80b-kak-eto-shlo-po-datam.md
-    type: analitika
-    title: "Как это шло по датам"
-    source: "Vesuvius Challenge и EduceLab, проф. Брент Силз, Университет Кентукки, совместно с Национальной библиотекой Неаполя; https://scrollprize.org/"
-    timing_min: 0.40
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
   - id: s81
     file: slides/s81-nol-protiv-devyanosta.md
     type: comparison
     title: "Свиток Геркуланума и «Волшебник страны Оз» в Sphere: ноль домысленного против девяноста процентов"
     timing_min: 0.40
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
-  - id: s82
-    file: slides/s82-steam-i-avtodublyazh.md
-    type: analitika
-    title: "Steam и автоматический дубляж: два счёта со знаменателем"
-    source: "публичные страницы раскрытия Steam; сообщения площадки о дубляже, 11 февраля 2025"
-    timing_min: 0.60
-    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
   - id: s83
     file: slides/s83-ustroystvo-raspoznavatelya.md
     type: schema_architecture
     title: "Устройство распознавателя: те же блоки внимания, обратная задача"
-    source: "Dosovitskiy et al., ICLR 2021, arXiv:2010.11929; Radford et al., ICML 2021, arXiv:2103.00020; Nature, октябрь 2024, doi:10.1038/s41586-024-08025-4"
-    timing_min: 0.50
-    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+    source: "Dosovitskiy et al., ICLR 2021, arXiv:2010.11929; Radford et al., ICML 2021, arXiv:2103.00020; Nature, октябрь 2024, doi:10.1038/s41586-024-08025-4; публичные страницы раскрытия Steam; сообщения площадки о дубляже, 11 февраля 2025"
+    timing_min: 1.10
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
   - id: s84
     file: slides/s84-raspoznavatel-na-chuzhoy-modeli.md
     type: analitika
@@ -247,32 +86,18 @@ slides:
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
   - id: s85
     file: slides/s85-podpis-kamery-nikon.md
-    type: analitika
-    title: "Подпись камеры Nikon Z6III: отозванные сертификаты"
-    source: "уведомление производителя, сентябрь 2025"
-    timing_min: 0.50
+    type: comparison
+    title: "Обход подписи камеры: эксплойт и дыра в спецификации"
+    source: "David Buchanan (retr0id), «C2PA Cameras Do Not Survive Contact With Reality», личный блог исследователя, 25 августа 2026 (первое открытие) и 2 октября 2026 (второе); CVE-2026-43499; независимый разбор второго открытия — workos.com, с цитатами первоисточника"
+    timing_min: 1.00
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
-  - id: s85a
-    file: slides/s85a-chto-zdes-slomalos-i-chto.md
-    type: analitika
-    title: "Что здесь сломалось и что не сломалось"
-    source: "уведомление производителя, сентябрь 2025"
-    timing_min: 0.50
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: wired }
   - id: s86
     file: slides/s86-razbor-cnet.md
     type: analitika
     title: "Разбор: CNET — 41 исправление из 77 статей"
     source: "CNET, «CNET Is Testing an AI Engine. Here's What We've Learned, Mistakes and All», 25 января 2023; https://www.cnet.com/tech/cnet-is-testing-an-ai-engine-heres-what-weve-learned-mistakes-and-all/"
-    timing_min: 0.70
+    timing_min: 1.30
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
-  - id: s86a
-    file: slides/s86a-chto-bylo-ustroeno-v-redaktsii.md
-    type: analitika
-    title: "Что было устроено в редакции и что написали другие"
-    source: "CNET, «CNET Is Testing an AI Engine. Here's What We've Learned, Mistakes and All», 25 января 2023; https://www.cnet.com/tech/cnet-is-testing-an-ai-engine-heres-what-weve-learned-mistakes-and-all/"
-    timing_min: 0.60
-    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
   - id: s87
     file: slides/s87-razbor-rossiyskie-media.md
     type: analitika
@@ -319,7 +144,7 @@ slides:
     file: slides/s91a-prava-mirovye-modeli-razmer-rynka.md
     type: analitika
     title: "Куда идёт индустрия: права, мировые модели и размер рынка"
-    source: "техническая статья SD3, 2024 · карточка модели Stable Diffusion v1 · Genie 3, Google DeepMind, август 2025 · выпуск Suno v6 от 09.09.2026 и ElevenMusic от 01.04.2026 · четыре отраслевых обзора рынка за 2026 год"
+    source: "техническая статья SD3, 2024 · карточка модели Stable Diffusion v1 · Genie 3, Google DeepMind, август 2025 · независимая проверка WRBench, 23 модели, июнь 2026 (arXiv:2606.20545) · выпуск Suno v6 от 09.09.2026 и ElevenMusic от 01.04.2026 · четыре отраслевых обзора рынка за 2026 год"
     timing_min: 0.20
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
   - id: s92
@@ -378,16 +203,16 @@ slides:
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
 
 totals:
-  slides: 126
+  slides: 100
   timing_min: 88.00
   timing_missing: 0
-  strict_in_min: 28.60            # кадры с `in_bucket: true`, сложено по минутам
-  strict_in_share: "32.5%"       # порог курса 30%; partial → out
+  strict_in_min: 29.00            # кадры с `in_bucket: true`, сложено по минутам
+  strict_in_share: "33.0%"       # порог курса 30%; partial → out
   vfy_slides: 11
   by_status:
-    "собран": 126
+    "собран": 100
   media:
-    wired: 41
-    needs_media: 51
-    no_decision: 34
+    wired: 26
+    needs_media: 56
+    no_decision: 18
   karta_vechera_predyavleniy: 6

@@ -84,6 +84,22 @@ from deckkit import (arhitektura, columns, epohi, fazy, figure, floor,  # noqa: 
                      plotnost, polosy, prims, razvilka, render as rnd,
                      report, scheme, slidefile, strelki, tables, timeline,
                      titles, twocol, voronka, vynoski, vyvody, wrap)
+
+
+# ─── ПОЛ КЕГЛЯ ВИДИМОГО СЛОЯ: 15 пт, решение владельца 29.10.2026 ───
+# Прежние 12,0 были НАЗНАЧЕНЫ, расчёта под ними не стояло. 15 выведены из
+# высоты прописной не меньше одной пятидесятой высоты листа: лист 540 пт,
+# одна пятидесятая — 10,8 пт прописной, при отношении прописной к кеглю
+# 0,70-0,72 выходит 15,0-15,4.
+#
+# Поднято ЗДЕСЬ, а не в общем `deckkit`, нарочно: пакет читает VIS_PT в
+# момент вызова (см. его же docstring) именно затем, чтобы дека поднимала
+# свой пол, не двигая порог соседним лекциям и чужой сессии.
+#
+# Тег не блокирующий по построению: поднять кегль — значит раздуть рамку и
+# отнять высоту у тела, а выбор между «срезать текст» и «оставить мелко» —
+# решение владельца. Оно принято: режем текст.
+floor.VIS_PT = 15.0
 from deckkit.theme import (DEEP, GOLD, GOLD_TINT, LIGHT, MID,  # noqa: E402
                            OUTLINE, SLIDE_H, SLIDE_W, SURFACE, TEAL,
                            WHITE)

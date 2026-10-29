@@ -198,6 +198,14 @@ def voronka():
         x = 420
         w = 300
         remaining = 34
+        # Старт — одинаковый блок «34 атаки» у ОБОИХ рядов (правка владельца,
+        # issue #299): без него верхний ряд показывал только «осталось 7» и
+        # 27 остановленных исчезали молча, а нижний ряд убыль показывал —
+        # ряды были несопоставимы ровно там, где вся суть в их сопоставлении.
+        plashka(d, x, y - 60, w, 130, "34", "атаки", tone="base", nsz=46,
+                lsz=23, where=f"{title} · старт")
+        arrow(d, x + w, y + 5, x + w + 110, y + 5, col=LIGHT, wd=4)
+        x += w + 110
         for i, (name, stopped) in enumerate(steps):
             card(d, x, y - 55, w, 120, fill=SURF, stroke=TEAL, sw=3)
             wrapped(d, x + 16, y - 46, name, 22, DEEP, w - 32, center=x + w / 2,

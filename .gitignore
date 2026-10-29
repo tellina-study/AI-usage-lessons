@@ -65,3 +65,9 @@ library/lectures/lec-07/rework/deck/chastichnaya-sborka.pptx
 # ...и её рендер: правило игнорировало только pptx, а `--only` оставляет рядом и pdf,
 # который иначе попадает в коммит как случайный артефакт (круг #285, раздел 5).
 library/lectures/lec-07/rework/deck/chastichnaya-sborka.pdf
+
+# Точечная сборка одного кадра (`build.py --block nNN`) кладёт результат рядом с
+# декой под именем `sem-NN-nMM.pptx`. Это рабочий файл на один взгляд, а не
+# артефакт: 48 таких попало в историю разом, когда каталог `rendered/` добавили
+# целиком — 3,2 МБ двоичных файлов, которые никто никогда не откроет.
+library/seminars/*/rendered/sem-*-n*.pptx

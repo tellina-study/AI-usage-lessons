@@ -62,8 +62,8 @@ def tsikl():
     card(d, 1720, R1_Y, 600, R1_H, fill=SURF, stroke=TEAL, sw=5)
     ctxt(d, 2020, R1_Y + 50, "Сошлось?", 36, DEEP, b=True, limit=560,
          where="развилка · название")
-    ctxt(d, 2020, R1_Y + 108, "решает код, не модель", 25, LIGHT, limit=560,
-         where="развилка · пояснение")
+    ctxt(d, 2020, R1_Y + 108, "решает код по заданным условиям", 25, LIGHT,
+         limit=560, where="развилка · пояснение")
 
     for x1, x2 in ((360, 420), (940, 1000), (1660, 1720)):
         arrow(d, x1, cy1, x2, cy1, col=MID, wd=5)

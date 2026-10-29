@@ -63,18 +63,55 @@ DARKCARD = (0x18, 0x20, 0x3A); GOLDINK = (0x5A, 0x44, 0x08)
 GREY_FILL = (0xC9, 0xD1, 0xDB); GREY_TX = (0x55, 0x60, 0x70)
 SOFT_GREY = (0xE5, 0xEA, 0xF0)
 
-# Схемы пишутся рядом с ЗАПУЩЕННОЙ рисовалкой, а не рядом с тулкитом. Пока
-# тулкит лежал копией в папке занятия, разницы не было; после выноса в
+# Схемы пишутся рядом с рисовалкой, а не рядом с тулкитом. Пока тулкит лежал
+# копией в папке занятия, разницы не было; после выноса в
 # `tools/seminar-build/` `Path(__file__).parent` стал бы общим каталогом —
 # и схемы всех занятий легли бы в одну папку поверх друг друга, молча.
+#
+# ПРАВКА issue #299, дыра 2: было взято `sys.modules["__main__"].__file__` —
+# «рядом с ЗАПУЩЕННОЙ рисовалкой». Это молча ехало мимо цели, если генератор
+# был не запущен напрямую, а ИМПОРТИРОВАН кем-то из другой папки: `__main__`
+# тогда — тот, кто импортировал, а не сам генератор. Ровно это произошло на
+# Семинаре 9 (2026-10-29): рисовалка Кейса 2 была вызвана не как
+# `python3 make_figures_k2.py` из своей папки, а импортом из
+# `tools/seminar-build/` — картинка легла в `tools/seminar-build/figures/`,
+# собранная дека молча показала бы старую версию схемы.
+#
+# Чинится ходом по стеку вызовов вместо угадывания по `__main__`: ищем
+# БЛИЖАЙШЕГО предка этого вызова, чей файл лежит в
+# `library/seminars/*/rendered/`. Это всегда либо сам генератор
+# (`make_figures_*.py`), либо `make_figures_common.py` того же занятия,
+# который его импортирует, — и оба лежат в нужной папке независимо от того,
+# откуда и как был запущен процесс целиком. Собственный файл тулкита в этот
+# поиск не попадает (он лежит в `tools/seminar-build/`, не в
+# `library/seminars/`), и это ровно то свойство, ради которого раньше стоял
+# `__main__`: схемы разных занятий всё так же не ложатся в один общий
+# каталог. Если такого предка в стеке НЕТ вовсе — падаем громко, а не молча
+# пишем куда попало (дыра 2, пункт 1 постановки issue #299).
 import sys as _sys
 
 
 def _out_dir():
-    main = _sys.modules.get("__main__")
-    script = getattr(main, "__file__", None)
-    base = Path(script).resolve().parent if script else Path(__file__).resolve().parent
-    return base / "figures"
+    repo = Path(__file__).resolve().parent.parent.parent   # tools/seminar-build → repo root
+    seminars = repo / "library" / "seminars"
+    frame = _sys._getframe(1)
+    while frame is not None:
+        fn = frame.f_globals.get("__file__")
+        if fn:
+            p = Path(fn).resolve()
+            try:
+                rel = p.relative_to(seminars)
+            except ValueError:
+                rel = None
+            if rel is not None and len(rel.parts) >= 2 and rel.parts[1] == "rendered":
+                return p.parent / "figures"
+        frame = frame.f_back
+    raise SystemExit(
+        "fig_toolkit._out_dir(): в стеке вызовов нет файла внутри "
+        "library/seminars/*/rendered/ — непонятно, куда писать схему. "
+        "Запускайте make_figures_*.py как скрипт из папки своего занятия, "
+        "а не импортом из tools/seminar-build/ или откуда-то ещё."
+    )
 
 
 OUT = _out_dir()

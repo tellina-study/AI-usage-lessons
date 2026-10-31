@@ -1,0 +1,880 @@
+{
+  "_meta": {
+    "pptx": "/home/harness/harness-projects/256/.worktrees/folder-288/session-b7caa6c0-9d806aa6/notes/research/dizayn-metodika/proba-R1-lec-08/rendered/proba-R1.pptx",
+    "pdf": "/home/harness/harness-projects/256/.worktrees/folder-288/session-b7caa6c0-9d806aa6/notes/research/dizayn-metodika/proba-R1-lec-08/rendered/proba-R1.pdf"
+  },
+  "1.3": {
+    "porog": "15,0 пт на 100% знаков видимого слоя (включая подписи и подвал)",
+    "moy_metod": {
+      "opisanie": "каждый текстовый прогон (run) всей колоды, без фильтра доли и без исключения верхней/нижней зоны кадра — полный прогон",
+      "vsego_progonov": 215,
+      "progonov_bez_zadannogo_keglya": 0,
+      "izmereno_progonov": 215,
+      "nizhe_pola_progonov": 96,
+      "dolya_nizhe_pola_po_progonam": 0.44651162790697674,
+      "dolya_nizhe_pola_po_simvolam": 0.5139905294877314,
+      "zadeto_kadrov": 15,
+      "nomera_kadrov": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "desyat_khudshikh": [
+        {
+          "slide": 1,
+          "shape": "TextBox 5",
+          "size_pt": 12.0,
+          "text": "Концепт-арт · иллюстрация · ключевой кад"
+        },
+        {
+          "slide": 2,
+          "shape": "TextBox 3",
+          "size_pt": 12.0,
+          "text": "до модели"
+        },
+        {
+          "slide": 2,
+          "shape": "TextBox 15",
+          "size_pt": 12.0,
+          "text": "с моделью"
+        },
+        {
+          "slide": 2,
+          "shape": "TextBox 27",
+          "size_pt": 12.0,
+          "text": "модель входит на второй клетке и только "
+        },
+        {
+          "slide": 2,
+          "shape": "TextBox 33",
+          "size_pt": 12.0,
+          "text": "описание класса работы; прейскуранты и с"
+        },
+        {
+          "slide": 3,
+          "shape": "TextBox 45",
+          "size_pt": 12.0,
+          "text": "Профи.ру, 3 848 анкет иллюстраторов"
+        },
+        {
+          "slide": 3,
+          "shape": "TextBox 45",
+          "size_pt": 12.0,
+          "text": "·"
+        },
+        {
+          "slide": 3,
+          "shape": "TextBox 45",
+          "size_pt": 12.0,
+          "text": "прейскуранты iStock и Shutterstock"
+        },
+        {
+          "slide": 4,
+          "shape": "TextBox 8",
+          "size_pt": 12.0,
+          "text": "Disney, «101 далматинец», 1961"
+        },
+        {
+          "slide": 4,
+          "shape": "TextBox 8",
+          "size_pt": 12.0,
+          "text": "·"
+        }
+      ]
+    },
+    "metod_zamer_py_na_etom_zhe_fayle": {
+      "opisanie": "zamer.summarize_pdf_or_pptx: наименьшая ступень, покрывающая ≥1% взвешенного по символам объёма текста (MIN_SIZE_SHARE), пул уже очищен от верхних 5%/нижних 8% высоты кадра и от span'ов-номеров страниц (is_footer_zone)",
+      "minimalnyy_kegl_s_filtrom_1_protsenta": 12.0,
+      "minimalnyy_kegl_bez_filtra_1_protsenta_no_s_iskl_kolontitula": 12.0,
+      "dolya_nizhe_pola_po_simvolam_v_etom_pule": 0.4495368113115553,
+      "stupeni_s_filtrom": [
+        12.0,
+        13.5,
+        14.0,
+        14.5,
+        15.0,
+        15.5,
+        16.0,
+        16.5,
+        17.5,
+        23.0,
+        27.0
+      ]
+    },
+    "raznitsa_metodov_chislom": {
+      "dolya_nizhe_15pt_moy_metod_po_simvolam": 0.514,
+      "dolya_nizhe_15pt_metod_zamer_po_simvolam": 0.4495,
+      "razlichie_v_p_p": 6.45,
+      "kommentariy": "обе доли посчитаны по одной единице (доля символов), различие — ровно то, что даёт исключение zamer.py верхних 5%/нижних 8% высоты кадра и фильтр ступеней ≥1% веса; на очень маленьком тестовом файле (2 кадра) различие может быть нулевым или минимальным — смысл числа проявляется на полной колоде"
+    },
+    "fakt": "96 прогонов из 215 измеренных (доля 0.4465 по прогонам, 0.5140 по символам) ниже 15,0 пт, задето 15 кадр(ов)",
+    "verdikt": "НЕ ПРОХОДИТ"
+  },
+  "1.8": {
+    "porog": "WCAG — ≥4,5:1 для обычного текста, ≥3,0:1 для крупного (кегль ≥18 пт либо ≥14 пт полужирным)",
+    "kak_merili": "deckkit.contrast импортирован как библиотека (функции rows_of/ratio/background/lum — чистые, зависят только от python-pptx, не от состояния сборки) — переиспользован, не переписан, по прямому требованию задания",
+    "vsego_par_izmereno": 215,
+    "ne_izmereno_tsvet_ili_fon_ne_nazvany": 0,
+    "nizhe_poroga": 0,
+    "desyat_khudshikh": [],
+    "fakt": "0 пар из 215 измеренных ниже порога WCAG",
+    "verdikt": "проходит"
+  },
+  "1.11": {
+    "porog": "ничего критичного (заголовок, ключевое число, подпись-источник) не стоит ближе 48 пт от левого/правого края и 24 пт от верхнего/нижнего",
+    "kak_merili": "рабочая область 864×492 пт на холсте 960.0×540.0 пт — поле 48 пт слева/справа, 24 пт сверху/снизу; критичная рамка — кегль ≥23 пт (заголовок/число) либо верх рамки в нижних 9% высоты кадра (подвал/подпись-источник)",
+    "vsego_tekstovykh_ramok": 181,
+    "narusheniy_vsego_ramok": 52,
+    "narusheniy_kriticheskikh_ramok": 28,
+    "narushiteli_kriticheskie": [
+      {
+        "slide": 1,
+        "shape": "TextBox 3",
+        "text": "Раздел 1. Неподвижное изображение",
+        "max_size_pt": 30.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 55.4,
+        "dist_right": 39.6,
+        "dist_top": 75.6,
+        "dist_bottom": 423.6,
+        "violations": [
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 2,
+        "shape": "TextBox 2",
+        "text": "Что за работа: одно изображение в выпуск",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 2,
+        "shape": "TextBox 33",
+        "text": "описание класса работы; прейскуранты и с",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 3,
+        "shape": "TextBox 2",
+        "text": "Четыре способа получить изображение без ",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 3,
+        "shape": "TextBox 45",
+        "text": "Профи.ру, 3 848 анкет иллюстраторов · пр",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 4,
+        "shape": "TextBox 2",
+        "text": "Два удешевления до всякой модели",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 4,
+        "shape": "TextBox 8",
+        "text": "Disney, «101 далматинец», 1961 · Adobe P",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 5,
+        "shape": "TextBox 2",
+        "text": "Цена единицы изображения",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 5,
+        "shape": "TextBox 37",
+        "text": "Тариф Gemini, 27.10.2026 · Профи.ру · пр",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 6,
+        "shape": "TextBox 2",
+        "text": "Цена пробы и цена выбора",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 6,
+        "shape": "TextBox 18",
+        "text": "Тариф Gemini, 27.10.2026 · сообщение Toy",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 7,
+        "shape": "TextBox 2",
+        "text": "Ставка: сколько генераций на одну иллюст",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 8,
+        "shape": "TextBox 2",
+        "text": "Сколько генераций на одну иллюстрацию",
+        "max_size_pt": 28.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 473.1,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 8,
+        "shape": "TextBox 8",
+        "text": "«Тинькофф Журнал», 20.03.2023",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 9,
+        "shape": "TextBox 2",
+        "text": "Т—Ж: баннеры на домашней видеокарте",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 9,
+        "shape": "TextBox 22",
+        "text": "«Тинькофф Журнал», 20.03.2023",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 10,
+        "shape": "TextBox 2",
+        "text": "Т—Ж: что получается и что не получается",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 10,
+        "shape": "TextBox 14",
+        "text": "«Тинькофф Журнал», 20.03.2023",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 11,
+        "shape": "TextBox 2",
+        "text": "Перегородка Airbus",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 11,
+        "shape": "TextBox 18",
+        "text": "Autodesk и Airbus, порождающее проектиро",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 12,
+        "shape": "TextBox 2",
+        "text": "Чего метод не умеет",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 12,
+        "shape": "TextBox 38",
+        "text": "Техническая работа по Stable Diffusion 3",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 13,
+        "shape": "TextBox 2",
+        "text": "Getty против Stability",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 13,
+        "shape": "TextBox 14",
+        "text": "Высокий суд Англии и Уэльса, судья Joann",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 14,
+        "shape": "TextBox 2",
+        "text": "Четыре упоминания с числом",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 14,
+        "shape": "TextBox 22",
+        "text": "Hugging Face, прямой запрос к интерфейсу",
+        "max_size_pt": 12.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 499.7,
+        "dist_bottom": 4.3,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            4.3
+          ]
+        ]
+      },
+      {
+        "slide": 15,
+        "shape": "TextBox 2",
+        "text": "×73 — ×14 700",
+        "max_size_pt": 34.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 466.6,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 16,
+        "shape": "TextBox 2",
+        "text": "Карта стадии: колонка «Изображение»",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      }
+    ],
+    "fakt": "28 критичных рамок из 181 нарушают поле/безопасную зону (52 нарушений среди всех текстовых рамок, не только критичных)",
+    "verdikt": "НЕ ПРОХОДИТ"
+  },
+  "1.13": {
+    "porog": "бюджет = (ширина_пт / 9,0) × число_строк, округлено вниз; нарушение — текст слота превышает бюджет более чем вдвое",
+    "kak_merili": "слот = текстовая рамка .pptx; ширина — геометрия фигуры в пт; число строк — число строк сопоставлено по физическим строкам PDF там, где совпадение нашлось; знаков — длина текста рамки после свёртки пробелов; бюджет = floor((ширина/9.0)×строк)",
+    "vsego_ramok_s_tekstom": 181,
+    "narusheniy_vdvoe": 0,
+    "narushiteli": [],
+    "fakt": "0 рамок из 181 превышают пересчитанный бюджет более чем вдвое",
+    "verdikt": "проходит"
+  },
+  "1.12": {
+    "porog": "37–74 знака в строке, идеал ≈55 (кириллическая поправка к внешнему канону)",
+    "kak_merili": "физическая строка из PDF-слоя (PyMuPDF get_text('dict'), уже после переноса) — выбран .pdf, а не .pptx, потому что .pptx не хранит точку физического переноса строки внутри абзаца; счёт знаков — len() строки после свёртки пробелов (норм. пробел), без учёта регистра",
+    "vsego_strok": 262,
+    "mediana_znakov": 19.0,
+    "p10_znakov": 6.0,
+    "p90_znakov": 51.0,
+    "idealnaya_dlina": 55,
+    "strok_vne_polosy": 211,
+    "dolya_vne_polosy": 0.8053,
+    "desyat_khudshikh": [
+      {
+        "kadr": 13,
+        "znakov": 138,
+        "text": "Высокий суд Англии и Уэльса, судья Joann"
+      },
+      {
+        "kadr": 13,
+        "znakov": 127,
+        "text": "на одну картинку: 4 265 146 304 байта ве"
+      },
+      {
+        "kadr": 14,
+        "znakov": 114,
+        "text": "Множитель наценки сходится по девяти мод"
+      },
+      {
+        "kadr": 9,
+        "znakov": 113,
+        "text": "Порог входа опустился до ноутбука, 40 ка"
+      },
+      {
+        "kadr": 14,
+        "znakov": 1,
+        "text": "₽"
+      },
+      {
+        "kadr": 14,
+        "znakov": 1,
+        "text": "₽"
+      },
+      {
+        "kadr": 14,
+        "znakov": 1,
+        "text": "₽"
+      },
+      {
+        "kadr": 6,
+        "znakov": 109,
+        "text": "Считаем то, что ушло заказчику. Экономия"
+      },
+      {
+        "kadr": 14,
+        "znakov": 109,
+        "text": "Hugging Face, прямой запрос к интерфейсу"
+      },
+      {
+        "kadr": 5,
+        "znakov": 3,
+        "text": "×73"
+      }
+    ],
+    "fakt": "211 строк из 262 вне полосы 37–74 знаков (доля 0.8053); медиана 19, p10=6, p90=51",
+    "verdikt": "НЕ ПРОХОДИТ"
+  }
+}

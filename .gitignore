@@ -65,3 +65,7 @@ library/lectures/lec-07/rework/deck/chastichnaya-sborka.pptx
 # ...и её рендер: правило игнорировало только pptx, а `--only` оставляет рядом и pdf,
 # который иначе попадает в коммит как случайный артефакт (круг #285, раздел 5).
 library/lectures/lec-07/rework/deck/chastichnaya-sborka.pdf
+
+# служебные выводы самопроверок форм ядра
+tools/presentation-build/out-*/
+tools/presentation-build/probe-out/

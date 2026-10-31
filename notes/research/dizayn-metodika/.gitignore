@@ -1,0 +1,6 @@
+# Эталонные файлы и образцы — чужие бинарники, в репозиторий не кладём.
+# Провенанс и адреса, откуда они берутся, лежат в etalony/PASPORTA.md.
+etalony/**
+obraztsy/**
+zamer/syroe-*.json
+!etalony/PASPORTA.md

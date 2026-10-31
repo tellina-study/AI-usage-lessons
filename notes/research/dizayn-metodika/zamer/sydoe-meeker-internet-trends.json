@@ -1,0 +1,125 @@
+{
+  "name": "meeker-internet-trends",
+  "razryad": "эталон плотности",
+  "n_frames": 334,
+  "unit": "кадр (страница/слайд)",
+  "tipografika": {
+    "min_kegl_osnovnogo_teksta": 4.5,
+    "median_kegl_osnovnogo_teksta": 11.0,
+    "min_kegl_bez_filtra_shuma": 3.0,
+    "dolya_simvolov_na_etom_minimalnom_kegle": 0.00222,
+    "n_stupeney_keglya": 17,
+    "stupeni_pt": [
+      4.5,
+      6.0,
+      7.0,
+      8.0,
+      9.0,
+      10.0,
+      10.5,
+      11.0,
+      12.0,
+      14.0,
+      15.0,
+      16.0,
+      17.0,
+      18.0,
+      20.0,
+      24.0,
+      28.0
+    ],
+    "otnosheniya_sosednih_stupeney": [
+      1.333,
+      1.167,
+      1.143,
+      1.125,
+      1.111,
+      1.05,
+      1.048,
+      1.091,
+      1.167,
+      1.071,
+      1.067,
+      1.062,
+      1.059,
+      1.111,
+      1.2,
+      1.167
+    ],
+    "n_garnitur_nachertaniy": 9,
+    "garnitury": [
+      "Arial-BoldItalicMT",
+      "Arial-BoldMT",
+      "Arial-ItalicMT",
+      "ArialMT",
+      "CambriaMath",
+      "ChronicleDisplay-Semi",
+      "Tahoma-Bold",
+      "Theinhardt-Regular",
+      "Wingdings-Regular"
+    ],
+    "kak_otdelili_kolontitul": "верхние 5% и нижние 8% высоты кадра исключены из расчёта кегля/гарнитур основного текста; отдельно исключены span'ы из одних цифр длиной ≤3 символов (номера страниц)"
+  },
+  "tsvet": {
+    "n_unikalnyh_tsvetov_teksta": 49,
+    "n_unikalnyh_tsvetov_zalivok": 42,
+    "samyy_yarkiy_akcent": "#ff0000",
+    "dolya_ploshchadi_pod_akcentom": 0.0005,
+    "kak_merili": "цвет текста — span.color (PDF) / run.font.color.rgb (PPTX), квантован кратно 4 на канал; «самый яркий акцент» выбран по насыщенность×значение (HSV) среди различимых заливок, НЕ по площади — так крупная тёмная фоновая плашка не обгоняет настоящий яркий акцент своим размером; площадь акцента — сумма площадей заливок именно ЭТОГО цвета самого насыщенного неахроматичного цвета, делённая на сумму площадей ВСЕХ учтённых заливок (не площадь кадра — заливки часто не покрывают кадр целиком, поэтому это доля \"внутри учтённых плашек\", а не кадра)"
+  },
+  "plotnost": {
+    "slov_na_kadr_mediana": 81.0,
+    "slov_na_kadr_p90": 191.39999999999998,
+    "slov_na_kadr_max": 1003,
+    "dolya_ploshchadi_pod_tekstom_mediana": 0.2167,
+    "dolya_ploshchadi_pod_tekstom_p90": 0.3883,
+    "dolya_ploshchadi_pod_tekstom_max": 0.7097,
+    "dolya_kadrov_tolko_zagolovok": 0.0269,
+    "kak_merili": "слова — page.get_text('words')/текст прогонов; площадь текста — доля сетки 64×64, покрытая объединением bbox текстовых блоков (не сумма bbox — так не дублируется перекрытие); «только заголовок» — слов ≤12 и площадь текста ≤0.05"
+  },
+  "izobrazhenie": {
+    "dolya_kadrov_s_krupnym_izobrazheniem": 0.003,
+    "dolya_kadrov_bez_izobrazheniy": 0.003,
+    "srednee_chislo_izobrazheniy_na_kadr": 1.988,
+    "kak_merili": "изображение — растровый блок (PDF: block type==1 из get_text('dict'); PPTX: shape_type==PICTURE); «крупное» — доля площади кадра ≥0.4 по той же сетке 64×64"
+  },
+  "ritm": {
+    "n_raznyh_raskladok": 43,
+    "dliny_seriy_odinakovyh_podryad_max": 7,
+    "dliny_seriy_odinakovyh_podryad_mediana": 1,
+    "dliny_seriy_odinakovyh_podryad_raspredelenie": [
+      [
+        1,
+        205
+      ],
+      [
+        2,
+        41
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        5,
+        1
+      ],
+      [
+        6,
+        2
+      ],
+      [
+        7,
+        1
+      ]
+    ],
+    "dolya_stranits_razdeliteley": 0.0329,
+    "kak_merili": "кластеризация иерархическая (scipy.cluster.hierarchy, average-linkage) по вектору: occupancy текста и изображений по сетке 3×3 (18 бит) + число текстовых блоков + число изображений + доля площади текста/изображения; порог отсечения — эвристика 0.6×средней попарной дистанции нормированных признаков, НЕ статистический критерий — число раскладок зависит от порога, трактовать как порядок величины; разделитель — слов ≤20 и есть кегль ≥1.4× медианного кегля кадра"
+  },
+  "path": "/home/harness/harness-projects/256/.worktrees/folder-288/session-0b2adb13-7ee7af40/notes/research/dizayn-metodika/etalony/meeker-internet-trends/internet-trends-2019.pdf",
+  "vremya_s": 3.0
+}

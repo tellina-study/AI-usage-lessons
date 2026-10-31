@@ -1,0 +1,42 @@
+{
+  "name": "extreme-slide-chooser",
+  "razryad": "справочник форм",
+  "n_frames": 1,
+  "unit": "кадр (страница/слайд)",
+  "tipografika": {
+    "min_kegl_osnovnogo_teksta": 4.0,
+    "median_kegl_osnovnogo_teksta": 8.0,
+    "min_kegl_bez_filtra_shuma": 4.0,
+    "dolya_simvolov_na_etom_minimalnom_kegle": 0.01897,
+    "n_stupeney_keglya": 3,
+    "stupeni_pt": [
+      4.0,
+      8.0,
+      14.0
+    ],
+    "otnosheniya_sosednih_stupeney": [
+      2.0,
+      1.75
+    ],
+    "n_garnitur_nachertaniy": 4,
+    "garnitury": [
+      "AGaramondPro-BoldItalic",
+      "AGaramondPro-Regular",
+      "AGaramondPro-Semibold",
+      "Futura-CondensedMedium"
+    ],
+    "kak_otdelili_kolontitul": "верхние 5% и нижние 8% высоты кадра исключены из расчёта кегля/гарнитур основного текста; отдельно исключены span'ы из одних цифр длиной ≤3 символов (номера страниц)"
+  },
+  "tsvet": {
+    "n_unikalnyh_tsvetov_teksta": 1,
+    "n_unikalnyh_tsvetov_zalivok": 12,
+    "samyy_yarkiy_akcent": "#a8a8ac",
+    "dolya_ploshchadi_pod_akcentom": 0.0017,
+    "kak_merili": "цвет текста — span.color (PDF) / run.font.color.rgb (PPTX), квантован кратно 4 на канал; «самый яркий акцент» выбран по насыщенность×значение (HSV) среди различимых заливок, НЕ по площади — так крупная тёмная фоновая плашка не обгоняет настоящий яркий акцент своим размером; площадь акцента — сумма площадей заливок именно ЭТОГО цвета самого насыщенного неахроматичного цвета, делённая на сумму площадей ВСЕХ учтённых заливок (не площадь кадра — заливки часто не покрывают кадр целиком, поэтому это доля \"внутри учтённых плашек\", а не кадра)"
+  },
+  "plotnost": "неприменимо — справочник форм, не колода для показа",
+  "izobrazhenie": "неприменимо — справочник форм, не колода для показа",
+  "ritm": "неприменимо — справочник форм, не колода для показа",
+  "path": "/home/harness/harness-projects/256/.worktrees/folder-288/session-0b2adb13-7ee7af40/notes/research/dizayn-metodika/etalony/extreme-slide-chooser/slide-chooser-11x17.pdf",
+  "vremya_s": 0.2
+}

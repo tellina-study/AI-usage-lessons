@@ -32,10 +32,10 @@ W_PX, H_PX = 1600, 680
 def case1_scheme():
     im = Image.new("RGB", (W_PX, H_PX), W)
     d = ImageDraw.Draw(im)
-    head(d, "Кейс 1 · хранение базы знаний — execution 2112 (s10-case1-vector)", sz=28)
+    head(d, "Кейс 1 · хранение базы знаний", sz=28)
 
     y = 170
-    node_n8n(d, 40, y, 300, 160, "Вопрос + корпус с векторами", "formTrigger · s10-case1-vector",
+    node_n8n(d, 40, y, 300, 160, "Вопрос + корпус с векторами", "formTrigger",
               kind="trigger")
     node_n8n(d, 390, y, 300, 160, "Embed query",
               ["httpRequest → OpenRouter /v1/embeddings", "model: text-embedding-3-small"],
@@ -126,10 +126,10 @@ def case3_scheme():
 def case4_scheme():
     im = Image.new("RGB", (W_PX, H_PX), W)
     d = ImageDraw.Draw(im)
-    head(d, "Кейс 4 · поиск по изображениям — execution 2114 (s10-case4-mm)", sz=28)
+    head(d, "Кейс 4 · поиск по изображениям", sz=28)
 
     y = 170
-    node_n8n(d, 60, y, 320, 160, "Скан бланка (data URL)", "formTrigger · s10-case4-mm",
+    node_n8n(d, 60, y, 320, 160, "Скан бланка (data URL)", "formTrigger",
               kind="trigger")
     node_n8n(d, 420, y, 620, 160, "Embed image",
               ["httpRequest → /v1/embeddings", "model: amazon/titan-embed-image-v1"], kind="external")

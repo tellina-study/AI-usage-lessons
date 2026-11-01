@@ -1,0 +1,139 @@
+# Что у Семинара 10 своё. Код сборщика — общий, в `tools/seminar-build/`.
+#
+# Правило, которое этот файл обслуживает (канон `tools/presentation-build/
+# seminar-deck-kit.md`): дека собирается из ИМЕНОВАННОЙ БИБЛИОТЕКИ ПРИЁМОВ, и
+# приём выбирается по полю `visual.pattern` слайда — ниже, в `genres`.
+#
+# Взято за образец у `library/seminars/sem-09/rendered/deck-config.yaml`
+# (ветка issue-299, непромерженная — см. ARCHITECTURE.md §2) и переписано под
+# сетку С10 (SETKA-KEYSOV.md): 49 слайдов, ЧЕТЫРЕ кейса плюс один
+# концептуальный разбавитель ВНЕ дорожки кейсов (ARCHITECTURE.md §4: «4
+# техкейса + 1 разбавитель», разбавитель не входит в case_track).
+
+seminar: "10"
+issue: 311
+
+langs:
+  ru:
+    slides: slides
+    deck: deck.yaml
+    out: sem-10.pptx
+    blocks: [Введение, Кейсы, Разбавитель, Закрытие]
+
+# Границы блоков: [от, до, индекс блока, индекс ступени или null].
+# Введение n01-n04, кейсы n05-n42, разбавитель n43-n46, закрытие n47-n49.
+razmetka:
+  n:
+    rows:
+      - [1, 4, 0, null]
+      - [5, 42, 1, null]
+      - [43, 46, 2, null]
+      - [47, 49, 3, null]
+    stages: []
+
+# Дорожка кейсов на лёгком дивайдере: названия по ЗАДАЧЕ (канон §1
+# проектирования — не тезис/урок), в порядке SETKA-KEYSOV.md. Разбавитель
+# (Google AI Overviews) НЕ входит в дорожку — он вне case_track по
+# ARCHITECTURE.md §4.
+case_track:
+  - Хранение базы знаний
+  - Разбиение документа на части
+  - Чем искать нужный кусок
+  - Поиск по изображениям
+
+# ВАЖНО, куплено дефектом С8 (его deck-config.yaml, комментарий к n27):
+# ключи ниже — ТОЧНЫЕ id дивайдеров кейсов. При любой вставке или
+# перенумеровке слайдов этот блок правится В ТОМ ЖЕ КРУГЕ.
+case_idx:
+  n05: 0
+  n14: 1
+  n23: 2
+  n33: 3
+
+# `visual.pattern` → жанр из библиотеки приёмов (`tools/seminar-build/genres.py`).
+# Имя, которого здесь нет, рисуется жанром `content` — нормальный, самый
+# частый случай.
+genres:
+  hero_cover: cover_centered
+  case_divider_quote: case_divider
+  question_with_option_cards: question
+  keystone_axis: axis_table
+  recap_table: axis_table
+  criteria_checklist_and_boundary: criteria
+  outcome_artifact: closing
+  bridge_forward: closing
+
+# Роль блока-цитаты ПО УМОЛЧАНИЮ для этого приёма. Запись нужна только там,
+# где умолчание (`formula`) неверно.
+pattern_role:
+  question_with_option_cards: question
+  answer_breakdown_table: formula
+  criteria_checklist_and_boundary: formula
+  recap_table: fact
+  keystone_axis: fact
+  measured_outcome_table: fact
+
+# Приёмы, где зал ГОЛОСУЕТ карточками.
+vote_patterns:
+  - question_with_option_cards
+
+# Дивайдеры кейса: `audit_takty_keysa` читает этот список, чтобы проверить
+# порядок «дивайдер → сцена → вопрос» (А5a). У С10 один приём дивайдера
+# кейса; дивайдер разбавителя — тот же приём ВНЕ `case_idx` (без дорожки),
+# поэтому список тот же.
+divider_patterns: [case_divider_quote]
+
+# Слайды, где фигура — подтверждающий бэкап ПОСЛЕ основных врезок.
+fig_after: []
+
+table_style: {}
+gold_quote_sids: {}
+figs: {}
+
+# Врезки вокруг настоящих снимков/схем n8n (слой 2 каждого кейса) по
+# умолчанию рисуются ролью "formula" (жирным, с весом тезиса-итога) — вес,
+# рассчитанный на тезис, здесь съедал бы место у самой схемы. "fact" — тот
+# же компактный приём, что держит факты и числа на остальных слайдах деки.
+# Задано ПО ID СЛАЙДА (n8n-экраны всех четырёх кейсов).
+quote_role_force:
+  n11: fact
+  n20: fact
+  n30: fact
+  n40: fact
+
+deck_yaml:
+  central_question_patterns: [question_with_option_cards]
+  axis_pattern: keystone_axis
+  head_defaults:
+    seminar_number: 10
+    audience: "3 курс, 09.03.01 — практикующие инженеры, все пользуются ИИ-ассистентами"
+    format: >-
+      слайды фасилитатора + открытые вопросы с карточками (вопрос ДО разбора) +
+      программные схемы экрана n8n.lessons.tellian.io (живой холст недостижим в этой
+      среде, notes/mcp-limitations.md [#233-8]) + четыре измеренных замера на этом
+      стенде (SberQuAD для текста, CORD для изображений), протоколы в `stend/raw/`
+    language: ru
+    slot_min: 90
+
+# ── Сторожа и генераторы ────────────────────────────────────────────────────
+
+notes:
+  # Коридор семинара по канону §5 — 250-450 слов на содержательный слайд,
+  # единый на все классы (приём Семинара 7, не Семинара 6).
+  bands:
+    разделитель: [250, 450]
+    голосование: [250, 450]
+    содержательный: [250, 450]
+    опорный: [250, 450]
+    обложка: null
+  anchor: {}
+
+svodka:
+  case_divider_patterns: [case_divider_quote]
+  nachalo_default: "сцена Ольги, одностраничник"
+  zal:
+    question_with_option_cards: голосования карточками
+
+sluzhebnoe:
+  timing_patterns: [hero_cover, case_divider_quote, keystone_axis, recap_table]
+  razdely: ["МОСТИК", "ШОВ С9→С10", "ОСЬ"]

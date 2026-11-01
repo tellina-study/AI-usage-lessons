@@ -10,17 +10,18 @@ import time
 from harness2 import llm_answer, cosine, contains_answer
 
 data = json.load(open("corpus_case1_embedded.json"))
-corpus_200 = data["corpus_200"]
+corpus_all = data["corpus_500"]
 questions = data["questions"]
 
-needle = [d for d in corpus_200 if d["is_needle"]]
-distractors = [d for d in corpus_200 if not d["is_needle"]]
+needle = [d for d in corpus_all if d["is_needle"]]
+distractors = [d for d in corpus_all if not d["is_needle"]]
 assert len(needle) == 10
 
 SIZES = {
     10: needle,
     50: needle + distractors[:40],
-    200: needle + distractors,
+    200: needle + distractors[:190],
+    500: needle + distractors,
 }
 
 STOPWORDS = set("и в во не что он на я с со как а то все она так его но да ты к у же вы за бы по "

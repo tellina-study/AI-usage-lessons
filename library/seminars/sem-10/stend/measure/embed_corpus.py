@@ -2,7 +2,7 @@ import json, time
 from harness2 import embed_batch
 
 data = json.load(open("corpus_case1.json"))
-corpus = data["corpus_200"]
+corpus = data["corpus_500"]
 questions = data["questions"]
 
 texts = [d["text"] for d in corpus]
@@ -29,7 +29,7 @@ cost_total += (qmeta["cost"] or 0)
 elapsed = time.time() - t0
 print(f"TOTAL embed wall={elapsed:.1f}s cost=${cost_total:.6f} for {len(texts)} docs + {len(q_texts)} queries")
 
-json.dump({"corpus_200": corpus, "questions": questions,
+json.dump({"corpus_500": corpus, "questions": questions,
            "embed_meta": {"model": "openai/text-embedding-3-small", "total_cost_usd": cost_total,
                            "total_wall_s": elapsed, "n_docs": len(texts), "n_queries": len(q_texts)}},
           open("corpus_case1_embedded.json", "w", encoding="utf-8"), ensure_ascii=False)

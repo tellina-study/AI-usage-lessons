@@ -3,7 +3,7 @@ from harness2 import embed_batch, cosine
 from case1_measure import tokenize, STOPWORDS  # reuse tokenizer (classical keyword method)
 
 existing = json.load(open('corpus_case1_embedded.json'))
-corpus_200 = existing['corpus_200']
+corpus_200 = existing['corpus_500']  # имя переменной сохранено для минимального диффа; теперь 500 документов
 q3 = json.load(open('case3_questions.json'))['questions']
 
 q_texts = [q['question'] for q in q3]

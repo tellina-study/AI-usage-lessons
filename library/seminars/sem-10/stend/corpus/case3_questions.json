@@ -2,213 +2,403 @@
   "questions": [
     {
       "qid": "c3q1",
-      "question": "Каков атомный номер кислорода?",
-      "answer": "8",
-      "gold_doc_id": "distractor-30"
+      "question": "Какое имя у супруги Шекспира?",
+      "answer": "Энн Хатауэй",
+      "gold_doc_id": "distractor-99",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.25
     },
     {
       "qid": "c3q2",
-      "question": "Кто был архитектором висячего моста через ущелье Эйвона?",
-      "answer": "Изамбард Кингдом Брюнель",
-      "gold_doc_id": "distractor-33"
+      "question": "Какое название до 2011 года было у GBTA?",
+      "answer": "NBTA (от National Business Travel Association)",
+      "gold_doc_id": "distractor-147",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.8
     },
     {
       "qid": "c3q3",
-      "question": "При каком давлении удалось получить кристаллы гелия?",
-      "answer": "выше 35 атм",
-      "gold_doc_id": "needle-1"
+      "question": "На сколько километров простирается Западная Сибирь от Северного Ледовитого океана до возвышенностей Казахского мелкосопочника7",
+      "answer": "на две с половиной тысячи километров",
+      "gold_doc_id": "distractor-83",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.727
     },
     {
       "qid": "c3q4",
-      "question": "Какие изделия изделия в США продавались под местными марками Advent, Harman/Kardon, Fisher?",
-      "answer": "Nakamichi",
-      "gold_doc_id": "distractor-101"
+      "question": "Кто в 1395 году принял титул герцога Миланского?",
+      "answer": "Джангалеаццо Висконти",
+      "gold_doc_id": "distractor-411",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 1.0
     },
     {
       "qid": "c3q5",
-      "question": "Чем было подорвано функционирование квебекских школ?",
-      "answer": "гонениями на католическую церковь",
-      "gold_doc_id": "distractor-129"
+      "question": "Какое бытует мнение насчёт рациона дьявола?",
+      "answer": "ест всё, кроме мёда",
+      "gold_doc_id": "distractor-142",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.167
     },
     {
       "qid": "c3q6",
-      "question": "На ком был женат первый Белозерский князь",
-      "answer": "на внучке хана Батыя",
-      "gold_doc_id": "distractor-161"
+      "question": "Назовите дату гибели Гинтараса Паулёниса?",
+      "answer": "5 октября 1994 г.",
+      "gold_doc_id": "distractor-418",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.2
     },
     {
       "qid": "c3q7",
-      "question": "В чём преимущество поворотно-сдвижных дверей?",
-      "answer": "легко закрываются даже в переполненном троллейбусе.",
-      "gold_doc_id": "distractor-158"
+      "question": "Пример водных приград?",
+      "answer": "реки",
+      "gold_doc_id": "distractor-339",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.0
     },
     {
       "qid": "c3q8",
-      "question": "Что производил Эдгар Брандт?",
-      "answer": "изделия из кованного металла",
-      "gold_doc_id": "distractor-139"
+      "question": "Что такое простой вопрос, который сводится к предложению предоставления соответствующих денежных вознаграждений в обмен на усилие?",
+      "answer": "мотивация",
+      "gold_doc_id": "distractor-258",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.917
     },
     {
       "qid": "c3q9",
-      "question": "В каких областях существуют приложения технологии управления риском?",
-      "answer": "экономики и техники",
-      "gold_doc_id": "distractor-75"
+      "question": "В каком году опубликована статья об анализе митохондриальной ДНК?",
+      "answer": "2008",
+      "gold_doc_id": "distractor-122",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.857
     },
     {
       "qid": "c3q10",
-      "question": "какие вещества входят в состав Юпитера и Солнца, делая их схожими?",
-      "answer": "большая доля водорода и гелия",
-      "gold_doc_id": "distractor-63"
+      "question": "Какие наиболее популярные произведения были созданы на протяжении 1984-1986 гг",
+      "answer": " Зеленый свет , Гиподинамия , Годы странствий , Затмение сердца ",
+      "gold_doc_id": "cluster6-2",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.375
     },
     {
       "qid": "c3q11",
-      "question": "Где доступна услуга для размещения?",
-      "answer": "на сайтах партнеров ЮНИСТРИМ",
-      "gold_doc_id": "distractor-116"
+      "question": "В каком положении большую часть времени находилась подводная лодка?",
+      "answer": "в надводном",
+      "gold_doc_id": "distractor-209",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.125
     },
     {
       "qid": "c3q12",
-      "question": "Что такое продукт стеклоделия?",
-      "answer": "одной из древнейших технологий в материальной культуре.",
-      "gold_doc_id": "distractor-110"
+      "question": "О чем книга The 4-Hour Workweek ?",
+      "answer": "об эффективном управлении собственным временем",
+      "gold_doc_id": "distractor-51",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.75
     },
     {
       "qid": "c3q13",
-      "question": "Что обсуждали СМИ в течение 2010-х?",
-      "answer": "вероятное возрождение ню-метала",
-      "gold_doc_id": "distractor-163"
+      "question": "Каков перевод термина Рабочая сила на английский язык?",
+      "answer": "Labor force",
+      "gold_doc_id": "distractor-464",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.286
     },
     {
       "qid": "c3q14",
-      "question": "куда россини уезжает гастролировать",
-      "answer": "в Вену",
-      "gold_doc_id": "distractor-89"
+      "question": "Что пользуется большой популярностью помимо специализированных школ гостиничного бизнеса?",
+      "answer": "Пользуются курсы иностранных языков",
+      "gold_doc_id": "distractor-75",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.875
     },
     {
       "qid": "c3q15",
-      "question": "Карты какой системы могут использоваться для платежей в паркоматах, магазинах, транспорте и т. д.?",
-      "answer": "Chipknip",
-      "gold_doc_id": "distractor-50"
+      "question": "Что не имеет первичной перетяжки, они имеют так называемый диффузный кинетохор, поэтому во время митоза микротрубочки веретена деления прикрепляются по всей длине хромосомы?",
+      "answer": "Голоцентрические хромосомы.",
+      "gold_doc_id": "distractor-346",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.941
     },
     {
       "qid": "c3q16",
-      "question": "Какой процент оборота от иностранных клиентов определяет скейлап?",
-      "answer": "не менее 20 %",
-      "gold_doc_id": "distractor-141"
+      "question": "Какие еще существуют способы управления гостиничными сетями?",
+      "answer": "на основе договора аренды",
+      "gold_doc_id": "distractor-325",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.167
     },
     {
       "qid": "c3q17",
-      "question": "В каком году бал АЛТ был перенесен на субботу?",
-      "answer": "В 1977",
-      "gold_doc_id": "distractor-35"
+      "question": "К какому сроку прирост в промышленности Германии сравнялся со странами-противниками?",
+      "answer": "К декабрю 1941 года",
+      "gold_doc_id": "distractor-149",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.125
     },
     {
       "qid": "c3q18",
-      "question": "От чего зависит цена на металлический висмут?",
-      "answer": "от его чистоты",
-      "gold_doc_id": "distractor-121"
+      "question": "С какого периода на Уимблдоне введена система уайлд-кард ?",
+      "answer": "с 1977 года",
+      "gold_doc_id": "distractor-145",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.286
     },
     {
       "qid": "c3q19",
-      "question": "Как называется язык южноамериканского индейского народа кечуа, принадлежит к группе кечуанских языков?",
-      "answer": "кечуа",
-      "gold_doc_id": "distractor-53"
+      "question": "Какова скорость порыва ветра, признанного самым быстрым на Земле?",
+      "answer": "113 м/с",
+      "gold_doc_id": "distractor-439",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.5
     },
     {
       "qid": "c3q20",
-      "question": "Почему Холмс на знает элементарных вещей к примеру про то что Земля вращается вокруг Солнца?",
-      "answer": "эти сведения совершенно бесполезны в его работе",
-      "gold_doc_id": "needle-5"
+      "question": "Какова главная заслуга Лейбница в физике?",
+      "answer": "введение в механику количественной меры движения",
+      "gold_doc_id": "distractor-324",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.2
     },
     {
       "qid": "c3q21",
-      "question": "В постоянной экспозиции какого музея презентуют приобретенные произведения искусства UBS MAP Global Art Initiative?",
-      "answer": "Музея современного искусства Гуггенхайма",
-      "gold_doc_id": "distractor-130"
+      "question": "Что по словам Т. С. Элиота делает шекспировские произведения современными?",
+      "answer": "шекспировский примитивизм ",
+      "gold_doc_id": "distractor-90",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.5
     },
     {
       "qid": "c3q22",
-      "question": "Сколько учащихся насчитывалось в 2011—2012 учебном году в женевской образовательной системе?",
-      "answer": "92 311 учащихся",
-      "gold_doc_id": "distractor-10"
+      "question": "Когда произошло сражение?",
+      "answer": "16 апреля 1746 года",
+      "gold_doc_id": "distractor-38",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.0
     },
     {
       "qid": "c3q23",
-      "question": "Какой из методов имеет внутренние источники ошибок?",
-      "answer": "все",
-      "gold_doc_id": "distractor-31"
+      "question": "За что некоторые студенты принимали Hwæt! ?",
+      "answer": "За Тихо! ( Quiet! )",
+      "gold_doc_id": "distractor-123",
+      "lexical_class": "neutral",
+      "overlap_ratio": 1.0
     },
     {
       "qid": "c3q24",
-      "question": "С кем сотрудничали Linkin Park на альбоме Collision Course (2004)?",
-      "answer": "с Jay Z",
-      "gold_doc_id": "distractor-181"
+      "question": "Что такое филогенез?",
+      "answer": "эволюционная история видов, описывающая их изменения и генеалогические отношения между собой.",
+      "gold_doc_id": "cluster8-4",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.5
     },
     {
       "qid": "c3q25",
-      "question": "На какие марки подразделяется висмут?",
-      "answer": "Ви2, Ви1, Ви00, Ви000[13], Ви0000",
-      "gold_doc_id": "distractor-121"
+      "question": "Какие особенности имеет одна пара щупалец у головоногих с 10 щупальцами?",
+      "answer": "ловчие, более длинные, с присосками на концах.",
+      "gold_doc_id": "distractor-59",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.375
     },
     {
       "qid": "c3q26",
-      "question": "Кто была похищена синоби из Селения Скрытого Тумана?",
-      "answer": "Рин",
-      "gold_doc_id": "distractor-52"
+      "question": "Когда было начато строительство в России Пулковской астрономической обсерватории?",
+      "answer": "21 июня (3 июля) 1835 года",
+      "gold_doc_id": "distractor-403",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.333
     },
     {
       "qid": "c3q27",
-      "question": "В каком учреждении Форрестер был аспирантом во время Второй мировой войны?",
-      "answer": "в Массачусетском технологическом институте",
-      "gold_doc_id": "distractor-88"
+      "question": "Какой альбом Дилана вышел в 1969 году?",
+      "answer": "Nashville Skyline",
+      "gold_doc_id": "distractor-186",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.8
     },
     {
       "qid": "c3q28",
-      "question": "Где Грэмом и Доддом были изложены основные положения своей концепции?",
-      "answer": "в фундаментальном труде Анализ ценных бумаг ",
-      "gold_doc_id": "distractor-167"
+      "question": "Что служит центральной осью Садов Кью?",
+      "answer": "центральной осью дизайна здесь служит Пагода",
+      "gold_doc_id": "cluster8-3",
+      "lexical_class": "neutral",
+      "overlap_ratio": 1.0
     },
     {
       "qid": "c3q29",
-      "question": "На какой базе начали делать 7К-ОК — многоцелевой трёхместный орбитальный корабль (ОК)?",
-      "answer": "на базе 7К",
-      "gold_doc_id": "distractor-2"
+      "question": "На что надеется автор?",
+      "answer": "это поможет решить проблемы человеческого общества",
+      "gold_doc_id": "distractor-52",
+      "lexical_class": "neutral",
+      "overlap_ratio": 1.0
     },
     {
       "qid": "c3q30",
-      "question": "Из какого диалекта внесли в литературный язык варианты множественного числа?",
-      "answer": "из куваканского",
-      "gold_doc_id": "distractor-11"
+      "question": "Сколько акционеров было у банка в 1895 году?",
+      "answer": "14 тысяч акционеров",
+      "gold_doc_id": "distractor-200",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.6
     },
     {
       "qid": "c3q31",
-      "question": "Какой ученый первым высказал мысль индийского происхождения арабских цифр ?",
-      "answer": "Георгий Яковлевич Кер",
-      "gold_doc_id": "distractor-1"
+      "question": "Куда операционная система записывает данные содержимого ОЗУ?",
+      "answer": "На устройство постоянного хранения данных",
+      "gold_doc_id": "distractor-214",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.833
     },
     {
       "qid": "c3q32",
-      "question": "Чья одна из гипотез сводилась к тому, что специфическим состоянием газов воздуха при большом разрежении и мог оказаться эфир или некий-то газ с очень малым весом?",
-      "answer": "Менделеева",
-      "gold_doc_id": "distractor-108"
+      "question": "Какой язык был более тысячелетия было языком международного общения большинства стран мира.",
+      "answer": "Греческое койне",
+      "gold_doc_id": "distractor-285",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.875
     },
     {
       "qid": "c3q33",
-      "question": "какую глубину имеет река Сырдарья?",
-      "answer": "от 1.5 до 5 м",
-      "gold_doc_id": "distractor-151"
+      "question": "На каком месте в мире находится Нигер по запасам урановой руды?",
+      "answer": "на девятом месте",
+      "gold_doc_id": "distractor-80",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.875
     },
     {
       "qid": "c3q34",
-      "question": "С использованием чего связано событие авиационное происшествие ?",
-      "answer": "воздушного судна",
-      "gold_doc_id": "distractor-15"
+      "question": "В результате деятельности кого произошло накопление в атмосфере кислорода согласно гипотезе?",
+      "answer": "фотосинтезирующих организмов",
+      "gold_doc_id": "distractor-316",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.667
     },
     {
       "qid": "c3q35",
-      "question": "Когда начался выпуск регенерированной кинопленки из переработанных изношенных фильмокопий?",
-      "answer": "В 1910 году",
-      "gold_doc_id": "distractor-8"
+      "question": "На ком завершилась баварская династия Теоделинды?",
+      "answer": "Король Ариперт II (702—712)",
+      "gold_doc_id": "distractor-135",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.2
+    },
+    {
+      "qid": "c3q36",
+      "question": "Как называется корректирующая оптическая система, установленная на телескоп во время первой экспедиции обслуживания в 1993 году для компенсации неточности изготовления главного зеркала?",
+      "answer": "COSTAR",
+      "gold_doc_id": "distractor-350",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.941
+    },
+    {
+      "qid": "c3q37",
+      "question": "Чем привлекает Люксембург иностранные банки?",
+      "answer": "стабильной политической системой и законодательством",
+      "gold_doc_id": "distractor-341",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.25
+    },
+    {
+      "qid": "c3q38",
+      "question": "Кого выбирали голосуя через компромисс?",
+      "answer": "Специальную комиссию, которая выбирала кандидата.",
+      "gold_doc_id": "distractor-375",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.25
+    },
+    {
+      "qid": "c3q39",
+      "question": "Как назывался альбом новых песен, выпущенный Диланом в 1997 году?",
+      "answer": "Time Out of Mind",
+      "gold_doc_id": "cluster5-1",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.5
+    },
+    {
+      "qid": "c3q40",
+      "question": "Когда были найдены останки Najash rionegrina? в 2006 году.",
+      "answer": "В 2006 году.",
+      "gold_doc_id": "distractor-430",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 1.0
+    },
+    {
+      "qid": "c3q41",
+      "question": "Какой закон с 1934 часто изменялся?",
+      "answer": "о Банке Канады",
+      "gold_doc_id": "distractor-66",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 1.0
+    },
+    {
+      "qid": "c3q42",
+      "question": "Чем был обмен по бартеру в торговле?",
+      "answer": "Единственной доступной формой торговли",
+      "gold_doc_id": "distractor-107",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.667
+    },
+    {
+      "qid": "c3q43",
+      "question": "Эквивалентны ли точки на спирали, угловое расстояние между которыми 360°?",
+      "answer": "не эквивалентны",
+      "gold_doc_id": "distractor-276",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.429
+    },
+    {
+      "qid": "c3q44",
+      "question": "Как дословно на древне-греческом будет термин философия ?",
+      "answer": " любомудрие , любовь к мудрости ",
+      "gold_doc_id": "distractor-58",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.2
+    },
+    {
+      "qid": "c3q45",
+      "question": "Кто описал Райсцуг в 1515 году?",
+      "answer": "Маттхеус Ланг",
+      "gold_doc_id": "distractor-177",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 1.0
+    },
+    {
+      "qid": "c3q46",
+      "question": "Где выпущены патроны 38",
+      "answer": "в США",
+      "gold_doc_id": "distractor-399",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.5
+    },
+    {
+      "qid": "c3q47",
+      "question": "Кто выделил мифологию, науку и обобщение обыденного сознания как источники философской древнегреческой мысли?",
+      "answer": "А. Н. Чанышев",
+      "gold_doc_id": "distractor-448",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.7
+    },
+    {
+      "qid": "c3q48",
+      "question": "Сколько человек было ранено во время событий 12-15 июня 1967 года в Чимкенте?",
+      "answer": "свыше 50 человек",
+      "gold_doc_id": "distractor-271",
+      "lexical_class": "exact_match",
+      "overlap_ratio": 0.889
+    },
+    {
+      "qid": "c3q49",
+      "question": "Каким вторым званием обладают жители города Рязань?",
+      "answer": "общественные деятели, врачи и учителя, инженеры-конструкторы и преподаватели, труженики тыла и артисты, учёные и художники, строители, писатели, спортсмены и космонавты. Н",
+      "gold_doc_id": "distractor-197",
+      "lexical_class": "lexical_gap",
+      "overlap_ratio": 0.143
+    },
+    {
+      "qid": "c3q50",
+      "question": "Что согласывают стороны, участвующие в системе ЗУП?",
+      "answer": "уровень сервиса и размеры запасов",
+      "gold_doc_id": "distractor-82",
+      "lexical_class": "neutral",
+      "overlap_ratio": 0.4
     }
   ]
 }

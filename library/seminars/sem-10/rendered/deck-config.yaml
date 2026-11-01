@@ -26,7 +26,7 @@ razmetka:
   n:
     rows:
       - [1, 4, 0, null]
-      - [5, 42, 1, null]
+      - [5, 42, 1, 0]
       - [43, 46, 2, null]
       - [47, 49, 3, null]
     stages: []

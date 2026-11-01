@@ -1,0 +1,140 @@
+{
+  "name": "С10 · Кейс 2 — нарезка документа (демо-экран)",
+  "nodes": [
+    {
+      "id": "trig",
+      "name": "Документ целиком",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -480,
+        0
+      ],
+      "webhookId": "s10-case2-chunking",
+      "parameters": {
+        "path": "s10-case2-chunking",
+        "formTitle": "С10 · Кейс 2 — нарезка документа (демо)",
+        "formDescription": "JSON: {document, question, answer, answer_start, chunk_size}",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "payload",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "fixed",
+      "name": "Нарезка фиксированным размером",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -220,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const payload = JSON.parse($input.first().json.payload);\nconst size = payload.chunk_size || 180;\nfunction chunkFixed(text, size, overlap) {\n  const chunks = []; let i = 0;\n  while (i < text.length) {\n    const end = Math.min(i + size, text.length);\n    chunks.push({start: i, end: end, text: text.slice(i, end)});\n    if (end === text.length) break;\n    i += size - overlap;\n  }\n  return chunks;\n}\nfunction answerIntact(chunks, aStart, aEnd) {\n  for (const c of chunks) { if (c.start <= aStart && aEnd <= c.end) return true; }\n  return false;\n}\nconst chunks = chunkFixed(payload.document, size, 0);\nconst aStart = payload.answer_start;\nconst aEnd = aStart + payload.answer.length;\nconst intact = answerIntact(chunks, aStart, aEnd);\nreturn [{json: {...payload, chunk_size: size, chunks_v1: chunks, v1_intact: intact}}];"
+      }
+    },
+    {
+      "id": "struct",
+      "name": "Нарезка по границам предложений",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        40,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const d = $input.first().json;\nfunction chunkStructural(text, target) {\n  const sentences = text.split(/(?<=[.!?])\\s+/);\n  const chunks = []; let pos = 0, curStart = 0, curText = '';\n  for (const sent of sentences) {\n    let idx = text.indexOf(sent, pos); if (idx === -1) idx = pos;\n    const sStart = idx, sEnd = idx + sent.length;\n    if (curText && (curText.length + sent.length + 1 > target)) {\n      chunks.push({start: curStart, end: pos, text: curText});\n      curText = sent; curStart = sStart;\n    } else {\n      if (!curText) curStart = sStart;\n      curText = curText ? (curText + ' ' + sent).trim() : sent;\n    }\n    pos = sEnd;\n  }\n  if (curText) chunks.push({start: curStart, end: text.length, text: curText});\n  return chunks;\n}\nfunction answerIntact(chunks, aStart, aEnd) {\n  for (const c of chunks) { if (c.start <= aStart && aEnd <= c.end) return true; }\n  return false;\n}\nconst chunks = chunkStructural(d.document, d.chunk_size);\nconst aStart = d.answer_start;\nconst aEnd = aStart + d.answer.length;\nconst intact = answerIntact(chunks, aStart, aEnd);\nreturn [{json: {...d, chunks_v2: chunks, v2_intact: intact}}];"
+      }
+    },
+    {
+      "id": "compare",
+      "name": "Сравнение: попал ли ответ целиком в один кусок",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        300,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const d = $input.first().json;\nfunction fmt(chunks) {\n  return chunks.map((c,i)=>`  [${i}] (${c.start}-${c.end}): \"${c.text.replace(/\\n/g,' ').slice(0,70)}${c.text.length>70?'…':''}\"`).join('\\n');\n}\nconst summary = `Документ (${d.document.length} симв.), размер куска = ${d.chunk_size}\\n` +\n  `Вопрос: ${d.question}\\n` +\n  `Эталонный ответ: \"${d.answer}\" (позиция ${d.answer_start}-${d.answer_start + d.answer.length})\\n\\n` +\n  `v1 — фиксированный размер (${d.chunks_v1.length} куска):\\n${fmt(d.chunks_v1)}\\n` +\n  `→ ответ ${d.v1_intact ? 'ЦЕЛИКОМ в одном куске' : 'РАЗОРВАН границей куска'}\\n\\n` +\n  `v2 — по границам предложений (${d.chunks_v2.length} куска):\\n${fmt(d.chunks_v2)}\\n` +\n  `→ ответ ${d.v2_intact ? 'ЦЕЛИКОМ в одном куске' : 'РАЗОРВАН границей куска'}`;\nreturn [{json: {...d, summary}}];"
+      }
+    },
+    {
+      "id": "res",
+      "name": "Result screen",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        540,
+        0
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Сравнение нарезки",
+        "completionMessage": "={{ $json.summary }}",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Документ целиком": {
+      "main": [
+        [
+          {
+            "node": "Нарезка фиксированным размером",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Нарезка фиксированным размером": {
+      "main": [
+        [
+          {
+            "node": "Нарезка по границам предложений",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Нарезка по границам предложений": {
+      "main": [
+        [
+          {
+            "node": "Сравнение: попал ли ответ целиком в один кусок",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Сравнение: попал ли ответ целиком в один кусок": {
+      "main": [
+        [
+          {
+            "node": "Result screen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

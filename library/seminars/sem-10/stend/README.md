@@ -21,9 +21,37 @@ kesh_stend.py`: один `httpRequest`-узел, URL и тело приходя�
 | `sborka.py` → `raw-openrouter.json` | С10 · сырой вызов OpenRouter (универсальный) | `s10-raw-openrouter` | `S4AMVj1hVmcs4fe8` |
 | `sborka.py` → `case1-vector.json` | С10 · Кейс 1 — векторное хранилище (демо-экран) | `s10-case1-vector` | `JNXhpgEoOC937W5g` |
 | `sborka.py` → `case4-multimodal.json` | С10 · Кейс 4 — мультимодальный эмбеддинг (демо-экран) | `s10-case4-mm` | `s08s4eHIo6zbP8JQ` |
+| `sborka.py` → `case2-chunking.json` | С10 · Кейс 2 — нарезка документа (демо-экран) | `s10-case2-chunking` | `oLiJHPEy6uII7W5J` |
+| `sborka.py` → `case3-search.json` | С10 · Кейс 3 — виды поиска + реранкер (демо-экран) | `s10-case3-search` | `xAFFyyTJLYzZSvk8` |
 
-Все три опубликованы (`POST /workflows/<id>/publish`). Ни один сценарий С7/С8/С9 не
+Все пять опубликованы (`POST /workflows/<id>/publish`). Ни один сценарий С7/С8/С9 не
 тронут — правка ограничена путями `library/seminars/sem-10/`.
+
+**Доп. проход 2026-11-01 (issue #311, инфраструктурная фаза) — Кейс 2/3 получили
+собственные демо-воркфлоу на стенде.** До этого прохода Кейсы 2/3 существовали только
+как локальные Python-замеры (`measure/case2_chunking.py`, `measure/case3_measure.py`/
+`case3_rerank_measure.py`) без наглядного экрана на n8n — владелец, глядя на Семинар 9,
+явно попросил довести С10 до того же уровня (разбор + схемы + скрины + разбор тестов).
+Оба новых сценария — ТОЛЬКО демо-экраны механики для будущего слайда, не замена
+реальному измерению: числа Кейсов 2/3 в `SETKA-KEYSOV.md` и разделах README ниже этим
+проходом не трогаются и не пересчитываются.
+
+- **Кейс 2, execution `2369`** (`raw/case2_chunking_execution.json`,
+  `measure/trigger_case2_chunking.py`) — реальный документ SberQuAD (тот самый, что
+  входит в `sample[:60]` замера `case2_chunking.py`, seed=7): нарезка фиксированным
+  размером (180 симв.) разрывает эталонный ответ «из любых источников» границей куска
+  ([360:540) / [540:587)), нарезка по границам предложений оставляет его целиком в
+  одном куске ([411:587)). Узел «Сравнение» вернул `v1_intact=false`, `v2_intact=true`
+  — то же направление вывода, что и агрегат по 60 документам ниже.
+- **Кейс 3, execution `2371`** (`raw/case3_search_execution.json`,
+  `measure/trigger_case3_search.py`) — реальный вопрос `c3q10` («Какие наиболее
+  популярные произведения были созданы на протяжении 1984-1986 гг», gold=`cluster6-2`)
+  на малом (8 документов, включая confusable-пару `cluster6-1`/`cluster6-2` на сущности
+  «Звёздный») РЕАЛЬНОМ подмножестве корпуса Кейса 1/3: keyword/vector/hybrid/LLM-реранкер
+  — полный пайплайн прошёл настоящими вызовами (эмбеддинг вопроса и реранкер — через
+  OpenRouter). На этом маленьком демо-корпусе gold оказался на 1-м месте всеми методами
+  (иллюстрация механики, не повтор измерения «vector проигрывает на 500 документах» —
+  то измерение живёт в `raw/case3-results.json`/`case3-rerank-results.json`, не задето).
 
 **Доп. проход 2026-11-01 (issue #311) — `measure/case3_rerank_measure.py` (Кейс 3, 4-й и 5-й
 варианты, LLM-реранкер): zero new infra.** Тот же вебхук/credential `s10-raw-openrouter`, та
@@ -43,7 +71,48 @@ OpenRouter не даёт, это LLM-as-reranker (модели показыва�
   Работает технически (нет ошибки), но см. ниже — почему этот ответ **не значит, что
   мультимодальный эмбеддинг пригоден к использованию**.
 
-### Экран канваса n8n
+### Экран канваса n8n — ИСПРАВЛЕНО 2026-11-01: живые скрины сняты, прежний вывод был ошибкой
+
+**Прежний вывод этого раздела (ниже, зачёркнуто) был ошибкой оркестратора**, не
+подтверждённой заново проверкой: запись `notes/mcp-limitations.md` [#233-8] имеет
+апдейт от 2026-10-20 — ограничение **снято** для живого UI-канваса через обход
+`~/.cache/page-shot-libs/x` (`tools/presentation-build/setup_page_shots.sh`), и Семинар 9
+этой же техникой снял настоящие скрины для всех своих кейсов на том же стенде. Владелец
+курса поймал это прямой голосовой правкой («обязательно вернуть реальные скрины
+настройки узлов n8n») при сравнении С10 с С9.
+
+**Снято 2026-11-01** (`n8n_shots.py`, логин по `N8N_UI_EMAIL`/`N8N_UI_PASSWORD`,
+headless chromium через тот же обход) — 11 настоящих скриншотов живого стенда для ВСЕХ
+4 кейсов, `n8n-screenshots-raw/`:
+
+| Файл | Кейс | Что на кадре |
+|---|---|---|
+| `case1-canvas.png` | 1 | холст: Embed query → Simple Vector Store (cosine top-1) → Answer (RAG) |
+| `case1-vector-store-panel.png` | 1 | развёрнутый код узла «Simple Vector Store (cosine top-1)» |
+| `case1-answer-panel.png` | 1 | панель промта узла «Answer (RAG)» |
+| `case2-canvas.png` | 2 | холст: Документ → нарезка фикс. размером → нарезка по предложениям → сравнение |
+| `case2-fixed-chunk-panel.png` | 2 | развёрнутый код узла «Нарезка фиксированным размером» (порт `chunk_fixed`) |
+| `case2-structural-chunk-panel.png` | 2 | развёрнутый код узла «Нарезка по границам предложений» (порт `chunk_structural`) |
+| `case3-canvas.png` | 3 | холст: keyword → embed query → cosine → RRF fusion → LLM-реранкер → разбор |
+| `case3-rrf-panel.png` | 3 | развёрнутый код узла «RRF fusion (hybrid)» (RRF k=60) |
+| `case3-reranker-panel.png` | 3 | тело запроса узла «LLM-реранкер (gpt-4o-mini)» |
+| `case4-canvas.png` | 4 | холст: Скан бланка (data URL) → Embed image (amazon/titan-embed-image-v1) |
+| `case4-embed-image-panel.png` | 4 | настройки HTTP-узла эмбеддинга картинки |
+
+Все холсты сняты зумом «по размеру» (`zoom-to-fit`), кроп по узлам (без боковой панели
+n8n и крошек); попап «Production Checklist» на всех 4 прогонах не появился (само
+закрытие в коде — на случай, если появится при пересъёмке). Панели Code-узлов —
+РАЗВЁРНУТЫЙ вид редактора (кнопка expand), не сжатый (С9-урок: сжатый вид обрезает
+текст).
+
+**Следующая волна (слайды) обязана использовать эти PNG как реальные скриншоты, не
+прежние программные схемы.** Прежние программные схемы (`figures/case1-n8n-vector-scheme.png`,
+`figures/case4-n8n-mm-scheme.png`, генератор `make_figures_case1_case4.py`) оставлены на
+диске как запись устройства прежнего (ошибочного) решения — слайды на них ссылаться не
+должны.
+
+<details>
+<summary>Прежний (ошибочный) текст раздела, для истории</summary>
 
 Живой скрин холста в ЭТОЙ рабочей среде недостижим (задание прямо просило не тратить время
 на повторную попытку — `notes/mcp-limitations.md` [#233-8] и инструкция задачи). Вместо
@@ -56,6 +125,8 @@ OpenRouter не даёт, это LLM-as-reranker (модели показыва�
 
 Генератор — `make_figures_case1_case4.py`. Будущий слайд обязан нести `backup:` в
 frontmatter, что это не скриншот (канон §8.4, `proektirovanie-keysa-i-voprosa.md` §3).
+
+</details>
 
 ## Открытый технический риск ARCHITECTURE.md §5/§7 п.1 — РЕШЁН ЖИВЫМ ПРОГОНОМ, план переписан
 
@@ -305,8 +376,8 @@ phash решает подкласс «точные/почти-точные по�
 ```bash
 set -a; source /home/harness/.n8n-lab-credentials; set +a
 cd library/seminars/sem-10/stend
-python3 sborka.py --push                       # пересоздать/обновить 3 сценария на стенде
-python3 make_figures_case1_case4.py             # программные схемы (figures/)
+python3 sborka.py --push                       # пересоздать/обновить ВСЕ 5 сценариев на стенде
+python3 make_figures_case1_case4.py             # прежние программные схемы (не используются слайдами, см. ниже)
 # измерения (запускались из рабочей директории с corpus/*.json и corpus/cord_sample/*.jpg
 # рядом со скриптами measure/*.py — пути внутри скриптов рассчитаны на такое соседство):
 cd measure
@@ -326,6 +397,20 @@ python3 case3_rerank_measure.py                  # -> case3-rerank-results.json 
 # скопировать результаты в ../raw/, рабочие файлы (corpus_case1.json,
 # corpus_case1_embedded.json, case3_questions.json, *-results.json внутри measure/)
 # в git не идут — они временные, канонические копии живут в corpus/ и raw/.
+
+# демо-экраны Кейсов 2/3 (реальные прогоны на живом стенде, не замена измерению выше):
+python3 trigger_case2_chunking.py                 # -> case2_chunking_execution.json
+python3 trigger_case3_search.py                   # -> case3_search_execution.json (эмбеддинги
+                                                   # через harness2.embed_batch — реальный вызов стенда)
+# скопировать обе *_execution.json в ../raw/.
+```
+
+### Скрины живого UI n8n (все 4 кейса)
+
+```bash
+source tools/presentation-build/setup_page_shots.sh   # ОБЯЗАТЕЛЬНО через source, без конвейера
+set -a; source /home/harness/.n8n-lab-credentials; set +a
+python3 library/seminars/sem-10/stend/n8n_shots.py     # -> stend/n8n-screenshots-raw/*.png
 ```
 
 ## Что осталось открытым для следующих фаз
@@ -343,3 +428,7 @@ python3 case3_rerank_measure.py                  # -> case3-rerank-results.json 
    top-10 кандидатов gpt-4o-mini через `s10-raw-openrouter`; владельцу решить, входит ли
    4-й/5-й вариант в финальную деку как полноценный такт или как «нюанс» в конце разбора —
    вне объёма этой сессии (только стенд + числа).
+5. **ЗАКРЫТО 2026-11-01 (эта сессия, инфраструктурная фаза):** демо-воркфлоу Кейсов 2/3
+   на живом стенде (`oLiJHPEy6uII7W5J`/`xAFFyyTJLYzZSvk8`) и настоящие скрины живого UI
+   n8n для всех 4 кейсов (`n8n-screenshots-raw/`, 11 файлов) — готовое сырьё для
+   следующей волны переделки слайдов (контент/экспозиция/разбор — не объём этой сессии).

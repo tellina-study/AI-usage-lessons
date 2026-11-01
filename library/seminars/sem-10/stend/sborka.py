@@ -246,10 +246,349 @@ def case4_multimodal_workflow():
     }
 
 
+def case2_chunking_workflow():
+    """Сценарий 4 — демо-экран Кейса 2: нарезка документа фиксированным размером
+    против нарезки по границам предложений, на РЕАЛЬНОМ документе SberQuAD (не
+    придуманном тексте) — тот же документ/вопрос/ответ, что `measure/case2_chunking.py`
+    использует в своём sweep (seed=7, CHUNK_SIZE=180), только один конкретный пример
+    вместо агрегата по 60 документам. JS внутри Code-узлов — прямой порт
+    `chunk_fixed`/`chunk_structural`/`answer_intact` из `case2_chunking.py`, не
+    самостоятельная реализация (не должно расходиться с тем, что реально считалось)."""
+    webhook_id = "s10-case2-chunking"
+    js_chunk_fixed = (
+        "function chunkFixed(text, size, overlap) {\n"
+        "  const chunks = []; let i = 0;\n"
+        "  while (i < text.length) {\n"
+        "    const end = Math.min(i + size, text.length);\n"
+        "    chunks.push({start: i, end: end, text: text.slice(i, end)});\n"
+        "    if (end === text.length) break;\n"
+        "    i += size - overlap;\n"
+        "  }\n"
+        "  return chunks;\n"
+        "}\n"
+    )
+    js_answer_intact = (
+        "function answerIntact(chunks, aStart, aEnd) {\n"
+        "  for (const c of chunks) { if (c.start <= aStart && aEnd <= c.end) return true; }\n"
+        "  return false;\n"
+        "}\n"
+    )
+    return {
+        "name": "С10 · Кейс 2 — нарезка документа (демо-экран)",
+        "nodes": [
+            {
+                "id": "trig", "name": "Документ целиком",
+                "type": "n8n-nodes-base.formTrigger", "typeVersion": 2.2,
+                "position": [-480, 0], "webhookId": webhook_id,
+                "parameters": {
+                    "path": webhook_id,
+                    "formTitle": "С10 · Кейс 2 — нарезка документа (демо)",
+                    "formDescription": "JSON: {document, question, answer, answer_start, chunk_size}",
+                    "formFields": {"values": [
+                        {"fieldLabel": "payload", "fieldType": "textarea", "requiredField": True},
+                    ]},
+                    "options": {"appendAttribution": False}},
+            },
+            {
+                "id": "fixed", "name": "Нарезка фиксированным размером",
+                "type": "n8n-nodes-base.code", "typeVersion": 2,
+                "position": [-220, 0],
+                "parameters": {
+                    "jsCode": (
+                        "const payload = JSON.parse($input.first().json.payload);\n"
+                        "const size = payload.chunk_size || 180;\n"
+                        + js_chunk_fixed + js_answer_intact +
+                        "const chunks = chunkFixed(payload.document, size, 0);\n"
+                        "const aStart = payload.answer_start;\n"
+                        "const aEnd = aStart + payload.answer.length;\n"
+                        "const intact = answerIntact(chunks, aStart, aEnd);\n"
+                        "return [{json: {...payload, chunk_size: size, chunks_v1: chunks, v1_intact: intact}}];"
+                    ),
+                },
+            },
+            {
+                "id": "struct", "name": "Нарезка по границам предложений",
+                "type": "n8n-nodes-base.code", "typeVersion": 2,
+                "position": [40, 0],
+                "parameters": {
+                    "jsCode": (
+                        "const d = $input.first().json;\n"
+                        "function chunkStructural(text, target) {\n"
+                        "  const sentences = text.split(/(?<=[.!?])\\s+/);\n"
+                        "  const chunks = []; let pos = 0, curStart = 0, curText = '';\n"
+                        "  for (const sent of sentences) {\n"
+                        "    let idx = text.indexOf(sent, pos); if (idx === -1) idx = pos;\n"
+                        "    const sStart = idx, sEnd = idx + sent.length;\n"
+                        "    if (curText && (curText.length + sent.length + 1 > target)) {\n"
+                        "      chunks.push({start: curStart, end: pos, text: curText});\n"
+                        "      curText = sent; curStart = sStart;\n"
+                        "    } else {\n"
+                        "      if (!curText) curStart = sStart;\n"
+                        "      curText = curText ? (curText + ' ' + sent).trim() : sent;\n"
+                        "    }\n"
+                        "    pos = sEnd;\n"
+                        "  }\n"
+                        "  if (curText) chunks.push({start: curStart, end: text.length, text: curText});\n"
+                        "  return chunks;\n"
+                        "}\n"
+                        + js_answer_intact +
+                        "const chunks = chunkStructural(d.document, d.chunk_size);\n"
+                        "const aStart = d.answer_start;\n"
+                        "const aEnd = aStart + d.answer.length;\n"
+                        "const intact = answerIntact(chunks, aStart, aEnd);\n"
+                        "return [{json: {...d, chunks_v2: chunks, v2_intact: intact}}];"
+                    ),
+                },
+            },
+            {
+                "id": "compare", "name": "Сравнение: попал ли ответ целиком в один кусок",
+                "type": "n8n-nodes-base.code", "typeVersion": 2,
+                "position": [300, 0],
+                "parameters": {
+                    "jsCode": (
+                        "const d = $input.first().json;\n"
+                        "function fmt(chunks) {\n"
+                        "  return chunks.map((c,i)=>`  [${i}] (${c.start}-${c.end}): \"${c.text.replace(/\\n/g,' ').slice(0,70)}"
+                        "${c.text.length>70?'…':''}\"`).join('\\n');\n"
+                        "}\n"
+                        "const summary = `Документ (${d.document.length} симв.), размер куска = ${d.chunk_size}\\n` +\n"
+                        "  `Вопрос: ${d.question}\\n` +\n"
+                        "  `Эталонный ответ: \"${d.answer}\" (позиция ${d.answer_start}-${d.answer_start + d.answer.length})\\n\\n` +\n"
+                        "  `v1 — фиксированный размер (${d.chunks_v1.length} куска):\\n${fmt(d.chunks_v1)}\\n` +\n"
+                        "  `→ ответ ${d.v1_intact ? 'ЦЕЛИКОМ в одном куске' : 'РАЗОРВАН границей куска'}\\n\\n` +\n"
+                        "  `v2 — по границам предложений (${d.chunks_v2.length} куска):\\n${fmt(d.chunks_v2)}\\n` +\n"
+                        "  `→ ответ ${d.v2_intact ? 'ЦЕЛИКОМ в одном куске' : 'РАЗОРВАН границей куска'}`;\n"
+                        "return [{json: {...d, summary}}];"
+                    ),
+                },
+            },
+            {
+                "id": "res", "name": "Result screen",
+                "type": "n8n-nodes-base.form", "typeVersion": 1,
+                "position": [540, 0],
+                "parameters": {
+                    "operation": "completion", "respondWith": "text",
+                    "completionTitle": "Сравнение нарезки", "completionMessage": "={{ $json.summary }}",
+                    "options": {"appendAttribution": False}},
+            },
+        ],
+        "connections": {
+            "Документ целиком": {"main": [[{"node": "Нарезка фиксированным размером", "type": "main", "index": 0}]]},
+            "Нарезка фиксированным размером": {"main": [[{"node": "Нарезка по границам предложений", "type": "main", "index": 0}]]},
+            "Нарезка по границам предложений": {"main": [[{"node": "Сравнение: попал ли ответ целиком в один кусок", "type": "main", "index": 0}]]},
+            "Сравнение: попал ли ответ целиком в один кусок": {"main": [[{"node": "Result screen", "type": "main", "index": 0}]]},
+        },
+        "settings": {"executionOrder": "v1"},
+    }
+
+
+def case3_search_workflow():
+    """Сценарий 5 — демо-экран Кейса 3: keyword overlap → embedding запроса
+    (OpenRouter) → cosine-ранжирование → RRF-слияние (гибрид) → LLM-реранкер
+    (gpt-4o-mini) поверх top-N кандидатов. Вход — вопрос + малый РЕАЛЬНЫЙ корпус
+    (документы SberQuAD из того же пула, что `measure/case3_measure.py`/
+    `case3_rerank_measure.py`, включая confusable-пару cluster6-1/cluster6-2) с
+    эмбеддингами документов, посчитанными заранее офлайн тем же вебхуком
+    `s10-raw-openrouter` (см. `measure/trigger_case3_search.py`) — узел эмбеддинга
+    в этом сценарии считает ТОЛЬКО вектор вопроса, как в `case1-vector.json`."""
+    webhook_id = "s10-case3-search"
+    stopwords = (
+        "и в во не что он на я с со как а то все она так его но да ты к у же вы за бы по "
+        "только ее мне было вот от меня еще нет о из ему теперь когда даже ну вдруг ли "
+        "если уже или ни быть был него до вас нибудь опять уж вам сказал ведь там потом "
+        "себя ничего ей может они тут где есть надо ней для мы тебя их чем была сам чтоб "
+        "без будто чего раз тоже себе под будет ж тогда кто этот того потому этого какой "
+        "совсем ним здесь этом один почти мой тем чтобы нее сейчас были куда зачем всех "
+        "никогда можно при наконец два об другой хоть после над больше тот через эти нас "
+        "про всего них какая много разве три эту моя впрочем хорошо свою этой перед иногда "
+        "лучше чуть том нельзя такой им более всегда конечно всю между"
+    )
+    return {
+        "name": "С10 · Кейс 3 — виды поиска + реранкер (демо-экран)",
+        "nodes": [
+            {
+                "id": "trig", "name": "Вопрос + корпус с эмбеддингами",
+                "type": "n8n-nodes-base.formTrigger", "typeVersion": 2.2,
+                "position": [-900, 0], "webhookId": webhook_id,
+                "parameters": {
+                    "path": webhook_id,
+                    "formTitle": "С10 · Кейс 3 — виды поиска + реранкер (демо)",
+                    "formDescription": "JSON: {question, gold_doc_id, query_embedding_model, corpus: [{id, text, embedding}]}",
+                    "formFields": {"values": [
+                        {"fieldLabel": "payload", "fieldType": "textarea", "requiredField": True},
+                    ]},
+                    "options": {"appendAttribution": False}},
+            },
+            {
+                "id": "kw", "name": "Keyword overlap",
+                "type": "n8n-nodes-base.code", "typeVersion": 2,
+                "position": [-620, 0],
+                "parameters": {
+                    "jsCode": (
+                        f"const STOPWORDS = new Set((\"{stopwords}\").split(' '));\n"
+                        "function tokenize(text) {\n"
+                        "  const m = text.toLowerCase().match(/[а-яёa-z0-9]+/g) || [];\n"
+                        "  return m.filter(t => t.length > 2 && !STOPWORDS.has(t));\n"
+                        "}\n"
+                        "const payload = JSON.parse($input.first().json.payload);\n"
+                        "const qTokens = new Set(tokenize(payload.question));\n"
+                        "const scored = payload.corpus.map(doc => {\n"
+                        "  const dTokens = new Set(tokenize(doc.text));\n"
+                        "  let overlap = 0; for (const t of qTokens) if (dTokens.has(t)) overlap++;\n"
+                        "  return {id: doc.id, overlap};\n"
+                        "});\n"
+                        "scored.sort((a,b)=>b.overlap-a.overlap);\n"
+                        "const keyword_rank = scored.map(s=>s.id);\n"
+                        "return [{json: {...payload, keyword_rank, keyword_scores: scored}}];"
+                    ),
+                },
+            },
+            {
+                "id": "embed_q", "name": "Embed query (OpenRouter)",
+                "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2,
+                "position": [-340, 0],
+                "parameters": {
+                    "method": "POST",
+                    "url": "https://openrouter.ai/api/v1/embeddings",
+                    "authentication": "predefinedCredentialType",
+                    "nodeCredentialType": "openRouterApi",
+                    "sendBody": True, "specifyBody": "json",
+                    "jsonBody": "={{ JSON.stringify({model: $json.query_embedding_model || "
+                                 "'openai/text-embedding-3-small', input: $json.question}) }}",
+                    "options": {"response": {"response": {"neverError": True}}, "timeout": 60000},
+                },
+                "credentials": OPENROUTER_CRED,
+            },
+            {
+                "id": "cosine", "name": "Cosine ranking (vector)",
+                "type": "n8n-nodes-base.code", "typeVersion": 2,
+                "position": [-60, 0],
+                "parameters": {
+                    "jsCode": (
+                        "const kw = $('Keyword overlap').first().json;\n"
+                        "const qvec = $input.first().json.data[0].embedding;\n"
+                        "function cos(a,b){let d=0,na=0,nb=0;for(let i=0;i<a.length;i++){"
+                        "d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];}return d/(Math.sqrt(na)*Math.sqrt(nb));}\n"
+                        "const scored = kw.corpus.map(doc => ({id: doc.id, score: cos(qvec, doc.embedding)}));\n"
+                        "scored.sort((a,b)=>b.score-a.score);\n"
+                        "const vector_rank = scored.map(s=>s.id);\n"
+                        "return [{json: {...kw, vector_rank, vector_scores: scored}}];"
+                    ),
+                },
+            },
+            {
+                "id": "rrf", "name": "RRF fusion (hybrid)",
+                "type": "n8n-nodes-base.code", "typeVersion": 2,
+                "position": [220, 0],
+                "parameters": {
+                    "jsCode": (
+                        "const d = $input.first().json;\n"
+                        "function rrf(rankA, rankB, k=60) {\n"
+                        "  const scores = {};\n"
+                        "  [rankA, rankB].forEach(rank => { rank.forEach((id, i) => {\n"
+                        "    scores[id] = (scores[id]||0) + 1/(k+i+1); }); });\n"
+                        "  return Object.keys(scores).sort((a,b)=>scores[b]-scores[a]);\n"
+                        "}\n"
+                        "const hybrid_rank = rrf(d.keyword_rank, d.vector_rank, 60);\n"
+                        "const TOP_N = Math.min(10, hybrid_rank.length);\n"
+                        "const topIds = hybrid_rank.slice(0, TOP_N);\n"
+                        "const byId = {}; d.corpus.forEach(c=>byId[c.id]=c.text);\n"
+                        "const candidatesText = topIds.map((id,i)=>`${i+1}. ${byId[id]}`).join('\\n\\n');\n"
+                        "return [{json: {...d, hybrid_rank, top_ids: topIds, candidates_text: candidatesText}}];"
+                    ),
+                },
+            },
+            {
+                "id": "rerank", "name": "LLM-реранкер (gpt-4o-mini)",
+                "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2,
+                "position": [500, 0],
+                "parameters": {
+                    "method": "POST",
+                    "url": "https://openrouter.ai/api/v1/chat/completions",
+                    "authentication": "predefinedCredentialType",
+                    "nodeCredentialType": "openRouterApi",
+                    "sendBody": True, "specifyBody": "json",
+                    "jsonBody": (
+                        "={{ JSON.stringify({model: 'openai/gpt-4o-mini', messages: [\n"
+                        "  {role: 'system', content: 'Ты — переранжировщик результатов поиска. Тебе дан "
+                        "вопрос и ' + $json.top_ids.length + ' кандидатов-отрывков, пронумерованных 1..' "
+                        "+ $json.top_ids.length + '. Переупорядочи номера кандидатов от самого "
+                        "релевантного вопросу к наименее релевантному. Ответь СТРОГО JSON-массивом чисел "
+                        "— перестановкой всех номеров, без пояснений.'},\n"
+                        "  {role: 'user', content: 'Вопрос: ' + $json.question + '\\n\\nКандидаты:\\n' "
+                        "+ $json.candidates_text}\n"
+                        "]}) }}"
+                    ),
+                    "options": {"response": {"response": {"neverError": True}}, "timeout": 90000},
+                },
+                "credentials": OPENROUTER_CRED,
+            },
+            {
+                "id": "parse", "name": "Разбор ответа реранкера + итог",
+                "type": "n8n-nodes-base.code", "typeVersion": 2,
+                "position": [780, 0],
+                "parameters": {
+                    "jsCode": (
+                        "const d = $('RRF fusion (hybrid)').first().json;\n"
+                        "const resp = $input.first().json;\n"
+                        "let content = null; try { content = resp.choices[0].message.content; } catch(e) {}\n"
+                        "let order = null;\n"
+                        "if (content) {\n"
+                        "  const m = content.match(/\\[[\\d,\\s]+\\]/);\n"
+                        "  if (m) { try { const parsed = JSON.parse(m[0]); const n = d.top_ids.length;\n"
+                        "    const isPerm = parsed.length===n && new Set(parsed).size===n && "
+                        "parsed.every(x=>x>=1&&x<=n);\n"
+                        "    if (isPerm) order = parsed; } catch(e) {} }\n"
+                        "}\n"
+                        "let rerankedIds = d.top_ids; let parseOk = false;\n"
+                        "if (order) { rerankedIds = order.map(i => d.top_ids[i-1]); parseOk = true; }\n"
+                        "function rankOf(list, id) { const i = list.indexOf(id); return i===-1 ? null : i+1; }\n"
+                        "const rHybrid = rankOf(d.hybrid_rank, d.gold_doc_id);\n"
+                        "const rReranked = rankOf(rerankedIds, d.gold_doc_id);\n"
+                        "const summary = `Вопрос: ${d.question}\\n` +\n"
+                        "  `Эталонный документ: ${d.gold_doc_id}\\n\\n` +\n"
+                        "  `keyword: ранг эталона = ${rankOf(d.keyword_rank, d.gold_doc_id) ?? 'не найден'} "
+                        "(из ${d.keyword_rank.length})\\n` +\n"
+                        "  `vector:  ранг эталона = ${rankOf(d.vector_rank, d.gold_doc_id) ?? 'не найден'} "
+                        "(из ${d.vector_rank.length})\\n` +\n"
+                        "  `hybrid (RRF): ранг эталона = ${rHybrid ?? 'не найден'} (из ${d.hybrid_rank.length})\\n` +\n"
+                        "  `hybrid + LLM-реранкер: ранг эталона = ${rReranked ?? ('не входил в top-' + "
+                        "d.top_ids.length)} (parse_ok=${parseOk})\\n\\n` +\n"
+                        "  `top-${d.top_ids.length} до реранка: ${d.top_ids.join(', ')}\\n` +\n"
+                        "  `top-${d.top_ids.length} после реранка: ${rerankedIds.join(', ')}`;\n"
+                        "return [{json: {...d, reranked_ids: rerankedIds, parse_ok: parseOk, summary}}];"
+                    ),
+                },
+            },
+            {
+                "id": "res", "name": "Result screen",
+                "type": "n8n-nodes-base.form", "typeVersion": 1,
+                "position": [1040, 0],
+                "parameters": {
+                    "operation": "completion", "respondWith": "text",
+                    "completionTitle": "Итог поиска", "completionMessage": "={{ $json.summary }}",
+                    "options": {"appendAttribution": False}},
+            },
+        ],
+        "connections": {
+            "Вопрос + корпус с эмбеддингами": {"main": [[{"node": "Keyword overlap", "type": "main", "index": 0}]]},
+            "Keyword overlap": {"main": [[{"node": "Embed query (OpenRouter)", "type": "main", "index": 0}]]},
+            "Embed query (OpenRouter)": {"main": [[{"node": "Cosine ranking (vector)", "type": "main", "index": 0}]]},
+            "Cosine ranking (vector)": {"main": [[{"node": "RRF fusion (hybrid)", "type": "main", "index": 0}]]},
+            "RRF fusion (hybrid)": {"main": [[{"node": "LLM-реранкер (gpt-4o-mini)", "type": "main", "index": 0}]]},
+            "LLM-реранкер (gpt-4o-mini)": {"main": [[{"node": "Разбор ответа реранкера + итог", "type": "main", "index": 0}]]},
+            "Разбор ответа реранкера + итог": {"main": [[{"node": "Result screen", "type": "main", "index": 0}]]},
+        },
+        "settings": {"executionOrder": "v1"},
+    }
+
+
 WORKFLOWS = {
     "raw-openrouter.json": raw_openrouter_workflow,
     "case1-vector.json": case1_vector_workflow,
     "case4-multimodal.json": case4_multimodal_workflow,
+    "case2-chunking.json": case2_chunking_workflow,
+    "case3-search.json": case3_search_workflow,
 }
 
 

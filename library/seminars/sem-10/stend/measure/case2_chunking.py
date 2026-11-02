@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""Кейс 2 — v1 (нарезка фиксированным размером) против v2 (по структуре предложений)
-на реальных контекстах SberQuAD с известным answer_start/answer_end.
+"""Кейс 2 — четыре версии нарезки документа на реальных контекстах SberQuAD с известным
+answer_start/answer_end: v1 (фиксированный размер), v2 (по структуре предложений),
+v3 (по границам слов — не рвёт слово, но не знает о предложении), v4 (фиксированный
+размер с перекрытием — закрывает честный открытый пункт прежнего замера: перекрытие
+не было проверено ни на одном прогоне).
 
 Метрика: доля вопросов, для которых полный текст эталонного ответа оказывается
 целиком в ОДНОМ куске (не разорван границей) — считается структурно (без LLM/API).
@@ -12,6 +15,7 @@ import pandas as pd
 
 CHUNK_SIZE = 180  # символов — заголовочное значение свода (полный sweep — ниже в summary)
 OVERLAP = 0
+OVERLAP_FRAC_V4 = 0.15  # доля size, используемая версией 4 (перекрытие)
 
 df = pd.read_parquet("sberquad_val.parquet")
 by_ctx = {}
@@ -90,6 +94,44 @@ def chunk_structural(text, target=CHUNK_SIZE):
     return chunks
 
 
+WORD_SPLIT = re.compile(r"\S+")
+
+
+def chunk_word_boundary(text, size=CHUNK_SIZE):
+    """Режет по границам слов: слово целиком никогда не рвётся, но граница предложения
+    не учитывается вовсе — дешёвый шаг вверх от голого счёта символов."""
+    words = list(WORD_SPLIT.finditer(text))
+    if not words:
+        return [(0, len(text), text)]
+    chunks = []
+    cur_start = words[0].start()
+    cur_end = cur_start
+    cur_len = 0
+    for m in words:
+        w = m.group()
+        added = len(w) if cur_len == 0 else len(w) + 1
+        if cur_len and cur_len + added > size:
+            chunks.append([cur_start, cur_end])
+            cur_start = m.start()
+            cur_len = len(w)
+        else:
+            cur_len += added
+        cur_end = m.end()
+    chunks.append([cur_start, cur_end])
+    # куски делаются смежными (конец = начало следующего), как в chunk_fixed/chunk_structural —
+    # иначе пробел между словами выпадает из всех кусков и искажает замер на границе
+    for i in range(len(chunks) - 1):
+        chunks[i][1] = chunks[i + 1][0]
+    chunks[-1][1] = len(text)
+    return [(s, e, text[s:e]) for s, e in chunks]
+
+
+def chunk_fixed_overlap(text, size=CHUNK_SIZE, frac=OVERLAP_FRAC_V4):
+    """Та же резка по счёту символов, что v1, но с перекрытием между соседними кусками."""
+    overlap = round(size * frac)
+    return chunk_fixed(text, size=size, overlap=overlap)
+
+
 def answer_intact(chunks, a_start, a_end):
     """Есть ли ровно один кусок, целиком содержащий [a_start, a_end)?"""
     for (s, e, _t) in chunks:
@@ -98,70 +140,82 @@ def answer_intact(chunks, a_start, a_end):
     return False
 
 
+VERSIONS = {
+    "v1": lambda ctx, sz: chunk_fixed(ctx, size=sz),
+    "v2": lambda ctx, sz: chunk_structural(ctx, target=sz),
+    "v3": lambda ctx, sz: chunk_word_boundary(ctx, size=sz),
+    "v4": lambda ctx, sz: chunk_fixed_overlap(ctx, size=sz),
+}
+
 sweep = []
 for sz in [120, 180, 220, 300, 450]:
-    n_t = n_v1 = n_v2 = 0
+    n_t = 0
+    n_broken = {k: 0 for k in VERSIONS}
     for ctx, qs in sample:
-        fc = chunk_fixed(ctx, size=sz)
-        sc = chunk_structural(ctx, target=sz)
+        chunks_by_v = {k: f(ctx, sz) for k, f in VERSIONS.items()}
         for q in qs:
             a_s = q["answer_start"]; a_e = a_s + len(q["answer"])
             if a_e > len(ctx):
                 continue
             n_t += 1
-            if not answer_intact(fc, a_s, a_e):
-                n_v1 += 1
-            if not answer_intact(sc, a_s, a_e):
-                n_v2 += 1
-    sweep.append({"chunk_size_chars": sz, "n_questions": n_t,
-                   "v1_broken": n_v1, "v1_broken_rate": round(n_v1 / n_t, 3),
-                   "v2_broken": n_v2, "v2_broken_rate": round(n_v2 / n_t, 3)})
+            for k, chunks in chunks_by_v.items():
+                if not answer_intact(chunks, a_s, a_e):
+                    n_broken[k] += 1
+    row = {"chunk_size_chars": sz, "n_questions": n_t}
+    for k in VERSIONS:
+        row[f"{k}_broken"] = n_broken[k]
+        row[f"{k}_broken_rate"] = round(n_broken[k] / n_t, 3)
+    sweep.append(row)
 
 results = []
 n_total = 0
-n_v1_broken = 0
-n_v2_broken = 0
+n_broken_headline = {k: 0 for k in VERSIONS}
 for ctx, qs in sample:
-    fixed_chunks = chunk_fixed(ctx)
-    struct_chunks = chunk_structural(ctx)
+    chunks_by_v = {k: f(ctx, CHUNK_SIZE) for k, f in VERSIONS.items()}
     for q in qs:
         a_start = q["answer_start"]
         a_end = a_start + len(q["answer"])
         if a_end > len(ctx):
             continue
-        v1_ok = answer_intact(fixed_chunks, a_start, a_end)
-        v2_ok = answer_intact(struct_chunks, a_start, a_end)
         n_total += 1
-        if not v1_ok:
-            n_v1_broken += 1
-        if not v2_ok:
-            n_v2_broken += 1
+        ok_by_v = {}
+        for k, chunks in chunks_by_v.items():
+            ok = answer_intact(chunks, a_start, a_end)
+            ok_by_v[k] = ok
+            if not ok:
+                n_broken_headline[k] += 1
         results.append({
             "question": q["question"],
             "answer": q["answer"],
             "context_len": len(ctx),
-            "n_chunks_v1": len(fixed_chunks),
-            "n_chunks_v2": len(struct_chunks),
-            "v1_answer_intact": v1_ok,
-            "v2_answer_intact": v2_ok,
+            **{f"n_chunks_{k}": len(chunks_by_v[k]) for k in VERSIONS},
+            **{f"{k}_answer_intact": ok_by_v[k] for k in VERSIONS},
         })
+
+VERSION_LABELS = {
+    "v1": "резать по счёту символов",
+    "v2": "резать по границам предложений",
+    "v3": "резать по границам слов",
+    "v4": "резать по счёту символов с перекрытием",
+}
 
 summary = {
     "source": "SberQuAD (kuznetsoffandrey/sberquad), validation split, уникальные контексты >=500 символов",
     "offset_mismatch_in_raw_dataset": f"{n_offset_mismatch}/{n_offset_total} ({n_offset_mismatch/n_offset_total:.1%})",
     "n_documents": len(sample),
     "headline_chunk_size_chars": CHUNK_SIZE,
-    "overlap_chars": OVERLAP,
+    "overlap_chars_v1_v2_v3": 0,
+    "overlap_chars_v4": round(CHUNK_SIZE * OVERLAP_FRAC_V4),
+    "overlap_frac_v4": OVERLAP_FRAC_V4,
     "n_questions": n_total,
-    "v1_fixed_size": {
-        "answer_intact_count": n_total - n_v1_broken,
-        "answer_broken_count": n_v1_broken,
-        "answer_broken_rate": round(n_v1_broken / n_total, 3) if n_total else None,
-    },
-    "v2_structural": {
-        "answer_intact_count": n_total - n_v2_broken,
-        "answer_broken_count": n_v2_broken,
-        "answer_broken_rate": round(n_v2_broken / n_total, 3) if n_total else None,
+    "versions": {
+        k: {
+            "label": VERSION_LABELS[k],
+            "answer_intact_count": n_total - n_broken_headline[k],
+            "answer_broken_count": n_broken_headline[k],
+            "answer_broken_rate": round(n_broken_headline[k] / n_total, 3) if n_total else None,
+        }
+        for k in VERSIONS
     },
     "sensitivity_sweep_by_chunk_size": sweep,
 }

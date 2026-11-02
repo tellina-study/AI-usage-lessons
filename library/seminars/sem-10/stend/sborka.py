@@ -247,13 +247,16 @@ def case4_multimodal_workflow():
 
 
 def case2_chunking_workflow():
-    """Сценарий 4 — демо-экран Кейса 2: нарезка документа фиксированным размером
-    против нарезки по границам предложений, на РЕАЛЬНОМ документе SberQuAD (не
-    придуманном тексте) — тот же документ/вопрос/ответ, что `measure/case2_chunking.py`
-    использует в своём sweep (seed=7, CHUNK_SIZE=180), только один конкретный пример
-    вместо агрегата по 60 документам. JS внутри Code-узлов — прямой порт
-    `chunk_fixed`/`chunk_structural`/`answer_intact` из `case2_chunking.py`, не
-    самостоятельная реализация (не должно расходиться с тем, что реально считалось)."""
+    """Сценарий 4 — демо-экран Кейса 2: четыре версии нарезки документа на РЕАЛЬНОМ
+    документе SberQuAD (не придуманном тексте) — тот же документ/вопрос/ответ, что
+    `measure/case2_chunking.py` использует в своём sweep (seed=7, CHUNK_SIZE=180),
+    только один конкретный пример вместо агрегата по 60 документам. JS внутри
+    Code-узлов — прямой порт `chunk_fixed`/`chunk_structural`/`chunk_word_boundary`/
+    `chunk_fixed_overlap`/`answer_intact` из `case2_chunking.py`, не самостоятельная
+    реализация (не должно расходиться с тем, что реально считалось). v3/v4 добавлены
+    2026-11-02 по прямому указанию владельца курса — закрывают открытый пункт прежнего
+    замера (перекрытие не проверялось) и дешёвую альтернативу голому счёту символов
+    (границы слов)."""
     webhook_id = "s10-case2-chunking"
     js_chunk_fixed = (
         "function chunkFixed(text, size, overlap) {\n"
@@ -265,6 +268,24 @@ def case2_chunking_workflow():
         "    i += size - overlap;\n"
         "  }\n"
         "  return chunks;\n"
+        "}\n"
+    )
+    js_chunk_word_boundary = (
+        "function chunkWordBoundary(text, size) {\n"
+        "  const re = /\\S+/g; let m; const words = [];\n"
+        "  while ((m = re.exec(text)) !== null) { words.push({start: m.index, end: m.index + m[0].length, text: m[0]}); }\n"
+        "  if (words.length === 0) return [{start: 0, end: text.length, text: text}];\n"
+        "  const spans = []; let curStart = words[0].start, curEnd = curStart, curLen = 0;\n"
+        "  for (const w of words) {\n"
+        "    const added = curLen === 0 ? w.text.length : w.text.length + 1;\n"
+        "    if (curLen && curLen + added > size) { spans.push([curStart, curEnd]); curStart = w.start; curLen = w.text.length; }\n"
+        "    else { curLen += added; }\n"
+        "    curEnd = w.end;\n"
+        "  }\n"
+        "  spans.push([curStart, curEnd]);\n"
+        "  for (let i = 0; i < spans.length - 1; i++) spans[i][1] = spans[i + 1][0];\n"
+        "  spans[spans.length - 1][1] = text.length;\n"
+        "  return spans.map(([s, e]) => ({start: s, end: e, text: text.slice(s, e)}));\n"
         "}\n"
     )
     js_answer_intact = (
@@ -341,9 +362,42 @@ def case2_chunking_workflow():
                 },
             },
             {
-                "id": "compare", "name": "Сравнение: попал ли ответ целиком в один кусок",
+                "id": "word", "name": "Нарезка по границам слов",
                 "type": "n8n-nodes-base.code", "typeVersion": 2,
                 "position": [300, 0],
+                "parameters": {
+                    "jsCode": (
+                        "const d = $input.first().json;\n"
+                        + js_chunk_word_boundary + js_answer_intact +
+                        "const chunks = chunkWordBoundary(d.document, d.chunk_size);\n"
+                        "const aStart = d.answer_start;\n"
+                        "const aEnd = aStart + d.answer.length;\n"
+                        "const intact = answerIntact(chunks, aStart, aEnd);\n"
+                        "return [{json: {...d, chunks_v3: chunks, v3_intact: intact}}];"
+                    ),
+                },
+            },
+            {
+                "id": "overlap", "name": "Нарезка фиксированным размером с перекрытием",
+                "type": "n8n-nodes-base.code", "typeVersion": 2,
+                "position": [560, 0],
+                "parameters": {
+                    "jsCode": (
+                        "const d = $input.first().json;\n"
+                        + js_chunk_fixed + js_answer_intact +
+                        "const overlap = Math.round(d.chunk_size * 0.15);\n"
+                        "const chunks = chunkFixed(d.document, d.chunk_size, overlap);\n"
+                        "const aStart = d.answer_start;\n"
+                        "const aEnd = aStart + d.answer.length;\n"
+                        "const intact = answerIntact(chunks, aStart, aEnd);\n"
+                        "return [{json: {...d, chunks_v4: chunks, v4_intact: intact, overlap_chars_v4: overlap}}];"
+                    ),
+                },
+            },
+            {
+                "id": "compare", "name": "Сравнение: попал ли ответ целиком в один кусок",
+                "type": "n8n-nodes-base.code", "typeVersion": 2,
+                "position": [820, 0],
                 "parameters": {
                     "jsCode": (
                         "const d = $input.first().json;\n"
@@ -351,13 +405,18 @@ def case2_chunking_workflow():
                         "  return chunks.map((c,i)=>`  [${i}] (${c.start}-${c.end}): \"${c.text.replace(/\\n/g,' ').slice(0,70)}"
                         "${c.text.length>70?'…':''}\"`).join('\\n');\n"
                         "}\n"
+                        "function verdict(ok) { return ok ? 'ЦЕЛИКОМ в одном куске' : 'РАЗОРВАН границей куска'; }\n"
                         "const summary = `Документ (${d.document.length} симв.), размер куска = ${d.chunk_size}\\n` +\n"
                         "  `Вопрос: ${d.question}\\n` +\n"
                         "  `Эталонный ответ: \"${d.answer}\" (позиция ${d.answer_start}-${d.answer_start + d.answer.length})\\n\\n` +\n"
                         "  `v1 — фиксированный размер (${d.chunks_v1.length} куска):\\n${fmt(d.chunks_v1)}\\n` +\n"
-                        "  `→ ответ ${d.v1_intact ? 'ЦЕЛИКОМ в одном куске' : 'РАЗОРВАН границей куска'}\\n\\n` +\n"
+                        "  `→ ответ ${verdict(d.v1_intact)}\\n\\n` +\n"
                         "  `v2 — по границам предложений (${d.chunks_v2.length} куска):\\n${fmt(d.chunks_v2)}\\n` +\n"
-                        "  `→ ответ ${d.v2_intact ? 'ЦЕЛИКОМ в одном куске' : 'РАЗОРВАН границей куска'}`;\n"
+                        "  `→ ответ ${verdict(d.v2_intact)}\\n\\n` +\n"
+                        "  `v3 — по границам слов (${d.chunks_v3.length} куска):\\n${fmt(d.chunks_v3)}\\n` +\n"
+                        "  `→ ответ ${verdict(d.v3_intact)}\\n\\n` +\n"
+                        "  `v4 — фиксированный размер с перекрытием ${d.overlap_chars_v4} симв. (${d.chunks_v4.length} куска):\\n${fmt(d.chunks_v4)}\\n` +\n"
+                        "  `→ ответ ${verdict(d.v4_intact)}`;\n"
                         "return [{json: {...d, summary}}];"
                     ),
                 },
@@ -365,7 +424,7 @@ def case2_chunking_workflow():
             {
                 "id": "res", "name": "Result screen",
                 "type": "n8n-nodes-base.form", "typeVersion": 1,
-                "position": [540, 0],
+                "position": [1080, 0],
                 "parameters": {
                     "operation": "completion", "respondWith": "text",
                     "completionTitle": "Сравнение нарезки", "completionMessage": "={{ $json.summary }}",
@@ -375,7 +434,9 @@ def case2_chunking_workflow():
         "connections": {
             "Документ целиком": {"main": [[{"node": "Нарезка фиксированным размером", "type": "main", "index": 0}]]},
             "Нарезка фиксированным размером": {"main": [[{"node": "Нарезка по границам предложений", "type": "main", "index": 0}]]},
-            "Нарезка по границам предложений": {"main": [[{"node": "Сравнение: попал ли ответ целиком в один кусок", "type": "main", "index": 0}]]},
+            "Нарезка по границам предложений": {"main": [[{"node": "Нарезка по границам слов", "type": "main", "index": 0}]]},
+            "Нарезка по границам слов": {"main": [[{"node": "Нарезка фиксированным размером с перекрытием", "type": "main", "index": 0}]]},
+            "Нарезка фиксированным размером с перекрытием": {"main": [[{"node": "Сравнение: попал ли ответ целиком в один кусок", "type": "main", "index": 0}]]},
             "Сравнение: попал ли ответ целиком в один кусок": {"main": [[{"node": "Result screen", "type": "main", "index": 0}]]},
         },
         "settings": {"executionOrder": "v1"},

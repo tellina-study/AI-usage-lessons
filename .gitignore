@@ -52,6 +52,12 @@ library/lectures/*/rendered/snapshots/
 # Seminar rendered snapshots — same convention, derived ephemeral, regeneratable from PPTX
 library/seminars/*/rendered/snapshots/
 
+# Seminar measurement working copies (stend/README.md "Как пересобрать") — ephemeral,
+# canonical copies live in stend/corpus/ and stend/raw/
+library/seminars/*/stend/measure/corpus_case*.json
+library/seminars/*/stend/measure/case*-results.json
+library/seminars/*/stend/measure/*_execution.json
+
 # Office temp lock files
 ~$*
 library/lectures/*/rendered/~$*

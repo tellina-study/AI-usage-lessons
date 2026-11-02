@@ -3,70 +3,70 @@
     "10": {
       "n_questions": 10,
       "stuffing": {
-        "accuracy": 0.8,
-        "avg_prompt_tokens": 2013.2,
-        "avg_cost_usd": 0.00019643999999999998,
-        "avg_wall_s": 1.6620000000000001
+        "accuracy": 0.7,
+        "avg_prompt_tokens": 2118.6,
+        "avg_cost_usd": 0.00018867,
+        "avg_wall_s": 1.3290000000000002
       },
       "keyword": {
-        "accuracy": 0.9,
-        "retrieval_recall@1": 1.0,
-        "avg_prompt_tokens": 256.9,
-        "avg_cost_usd": 4.7715e-05,
-        "avg_wall_s": 1.6740000000000002
+        "accuracy": 0.5,
+        "retrieval_recall@1": 0.8,
+        "avg_prompt_tokens": 280.8,
+        "avg_cost_usd": 4.836e-05,
+        "avg_wall_s": 1.534
       },
       "vector": {
-        "accuracy": 0.9,
+        "accuracy": 0.6,
         "retrieval_recall@1": 1.0,
-        "avg_prompt_tokens": 256.9,
-        "avg_cost_usd": 4.7774999999999996e-05,
-        "avg_wall_s": 1.532
+        "avg_prompt_tokens": 271.6,
+        "avg_cost_usd": 4.86e-05,
+        "avg_wall_s": 1.761
       }
     },
     "50": {
       "n_questions": 10,
       "stuffing": {
-        "accuracy": 0.6,
-        "avg_prompt_tokens": 9657.2,
-        "avg_cost_usd": 0.00081,
-        "avg_wall_s": 2.176
+        "accuracy": 0.7,
+        "avg_prompt_tokens": 9762.6,
+        "avg_cost_usd": 0.0008091900000000001,
+        "avg_wall_s": 1.335
       },
       "keyword": {
-        "accuracy": 0.9,
-        "retrieval_recall@1": 1.0,
-        "avg_prompt_tokens": 256.9,
-        "avg_cost_usd": 4.8495e-05,
-        "avg_wall_s": 1.338
+        "accuracy": 0.5,
+        "retrieval_recall@1": 0.8,
+        "avg_prompt_tokens": 280.8,
+        "avg_cost_usd": 4.836e-05,
+        "avg_wall_s": 1.4600000000000002
       },
       "vector": {
-        "accuracy": 0.8,
+        "accuracy": 0.7,
         "retrieval_recall@1": 1.0,
-        "avg_prompt_tokens": 256.9,
-        "avg_cost_usd": 4.9155e-05,
-        "avg_wall_s": 1.6670000000000003
+        "avg_prompt_tokens": 271.6,
+        "avg_cost_usd": 4.818e-05,
+        "avg_wall_s": 1.736
       }
     },
     "200": {
       "n_questions": 10,
       "stuffing": {
-        "accuracy": 0.4,
-        "avg_prompt_tokens": 39411.2,
-        "avg_cost_usd": 0.00327678,
-        "avg_wall_s": 3.2980000000000005
+        "accuracy": 0.7,
+        "avg_prompt_tokens": 39516.6,
+        "avg_cost_usd": 0.0032040899999999997,
+        "avg_wall_s": 1.457
       },
       "keyword": {
-        "accuracy": 0.7,
-        "retrieval_recall@1": 1.0,
-        "avg_prompt_tokens": 256.9,
-        "avg_cost_usd": 4.7115e-05,
-        "avg_wall_s": 1.3190000000000002
+        "accuracy": 0.4,
+        "retrieval_recall@1": 0.8,
+        "avg_prompt_tokens": 280.8,
+        "avg_cost_usd": 5.0100000000000005e-05,
+        "avg_wall_s": 1.431
       },
       "vector": {
-        "accuracy": 0.9,
+        "accuracy": 0.6,
         "retrieval_recall@1": 1.0,
-        "avg_prompt_tokens": 256.9,
-        "avg_cost_usd": 4.6455e-05,
-        "avg_wall_s": 2.178
+        "avg_prompt_tokens": 271.6,
+        "avg_cost_usd": 4.812e-05,
+        "avg_wall_s": 1.455
       }
     },
     "500": {
@@ -75,21 +75,21 @@
         "accuracy": 0.0,
         "avg_prompt_tokens": 0.0,
         "avg_cost_usd": 0.0,
-        "avg_wall_s": 1.238
+        "avg_wall_s": 1.222
       },
       "keyword": {
-        "accuracy": 0.8,
-        "retrieval_recall@1": 1.0,
-        "avg_prompt_tokens": 256.9,
-        "avg_cost_usd": 4.6995e-05,
-        "avg_wall_s": 1.6350000000000002
+        "accuracy": 0.5,
+        "retrieval_recall@1": 0.8,
+        "avg_prompt_tokens": 280.8,
+        "avg_cost_usd": 4.998e-05,
+        "avg_wall_s": 1.9900000000000002
       },
       "vector": {
         "accuracy": 0.7,
-        "retrieval_recall@1": 1.0,
-        "avg_prompt_tokens": 256.9,
-        "avg_cost_usd": 4.9635e-05,
-        "avg_wall_s": 1.331
+        "retrieval_recall@1": 0.9,
+        "avg_prompt_tokens": 272.0,
+        "avg_cost_usd": 4.896e-05,
+        "avg_wall_s": 1.643
       }
     }
   },
@@ -97,1208 +97,1208 @@
     {
       "corpus_size": 10,
       "qid": "q1",
-      "question": "для каких частиц биологическая эффективность прямо связана с линейной передачей энергии данного типа частиц",
-      "reference_answer": "заряженных",
+      "question": "Как называется круг кровообращения, функционирующий через легкие?",
+      "reference_answer": "малый",
       "gold_doc_id": "needle-1",
       "stuffing": {
-        "model_answer": "Для заряженных частиц.",
+        "model_answer": "Малый круг кровообращения.",
         "correct": true,
-        "prompt_tokens": 2018,
-        "completion_tokens": 7,
-        "cost_usd": 0.0003069,
-        "wall_s": 2.27,
-        "exec_id": "2147"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-1",
-        "retrieved_correct": true,
-        "keyword_score": 10,
-        "model_answer": "Для заряженных частиц.",
-        "correct": true,
-        "prompt_tokens": 270,
-        "completion_tokens": 7,
-        "cost_usd": 4.47e-05,
-        "wall_s": 1.11,
-        "exec_id": "2148"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-1",
-        "retrieved_correct": true,
-        "cosine_score": 0.5401189704918439,
-        "model_answer": "Для заряженных частиц.",
-        "correct": true,
-        "prompt_tokens": 270,
-        "completion_tokens": 7,
-        "cost_usd": 4.47e-05,
-        "wall_s": 1.11,
-        "exec_id": "2149"
-      }
-    },
-    {
-      "corpus_size": 10,
-      "qid": "q2",
-      "question": "В каком году Шостакович покинул школу Гляссера?",
-      "reference_answer": "в 1918",
-      "gold_doc_id": "needle-2",
-      "stuffing": {
-        "model_answer": "В 1918 году.",
-        "correct": true,
-        "prompt_tokens": 2013,
-        "completion_tokens": 6,
-        "cost_usd": 0.00030555,
-        "wall_s": 1.13,
-        "exec_id": "2150"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-2",
-        "retrieved_correct": true,
-        "keyword_score": 5,
-        "model_answer": "В 1918 году.",
-        "correct": true,
-        "prompt_tokens": 267,
-        "completion_tokens": 6,
-        "cost_usd": 4.365e-05,
-        "wall_s": 2.19,
-        "exec_id": "2151"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-2",
-        "retrieved_correct": true,
-        "cosine_score": 0.5652319600094645,
-        "model_answer": "Шостакович покинул школу Гляссера в 1918 году.",
-        "correct": true,
-        "prompt_tokens": 267,
-        "completion_tokens": 19,
-        "cost_usd": 5.145e-05,
-        "wall_s": 2.16,
-        "exec_id": "2152"
-      }
-    },
-    {
-      "corpus_size": 10,
-      "qid": "q3",
-      "question": "Какие свойства присущи волоскам шерсти белого медведя?",
-      "reference_answer": "теплоизоляционные",
-      "gold_doc_id": "needle-3",
-      "stuffing": {
-        "model_answer": "Шерсть белого медведя лишена пигментной окраски, шерстинки полые и полупрозрачные, что придаёт шерсти теплоизоляционные свойства.",
-        "correct": true,
-        "prompt_tokens": 2011,
-        "completion_tokens": 40,
-        "cost_usd": 0.00018165,
-        "wall_s": 2.17,
-        "exec_id": "2153"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-3",
-        "retrieved_correct": true,
-        "keyword_score": 4,
-        "model_answer": "Волоски шерсти белого медведя полупрозрачные, пропускают только ультрафиолетовые лучи и лишены пигментной окраски.",
-        "correct": false,
-        "prompt_tokens": 255,
-        "completion_tokens": 38,
-        "cost_usd": 6.105e-05,
-        "wall_s": 2.17,
-        "exec_id": "2154"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-3",
-        "retrieved_correct": true,
-        "cosine_score": 0.6904061727997431,
-        "model_answer": "Волоски шерсти белого медведя полые, полупрозрачные, пропускают только ультрафиолетовые лучи и придают шерсти теплоизоляционные свойства.",
-        "correct": true,
-        "prompt_tokens": 255,
-        "completion_tokens": 41,
-        "cost_usd": 6.285e-05,
-        "wall_s": 2.17,
-        "exec_id": "2155"
-      }
-    },
-    {
-      "corpus_size": 10,
-      "qid": "q4",
-      "question": "Что разделяет сердце земноводных?",
-      "reference_answer": "межпредсердная перегородка",
-      "gold_doc_id": "needle-4",
-      "stuffing": {
-        "model_answer": "У земноводных сердце трёхкамерное с межпредсердной перегородкой.",
-        "correct": false,
-        "prompt_tokens": 2005,
-        "completion_tokens": 22,
-        "cost_usd": 0.00016995,
-        "wall_s": 1.11,
-        "exec_id": "2156"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-4",
-        "retrieved_correct": true,
-        "keyword_score": 2,
-        "model_answer": "Межпредсердная перегородка.",
-        "correct": true,
-        "prompt_tokens": 268,
+        "prompt_tokens": 2113,
         "completion_tokens": 10,
-        "cost_usd": 4.62e-05,
-        "wall_s": 1.12,
-        "exec_id": "2157"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-4",
-        "retrieved_correct": true,
-        "cosine_score": 0.4694115821803972,
-        "model_answer": "Межпредсердная перегородка.",
-        "correct": true,
-        "prompt_tokens": 268,
-        "completion_tokens": 10,
-        "cost_usd": 4.62e-05,
-        "wall_s": 2.16,
-        "exec_id": "2158"
-      }
-    },
-    {
-      "corpus_size": 10,
-      "qid": "q5",
-      "question": "Для чего служит легкое водяным змеям?",
-      "reference_answer": "служит плавательным пузырём",
-      "gold_doc_id": "needle-5",
-      "stuffing": {
-        "model_answer": "Легкое водяным змеям служит плавательным пузырём.",
-        "correct": true,
-        "prompt_tokens": 2009,
-        "completion_tokens": 17,
-        "cost_usd": 0.00016755,
-        "wall_s": 1.12,
-        "exec_id": "2159"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-5",
-        "retrieved_correct": true,
-        "keyword_score": 3,
-        "model_answer": "Легкое водяным змеям служит плавательным пузырём.",
-        "correct": true,
-        "prompt_tokens": 263,
-        "completion_tokens": 17,
-        "cost_usd": 4.965e-05,
-        "wall_s": 1.12,
-        "exec_id": "2160"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-5",
-        "retrieved_correct": true,
-        "cosine_score": 0.43719335412406773,
-        "model_answer": "Легкое водяным змеям служит плавательным пузырём.",
-        "correct": true,
-        "prompt_tokens": 263,
-        "completion_tokens": 17,
-        "cost_usd": 4.965e-05,
-        "wall_s": 1.11,
-        "exec_id": "2161"
-      }
-    },
-    {
-      "corpus_size": 10,
-      "qid": "q6",
-      "question": "Какие культуры не давали урожаев у китайцев",
-      "reference_answer": "пшеница, просо и рис",
-      "gold_doc_id": "needle-6",
-      "stuffing": {
-        "model_answer": "нет информации",
-        "correct": false,
-        "prompt_tokens": 2007,
-        "completion_tokens": 2,
-        "cost_usd": 0.00015825,
-        "wall_s": 1.12,
-        "exec_id": "2162"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-6",
-        "retrieved_correct": true,
-        "keyword_score": 3,
-        "model_answer": "Пшеница, просо и рис.",
-        "correct": true,
-        "prompt_tokens": 261,
-        "completion_tokens": 10,
-        "cost_usd": 4.515e-05,
-        "wall_s": 2.16,
-        "exec_id": "2163"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-6",
-        "retrieved_correct": true,
-        "cosine_score": 0.5863709610415989,
-        "model_answer": "Пшеница, просо и рис.",
-        "correct": true,
-        "prompt_tokens": 261,
-        "completion_tokens": 10,
-        "cost_usd": 4.515e-05,
-        "wall_s": 1.12,
-        "exec_id": "2164"
-      }
-    },
-    {
-      "corpus_size": 10,
-      "qid": "q7",
-      "question": "В соответствии с чем новая теория требовала меньшей скорости в более плотной среде?",
-      "reference_answer": "со здравым смыслом",
-      "gold_doc_id": "needle-7",
-      "stuffing": {
-        "model_answer": "Новая теория требовала меньшей скорости в более плотной среде в соответствии со здравым смыслом.",
-        "correct": true,
-        "prompt_tokens": 2014,
-        "completion_tokens": 22,
-        "cost_usd": 0.0001713,
-        "wall_s": 2.16,
-        "exec_id": "2165"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-7",
-        "retrieved_correct": true,
-        "keyword_score": 8,
-        "model_answer": "В соответствии со здравым смыслом.",
-        "correct": true,
-        "prompt_tokens": 207,
-        "completion_tokens": 8,
-        "cost_usd": 3.585e-05,
-        "wall_s": 2.15,
-        "exec_id": "2166"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-7",
-        "retrieved_correct": true,
-        "cosine_score": 0.4619695316198367,
-        "model_answer": "В соответствии со здравым смыслом.",
-        "correct": true,
-        "prompt_tokens": 207,
-        "completion_tokens": 8,
-        "cost_usd": 3.585e-05,
-        "wall_s": 2.17,
-        "exec_id": "2167"
-      }
-    },
-    {
-      "corpus_size": 10,
-      "qid": "q8",
-      "question": "Что помимо инвестиционных товаров и инструментов обуславливает процесс инвестирования?",
-      "reference_answer": "инвестиционные услуги",
-      "gold_doc_id": "needle-8",
-      "stuffing": {
-        "model_answer": "Инвестиционные услуги обуславливают процесс реального и финансового инвестирования.",
-        "correct": true,
-        "prompt_tokens": 2014,
-        "completion_tokens": 18,
-        "cost_usd": 0.0001689,
-        "wall_s": 2.16,
-        "exec_id": "2168"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-8",
-        "retrieved_correct": true,
-        "keyword_score": 2,
-        "model_answer": "Инвестиционные услуги обуславливают процесс инвестирования.",
-        "correct": true,
-        "prompt_tokens": 181,
-        "completion_tokens": 13,
-        "cost_usd": 3.495e-05,
-        "wall_s": 2.18,
-        "exec_id": "2169"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-8",
-        "retrieved_correct": true,
-        "cosine_score": 0.5714866261314977,
-        "model_answer": "Инвестиционные услуги.",
-        "correct": true,
-        "prompt_tokens": 181,
-        "completion_tokens": 5,
-        "cost_usd": 3.015e-05,
-        "wall_s": 1.11,
-        "exec_id": "2170"
-      }
-    },
-    {
-      "corpus_size": 10,
-      "qid": "q9",
-      "question": "Какой делало систему Коперника то, что в описании движения планет выбрасывался первый и самый важный эпицикл?",
-      "reference_answer": "более простой и удобной, чем птолемеевская",
-      "gold_doc_id": "needle-9",
-      "stuffing": {
-        "model_answer": "Это делало систему Коперника более простой и удобной, чем птолемеевская.",
-        "correct": true,
-        "prompt_tokens": 2027,
-        "completion_tokens": 21,
-        "cost_usd": 0.00017265,
-        "wall_s": 2.27,
-        "exec_id": "2171"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-9",
-        "retrieved_correct": true,
-        "keyword_score": 11,
-        "model_answer": "Это делало систему Коперника более простой и удобной, чем птолемеевская.",
-        "correct": true,
-        "prompt_tokens": 244,
-        "completion_tokens": 21,
-        "cost_usd": 4.92e-05,
-        "wall_s": 1.44,
-        "exec_id": "2172"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-9",
-        "retrieved_correct": true,
-        "cosine_score": 0.5951880564864049,
-        "model_answer": "Система Коперника становилась более простой и удобной.",
-        "correct": false,
-        "prompt_tokens": 244,
-        "completion_tokens": 14,
-        "cost_usd": 4.5e-05,
-        "wall_s": 1.1,
-        "exec_id": "2173"
-      }
-    },
-    {
-      "corpus_size": 10,
-      "qid": "q10",
-      "question": "Когда было основано кооперативное Содружество Федерации Манитобы?",
-      "reference_answer": "в 1932 году",
-      "gold_doc_id": "needle-10",
-      "stuffing": {
-        "model_answer": "В 1932 году.",
-        "correct": true,
-        "prompt_tokens": 2014,
-        "completion_tokens": 6,
-        "cost_usd": 0.0001617,
-        "wall_s": 1.11,
-        "exec_id": "2174"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-10",
-        "retrieved_correct": true,
-        "keyword_score": 5,
-        "model_answer": "Кооперативное Содружество Федерации Манитобы было основано в 1932 году.",
-        "correct": true,
-        "prompt_tokens": 353,
-        "completion_tokens": 23,
-        "cost_usd": 6.675e-05,
-        "wall_s": 1.1,
-        "exec_id": "2175"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-10",
-        "retrieved_correct": true,
-        "cosine_score": 0.4689290907206867,
-        "model_answer": "Кооперативное Содружество Федерации Манитобы было основано в 1932 году.",
-        "correct": true,
-        "prompt_tokens": 353,
-        "completion_tokens": 23,
-        "cost_usd": 6.675e-05,
-        "wall_s": 1.11,
-        "exec_id": "2176"
-      }
-    },
-    {
-      "corpus_size": 50,
-      "qid": "q1",
-      "question": "для каких частиц биологическая эффективность прямо связана с линейной передачей энергии данного типа частиц",
-      "reference_answer": "заряженных",
-      "gold_doc_id": "needle-1",
-      "stuffing": {
-        "model_answer": "Для заряженных частиц.",
-        "correct": true,
-        "prompt_tokens": 9662,
-        "completion_tokens": 7,
-        "cost_usd": 0.0014535,
-        "wall_s": 3.23,
-        "exec_id": "2177"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-1",
-        "retrieved_correct": true,
-        "keyword_score": 10,
-        "model_answer": "Для заряженных частиц.",
-        "correct": true,
-        "prompt_tokens": 270,
-        "completion_tokens": 7,
-        "cost_usd": 4.47e-05,
-        "wall_s": 2.18,
-        "exec_id": "2178"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-1",
-        "retrieved_correct": true,
-        "cosine_score": 0.5401189704918439,
-        "model_answer": "Для заряженных частиц.",
-        "correct": true,
-        "prompt_tokens": 270,
-        "completion_tokens": 7,
-        "cost_usd": 4.47e-05,
-        "wall_s": 1.11,
-        "exec_id": "2179"
-      }
-    },
-    {
-      "corpus_size": 50,
-      "qid": "q2",
-      "question": "В каком году Шостакович покинул школу Гляссера?",
-      "reference_answer": "в 1918",
-      "gold_doc_id": "needle-2",
-      "stuffing": {
-        "model_answer": "Шостакович покинул школу Гляссера в 1918 году.",
-        "correct": true,
-        "prompt_tokens": 9657,
-        "completion_tokens": 19,
-        "cost_usd": 0.00073995,
-        "wall_s": 2.19,
-        "exec_id": "2180"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-2",
-        "retrieved_correct": true,
-        "keyword_score": 5,
-        "model_answer": "В 1918 году.",
-        "correct": true,
-        "prompt_tokens": 267,
-        "completion_tokens": 6,
-        "cost_usd": 4.365e-05,
-        "wall_s": 1.13,
-        "exec_id": "2181"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-2",
-        "retrieved_correct": true,
-        "cosine_score": 0.5652319600094645,
-        "model_answer": "Шостакович покинул школу Гляссера в 1918 году.",
-        "correct": true,
-        "prompt_tokens": 267,
-        "completion_tokens": 19,
-        "cost_usd": 5.145e-05,
-        "wall_s": 2.15,
-        "exec_id": "2182"
-      }
-    },
-    {
-      "corpus_size": 50,
-      "qid": "q3",
-      "question": "Какие свойства присущи волоскам шерсти белого медведя?",
-      "reference_answer": "теплоизоляционные",
-      "gold_doc_id": "needle-3",
-      "stuffing": {
-        "model_answer": "Шерсть белого медведя лишена пигментной окраски, шерстинки полые и полупрозрачные, что придаёт шерсти теплоизоляционные свойства.",
-        "correct": true,
-        "prompt_tokens": 9655,
-        "completion_tokens": 40,
-        "cost_usd": 0.00075225,
-        "wall_s": 2.17,
-        "exec_id": "2183"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-3",
-        "retrieved_correct": true,
-        "keyword_score": 4,
-        "model_answer": "Волоски шерсти белого медведя полупрозрачные, лишены пигментной окраски и пропускают только ультрафиолетовые лучи, что придаёт им теплоизоляционные свойства.",
-        "correct": true,
-        "prompt_tokens": 255,
-        "completion_tokens": 48,
-        "cost_usd": 6.705e-05,
-        "wall_s": 2.17,
-        "exec_id": "2184"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-3",
-        "retrieved_correct": true,
-        "cosine_score": 0.6904061727997431,
-        "model_answer": "Волоски шерсти белого медведя полупрозрачные, пропускают только ультрафиолетовые лучи и лишены пигментной окраски.",
-        "correct": false,
-        "prompt_tokens": 255,
-        "completion_tokens": 38,
-        "cost_usd": 6.105e-05,
-        "wall_s": 2.17,
-        "exec_id": "2185"
-      }
-    },
-    {
-      "corpus_size": 50,
-      "qid": "q4",
-      "question": "Что разделяет сердце земноводных?",
-      "reference_answer": "межпредсердная перегородка",
-      "gold_doc_id": "needle-4",
-      "stuffing": {
-        "model_answer": "Сердце земноводных разделяется межпредсердной перегородкой.",
-        "correct": false,
-        "prompt_tokens": 9649,
-        "completion_tokens": 19,
-        "cost_usd": 0.00073875,
-        "wall_s": 2.18,
-        "exec_id": "2186"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-4",
-        "retrieved_correct": true,
-        "keyword_score": 2,
-        "model_answer": "Сердце земноводных разделяет межпредсердная перегородка.",
-        "correct": true,
-        "prompt_tokens": 268,
-        "completion_tokens": 19,
-        "cost_usd": 5.16e-05,
-        "wall_s": 1.11,
-        "exec_id": "2187"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-4",
-        "retrieved_correct": true,
-        "cosine_score": 0.4694115821803972,
-        "model_answer": "Сердце земноводных разделяет межпредсердная перегородка.",
-        "correct": true,
-        "prompt_tokens": 268,
-        "completion_tokens": 19,
-        "cost_usd": 5.16e-05,
-        "wall_s": 1.11,
-        "exec_id": "2188"
-      }
-    },
-    {
-      "corpus_size": 50,
-      "qid": "q5",
-      "question": "Для чего служит легкое водяным змеям?",
-      "reference_answer": "служит плавательным пузырём",
-      "gold_doc_id": "needle-5",
-      "stuffing": {
-        "model_answer": "Легкое водяным змеям служит плавательным пузырём.",
-        "correct": true,
-        "prompt_tokens": 9653,
-        "completion_tokens": 17,
-        "cost_usd": 0.00073815,
-        "wall_s": 2.17,
-        "exec_id": "2189"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-5",
-        "retrieved_correct": true,
-        "keyword_score": 3,
-        "model_answer": "Легкое водяным змеям служит плавательным пузырём.",
-        "correct": true,
-        "prompt_tokens": 263,
-        "completion_tokens": 17,
-        "cost_usd": 4.965e-05,
-        "wall_s": 1.12,
-        "exec_id": "2190"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-5",
-        "retrieved_correct": true,
-        "cosine_score": 0.43719335412406773,
-        "model_answer": "Лёгкое водяным змеям служит плавательным пузырём.",
-        "correct": true,
-        "prompt_tokens": 263,
-        "completion_tokens": 18,
-        "cost_usd": 5.025e-05,
-        "wall_s": 1.11,
-        "exec_id": "2191"
-      }
-    },
-    {
-      "corpus_size": 50,
-      "qid": "q6",
-      "question": "Какие культуры не давали урожаев у китайцев",
-      "reference_answer": "пшеница, просо и рис",
-      "gold_doc_id": "needle-6",
-      "stuffing": {
-        "model_answer": "нет информации",
-        "correct": false,
-        "prompt_tokens": 9651,
-        "completion_tokens": 2,
-        "cost_usd": 0.00072885,
-        "wall_s": 2.18,
-        "exec_id": "2192"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-6",
-        "retrieved_correct": true,
-        "keyword_score": 3,
-        "model_answer": "Пшеница, просо и рис.",
-        "correct": true,
-        "prompt_tokens": 261,
-        "completion_tokens": 10,
-        "cost_usd": 4.515e-05,
-        "wall_s": 1.1,
-        "exec_id": "2193"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-6",
-        "retrieved_correct": true,
-        "cosine_score": 0.5863709610415989,
-        "model_answer": "Пшеница, просо и рис.",
-        "correct": true,
-        "prompt_tokens": 261,
-        "completion_tokens": 10,
-        "cost_usd": 4.515e-05,
-        "wall_s": 2.15,
-        "exec_id": "2194"
-      }
-    },
-    {
-      "corpus_size": 50,
-      "qid": "q7",
-      "question": "В соответствии с чем новая теория требовала меньшей скорости в более плотной среде?",
-      "reference_answer": "со здравым смыслом",
-      "gold_doc_id": "needle-7",
-      "stuffing": {
-        "model_answer": "Новая теория требовала меньшей скорости в более плотной среде для объяснения преломления.",
-        "correct": false,
-        "prompt_tokens": 9658,
-        "completion_tokens": 22,
-        "cost_usd": 0.0007419,
-        "wall_s": 2.18,
-        "exec_id": "2195"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-7",
-        "retrieved_correct": true,
-        "keyword_score": 8,
-        "model_answer": "В соответствии со здравым смыслом.",
-        "correct": true,
-        "prompt_tokens": 207,
-        "completion_tokens": 8,
-        "cost_usd": 3.585e-05,
-        "wall_s": 1.12,
-        "exec_id": "2196"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-7",
-        "retrieved_correct": true,
-        "cosine_score": 0.4619695316198367,
-        "model_answer": "В соответствии со здравым смыслом.",
-        "correct": true,
-        "prompt_tokens": 207,
-        "completion_tokens": 8,
-        "cost_usd": 3.585e-05,
-        "wall_s": 2.15,
-        "exec_id": "2197"
-      }
-    },
-    {
-      "corpus_size": 50,
-      "qid": "q8",
-      "question": "Что помимо инвестиционных товаров и инструментов обуславливает процесс инвестирования?",
-      "reference_answer": "инвестиционные услуги",
-      "gold_doc_id": "needle-8",
-      "stuffing": {
-        "model_answer": "Инвестиционные услуги.",
-        "correct": true,
-        "prompt_tokens": 9658,
-        "completion_tokens": 5,
-        "cost_usd": 0.0007317,
-        "wall_s": 1.13,
-        "exec_id": "2198"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-8",
-        "retrieved_correct": true,
-        "keyword_score": 2,
-        "model_answer": "Инвестиционные услуги.",
-        "correct": true,
-        "prompt_tokens": 181,
-        "completion_tokens": 5,
-        "cost_usd": 3.015e-05,
-        "wall_s": 1.11,
-        "exec_id": "2199"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-8",
-        "retrieved_correct": true,
-        "cosine_score": 0.5714866261314977,
-        "model_answer": "Помимо инвестиционных товаров и инструментов, процесс инвестирования обуславливают инвестиционные услуги.",
-        "correct": true,
-        "prompt_tokens": 181,
-        "completion_tokens": 21,
-        "cost_usd": 3.975e-05,
-        "wall_s": 1.12,
-        "exec_id": "2200"
-      }
-    },
-    {
-      "corpus_size": 50,
-      "qid": "q9",
-      "question": "Какой делало систему Коперника то, что в описании движения планет выбрасывался первый и самый важный эпицикл?",
-      "reference_answer": "более простой и удобной, чем птолемеевская",
-      "gold_doc_id": "needle-9",
-      "stuffing": {
-        "model_answer": "Нет информации.",
-        "correct": false,
-        "prompt_tokens": 9671,
-        "completion_tokens": 3,
-        "cost_usd": 0.00073245,
-        "wall_s": 2.17,
-        "exec_id": "2201"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-9",
-        "retrieved_correct": true,
-        "keyword_score": 11,
-        "model_answer": "Систему Коперника это делало более простой и удобной, чем птолемеевскую.",
-        "correct": false,
-        "prompt_tokens": 244,
-        "completion_tokens": 23,
-        "cost_usd": 5.04e-05,
-        "wall_s": 1.23,
-        "exec_id": "2202"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-9",
-        "retrieved_correct": true,
-        "cosine_score": 0.5951880564864049,
-        "model_answer": "Это делало систему Коперника более простой и удобной.",
-        "correct": false,
-        "prompt_tokens": 244,
-        "completion_tokens": 14,
-        "cost_usd": 4.5e-05,
-        "wall_s": 2.5,
-        "exec_id": "2203"
-      }
-    },
-    {
-      "corpus_size": 50,
-      "qid": "q10",
-      "question": "Когда было основано кооперативное Содружество Федерации Манитобы?",
-      "reference_answer": "в 1932 году",
-      "gold_doc_id": "needle-10",
-      "stuffing": {
-        "model_answer": "Кооперативное Содружество Федерации Манитобы было основано в 1932 году.",
-        "correct": true,
-        "prompt_tokens": 9658,
-        "completion_tokens": 23,
-        "cost_usd": 0.0007425,
-        "wall_s": 2.16,
-        "exec_id": "2204"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-10",
-        "retrieved_correct": true,
-        "keyword_score": 5,
-        "model_answer": "Кооперативное Содружество Федерации Манитобы было основано в 1932 году.",
-        "correct": true,
-        "prompt_tokens": 353,
-        "completion_tokens": 23,
-        "cost_usd": 6.675e-05,
-        "wall_s": 1.11,
-        "exec_id": "2205"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-10",
-        "retrieved_correct": true,
-        "cosine_score": 0.4689290907206867,
-        "model_answer": "Кооперативное Содружество Федерации Манитобы было основано в 1932 году.",
-        "correct": true,
-        "prompt_tokens": 353,
-        "completion_tokens": 23,
-        "cost_usd": 6.675e-05,
-        "wall_s": 1.1,
-        "exec_id": "2206"
-      }
-    },
-    {
-      "corpus_size": 200,
-      "qid": "q1",
-      "question": "для каких частиц биологическая эффективность прямо связана с линейной передачей энергии данного типа частиц",
-      "reference_answer": "заряженных",
-      "gold_doc_id": "needle-1",
-      "stuffing": {
-        "model_answer": "Для заряженных частиц биологическая эффективность прямо связана с линейной передачей энергии данного типа частиц.",
-        "correct": true,
-        "prompt_tokens": 39416,
-        "completion_tokens": 25,
-        "cost_usd": 0.0059274,
-        "wall_s": 3.25,
-        "exec_id": "2207"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-1",
-        "retrieved_correct": true,
-        "keyword_score": 10,
-        "model_answer": "Для заряженных частиц.",
-        "correct": true,
-        "prompt_tokens": 270,
-        "completion_tokens": 7,
-        "cost_usd": 4.47e-05,
-        "wall_s": 1.11,
-        "exec_id": "2208"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-1",
-        "retrieved_correct": true,
-        "cosine_score": 0.5401189704918439,
-        "model_answer": "Для заряженных частиц.",
-        "correct": true,
-        "prompt_tokens": 270,
-        "completion_tokens": 7,
-        "cost_usd": 4.47e-05,
-        "wall_s": 1.13,
-        "exec_id": "2209"
-      }
-    },
-    {
-      "corpus_size": 200,
-      "qid": "q2",
-      "question": "В каком году Шостакович покинул школу Гляссера?",
-      "reference_answer": "в 1918",
-      "gold_doc_id": "needle-2",
-      "stuffing": {
-        "model_answer": "Шостакович покинул школу Гляссера в 1918 году.",
-        "correct": true,
-        "prompt_tokens": 39411,
-        "completion_tokens": 19,
-        "cost_usd": 0.00300465,
-        "wall_s": 4.3,
-        "exec_id": "2210"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-2",
-        "retrieved_correct": true,
-        "keyword_score": 5,
-        "model_answer": "В 1918 году.",
-        "correct": true,
-        "prompt_tokens": 267,
-        "completion_tokens": 6,
-        "cost_usd": 4.365e-05,
-        "wall_s": 2.16,
-        "exec_id": "2211"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-2",
-        "retrieved_correct": true,
-        "cosine_score": 0.5652319600094645,
-        "model_answer": "В 1918 году.",
-        "correct": true,
-        "prompt_tokens": 267,
-        "completion_tokens": 6,
-        "cost_usd": 4.365e-05,
-        "wall_s": 2.15,
-        "exec_id": "2212"
-      }
-    },
-    {
-      "corpus_size": 200,
-      "qid": "q3",
-      "question": "Какие свойства присущи волоскам шерсти белого медведя?",
-      "reference_answer": "теплоизоляционные",
-      "gold_doc_id": "needle-3",
-      "stuffing": {
-        "model_answer": "Шерсть белого медведя лишена пигментной окраски, шерстинки полые, полупрозрачные волоски пропускают ультрафиолетовые лучи, придавая шерсти теплоизоляционные свойства.",
-        "correct": true,
-        "prompt_tokens": 39409,
-        "completion_tokens": 52,
-        "cost_usd": 0.00299535,
-        "wall_s": 9.74,
-        "exec_id": "2213"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-3",
-        "retrieved_correct": true,
-        "keyword_score": 4,
-        "model_answer": "Волоски шерсти белого медведя полупрозрачные, лишены пигментной окраски и обладают теплоизоляционными свойствами.",
-        "correct": false,
-        "prompt_tokens": 255,
-        "completion_tokens": 33,
-        "cost_usd": 5.805e-05,
-        "wall_s": 1.12,
-        "exec_id": "2214"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-3",
-        "retrieved_correct": true,
-        "cosine_score": 0.6904061727997431,
-        "model_answer": "Волоски шерсти белого медведя полупрозрачные, лишены пигментной окраски и имеют теплоизоляционные свойства.",
-        "correct": true,
-        "prompt_tokens": 255,
-        "completion_tokens": 31,
-        "cost_usd": 5.685e-05,
-        "wall_s": 1.11,
-        "exec_id": "2215"
-      }
-    },
-    {
-      "corpus_size": 200,
-      "qid": "q4",
-      "question": "Что разделяет сердце земноводных?",
-      "reference_answer": "межпредсердная перегородка",
-      "gold_doc_id": "needle-4",
-      "stuffing": {
-        "model_answer": "Сердце земноводных разделяется межпредсердной перегородкой.",
-        "correct": false,
-        "prompt_tokens": 39403,
-        "completion_tokens": 19,
-        "cost_usd": 0.00297465,
-        "wall_s": 2.22,
-        "exec_id": "2216"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-4",
-        "retrieved_correct": true,
-        "keyword_score": 2,
-        "model_answer": "Сердце земноводных имеет межпредсердную перегородку.",
-        "correct": false,
-        "prompt_tokens": 268,
-        "completion_tokens": 18,
-        "cost_usd": 5.1e-05,
-        "wall_s": 1.11,
-        "exec_id": "2217"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-4",
-        "retrieved_correct": true,
-        "cosine_score": 0.4694115821803972,
-        "model_answer": "Межпредсердная перегородка.",
-        "correct": true,
-        "prompt_tokens": 268,
-        "completion_tokens": 10,
-        "cost_usd": 4.62e-05,
-        "wall_s": 1.1,
-        "exec_id": "2218"
-      }
-    },
-    {
-      "corpus_size": 200,
-      "qid": "q5",
-      "question": "Для чего служит легкое водяным змеям?",
-      "reference_answer": "служит плавательным пузырём",
-      "gold_doc_id": "needle-5",
-      "stuffing": {
-        "model_answer": "Легкое водяным змеям служит плавательным пузырем.",
-        "correct": false,
-        "prompt_tokens": 39407,
-        "completion_tokens": 17,
-        "cost_usd": 0.00297405,
-        "wall_s": 2.2,
-        "exec_id": "2219"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-5",
-        "retrieved_correct": true,
-        "keyword_score": 3,
-        "model_answer": "Легкое водяным змеям служит плавательным пузырём.",
-        "correct": true,
-        "prompt_tokens": 263,
-        "completion_tokens": 17,
-        "cost_usd": 4.965e-05,
-        "wall_s": 2.16,
-        "exec_id": "2220"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-5",
-        "retrieved_correct": true,
-        "cosine_score": 0.43719335412406773,
-        "model_answer": "Лёгкое водяным змеям служит плавательным пузырём.",
-        "correct": true,
-        "prompt_tokens": 263,
-        "completion_tokens": 18,
-        "cost_usd": 5.025e-05,
-        "wall_s": 1.1,
-        "exec_id": "2221"
-      }
-    },
-    {
-      "corpus_size": 200,
-      "qid": "q6",
-      "question": "Какие культуры не давали урожаев у китайцев",
-      "reference_answer": "пшеница, просо и рис",
-      "gold_doc_id": "needle-6",
-      "stuffing": {
-        "model_answer": "Нет информации.",
-        "correct": false,
-        "prompt_tokens": 39405,
-        "completion_tokens": 3,
-        "cost_usd": 0.00296535,
-        "wall_s": 2.19,
-        "exec_id": "2222"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-6",
-        "retrieved_correct": true,
-        "keyword_score": 3,
-        "model_answer": "Пшеница, просо и рис.",
-        "correct": true,
-        "prompt_tokens": 261,
-        "completion_tokens": 10,
-        "cost_usd": 4.515e-05,
-        "wall_s": 1.11,
-        "exec_id": "2223"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-6",
-        "retrieved_correct": true,
-        "cosine_score": 0.5863709610415989,
-        "model_answer": "Пшеница, просо и рис.",
-        "correct": true,
-        "prompt_tokens": 261,
-        "completion_tokens": 10,
-        "cost_usd": 4.515e-05,
-        "wall_s": 2.34,
-        "exec_id": "2224"
-      }
-    },
-    {
-      "corpus_size": 200,
-      "qid": "q7",
-      "question": "В соответствии с чем новая теория требовала меньшей скорости в более плотной среде?",
-      "reference_answer": "со здравым смыслом",
-      "gold_doc_id": "needle-7",
-      "stuffing": {
-        "model_answer": "Новая теория требовала меньшей скорости в более плотной среде для объяснения преломления.",
-        "correct": false,
-        "prompt_tokens": 39412,
-        "completion_tokens": 22,
-        "cost_usd": 0.0029778,
-        "wall_s": 2.5,
-        "exec_id": "2225"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-7",
-        "retrieved_correct": true,
-        "keyword_score": 8,
-        "model_answer": "В соответствии со здравым смыслом.",
-        "correct": true,
-        "prompt_tokens": 207,
-        "completion_tokens": 8,
-        "cost_usd": 3.585e-05,
-        "wall_s": 1.12,
-        "exec_id": "2226"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-7",
-        "retrieved_correct": true,
-        "cosine_score": 0.4619695316198367,
-        "model_answer": "В соответствии со здравым смыслом.",
-        "correct": true,
-        "prompt_tokens": 207,
-        "completion_tokens": 8,
-        "cost_usd": 3.585e-05,
-        "wall_s": 2.16,
-        "exec_id": "2227"
-      }
-    },
-    {
-      "corpus_size": 200,
-      "qid": "q8",
-      "question": "Что помимо инвестиционных товаров и инструментов обуславливает процесс инвестирования?",
-      "reference_answer": "инвестиционные услуги",
-      "gold_doc_id": "needle-8",
-      "stuffing": {
-        "model_answer": "нет информации.",
-        "correct": false,
-        "prompt_tokens": 39412,
-        "completion_tokens": 3,
-        "cost_usd": 0.0029664,
-        "wall_s": 2.18,
-        "exec_id": "2228"
-      },
-      "keyword": {
-        "retrieved_doc_id": "needle-8",
-        "retrieved_correct": true,
-        "keyword_score": 2,
-        "model_answer": "Инвестиционные услуги.",
-        "correct": true,
-        "prompt_tokens": 181,
-        "completion_tokens": 5,
-        "cost_usd": 3.015e-05,
-        "wall_s": 1.11,
-        "exec_id": "2229"
-      },
-      "vector": {
-        "retrieved_doc_id": "needle-8",
-        "retrieved_correct": true,
-        "cosine_score": 0.5714866261314977,
-        "model_answer": "Инвестиционные услуги.",
-        "correct": true,
-        "prompt_tokens": 181,
-        "completion_tokens": 5,
-        "cost_usd": 3.015e-05,
-        "wall_s": 2.16,
-        "exec_id": "2230"
-      }
-    },
-    {
-      "corpus_size": 200,
-      "qid": "q9",
-      "question": "Какой делало систему Коперника то, что в описании движения планет выбрасывался первый и самый важный эпицикл?",
-      "reference_answer": "более простой и удобной, чем птолемеевская",
-      "gold_doc_id": "needle-9",
-      "stuffing": {
-        "model_answer": "Система Коперника становилась более простой и удобной.",
-        "correct": false,
-        "prompt_tokens": 39425,
-        "completion_tokens": 14,
-        "cost_usd": 0.00297495,
+        "cost_usd": 0.00032295,
         "wall_s": 2.21,
-        "exec_id": "2231"
+        "exec_id": "2393"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "keyword_score": 1,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 2.16,
+        "exec_id": "2394"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "cosine_score": 0.6163178222651524,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 1.09,
+        "exec_id": "2395"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q2",
+      "question": "Сколько длилось путешествие Моцарта в 1789 году?",
+      "reference_answer": "Путешествие длилось без малого три месяца",
+      "gold_doc_id": "needle-2",
+      "stuffing": {
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 2112,
+        "completion_tokens": 27,
+        "cost_usd": 0.0001794,
+        "wall_s": 2.16,
+        "exec_id": "2396"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "keyword_score": 5,
+        "model_answer": "Путешествие длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": true,
+        "prompt_tokens": 344,
+        "completion_tokens": 24,
+        "cost_usd": 6.6e-05,
+        "wall_s": 1.13,
+        "exec_id": "2397"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "cosine_score": 0.6177550270626744,
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 344,
+        "completion_tokens": 27,
+        "cost_usd": 6.78e-05,
+        "wall_s": 1.1,
+        "exec_id": "2398"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q3",
+      "question": "Какая температура летом не дает возможности марафонцам показывать наилучшие результаты?",
+      "reference_answer": "высокая",
+      "gold_doc_id": "needle-3",
+      "stuffing": {
+        "model_answer": "нет информации",
+        "correct": false,
+        "prompt_tokens": 2115,
+        "completion_tokens": 2,
+        "cost_usd": 0.00016485,
+        "wall_s": 1.12,
+        "exec_id": "2399"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "keyword_score": 6,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 1.12,
+        "exec_id": "2400"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "cosine_score": 0.5693151581977827,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 2.18,
+        "exec_id": "2401"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q4",
+      "question": "В каком году была возрождена дискуссия палеонтологами Нильсов Элдриджем и Стивеном Гулдом?",
+      "reference_answer": "1972",
+      "gold_doc_id": "needle-4",
+      "stuffing": {
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 2129,
+        "completion_tokens": 6,
+        "cost_usd": 0.00016935,
+        "wall_s": 1.1,
+        "exec_id": "2402"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": false,
+        "keyword_score": 1,
+        "model_answer": "нет информации",
+        "correct": false,
+        "prompt_tokens": 361,
+        "completion_tokens": 2,
+        "cost_usd": 5.535e-05,
+        "wall_s": 1.12,
+        "exec_id": "2403"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-4",
+        "retrieved_correct": true,
+        "cosine_score": 0.3722983804462846,
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 6,
+        "cost_usd": 4.905e-05,
+        "wall_s": 1.34,
+        "exec_id": "2404"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q5",
+      "question": "Какому розыгрышу Кубка мира в 1950 году предшествовала резонансная трагедия?",
+      "reference_answer": "Первому послевоенному розыгрышу.",
+      "gold_doc_id": "needle-5",
+      "stuffing": {
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 2122,
+        "completion_tokens": 19,
+        "cost_usd": 0.0001761,
+        "wall_s": 1.15,
+        "exec_id": "2405"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "keyword_score": 8,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 14,
+        "cost_usd": 4.59e-05,
+        "wall_s": 3.22,
+        "exec_id": "2406"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "cosine_score": 0.5233230576324489,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 19,
+        "cost_usd": 4.89e-05,
+        "wall_s": 3.2,
+        "exec_id": "2407"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q6",
+      "question": "В чем заключается функция митохондрий?",
+      "reference_answer": "в окислении органических соединений и последующем синтезе АТФ",
+      "gold_doc_id": "needle-6",
+      "stuffing": {
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и последующем синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": true,
+        "prompt_tokens": 2106,
+        "completion_tokens": 38,
+        "cost_usd": 0.0001851,
+        "wall_s": 1.13,
+        "exec_id": "2408"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 26,
+        "cost_usd": 4.89e-05,
+        "wall_s": 1.1,
+        "exec_id": "2409"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "cosine_score": 0.5956466409659753,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 26,
+        "cost_usd": 4.89e-05,
+        "wall_s": 2.16,
+        "exec_id": "2410"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q7",
+      "question": "Кровью каких животных в основном питаются двукрылые кровососы?",
+      "reference_answer": "млекопитающих",
+      "gold_doc_id": "needle-7",
+      "stuffing": {
+        "model_answer": "Двукрылые кровососы в основном питаются кровью млекопитающих, реже — птиц и насекомых.",
+        "correct": true,
+        "prompt_tokens": 2115,
+        "completion_tokens": 31,
+        "cost_usd": 0.00018225,
+        "wall_s": 1.1,
+        "exec_id": "2411"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "В основном млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 8,
+        "cost_usd": 3.93e-05,
+        "wall_s": 1.12,
+        "exec_id": "2412"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "cosine_score": 0.5857860729720794,
+        "model_answer": "Двукрылые кровососы в основном питаются кровью млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 21,
+        "cost_usd": 4.71e-05,
+        "wall_s": 2.15,
+        "exec_id": "2413"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q8",
+      "question": "Какая страна в 2001 году стала первой из пяти арктических стран, обратившейся с заявкой о расширении границ своего континентального шельфа свыше стандартного 322-километрового предела?",
+      "reference_answer": "Россия",
+      "gold_doc_id": "needle-8",
+      "stuffing": {
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 2150,
+        "completion_tokens": 2,
+        "cost_usd": 0.0001701,
+        "wall_s": 1.11,
+        "exec_id": "2414"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "keyword_score": 19,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 2.15,
+        "exec_id": "2415"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "cosine_score": 0.6316103502960787,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 1.11,
+        "exec_id": "2416"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q9",
+      "question": "Какая структура управляет Центральным банком?",
+      "reference_answer": "Правление банка",
+      "gold_doc_id": "needle-9",
+      "stuffing": {
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 2107,
+        "completion_tokens": 12,
+        "cost_usd": 0.00016965,
+        "wall_s": 1.1,
+        "exec_id": "2417"
       },
       "keyword": {
         "retrieved_doc_id": "needle-9",
         "retrieved_correct": true,
-        "keyword_score": 11,
-        "model_answer": "Систему Коперника это делало более простой и удобной.",
-        "correct": false,
-        "prompt_tokens": 244,
-        "completion_tokens": 16,
-        "cost_usd": 4.62e-05,
-        "wall_s": 1.09,
-        "exec_id": "2232"
+        "keyword_score": 4,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
+        "wall_s": 1.1,
+        "exec_id": "2418"
       },
       "vector": {
         "retrieved_doc_id": "needle-9",
         "retrieved_correct": true,
-        "cosine_score": 0.5951880564864049,
-        "model_answer": "Система Коперника становилась более простой и удобной.",
+        "cosine_score": 0.6723626731190123,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
+        "wall_s": 2.15,
+        "exec_id": "2419"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q10",
+      "question": "Как звали ученого, модель системы мира которого была взята за основу Кеплером?",
+      "reference_answer": "Коперник",
+      "gold_doc_id": "needle-10",
+      "stuffing": {
+        "model_answer": "Коперник.",
+        "correct": true,
+        "prompt_tokens": 2117,
+        "completion_tokens": 5,
+        "cost_usd": 0.00016695,
+        "wall_s": 1.11,
+        "exec_id": "2420"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": false,
+        "keyword_score": 2,
+        "model_answer": "нет информации.",
         "correct": false,
-        "prompt_tokens": 244,
-        "completion_tokens": 14,
-        "cost_usd": 4.5e-05,
+        "prompt_tokens": 272,
+        "completion_tokens": 3,
+        "cost_usd": 4.26e-05,
+        "wall_s": 1.12,
+        "exec_id": "2421"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-10",
+        "retrieved_correct": true,
+        "cosine_score": 0.5687593164083498,
+        "model_answer": "Коперник.",
+        "correct": true,
+        "prompt_tokens": 238,
+        "completion_tokens": 5,
+        "cost_usd": 3.87e-05,
+        "wall_s": 1.13,
+        "exec_id": "2422"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q1",
+      "question": "Как называется круг кровообращения, функционирующий через легкие?",
+      "reference_answer": "малый",
+      "gold_doc_id": "needle-1",
+      "stuffing": {
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 9757,
+        "completion_tokens": 10,
+        "cost_usd": 0.00131595,
+        "wall_s": 2.18,
+        "exec_id": "2423"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "keyword_score": 1,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
         "wall_s": 1.1,
-        "exec_id": "2233"
+        "exec_id": "2424"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "cosine_score": 0.6163178222651524,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 1.11,
+        "exec_id": "2425"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q2",
+      "question": "Сколько длилось путешествие Моцарта в 1789 году?",
+      "reference_answer": "Путешествие длилось без малого три месяца",
+      "gold_doc_id": "needle-2",
+      "stuffing": {
+        "model_answer": "Путешествие Моцарта длилось почти три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 9756,
+        "completion_tokens": 26,
+        "cost_usd": 0.000759,
+        "wall_s": 1.13,
+        "exec_id": "2426"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "keyword_score": 5,
+        "model_answer": "Путешествие длилось без малого три месяца.",
+        "correct": true,
+        "prompt_tokens": 344,
+        "completion_tokens": 11,
+        "cost_usd": 5.82e-05,
+        "wall_s": 2.15,
+        "exec_id": "2427"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "cosine_score": 0.6177550270626744,
+        "model_answer": "Путешествие длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": true,
+        "prompt_tokens": 344,
+        "completion_tokens": 24,
+        "cost_usd": 6.6e-05,
+        "wall_s": 2.15,
+        "exec_id": "2428"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q3",
+      "question": "Какая температура летом не дает возможности марафонцам показывать наилучшие результаты?",
+      "reference_answer": "высокая",
+      "gold_doc_id": "needle-3",
+      "stuffing": {
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 9759,
+        "completion_tokens": 3,
+        "cost_usd": 0.00074565,
+        "wall_s": 1.11,
+        "exec_id": "2429"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "keyword_score": 6,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 1.1,
+        "exec_id": "2430"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "cosine_score": 0.5693151581977827,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 2.16,
+        "exec_id": "2431"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q4",
+      "question": "В каком году была возрождена дискуссия палеонтологами Нильсов Элдриджем и Стивеном Гулдом?",
+      "reference_answer": "1972",
+      "gold_doc_id": "needle-4",
+      "stuffing": {
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 9773,
+        "completion_tokens": 6,
+        "cost_usd": 0.00074955,
+        "wall_s": 1.11,
+        "exec_id": "2432"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": false,
+        "keyword_score": 1,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 361,
+        "completion_tokens": 3,
+        "cost_usd": 5.595e-05,
+        "wall_s": 1.12,
+        "exec_id": "2433"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-4",
+        "retrieved_correct": true,
+        "cosine_score": 0.3722983804462846,
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 6,
+        "cost_usd": 4.905e-05,
+        "wall_s": 2.16,
+        "exec_id": "2434"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q5",
+      "question": "Какому розыгрышу Кубка мира в 1950 году предшествовала резонансная трагедия?",
+      "reference_answer": "Первому послевоенному розыгрышу.",
+      "gold_doc_id": "needle-5",
+      "stuffing": {
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 9766,
+        "completion_tokens": 19,
+        "cost_usd": 0.0007563,
+        "wall_s": 1.11,
+        "exec_id": "2435"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "keyword_score": 8,
+        "model_answer": "Первому послевоенному розыгрыше Кубка мира.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 14,
+        "cost_usd": 4.59e-05,
+        "wall_s": 1.12,
+        "exec_id": "2436"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "cosine_score": 0.5233230576324489,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 14,
+        "cost_usd": 4.59e-05,
+        "wall_s": 2.15,
+        "exec_id": "2437"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q6",
+      "question": "В чем заключается функция митохондрий?",
+      "reference_answer": "в окислении органических соединений и последующем синтезе АТФ",
+      "gold_doc_id": "needle-6",
+      "stuffing": {
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и последующем синтезе АТФ с использованием энергии этих соединений.",
+        "correct": true,
+        "prompt_tokens": 9750,
+        "completion_tokens": 35,
+        "cost_usd": 0.0007635,
+        "wall_s": 1.13,
+        "exec_id": "2438"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 35,
+        "cost_usd": 5.43e-05,
+        "wall_s": 1.11,
+        "exec_id": "2439"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "cosine_score": 0.5956466409659753,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 35,
+        "cost_usd": 5.43e-05,
+        "wall_s": 2.16,
+        "exec_id": "2440"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q7",
+      "question": "Кровью каких животных в основном питаются двукрылые кровососы?",
+      "reference_answer": "млекопитающих",
+      "gold_doc_id": "needle-7",
+      "stuffing": {
+        "model_answer": "Кровью млекопитающих, реже птиц и насекомых.",
+        "correct": true,
+        "prompt_tokens": 9759,
+        "completion_tokens": 18,
+        "cost_usd": 0.00075465,
+        "wall_s": 2.17,
+        "exec_id": "2441"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "В основном двукрылые кровососы питаются кровью млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 20,
+        "cost_usd": 4.65e-05,
+        "wall_s": 1.12,
+        "exec_id": "2442"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "cosine_score": 0.5857860729720794,
+        "model_answer": "В основном они питаются кровью млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 13,
+        "cost_usd": 4.23e-05,
+        "wall_s": 1.1,
+        "exec_id": "2443"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q8",
+      "question": "Какая страна в 2001 году стала первой из пяти арктических стран, обратившейся с заявкой о расширении границ своего континентального шельфа свыше стандартного 322-километрового предела?",
+      "reference_answer": "Россия",
+      "gold_doc_id": "needle-8",
+      "stuffing": {
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 9794,
+        "completion_tokens": 2,
+        "cost_usd": 0.0007503,
+        "wall_s": 1.12,
+        "exec_id": "2444"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "keyword_score": 19,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 2.16,
+        "exec_id": "2445"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "cosine_score": 0.6316103502960787,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 1.11,
+        "exec_id": "2446"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q9",
+      "question": "Какая структура управляет Центральным банком?",
+      "reference_answer": "Правление банка",
+      "gold_doc_id": "needle-9",
+      "stuffing": {
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 9751,
+        "completion_tokens": 12,
+        "cost_usd": 0.00074985,
+        "wall_s": 1.11,
+        "exec_id": "2447"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "keyword_score": 4,
+        "model_answer": "Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 4,
+        "cost_usd": 3e-05,
+        "wall_s": 2.16,
+        "exec_id": "2448"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "cosine_score": 0.6723626731190123,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
+        "wall_s": 2.15,
+        "exec_id": "2449"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q10",
+      "question": "Как звали ученого, модель системы мира которого была взята за основу Кеплером?",
+      "reference_answer": "Коперник",
+      "gold_doc_id": "needle-10",
+      "stuffing": {
+        "model_answer": "Коперник.",
+        "correct": true,
+        "prompt_tokens": 9761,
+        "completion_tokens": 5,
+        "cost_usd": 0.00074715,
+        "wall_s": 1.18,
+        "exec_id": "2450"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": false,
+        "keyword_score": 2,
+        "model_answer": "нет информации",
+        "correct": false,
+        "prompt_tokens": 272,
+        "completion_tokens": 2,
+        "cost_usd": 4.2e-05,
+        "wall_s": 1.46,
+        "exec_id": "2451"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-10",
+        "retrieved_correct": true,
+        "cosine_score": 0.5687593164083498,
+        "model_answer": "Коперник.",
+        "correct": true,
+        "prompt_tokens": 238,
+        "completion_tokens": 5,
+        "cost_usd": 3.87e-05,
+        "wall_s": 1.11,
+        "exec_id": "2452"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q1",
+      "question": "Как называется круг кровообращения, функционирующий через легкие?",
+      "reference_answer": "малый",
+      "gold_doc_id": "needle-1",
+      "stuffing": {
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 39511,
+        "completion_tokens": 10,
+        "cost_usd": 0.00521265,
+        "wall_s": 2.2,
+        "exec_id": "2453"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "keyword_score": 1,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 1.11,
+        "exec_id": "2454"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "cosine_score": 0.6163178222651524,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 1.1,
+        "exec_id": "2455"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q2",
+      "question": "Сколько длилось путешествие Моцарта в 1789 году?",
+      "reference_answer": "Путешествие длилось без малого три месяца",
+      "gold_doc_id": "needle-2",
+      "stuffing": {
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 39510,
+        "completion_tokens": 27,
+        "cost_usd": 0.0029859,
+        "wall_s": 2.2,
+        "exec_id": "2456"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "keyword_score": 5,
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 344,
+        "completion_tokens": 27,
+        "cost_usd": 6.78e-05,
+        "wall_s": 2.16,
+        "exec_id": "2457"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "cosine_score": 0.6177550270626744,
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 344,
+        "completion_tokens": 27,
+        "cost_usd": 6.78e-05,
+        "wall_s": 1.12,
+        "exec_id": "2458"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q3",
+      "question": "Какая температура летом не дает возможности марафонцам показывать наилучшие результаты?",
+      "reference_answer": "высокая",
+      "gold_doc_id": "needle-3",
+      "stuffing": {
+        "model_answer": "Летняя высокая температура не позволяет марафонцам показывать наилучшие результаты.",
+        "correct": true,
+        "prompt_tokens": 39513,
+        "completion_tokens": 18,
+        "cost_usd": 0.00298095,
+        "wall_s": 1.15,
+        "exec_id": "2459"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "keyword_score": 6,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 2.15,
+        "exec_id": "2460"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "cosine_score": 0.5693151581977827,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 1.11,
+        "exec_id": "2461"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q4",
+      "question": "В каком году была возрождена дискуссия палеонтологами Нильсов Элдриджем и Стивеном Гулдом?",
+      "reference_answer": "1972",
+      "gold_doc_id": "needle-4",
+      "stuffing": {
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 39527,
+        "completion_tokens": 6,
+        "cost_usd": 0.00297585,
+        "wall_s": 1.13,
+        "exec_id": "2462"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": false,
+        "keyword_score": 1,
+        "model_answer": "нет информации",
+        "correct": false,
+        "prompt_tokens": 361,
+        "completion_tokens": 2,
+        "cost_usd": 5.535e-05,
+        "wall_s": 2.14,
+        "exec_id": "2463"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-4",
+        "retrieved_correct": true,
+        "cosine_score": 0.3722983804462846,
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 6,
+        "cost_usd": 4.905e-05,
+        "wall_s": 2.16,
+        "exec_id": "2464"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q5",
+      "question": "Какому розыгрышу Кубка мира в 1950 году предшествовала резонансная трагедия?",
+      "reference_answer": "Первому послевоенному розыгрышу.",
+      "gold_doc_id": "needle-5",
+      "stuffing": {
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 39520,
+        "completion_tokens": 19,
+        "cost_usd": 0.0029826,
+        "wall_s": 1.14,
+        "exec_id": "2465"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "keyword_score": 8,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 19,
+        "cost_usd": 4.89e-05,
+        "wall_s": 1.22,
+        "exec_id": "2466"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "cosine_score": 0.5233230576324489,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 14,
+        "cost_usd": 4.59e-05,
+        "wall_s": 1.43,
+        "exec_id": "2467"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q6",
+      "question": "В чем заключается функция митохондрий?",
+      "reference_answer": "в окислении органических соединений и последующем синтезе АТФ",
+      "gold_doc_id": "needle-6",
+      "stuffing": {
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": false,
+        "prompt_tokens": 39504,
+        "completion_tokens": 35,
+        "cost_usd": 0.0029898,
+        "wall_s": 2.18,
+        "exec_id": "2468"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 35,
+        "cost_usd": 5.43e-05,
+        "wall_s": 1.1,
+        "exec_id": "2469"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "cosine_score": 0.5956466409659753,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 35,
+        "cost_usd": 5.43e-05,
+        "wall_s": 1.1,
+        "exec_id": "2470"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q7",
+      "question": "Кровью каких животных в основном питаются двукрылые кровососы?",
+      "reference_answer": "млекопитающих",
+      "gold_doc_id": "needle-7",
+      "stuffing": {
+        "model_answer": "Кровью млекопитающих, реже птиц и насекомых.",
+        "correct": true,
+        "prompt_tokens": 39513,
+        "completion_tokens": 18,
+        "cost_usd": 0.00298095,
+        "wall_s": 1.14,
+        "exec_id": "2471"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "В основном двукрылые кровососы питаются кровью млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 20,
+        "cost_usd": 4.65e-05,
+        "wall_s": 1.12,
+        "exec_id": "2472"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "cosine_score": 0.5857860729720794,
+        "model_answer": "В основном млекопитающих, реже птиц и насекомых.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 17,
+        "cost_usd": 4.47e-05,
+        "wall_s": 1.1,
+        "exec_id": "2473"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q8",
+      "question": "Какая страна в 2001 году стала первой из пяти арктических стран, обратившейся с заявкой о расширении границ своего континентального шельфа свыше стандартного 322-километрового предела?",
+      "reference_answer": "Россия",
+      "gold_doc_id": "needle-8",
+      "stuffing": {
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 39548,
+        "completion_tokens": 2,
+        "cost_usd": 0.0029766,
+        "wall_s": 1.15,
+        "exec_id": "2474"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "keyword_score": 19,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 1.1,
+        "exec_id": "2475"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "cosine_score": 0.6316103502960787,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 2.15,
+        "exec_id": "2476"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q9",
+      "question": "Какая структура управляет Центральным банком?",
+      "reference_answer": "Правление банка",
+      "gold_doc_id": "needle-9",
+      "stuffing": {
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 39505,
+        "completion_tokens": 12,
+        "cost_usd": 0.00297615,
+        "wall_s": 1.15,
+        "exec_id": "2477"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "keyword_score": 4,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
+        "wall_s": 1.1,
+        "exec_id": "2478"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "cosine_score": 0.6723626731190123,
+        "model_answer": "Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 4,
+        "cost_usd": 3e-05,
+        "wall_s": 2.17,
+        "exec_id": "2479"
       }
     },
     {
       "corpus_size": 200,
       "qid": "q10",
-      "question": "Когда было основано кооперативное Содружество Федерации Манитобы?",
-      "reference_answer": "в 1932 году",
+      "question": "Как звали ученого, модель системы мира которого была взята за основу Кеплером?",
+      "reference_answer": "Коперник",
       "gold_doc_id": "needle-10",
       "stuffing": {
-        "model_answer": "Кооперативное Содружество Федерации Манитобы было основано в 1932 году.",
+        "model_answer": "Модель системы мира была основана на работах Коперника.",
         "correct": true,
-        "prompt_tokens": 39412,
-        "completion_tokens": 23,
-        "cost_usd": 0.0030072,
-        "wall_s": 2.19,
-        "exec_id": "2234"
+        "prompt_tokens": 39515,
+        "completion_tokens": 15,
+        "cost_usd": 0.00297945,
+        "wall_s": 1.13,
+        "exec_id": "2480"
       },
       "keyword": {
-        "retrieved_doc_id": "needle-10",
-        "retrieved_correct": true,
-        "keyword_score": 5,
-        "model_answer": "Кооперативное Содружество Федерации Манитобы было основано в 1932 году.",
-        "correct": true,
-        "prompt_tokens": 353,
-        "completion_tokens": 23,
-        "cost_usd": 6.675e-05,
-        "wall_s": 1.1,
-        "exec_id": "2235"
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": false,
+        "keyword_score": 2,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 272,
+        "completion_tokens": 3,
+        "cost_usd": 4.26e-05,
+        "wall_s": 1.11,
+        "exec_id": "2481"
       },
       "vector": {
         "retrieved_doc_id": "needle-10",
         "retrieved_correct": true,
-        "cosine_score": 0.4689290907206867,
-        "model_answer": "Кооперативное Содружество Федерации Манитобы было основано в 1932 году.",
+        "cosine_score": 0.5687593164083498,
+        "model_answer": "Коперник.",
         "correct": true,
-        "prompt_tokens": 353,
-        "completion_tokens": 23,
-        "cost_usd": 6.675e-05,
-        "wall_s": 7.43,
-        "exec_id": "2236"
+        "prompt_tokens": 238,
+        "completion_tokens": 5,
+        "cost_usd": 3.87e-05,
+        "wall_s": 1.11,
+        "exec_id": "2482"
       }
     },
     {
       "corpus_size": 500,
       "qid": "q1",
-      "question": "для каких частиц биологическая эффективность прямо связана с линейной передачей энергии данного типа частиц",
-      "reference_answer": "заряженных",
+      "question": "Как называется круг кровообращения, функционирующий через легкие?",
+      "reference_answer": "малый",
       "gold_doc_id": "needle-1",
       "stuffing": {
         "model_answer": null,
@@ -1306,40 +1306,39 @@
         "prompt_tokens": null,
         "completion_tokens": null,
         "cost_usd": null,
-        "wall_s": 1.49,
-        "exec_id": "2237",
-        "raw_error": "This endpoint's maximum context length is 128000 tokens. However, you requested about 159769 tokens (159769 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically."
+        "wall_s": 1.2,
+        "exec_id": "2483"
       },
       "keyword": {
         "retrieved_doc_id": "needle-1",
         "retrieved_correct": true,
-        "keyword_score": 10,
-        "model_answer": "Для заряженных частиц биологическая эффективность прямо связана с линейной передачей энергии.",
+        "keyword_score": 1,
+        "model_answer": "Малый круг кровообращения.",
         "correct": true,
-        "prompt_tokens": 270,
-        "completion_tokens": 21,
-        "cost_usd": 5.31e-05,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
         "wall_s": 2.16,
-        "exec_id": "2238"
+        "exec_id": "2484"
       },
       "vector": {
         "retrieved_doc_id": "needle-1",
         "retrieved_correct": true,
-        "cosine_score": 0.5401189704918439,
-        "model_answer": "Для заряженных частиц биологическая эффективность прямо связана с линейной передачей энергии.",
+        "cosine_score": 0.6163178222651524,
+        "model_answer": "Малый круг кровообращения.",
         "correct": true,
-        "prompt_tokens": 270,
-        "completion_tokens": 21,
-        "cost_usd": 5.31e-05,
-        "wall_s": 1.12,
-        "exec_id": "2239"
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 1.11,
+        "exec_id": "2485"
       }
     },
     {
       "corpus_size": 500,
       "qid": "q2",
-      "question": "В каком году Шостакович покинул школу Гляссера?",
-      "reference_answer": "в 1918",
+      "question": "Сколько длилось путешествие Моцарта в 1789 году?",
+      "reference_answer": "Путешествие длилось без малого три месяца",
       "gold_doc_id": "needle-2",
       "stuffing": {
         "model_answer": null,
@@ -1348,39 +1347,38 @@
         "completion_tokens": null,
         "cost_usd": null,
         "wall_s": 1.16,
-        "exec_id": "2240",
-        "raw_error": "This endpoint's maximum context length is 128000 tokens. However, you requested about 159741 tokens (159741 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically."
+        "exec_id": "2486"
       },
       "keyword": {
         "retrieved_doc_id": "needle-2",
         "retrieved_correct": true,
         "keyword_score": 5,
-        "model_answer": "В 1918 году.",
+        "model_answer": "Путешествие длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
         "correct": true,
-        "prompt_tokens": 267,
-        "completion_tokens": 6,
-        "cost_usd": 4.365e-05,
-        "wall_s": 2.17,
-        "exec_id": "2241"
+        "prompt_tokens": 344,
+        "completion_tokens": 24,
+        "cost_usd": 6.6e-05,
+        "wall_s": 1.11,
+        "exec_id": "2487"
       },
       "vector": {
         "retrieved_doc_id": "needle-2",
         "retrieved_correct": true,
-        "cosine_score": 0.5652319600094645,
-        "model_answer": "Шостакович покинул школу Гляссера в 1918 году.",
-        "correct": true,
-        "prompt_tokens": 267,
-        "completion_tokens": 19,
-        "cost_usd": 5.145e-05,
-        "wall_s": 1.1,
-        "exec_id": "2242"
+        "cosine_score": 0.6177550270626744,
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 344,
+        "completion_tokens": 27,
+        "cost_usd": 6.78e-05,
+        "wall_s": 1.11,
+        "exec_id": "2488"
       }
     },
     {
       "corpus_size": 500,
       "qid": "q3",
-      "question": "Какие свойства присущи волоскам шерсти белого медведя?",
-      "reference_answer": "теплоизоляционные",
+      "question": "Какая температура летом не дает возможности марафонцам показывать наилучшие результаты?",
+      "reference_answer": "высокая",
       "gold_doc_id": "needle-3",
       "stuffing": {
         "model_answer": null,
@@ -1388,40 +1386,39 @@
         "prompt_tokens": null,
         "completion_tokens": null,
         "cost_usd": null,
-        "wall_s": 1.16,
-        "exec_id": "2243",
-        "raw_error": "This endpoint's maximum context length is 128000 tokens. However, you requested about 159745 tokens (159745 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically."
+        "wall_s": 1.62,
+        "exec_id": "2489"
       },
       "keyword": {
         "retrieved_doc_id": "needle-3",
         "retrieved_correct": true,
-        "keyword_score": 4,
-        "model_answer": "Волоски шерсти белого медведя полые, полупрозрачные и имеют теплоизоляционные свойства.",
-        "correct": true,
-        "prompt_tokens": 255,
-        "completion_tokens": 25,
-        "cost_usd": 5.325e-05,
-        "wall_s": 2.17,
-        "exec_id": "2244"
+        "keyword_score": 6,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 2.14,
+        "exec_id": "2490"
       },
       "vector": {
-        "retrieved_doc_id": "needle-3",
-        "retrieved_correct": true,
-        "cosine_score": 0.6904061727997431,
-        "model_answer": "Волосков шерсти белого медведя полупрозрачные, лишены пигментной окраски и обладают теплоизоляционными свойствами.",
+        "retrieved_doc_id": "distractor-237",
+        "retrieved_correct": false,
+        "cosine_score": 0.6860593961749208,
+        "model_answer": "Температура выше 14—16 °С ухудшает результаты марафонцев.",
         "correct": false,
-        "prompt_tokens": 255,
-        "completion_tokens": 33,
-        "cost_usd": 5.805e-05,
-        "wall_s": 2.15,
-        "exec_id": "2245"
+        "prompt_tokens": 274,
+        "completion_tokens": 18,
+        "cost_usd": 5.19e-05,
+        "wall_s": 1.11,
+        "exec_id": "2491"
       }
     },
     {
       "corpus_size": 500,
       "qid": "q4",
-      "question": "Что разделяет сердце земноводных?",
-      "reference_answer": "межпредсердная перегородка",
+      "question": "В каком году была возрождена дискуссия палеонтологами Нильсов Элдриджем и Стивеном Гулдом?",
+      "reference_answer": "1972",
       "gold_doc_id": "needle-4",
       "stuffing": {
         "model_answer": null,
@@ -1429,40 +1426,39 @@
         "prompt_tokens": null,
         "completion_tokens": null,
         "cost_usd": null,
-        "wall_s": 1.19,
-        "exec_id": "2246",
-        "raw_error": "This endpoint's maximum context length is 128000 tokens. However, you requested about 159735 tokens (159735 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically."
+        "wall_s": 1.21,
+        "exec_id": "2492"
       },
       "keyword": {
-        "retrieved_doc_id": "needle-4",
-        "retrieved_correct": true,
-        "keyword_score": 2,
-        "model_answer": "Сердце земноводных разделяют межпредсердная перегородка.",
-        "correct": true,
-        "prompt_tokens": 268,
-        "completion_tokens": 19,
-        "cost_usd": 5.16e-05,
-        "wall_s": 1.1,
-        "exec_id": "2247"
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": false,
+        "keyword_score": 1,
+        "model_answer": "нет информации",
+        "correct": false,
+        "prompt_tokens": 361,
+        "completion_tokens": 2,
+        "cost_usd": 5.535e-05,
+        "wall_s": 2.17,
+        "exec_id": "2493"
       },
       "vector": {
         "retrieved_doc_id": "needle-4",
         "retrieved_correct": true,
-        "cosine_score": 0.4694115821803972,
-        "model_answer": "Сердце земноводных имеет межпредсердную перегородку.",
-        "correct": false,
-        "prompt_tokens": 268,
-        "completion_tokens": 18,
-        "cost_usd": 5.1e-05,
-        "wall_s": 1.22,
-        "exec_id": "2248"
+        "cosine_score": 0.3722983804462846,
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 6,
+        "cost_usd": 4.905e-05,
+        "wall_s": 2.16,
+        "exec_id": "2494"
       }
     },
     {
       "corpus_size": 500,
       "qid": "q5",
-      "question": "Для чего служит легкое водяным змеям?",
-      "reference_answer": "служит плавательным пузырём",
+      "question": "Какому розыгрышу Кубка мира в 1950 году предшествовала резонансная трагедия?",
+      "reference_answer": "Первому послевоенному розыгрышу.",
       "gold_doc_id": "needle-5",
       "stuffing": {
         "model_answer": null,
@@ -1470,40 +1466,39 @@
         "prompt_tokens": null,
         "completion_tokens": null,
         "cost_usd": null,
-        "wall_s": 1.51,
-        "exec_id": "2249",
-        "raw_error": "This endpoint's maximum context length is 128000 tokens. However, you requested about 159736 tokens (159736 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically."
+        "wall_s": 1.17,
+        "exec_id": "2495"
       },
       "keyword": {
         "retrieved_doc_id": "needle-5",
         "retrieved_correct": true,
-        "keyword_score": 3,
-        "model_answer": "Легкое водяным змеям служит плавательным пузырём.",
-        "correct": true,
-        "prompt_tokens": 263,
-        "completion_tokens": 17,
-        "cost_usd": 4.965e-05,
-        "wall_s": 2.15,
-        "exec_id": "2250"
+        "keyword_score": 8,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 19,
+        "cost_usd": 4.89e-05,
+        "wall_s": 3.2,
+        "exec_id": "2496"
       },
       "vector": {
         "retrieved_doc_id": "needle-5",
         "retrieved_correct": true,
-        "cosine_score": 0.43719335412406773,
-        "model_answer": "Лёгкое водяным змеям служит плавательным пузырём.",
-        "correct": true,
-        "prompt_tokens": 263,
-        "completion_tokens": 18,
-        "cost_usd": 5.025e-05,
-        "wall_s": 1.12,
-        "exec_id": "2251"
+        "cosine_score": 0.5233230576324489,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 19,
+        "cost_usd": 4.89e-05,
+        "wall_s": 2.15,
+        "exec_id": "2497"
       }
     },
     {
       "corpus_size": 500,
       "qid": "q6",
-      "question": "Какие культуры не давали урожаев у китайцев",
-      "reference_answer": "пшеница, просо и рис",
+      "question": "В чем заключается функция митохондрий?",
+      "reference_answer": "в окислении органических соединений и последующем синтезе АТФ",
       "gold_doc_id": "needle-6",
       "stuffing": {
         "model_answer": null,
@@ -1512,39 +1507,38 @@
         "completion_tokens": null,
         "cost_usd": null,
         "wall_s": 1.17,
-        "exec_id": "2252",
-        "raw_error": "This endpoint's maximum context length is 128000 tokens. However, you requested about 159739 tokens (159739 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically."
+        "exec_id": "2498"
       },
       "keyword": {
         "retrieved_doc_id": "needle-6",
         "retrieved_correct": true,
-        "keyword_score": 3,
-        "model_answer": "нет информации.",
+        "keyword_score": 2,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
         "correct": false,
-        "prompt_tokens": 261,
-        "completion_tokens": 3,
-        "cost_usd": 4.095e-05,
-        "wall_s": 1.11,
-        "exec_id": "2253"
+        "prompt_tokens": 222,
+        "completion_tokens": 35,
+        "cost_usd": 5.43e-05,
+        "wall_s": 2.57,
+        "exec_id": "2499"
       },
       "vector": {
         "retrieved_doc_id": "needle-6",
         "retrieved_correct": true,
-        "cosine_score": 0.5863709610415989,
-        "model_answer": "Пшеница, просо и рис.",
+        "cosine_score": 0.5956466409659753,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и последующем синтезе АТФ.",
         "correct": true,
-        "prompt_tokens": 261,
-        "completion_tokens": 10,
-        "cost_usd": 4.515e-05,
-        "wall_s": 2.15,
-        "exec_id": "2254"
+        "prompt_tokens": 222,
+        "completion_tokens": 29,
+        "cost_usd": 5.07e-05,
+        "wall_s": 2.17,
+        "exec_id": "2500"
       }
     },
     {
       "corpus_size": 500,
       "qid": "q7",
-      "question": "В соответствии с чем новая теория требовала меньшей скорости в более плотной среде?",
-      "reference_answer": "со здравым смыслом",
+      "question": "Кровью каких животных в основном питаются двукрылые кровососы?",
+      "reference_answer": "млекопитающих",
       "gold_doc_id": "needle-7",
       "stuffing": {
         "model_answer": null,
@@ -1552,40 +1546,39 @@
         "prompt_tokens": null,
         "completion_tokens": null,
         "cost_usd": null,
-        "wall_s": 1.16,
-        "exec_id": "2255",
-        "raw_error": "This endpoint's maximum context length is 128000 tokens. However, you requested about 159757 tokens (159757 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically."
+        "wall_s": 1.15,
+        "exec_id": "2501"
       },
       "keyword": {
         "retrieved_doc_id": "needle-7",
         "retrieved_correct": true,
-        "keyword_score": 8,
-        "model_answer": "В соответствии со здравым смыслом.",
+        "keyword_score": 2,
+        "model_answer": "Двукрылые кровососы в основном питаются кровью млекопитающих.",
         "correct": true,
-        "prompt_tokens": 207,
-        "completion_tokens": 8,
-        "cost_usd": 3.585e-05,
-        "wall_s": 2.15,
-        "exec_id": "2256"
+        "prompt_tokens": 230,
+        "completion_tokens": 21,
+        "cost_usd": 4.71e-05,
+        "wall_s": 2.16,
+        "exec_id": "2502"
       },
       "vector": {
         "retrieved_doc_id": "needle-7",
         "retrieved_correct": true,
-        "cosine_score": 0.4619695316198367,
-        "model_answer": "В соответствии со здравым смыслом.",
+        "cosine_score": 0.5857860729720794,
+        "model_answer": "В основном млекопитающих.",
         "correct": true,
-        "prompt_tokens": 207,
+        "prompt_tokens": 230,
         "completion_tokens": 8,
-        "cost_usd": 3.585e-05,
-        "wall_s": 1.1,
-        "exec_id": "2257"
+        "cost_usd": 3.93e-05,
+        "wall_s": 2.16,
+        "exec_id": "2503"
       }
     },
     {
       "corpus_size": 500,
       "qid": "q8",
-      "question": "Что помимо инвестиционных товаров и инструментов обуславливает процесс инвестирования?",
-      "reference_answer": "инвестиционные услуги",
+      "question": "Какая страна в 2001 году стала первой из пяти арктических стран, обратившейся с заявкой о расширении границ своего континентального шельфа свыше стандартного 322-километрового предела?",
+      "reference_answer": "Россия",
       "gold_doc_id": "needle-8",
       "stuffing": {
         "model_answer": null,
@@ -1593,40 +1586,39 @@
         "prompt_tokens": null,
         "completion_tokens": null,
         "cost_usd": null,
-        "wall_s": 1.19,
-        "exec_id": "2258",
-        "raw_error": "This endpoint's maximum context length is 128000 tokens. However, you requested about 159760 tokens (159760 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically."
+        "wall_s": 1.18,
+        "exec_id": "2504"
       },
       "keyword": {
         "retrieved_doc_id": "needle-8",
         "retrieved_correct": true,
-        "keyword_score": 2,
-        "model_answer": "Инвестиционные услуги.",
+        "keyword_score": 19,
+        "model_answer": "Россия.",
         "correct": true,
-        "prompt_tokens": 181,
-        "completion_tokens": 5,
-        "cost_usd": 3.015e-05,
-        "wall_s": 1.11,
-        "exec_id": "2259"
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 1.12,
+        "exec_id": "2505"
       },
       "vector": {
         "retrieved_doc_id": "needle-8",
         "retrieved_correct": true,
-        "cosine_score": 0.5714866261314977,
-        "model_answer": "Помимо инвестиционных товаров и инструментов, процесс инвестирования обуславливают инвестиционные услуги.",
+        "cosine_score": 0.6316103502960787,
+        "model_answer": "Россия.",
         "correct": true,
-        "prompt_tokens": 181,
-        "completion_tokens": 21,
-        "cost_usd": 3.975e-05,
-        "wall_s": 1.12,
-        "exec_id": "2260"
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 1.1,
+        "exec_id": "2506"
       }
     },
     {
       "corpus_size": 500,
       "qid": "q9",
-      "question": "Какой делало систему Коперника то, что в описании движения планет выбрасывался первый и самый важный эпицикл?",
-      "reference_answer": "более простой и удобной, чем птолемеевская",
+      "question": "Какая структура управляет Центральным банком?",
+      "reference_answer": "Правление банка",
       "gold_doc_id": "needle-9",
       "stuffing": {
         "model_answer": null,
@@ -1634,40 +1626,39 @@
         "prompt_tokens": null,
         "completion_tokens": null,
         "cost_usd": null,
-        "wall_s": 1.17,
-        "exec_id": "2261",
-        "raw_error": "This endpoint's maximum context length is 128000 tokens. However, you requested about 159769 tokens (159769 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically."
+        "wall_s": 1.18,
+        "exec_id": "2507"
       },
       "keyword": {
         "retrieved_doc_id": "needle-9",
         "retrieved_correct": true,
-        "keyword_score": 11,
-        "model_answer": "Система Коперника становилась более простой и удобной.",
-        "correct": false,
-        "prompt_tokens": 244,
-        "completion_tokens": 14,
-        "cost_usd": 4.5e-05,
-        "wall_s": 1.1,
-        "exec_id": "2262"
+        "keyword_score": 4,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
+        "wall_s": 1.11,
+        "exec_id": "2508"
       },
       "vector": {
         "retrieved_doc_id": "needle-9",
         "retrieved_correct": true,
-        "cosine_score": 0.5951880564864049,
-        "model_answer": "Система Коперника становилась более простой и удобной.",
-        "correct": false,
-        "prompt_tokens": 244,
-        "completion_tokens": 14,
-        "cost_usd": 4.5e-05,
+        "cosine_score": 0.6723626731190123,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
         "wall_s": 1.11,
-        "exec_id": "2263"
+        "exec_id": "2509"
       }
     },
     {
       "corpus_size": 500,
       "qid": "q10",
-      "question": "Когда было основано кооперативное Содружество Федерации Манитобы?",
-      "reference_answer": "в 1932 году",
+      "question": "Как звали ученого, модель системы мира которого была взята за основу Кеплером?",
+      "reference_answer": "Коперник",
       "gold_doc_id": "needle-10",
       "stuffing": {
         "model_answer": null,
@@ -1676,40 +1667,39 @@
         "completion_tokens": null,
         "cost_usd": null,
         "wall_s": 1.18,
-        "exec_id": "2264",
-        "raw_error": "This endpoint's maximum context length is 128000 tokens. However, you requested about 159750 tokens (159750 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically."
+        "exec_id": "2510"
       },
       "keyword": {
-        "retrieved_doc_id": "needle-10",
-        "retrieved_correct": true,
-        "keyword_score": 5,
-        "model_answer": "Кооперативное Содружество Федерации Манитобы было основано в 1932 году.",
-        "correct": true,
-        "prompt_tokens": 353,
-        "completion_tokens": 23,
-        "cost_usd": 6.675e-05,
-        "wall_s": 1.13,
-        "exec_id": "2265"
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": false,
+        "keyword_score": 2,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 272,
+        "completion_tokens": 3,
+        "cost_usd": 4.26e-05,
+        "wall_s": 2.16,
+        "exec_id": "2511"
       },
       "vector": {
         "retrieved_doc_id": "needle-10",
         "retrieved_correct": true,
-        "cosine_score": 0.4689290907206867,
-        "model_answer": "Кооперативное Содружество Федерации Манитобы было основано в 1932 году.",
+        "cosine_score": 0.5687593164083498,
+        "model_answer": "Коперник.",
         "correct": true,
-        "prompt_tokens": 353,
-        "completion_tokens": 23,
-        "cost_usd": 6.675e-05,
-        "wall_s": 1.12,
-        "exec_id": "2266"
+        "prompt_tokens": 238,
+        "completion_tokens": 5,
+        "cost_usd": 3.87e-05,
+        "wall_s": 2.25,
+        "exec_id": "2512"
       }
     }
   ],
-  "total_wall_s": 213.7053828239441,
+  "total_wall_s": 186.50717544555664,
   "embed_meta": {
     "model": "openai/text-embedding-3-small",
-    "total_cost_usd": 0.0032581199999999993,
-    "total_wall_s": 49.59650683403015,
+    "total_cost_usd": 0.00326242,
+    "total_wall_s": 49.55569243431091,
     "n_docs": 500,
     "n_queries": 10
   },

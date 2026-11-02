@@ -147,7 +147,11 @@ def _probe(out_pptx, *, kind):
 
 
 def self_test():
-    script = HERE.parents[3] / "tools" / "presentation-build" / "pptx_to_png.sh"
+    # `parents[1]` = корень репозитория (`tools/seminar-build/..`). Прежние
+    # `parents[3]` отсчитывали фиксированную глубину и в рабочей копии
+    # указывали в `/home`, а в worktree — в `.worktrees`: самопроверка падала
+    # `FileNotFoundError` на первой же пробе.
+    script = HERE.parents[1] / "tools" / "presentation-build" / "pptx_to_png.sh"
     cases = (("чужие налезли: две надписи на месте одной", "cross_broken", True, "НАЛОЖЕНИЕ"),
              ("чужие врозь: надписи на разной высоте", "cross_clean", False, "НАЛОЖЕНИЕ"),
              ("свои слиплись: межстрочный 0,80", "ink_broken", True, "СЛИПЛИСЬ"),

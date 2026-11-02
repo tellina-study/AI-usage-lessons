@@ -24,7 +24,12 @@ LibreOffice с PowerPoint понимают его как долю СОБСТВЕ
 
 `РЕЖЕТ` — фигура пересекает строку текста ЧАСТИЧНО. Плашка, внутри которой
 текст лежит целиком, — штатная форма и не считается.
+
+Перед сверкой проверяется, что pptx и pdf — ОДИН И ТОТ ЖЕ файл в двух видах
+(`pair_mismatch` ниже). Без этого проверка молча сопоставляет рамки одной
+версии со строками другой, и вывод не отличим от настоящих дефектов.
 """
+import re
 import subprocess
 import sys
 import tempfile
@@ -117,6 +122,76 @@ def spills(shape, line_bbox):
     starts_inside = st <= ly0 + OWN_TOL and sb >= ly0 + CUT_TOL
     owns = sl <= lx0 + OWN_TOL and sr >= lx1 - OWN_TOL and starts_inside
     return (ly1 - sb) if owns and ly1 - sb > CUT_TOL else 0.0
+
+
+# ── Сверяемая пара: один файл в двух видах ──────────────────────────────────
+#
+# Эта проверка — единственная в сборке, которая СОПОСТАВЛЯЕТ ДВА АРТЕФАКТА:
+# геометрию фигур из pptx и строки, нарисованные LibreOffice в pdf. Если pdf
+# собран из другой версии pptx, сопоставлять нечего — а проверка этого не видела
+# по построению: она честно мерила пересечения рамок одной версии со строками
+# другой и печатала их пачкой, не отличимой от настоящих находок.
+#
+# Замерено 2026-11-02 на деке Семинара 10. Pdf, собранный ДО пересборки одного
+# слайда (n11: две таблицы переразмечены с пяти колонок на четыре), против
+# свежей pptx дал 31 «РЕЖЕТ» глубиной до 11,7 pt — все на одной странице и все
+# ложные; pdf из HEAD против той же pptx — 300 на всей деке. Пересборка pdf из
+# той же pptx: 0. Ни одного признака подмены в выводе не было, и самый надёжный
+# сторож деки отчитался о дефекте, которого нет.
+#
+# Признак — ТЕКСТ, а не время файла: mtime переставляет и `touch`, и
+# копирование, и порядок сборки (pdf кладут рядом с pptx вторым шагом), а слова
+# на странице подменить нечем. Доля слов слайда, найденных на СВОЕЙ странице
+# pdf, замерена на обеих парах: на верной паре 1,000 на всех 64 страницах (это
+# минимум по деке, не среднее), на подменённой — 0,000–0,015 на худших
+# страницах. Порог ниже лежит в этом разрыве, с запасом в обе стороны.
+PAIR_COV = 0.90
+
+# Слова короче четырёх знаков выброшены: предлоги и обрывки дают совпадение
+# между любыми двумя страницами русского текста и размывают разрыв.
+_WORD = re.compile(r"[0-9A-Za-zА-Яа-яЁё]{4,}")
+
+
+def _words(s):
+    return {w for w in _WORD.findall(s.lower())}
+
+
+def slide_words(pptx_path):
+    out = []
+    for sl in Presentation(pptx_path).slides:
+        out.append(_words(" ".join(sh.text_frame.text for sh in sl.shapes
+                                   if sh.has_text_frame)))
+    return out
+
+
+def pair_mismatch(pptx_path, pdf_path, pages=None):
+    """Признаки того, что pdf собран НЕ из этой pptx. Пустой список — пара
+    сходится, сверять можно.
+
+    Доля считается в одну сторону: сколько слов СЛАЙДА нашлось на своей
+    странице. Обратная сторона не годится — в pdf попадает текст схем-картинок,
+    которого в pptx нет ни одной надписью, и он бы занижал долю на верной паре.
+    Слайд без текста вовсе (обложка одной картинкой) пропускается: доли у него
+    нет, и объявлять её нулём значило бы придумать расхождение.
+    """
+    words = slide_words(pptx_path)
+    doc = pymupdf.open(pdf_path)
+    try:
+        out = []
+        if doc.page_count != len(words):
+            out.append(f"в pptx {len(words)} слайдов, в pdf {doc.page_count} страниц")
+        for i, want in enumerate(words):
+            if pages is not None and i not in set(pages):
+                continue
+            if i >= doc.page_count or not want:
+                continue
+            cov = len(want & _words(doc[i].get_text())) / len(want)
+            if cov < PAIR_COV:
+                out.append(f"стр. {i + 1}: на странице нашлось {cov:.0%} слов "
+                           f"этого слайда")
+        return out
+    finally:
+        doc.close()
 
 
 def check(pptx_path, pdf_path, pages=None):
@@ -263,7 +338,12 @@ def self_test():
     sys.path.insert(0, str(HERE))
     import deck_kit as K
     import metrics as M
-    script = HERE.parents[3] / "tools" / "presentation-build" / "pptx_to_png.sh"
+    # Корень репозитория — РОВНО `tools/seminar-build/..` (`parents[1]`), а не
+    # фиксированная глубина от корня файловой системы: прежние `parents[3]`
+    # указывали в `/home` в рабочей копии и в `.worktrees` в worktree, и
+    # самопроверка падала `FileNotFoundError` ещё на первой пробе — то есть не
+    # сторожила ничего в обеих раскладках.
+    script = HERE.parents[1] / "tools" / "presentation-build" / "pptx_to_png.sh"
     ok = True
 
     def render(build, tag, d):
@@ -294,6 +374,24 @@ def self_test():
             mark = "✓" if hit == want_hit else "✗ ПРОВЕРКА МЁРТВАЯ"
             print(f"{mark} {name:38} → {msgs[0][:78] if msgs else 'чисто'}")
 
+        # ── пара не сходится: проба, которая поймала бы 31 ложный «РЕЖЕТ» ──
+        #
+        # Кормим проверку ЧУЖИМ pdf — ровно тем, что случилось на Семинаре 10,
+        # только там версии различались одним слайдом, а здесь всем текстом.
+        # Проба держит оба конца: на чужой паре признак обязан сработать, на
+        # своей — молчать, иначе отказ начнёт останавливать верные прогоны.
+        own_pptx, own_pdf = render(lambda o: _probe_cut(o, overlap=False),
+                                   "pair-own", d)
+        _, alien_pdf = render(_probe_pitch, "pair-alien", d)
+        for name, pdf_in, want_hit in (("чужой pdf: пара обязана не сойтись",
+                                        alien_pdf, True),
+                                       ("свой pdf: пара сходится", own_pdf, False)):
+            bad = pair_mismatch(str(own_pptx), str(pdf_in), pages=[0])
+            hit = bool(bad)
+            ok = ok and hit == want_hit
+            mark = "✓" if hit == want_hit else "✗ ПРОВЕРКА МЁРТВАЯ"
+            print(f"{mark} {name:38} → {bad[0][:78] if bad else 'сходится'}")
+
         # ── шаг строки: проба, которая поймала бы саму недомерку ────────────
         pptx, pdf = render(_probe_pitch, "pitch", d)
         drawn = measured_pitch(str(pdf), 0, 18.0)
@@ -317,6 +415,22 @@ def main():
         return self_test()
     pptx, pdf = args[0], args[1]
     pages = [int(x) - 1 for x in args[2:]] or None
+
+    # Отказ, а не предупреждение рядом с находками: на подменённой паре
+    # находки НЕ «частично верны», они бессмысленны целиком, и печатать их
+    # вместе с оговоркой значило бы предложить человеку выбирать, каким из
+    # тридцати одного числа верить.
+    bad = pair_mismatch(pptx, pdf, pages)
+    if bad:
+        print("⛔ ПАРА НЕ СХОДИТСЯ: pdf собран не из этой pptx — сверять нечего.")
+        for b in bad[:12]:
+            print(f"   · {b}")
+        if len(bad) > 12:
+            print(f"   · … и ещё {len(bad) - 12}")
+        print("   Пересобрать pdf из этой же pptx и повторить:\n"
+              "   tools/presentation-build/pptx_to_png.sh <pptx> <outdir> 150")
+        return 2
+
     msgs = check(pptx, pdf, pages)
     for m in msgs:
         print("⚠", m)

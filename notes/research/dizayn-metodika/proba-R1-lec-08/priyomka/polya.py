@@ -45,9 +45,13 @@ for path in sys.argv[1:]:
             l = sh.left/12700.0; w = sh.width/12700.0
             if w < 6 or w >= W - 1: continue
             vsego += 1
-            d = l - MX
-            if LO <= abs(d) <= HI:
-                melkie[round(d)] += 1; nk.add(round(d))
+            # ОБА края, не только левый: блок, стоящий ровно по левому полю и
+            # выступающий вправо, по одному левому краю неотличим от ровного
+            # (находка владельца 02.11 на кадре 2: блок 29,5-930,5 против
+            # 39,6-920,4 у соседей — вылезал на 10,1 пт в КАЖДУЮ сторону).
+            for d in (l - MX, (W - MX) - (l + w)):
+                if LO <= abs(d) <= HI:
+                    melkie[round(d)] += 1; nk.add(round(d))
         po_kadram.append(len(nk))
     n = sum(melkie.values())
     print(f"{path.split('/')[-1]:26s} мелких промахов поля: {n:4d}/{vsego} = {n/max(vsego,1)*100:5.1f}% · "

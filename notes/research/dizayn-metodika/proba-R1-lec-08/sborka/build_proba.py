@@ -47,8 +47,8 @@ from deckkit import report as deckkit_report  # noqa: E402
 from deckkit import slidefile as deckkit_slidefile  # noqa: E402
 
 
-def adapt_imena_kadrov():
-    """Даёт читателю кадров увидеть имена `r1-NN-*.md` — НАХОДКА ПРОБЫ,
+def adapt_imena_kadrov(prefix="r1"):
+    """Даёт читателю кадров увидеть имена `<prefix>-NN-*.md` — НАХОДКА ПРОБЫ,
     а не улучшение.
 
     Разнарядка (`03-RAZNARYADKA.md` §1, столбец «кадр») называет файлы
@@ -76,7 +76,7 @@ def adapt_imena_kadrov():
     old = deckkit_slidefile.slide_files
 
     def slide_files(slides_dir, only=None):
-        files = sorted(Path(slides_dir).glob("r1-*.md"), key=lambda f: f.name)
+        files = sorted(Path(slides_dir).glob(f"{prefix}-*.md"), key=lambda f: f.name)
         if not files:                      # каталог не этой пробы — чужой читатель
             return old(slides_dir, only)
         if only:
@@ -87,7 +87,7 @@ def adapt_imena_kadrov():
         return files
 
     deckkit_slidefile.slide_files = slide_files
-    print("читатель кадров подменён обёрткой: имена `r1-NN-*.md` вместо "
+    print(f"читатель кадров подменён обёрткой: имена `{prefix}-NN-*.md` вместо "
           "`sNN-*.md` (см. `adapt_imena_kadrov`)")
 
 
@@ -126,18 +126,28 @@ def main():
                           "`s*.md` и фильтрует по ИМЕНИ ФАЙЛА до первого "
                           "дефиса, не по полю `id` фронтматтера — файлы кадров "
                           "обязаны начинаться на `s`, иначе соберётся 0 кадров")
+    ap.add_argument("--krug", default="r1", choices=("r1", "r2"),
+                    help="какой круг пробы собирать: r1 (каталог kadry/) "
+                         "или r2 (каталог kadry-r2/, переделка по потолку)")
     ap.add_argument("--vis-pt", type=float, default=15.0,
                      help="новый пол кегля видимого слоя (по умолчанию 15.0)")
     a = ap.parse_args()
 
     RENDERED_DIR.mkdir(parents=True, exist_ok=True)
-    adapt_imena_kadrov()
+    krug = a.krug
+    kadry_dir = KADRY_DIR if krug == "r1" else PROBA_ROOT / "kadry-r2"
+    out_pptx = RENDERED_DIR / f"proba-{krug.upper()}.pptx"
+    out_only = RENDERED_DIR / f"proba-{krug.upper()}-chastichnaya.pptx"
+    snaps_dir = RENDERED_DIR / ("snapshots" if krug == "r1" else "snapshots-r2")
+    snaps_dir.mkdir(parents=True, exist_ok=True)
+
+    adapt_imena_kadrov(prefix=krug)
     before, after = raise_floor(new_vis_pt=a.vis_pt)
 
-    out = OUT_PPTX if not a.only else OUT_PPTX_ONLY
-    n = build(only=a.only, out=out, slides_dir=KADRY_DIR, root=PROBA_ROOT)
+    out = out_pptx if not a.only else out_only
+    n = build(only=a.only, out=out, slides_dir=kadry_dir, root=PROBA_ROOT)
     if a.only:
-        print(f"[частичная сборка] выпуск {OUT_PPTX.name} НЕ ТРОНУТ")
+        print(f"[частичная сборка] выпуск {out_pptx.name} НЕ ТРОНУТ")
 
     # Полный отчёт (предупреждения, в т.ч. `[кегль]`) — та же функция,
     # которую зовёт `build_lec07.main()`, не свой пересказ.
@@ -148,7 +158,7 @@ def main():
     rnd.verify_links(out)
 
     if a.render:
-        code = rnd.render(out, SNAPS_DIR)
+        code = rnd.render(out, snaps_dir)
         if code:
             print(f"рендер вернул код {code} — PDF/PNG могли не получиться")
             return code

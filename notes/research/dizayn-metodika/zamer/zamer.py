@@ -9,9 +9,51 @@
 
 Три источника данных, три разных набора измеримого:
   - pdf   — PyMuPDF (fitz), текстовый слой + векторные заливки (get_drawings).
-  - pptx  — python-pptx, фигуры/прогоны текста/заливки.
+  - pptx  — python-pptx, фигуры/прогоны текста/заливки. Рамка текста НЕ равна рамке фигуры:
+           см. «Приведение пути pptx к пути pdf» ниже — это починка находки Т-16.
   - raster — только PIL по пикселям (нет текстового слоя): плотность «чернил», палитра.
            Типографика и ритм для такого образца — «не измеримо», не оценка на глаз.
+
+Приведение пути pptx к пути pdf (починка Т-16, issue #307)
+----------------------------------------------------------
+До этой правки путь pptx обводил ГЕОМЕТРИЮ ФИГУРЫ (`shp.left/top/width/height`), то есть
+рамку текстового ПОЛЯ вместе со всем пустым местом внутри него, а путь pdf — рамку самих
+набранных БУКВ (`block["bbox"]` из `get_text("dict")`). Два пути меряли разные физические
+величины, а сравнивались между собой: один и тот же файл Лекции 7 давал 0,7461 как pptx и
+0,3845 как pdf при совпадающей медиане слов (137 и 137). Разбор — в журнале трения пробы
+дизайн-методики, записи Т-16 и Т-24
+(`notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA-part2.md`, `-part3.md`).
+
+Теперь путь pptx обводит ОЦЕНКУ рамки букв, абзац за абзацем — и это именно оценка, а не
+измерение: python-pptx отдаёт разметку, а не результат вёрстки, поэтому положение строк
+приходится вычислять. Способ назван приближением прямо в поле `kak_merili` каждого замера.
+Как считается:
+  - ширина строки — по настоящим метрикам глифов того же шрифтового семейства, что и в pdf:
+    `pymupdf.Font("helv"/"hebo"/"heit"/"hebi")` (Helvetica метрически совпадает с Arial),
+    `"cour"/"cobo"` для моноширинных прогонов. Сверено на 216 прогонах реального pdf Лекции 7:
+    медиана отношения «оценка/измеренная ширина» = 0,987.
+  - перенос строк — жадный, по словам, по ширине тела поля (ширина фигуры минус внутренние
+    отступы `margin_left/right`), при `word_wrap=False` переноса нет;
+  - шаг строк — `line_spacing` абзаца: множитель × 1,20 × кегль (одинарный интерлиньяж
+    PowerPoint), либо точное значение в пунктах, если задано как длина (`spcPts`);
+  - высота рамки букв строки — 1,117 × кегль (ascent+descent гарнитуры Arial по hhea);
+    измерено на pdf Лекции 7: высота строки / кегль = 1,116 на всех 106 однопрогонных строках;
+  - положение по вертикали — от привязки `vertical_anchor` (top/middle/bottom) и
+    `space_before`/`space_after` абзацев; по горизонтали — от выравнивания абзаца;
+  - `normAutofit fontScale`/`lnSpcReduction` (автоуменьшение текста под поле) учитываются,
+    если заданы в разметке.
+Единица обвода — АБЗАЦ (объединение его строк), потому что в pdf единица обвода — блок, и
+блок PyMuPDF это тоже объединение строк; обвод каждой строки отдельно дал бы систематически
+меньшую площадь, чем у эталонов, и сравнение опять поехало бы (замерено: см.
+`zamer/ISPRAVLENIE-T16.md`).
+
+Сверка починки — один и тот же файл обоими путями, пять наших колод, медиана доли площади
+под текстом: lec-07 0,3779 против 0,3845 · lec-06 0,3306 против 0,3236 · sem-08 0,2163 против
+0,2122 · проба R1 0,2230 против 0,2356 · проба R2 0,2332 против 0,2410. Худшее расхождение
+медиан — 0,0126 абсолютных (5,3% относительных) на пробе R1.
+
+Путь pdf этой правкой не тронут ни одной строкой: по нему посчитаны тринадцать эталонов, их
+числа обязаны остаться прежними до последнего знака.
 
 Разряд «справочник форм» (плакаты-таксономии) меряется только по типографике и цвету —
 плотность/изображение/ритм для него помечаются «неприменимо» по условию задания: это не
@@ -60,6 +102,18 @@ DIVIDER_MAX_WORDS = 20          # «страница-разделитель»: �
 DIVIDER_FONT_RATIO = 1.4        # и есть кегль крупнее медианного кегля кадра минимум в 1.4 раза
 IMAGE_DOMINANT_FRAC = 0.40      # «изображение занимает больше 40% площади листа»
 RASTER_QUANTIZE_COLORS = 12     # на сколько цветов квантуем растровые образцы для палитры
+
+# --- приведение пути pptx к пути pdf (починка Т-16) ---
+PPTX_PITCH_SINGLE = 1.20   # одинарный интерлиньяж PowerPoint в долях кегля (множитель
+                            # line_spacing умножается на него); проверено на pdf Лекции 7:
+                            # шаг строк / кегль = 1,319 при line_spacing 1,10 (1,10×1,20=1,32)
+                            # и 1,343 при 1,12 (1,12×1,20=1,344)
+PPTX_GLYPH_HEIGHT = 1.117  # высота рамки букв строки в долях кегля (ascent+descent Arial по
+                            # hhea: 0,905+0,212); измерено на pdf Лекции 7 — 1,116 на всех 106
+                            # однопрогонных строках, разброса нет вовсе
+PPTX_DEFAULT_SIZE = 18.0   # кегль прогона, у которого он не задан явно и унаследован от
+                            # макета (python-pptx наследование не раскрывает) — дефолт
+                            # PowerPoint; во всех пяти наших колодах таких прогонов 0
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ETALONY = os.path.normpath(os.path.join(HERE, "..", "etalony"))
@@ -363,6 +417,201 @@ def walk_shapes(shapes):
                 pass
 
 
+# --------------------------------------------------------------------------------------
+# Оценка рамки БУКВ внутри текстового поля pptx — починка Т-16.
+#
+# python-pptx отдаёт разметку, а не результат вёрстки: положения строк в файле нет, его
+# вычисляет приложение при показе. Поэтому рамка букв здесь ОЦЕНИВАЕТСЯ, а не измеряется —
+# и так и называется в поле kak_merili. Обоснование констант — в докстринге модуля.
+# --------------------------------------------------------------------------------------
+
+_PPTX_FONT_CACHE = {}
+
+
+def pptx_glyph_font(name, bold, italic):
+    """Метрики глифов для прогона pptx — из того же PyMuPDF, которым меряется путь pdf.
+
+    Helvetica метрически совпадает с Arial (ширины глифов те же), поэтому ширина строки,
+    посчитанная по "helv", воспроизводит ширину той же строки в собранном pdf: сверено на 216
+    прогонах pdf Лекции 7, медиана отношения оценка/измерение 0,987.
+    """
+    low = (name or "Arial").lower()
+    mono = ("consol" in low) or ("courier" in low) or ("mono" in low)
+    if mono:
+        key = "cobo" if bold else "cour"
+    else:
+        key = {(0, 0): "helv", (1, 0): "hebo", (0, 1): "heit", (1, 1): "hebi"}[
+            (1 if bold else 0, 1 if italic else 0)]
+    if key not in _PPTX_FONT_CACHE:
+        _PPTX_FONT_CACHE[key] = fitz.Font(key)
+    return _PPTX_FONT_CACHE[key]
+
+
+def pptx_autofit_scale(tf):
+    """(масштаб кегля, сокращение интерлиньяжа) из normAutofit, если задано в разметке.
+
+    PowerPoint умеет уменьшать текст, чтобы он влез в поле; тогда кегль в разметке больше
+    того, который виден на экране. Без этой поправки такой кадр был бы переоценён. Ни в одной
+    из пяти наших колод fontScale не задан — поправка на будущие колоды, не на нынешние.
+    """
+    try:
+        bodyPr = tf._txBody.bodyPr
+        for child in bodyPr:
+            if child.tag.endswith("}normAutofit"):
+                fs = child.get("fontScale")
+                lr = child.get("lnSpcReduction")
+                return (float(fs) / 100000.0 if fs else 1.0,
+                        float(lr) / 100000.0 if lr else 0.0)
+    except Exception:
+        pass
+    return (1.0, 0.0)
+
+
+def pptx_run_size(run, scale):
+    try:
+        if run.font.size is not None:
+            return float(run.font.size.pt) * scale
+    except Exception:
+        pass
+    return PPTX_DEFAULT_SIZE * scale
+
+
+def pptx_paragraph_lines(para, avail_w, wrap, scale):
+    """Жадный перенос абзаца по словам -> [(ширина строки в pt, кегль строки в pt)].
+
+    Ширина слова — по настоящим метрикам глифов (pptx_glyph_font), не по «среднему знаку»:
+    строка из прописных и строка из строчных одной длины занимают разную ширину, и на счёте
+    «знаков × коэффициент» это разошлось бы на десятки процентов.
+    """
+    toks = []  # (текст, ширина pt, кегль pt); пробел — отдельный токен
+    for run in para.runs:
+        text = run.text or ""
+        if not text:
+            continue
+        size = pptx_run_size(run, scale)
+        if size <= 0:
+            continue
+        try:
+            bold, italic = bool(run.font.bold), bool(run.font.italic)
+        except Exception:
+            bold, italic = False, False
+        fnt = pptx_glyph_font(run.font.name, bold, italic)
+        buf = ""
+        for ch in text:
+            if ch in " \t\u00a0":
+                if buf:
+                    toks.append((buf, fnt.text_length(buf, size), size))
+                    buf = ""
+                toks.append((" ", fnt.text_length(" ", size), size))
+            else:
+                buf += ch
+        if buf:
+            toks.append((buf, fnt.text_length(buf, size), size))
+    if not toks:
+        return []
+    if not wrap or avail_w <= 0:
+        return [(sum(w for _, w, _ in toks), max(s for _, _, s in toks))]
+    lines = []
+    cur_w, cur_size, started = 0.0, 0.0, False
+    for txt, w, size in toks:
+        if txt == " ":
+            if started:                      # ведущие пробелы строки не считаем
+                cur_w += w
+                cur_size = max(cur_size, size)
+            continue
+        if started and cur_w + w > avail_w + 0.01:
+            lines.append((cur_w, cur_size))
+            cur_w, cur_size = w, size
+        else:
+            cur_w += w
+            cur_size = max(cur_size, size)
+            started = True
+    if started:
+        lines.append((cur_w, cur_size))
+    # слово шире тела поля всё равно не вылезает за его край при показе
+    return [(min(w, avail_w), s) for w, s in lines]
+
+
+def pptx_text_ink_bboxes(shp):
+    """Оценка рамок букв в фигуре: по одной рамке на АБЗАЦ (объединение его строк).
+
+    Абзац, а не строка: в пути pdf единица обвода — блок PyMuPDF, а он тоже объединение
+    строк, и у левовыключенного абзаца его рамка шире последней строки. Обвод каждой строки
+    отдельно даёт площадь систематически ниже эталонной (замерено на всех пяти наших колодах:
+    медиана ниже pdf на 0,021–0,062 против 0,004–0,013 при обводе абзацами).
+
+    Возвращает [(абзац, рамка его букв)] — с привязкой к абзацу, чтобы «колонтитул ли это»
+    решалось по рамке самого текста, как это делает путь pdf по bbox прогона, а не по рамке
+    поля (поле во всю высоту кадра задевало бы колонтитул любым своим текстом).
+    """
+    tf = shp.text_frame
+    left, top = emu_to_pt(shp.left), emu_to_pt(shp.top)
+    width, height = emu_to_pt(shp.width), emu_to_pt(shp.height)
+    scale, ln_reduction = pptx_autofit_scale(tf)
+    try:
+        ml, mr = emu_to_pt(tf.margin_left), emu_to_pt(tf.margin_right)
+        mt, mb = emu_to_pt(tf.margin_top), emu_to_pt(tf.margin_bottom)
+    except (TypeError, ValueError):
+        ml = mr = mt = mb = 0.0
+    avail_w = max(0.0, width - ml - mr)
+    wrap = tf.word_wrap is not False
+
+    # первый проход: высоты абзацев и строки внутри них
+    laid = []       # (space_before, высота абзаца, space_after, [(ширина, кегль, dy, h)])
+    total_h = 0.0
+    for para in tf.paragraphs:
+        lines = pptx_paragraph_lines(para, avail_w, wrap, scale)
+        if not lines:
+            continue                     # пустой абзац букв не даёт — площади не занимает
+        spacing = para.line_spacing
+        exact_pt, mult = None, 1.0
+        if spacing is None:
+            mult = 1.0
+        elif hasattr(spacing, "pt"):     # точный интерлиньяж в пунктах (spcPts).
+            exact_pt = float(spacing.pt)  # ВНИМАНИЕ: Length наследует int, поэтому проверка
+        else:                             # на (int, float) здесь дала бы 914400 как множитель
+            mult = float(spacing)
+        sp_before = emu_to_pt(para.space_before) if para.space_before is not None else 0.0
+        sp_after = emu_to_pt(para.space_after) if para.space_after is not None else 0.0
+        h, rows = 0.0, []
+        for line_w, line_size in lines:
+            pitch = exact_pt if exact_pt is not None else mult * PPTX_PITCH_SINGLE * line_size
+            pitch *= (1.0 - ln_reduction)
+            glyph_h = PPTX_GLYPH_HEIGHT * line_size
+            rows.append((line_w, line_size, h + (pitch - glyph_h) / 2.0, glyph_h))
+            h += pitch
+        laid.append((sp_before, h, sp_after, rows, para))
+        total_h += sp_before + h + sp_after
+    if not laid:
+        return []
+
+    anchor = str(tf.vertical_anchor)
+    if "MIDDLE" in anchor:
+        y = top + mt + max(0.0, (height - mt - mb - total_h)) / 2.0
+    elif "BOTTOM" in anchor:
+        y = top + height - mb - total_h
+    else:
+        y = top + mt
+
+    out = []
+    for sp_before, h, sp_after, rows, para in laid:
+        y += sp_before
+        al = str(para.alignment)
+        mine = []
+        for line_w, line_size, dy, glyph_h in rows:
+            if "CENTER" in al:
+                x0 = left + ml + (avail_w - line_w) / 2.0
+            elif "RIGHT" in al:
+                x0 = left + width - mr - line_w
+            else:
+                x0 = left + ml
+            mine.append((x0, y + dy, x0 + line_w, y + dy + glyph_h))
+        out.append((para, (min(b[0] for b in mine), min(b[1] for b in mine),
+                           max(b[2] for b in mine), max(b[3] for b in mine))))
+        y += h + sp_after
+    return out
+
+
 def parse_pptx(path, log=print):
     prs = Presentation(path)
     sw, sh = emu_to_pt(prs.slide_width), emu_to_pt(prs.slide_height)
@@ -393,14 +642,18 @@ def parse_pptx(path, log=print):
             if not getattr(shp, "has_text_frame", False):
                 continue
             tf = shp.text_frame
-            block_has_text = False
-            for para in tf.paragraphs:
+            # починка Т-16: обводим оценку рамки БУКВ абзаца, а не рамку текстового поля —
+            # путь pdf обводит именно буквы, и сравнивать можно только одно с одним.
+            para_boxes = pptx_text_ink_bboxes(shp)
+            if not para_boxes:
+                continue
+            for para, pbox in para_boxes:
+                in_footer = is_footer_zone(pbox, sh)
                 for run in para.runs:
                     text = run.text or ""
                     stripped = text.strip()
                     if not stripped:
                         continue
-                    block_has_text = True
                     nchars = len(stripped)
                     size_pt = None
                     try:
@@ -411,10 +664,10 @@ def parse_pptx(path, log=print):
                     if size_pt is not None:
                         size = round(size_pt * 2) / 2.0
                         fr.font_sizes_weighted[size] += nchars
-                        if not is_footer_zone(bbox, sh):
+                        if not in_footer:
                             fr.body_font_sizes_weighted[size] += nchars
                     font_name = run.font.name or "(унаследован)"
-                    if not is_footer_zone(bbox, sh):
+                    if not in_footer:
                         fr.font_names.add(font_name)
                     try:
                         color = run.font.color
@@ -423,10 +676,9 @@ def parse_pptx(path, log=print):
                             fr.text_colors.add(rgb_to_hex(rgb[0], rgb[1], rgb[2]))
                     except Exception:
                         pass
-            if block_has_text:
-                fr.text_bboxes.append(bbox)
+                fr.text_bboxes.append(pbox)
                 fr.n_text_blocks += 1
-                fr.word_count += len([w for w in tf.text.split() if w.strip()])
+            fr.word_count += len([w for w in tf.text.split() if w.strip()])
         frames.append(fr)
     return frames
 
@@ -526,9 +778,28 @@ def runs_of(labels):
 # Сводка по образцу
 # --------------------------------------------------------------------------------------
 
-def summarize_pdf_or_pptx(name, razryad, frames, is_reference_poster):
+def summarize_pdf_or_pptx(name, razryad, frames, is_reference_poster, source="pdf"):
     n = len(frames)
-    out = {"name": name, "razryad": razryad, "n_frames": n, "unit": "кадр (страница/слайд)"}
+    out = {"name": name, "razryad": razryad, "n_frames": n, "unit": "кадр (страница/слайд)",
+            "istochnik": source}
+    # Приписка о приближении на пути pptx (починка Т-16) — добавляется в kak_merili каждого
+    # показателя, который считается по рамкам текста, чтобы оценка нигде не читалась как
+    # измерение. Путь pdf её не получает: там рамка букв приходит из файла.
+    pptx_pribl = ("" if source != "pptx" else
+                   " ПРИБЛИЖЕНИЕ (не измерение): в .pptx положения строк нет — файл хранит "
+                   "разметку, а вёрстку делает приложение при показе. Рамка букв абзаца "
+                   "ОЦЕНЕНА: ширина строк — по метрикам глифов Helvetica/Courier (метрически "
+                   "совпадают с Arial/Consolas) из того же PyMuPDF, которым меряется путь pdf; "
+                   f"перенос — жадный по словам по ширине тела поля; шаг строк — line_spacing "
+                   f"абзаца (множитель × {PPTX_PITCH_SINGLE} × кегль либо точное значение в "
+                   f"пунктах); высота рамки букв строки — {PPTX_GLYPH_HEIGHT} × кегль "
+                   "(ascent+descent Arial); положение — по vertical_anchor, space_before/after "
+                   "и выравниванию абзаца. Единица обвода — абзац (объединение его строк), как "
+                   "блок в пути pdf. До починки Т-16 здесь обводилась рамка текстового ПОЛЯ "
+                   "(shp.left/top/width/height) вместе с пустым местом внутри него, и число "
+                   "было несравнимо с эталонами: Лекция 7 давала 0,7461 вместо 0,3845. "
+                   "Сверка починки на пяти наших колодах (один файл обоими путями): худшее "
+                   "расхождение медиан 0,0126 абсолютных, 5,3% относительных.")
 
     # --- 3. типографика (всегда считаем, даже для справочников форм) ---
     # Ступени и min-кегль считаются ТОЛЬКО по body_font_sizes_weighted (колонтитул/номера
@@ -562,7 +833,10 @@ def summarize_pdf_or_pptx(name, razryad, frames, is_reference_poster):
         "kak_otdelili_kolontitul": f"верхние {int(HEADER_FRAC*100)}% и нижние {int(FOOTER_FRAC*100)}% "
                                      f"высоты кадра исключены из расчёта кегля/гарнитур основного "
                                      f"текста; отдельно исключены span'ы из одних цифр длиной ≤3 "
-                                     f"символов (номера страниц)",
+                                     f"символов (номера страниц)"
+                                     + (pptx_pribl and " Зона колонтитула на пути pptx "
+                                        "определяется по рамке букв абзаца, а не по рамке "
+                                        "текстового поля (починка Т-16).")
     }
 
     # --- 4. цвет ---
@@ -614,7 +888,8 @@ def summarize_pdf_or_pptx(name, razryad, frames, is_reference_poster):
         "kak_merili": f"слова — page.get_text('words')/текст прогонов; площадь текста — доля "
                        f"сетки {GRID}×{GRID}, покрытая объединением bbox текстовых блоков (не "
                        f"сумма bbox — так не дублируется перекрытие); «только заголовок» — "
-                       f"слов ≤{TITLE_ONLY_MAX_WORDS} и площадь текста ≤{TITLE_ONLY_MAX_AREA}",
+                       f"слов ≤{TITLE_ONLY_MAX_WORDS} и площадь текста ≤{TITLE_ONLY_MAX_AREA}"
+                       + pptx_pribl,
     }
 
     # --- 2. изображение ---
@@ -647,7 +922,8 @@ def summarize_pdf_or_pptx(name, razryad, frames, is_reference_poster):
                        f"дистанции нормированных признаков, НЕ статистический критерий — "
                        f"число раскладок зависит от порога, трактовать как порядок величины; "
                        f"разделитель — слов ≤{DIVIDER_MAX_WORDS} и есть кегль ≥"
-                       f"{DIVIDER_FONT_RATIO}× медианного кегля кадра",
+                       f"{DIVIDER_FONT_RATIO}× медианного кегля кадра"
+                       + pptx_pribl,
     }
     return out
 
@@ -708,10 +984,12 @@ def run_one(key, spec, log=print):
     if spec["type"] == "pdf":
         frames = parse_pdf(path, log=log)
         summary = summarize_pdf_or_pptx(key, spec["razryad"], frames,
-                                         is_reference_poster=(key in REFERENCE_POSTERS))
+                                         is_reference_poster=(key in REFERENCE_POSTERS),
+                                         source="pdf")
     elif spec["type"] == "pptx":
         frames = parse_pptx(path, log=log)
-        summary = summarize_pdf_or_pptx(key, spec["razryad"], frames, is_reference_poster=False)
+        summary = summarize_pdf_or_pptx(key, spec["razryad"], frames, is_reference_poster=False,
+                                         source="pptx")
     elif spec["type"] == "raster":
         pages = parse_raster(path, log=log)
         summary = summarize_raster(key, spec["razryad"], pages)

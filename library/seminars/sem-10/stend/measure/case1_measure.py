@@ -104,15 +104,18 @@ def run():
                 "gold_doc_id": gold,
                 "stuffing": {"model_answer": r_a["answer"], "correct": ok_a,
                              "prompt_tokens": r_a["prompt_tokens"], "completion_tokens": r_a["completion_tokens"],
-                             "cost_usd": r_a["cost"], "wall_s": r_a["wall_s"], "exec_id": r_a["exec_id"]},
+                             "cost_usd": r_a["cost"], "wall_s": r_a["wall_s"], "exec_id": r_a["exec_id"],
+                             "raw_error": r_a["raw_error"]},
                 "keyword": {"retrieved_doc_id": doc_b["id"], "retrieved_correct": retrieved_correct_b,
                             "keyword_score": score_b, "model_answer": r_b["answer"], "correct": ok_b,
                             "prompt_tokens": r_b["prompt_tokens"], "completion_tokens": r_b["completion_tokens"],
-                            "cost_usd": r_b["cost"], "wall_s": r_b["wall_s"], "exec_id": r_b["exec_id"]},
+                            "cost_usd": r_b["cost"], "wall_s": r_b["wall_s"], "exec_id": r_b["exec_id"],
+                            "raw_error": r_b["raw_error"]},
                 "vector": {"retrieved_doc_id": doc_c["id"], "retrieved_correct": retrieved_correct_c,
                            "cosine_score": score_c, "model_answer": r_c["answer"], "correct": ok_c,
                            "prompt_tokens": r_c["prompt_tokens"], "completion_tokens": r_c["completion_tokens"],
-                           "cost_usd": r_c["cost"], "wall_s": r_c["wall_s"], "exec_id": r_c["exec_id"]},
+                           "cost_usd": r_c["cost"], "wall_s": r_c["wall_s"], "exec_id": r_c["exec_id"],
+                           "raw_error": r_c["raw_error"]},
             })
 
     # свод по размеру/варианту

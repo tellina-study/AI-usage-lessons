@@ -1,0 +1,1232 @@
+diff --git a/tools/presentation-build/deckkit/axis.py b/tools/presentation-build/deckkit/axis.py
+index eeb9bb8198..b0a4c72aee 100644
+--- a/tools/presentation-build/deckkit/axis.py
++++ b/tools/presentation-build/deckkit/axis.py
+@@ -56,7 +56,8 @@ from dataclasses import dataclass
+ from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
+ 
+ from . import floor, metrics, prims, report
+-from .theme import DEEP, GOLD, LIGHT, MID, SLATE, SURFACE, TEAL, WHITE
++from .theme import (DEEP, GOLD, GOLD_TINT, LIGHT, MID, OUTLINE, PAD_IN, SLATE,
++                    SURFACE, TEAL, TEAL_TINT, WHITE)
+ 
+ NEEDS_ROWS = False          # ось читает `marks`, а не `rows`
+ 
+@@ -93,7 +94,50 @@ class AxisStyle:
+     ends: bool = True           # называть КОНЦЫ окна, см. `_end_label`
+     end_pt: float = 12.0        # пол видимого слоя, см. `floor.py`
+     end_w: float = 0.80
++    end_h: float = 0.26         # СВОЯ строка под концами окна
+     break_w: float = 0.09       # метка разрыва у левого конца
++    # ── ВЫРАЗИТЕЛЬНОСТЬ ФОРМЫ (круг R4 пробы) ──────────────────────
++    # Владелец, посмотрев круг R3: «таймлайн с засечками надо сделать
++    # интереснее». Ни одного НОВОГО числа, имени или источника ни одна
++    # из этих ручек на кадр не выводит — они меняют только то, КАК
++    # нарисовано уже объявленное.
++    rail: bool = True           # рельс во всю ширину серым, занятый
++                                # отрезок — бирюзовым и толще: видно, что
++                                # величины жмутся в левый огрызок, а не
++                                # «стоят на шкале вообще»
++    rail_k: float = 2.0         # во сколько раз занятый отрезок толще
++    grid: bool = True           # разрядка шкалы волосяными делениями по
++                                # тому же шагу, которым подписаны концы
++    grid_h: float = 0.05
++    tick_minor: float = 0.72    # обычная засечка короче ключевой — так
++                                # ключевая читается выше, не вырастая за
++                                # отведённую блоку высоту
++    dot_r: float = 0.075        # диск на ключевой засечке
++    leader: bool = True         # волосяная привязка подписи к засечке,
++                                # когда подпись пришлось сдвинуть от неё
++    lead_min: float = 0.18      # с какого сдвига привязка рисуется
++    # ── РАЗВЕДЕНИЕ ПОДПИСЕЙ ОДНОЙ ДОРОЖКИ (круг R4, вторая итерация) ──
++    lab_gap: float = PAD_IN     # просвет между СОСЕДНИМИ подписями одной
++                                # дорожки. Взят общий отступ деки, а не своё
++                                # число: две подписи в одной дорожке — два
++                                # соседа в одной полосе, и мера их разделения
++                                # та же, что у всего прочего в этом ядре.
++                                # Пробел на кегле 15 — 0,058"; 0,30" это пять
++                                # пробелов, то есть граница, а не промежуток
++                                # между словами. Замерено на собранном кадре
++                                # 3: зазор 0,17" (три пробела) читался ОДНОЙ
++                                # подписью «Опт, библиотека Розница,
++                                # библиотека».
++    lab_slack: float = 0.04     # запас рамки над шириной её собственного
++                                # текста: рамка в ровно измеренную ширину
++                                # рвётся на округлении разметки
++    spread_max: float = 2.0     # во сколько раз подписям дозволено
++                                # разъехаться шире своих засечек. Замерено
++                                # на собранном круге R4: у всех четырёх пар
++                                # деки это 0,7…1,0, у пробы на сошедшиеся
++                                # подписи (четыре величины в сотых долях) —
++                                # 3,2. Порог посередине, с запасом вдвое в
++                                # обе стороны
+ 
+ 
+ DEFAULT = AxisStyle()
+@@ -216,6 +260,140 @@ def _x_of(v, d, x, w, st):
+     return x + st.line_pad + inner * (v - lo) / (hi - lo)
+ 
+ 
++def _lab_w(m, st, cap):
++    """Ширина рамки подписи — по САМОЙ ДЛИННОЙ ЕЁ СОБСТВЕННОЙ СТРОКЕ, а не
++    по доле оси.
++
++    Было `lane_w`, то есть `ширина оси / число засечек`: на кадре 3 это
++    3,18" под подпись «50 · Заказ», которой нужно 0,59". Рамка, вчетверо
++    шире своего текста, не видна на снимке — зато она и есть то, чем
++    подписи наезжают друг на друга: пока рамка меряется долей оси, две
++    соседние занимают одно и то же место, как бы коротко ни были
++    подписаны.
++
++    Потолок — та же `lane_w`: одна подпись не вправе съесть всю ось. Текст
++    шире потолка переносится ровно так же, как переносился до этой правки,
++    поэтому ВЫСОТА дорожки от сужения рамки не меняется ни на одном кадре
++    (`lanes_h` зовёт эту же функцию — одно место на меру и на рисование)."""
++    need = max(metrics.text_w(ln, st.lab_pt)
++               for ln in mark_text(m).split("\n")) / 72.0
++    return min(cap, need + st.lab_slack)
++
++
++def _place(d, x, w, st=DEFAULT):
++    """РАСКЛАДКА ПОДПИСЕЙ ЗАСЕЧЕК: каждая стоит на своей засечке, в границах
++    отведённой ширины И не на соседке. Одно место на меру и на рисование.
++
++    Возвращает `{номер засечки: (левый край, ширина рамки, выключка,
++    сдвиг от своей засечки)}`.
++
++    ЧТО БЫЛО И ПОЧЕМУ СЛОМАЛОСЬ. Прежний `_clamp_lab` знал ровно одно
++    требование — «не уйти за кромку листа» — и прижимал к полю КАЖДУЮ
++    подпись по отдельности, ничего не зная о соседках. Пока засечки
++    разнесены по шкале (кадры 11 и 14), этого хватало. Кадр 3 — четыре
++    величины, три из которых (0,25 · 2,50 · 50) жмутся к левому краю окна
++    до 500, — замерен на собранном круге R4:
++
++    * верхняя дорожка: «0,25 Микросток» и «50 Заказ» получили ОДНУ И ТУ ЖЕ
++      координату 0,80" и одну ширину 3,18" — наезд 3,18", то есть полное
++      совпадение рамок. На снимке «0,25» и «50» напечатались одно поверх
++      другого;
++    * нижняя: «2,50 Опт, библиотека» и «130 Розница, библиотека» —
++      наезд 2,00", и видимый зазор между словами вышел 0,17" (три пробела),
++      отчего две подписи читались одной: «Опт, библиотека Розница,
++      библиотека»;
++    * кадр 14, нижняя дорожка: наезд 0,48" — рамки уже налезали, текст
++      спасся случайно, выключкой врозь.
++
++    Зажим не виноват: задачу «не уйти за лист» он решал. Не решалась
++    вторая, которой у него не было, — «не сесть на соседку».
++
++    КАК РЕШЕНО. Раскладка идёт ДОРОЖКОЙ ЦЕЛИКОМ, не подписью за раз:
++
++    1. рамка сужается до своего текста (`_lab_w`) — это снимает ту часть
++       наезда, которой на экране вообще ничего не соответствует;
++    2. проход слева направо: каждая следующая начинается не раньше, чем
++       кончилась предыдущая плюс `lab_gap`;
++    3. проход справа налево: если первый упёрся в правый край, подписи
++       сдвигаются обратно — порядок при этом сохраняется, а смещение от
++       своей засечки выходит наименьшим из возможных;
++    4. что не влезло и так — остаётся наездом и ВЫХОДИТ ПРЕДУПРЕЖДЕНИЕМ
++       (`check_axis`), а не тихой кашей на снимке.
++
++    Сдвинутая подпись выключается в СТОРОНУ СВОЕЙ ЗАСЕЧКИ и привязывается
++    к ней волоском (`leader`): подпись, отъехавшую молча, читают как
++    подпись соседней величины.
++
++    ПОЧЕМУ НЕ ЯРУСАМИ. Второй ярус дорожки развёл бы кадр 3 без всякого
++    сдвига вбок, но стоит высоты: нижняя дорожка выросла бы на строку
++    (0,30" на кегле 15), а кадр 3 на круге R4 уже платил за 0,26" высоты
++    ступенью кегля тела 12,0 → 10,5. Разведение вбок стоит нисколько.
++
++    `res` у краёв — место под числа концов окна, которые стоят в той же
++    полосе; см. `draw_axis`, раздел `st.ends`."""
++    cap = lane_w(d, w, st)
++    res = st.end_w if st.ends else 0.0
++    lo_x, hi_x = x + res, x + w - res
++    lanes = _lanes(d)
++    out = {}
++    for up in (True, False):
++        idx = sorted([i for i in range(len(d["marks"])) if lanes[i] == up],
++                     key=lambda i: d["marks"][i]["v"])
++        if not idx:
++            continue
++        ws = [_lab_w(d["marks"][i], st, cap) for i in idx]
++        mxs = [_x_of(d["marks"][i]["v"], d, x, w, st) for i in idx]
++        lx = [mx - lw / 2 for mx, lw in zip(mxs, ws)]
++        cur = lo_x                                  # слева направо
++        for k in range(len(idx)):
++            lx[k] = max(lx[k], cur)
++            cur = lx[k] + ws[k] + st.lab_gap
++        cur = hi_x                                  # справа налево
++        for k in range(len(idx) - 1, -1, -1):
++            lx[k] = min(lx[k], cur - ws[k])
++            cur = lx[k] - st.lab_gap
++        for k, i in enumerate(idx):
++            lx[k] = max(lx[k], lo_x)                # кромка листа — предел
++            off = (lx[k] + ws[k] / 2) - mxs[k]
++            al = (PP_ALIGN.CENTER if abs(off) <= st.lab_slack else
++                  PP_ALIGN.LEFT if off > 0 else PP_ALIGN.RIGHT)
++            out[i] = (lx[k], ws[k], al, off)
++    return out
++
++
++def _sosedi(d, w, st=DEFAULT):
++    """Соседние подписи одной дорожки после раскладки: `(i, j, наезд,
++    во сколько раз подписи разъехались шире своих засечек)`.
++
++    Две беды, и обе меряются здесь, потому что обе — про одну пару:
++
++    * НАЕЗД — раскладка не смогла развести подписи в отведённой ширине
++      (`наезд > 0`). На полной ширине тела это почти невозможно: потолок
++      рамки — `lane_w`, то есть доля оси, и сумма долей в дорожку всегда
++      влезает. Остаётся узкая колонка — там случается;
++    * РАЗЪЕХАЛИСЬ — развести удалось, но ценой такого сдвига, что подписи
++      стоят ВТРОЕ дальше друг от друга, чем их засечки. Это прямая ложь
++      той единственной вещи, ради которой ось заведена: расстояние между
++      засечками пропорционально разнице величин. Наезда при этом нет, и
++      прежняя проверка такой кадр пропускала молча."""
++    place = _place(d, 0.0, w, st)
++    lanes = _lanes(d)
++    out = []
++    for up in (True, False):
++        idx = sorted([i for i in range(len(d["marks"])) if lanes[i] == up],
++                     key=lambda i: d["marks"][i]["v"])
++        for a, b in zip(idx, idx[1:]):
++            la, wa, _, _ = place[a]
++            lb, wb, _, _ = place[b]
++            naezd = (la + wa + st.lab_gap) - lb
++            shag_z = abs(_x_of(d["marks"][b]["v"], d, 0.0, w, st)
++                         - _x_of(d["marks"][a]["v"], d, 0.0, w, st))
++            shag_p = abs((lb + wb / 2) - (la + wa / 2))
++            k = shag_p / shag_z if shag_z > 1e-6 else float("inf")
++            out.append((a, b, naezd, k))
++    return out
++
++
+ def _lanes(d):
+     """Дорожки подписей: чётные засечки над прямой, нечётные под ней.
+ 
+@@ -248,12 +426,17 @@ def lanes_h(d, w, st=DEFAULT):
+     молчащий сторож, который в этом круге чинят везде, и заводить его
+     новой формой нельзя. Замерено на живом `s45`: подпись «Врач один, со
+     справочниками» занимает две строки, то есть 0,78" против обещанных
+-    0,62"."""
+-    lw = lane_w(d, w, st)
++    0,62".
++
++    Ширина рамки берётся ТА ЖЕ, по которой подпись потом и рисуется
++    (`_lab_w`), а не `lane_w`: мера по одной ширине и рисование по другой
++    — это две формулы одного числа, и расходятся они на первой же
++    правке."""
++    cap = lane_w(d, w, st)
+     lanes = _lanes(d)
+-    up = [metrics.est_h(mark_text(m), st.lab_pt, lw, st.lab_ls)
++    up = [metrics.est_h(mark_text(m), st.lab_pt, _lab_w(m, st, cap), st.lab_ls)
+           for i, m in enumerate(d["marks"]) if lanes[i]]
+-    dn = [metrics.est_h(mark_text(m), st.lab_pt, lw, st.lab_ls)
++    dn = [metrics.est_h(mark_text(m), st.lab_pt, _lab_w(m, st, cap), st.lab_ls)
+           for i, m in enumerate(d["marks"]) if not lanes[i]]
+     return (max(up) if up else 0.0), (max(dn) if dn else 0.0)
+ 
+@@ -283,12 +466,10 @@ def line_y_of(y, d=None, w=11.0, st=DEFAULT):
+ def axis_h(d, w, st=DEFAULT):
+     """Высота оси — она же то, что ось отнимает у тела кадра."""
+     h = block_h(d, w, st)
+-    if st.ends:
+-        # Концы стоят в полосе НИЖНЕЙ дорожки подписей, но нижняя дорожка
+-        # может быть пустой (все засечки сверху) — тогда полосу надо
+-        # добавить, иначе концы сели бы на единицу оси.
+-        if lanes_h(d, w, st)[1] <= 1e-9:
+-            h += 0.26
++    if st.ends and lanes_h(d, w, st)[1] <= 1e-9:
++        # Нижняя дорожка пуста (все засечки сверху) — концам окна нужна
++        # своя полоса, иначе они сели бы на строку единицы оси.
++        h += st.end_h
+     if d["unit"] or d["base"]:
+         h += st.unit_gap + st.unit_h
+     if d["caption"]:
+@@ -330,29 +511,30 @@ def check_axis(sid, d, w, st=DEFAULT):
+             report.warn(
+                 f"[ось] {sid}: у засечки «{m['label'] or m['shown']}» нижний "
+                 f"край интервала ({m['lo']}) выше верхнего ({m['hi']})")
+-    # Подписи сошлись: на каждой дорожке соседние засечки обязаны стоять
+-    # дальше, чем половина суммы их подписей. Мера идёт по НАСТОЯЩЕЙ ширине
+-    # текста, а не по числу знаков.
+-    lanes = _lanes(d)
+-    for up in (True, False):
+-        idx = sorted([i for i in range(len(d["marks"])) if lanes[i] == up],
+-                     key=lambda i: d["marks"][i]["v"])
+-        for a, b in zip(idx, idx[1:]):
+-            ma, mb = d["marks"][a], d["marks"][b]
+-            xa = _x_of(ma["v"], d, 0.0, w, st)
+-            xb = _x_of(mb["v"], d, 0.0, w, st)
+-            wa = metrics.longest_word_w(ma["label"] or ma["shown"],
+-                                        st.lab_pt) / 72.0
+-            wb = metrics.longest_word_w(mb["label"] or mb["shown"],
+-                                        st.lab_pt) / 72.0
+-            if xb - xa < (wa + wb) / 2:
+-                report.warn(
+-                    f"[ось] {sid}: засечки «{ma['label'] or ma['shown']}» и "
+-                    f"«{mb['label'] or mb['shown']}» стоят в "
+-                    f"{xb - xa:.2f}\" друг от друга, а их подписям нужно "
+-                    f"{(wa + wb) / 2:.2f}\" — на экране они сойдутся. "
+-                    "Задайте `from`/`to` поуже, сократите подписи либо "
+-                    "сведите две близкие величины в одну засечку")
++    # ПОДПИСИ НЕ РАЗВЕЛИСЬ. Мера идёт по ТОЙ ЖЕ раскладке, по которой
++    # подписи потом рисуются (`_place`), а не по прикидке «половина суммы
++    # длиннейших слов». Прежняя прикидка на кадре 3 молчала: 1,16" между
++    # засечками против 0,63" по её формуле — а рамки при этом совпали
++    # ПОЛНОСТЬЮ, потому что мерились не текстом, а долей оси. Теперь
++    # говорит ровно то, чего раскладка сделать не смогла: подписи не
++    # помещаются в отведённую ширину даже разведёнными вплотную.
++    for a, b, naezd, k in _sosedi(d, w, st):
++        ma, mb = d["marks"][a], d["marks"][b]
++        para = (f"«{ma['label'] or ma['shown']}» и "
++                f"«{mb['label'] or mb['shown']}»")
++        if naezd > 1e-6:
++            report.warn(
++                f"[ось] {sid}: подписи {para} стоят в одной дорожке и не "
++                f"разводятся — не хватает {naezd:.2f}\" ширины, они наедут "
++                "друг на друга. Задайте `from`/`to` поуже, сократите подписи "
++                "либо сведите две близкие величины в одну засечку")
++        elif k > st.spread_max:
++            report.warn(
++                f"[ось] {sid}: подписи {para} РАЗЪЕХАЛИСЬ в {k:.1f} раза "
++                "шире, чем стоят их засечки — рисунок врёт о расстоянии, "
++                "ради которого эта форма и заведена. Сократите подписи, "
++                "задайте `from`/`to` поуже либо сведите две близкие величины "
++                "в одну засечку")
+ 
+ 
+ def draw_axis(s, sid, d, x, y, w, st=DEFAULT, tag=None):
+@@ -360,11 +542,69 @@ def draw_axis(s, sid, d, x, y, w, st=DEFAULT, tag=None):
+     Возвращает занятую высоту."""
+     tag = tag or sid
+     lanes = _lanes(d)
++    place = _place(d, x, w, st)         # раскладка подписей — одна на всю ось
+     top = y
+     up_h, dn_h = lanes_h(d, w, st)
+     line_y = line_y_of(top, d, w, st)
+-    prims.rect(s, x + st.line_pad / 2, line_y,
+-               w - st.line_pad, st.line_h, LIGHT, count="ось")
++    lo_v, hi_v = span(d, st)
++    step = _step(hi_v - lo_v)
++    # ── РЕЛЬС ВО ВСЮ ОТВЕДЁННУЮ ШИРИНУ, ОТ ПОЛЯ ДО ПОЛЯ ─────────────
++    # Было `x + line_pad / 2` шириной `w - line_pad`: прямая начиналась на
++    # 19,8 пт правее поля и ни с чем на кадре не совпадала — пятая левая
++    # вертикаль из пяти (находка владельца по кругу R3). Теперь прямая
++    # стоит РОВНО на поле, а запас под крайние подписи остаётся там, где
++    # он и нужен, — в `_x_of`, то есть в положении ЗАСЕЧЕК, не прямой.
++    if st.rail:
++        prims.rect(s, x, line_y, w, st.line_h, OUTLINE, count="ось")
++        # ТОЛЬКО ПО ВЕЛИЧИНАМ ЗАСЕЧЕК, без краёв интервалов. Замерено
++        # глазами на первом же собранном кадре: с краями отрезок кадра 3
++        # растянулся от 0,25 до 499 — то есть почти во всю шкалу — и
++        # ПРОТИВОРЕЧИЛ подписи схемы, которая говорит, что три способа из
++        # четырёх прижаты к левому краю. Интервал — про точность одной
++        # величины, занятый отрезок — про то, где стоят сами величины.
++        vals = [m["v"] for m in d["marks"]]
++        ax = _x_of(min(vals), d, x, w, st)
++        bx = _x_of(max(vals), d, x, w, st)
++        th = st.line_h * st.rail_k
++        # ИНТЕРВАЛЫ РИСУЮТСЯ ДО занятого отрезка и тоньше его — иерархия
++        # одной краской, а не двумя. Порядок здесь несущий, а не случайный:
++        # пока интервал ложился ПОВЕРХ (как было до этого круга), кадр 3
++        # уходил в показ сплошной полосой от края до края — у розницы
++        # интервал 130-499, и он закрашивал ровно тот пустой кусок шкалы,
++        # ради показа которого занятый отрезок и заведён. Теперь толстым
++        # набрано, ГДЕ СТОЯТ величины, тонким — куда дотягиваются их
++        # пределы, и первое не тонет во втором.
++        for m in d["marks"]:
++            if m["lo"] is None or m["hi"] is None:
++                continue
++            lx, hx = _x_of(m["lo"], d, x, w, st), _x_of(m["hi"], d, x, w, st)
++            prims.rect(s, min(lx, hx), line_y + (st.line_h - st.ci_h) / 2,
++                       max(abs(hx - lx), st.tick_w), st.ci_h, TEAL,
++                       count="интервал")
++        # ЗАНЯТЫЙ ОТРЕЗОК — то, что уже сказано засечками, и ничего
++        # сверх: от наименьшей величины до наибольшей. Он и показывает
++        # то, что прежде приходилось дочитывать подписью под схемой, —
++        # сколько шкалы величины занимают, а сколько пусто.
++        prims.rect(s, min(ax, bx), line_y - (th - st.line_h) / 2,
++                   max(abs(bx - ax), st.tick_w), th, TEAL, count="занятое")
++    else:
++        prims.rect(s, x, line_y, w, st.line_h, LIGHT, count="ось")
++    if st.grid:
++        # РАЗРЯДКА тем же шагом, которым подписаны концы окна: деления не
++        # несут ни одного числа, которого на кадре ещё нет, — они дают
++        # глазу масштаб, по которому читается, далеко ли засечки друг от
++        # друга. Без них прямая была ровной полосой без единицы длины.
++        k = math.ceil(lo_v / step)
++        while k * step < hi_v - 1e-9:
++            gv = k * step
++            k += 1
++            if abs(gv - lo_v) < 1e-9:
++                continue
++            gx = _x_of(gv, d, x, w, st)
++            if gx <= x or gx >= x + w:
++                continue
++            prims.rect(s, gx - 0.006, line_y + st.line_h,
++                       0.012, st.grid_h, OUTLINE, count="деление")
+     if d["zero"]:
+         zx = _x_of(0.0, d, x, w, st)
+         prims.rect(s, zx - st.tick_w / 2, line_y - st.tick_h - 0.10,
+@@ -377,25 +617,28 @@ def draw_axis(s, sid, d, x, y, w, st=DEFAULT, tag=None):
+                        quiet=True)
+     if st.ends:
+         # КОНЦЫ ОКНА НАЗВАНЫ. Без них ось читается шкалой от нуля до ста:
+-        # приёмка глазами замерила `s05` — окно 70…95, и зал, принявший
+-        # левый край за ноль, прочтёт 74 как «почти ничего», а 92 как
+-        # «почти всё». Пропорции при этом верные: форма не врала, ей не
+-        # хватало рамки отсчёта. У оси с нулём по центру эта рамка была с
+-        # самого начала (сам ноль подписан), у общей шкалы — не было.
+-        lo, hi = span(d, st)
+-        step = _step(hi - lo)
++        # приёмка глазами замерила `s05` Лекции 7 — окно 70…95, и зал,
++        # принявший левый край за ноль, прочтёт 74 как «почти ничего», а
++        # 92 как «почти всё». Пропорции при этом верные: форма не врала,
++        # ей не хватало рамки отсчёта.
++        #
++        # Прижаты К ПОЛЮ и к правой кромке, а не центрированы по краю
++        # прямой: центрирование уводило левую рамку на −9 пт от поля
++        # (замер круга R3). Набраны КУРСИВОМ и серым — чтобы число
++        # границы не читалось как ещё одна величина рядом с величинами
++        # засечек; место под них в своей полосе освобождает `_clamp_lab`.
+         floor.pt(st.end_pt, tag, "конец оси")
+-        for v, ax in ((lo, x + st.line_pad / 2 - st.end_w / 2),
+-                      (hi, x + w - st.line_pad / 2 - st.end_w / 2)):
+-            prims.text_box(s, ax, line_y + st.line_h + 0.04, st.end_w, 0.24,
++        for v, ax, al in ((lo_v, x, PP_ALIGN.LEFT),
++                          (hi_v, x + w - st.end_w, PP_ALIGN.RIGHT)):
++            prims.text_box(s, ax, line_y + st.line_h + 0.03, st.end_w, 0.24,
+                            _fmt(v, step), size=st.end_pt, color=SLATE,
+-                           align=PP_ALIGN.CENTER, ls=1.0,
++                           italic=True, align=al, ls=1.0,
+                            tag=f"{tag}/конец", quiet=True)
+-        if not d["zero"] and lo > 0:
++        if not d["zero"] and lo_v > 0:
+             # Окно НЕ от нуля — об этом говорит разрыв у левого конца,
+             # знак того же рода, каким его рисуют на графиках. Словами это
+             # стоило бы строки, а кадры деки стоят у предела.
+-            bx = x + st.line_pad / 2 + st.break_w
++            bx = x + st.break_w
+             for dx in (0.0, st.break_w * 0.9):
+                 prims.rect(s, bx + dx, line_y - st.line_h * 1.6,
+                            st.break_w * 0.45, st.line_h * 4.2, WHITE,
+@@ -404,26 +647,47 @@ def draw_axis(s, sid, d, x, y, w, st=DEFAULT, tag=None):
+         mx = _x_of(m["v"], d, x, w, st)
+         up = lanes[i]
+         col = GOLD if m["key"] else MID
+-        if m["lo"] is not None and m["hi"] is not None:
+-            lx, hx = _x_of(m["lo"], d, x, w, st), _x_of(m["hi"], d, x, w, st)
+-            prims.rect(s, lx, line_y + (st.line_h - st.ci_h) / 2, hx - lx,
+-                       st.ci_h, TEAL, count="интервал")
++        # ЗАСЕЧКА КЛЮЧЕВОЙ ВЕЛИЧИНЫ ВЫШЕ ОСТАЛЬНЫХ — но выше не потому,
++        # что выросла она, а потому, что обычные стали короче (`tick_minor`).
++        # Рост вверх съел бы просвет до дорожки подписей (0,10" против
++        # прироста 0,13") и подпись наехала бы на засечку; укорочение
++        # обычных даёт ту же разницу на глаз, не трогая высоту блока,
++        # которую `block_h` уже посчитал по `tick_h`.
++        th = st.tick_h if m["key"] else st.tick_h * st.tick_minor
+         prims.rect(s, mx - st.tick_w / 2,
+-                   line_y - st.tick_h if up else line_y + st.line_h,
+-                   st.tick_w, st.tick_h, col, count="засечка")
++                   line_y - th if up else line_y + st.line_h,
++                   st.tick_w, th, col, count="засечка")
+         if m["key"]:
++            # Диск на самой прямой: ключевая величина названа формой, а
++            # не только цветом — с задних рядов золотой штрих шириной
++            # 4 пт от бирюзового отличается хуже, чем круг.
++            prims.oval(s, mx - st.dot_r, line_y + st.line_h / 2 - st.dot_r,
++                       2 * st.dot_r, 2 * st.dot_r, GOLD, count="ключ")
+             report.GOLD_SEEN.add(sid)
+         lane_y = (line_y - st.tick_h - st.lane_gap - up_h) if up \
+             else (line_y + st.line_h + st.tick_h + st.lane_gap)
+         text = mark_text(m)
+-        lw = lane_w(d, w, st)
+         floor.pt(st.lab_pt, tag, "подпись засечки")
++        lx, lw, al, off = place[i]
++        if st.leader and abs(off) > st.lead_min:
++            # Подпись пришлось сдвинуть от своей засечки — значит её надо
++            # к засечке ПРИВЯЗАТЬ, иначе прижатая к полю подпись читается
++            # как подпись соседней величины. Волосяная линия идёт от
++            # засечки к краю рамки, с той стороны, в которую сдвинули.
++            if al == PP_ALIGN.LEFT:
++                ax0, ax1 = lx + 0.04, mx
++            else:
++                ax0, ax1 = mx, lx + lw - 0.04
++            ly = (line_y - th - 0.035) if up else (line_y + st.line_h
++                                                   + th + 0.025)
++            prims.rect(s, min(ax0, ax1), ly, max(abs(ax1 - ax0), 0.02),
++                       0.011, OUTLINE, count="привязка")
+         # Без `quiet`: рамка подписи теперь мерена по её собственному
+         # тексту, значит предупреждению есть что сказать, и затыкать его
+         # нечем.
+-        prims.text_box(s, mx - lw / 2, lane_y, lw, up_h if up else dn_h,
++        prims.text_box(s, lx, lane_y, lw, up_h if up else dn_h,
+                        text, size=st.lab_pt, bold=False, color=DEEP,
+-                       align=PP_ALIGN.CENTER,
++                       align=al,
+                        anchor=MSO_ANCHOR.BOTTOM if up else MSO_ANCHOR.TOP,
+                        ls=st.lab_ls, tag=f"{tag}/засечка{i + 1}")
+     cy = top + block_h(d, w, st)
+diff --git a/tools/presentation-build/deckkit/columns.py b/tools/presentation-build/deckkit/columns.py
+index 49dc2fb384..2775667c47 100644
+--- a/tools/presentation-build/deckkit/columns.py
++++ b/tools/presentation-build/deckkit/columns.py
+@@ -45,11 +45,19 @@
+ объявлять не нужно.
+ """
+ from . import floor, metrics, prims, report
+-from .theme import DEEP, LIGHT, MID, SURFACE, TEAL, WHITE
++from .theme import DEEP, LIGHT, MID, PAD_IN, SURFACE, TEAL, WHITE
+ 
+ GAP = 0.34
+-PAD = 0.18
+-TOP_PAD = 0.17
++# Внутренний отступ столбца — одно число ядра (`theme.PAD_IN`, круг R4
++# пробы). Было 0,18" и совпадало с `vyvody`/`epohi` лишь по случаю.
++PAD = PAD_IN
++# Вертикальный отступ столбца УМЕНЬШЕН с 0,17" до 0,12" — ровно затем,
++# чтобы вернуть кадру высоту, которую забрал горизонтальный отступ,
++# поднятый до `PAD_IN`. Замерено: без этого перечни обоих столбцов
++# кадра r113 перестают влезать (1,30" против 1,24") — блокирующая
++# `[высота]` на замороженном содержании. Коробка целиком осталась той
++# же высоты, обмен внутри неё: горизонталь взяла, вертикаль отдала.
++TOP_PAD = 0.12
+ HEAD_PT = 14.0
+ HEAD_LS = 1.12
+ # Пол видимого слоя (`floor.py`). Подбор берёт НАИБОЛЬШИЙ кегль, который
+@@ -202,6 +210,22 @@ def _doli(dolya_levogo, n, cols):
+                 f"не совпадает с числом столбцов {n}")
+         itog = sum(doli)
+         return [d / itog for d in doli]
++    if dolya_levogo is None:
++        # ДОЛЯ НЕ ОБЪЯВЛЕНА — мерится по содержимому, и на ДВУХ столбцах
++        # тоже (круг R4 пробы). Прежде `None` сюда прийти не мог: пара
++        # всегда получала скаляр, и скаляр этот по умолчанию был 0,5 —
++        # то есть два столбца всегда делили ширину ровно пополам,
++        # независимо от того, что в них написано.
++        #
++        # Владелец, круг R3: «ассиметричных паттернов так и не хватает, и
++        # вёрстка скучная». Это один из немногих случаев, где асимметрию
++        # не надо рисовать — её достаточно ПЕРЕСТАТЬ ПОДАВЛЯТЬ: ширина
++        # столбца идёт от того, сколько в нём написано, тем же корнем из
++        # медианной длины, которым она уже считается у трёх столбцов.
++        # Кадр, объявивший долю явно, по-прежнему получает ровно её.
++        doli = _avto_doli(cols)
++        itog = sum(doli)
++        return [d / itog for d in doli]
+     if n == 2:
+         d0 = min(0.75, max(0.25, float(dolya_levogo)))
+         return [d0, 1.0 - d0]
+@@ -215,6 +239,44 @@ def _doli(dolya_levogo, n, cols):
+     return [d / itog for d in doli]
+ 
+ 
++def nuzhnaya_h(cols, w, dolya_levogo=None):
++    """Высота, которая столбцам НУЖНА при наибольшем кегле, — не та, что
++    осталась на кадре (круг R4 пробы).
++
++    Зачем. Высоту столбцам всегда назначал вызывающий код «сколько
++    осталось до подвала, но не больше `MAX_H`», и коробка выходила ровно
++    такой независимо от того, два в ней пункта или шесть. Замерено на
++    собранном кадре r110: текст левого столбца кончается на 4,00", коробка
++    идёт до 4,73" — три четверти дюйма пустого поля под текстом, и столько
++    же под правым. Владелец про такие кадры сказал «вёрстка скучная», и
++    это одно из мест, где скука именно в этом: коробка не обнимает то, что
++    в ней написано.
++
++    Считается по тем же `_doli`/`est_h`/`ITEM_*`, которыми столбцы
++    РИСУЮТСЯ — вторая формула той же высоты разошлась бы с первой на
++    первой же правке."""
++    n = len(cols)
++    if not n:
++        return 0.0
++    doli = _doli(dolya_levogo, n, cols)
++    shiriny = [(w - GAP * (n - 1)) * d for d in doli]
++    nado = 0.0
++    for c, cw in zip(cols, shiriny):
++        iw = cw - 2 * PAD
++        h = TOP_PAD * 2
++        if c["head"]:
++            h += metrics.est_h(c["head"], HEAD_PT, iw, HEAD_LS) + 0.12
++        body = "\n".join("• " + it for it in c["items"])
++        if body:
++            h += metrics.est_h(body, ITEM_HI, iw, ITEM_LS)
++        nado = max(nado, h)
++    return nado
++
++
++# УМОЛЧАНИЕ ОСТАЁТСЯ 0,5, а не `None`: по этому пути идут обе доставленные
++# деки (`build_lec07.content` зовёт без доли), и менять им ширины столбцов
++# задним числом нельзя. Меру по содержимому берёт тот, кто спросил её
++# явным `dolya_levogo=None`.
+ def draw_columns(s, sid, cols, x, y, w, h, dolya_levogo=0.5, pary=False):
+     """Два ИЛИ три столбца в коробках мотива. Первый на поверхности,
+     остальные белые с бирюзовой обводкой — различие сторон держится цветом
+diff --git a/tools/presentation-build/deckkit/epohi.py b/tools/presentation-build/deckkit/epohi.py
+index 597e1f5b69..58747a28f2 100644
+--- a/tools/presentation-build/deckkit/epohi.py
++++ b/tools/presentation-build/deckkit/epohi.py
+@@ -46,7 +46,7 @@ from dataclasses import dataclass
+ from pptx.enum.text import PP_ALIGN
+ 
+ from . import floor, metrics, prims, report
+-from .theme import DEEP, GOLD, LIGHT, MID, SURFACE, TEAL
++from .theme import DEEP, GOLD, LIGHT, MID, PAD_IN, SURFACE, TEAL
+ 
+ TOP_KEYS = {"left", "right", "obshchiy_vyvod"}
+ CARD_KEYS = {"head", "steps", "vyvod"}
+@@ -55,7 +55,20 @@ STEP_KEYS = {"label", "text"}
+ 
+ @dataclass(frozen=True)
+ class EpohiStyle:
+-    pad: float = 0.18
++    pad: float = PAD_IN  # одно число ядра, см. `theme.PAD_IN`
++    # ВЕРТИКАЛЬНЫЙ отступ НЕ сведён к `PAD_IN` нарочно, и это названо, а не
++    # умолчано. Находка владельца — про ЛЕВЫЕ ВЕРТИКАЛИ («границы не бьются
++    # на слайде»), то есть про горизонталь; вертикальный отступ ни одной
++    # вертикали не двигает. А поднять его с прежнего значения до 0,30"
++    # значит отнять у кадра высоту — замерено на этом же круге: сведение
++    # обоих отступов разом дало девять блокирующих `[высота]` на шестнадцати
++    # кадрах при замороженном содержании. Горизонталь сведена, вертикаль
++    # оставлена, обмен назван.
++    vpad: float = 0.14   # внутренний отступ СВЕРХУ и СНИЗУ: уменьшен с
++                         # 0,18" тем же обменом, что `columns.TOP_PAD`, —
++                         # горизонталь взяла 0,12" на карточку, вертикаль
++                         # вернула их же. Замер кадра r104: без обмена
++                         # карточки эпох переезжают подвал на 0,09"
+     gap: float = 0.26                  # просвет между карточками
+     head_pt: float = 16.0
+     head_ls: float = 1.08
+@@ -74,7 +87,8 @@ class EpohiStyle:
+     obshchiy_pt: float = 15.0          # пол видимого слоя
+     obshchiy_ls: float = 1.16
+     obshchiy_gap: float = 0.20         # карточки — общий вывод
+-    obshchiy_pad: float = 0.16
++    obshchiy_pad: float = PAD_IN  # одно число ядра, см. `theme.PAD_IN`
++    obshchiy_vpad: float = 0.13   # у общего вывода — СВЕРХУ и СНИЗУ
+     min_card_w: float = 3.00
+     min_step_w: float = 0.60
+     max_steps: int = 5
+@@ -206,7 +220,7 @@ def _vyvod_h(card, inner_w, st):
+ 
+ def card_h(card, cw, st=DEFAULT):
+     inner_w = max(0.3, cw - 2 * st.pad)
+-    h = 2 * st.pad
++    h = 2 * st.vpad
+     h += metrics.est_h(card["head"], st.head_pt, inner_w, st.head_ls, True)
+     h += st.head_gap
+     h += _body_h(card, inner_w, st)
+@@ -219,7 +233,7 @@ def _obshchiy_h(d, w, st=DEFAULT):
+     if not d["obshchiy_vyvod"]:
+         return 0.0
+     iw = max(0.3, w - 2 * st.obshchiy_pad)
+-    return (2 * st.obshchiy_pad
++    return (2 * st.obshchiy_vpad
+             + metrics.est_h(d["obshchiy_vyvod"], st.obshchiy_pt, iw,
+                             st.obshchiy_ls, True))
+ 
+@@ -315,7 +329,7 @@ def _draw_card(s, sid, card, x, y, cw, ch, stroke, st, tag):
+                     stroke_pt=1.5)
+     inner_w = max(0.3, cw - 2 * st.pad)
+     cx = x + st.pad
+-    cy = y + st.pad
++    cy = y + st.vpad
+     floor.pt(st.head_pt, tag, "заголовок эпохи")
+     hh = metrics.est_h(card["head"], st.head_pt, inner_w, st.head_ls, True)
+     prims.text_box(s, cx, cy, inner_w, hh, card["head"], size=st.head_pt,
+diff --git a/tools/presentation-build/deckkit/fazy.py b/tools/presentation-build/deckkit/fazy.py
+index edaa463a01..4d720299c6 100644
+--- a/tools/presentation-build/deckkit/fazy.py
++++ b/tools/presentation-build/deckkit/fazy.py
+@@ -51,7 +51,7 @@ from dataclasses import dataclass
+ from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
+ 
+ from . import floor, metrics, prims, report
+-from .theme import DEEP, GOLD, LIGHT, MID, SURFACE
++from .theme import DEEP, GOLD, LIGHT, MID, PAD_IN, SURFACE
+ 
+ FAZY_KEYS = {"groups", "itog"}
+ GROUP_KEYS = {"head", "steps", "model_in"}
+@@ -59,7 +59,16 @@ GROUP_KEYS = {"head", "steps", "model_in"}
+ 
+ @dataclass(frozen=True)
+ class FazyStyle:
+-    pad: float = 0.12               # поле внутри клетки
++    pad: float = PAD_IN             # поле внутри клетки, см. `theme`
++    # ВЕРТИКАЛЬНЫЙ отступ НЕ сведён к `PAD_IN` нарочно, и это названо, а не
++    # умолчано. Находка владельца — про ЛЕВЫЕ ВЕРТИКАЛИ («границы не бьются
++    # на слайде»), то есть про горизонталь; вертикальный отступ ни одной
++    # вертикали не двигает. А поднять его с прежнего значения до 0,30"
++    # значит отнять у кадра высоту — замерено на этом же круге: сведение
++    # обоих отступов разом дало девять блокирующих `[высота]` на шестнадцати
++    # кадрах при замороженном содержании. Горизонталь сведена, вертикаль
++    # оставлена, обмен назван.
++    vpad: float = 0.12              # внутри клетки СВЕРХУ и СНИЗУ
+     gap: float = 0.08               # просвет клетка — стрелка (внутри фазы)
+     arrow_w: float = 0.22
+     arrow_h: float = 0.13
+@@ -78,7 +87,8 @@ class FazyStyle:
+     itog_pt: float = 15.0
+     itog_ls: float = 1.16
+     itog_gap: float = 0.20          # клетки — плашка итога (считая связку)
+-    itog_pad: float = 0.16
++    itog_pad: float = PAD_IN  # одно число ядра, см. `theme.PAD_IN`
++    itog_vpad: float = 0.16   # у итоговой полосы — СВЕРХУ и СНИЗУ
+     tie_w: float = 0.022
+     tie_min: float = 0.10
+     max_groups: int = 4
+@@ -221,7 +231,7 @@ def cell_h(d, w, st=DEFAULT):
+     best = st.cell_min_h
+     for g in d["groups"]:
+         for t in g["steps"]:
+-            h = 2 * st.pad + min(st.cell_rows, metrics.n_lines(t, f, iw, True)) \
++            h = 2 * st.vpad + min(st.cell_rows, metrics.n_lines(t, f, iw, True)) \
+                 * _cell_line_h(f, st)
+             best = max(best, h)
+     return best
+@@ -241,7 +251,7 @@ def _itog_h(d, w, st=DEFAULT):
+     if not d["itog"]:
+         return 0.0
+     iw = max(0.3, w - 2 * st.itog_pad)
+-    return (st.itog_gap + 2 * st.itog_pad
++    return (st.itog_gap + 2 * st.itog_vpad
+             + metrics.est_h(d["itog"], st.itog_pt, iw, st.itog_ls, True))
+ 
+ 
+diff --git a/tools/presentation-build/deckkit/figure.py b/tools/presentation-build/deckkit/figure.py
+index 952d92fc58..3f4e086c7e 100644
+--- a/tools/presentation-build/deckkit/figure.py
++++ b/tools/presentation-build/deckkit/figure.py
+@@ -81,6 +81,18 @@ class FigureStyle:
+     note_italic: bool = True
+     max_val_chars: int = 16      # дальше это не число, а фраза
+     center: bool = True
++    # ── ПЕРЕВЁРНУТЫЙ КАДР ДО КРОМОК (круг R4 пробы) ──────────────────
++    # Владелец, круг R3: «ассиметричных паттернов так и не хватает, и
++    # вёрстка скучная». Замерено на собранном кадре r108: тёмная коробка
++    # величины занимала верхнюю половину листа (высота по содержимому),
++    # под ней оставалось 2,7" белого — то есть кадр-удар, вся работа
++    # которого в силе контраста, выходил слабее любой соседней плашки.
++    #
++    # `bleed` даёт ему то, ради чего `invert` и заведён: тёмная полоса
++    # ОТ КРОМКИ ДО КРОМКИ на всю высоту тела, прямые углы (скруглённый
++    # край у кромки листа читается как «коробочка у края», см. ту же
++    # оговорку у `media.draw_bleed`), величина посередине.
++    bleed: bool = False
+     min_h: float = 1.70
+ 
+ 
+@@ -186,17 +198,27 @@ def check_figure(sid, fig, w, st=DEFAULT):
+             "База называет, ОТ ЧЕГО считается число")
+ 
+ 
+-def draw_figure(s, sid, fig, x, y, w, st=DEFAULT, tag=None):
++def draw_figure(s, sid, fig, x, y, w, st=DEFAULT, tag=None, h_force=None):
+     """Величина во весь кадр: число · золотая черта · единица · база ·
+-    оговорка. Возвращает занятую высоту."""
++    оговорка. Возвращает занятую высоту.
++
++    `h_force` — высота полосы, назначенная кадром (см. `st.bleed`). Текст
++    при этом центрируется по ней вертикально; сама мера содержимого
++    (`figure_h`) не трогается, иначе раскладка кадра и рисование
++    разошлись бы."""
+     tag = tag or sid
+     iw = _iw(w, st)
+-    h = figure_h(fig, w, st)
++    h_text = figure_h(fig, w, st)
++    h = max(h_text, h_force) if h_force else h_text
+     dark = fig["invert"]
+-    prims.ocean_box(s, x, y, w, h,
+-                    fill=DEEP if dark else SURFACE,
+-                    stroke=DEEP if dark else LIGHT,
+-                    stroke_pt=1.5)
++    if st.bleed:
++        prims.rect(s, x, y, w, h, DEEP if dark else SURFACE, count="мотив")
++    else:
++        prims.ocean_box(s, x, y, w, h,
++                        fill=DEEP if dark else SURFACE,
++                        stroke=DEEP if dark else LIGHT,
++                        stroke_pt=1.5)
++    y += max(0.0, (h - h_text) / 2)
+     align = PP_ALIGN.CENTER if st.center else PP_ALIGN.LEFT
+     f = val_size(fig, w, st)
+     floor.pt(f, tag, "величина кадра")
+diff --git a/tools/presentation-build/deckkit/itog.py b/tools/presentation-build/deckkit/itog.py
+index 50027c8833..5aa8a1d3ce 100644
+--- a/tools/presentation-build/deckkit/itog.py
++++ b/tools/presentation-build/deckkit/itog.py
+@@ -47,7 +47,7 @@ from dataclasses import dataclass, replace
+ from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
+ 
+ from . import floor, markup, metrics, prims, report
+-from .theme import DEEP, GOLD, LIGHT, SURFACE
++from .theme import DEEP, GOLD, LIGHT, PAD_IN, SURFACE
+ 
+ # Ключи, которые форма ЧИТАЕТ. Всё прочее называется `[итог]`: молчащий ключ
+ # хуже отсутствующего — порядный `arrows` на `s36` стоял, не читался, и
+@@ -57,7 +57,16 @@ KEYS = {"yarlyk", "text"}
+ 
+ @dataclass(frozen=True)
+ class ItogStyle:
+-    pad: float = 0.20            # поле внутри полосы
++    pad: float = PAD_IN          # поле внутри полосы, см. `theme.PAD_IN`
++    # ВЕРТИКАЛЬНЫЙ отступ НЕ сведён к `PAD_IN` нарочно, и это названо, а не
++    # умолчано. Находка владельца — про ЛЕВЫЕ ВЕРТИКАЛИ («границы не бьются
++    # на слайде»), то есть про горизонталь; вертикальный отступ ни одной
++    # вертикали не двигает. А поднять его с прежнего значения до 0,30"
++    # значит отнять у кадра высоту — замерено на этом же круге: сведение
++    # обоих отступов разом дало девять блокирующих `[высота]` на шестнадцати
++    # кадрах при замороженном содержании. Горизонталь сведена, вертикаль
++    # оставлена, обмен назван.
++    vpad: float = 0.16           # внутри полосы СВЕРХУ и СНИЗУ
+     chip_pt: float = 14.0        # пол видимого слоя, см. `floor.py`
+     chip_pad: float = 0.15       # поле внутри ярлыка, с каждой стороны
+     chip_h: float = 0.36
+@@ -144,7 +153,7 @@ def itog_h(d, w, st=DEFAULT):
+     """Высота полосы — она же то, что полоса отнимает у тела кадра."""
+     th = metrics.runs_h(_runs(d, st), text_w(d, w, st), st.text_ls)
+     body = max(th, st.chip_h if d["yarlyk"] else 0.0)
+-    return max(st.min_h, body + 2 * st.pad)
++    return max(st.min_h, body + 2 * st.vpad)
+ 
+ 
+ def itog_y(bot, d, w, st=DEFAULT):
+diff --git a/tools/presentation-build/deckkit/plates.py b/tools/presentation-build/deckkit/plates.py
+index 29146f2d1f..43083b634f 100644
+--- a/tools/presentation-build/deckkit/plates.py
++++ b/tools/presentation-build/deckkit/plates.py
+@@ -42,13 +42,22 @@ import re
+ from dataclasses import dataclass, field, replace
+ 
+ from . import floor, metrics, prims, report
+-from .theme import DEEP, GOLD, LIGHT, SLATE, SURFACE, TEAL, WHITE
++from .theme import DEEP, GOLD, LIGHT, PAD_IN, SLATE, SURFACE, TEAL, WHITE
+ 
+ 
+ @dataclass(frozen=True)
+ class PlateStyle:
+     gap: float = 0.18
+-    pad: float = 0.15
++    pad: float = PAD_IN     # один внутренний отступ на всё ядро, см. `theme`
++    # ВЕРТИКАЛЬНЫЙ отступ НЕ сведён к `PAD_IN` нарочно, и это названо, а не
++    # умолчано. Находка владельца — про ЛЕВЫЕ ВЕРТИКАЛИ («границы не бьются
++    # на слайде»), то есть про горизонталь; вертикальный отступ ни одной
++    # вертикали не двигает. А поднять его с прежнего значения до 0,30"
++    # значит отнять у кадра высоту — замерено на этом же круге: сведение
++    # обоих отступов разом дало девять блокирующих `[высота]` на шестнадцати
++    # кадрах при замороженном содержании. Горизонталь сведена, вертикаль
++    # оставлена, обмен назван.
++    vpad: float = 0.15      # внутренний отступ СВЕРХУ и СНИЗУ
+     max_per_row: int = 4            # плашек в ряд; больше — второй ряд
+     stroke_pt: float = 1.2
+     gold_stroke_pt: float = 2.0
+@@ -112,7 +121,11 @@ class PlateStyle:
+ DEFAULT = PlateStyle()
+ 
+ # Ровно то, чем собрана доставленная дека Лекции 7.
+-LEC07 = replace(DEFAULT, warn_overflow=False)
++# `pad` ПРИШПИЛЕН (0,15") по той же причине, по какой пришпилен весь набор
++# `LEC06` ниже: сведение внутренних отступов к одному числу `theme.PAD_IN`
++# (круг R4 пробы) сдвинуло бы доставленную деку, которую читали залу.
++# Унаследованное умолчание — совпадение, пришпиленное число — обещание.
++LEC07 = replace(DEFAULT, warn_overflow=False, pad=0.15)
+ 
+ # Ровно то, чем собрана доставленная дека Лекции 6.
+ # Числа Лекции 6 ПРИШПИЛЕНЫ все до одного, в том числе те, что совпадали с
+@@ -122,7 +135,7 @@ LEC07 = replace(DEFAULT, warn_overflow=False)
+ # доставленную деку, которую читали залу. Пришпиленное число — обещание,
+ # унаследованное — совпадение.
+ LEC06 = PlateStyle(
+-    gap=0.18, pad=0.16, stroke_pt=1.4,
++    gap=0.18, pad=0.16, vpad=0.16, stroke_pt=1.4,
+     label_pt=10.0,
+     label_ls=1.08, label_extra=0.05, label_extra_in_box=False,
+     label_color=TEAL, label_wsafe=True,
+@@ -255,7 +268,7 @@ def plate_h(p, pw, st=DEFAULT):
+     ПРОПИСНЫМИ и полужирной, значение — полужирным. Мера по строчным и
+     светлым давала плашку ниже надписи, и надпись наезжала на оговорку."""
+     iw = max(0.3, pw - 2 * st.pad)
+-    h = 2 * st.pad
++    h = 2 * st.vpad
+     if p["label"]:
+         lw = iw * metrics.W_SAFE if st.label_wsafe else iw
+         h += metrics.est_h(p["label"].upper(), st.label_pt, lw,
+@@ -316,7 +329,7 @@ def _draw_plate(s, sid, p, x, y, w, h, is_gold, st, tag):
+     if is_gold:
+         report.GOLD_SEEN.add(sid)
+     iw = max(0.3, w - 2 * st.pad)
+-    cy = y + st.pad
++    cy = y + st.vpad
+     if p["label"]:
+         lw = iw * metrics.W_SAFE if st.label_wsafe else iw
+         lab = p["label"].upper()
+diff --git a/tools/presentation-build/deckkit/prims.py b/tools/presentation-build/deckkit/prims.py
+index a691a975f5..eba238f157 100644
+--- a/tools/presentation-build/deckkit/prims.py
++++ b/tools/presentation-build/deckkit/prims.py
+@@ -100,6 +100,55 @@ def rect(s, x, y, w, h, fill, *, stroke=None, stroke_pt=1.0,
+     return shp
+ 
+ 
++def oval(s, x, y, w, h, fill, *, stroke=None, stroke_pt=1.0, count="круг"):
++    """Круг/эллипс — общий примитив (круг R4 пробы).
++
++    Заведён потому, что у ядра не было НИ ОДНОЙ круглой фигуры: всё, что
++    должно было читаться точкой, узлом или диском, рисовалось узким
++    прямоугольником. Первым его просит ось с засечками (диск на ключевой
++    величине: золотой штрих шириной 4 пт с задних рядов от бирюзовой
++    прямой почти не отличается, круг отличается), но форма не его — она
++    общая, поэтому и стоит здесь, а не внутри `axis`."""
++    shp = s.shapes.add_shape(MSO_SHAPE.OVAL,
++                             Inches(x), Inches(y), Inches(w), Inches(h))
++    shp.fill.solid()
++    shp.fill.fore_color.rgb = fill
++    if stroke is None:
++        shp.line.fill.background()
++    else:
++        shp.line.color.rgb = stroke
++        shp.line.width = Pt(stroke_pt)
++    no_shadow(shp)
++    if count:
++        report.PRIM[count] += 1
++    return shp
++
++
++def rotate(shp, deg):
++    """ПОВОРОТ ФИГУРЫ — общий примитив (круг R4 пробы).
++
++    Заведён по находке владельца «ассиметричных паттернов так и не
++    хватает». Замер, из-за которого он заводится здесь, а не в одной
++    форме: слова `rotation` не было НИ В ОДНОМ из шестидесяти двух
++    модулей ядра, и на ~4000 фигур шести замеренных колод курса
++    повёрнутых — НОЛЬ. То есть ядро не «редко поворачивало», а не умело
++    поворачивать вовсе, и ни одна дека курса не могла этого обнаружить.
++
++    Отдельной функцией, а не ключом у каждой фигуры, нарочно: поворот
++    применим к ЛЮБОЙ уже нарисованной фигуре, и ключ пришлось бы завести
++    в пяти местах сразу, то есть снова по числу на модуль — ровно та
++    болезнь, которую этот же круг лечит у внутренних отступов.
++
++    ВАЖНО ПРО МЕРУ: PowerPoint поворачивает фигуру ВОКРУГ ЕЁ ЦЕНТРА, а
++    `left`/`top`/`width`/`height` при этом НЕ меняются. Значит ни один
++    замер ядра (высота блока, запас, перехлёст, промах поля) после
++    поворота не описывает то, что увидит зал. Поэтому поворачивать
++    допустимо только фигуры, чья рамка заведомо с запасом, — и это
++    ограничение названо здесь, а не оставлено на догадку."""
++    shp.rotation = float(deg)
++    return shp
++
++
+ def ocean_box(s, x, y, w, h, *, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5,
+               radius_pt=MOTIF_RADIUS_PT, count="мотив"):
+     """Мотив деки: океанская скруглённая коробка. Радиус 12 пт.
+diff --git a/tools/presentation-build/deckkit/probes.py b/tools/presentation-build/deckkit/probes.py
+index e809a73cc7..8e282b7e1a 100644
+--- a/tools/presentation-build/deckkit/probes.py
++++ b/tools/presentation-build/deckkit/probes.py
+@@ -664,10 +664,10 @@ scheme:
+ проба
+ """),
+ 
+-    "[ось] сойдутся": ("s9q", """---
++    "[ось] РАЗЪЕХАЛИСЬ": ("s9q", """---
+ id: s9q
+ type: case
+-title: "Проба на сошедшиеся подписи засечек"
++title: "Проба на разъехавшиеся подписи засечек"
+ source: "—"
+ scheme:
+   kind: shkala
+@@ -1043,10 +1043,18 @@ source: "—"
+     # ЧИСЛЕННО, а не выдуман: нужен столбец, который по мере ВЛЕЗАЕТ, но
+     # у которого (1) запас меньше одной строки своего кегля и (2) одна
+     # строка заняла рамку плотнее 99,8%. Такое сочетание руками не
+-    # написать — перебор по словарю нашёл его на 13,5 пт: запас 0,039" при
+-    # строке 0,292" и одна строка из девяти на занятости 99,973%. Это та же
+-    # обстановка, в которой на `s105` слово «процедуру» вышло за нижнюю
+-    # грань коробки, при том что сборка молчала.
++    # написать — перебор по словарю нашёл его заново на 12,5 пт: запас
++    # 0,063" при строке 0,271" и одна строка из десяти на занятости
++    # 99,89%. Это та же обстановка, в которой на `s105` слово «процедуру»
++    # вышло за нижнюю грань коробки, при том что сборка молчала.
++    #
++    # ВХОД ПЕРЕПОДОБРАН (круг R4 пробы методики, 2026-11-02), и это не
++    # починка пробы, а ровно то, чего абзац ниже и требовал: сведение
++    # внутренних отступов к одному числу (`theme.PAD_IN`) сдвинуло
++    # `columns.PAD` 0,18 → 0,30 и `columns.TOP_PAD` 0,17 → 0,12, рамка
++    # перечня поехала, прежний вход перестал попадать в полосу — и проба
++    # сказала «не ловлю», а не замолчала. Старый вход сохранён в истории
++    # этого файла; подбор повторён тем же способом (перебор по словарю).
+     #
+     # Вход подобран под рамку `refdeck` (столбец 5,59" при шапке «Что
+     # отменить нельзя» — 2,67" под перечень). Если раскладка образцовой
+@@ -1062,11 +1070,12 @@ columns:
+   right:
+     head: "Что отменить нельзя"
+     items:
+-      - "запас оценку принятое кегль меру процедуру замер строку допуск регулятора"
+-      - "подпись регулятора допуск высоту кадр"
+-      - "абзац подпись регулятора рамку слово допуск модель ширину отзыва проведённую коробка"
+-      - "подпись ширину допуск изделие регулятора ширину абзац допуск нельзя строку коробка"
+-      - "запись слово слово отзыва довод изделия тело коробка столбец замер"
++      - "отозвать обводку рамку рамку нельзя коробка отозвать изделие абзац изделия кадр поверхность"
++      - "слово регулятора нельзя тело допуск кадр партию принятое оценку отзыва"
++      - "ширину регулятора отозвать высоту абзац отозвать строку кегль партию"
++      - "тело отозвать процедуру тело отозвать ширину модель обводку запас"
++      - "кадр изделие столбец изделие ширину оценку отменить"
++      - "слово изделие высоту запас столбец допуск"
+ ---
+ 
+ ## Видимый текст слайда
+@@ -1132,8 +1141,9 @@ LABELS = {
+         "чего-то, и это «что-то» обязано стоять рядом",
+     "[ось] РАЗНЫЕ базы": "отказ оси: два знаменателя на одной прямой — "
+                          "сравнение, которого нет",
+-    "[ось] сойдутся": "подписи засечек мерятся ШИРИНОЙ текста, а не "
+-                      "числом засечек",
++    "[ось] РАЗЪЕХАЛИСЬ": "подписи, разведённые раскладкой, меряются "
++        "ПРОТИВ шага своих засечек: наезда нет, а расстояние между "
++        "величинами — главное, что эта форма утверждает — уже переврано",
+     "[запас]": "блок, который ВЛЕЗАЕТ по мере, и всё равно не проверен: "
+                "запас тоньше, чем мера способна разрешить",
+     "[проекция]": "тело УКЛАДЫВАЕТСЯ, блокирующего нет — и всё равно оно "
+diff --git a/tools/presentation-build/deckkit/theme.py b/tools/presentation-build/deckkit/theme.py
+index b43a5c3606..816525a9a3 100644
+--- a/tools/presentation-build/deckkit/theme.py
++++ b/tools/presentation-build/deckkit/theme.py
+@@ -41,3 +41,36 @@ FONT = "Arial"
+ # SURFACE, обводка LIGHT. Радиус в пунктах, а не в долях, потому что доля
+ # у разной по размеру коробки даёт разную на глаз скруглённость.
+ MOTIF_RADIUS_PT = 12.0
++
++# ── ВНУТРЕННИЙ ОТСТУП: ОДНО ЧИСЛО НА ВСЁ ЯДРО ───────────────────────
++# Владелец, круг R3 пробы (2026-11-02): «почти на всех слайдах визуальные
++# вертикали границ не бьются на слайде». Разобрано до фигур: на одном
++# кадре жили ПЯТЬ левых границ в пределах двадцати пунктов друг от друга
++# — подпись засечки (за левым краем листа), коробка мотива (поле минус
++# 0,14"), заголовок с подвалом (само поле), текст внутри коробки (поле
++# плюс 0,04"), прямая оси (поле плюс 0,275"). Каждая из пяти была своим
++# числом СВОЕГО модуля, и ни одно из пяти не было видно оттуда, где
++# принималось решение о поле.
++#
++# ПРАВИЛО, которое это число вводит и которого раньше не было:
++#
++#   ВСЁ, что стоит на поле (коробка мотива, полоса плашек, столбцы,
++#   карточки, прямая оси, панель дивайдера), стоит на нём РОВНО;
++#   ВСЁ, что стоит ВНУТРИ коробки, отступает от её грани на PAD_IN —
++#   одно и то же число у всех форм.
++#
++# Тогда на кадре ровно ДВЕ левые вертикали вместо пяти, и обе намеренны.
++#
++# ПОЧЕМУ ИМЕННО 0,30". Мера промаха поля (`priyomka/polya.py`) считает
++# промахом отступ 1-20 пт: ноль — фигура на сетке, больше двадцати —
++# осознанный отступ, между — промах, и глаз видит именно его. 0,30" =
++# 21,6 пт — первое круглое значение за этой границей. Замерено на
++# доставленной Лекции 6 (4,7 % промахов, 8 значений): её собственные
++# внутренние отступы 27 и 37 пт — то есть она держит ровно это правило,
++# просто нигде его не записала.
++#
++# Числа ДОСТАВЛЕННЫХ дек этим не двигаются: наборы `plates.LEC06` и
++# `plates.LEC07` пришпилены своими значениями (0,16" и 0,15") — ровно по
++# той причине, которую шапка `plates.LEC06` уже называет: унаследованное
++# умолчание есть совпадение, а не обещание.
++PAD_IN = 0.30
+diff --git a/tools/presentation-build/deckkit/vynoski.py b/tools/presentation-build/deckkit/vynoski.py
+index 73cae7ef68..e13f1c6c1a 100644
+--- a/tools/presentation-build/deckkit/vynoski.py
++++ b/tools/presentation-build/deckkit/vynoski.py
+@@ -74,8 +74,8 @@ from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
+ from pptx.util import Inches, Pt
+ 
+ from . import floor, metrics, prims, report
+-from .theme import (DEEP, GOLD, LIGHT, MID, SLIDE_H, SLIDE_W, SURFACE,
+-                    WHITE)
++from .theme import (DEEP, GOLD, LIGHT, MID, PAD_IN, SLIDE_H, SLIDE_W,
++                    SURFACE, TEAL, WHITE)
+ 
+ SIDES = ("left", "right")
+ 
+@@ -84,7 +84,16 @@ SIDES = ("left", "right")
+ class VynoskiStyle:
+     # ── колонка выносок ──────────────────────────────────────────────
+     col_w: float = 3.10          # ширина бокса выноски
+-    box_pad: float = 0.14
++    box_pad: float = PAD_IN  # одно число ядра, см. `theme.PAD_IN`
++    # ВЕРТИКАЛЬНЫЙ отступ НЕ сведён к `PAD_IN` нарочно, и это названо, а не
++    # умолчано. Находка владельца — про ЛЕВЫЕ ВЕРТИКАЛИ («границы не бьются
++    # на слайде»), то есть про горизонталь; вертикальный отступ ни одной
++    # вертикали не двигает. А поднять его с прежнего значения до 0,30"
++    # значит отнять у кадра высоту — замерено на этом же круге: сведение
++    # обоих отступов разом дало девять блокирующих `[высота]` на шестнадцати
++    # кадрах при замороженном содержании. Горизонталь сведена, вертикаль
++    # оставлена, обмен назван.
++    box_vpad: float = 0.14   # внутри выноски СВЕРХУ и СНИЗУ
+     box_gap: float = 0.16        # просвет между боксами одной стороны
+     core_min: float = 4.60       # полоса изображения, которую колонки не
+                                  # вправе съесть целиком: уже этого от
+@@ -110,12 +119,35 @@ class VynoskiStyle:
+     cap_pt: float = 12.0         # пол видимого слоя
+     cap_ls: float = 1.14
+     cap_gap: float = 0.10
++    # ── ЧИТАЕМОСТЬ НА ПЁСТРОМ СНИМКЕ (круг R4 пробы) ─────────────────
++    # Владелец, посмотрев круг R3: «выноски прикольно но у тебя они поверх
++    # пёстрого рисунка и их не видно».
++    #
++    # Это НЕ отказ сторожа контраста и не прозрачность. Замерено по XML
++    # собранного кадра: заливка бокса — сплошная `F4F7FA`, прогоны текста
++    # дают 13 : 1 к ней, сторож молчит заслуженно. Беда в другом: бледная
++    # поверхность на СВЕТЛОМ куске снимка отличается от него едва-едва, и
++    # бокс держится одной обводкой в 1,5 пт. Сторож контраста этого увидеть
++    # НЕ МОЖЕТ по построению — он сравнивает текст с заливкой, а не заливку
++    # с тем, что под ней.
++    #
++    # Поэтому бокс, лежащий НА снимке, набирается тёмным с белым текстом:
++    # отделение от любого снимка — светлого, пёстрого, тёмного — перестаёт
++    # зависеть от того, что именно под ним. Золотой кружок номера остаётся
++    # ровно тем же (золото на глубоком — 6,85 : 1), и правило «золото
++    # заливкой, не текстом» не трогается.
++    box_fill: object = DEEP
++    box_text: object = WHITE
++    box_stroke: object = TEAL
++    box_stroke_pt: float = 1.5
+     # ── пределы ──────────────────────────────────────────────────────
+     max_points: int = 4
+     min_points: int = 2
+     max_img_h: float = 6.10      # высота, больше которой тело кадра не
+                                  # бывает: поле сверху под заголовок
+     min_share: float = 0.55      # §2.2: доля площади кадра под изображение
++    max_cover: float = 0.22      # сколько снимка боксам позволено
++                                 # закрыть, см. `check_vynoski`
+ 
+ 
+ DEFAULT = VynoskiStyle()
+@@ -213,7 +245,7 @@ def _box_h(p, cw, st):
+     hh = max(st.num_d,
+              metrics.est_h(p["head"] or "—", st.head_pt, max(0.4, head_w),
+                            st.head_ls, True))
+-    h = 2 * st.box_pad + hh
++    h = 2 * st.box_vpad + hh
+     if p["text"]:
+         h += st.head_gap + metrics.est_h(p["text"], st.body_pt,
+                                          max(0.4, inner), st.body_ls)
+@@ -288,7 +320,7 @@ def layout(v, w, h, st=DEFAULT, x=0.0, y=0.0):
+         at = p["at"] or (0.5, 0.5)
+         p["_px"] = ix + at[0] * iw
+         p["_py"] = iy + at[1] * ih
+-    anchor_dy = st.box_pad + st.num_d / 2
++    anchor_dy = st.box_vpad + st.num_d / 2
+     for side in SIDES:
+         mine = [p for p in v["points"] if p["side"] == side]
+         mine.sort(key=lambda p: p["_py"])
+@@ -441,7 +473,32 @@ def check_vynoski(sid, v, w, st=DEFAULT):
+             "почти вплотную к краю изображения: сдвиньте её к середине либо "
+             "переставьте выноску на противоположную `side`")
+ 
++    # ── СКОЛЬКО СНИМКА ПОХОРОНЕНО ПОД БОКСАМИ ───────────────────────
++    # Владелец, круг R3: «выноски прикольно но у тебя они поверх пёстрого
++    # рисунка». Сторож выше ловит только крайний случай — бокс поверх самой
++    # ТОЧКИ. Между «накрыл точку» и «не накрыл ничего» лежит всё остальное:
++    # бокс, севший на соседнюю панель разбора, точку не трогает и молчит.
++    #
++    # Этот замер и есть число, которого записи Т-34 не хватало: доля
++    # площади снимка под боксами. Он НЕ отменяет несовместимости двух
++    # требований формы (снимок ≥55% площади кадра против привязки к точкам)
++    # — он делает её видимой на каждом кадре, а не только в разборе.
+     _ix, _iy, iw, ih = lay["img"]
++    zakryto = 0.0
++    for b in lay["boxes"]:
++        ox = max(0.0, min(b["x"] + b["w"], _ix + iw) - max(b["x"], _ix))
++        oy = max(0.0, min(b["y"] + b["h"], _iy + ih) - max(b["y"], _iy))
++        zakryto += ox * oy
++    dolya = zakryto / max(iw * ih, 1e-6)
++    if dolya > st.max_cover:
++        report.warn(
++            f"[выноски] {sid}: боксы закрывают {dolya * 100:.0f}% площади "
++            f"снимка (порог {st.max_cover * 100:.0f}%) — показанного "
++            "остаётся меньше, чем разобранного. Это не про точки `at` (их "
++            "сторож выше), а про то, что под боксами исчезают СОСЕДНИЕ "
++            "места снимка, по которым зал сверяет разбор. Лечится снимком "
++            "другой пропорции, меньшим числом выносок или более коротким "
++            "текстом в них — сама форма ужимать его не вправе")
+     share = iw * ih / (SLIDE_W * SLIDE_H)
+     if share < st.min_share - 1e-9:
+         ar = _ar(v)
+@@ -544,10 +601,11 @@ def draw_vynoski(s, sid, v, x, y, w, h, st=DEFAULT, tag=None):
+     for b in lay["boxes"]:
+         p = b["p"]
+         prims.ocean_box(s, b["x"], b["y"], b["w"], b["h"],
+-                        fill=SURFACE, stroke=LIGHT, stroke_pt=1.5)
++                        fill=st.box_fill, stroke=st.box_stroke,
++                        stroke_pt=st.box_stroke_pt)
+         inner = b["w"] - 2 * st.box_pad
+         ncx = b["x"] + st.box_pad + st.num_d / 2
+-        ncy = b["y"] + st.box_pad + st.num_d / 2
++        ncy = b["y"] + st.box_vpad + st.num_d / 2
+         _dot(s, ncx, ncy, st.num_d, GOLD, "номер")
+         report.GOLD_SEEN.add(sid)
+         floor.pt(st.num_pt, tag, "номер выноски")
+@@ -561,17 +619,18 @@ def draw_vynoski(s, sid, v, x, y, w, h, st=DEFAULT, tag=None):
+         hh = max(st.num_d, metrics.est_h(p["head"] or "—", st.head_pt,
+                                          max(0.4, b_w), st.head_ls, True))
+         floor.pt(st.head_pt, tag, "заголовок выноски")
+-        prims.text_box(s, hx, b["y"] + st.box_pad, b_w, hh, p["head"] or "—",
+-                       size=st.head_pt, bold=True, color=DEEP,
++        prims.text_box(s, hx, b["y"] + st.box_vpad, b_w, hh, p["head"] or "—",
++                       size=st.head_pt, bold=True, color=st.box_text,
+                        ls=st.head_ls, tag=f"{tag}/выноска{p['n']}/заголовок")
+         if p["text"]:
+             floor.pt(st.body_pt, tag, "тело выноски")
+             th = metrics.est_h(p["text"], st.body_pt, max(0.4, inner),
+                                st.body_ls)
+             prims.text_box(s, b["x"] + st.box_pad,
+-                           b["y"] + st.box_pad + hh + st.head_gap,
+-                           inner, th, p["text"], size=st.body_pt, color=DEEP,
+-                           ls=st.body_ls, tag=f"{tag}/выноска{p['n']}/тело")
++                           b["y"] + st.box_vpad + hh + st.head_gap,
++                           inner, th, p["text"], size=st.body_pt,
++                           color=st.box_text, ls=st.body_ls,
++                           tag=f"{tag}/выноска{p['n']}/тело")
+ 
+     if lay["cap_h"]:
+         floor.pt(st.cap_pt, tag, "подпись под изображением")
+diff --git a/tools/presentation-build/deckkit/vyvody.py b/tools/presentation-build/deckkit/vyvody.py
+index 00fda87486..b27f27166a 100644
+--- a/tools/presentation-build/deckkit/vyvody.py
++++ b/tools/presentation-build/deckkit/vyvody.py
+@@ -33,7 +33,7 @@ from dataclasses import dataclass
+ from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
+ 
+ from . import floor, metrics, prims, report
+-from .theme import DEEP, GOLD, LIGHT, MID, SURFACE
++from .theme import DEEP, GOLD, LIGHT, MID, PAD_IN, SURFACE
+ 
+ TOP_KEYS = {"items", "most"}
+ ITEM_KEYS = {"head", "text"}
+@@ -41,7 +41,16 @@ ITEM_KEYS = {"head", "text"}
+ 
+ @dataclass(frozen=True)
+ class VyvodyStyle:
+-    pad: float = 0.18
++    pad: float = PAD_IN  # одно число ядра, см. `theme.PAD_IN`
++    # ВЕРТИКАЛЬНЫЙ отступ НЕ сведён к `PAD_IN` нарочно, и это названо, а не
++    # умолчано. Находка владельца — про ЛЕВЫЕ ВЕРТИКАЛИ («границы не бьются
++    # на слайде»), то есть про горизонталь; вертикальный отступ ни одной
++    # вертикали не двигает. А поднять его с прежнего значения до 0,30"
++    # значит отнять у кадра высоту — замерено на этом же круге: сведение
++    # обоих отступов разом дало девять блокирующих `[высота]` на шестнадцати
++    # кадрах при замороженном содержании. Горизонталь сведена, вертикаль
++    # оставлена, обмен назван.
++    vpad: float = 0.18   # внутренний отступ СВЕРХУ и СНИЗУ
+     gap: float = 0.16                # между карточками
+     num_d: float = 0.56              # поперечник квадрата с цифрой
+     num_pt: float = 24.0
+@@ -133,7 +142,7 @@ def item_h(item, w, st=DEFAULT):
+     if item["text"]:
+         body += st.head_gap + metrics.est_h(item["text"], st.text_pt, tw,
+                                             st.text_ls)
+-    return max(st.card_min_h, max(body, st.num_d) + 2 * st.pad)
++    return max(st.card_min_h, max(body, st.num_d) + 2 * st.vpad)
+ 
+ 
+ def vyvody_h(d, w, st=DEFAULT):

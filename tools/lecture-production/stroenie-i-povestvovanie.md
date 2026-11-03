@@ -27,8 +27,9 @@ issue: 238
 | [`../presentation-build/trebovaniya-k-soderzhaniyu-forma.md`](../presentation-build/trebovaniya-k-soderzhaniyu-forma.md) §5.12–5.22 | кадр: как то же самое раскладывается на слайде и как принимается |
 | [`../editorial/README.md`](../editorial/README.md) | звучание: тон, запрет формата сопоставления, русский язык |
 | [`obzor-stran-i-glubina-razbora.md`](obzor-stran-i-glubina-razbora.md) | расширение шагов 3 и 4: обзор по странам/юрисдикциям, пять вопросов инженерной глубины разбора |
+| [`../metodika-podachi/README.md`](../metodika-podachi/README.md) | методика подачи, два потока: `povestvovanie/` — сборка линии, её поля и чеклист до первого кадра; `kadr/` + `shov/` + `priyomka/` — чем утверждение рисуется, как кадры идут друг за другом, какими числами колода принимается. Пофазный форс — [`metodika-podachi-po-fazam.md`](metodika-podachi-po-fazam.md) |
 
-Текст правила живёт в одном месте из пяти. Ссылки — по именованным разделам.
+Текст правила живёт в одном месте из шести. Ссылки — по именованным разделам.
 
 ## Оглавление
 

@@ -10,6 +10,12 @@ description: Пишет речь лектора (speech.md) — conversational t
 2. `library/lectures/lec-NN/chapter.md` — finalized глава методички (твой главный источник содержания).
 3. `library/lectures/lec-NN/deck.yaml` + `slides/*.md` — структура слайдов (твой план разбивки речи).
 4. `library/lectures/lec-NN/rendered/snapshots/*.png` — что студент видит (опционально, для навигации «следующий слайд...»).
+5. **`tools/metodika-podachi/README.md` — методика подачи, поток повествования (ENFORCED,
+   issue #307).** Речь идёт по той линии, которая уже собрана и записана: порядок пяти шагов
+   раздела и швы между разборами — `tools/metodika-podachi/povestvovanie/09-POVESTVOVANIE-SBORKA.md` §2 (шаги 7–10);
+   записанная линия, с которой речь обязана совпадать —
+   `tools/metodika-podachi/povestvovanie/08-POVESTVOVANIE-ZAPIS.md` §2. Пофазный форс —
+   `tools/lecture-production/metodika-podachi-po-fazam.md`.
 
 ## Роль
 

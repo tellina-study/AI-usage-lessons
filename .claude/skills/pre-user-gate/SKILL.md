@@ -66,7 +66,15 @@ Before each USER GATE in lecture-production pipeline (см. `tools/lecture-produ
 
 ### 3. Checklist (для slides — `mode=slides` / `mode=final`)
 
+**Порядок приёмки (ENFORCED, issue #307):** числом на полном прогоне файла **раньше**, чем
+глазами на распечатке разворотами по 12–16 кадров — `tools/metodika-podachi/priyomka/07-PRIYOMKA-part2.md`
+§3. Пол из 14 числовых порогов — `tools/metodika-podachi/priyomka/07-PRIYOMKA.md` §1.1–1.14. Зелёный пол приёмки сам не
+даёт: условие — `tools/metodika-podachi/priyomka/07-PRIYOMKA-part2.md` §4.5.
+
 Каждый item — pass/fail:
+
+- [ ] Пол методики подачи пройден: 14 числовых порогов `tools/metodika-podachi/priyomka/07-PRIYOMKA.md` §1.1–1.14 сняты на собранном файле (не на части).
+- [ ] Вопрос потолка задан и получил конкретный ответ на выборке 5–7 кадров раздела (`tools/metodika-podachi/priyomka/07-PRIYOMKA-part2.md` §2.1); находка называет номер отсутствующего приёма из §2.2–2.4.
 
 - [ ] All schemas pass Schema Readability Checklist (§5.5).
 - [ ] No designer-added extras: «Лектору» = 0, «Вы здесь» в visible content = 0, «мин» в visible (not metadata) = 0, subtitle добавленный по инициативе = 0, callback frame от designer = 0.
@@ -161,5 +169,6 @@ Return a report to orchestrator:
 
 - Pipeline: `tools/lecture-production/README.md` §3 (где gate'ы), §3.5 (cascade tracking).
 - Slides QA: `tools/presentation-build/README.md` §5.5 (Schema Readability Acceptance Gate), §9 (anti-patterns).
+- Методика подачи, поток кадра и приёмка: `tools/metodika-podachi/README.md`; пофазный форс — `tools/lecture-production/metodika-podachi-po-fazam.md`.
 - Build orchestration: `.claude/skills/build-deck/SKILL.md` (Phase 6.5).
 - Reflections: `notes/reflections/2026-05-13-lec-01-v3-rebuild/REFLECTION-CONSOLIDATED.md` (исходный rationale).

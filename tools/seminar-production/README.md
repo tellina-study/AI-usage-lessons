@@ -14,7 +14,10 @@ status: canon
 собирает переносимое; папка семинара остаётся местом для того, что к нему одному и относится.
 
 Читать вместе с: `tools/editorial/` (редактура, читать первым), `tools/presentation-build/README.md`
-(деки), `CLAUDE.md` (запреты курса), `notes/mcp-limitations.md` (грабли инструментов).
+(сборка деки), [`tools/metodika-podachi/README.md`](../metodika-podachi/README.md) (методика
+подачи, оба потока — чем рассказываем и чем показываем; жанровая дельта семинара —
+[`05-ZHANRY.md`](../metodika-podachi/05-ZHANRY.md)), `CLAUDE.md` (запреты курса),
+`notes/mcp-limitations.md` (грабли инструментов).
 
 ## Оглавление
 

@@ -1,0 +1,13 @@
+source: https://science.nasa.gov/photojournal/autonomous-selection-of-a-rovers-laser-target-on-mars
+direct_asset: https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia20/pia20762/PIA20762.jpg
+catalog_id: PIA20762
+title: "Autonomous Selection of a Rover's Laser Target on Mars"
+credit: NASA/JPL-Caltech/LANL/CNES/IRAP/LPGNantes/CNRS/IAS
+date_released: 2016-07-21
+date_accessed: 2026-10-31
+tier: "Tier 1 (official NASA/JPL press asset — og:image class, direct institutional source)"
+description: >
+  Curiosity NavCam стереоснимок, на котором бортовое ПО AEGIS автономно выбрало цель
+  (жёлтая точка) для ChemCam; за 30 минут лазер отработал по 9 точкам цели.
+  Прямая иллюстрация к § 1.3 разбора AEGIS — само "решение алгоритма" на реальном снимке.
+license: NASA public domain (US government work), пригоден для образовательного использования с credit line.

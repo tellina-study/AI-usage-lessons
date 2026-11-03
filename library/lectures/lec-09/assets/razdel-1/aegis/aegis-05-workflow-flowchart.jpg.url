@@ -1,0 +1,14 @@
+source: https://superintelligence.jpl.nasa.gov/public/projects/aegis/ (ранее ai.jpl.nasa.gov/public/projects/aegis/)
+direct_asset: https://superintelligence.jpl.nasa.gov/public/projects/aegis/images/aegis_workflow.jpg
+title: "AEGIS onboard workflow flowchart"
+credit: NASA/JPL-Caltech (официальная страница проекта AEGIS, JPL Machine Learning & Instrument Autonomy group)
+date_accessed: 2026-10-31
+tier: "Tier 1 (официальная институциональная инфографика, не агрегатор)"
+description: >
+  ИНФОГРАФИКА. Официальная блок-схема полного цикла AEGIS: получение снимка NavCam →
+  детекция целей (Rockster) → извлечение признаков → фильтрация → приоритизация
+  (ранжирование random forest) → наведение/трекинг → съём ChemCam/SuperCam.
+  Прямая визуализация § 1.3 "Устройство" — редкий случай, когда официальная схема
+  буквально совпадает с текстовым разбором главы шаг за шагом.
+  Качество: высокое (первоисточник JPL, не агрегатор/блог).
+license: NASA public domain (US government work).

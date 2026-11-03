@@ -1,0 +1,13 @@
+source: https://nasa-jpl.github.io/SPOC/ (официальная страница проекта SPOC, NASA-JPL GitHub Pages)
+direct_asset: https://nasa-jpl.github.io/SPOC/assets/images/implementations.png
+title: "SPOC implementations family diagram (SPOC / SPOC-Lite / SPOC-HPSC/SNPE)"
+credit: NASA/JPL-Caltech
+date_accessed: 2026-10-31
+tier: "Tier 1 (официальная страница проекта)"
+description: >
+  ИНФОГРАФИКА. Официальная схема семейства реализаций SPOC — ровно то разделение,
+  которое глава описывает в § 1.4 "Форвард-часть" и "Варианты метода":
+  SPOC-HiRISE / SPOC-NavCam (текущее Earth-side применение) против SPOC-Lite (CPU)
+  и SPOC-HPSC/SNPE (GPU) — будущие бортовые варианты. Редкий случай точного совпадения
+  официальной схемы с текстовым разбором главы.
+license: NASA public domain (US government work), официальная институциональная страница.

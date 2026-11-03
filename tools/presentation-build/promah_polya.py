@@ -25,7 +25,7 @@
 Сработал четвёртый. Первые три мерили разброс вообще. У четвёртого определение
 содержательное: он мерит разброс в той полосе, где он читается
 неряшливостью. Черновики всех четырёх сохранены целиком, вместе с
-неудачными: `proba-R1-lec-08/priyomka/chernoviki-zamera/`.
+неудачными: `notes/research/dizayn-metodika/proba-R1-lec-08/priyomka/chernoviki-zamera/`.
 
 ══════════════════════════════════════════════════════════════════════
 ВНИМАНИЕ: ТАБЛИЦА ПОРОГА СНЯТА ПРЕЖНЕЙ МЕРКОЙ, И ЭТО ПРОВЕРЕНО ПРОГОНОМ
@@ -75,7 +75,7 @@
 подряд, и молча: своего поля она из файла не читает.
 
 Запуск:  python3 promah_polya.py <файл.pptx> [ещё.pptx ...]
-Связанные записи: `proba-R1-lec-08/00-ZHURNAL-TRENIYA-part4.md` Т-36, Т-37.
+Связанные записи: `notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA-part4.md` Т-36, Т-37.
 """
 import sys, statistics
 from collections import Counter

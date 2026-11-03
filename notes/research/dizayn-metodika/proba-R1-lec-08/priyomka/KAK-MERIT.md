@@ -8,7 +8,7 @@ issue #307. Тринадцать показателей `07-PRIYOMKA.md` §1 с�
 ```bash
 # zamer.py — плотность/слова/ступени-с-фильтром/изображение/акцент/ритм,
 # одной линейкой по 13 эталонам + колодам курса (не про приёмку одной колоды к порогу)
-cd notes/research/dizayn-metodika/zamer
+cd tools/metodika-podachi/zamer
 python3 zamer.py --path <lec>/rendered/<lec>.pptx --type pptx --name <lec> --razryad "наша колода"
 cat sydoe-<lec>.json
 

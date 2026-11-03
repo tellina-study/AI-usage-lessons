@@ -595,7 +595,7 @@ def print_section(num, title, data):
 def build_report(res):
     out = []
     out.append("ДОБОР ПОРОГОВ ПРИЁМКИ — показатели 1.3 (полный пол), 1.8, 1.11, 1.12, 1.13")
-    out.append("issue #307, проба R1 Лекции 8 — notes/research/dizayn-metodika/07-PRIYOMKA.md §1")
+    out.append("issue #307, проба R1 Лекции 8 — tools/metodika-podachi/priyomka/07-PRIYOMKA.md §1")
     out.append(f"Файл .pptx: {res['_meta']['pptx']}")
     out.append(f"Файл .pdf:  {res['_meta']['pdf'] or '(не передан)'}")
 

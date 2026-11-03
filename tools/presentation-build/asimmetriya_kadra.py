@@ -33,7 +33,7 @@ chernoviki-zamera/asimmetriya.py` (issue #307, круг R3 пробы). Счит
 Числа журнала (Т-39: lec-06 0,011 · lec-07 0,010 · проба R1·R2·R3 =
 0,009 · 0,015 · 0,010, повёрнутых ноль) воспроизводятся ДОСЛОВНО. Внешний
 эталон-5 (там 0,012 и тоже ноль поворотов) перемерить было нечем: файлов
-эталонов в репозитории нет, в `notes/research/dizayn-metodika/etalony/`
+эталонов в репозитории нет, в `tools/metodika-podachi/etalony/`
 лежат только паспорта.
 
 ЧТО ЭТИ ЧИСЛА ЗНАЧАТ. Содержание стоит ровно по центру во ВСЕХ семи
@@ -41,7 +41,7 @@ chernoviki-zamera/asimmetriya.py` (issue #307, круг R3 пробы). Счит
 ~4700 фигур. Это не склонность дизайнера: слова `rotation` не было ни в
 одном из модулей ядра (37 у пробы, 62 на ветке Лекции 8). Поворот не
 «редко применяли» — его нечем было применить. Заплата R4 завела общий
-примитив `prims.rotate` (см. `proba-R1-lec-08/yadro-ZAPLATY.md`).
+примитив `prims.rotate` (см. `notes/research/dizayn-metodika/proba-R1-lec-08/yadro-ZAPLATY.md`).
 
 Столбец «выходов за лист» читается ОТДЕЛЬНО и в обратную сторону: у R2 и
 R3 стоит дефект Т-37, а вовсе не замысел: подпись засечки центрировалась по
@@ -57,7 +57,7 @@ R3 стоит дефект Т-37, а вовсе не замысел: подпи�
 скажет.
 
 Запуск:  python3 asimmetriya_kadra.py <файл.pptx> [ещё.pptx ...]
-Связанные записи: `proba-R1-lec-08/00-ZHURNAL-TRENIYA-part4.md` Т-37, Т-39.
+Связанные записи: `notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA-part4.md` Т-37, Т-39.
 """
 import sys, statistics
 from pptx import Presentation

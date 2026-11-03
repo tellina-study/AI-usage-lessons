@@ -59,10 +59,10 @@
 которые форма уже ругается. В словаре геометрий такая выноска выглядела
 бы как успех. Каталог может назвать тело-кандидата; принять его может
 только приёмка — см. графу «из чего сложена» в
-`notes/research/dizayn-metodika/02-KATALOG-FORM-TELA.md`.
+`tools/metodika-podachi/kadr/02-KATALOG-FORM-TELA.md`.
 
 Запуск:  python3 slovar_geometriy.py <файл.pptx> [ещё.pptx ...]
-Связанные записи: `proba-R1-lec-08/00-ZHURNAL-TRENIYA-part4.md` Т-40,
+Связанные записи: `notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA-part4.md` Т-40,
 `…-part5.md` Т-42; ловушка округления `build_freeform` —
 `notes/mcp-limitations.md` [#307-1].
 """

@@ -266,5 +266,5 @@ issue #293** — файлов кадров стало **93 вместо 111**, �
 [`00-ZHURNAL-TRENIYA-part4.md`](00-ZHURNAL-TRENIYA-part4.md) (Т-33, Т-37, Т-39,
 Т-40, Т-41) и [`-part5.md`](00-ZHURNAL-TRENIYA-part5.md) (Т-42, третье
 срабатывание сторожа) · свод переносимого
-[`../PERENOSIMOE.md`](../PERENOSIMOE.md) · графа тел форм
-[`../02-KATALOG-FORM-TELA.md`](../02-KATALOG-FORM-TELA.md).
+[`../../../../tools/metodika-podachi/PERENOSIMOE.md`](../../../../tools/metodika-podachi/PERENOSIMOE.md) · графа тел форм
+[`../../../../tools/metodika-podachi/kadr/02-KATALOG-FORM-TELA.md`](../../../../tools/metodika-podachi/kadr/02-KATALOG-FORM-TELA.md).

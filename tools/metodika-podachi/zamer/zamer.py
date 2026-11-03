@@ -3,7 +3,7 @@
 """
 Программа замера плотности / изображения / типографики / цвета / ритма — issue #307.
 
-Одна линейка для всех образцов: 13 чужих эталонов (notes/research/dizayn-metodika/etalony/)
+Одна линейка для всех образцов: 13 чужих эталонов (tools/metodika-podachi/etalony/)
 и наши колоды (library/lectures/*, library/seminars/*). Единица измерения — «кадр»
 (страница PDF == слайд PPTX == разворот растрового образца).
 
@@ -66,7 +66,7 @@
     python3 zamer.py --path X.pptx --type pptx --name "моя-колода" --razryad "наша колода"
         # разовый замер произвольного файла — так мерим будущие колоды той же линейкой
 
-Результат на образец: notes/research/dizayn-metodika/zamer/sydoe-<имя>.json — все сырые
+Результат на образец: tools/metodika-podachi/zamer/sydoe-<имя>.json — все сырые
 числа и промежуточные показатели, по которым в ZAMER.md даны агрегаты. Бинарные образцы и
 JSON с сырыми числами не коммитятся (см. правило задания) — файл .json уже в .gitignore не
 обязателен, но коммит явно запрещён инструкцией, поэтому он просто не добавляется в git add.
@@ -117,7 +117,7 @@ PPTX_DEFAULT_SIZE = 18.0   # кегль прогона, у которого он
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ETALONY = os.path.normpath(os.path.join(HERE, "..", "etalony"))
-REPO_ROOT = os.path.normpath(os.path.join(HERE, "..", "..", "..", ".."))
+REPO_ROOT = os.path.normpath(os.path.join(HERE, "..", "..", ".."))
 OUT_DIR = HERE
 
 

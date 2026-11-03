@@ -2,7 +2,7 @@
 
 Задача координатора: не оценивать наши колоды на глаз, а измерить их тем же способом, что и
 тринадцать чужих эталонов из `notes/research/dizayn-metodika/etalony/` (паспорта и разряды —
-в `etalony/PASPORTA.md`, не переписываю здесь). Если замер противоречит ожиданию — верен замер.
+в `../etalony/PASPORTA.md`, не переписываю здесь). Если замер противоречит ожиданию — верен замер.
 
 ## Починка метода, 2026-11-02 — читать прежде таблиц
 
@@ -12,8 +12,8 @@
 читались как PDF, все наши колоды — как PPTX. Один и тот же файл Лекции 7 давал из-за этого
 **0,7461 как PPTX и 0,3845 как PDF** при совпадающей медиане слов (137 и 137). Находка —
 **Т-16** журнала трения пробы дизайн-методики
-(`../proba-R1-lec-08/00-ZHURNAL-TRENIYA-part2.md`), её расширение на показатели ритма — **Т-24**
-(`../proba-R1-lec-08/00-ZHURNAL-TRENIYA-part3.md`).
+(`notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA-part2.md`), её расширение на показатели ритма — **Т-24**
+(`notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA-part3.md`).
 
 Путь PPTX приведён к пути PDF: теперь он обводит **оценку рамки букв**, абзац за абзацем
 (ширина строк — по настоящим метрикам глифов, перенос — по ширине тела поля, шаг строк — по
@@ -40,7 +40,7 @@
 
 ## Программа замера
 
-`notes/research/dizayn-metodika/zamer/zamer.py` — один файл, три источника данных:
+`zamer.py` — один файл, три источника данных:
 
 - **PDF с текстовым слоем** — PyMuPDF (`fitz`): `page.get_text("dict")` даёт блоки текста/растра с
   bbox, кеглем, гарнитурой, цветом; `page.get_drawings()` — векторные заливки (плашки, подложки).
@@ -59,9 +59,9 @@ occupancy 3×3 для текста и изображений + число бло
 Запуск (повторно прогоняемый на будущих колодах):
 
 ```bash
-python3 notes/research/dizayn-metodika/zamer/zamer.py --all          # весь реестр issue #307
-python3 notes/research/dizayn-metodika/zamer/zamer.py --one <ключ>   # один образец реестра
-python3 notes/research/dizayn-metodika/zamer/zamer.py \
+python3 zamer.py --all          # весь реестр issue #307
+python3 zamer.py --one <ключ>   # один образец реестра
+python3 zamer.py \
     --path library/lectures/lec-NN/rendered/lec-NN.pptx \
     --type pptx --name "lec-NN" --razryad "наша колода"              # разовый замер новой колоды
 ```
@@ -335,7 +335,7 @@ abbott — 0,384, у apple — 0,212 — разброс почти в 20 раз.
   так что вердикт «внутри / вне полосы» внутри погрешности не переворачивается. **Но у порога
   приёмки 0,42 запас над верхом полосы — всего 0,007, то есть МЕНЬШЕ погрешности оценки**:
   колода, давшая по пути PPTX медиану в 0,41–0,43, этим путём не судится — для неё надо мерить
-  собранный PDF. Это сказано и в `07-PRIYOMKA.md` §1.1.
+  собранный PDF. Это сказано и в `../priyomka/07-PRIYOMKA.md` §1.1.
 - **Счёт изображений сам зависит от пути, и для двух наших колод — сильно.** Один и тот же файл:
   lec-06 — 1,688 изображений на кадр как PPTX против 11,406 как PDF, доля кадров с крупным
   изображением 0,0 против 0,750; sem-08 — 0,373 против 3,716 и 0,179 против 0,537. Сборка PDF
@@ -400,12 +400,12 @@ abbott — 0,384, у apple — 0,212 — разброс почти в 20 раз.
 
 ## Файлы
 
-- Программа: `notes/research/dizayn-metodika/zamer/zamer.py`
-- Отчёт о починке метода 2026-11-02 (Т-16): `notes/research/dizayn-metodika/zamer/ISPRAVLENIE-T16.md`
+- Программа: `zamer.py`
+- Отчёт о починке метода 2026-11-02 (Т-16): `ISPRAVLENIE-T16.md`
 - Сырые числа: `notes/research/dizayn-metodika/zamer/sydoe-<имя>.json`. Кроме
   образцов — контрольные прогоны наших колод по пути PDF, по которым сверена починка:
   `sydoe-lec-07-PDF-kontrol.json`, `sydoe-lec-06-PDF-kontrol.json`,
   `sydoe-sem-08-PDF-kontrol.json`, `sydoe-proba-R1-pdf.json`, `sydoe-proba-R2-pdf.json`.
   Поле `istochnik` в каждом замере говорит, какой путь его посчитал
-- Этот документ: `notes/research/dizayn-metodika/zamer/ZAMER.md`
-- Паспорта эталонов (разряды, адреса добычи): `notes/research/dizayn-metodika/etalony/PASPORTA.md`
+- Этот документ: `ZAMER.md`
+- Паспорта эталонов (разряды, адреса добычи): `../etalony/PASPORTA.md`

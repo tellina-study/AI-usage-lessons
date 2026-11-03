@@ -1,7 +1,7 @@
 ---
 issue: "#307 — что из пробы применимо за пределами Лекции 8"
 дата: "2026-11-03"
-источник: "proba-R1-lec-08/00-ZHURNAL-TRENIYA*.md, части 1–5 (42 записи), прочитанные целиком"
+источник: "notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA*.md, части 1–5 (42 записи), прочитанные целиком"
 статус: "свод переносимого; журнал трения и приёмки кругов заморожены и не правлены"
 ---
 
@@ -252,7 +252,7 @@ issue: "#307 — что из пробы применимо за пределам
 «работает же».
 
 Исполнено для всех 33 форм каталога:
-[`02-KATALOG-FORM-TELA.md`](02-KATALOG-FORM-TELA.md) — девять форм заполнены
+[`kadr/02-KATALOG-FORM-TELA.md`](kadr/02-KATALOG-FORM-TELA.md) — девять форм заполнены
 замером, двадцать четыре честно пусты.
 
 ---
@@ -270,7 +270,7 @@ issue: "#307 — что из пробы применимо за пределам
 из трёх кандидатов выходила образцовой.
 
 Все четыре сохранены целиком в
-`proba-R1-lec-08/priyomka/chernoviki-zamera/` со своим `README.md`, где у каждого
+`notes/research/dizayn-metodika/proba-R1-lec-08/priyomka/chernoviki-zamera/` со своим `README.md`, где у каждого
 назван исход. Переносом они **не тронуты** — ценны именно как запись неудачи.
 
 **Где применять.** В любом разборе: отвергнутая гипотеза с числом сильнее
@@ -331,7 +331,7 @@ issue: "#307 — что из пробы применимо за пределам
 ## §11. Чего проба НЕ проверила
 
 Названо здесь затем, чтобы не читалось как проверенное. Четыре пробела методика
-называет сама (`07-PRIYOMKA-part2.md` §5), и проба их не закрывала:
+называет сама (`priyomka/07-PRIYOMKA-part2.md` §5), и проба их не закрывала:
 
 * **контраст и кегль на настоящем проекторе** — всё мерено по файлу;
 * **цветовая слепота**;
@@ -346,7 +346,7 @@ issue: "#307 — что из пробы применимо за пределам
 нетронутым ядром: тот же разряд 3, 5168 расхождений). Эталон пришпилен к
 коммиту от 2026-10-12, после которого деку переработали — 93 файла кадров против
 111. Значит одна из названных проверок приёмки ядра сегодня не работает, и это
-не было известно до переноса. Разбор — `proba-R1-lec-08/yadro-ZAPLATY.md` §5.1.
+не было известно до переноса. Разбор — `notes/research/dizayn-metodika/proba-R1-lec-08/yadro-ZAPLATY.md` §5.1.
 
 ---
 
@@ -357,13 +357,13 @@ issue: "#307 — что из пробы применимо за пределам
 | промах поля (порог 1.14) | `tools/presentation-build/promah_polya.py` |
 | асимметрия, поворот, выход за лист | `tools/presentation-build/asimmetriya_kadra.py` |
 | словарь геометрий колоды | `tools/presentation-build/slovar_geometriy.py` |
-| графа «из чего сложена» по 33 формам | [`02-KATALOG-FORM-TELA.md`](02-KATALOG-FORM-TELA.md) |
-| заплаты ядра R4/R5: как применить | [`proba-R1-lec-08/yadro-ZAPLATY.md`](proba-R1-lec-08/yadro-ZAPLATY.md) |
-| журнал трения, 42 записи | [`proba-R1-lec-08/00-ZHURNAL-TRENIYA.md`](proba-R1-lec-08/00-ZHURNAL-TRENIYA.md) + части 2–5 |
-| черновики замера, включая три неудачных | `proba-R1-lec-08/priyomka/chernoviki-zamera/` |
+| графа «из чего сложена» по 33 формам | [`kadr/02-KATALOG-FORM-TELA.md`](kadr/02-KATALOG-FORM-TELA.md) |
+| заплаты ядра R4/R5: как применить | [`notes/research/dizayn-metodika/proba-R1-lec-08/yadro-ZAPLATY.md`](notes/research/dizayn-metodika/proba-R1-lec-08/yadro-ZAPLATY.md) |
+| журнал трения, 42 записи | [`notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA.md`](notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA.md) + части 2–5 |
+| черновики замера, включая три неудачных | `notes/research/dizayn-metodika/proba-R1-lec-08/priyomka/chernoviki-zamera/` |
 
 **Четыре открытых решения владельца** (issue #307) проба не закрывала и закрыть
 не могла: цель по плотности · поведение при переполнении · чья ветка несёт ядро ·
 добирать ли недостающие формы. Перечень и во что проба упёрлась по каждому —
-[`proba-R1-lec-08/00-ZHURNAL-TRENIYA.md`](proba-R1-lec-08/00-ZHURNAL-TRENIYA.md),
+[`notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA.md`](notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA.md),
 сводка части 1.

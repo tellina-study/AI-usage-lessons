@@ -12,6 +12,11 @@ You are an orchestrator. **Do NOT render slides yourself.** Delegate rendering t
 2. **`notes/mcp-limitations.md`** — известные баги PowerPoint MCP + workaround'ы.
 3. **`notes/decisions.md`** § «2026-05-12 — Presentation pipeline» — anti-pattern catalog + iteration journey.
 4. **`.claude/skills/pre-user-gate/SKILL.md`** — orchestrator self-review перед presenting USER GATE (применяется на этапе approval).
+5. **`tools/metodika-podachi/README.md`** — методика подачи, поток кадра (ENFORCED, issue #307):
+   `kadr/` — язык кадра и каталог 33 форм со слотами и бюджетом знаков; `tools/metodika-podachi/kadr/04-RITM-KOLODY.md`
+   — роль кадра и порог серии одной роли; `tools/metodika-podachi/shov/03-RAZNARYADKA.md` — разнарядка, составляемая
+   **до рисования первого кадра**; `tools/metodika-podachi/priyomka/07-PRIYOMKA.md` §1.1–1.14 — 14 числовых порогов
+   приёмки. Пофазный форс — `tools/lecture-production/metodika-podachi-po-fazam.md`.
 
 ## Arguments
 
@@ -50,10 +55,24 @@ You are an orchestrator. **Do NOT render slides yourself.** Delegate rendering t
 Если P0 issues найдены — STOP, фиксить source markdowns, повторить.
 Если только P1/P2 — фиксить инкрементально или продолжать с пометками.
 
+### Phase 2.5 — Разнарядка до рисования (ENFORCED, issue #307)
+
+Прежде чем спавнить рендер: у деки обязана быть **разнарядка** — строка на каждый кадр «что
+утверждает · чем доказывает · форма из каталога 33 · роль в ритме · слоты», составленная по
+`tools/metodika-podachi/shov/03-RAZNARYADKA.md` §1–3 (дерево выбора формы — §3, три исхода отказа
+формы — §4). Проверить до рисования, по `tools/metodika-podachi/shov/03-RAZNARYADKA-part2.md` §5 и
+`tools/metodika-podachi/kadr/04-RITM-KOLODY.md` §2.1: серия одной роли не длиннее четырёх, бюджет знаков на слот не
+превышен, вопрос залу не о личной работе слушателей.
+
+Разнарядки нет — STOP: это структурный пробел, и рисовать по нему значит решать форму кадра на
+глаз в момент рисования.
+
 ### Phase 3 — Render через presentation-designer
 
 Спавнить `presentation-designer` agent с инструкцией:
 - Читать `library/lectures/lec-NN/deck.yaml` + `slides/*.md`.
+- Читать поток кадра методики подачи (`tools/metodika-podachi/kadr/`) и собственную разнарядку
+  Phase 2.5; форма каждого кадра берётся из каталога 33 форм, а не придумывается.
 - Применять Ocean Gradient + Teal palette + Gold highlight ≥1×/слайд.
 - Применять Visual motif (Ocean rounded box) на каждом content слайде.
 - Visual loop: **минимум 3 итерации на слайд (existing), максимум 7 (NEW)**. На iter 7 без §5.5 gate-pass — escalate с гипотезой «schema concept may need redesign» (см. `tools/presentation-build/README.md` §5.6).

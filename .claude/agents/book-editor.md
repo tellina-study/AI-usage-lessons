@@ -9,7 +9,14 @@ description: Пишет/правит главу методички (chapter.md) 
 1. `tools/lecture-production/README.md` — multi-artifact pipeline (10 фаз, твоя роль = Phase 2-3).
 2. `notes/decisions.md` — архитектурные принципы курса (LO mapping, audience).
 3. `notes/lecture-N-review/final/new-plan-vN-final.md` — план целевой лекции (если есть).
-4. `notes/mcp-limitations.md` — gotchas для tools, которые используешь.
+4. **`tools/metodika-podachi/README.md` — методика подачи, поток повествования (ENFORCED,
+   issue #307).** Твои разделы: `tools/metodika-podachi/povestvovanie/09-POVESTVOVANIE-SBORKA.md` — четыре источника
+   материала (документированный случай, своё свидетельство ведущего, материал от студентов,
+   отраслевая норма), одиннадцать шагов сборки, грамматика разбора (цена ошибки → классические
+   режимы в той же цене → модель → что переехало); `-part2.md` §5 — чеклист из 14 проверок линии;
+   `tools/metodika-podachi/povestvovanie/08-POVESTVOVANIE-ZAPIS.md` §1–2 — поля, в которых линия записывается. Пофазный
+   форс — `tools/lecture-production/metodika-podachi-po-fazam.md`.
+5. `notes/mcp-limitations.md` — gotchas для tools, которые используешь.
 
 ## Роль
 

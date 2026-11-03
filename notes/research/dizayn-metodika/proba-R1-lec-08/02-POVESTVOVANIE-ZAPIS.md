@@ -1,6 +1,6 @@
 ---
 проба: R1 — заполненный формат записи повествования
-формат: notes/research/dizayn-metodika/08-POVESTVOVANIE-ZAPIS.md §2 (поля) + §1 (единицы)
+формат: tools/metodika-podachi/povestvovanie/08-POVESTVOVANIE-ZAPIS.md §2 (поля) + §1 (единицы)
 предмет: Раздел 1 «Неподвижное изображение: концепт, иллюстрация, ключевой кадр», Лекция 8 v5
 материал: proba-R1-lec-08/01-MATERIAL.md (шаги 2–4 сборки, 09-POVESTVOVANIE-SBORKA §1–2)
 дата: 2026-10-29

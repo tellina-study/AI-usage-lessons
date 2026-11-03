@@ -3,7 +3,7 @@ issue: "#307 — графа «из чего сложена» к сведённо
 дата: "2026-11-03"
 см_также: "02-KATALOG-FORM.md (№1–11) · -part2.md (№12–22) · -part3.md (№23–31) ·
   -part4.md (№32–33) — описания форм; 02-SOPOSTAVLENIE-S-YADROM.md (имена форм ядра);
-  proba-R1-lec-08/00-ZHURNAL-TRENIYA-part4.md Т-40 и -part5.md Т-42 — записи, купившие эту графу"
+  notes/research/dizayn-metodika/proba-R1-lec-08/00-ZHURNAL-TRENIYA-part4.md Т-40 и -part5.md Т-42 — записи, купившие эту графу"
 ---
 
 # Графа «из чего сложена». Все 33 формы каталога
@@ -248,12 +248,12 @@ issue: "#307 — графа «из чего сложена» к сведённо
 слотом вывода, и про её тело не известно ничего, кроме того, что в словаре
 геометрий Лекции 7 нет ничего, кроме трёх имён. Правка одной несущей формы
 проходит по всей колоде сразу (разбор переполнения,
-[`03-PEREPOLNENIE-RAZBOR.md`](03-PEREPOLNENIE-RAZBOR.md)).
+[`../shov/03-PEREPOLNENIE-RAZBOR.md`](../shov/03-PEREPOLNENIE-RAZBOR.md)).
 
 ---
 
 **Связанное:** [`02-SOPOSTAVLENIE-S-YADROM.md`](02-SOPOSTAVLENIE-S-YADROM.md) —
 имена форм ядра, без сверки с которым форму выбирать запрещено ·
-[`PERENOSIMOE.md`](PERENOSIMOE.md) — свод переносимых уроков ·
-[`proba-R1-lec-08/yadro-ZAPLATY.md`](proba-R1-lec-08/yadro-ZAPLATY.md) — заплаты
+[`../PERENOSIMOE.md`](../PERENOSIMOE.md) — свод переносимых уроков ·
+[`notes/research/dizayn-metodika/proba-R1-lec-08/yadro-ZAPLATY.md`](notes/research/dizayn-metodika/proba-R1-lec-08/yadro-ZAPLATY.md) — заплаты
 ядра, завёдшие эти тела · `tools/presentation-build/slovar_geometriy.py` — мера.

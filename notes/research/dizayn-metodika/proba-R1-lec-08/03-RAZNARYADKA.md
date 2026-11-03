@@ -1,6 +1,6 @@
 ---
 проба: R1 — разнарядка
-формат: notes/research/dizayn-metodika/03-RAZNARYADKA.md §1–3 + -part2.md §4–6
+формат: tools/metodika-podachi/shov/03-RAZNARYADKA.md §1–3 + -part2.md §4–6
 вход: proba-R1-lec-08/02-POVESTVOVANIE-ZAPIS.md (линия, прошедшая чеклист §5)
 формы: proba-R1-lec-08/indeks-form.md (33 формы каталога)
 дата: 2026-10-29

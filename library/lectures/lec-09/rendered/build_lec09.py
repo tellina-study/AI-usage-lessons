@@ -100,10 +100,21 @@ REPO_ROOT = HERE.parents[3]                           # корень репоз�
 sys.path.insert(0, str(REPO_ROOT / "tools" / "presentation-build"))
 
 from deckkit import (columns, floor, markup, media, metrics, plates,  # noqa: E402
-                     prims, report, scheme, slidefile, tables, titles, wrap)
+                     polosy, prims, report, scheme, slidefile, tables,
+                     titles, wrap)
 from deckkit import render as rnd                     # noqa: E402
 from deckkit.theme import (DEEP, GOLD, LIGHT, MID, SURFACE, TEAL,  # noqa: E402
                            WHITE, SLIDE_H, SLIDE_W)
+
+# ─── ПОЛ КЕГЛЯ ВИДИМОГО СЛОЯ: 15 пт, решение владельца 29.10.2026 ───
+# Фаза 6 (issue #317) — переделка деки под это решение: приёмка
+# (`rework/metodika-podachi-review-priyomka.md`) и ревью кадра
+# (`rework/metodika-podachi-review-kadr.md`) нашли пол деки нетронутым
+# (12,0 пт на 680 из 1205 run'ов). Поднято ЗДЕСЬ, по образцу
+# `library/lectures/lec-08/rework-v5/deck/build_lec08_v5.py` — пакет
+# читает `VIS_PT` в момент вызова (`floor.py`, docstring), поэтому дека
+# поднимает свой пол, не двигая порог соседним лекциям.
+floor.VIS_PT = 15.0
 
 SLIDES_DIR = LEC_ROOT / "slides"
 ASSET_CACHE = HERE / "assets-cache"       # .svg/.webp → .png, кешировано
@@ -118,13 +129,27 @@ FULL_W = SLIDE_W - 2 * MX                # 12,23"
 TITLE_Y, TITLE_H = 0.40, 0.92
 BODY_TOP = 1.46
 FOOT_BOT = 7.44                          # нижняя грань полосы подвала
-FOOT_H_MAX = 0.50                        # потолок (как было раньше, фиксом)
-FOOT_PT, FOOT_LS = 11.0, 1.12
+# Потолок поднят 0,50"→0,65" ВМЕСТЕ с кеглем подвала (11→15 пт, см. ниже):
+# на 15 пт самый длинный источник деки (`s09`, 110 знаков) не влезает в
+# одну строку и уходит на две — 0,58" по оценке сборщика, выше старого
+# потолка 0,50". Найдено первой же пересборкой после подъёма `FOOT_PT`
+# (`[высота] s09/подвал`). 0,65" — с запасом на ту же вторую строку у
+# любого другого кадра с похожим по длине источником.
+FOOT_H_MAX = 0.65
+# Подвал — ступень 0 лестницы кегля (`01-YAZYK-KADRA.md` §2.2: «Подпись /
+# источник / подвал» = 15 пт), не отдельное исключение из пола — поднят с
+# 11,0 тем же решением владельца, что и тело/плашки/схема ниже.
+FOOT_PT, FOOT_LS = 15.0, 1.12
 FOOT_GAP = 0.12                          # просвет между телом и подвалом
 MEDIA_W = 4.30                           # слот боковой иллюстрации
 MEDIA_H_CAP = 3.40
 COL_GAP = 0.34
-GAP = 0.20
+# 0,20"→0,13": после подъёма пола тело-рассказ («Что переехало» / «Честный
+# пробел») на `case_study`-кадрах (4 плашки + боковое фото) стало зажато
+# ниже 15 пт на 13 кадрах (Фаза 6, issue #317) — просвет между блоками
+# геометрически возвращает телу место без правки содержания; найденное
+# практикой других дек нижнее приличное значение для просвета блок-блок.
+GAP = 0.13
 HERO_TOP = 0.10
 WRAP_GAP = 0.10
 BODY_PT = 15.0                            # номинал тела — пол проекции мерит по нему
@@ -157,7 +182,16 @@ CONTENT_TYPES = {"norm", "case_study", "schema_matrix", "schema_pipeline",
 # смысла — и структура разбора естественно читается как ДВЕ пары
 # («цена ошибки» + «цена ошибки-2», «классика» + «модель»), поэтому
 # 2×2 не ломает форму, а совпадает с ней.
-PLATES = replace(plates.DEFAULT, value_key_color=LIGHT, max_per_row=2)
+#
+# `label_pt`/`note_pt`/`value_lo`/`value_floor` — четыре поля `PlateStyle`,
+# отмеченные в `plates.py` как «пол видимого слоя» (`label_pt`, `note_pt`,
+# `value_floor`) либо как нижняя граница диапазона подбора кегля значения
+# (`value_lo`) — тот же приём, что `build_lec08_v5.PLATES`. Решение
+# владельца 29.10.2026: пол поднят с 12 до 15, здесь — ровно там, где он
+# был прибит константой этого стиля.
+PLATES = replace(plates.DEFAULT, value_key_color=LIGHT, max_per_row=2,
+                 label_pt=15.0, note_pt=15.0, value_lo=15.0,
+                 value_floor=15.0)
 
 # `ai_by_word=False`: шаг модели угадывается по слову «модель» ненадёжно
 # (находка Лекции 7 — 4 ложных золота из 5), а ни один `scheme:` этой
@@ -168,7 +202,57 @@ PLATES = replace(plates.DEFAULT, value_key_color=LIGHT, max_per_row=2)
 # `step_rows=4`, не умолчательные 3: `s40` держит шаг «Пары «параметры →
 # результат» как обучающие примеры» — на 3 отведённых строках он не влезал
 # (`[высота]` 0,89" при рамке 0,77"), на 4 — влезает.
-SCHEME = scheme.SchemeStyle(ai_by_word=False, step_rows=4)
+#
+# `step_lo`/`lab_pt`/`cap_pt` — отмечены в `scheme.py` «пол видимого слоя»,
+# подняты с 12 до 15 тем же решением владельца; `step_hi` (потолок диапазона
+# подбора кегля шага) поднят с 13,5 до 16, иначе у подбора нет хода вверх
+# выше прежнего предела — тот же приём, что `build_lec08_v5.SCHEME`.
+SCHEME = scheme.SchemeStyle(ai_by_word=False, step_rows=4,
+                            step_hi=16.0, step_lo=15.0, lab_pt=15.0,
+                            cap_pt=15.0)
+
+# Столбцы: форма не принимает объект стиля, кегли лежат голыми константами
+# модуля и читаются в момент вызова. Поднимаем их тем же приёмом — атрибут
+# модуля, без правки общего пакета (у соседних лекций порог остаётся
+# прежним) — тот же приём, что `build_lec08_v5.columns.HEAD_PT`.
+columns.HEAD_PT = 15.0
+columns.ITEM_HI, columns.ITEM_LO, columns.ITEM_FLOOR = 16.0, 15.0, 15.0
+
+# Парные полосы (форма №21 каталога, `polosy:`) — ПОПЫТКА второй формы
+# разбора случая, рядом с «сеткой из 4 плашек» (`PLATES` выше), сделанная и
+# ОТКЛОНЁННАЯ в этой переделке (issue #317, Фаза 6). Разбор всех 13
+# `case_study`-кадров деки на пригодность:
+#
+# 1. У 12 из 13 классическая сторона либо «не существует» (COROB-X,
+#    Starcloud, Suncatcher — задача новая, классического аналога нет
+#    вовсе), либо названа словами без опубликованного числа (SPOC, LeoLabs,
+#    Dragon, Astrobee, Raptor, Claude/JPL, AIFS/AIGEFS, генеративный дизайн)
+#    — выдумать число значило бы нарушить Baseline/Counterfactual Mandate
+#    (`CLAUDE.md`) и содержание кадра, которое эта задача не трогает.
+# 2. Единственный кадр, где обе стороны уже стоят ЧИСЛОМ в ОДНОЙ единице
+#    без изобретения, — `s19` (AEGIS, «24% попаданий» / «93% попаданий»).
+#    Опробовано здесь: сборка дала СВОЙ БЛОКИРУЮЩИЙ отказ формы —
+#    `check_polosy` отказывается рисовать ОДНУ пару без соседних («строка
+#    одна — пара без соседних пар это кадр одного сравнения, и он читается
+#    `figure:` либо осью»). Форма №21 по замыслу — аггрегатор НЕСКОЛЬКИХ
+#    сравнений на одной шкале (образец `PERENOS-PRIYOMOV.md` §2.3: три
+#    строки «изображение / минута озвучки / эпизод микродрамы» на одном
+#    кадре), а не альтернативная раскладка ОДНОГО разбора случая. У этой
+#    лекции каждый `case_study`-кадр несёт ровно одну пару — форма №21
+#    структурно не подходит роли «разбор случая» этой лекции НИ НА ОДНОМ
+#    кадре, независимо от наличия чисел. `s19` возвращён на `PLATES`
+#    (см. `git log` этого файла — попытка и откат в одном issue #317).
+#
+# Импорт и стиль оставлены (не вырезаны) — `polosy:` остаётся доступным
+# полем фронтматтера для БУДУЩЕГО кадра этой или другой лекции, который
+# действительно агрегирует несколько сравнений на одной шкале (например,
+# накопительная сводка нескольких кейсов раздела — не этот кадр и не эта
+# задача). Поля стиля подняты до пола 15 пт тем же приёмом, что
+# `PLATES`/`SCHEME` выше, на случай такого кадра — тот же приём, что
+# `build_lec08_v5.POLOSY`.
+POLOSY = polosy.PolosyStyle(lab_pt=15.0, val_pt=15.0, mn_pt=15.0,
+                            leg_pt=15.0, tick_pt=15.0, unit_pt=15.0,
+                            cap_pt=15.0)
 
 # `TBL_ROW_MIN` 0,40"→0,32": найдено на `s62`/`s63` (14 строк со шляпкой —
 # `s63`, сводная сетка «тип задачи × модальность», 13 разборов). При кегле
@@ -205,7 +289,7 @@ def fit_table_height(tbl, hi, avail_h, w):
     return tables.TBL_FLOOR
 
 CONTENT_TYPES_WITH_FIELDS = ("blocks", "scheme", "columns", "table",
-                             "matrix_empty", "headline_number")
+                             "matrix_empty", "headline_number", "polosy")
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -303,7 +387,7 @@ def draw_chip_scale(s, x, y, w):
         prims.text_runs(s, x, cy, w, 0.34, [
             {"text": f"{label}: ", "size": 15, "color": DEEP},
             {"text": num, "size": 18, "bold": True, "color": text_col},
-            {"text": f" — {cap}", "size": 12.5, "color": LIGHT,
+            {"text": f" — {cap}", "size": 15.0, "color": LIGHT,
              "italic": True},
         ], ls=1.15, tag="s51/строка-сравнения")
         prims.rect(s, x, cy + 0.40, max(bw, 0.12), bar_h, bar_col,
@@ -311,7 +395,7 @@ def draw_chip_scale(s, x, y, w):
         cy += 0.40 + bar_h + 0.34
     prims.text_box(s, x, cy + 0.04, w, 0.35,
                    "Столбики не в линейном масштабе — разница составляет "
-                   "порядки, не проценты.", size=12, italic=True,
+                   "порядки, не проценты.", size=15.0, italic=True,
                    color=LIGHT, tag="s51/сноска")
     return cy + 0.40 - y
 
@@ -412,7 +496,7 @@ def footer(s, sl):
 def check_prims(sl, kind):
     for f, name in (("blocks", "плашки"), ("scheme", "схема"),
                     ("columns", "столбцы"), ("table", "таблица"),
-                    ("matrix_empty", "матрица")):
+                    ("matrix_empty", "матрица"), ("polosy", "полосы")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
@@ -514,7 +598,7 @@ def cover(p, sl, root):
                     "может быть выполнен")
     runs = []
     for i, (kind, t) in enumerate(slidefile.body_blocks(sl)):
-        sz = {"head": 34.0, "cap": 12.5}.get(kind, 17.0)
+        sz = {"head": 34.0, "cap": 15.0}.get(kind, 17.0)
         for j, r in enumerate(markup.inline_runs(
                 t, sz, DEEP if kind != "cap" else LIGHT)):
             r.setdefault("italic", kind == "cap")
@@ -652,6 +736,25 @@ def content(p, sl, root):
     пробел», а не рядом с числовой сводкой."""
     s = prims.blank(p)
     prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE, count="фон")
+    if str(sl.meta.get("type") or "") == "case_study":
+        # Силуэт-метка роли (ревью кадра #317 §5-6): «Стадия: …» (`norm`) и
+        # «Пример: …» (`case_study`) делят один и тот же рецепт «4 плашки
+        # 2×2» — взгляд без чтения текста их не различает (главная находка
+        # §5-6 ревью). Ни форма №21 (`polosy`, см. отказ выше — она держит
+        # НЕСКОЛЬКО сравнений на одной шкале, а не альтернативную раскладку
+        # ОДНОГО разбора), ни №26/№33 содержательно не подошли ВСЕМ 13
+        # кадрам этой роли: 12 из 13 несут классическую сторону без
+        # числа («не существует» либо названа словами), выдумывать его
+        # нарушило бы Baseline/Counterfactual Mandate. Правка, меняющая
+        # ГЕОМЕТРИЮ плашек, рискует переоткрыть находки `[высота]`
+        # (`s19`/`s22`/`s24`), которые пересборка под пол 15 пт уже дала на
+        # этом и без того плотном бюджете. Полоса слева — минимальный
+        # ДЕЙСТВИТЕЛЬНО силуэтный маркер (тот же приём, что уже держит
+        # идентичность раздела у `divider()` ниже), нулевой по высоте и не
+        # отнимающий ширины у тела (0,17" при поле `MX=0,55"`): ТИЛ, а не
+        # МИД дивайдера — секундарный акцент палитры, почти не занятый в
+        # остальной деке (находка §4 ревью кадра: 3 прогона тила на 1205).
+        prims.rect(s, 0, 0, 0.17, SLIDE_H, TEAL, count="полоса")
     bb = body_bot(sl)
     img = resolve_media(sl.meta, root, sl.sid)
     hero = img is not None and bool(sl.meta.get("media_hero"))
@@ -667,7 +770,18 @@ def content(p, sl, root):
     if not is_content:
         check_prims(sl, str(sl.meta.get("type") or "?"))
 
-    pl = plates.plates_of(sl, PLATES) if is_content else []
+    # `polosy:` (форма №21, см. docstring `POLOSY` выше) вместо плашек —
+    # НЕ рядом с ними: на кадре, который объявил `polosy`, поле `blocks`
+    # не стоит (сверено на `s19` при написании этой правки), и разбор
+    # случая несёт ровно ОДНУ форму цены/классики/модели, не две.
+    pol = polosy.polosy_of(sl, POLOSY) if is_content else None
+    if pol:
+        polosy.check(sl.sid, pol, body_w_top)
+        y += polosy.draw(s, sl.sid, pol, MX, y, body_w_top,
+                         tag=f"{sl.sid}/полосы") + GAP
+        pl = []
+    else:
+        pl = plates.plates_of(sl, PLATES) if is_content else []
     if pl:
         y += plates.draw_plates(s, sl.sid, pl, MX, y, body_w_top, PLATES) + GAP
     sch = scheme.scheme_of(sl, SCHEME) if is_content else None
@@ -690,7 +804,7 @@ def content(p, sl, root):
     if pure_table and slidefile.body_blocks(sl):
         runs, first = [], True
         for kind, t in slidefile.body_blocks(sl):
-            sz = {"head": 18.0, "cap": 12.0, "bullet": 14.0}.get(kind, 14.0)
+            sz = {"head": 18.0, "cap": 15.0, "bullet": 15.0}.get(kind, 15.0)
             # Разрыв МЕЖДУ абзацами — без него `s63` набрал два отдельных
             # предложения («…не существуют.» + «Два «—» — …») слитно,
             # впритык, без пробела между точкой и следующим словом.
@@ -798,7 +912,7 @@ def content(p, sl, root):
     elif avail > 0.35:
         runs, first = [], True
         for kind, t in slidefile.body_blocks(sl):
-            sz = {"head": 20.0, "cap": 12.0, "bullet": 15.0}.get(kind, 15.0)
+            sz = {"head": 20.0, "cap": 15.0, "bullet": 15.0}.get(kind, 15.0)
             if not first:
                 runs.append({"text": "", "size": sz, "newpara": True,
                              "space_before": 7})
@@ -835,9 +949,11 @@ def content(p, sl, root):
                 prims.text_runs(s, MX + 0.04, y_bot, FULL_W - 0.08,
                                 col_bot - y_bot, bot, ls=1.26,
                                 tag=f"{sl.sid}/тело-под")
+                floor.check_runs(top + bot, f"{sl.sid}/тело")
             else:
                 metrics.fit_runs(runs, body_w - 0.08, avail, ls=1.26,
                                  tag=f"{sl.sid}/тело", proj_base=BODY_PT)
+                floor.check_runs(runs, f"{sl.sid}/тело")
                 # Коробка мотива — по НАСТОЯЩЕЙ высоте текста после
                 # подбора, не по всему остатку кадра `avail`: короткое
                 # тело (`s13` — два жирных абзаца, схема уже забрала

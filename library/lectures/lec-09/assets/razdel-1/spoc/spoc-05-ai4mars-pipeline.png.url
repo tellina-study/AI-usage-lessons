@@ -1,0 +1,11 @@
+source: https://nasa-jpl.github.io/SPOC/ (официальная страница проекта SPOC, NASA-JPL GitHub Pages)
+direct_asset: https://nasa-jpl.github.io/SPOC/assets/images/ai4mars.png
+title: "AI4Mars crowdsourcing pipeline illustration"
+credit: NASA/JPL-Caltech
+date_accessed: 2026-10-31
+tier: "Tier 1 (официальная страница проекта)"
+description: >
+  Иллюстрация механики AI4Mars — как разметка волонтёров Zooniverse питает обучение
+  SPOC. Держит § 1.4 "Обучающие данные SPOC не статичны... AI4Mars... разметка
+  продолжает поступать и использоваться для улучшения модели прямо сейчас".
+license: NASA public domain (US government work).

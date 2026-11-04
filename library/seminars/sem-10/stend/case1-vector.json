@@ -1,0 +1,192 @@
+{
+  "name": "С10 · Кейс 1 — векторное хранилище (демо-экран)",
+  "nodes": [
+    {
+      "id": "trig",
+      "name": "Вопрос + корпус с векторами",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -480,
+        0
+      ],
+      "webhookId": "s10-case1-vector",
+      "parameters": {
+        "path": "s10-case1-vector",
+        "formTitle": "С10 · Кейс 1 — векторный поиск (демо)",
+        "formDescription": "Вопрос + корпус документов с готовыми эмбеддингами (JSON)",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "payload",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "embed_q",
+      "name": "Embed query (OpenRouter)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -220,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/embeddings",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openRouterApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({model: JSON.parse($json.payload).model, input: JSON.parse($json.payload).question}) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "pick",
+      "name": "Simple Vector Store (cosine top-1)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        40,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const payload = JSON.parse($('Вопрос + корпус с векторами').first().json.payload);\nconst qvec = $input.first().json.data[0].embedding;\nfunction cos(a,b){let d=0,na=0,nb=0;for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];}return d/(Math.sqrt(na)*Math.sqrt(nb));}\nlet best=null,bestScore=-1;\nfor(const doc of payload.corpus){const s=cos(qvec,doc.embedding);if(s>bestScore){bestScore=s;best=doc;}}\nreturn [{json:{question:payload.question,chunk:best.text,doc_id:best.id,score:bestScore,model:payload.model}}];"
+      }
+    },
+    {
+      "id": "model",
+      "name": "Model (answer on retrieved chunk)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        300,
+        120
+      ],
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "answer",
+      "name": "Answer (RAG)",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        300,
+        0
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "=Отвечай ТОЛЬКО по тексту ниже. Если ответа нет в тексте — напиши «нет информации».\n\nТекст:\n{{ $json.chunk }}\n\nВопрос: {{ $json.question }}"
+      }
+    },
+    {
+      "id": "res",
+      "name": "Result screen",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        540,
+        0
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Ответ",
+        "completionMessage": "={{ $json.text }}",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Вопрос + корпус с векторами": {
+      "main": [
+        [
+          {
+            "node": "Embed query (OpenRouter)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embed query (OpenRouter)": {
+      "main": [
+        [
+          {
+            "node": "Simple Vector Store (cosine top-1)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Vector Store (cosine top-1)": {
+      "main": [
+        [
+          {
+            "node": "Answer (RAG)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model (answer on retrieved chunk)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Answer (RAG)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer (RAG)": {
+      "main": [
+        [
+          {
+            "node": "Result screen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

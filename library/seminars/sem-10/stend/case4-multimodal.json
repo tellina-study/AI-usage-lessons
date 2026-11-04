@@ -1,0 +1,112 @@
+{
+  "name": "С10 · Кейс 4 — мультимодальный эмбеддинг (демо-экран)",
+  "nodes": [
+    {
+      "id": "trig",
+      "name": "Скан бланка (data URL)",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -220,
+        0
+      ],
+      "webhookId": "s10-case4-mm",
+      "parameters": {
+        "path": "s10-case4-mm",
+        "formTitle": "С10 · Кейс 4 — мультимодальный эмбеддинг (демо)",
+        "formDescription": "JSON-тело: {model, input: [...]}, как ожидает OpenRouter /embeddings",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "body",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "http",
+      "name": "Embed image (amazon/titan-embed-image-v1)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        60,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/embeddings",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openRouterApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "res",
+      "name": "Result screen",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        300,
+        0
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Готово",
+        "completionMessage": "ok",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Скан бланка (data URL)": {
+      "main": [
+        [
+          {
+            "node": "Embed image (amazon/titan-embed-image-v1)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embed image (amazon/titan-embed-image-v1)": {
+      "main": [
+        [
+          {
+            "node": "Result screen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

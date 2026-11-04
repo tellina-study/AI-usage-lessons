@@ -805,7 +805,19 @@ def content(p, sl, root):
     hero = img is not None and bool(sl.meta.get("media_hero"))
     col_bot, body_w_top = bb, FULL_W
     if hero:
-        x_box, col_bot, _y_top = place_hero_centered(s, sl, img, bb)
+        # `media_hero_target` — опциональное поле (добавление #317,
+        # Фаза 9: 5 новых кадров «большая иллюстрация + разбор», которым
+        # нужна площадь больше дефолтных 42% §5.9). Ни один из прежних 71
+        # кадров деки это поле не объявляет — без него `place_hero_centered`
+        # ведёт себя ТОЧНО как раньше (умолчание 0,42 внутри неё самой).
+        raw_target = sl.meta.get("media_hero_target")
+        raw_wcap = sl.meta.get("media_hero_wcap")
+        kw = {}
+        if raw_target:
+            kw["target"] = float(raw_target)
+        if raw_wcap:
+            kw["w_cap"] = float(raw_wcap)
+        x_box, col_bot, _y_top = place_hero_centered(s, sl, img, bb, **kw)
         body_w_top = x_box - COL_GAP - MX
         y = heading(s, sl, width=body_w_top)
     else:

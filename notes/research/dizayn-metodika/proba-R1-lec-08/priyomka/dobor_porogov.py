@@ -76,8 +76,12 @@ if _idx == -1:
     )
 REPO_ROOT = HERE[:_idx]
 
-ZAMER_DIR = os.path.join(REPO_ROOT, "notes", "research", "dizayn-metodika", "zamer")
+ZAMER_DIR = os.path.join(REPO_ROOT, "tools", "metodika-podachi", "zamer")
 DECKKIT_PARENT = os.path.join(REPO_ROOT, "tools", "presentation-build")
+# До коммита 001c083a3f ("Методика подачи вынесена в канон и подключена к конвейеру") zamer.py
+# жил по пути notes/research/dizayn-metodika/zamer/ — этот путь больше не существует. Находка
+# #307 (приёмка Лекции 9, issue #317): скрипт падал с ModuleNotFoundError на любой колоде, не
+# только на Лекции 9, потому что путь не был обновлён вместе с переносом. Починено здесь.
 
 sys.path.insert(0, ZAMER_DIR)
 import zamer  # noqa: E402  — модуль с методом сравнения для 1.3, не переписан

@@ -1,156 +1,193 @@
 {
   "_meta": {
-    "pptx": "/home/harness/harness-projects/256/.worktrees/folder-288/session-b7caa6c0-9d806aa6/notes/research/dizayn-metodika/proba-R1-lec-08/rendered/proba-R1.pptx",
-    "pdf": "/home/harness/harness-projects/256/.worktrees/folder-288/session-b7caa6c0-9d806aa6/notes/research/dizayn-metodika/proba-R1-lec-08/rendered/proba-R1.pdf"
+    "pptx": "library/lectures/lec-09/rendered/lec-09-pilot.pptx",
+    "pdf": "library/lectures/lec-09/rendered/lec-09-pilot.pdf"
   },
   "1.3": {
     "porog": "15,0 пт на 100% знаков видимого слоя (включая подписи и подвал)",
     "moy_metod": {
       "opisanie": "каждый текстовый прогон (run) всей колоды, без фильтра доли и без исключения верхней/нижней зоны кадра — полный прогон",
-      "vsego_progonov": 215,
+      "vsego_progonov": 1128,
       "progonov_bez_zadannogo_keglya": 0,
-      "izmereno_progonov": 215,
-      "nizhe_pola_progonov": 96,
-      "dolya_nizhe_pola_po_progonam": 0.44651162790697674,
-      "dolya_nizhe_pola_po_simvolam": 0.5139905294877314,
-      "zadeto_kadrov": 15,
+      "izmereno_progonov": 1128,
+      "nizhe_pola_progonov": 259,
+      "dolya_nizhe_pola_po_progonam": 0.2296099290780142,
+      "dolya_nizhe_pola_po_simvolam": 0.18253304711332052,
+      "zadeto_kadrov": 26,
       "nomera_kadrov": [
-        1,
-        2,
-        3,
-        4,
-        5,
         6,
-        7,
-        8,
         9,
-        10,
         11,
         12,
-        13,
-        14,
-        15
+        19,
+        20,
+        21,
+        22,
+        24,
+        32,
+        35,
+        42,
+        43,
+        44,
+        45,
+        47,
+        52,
+        53,
+        55,
+        58,
+        59,
+        62,
+        63,
+        64,
+        65,
+        68
       ],
       "desyat_khudshikh": [
         {
-          "slide": 1,
-          "shape": "TextBox 5",
-          "size_pt": 12.0,
-          "text": "Концепт-арт · иллюстрация · ключевой кад"
+          "slide": 19,
+          "shape": "TextBox 21",
+          "size_pt": 10.5,
+          "text": "Что переехало."
         },
         {
-          "slide": 2,
-          "shape": "TextBox 3",
-          "size_pt": 12.0,
-          "text": "до модели"
+          "slide": 19,
+          "shape": "TextBox 21",
+          "size_pt": 10.5,
+          "text": "Продуктивность выросла почти в 4 раза — "
         },
         {
-          "slide": 2,
-          "shape": "TextBox 15",
-          "size_pt": 12.0,
-          "text": "с моделью"
+          "slide": 19,
+          "shape": "TextBox 21",
+          "size_pt": 10.5,
+          "text": "Честный пробел."
         },
         {
-          "slide": 2,
-          "shape": "TextBox 27",
-          "size_pt": 12.0,
-          "text": "модель входит на второй клетке и только "
+          "slide": 19,
+          "shape": "TextBox 21",
+          "size_pt": 10.5,
+          "text": "Контур обратной связи и состав выборки r"
         },
         {
-          "slide": 2,
-          "shape": "TextBox 33",
-          "size_pt": 12.0,
-          "text": "описание класса работы; прейскуранты и с"
+          "slide": 19,
+          "shape": "TextBox 21",
+          "size_pt": 10.5,
+          "text": "Классификация на изображении."
         },
         {
-          "slide": 3,
-          "shape": "TextBox 45",
-          "size_pt": 12.0,
-          "text": "Профи.ру, 3 848 анкет иллюстраторов"
+          "slide": 22,
+          "shape": "TextBox 21",
+          "size_pt": 10.5,
+          "text": "Честная оговорка."
         },
         {
-          "slide": 3,
-          "shape": "TextBox 45",
-          "size_pt": 12.0,
-          "text": "·"
+          "slide": 22,
+          "shape": "TextBox 21",
+          "size_pt": 10.5,
+          "text": "Источники не называют, сколько манёвров "
         },
         {
-          "slide": 3,
-          "shape": "TextBox 45",
-          "size_pt": 12.0,
-          "text": "прейскуранты iStock и Shutterstock"
+          "slide": 22,
+          "shape": "TextBox 21",
+          "size_pt": 10.5,
+          "text": "Для контраста."
         },
         {
-          "slide": 4,
-          "shape": "TextBox 8",
-          "size_pt": 12.0,
-          "text": "Disney, «101 далматинец», 1961"
+          "slide": 22,
+          "shape": "TextBox 21",
+          "size_pt": 10.5,
+          "text": "У Starlink автоматика сама предупреждает"
         },
         {
-          "slide": 4,
-          "shape": "TextBox 8",
-          "size_pt": 12.0,
-          "text": "·"
+          "slide": 22,
+          "shape": "TextBox 21",
+          "size_pt": 10.5,
+          "text": "Классификация (приоритизация) на структу"
         }
       ]
     },
     "metod_zamer_py_na_etom_zhe_fayle": {
       "opisanie": "zamer.summarize_pdf_or_pptx: наименьшая ступень, покрывающая ≥1% взвешенного по символам объёма текста (MIN_SIZE_SHARE), пул уже очищен от верхних 5%/нижних 8% высоты кадра и от span'ов-номеров страниц (is_footer_zone)",
-      "minimalnyy_kegl_s_filtrom_1_protsenta": 12.0,
-      "minimalnyy_kegl_bez_filtra_1_protsenta_no_s_iskl_kolontitula": 12.0,
-      "dolya_nizhe_pola_po_simvolam_v_etom_pule": 0.4495368113115553,
+      "minimalnyy_kegl_s_filtrom_1_protsenta": 10.5,
+      "minimalnyy_kegl_bez_filtra_1_protsenta_no_s_iskl_kolontitula": 10.5,
+      "dolya_nizhe_pola_po_simvolam_v_etom_pule": 0.1899633148339761,
       "stupeni_s_filtrom": [
+        10.5,
         12.0,
+        12.5,
+        13.0,
         13.5,
-        14.0,
         14.5,
         15.0,
         15.5,
         16.0,
-        16.5,
-        17.5,
         23.0,
         27.0
       ]
     },
     "raznitsa_metodov_chislom": {
-      "dolya_nizhe_15pt_moy_metod_po_simvolam": 0.514,
-      "dolya_nizhe_15pt_metod_zamer_po_simvolam": 0.4495,
-      "razlichie_v_p_p": 6.45,
+      "dolya_nizhe_15pt_moy_metod_po_simvolam": 0.1825,
+      "dolya_nizhe_15pt_metod_zamer_po_simvolam": 0.19,
+      "razlichie_v_p_p": -0.74,
       "kommentariy": "обе доли посчитаны по одной единице (доля символов), различие — ровно то, что даёт исключение zamer.py верхних 5%/нижних 8% высоты кадра и фильтр ступеней ≥1% веса; на очень маленьком тестовом файле (2 кадра) различие может быть нулевым или минимальным — смысл числа проявляется на полной колоде"
     },
-    "fakt": "96 прогонов из 215 измеренных (доля 0.4465 по прогонам, 0.5140 по символам) ниже 15,0 пт, задето 15 кадр(ов)",
+    "fakt": "259 прогонов из 1128 измеренных (доля 0.2296 по прогонам, 0.1825 по символам) ниже 15,0 пт, задето 26 кадр(ов)",
     "verdikt": "НЕ ПРОХОДИТ"
   },
   "1.8": {
     "porog": "WCAG — ≥4,5:1 для обычного текста, ≥3,0:1 для крупного (кегль ≥18 пт либо ≥14 пт полужирным)",
     "kak_merili": "deckkit.contrast импортирован как библиотека (функции rows_of/ratio/background/lum — чистые, зависят только от python-pptx, не от состояния сборки) — переиспользован, не переписан, по прямому требованию задания",
-    "vsego_par_izmereno": 215,
+    "vsego_par_izmereno": 1128,
     "ne_izmereno_tsvet_ili_fon_ne_nazvany": 0,
     "nizhe_poroga": 0,
     "desyat_khudshikh": [],
-    "fakt": "0 пар из 215 измеренных ниже порога WCAG",
+    "fakt": "0 пар из 1128 измеренных ниже порога WCAG",
     "verdikt": "проходит"
   },
   "1.11": {
     "porog": "ничего критичного (заголовок, ключевое число, подпись-источник) не стоит ближе 48 пт от левого/правого края и 24 пт от верхнего/нижнего",
     "kak_merili": "рабочая область 864×492 пт на холсте 960.0×540.0 пт — поле 48 пт слева/справа, 24 пт сверху/снизу; критичная рамка — кегль ≥23 пт (заголовок/число) либо верх рамки в нижних 9% высоты кадра (подвал/подпись-источник)",
-    "vsego_tekstovykh_ramok": 181,
-    "narusheniy_vsego_ramok": 52,
-    "narusheniy_kriticheskikh_ramok": 28,
+    "vsego_tekstovykh_ramok": 729,
+    "narusheniy_vsego_ramok": 182,
+    "narusheniy_kriticheskikh_ramok": 92,
     "narushiteli_kriticheskie": [
       {
         "slide": 1,
-        "shape": "TextBox 3",
-        "text": "Раздел 1. Неподвижное изображение",
-        "max_size_pt": 30.0,
+        "shape": "TextBox 4",
+        "text": "Фронтир, который сам становится лаборато",
+        "max_size_pt": 34.0,
         "footer_zone": false,
         "critical": true,
-        "dist_left": 55.4,
-        "dist_right": 39.6,
-        "dist_top": 75.6,
-        "dist_bottom": 423.6,
+        "dist_left": 39.6,
+        "dist_right": 537.9,
+        "dist_top": 79.2,
+        "dist_bottom": 13.0,
         "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "снизу",
+            13.0
+          ]
+        ]
+      },
+      {
+        "slide": 2,
+        "shape": "TextBox 2",
+        "text": "Падение стоимости запуска — опора лекции",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
           [
             "справа",
             39.6
@@ -159,37 +196,15 @@
       },
       {
         "slide": 2,
-        "shape": "TextBox 2",
-        "text": "Что за работа: одно изображение в выпуск",
-        "max_size_pt": 27.0,
-        "footer_zone": false,
-        "critical": true,
-        "dist_left": 39.6,
-        "dist_right": 39.6,
-        "dist_top": 28.8,
-        "dist_bottom": 445.0,
-        "violations": [
-          [
-            "слева",
-            39.6
-          ],
-          [
-            "справа",
-            39.6
-          ]
-        ]
-      },
-      {
-        "slide": 2,
-        "shape": "TextBox 33",
-        "text": "описание класса работы; прейскуранты и с",
-        "max_size_pt": 12.0,
+        "shape": "TextBox 22",
+        "text": "Harry W. Jones, «The Recent Large Reduct",
+        "max_size_pt": 15.0,
         "footer_zone": true,
         "critical": true,
         "dist_left": 39.6,
         "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
         "violations": [
           [
             "слева",
@@ -201,14 +216,14 @@
           ],
           [
             "снизу",
-            4.3
+            3.5
           ]
         ]
       },
       {
         "slide": 3,
         "shape": "TextBox 2",
-        "text": "Четыре способа получить изображение без ",
+        "text": "Спутников и данных стало на порядок боль",
         "max_size_pt": 27.0,
         "footer_zone": false,
         "critical": true,
@@ -229,15 +244,15 @@
       },
       {
         "slide": 3,
-        "shape": "TextBox 45",
-        "text": "Профи.ру, 3 848 анкет иллюстраторов · пр",
-        "max_size_pt": 12.0,
+        "shape": "TextBox 22",
+        "text": "Union of Concerned Scientists · planet45",
+        "max_size_pt": 15.0,
         "footer_zone": true,
         "critical": true,
         "dist_left": 39.6,
         "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
         "violations": [
           [
             "слева",
@@ -249,14 +264,14 @@
           ],
           [
             "снизу",
-            4.3
+            3.5
           ]
         ]
       },
       {
         "slide": 4,
         "shape": "TextBox 2",
-        "text": "Два удешевления до всякой модели",
+        "text": "Кто запускает и с какой скоростью",
         "max_size_pt": 27.0,
         "footer_zone": false,
         "critical": true,
@@ -277,15 +292,15 @@
       },
       {
         "slide": 4,
-        "shape": "TextBox 8",
-        "text": "Disney, «101 далматинец», 1961 · Adobe P",
-        "max_size_pt": 12.0,
+        "shape": "TextBox 22",
+        "text": "flightatlas.org (31.10.2026) · ОЭСР, «Th",
+        "max_size_pt": 15.0,
         "footer_zone": true,
         "critical": true,
         "dist_left": 39.6,
         "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
         "violations": [
           [
             "слева",
@@ -297,14 +312,14 @@
           ],
           [
             "снизу",
-            4.3
+            3.5
           ]
         ]
       },
       {
         "slide": 5,
         "shape": "TextBox 2",
-        "text": "Цена единицы изображения",
+        "text": "Второй виток падения: Starship, план и ф",
         "max_size_pt": 27.0,
         "footer_zone": false,
         "critical": true,
@@ -325,15 +340,15 @@
       },
       {
         "slide": 5,
-        "shape": "TextBox 37",
-        "text": "Тариф Gemini, 27.10.2026 · Профи.ру · пр",
-        "max_size_pt": 12.0,
+        "shape": "TextBox 22",
+        "text": "SpaceX, квартальный отчёт 20.10.2026 · A",
+        "max_size_pt": 15.0,
         "footer_zone": true,
         "critical": true,
         "dist_left": 39.6,
         "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
         "violations": [
           [
             "слева",
@@ -345,14 +360,14 @@
           ],
           [
             "снизу",
-            4.3
+            3.5
           ]
         ]
       },
       {
         "slide": 6,
         "shape": "TextBox 2",
-        "text": "Цена пробы и цена выбора",
+        "text": "Порог, а не обещание",
         "max_size_pt": 27.0,
         "footer_zone": false,
         "critical": true,
@@ -373,15 +388,15 @@
       },
       {
         "slide": 6,
-        "shape": "TextBox 18",
-        "text": "Тариф Gemini, 27.10.2026 · сообщение Toy",
-        "max_size_pt": 12.0,
+        "shape": "TextBox 22",
+        "text": "Google (проект Suncatcher) · Starcloud ·",
+        "max_size_pt": 15.0,
         "footer_zone": true,
         "critical": true,
         "dist_left": 39.6,
         "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
         "violations": [
           [
             "слева",
@@ -393,14 +408,14 @@
           ],
           [
             "снизу",
-            4.3
+            3.5
           ]
         ]
       },
       {
         "slide": 7,
         "shape": "TextBox 2",
-        "text": "Ставка: сколько генераций на одну иллюст",
+        "text": "Почему именно сейчас — три фронтира",
         "max_size_pt": 27.0,
         "footer_zone": false,
         "critical": true,
@@ -420,182 +435,16 @@
         ]
       },
       {
-        "slide": 8,
-        "shape": "TextBox 2",
-        "text": "Сколько генераций на одну иллюстрацию",
-        "max_size_pt": 28.0,
-        "footer_zone": false,
-        "critical": true,
-        "dist_left": 39.6,
-        "dist_right": 39.6,
-        "dist_top": 28.8,
-        "dist_bottom": 473.1,
-        "violations": [
-          [
-            "слева",
-            39.6
-          ],
-          [
-            "справа",
-            39.6
-          ]
-        ]
-      },
-      {
-        "slide": 8,
-        "shape": "TextBox 8",
-        "text": "«Тинькофф Журнал», 20.03.2023",
-        "max_size_pt": 12.0,
-        "footer_zone": true,
-        "critical": true,
-        "dist_left": 39.6,
-        "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
-        "violations": [
-          [
-            "слева",
-            39.6
-          ],
-          [
-            "справа",
-            39.6
-          ],
-          [
-            "снизу",
-            4.3
-          ]
-        ]
-      },
-      {
-        "slide": 9,
-        "shape": "TextBox 2",
-        "text": "Т—Ж: баннеры на домашней видеокарте",
-        "max_size_pt": 27.0,
-        "footer_zone": false,
-        "critical": true,
-        "dist_left": 39.6,
-        "dist_right": 39.6,
-        "dist_top": 28.8,
-        "dist_bottom": 445.0,
-        "violations": [
-          [
-            "слева",
-            39.6
-          ],
-          [
-            "справа",
-            39.6
-          ]
-        ]
-      },
-      {
-        "slide": 9,
-        "shape": "TextBox 22",
-        "text": "«Тинькофф Журнал», 20.03.2023",
-        "max_size_pt": 12.0,
-        "footer_zone": true,
-        "critical": true,
-        "dist_left": 39.6,
-        "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
-        "violations": [
-          [
-            "слева",
-            39.6
-          ],
-          [
-            "справа",
-            39.6
-          ],
-          [
-            "снизу",
-            4.3
-          ]
-        ]
-      },
-      {
-        "slide": 10,
-        "shape": "TextBox 2",
-        "text": "Т—Ж: что получается и что не получается",
-        "max_size_pt": 27.0,
-        "footer_zone": false,
-        "critical": true,
-        "dist_left": 39.6,
-        "dist_right": 39.6,
-        "dist_top": 28.8,
-        "dist_bottom": 445.0,
-        "violations": [
-          [
-            "слева",
-            39.6
-          ],
-          [
-            "справа",
-            39.6
-          ]
-        ]
-      },
-      {
-        "slide": 10,
-        "shape": "TextBox 14",
-        "text": "«Тинькофф Журнал», 20.03.2023",
-        "max_size_pt": 12.0,
-        "footer_zone": true,
-        "critical": true,
-        "dist_left": 39.6,
-        "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
-        "violations": [
-          [
-            "слева",
-            39.6
-          ],
-          [
-            "справа",
-            39.6
-          ],
-          [
-            "снизу",
-            4.3
-          ]
-        ]
-      },
-      {
-        "slide": 11,
-        "shape": "TextBox 2",
-        "text": "Перегородка Airbus",
-        "max_size_pt": 27.0,
-        "footer_zone": false,
-        "critical": true,
-        "dist_left": 39.6,
-        "dist_right": 39.6,
-        "dist_top": 28.8,
-        "dist_bottom": 445.0,
-        "violations": [
-          [
-            "слева",
-            39.6
-          ],
-          [
-            "справа",
-            39.6
-          ]
-        ]
-      },
-      {
-        "slide": 11,
+        "slide": 7,
         "shape": "TextBox 18",
-        "text": "Autodesk и Airbus, порождающее проектиро",
-        "max_size_pt": 12.0,
+        "text": "Overview Energy/Meta (27.04.2026) · Fire",
+        "max_size_pt": 15.0,
         "footer_zone": true,
         "critical": true,
         "dist_left": 39.6,
         "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
         "violations": [
           [
             "слева",
@@ -607,14 +456,106 @@
           ],
           [
             "снизу",
-            4.3
+            3.5
           ]
         ]
       },
       {
-        "slide": 12,
+        "slide": 8,
         "shape": "TextBox 2",
-        "text": "Чего метод не умеет",
+        "text": "Ось лекции и адреса платежа",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 9,
+        "shape": "TextBox 2",
+        "text": "Keystone: от шахты до лунной трубки",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 9,
+        "shape": "TextBox 16",
+        "text": "DARPA Subterranean Challenge (2018–2021)",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 10,
+        "shape": "TextBox 2",
+        "text": "Вопрос лекции",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 11,
+        "shape": "TextBox 2",
+        "text": "Карта вечера: четыре фронта",
         "max_size_pt": 27.0,
         "footer_zone": false,
         "critical": true,
@@ -635,34 +576,8 @@
       },
       {
         "slide": 12,
-        "shape": "TextBox 38",
-        "text": "Техническая работа по Stable Diffusion 3",
-        "max_size_pt": 12.0,
-        "footer_zone": true,
-        "critical": true,
-        "dist_left": 39.6,
-        "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
-        "violations": [
-          [
-            "слева",
-            39.6
-          ],
-          [
-            "справа",
-            39.6
-          ],
-          [
-            "снизу",
-            4.3
-          ]
-        ]
-      },
-      {
-        "slide": 13,
         "shape": "TextBox 2",
-        "text": "Getty против Stability",
+        "text": "Как читать числа этой лекции",
         "max_size_pt": 27.0,
         "footer_zone": false,
         "critical": true,
@@ -683,34 +598,8 @@
       },
       {
         "slide": 13,
-        "shape": "TextBox 14",
-        "text": "Высокий суд Англии и Уэльса, судья Joann",
-        "max_size_pt": 12.0,
-        "footer_zone": true,
-        "critical": true,
-        "dist_left": 39.6,
-        "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
-        "violations": [
-          [
-            "слева",
-            39.6
-          ],
-          [
-            "справа",
-            39.6
-          ],
-          [
-            "снизу",
-            4.3
-          ]
-        ]
-      },
-      {
-        "slide": 14,
         "shape": "TextBox 2",
-        "text": "Четыре упоминания с числом",
+        "text": "Форма разбора: пять шагов",
         "max_size_pt": 27.0,
         "footer_zone": false,
         "critical": true,
@@ -726,39 +615,1379 @@
           [
             "справа",
             39.6
-          ]
-        ]
-      },
-      {
-        "slide": 14,
-        "shape": "TextBox 22",
-        "text": "Hugging Face, прямой запрос к интерфейсу",
-        "max_size_pt": 12.0,
-        "footer_zone": true,
-        "critical": true,
-        "dist_left": 39.6,
-        "dist_right": 39.6,
-        "dist_top": 499.7,
-        "dist_bottom": 4.3,
-        "violations": [
-          [
-            "слева",
-            39.6
-          ],
-          [
-            "справа",
-            39.6
-          ],
-          [
-            "снизу",
-            4.3
           ]
         ]
       },
       {
         "slide": 15,
         "shape": "TextBox 2",
-        "text": "×73 — ×14 700",
+        "text": "Стадия: автономная робототехника",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 16,
+        "shape": "TextBox 2",
+        "text": "Где справляется классика, где нужна моде",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 17,
+        "shape": "TextBox 2",
+        "text": "Как устроены методы: геометрия и случайн",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 18,
+        "shape": "TextBox 2",
+        "text": "Как устроены методы: карта без GPS и дет",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 19,
+        "shape": "TextBox 3",
+        "text": "Пример: AEGIS — автономный выбор научных",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 19,
+        "shape": "TextBox 25",
+        "text": "Francis et al., Science Robotics 2017 · ",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 20,
+        "shape": "TextBox 3",
+        "text": "Пример: SPOC — разметка марсианского гру",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 20,
+        "shape": "TextBox 25",
+        "text": "NASA JPL, страница проекта SPOC (nasa-jp",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 21,
+        "shape": "TextBox 3",
+        "text": "Пример: COROB-X — три робота в лавовой т",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 21,
+        "shape": "TextBox 25",
+        "text": "DFKI (Германия) совместно с Space Applic",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 22,
+        "shape": "TextBox 23",
+        "text": "LeoLabs (eoportal.org, leolabs.space/con",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 23,
+        "shape": "TextBox 2",
+        "text": "Упоминания раздела 1",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 23,
+        "shape": "TextBox 6",
+        "text": "NASA JPL · NASA NTRS (IPEx) · ICON · Sta",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 24,
+        "shape": "TextBox 2",
+        "text": "Что дало и что потребовало — Раздел 1",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 25,
+        "shape": "TextBox 2",
+        "text": "Вывод раздела 1",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 27,
+        "shape": "TextBox 2",
+        "text": "Сцена: экипаж смотрит, как корабль парку",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 27,
+        "shape": "TextBox 9",
+        "text": "SpaceX/NASA, миссия Demo-2 (2020)",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 28,
+        "shape": "TextBox 2",
+        "text": "Стадия: телеоперация",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 29,
+        "shape": "TextBox 2",
+        "text": "Где нужен человек, где граница уже сдвин",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 30,
+        "shape": "TextBox 2",
+        "text": "Как устроены методы: классический контро",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 31,
+        "shape": "TextBox 3",
+        "text": "Пример: автономная стыковка Dragon к МКС",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 31,
+        "shape": "TextBox 25",
+        "text": "NASA/SpaceX, миссия Demo-2 (2020)",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 32,
+        "shape": "TextBox 3",
+        "text": "Пример: предсказательная компенсация зад",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 32,
+        "shape": "TextBox 25",
+        "text": "Frontiers in Space Technologies 10.3389/",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 33,
+        "shape": "TextBox 3",
+        "text": "Пример: Astrobee — ML-ассистированное пи",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 33,
+        "shape": "TextBox 25",
+        "text": "Stanford + NASA, демонстрация 12.2025",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 34,
+        "shape": "TextBox 2",
+        "text": "Упоминания раздела 2",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 34,
+        "shape": "TextBox 6",
+        "text": "University of Bristol · ESA · PMC (телех",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 35,
+        "shape": "TextBox 2",
+        "text": "Что дало и что потребовало — Раздел 2",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 36,
+        "shape": "TextBox 2",
+        "text": "Вывод раздела 2",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 38,
+        "shape": "TextBox 2",
+        "text": "Стадия: ИИ-ассистированное проектировани",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 39,
+        "shape": "TextBox 2",
+        "text": "Где модель даёт новую возможность, где е",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 40,
+        "shape": "TextBox 2",
+        "text": "Как устроены методы: суррогатная модель ",
+        "max_size_pt": 25.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 41,
+        "shape": "TextBox 2",
+        "text": "Как устроены методы: внимание на сетке п",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 42,
+        "shape": "TextBox 3",
+        "text": "Пример: суррогатные модели в дизайне дви",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 42,
+        "shape": "TextBox 25",
+        "text": "Вакансии и публикации команды SpaceX «AI",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 43,
+        "shape": "TextBox 3",
+        "text": "Пример: Claude/Anthropic планирует маршр",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 43,
+        "shape": "TextBox 25",
+        "text": "Anthropic + NASA/JPL, кратер Езеро, 8 и ",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 44,
+        "shape": "TextBox 3",
+        "text": "Пример: ИИ-модели прогноза погоды AIFS и",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 44,
+        "shape": "TextBox 25",
+        "text": "ECMWF (arXiv 2406.01465, GMD Copernicus ",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 45,
+        "shape": "TextBox 3",
+        "text": "Пример: генеративный дизайн конструкций ",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 45,
+        "shape": "TextBox 25",
+        "text": "NASA NTRS (citations/20230013955, Ryan M",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 46,
+        "shape": "TextBox 2",
+        "text": "Упоминания раздела 3",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 46,
+        "shape": "TextBox 6",
+        "text": "NVIDIA · EarthDaily Agriculture · NASA (",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 47,
+        "shape": "TextBox 2",
+        "text": "Что дало и что потребовало — Раздел 3",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 48,
+        "shape": "TextBox 2",
+        "text": "Вывод раздела 3",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 50,
+        "shape": "TextBox 2",
+        "text": "Стадия: орбитальные вычисления",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 51,
+        "shape": "TextBox 2",
+        "text": "Что уже работает, что пока размер демонс",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 52,
+        "shape": "TextBox 3",
+        "text": "Пример: Starcloud — первый датацентровый",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 52,
+        "shape": "TextBox 25",
+        "text": "CNBC, 02.11.2025",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 53,
+        "shape": "TextBox 3",
+        "text": "Пример: Google Project Suncatcher",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 53,
+        "shape": "TextBox 25",
+        "text": "CNN, 01.10.2026",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 54,
+        "shape": "TextBox 2",
+        "text": "Упоминания раздела 4",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 55,
+        "shape": "TextBox 2",
+        "text": "Что дало и что потребовало — Раздел 4",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 56,
+        "shape": "TextBox 2",
+        "text": "Вывод раздела 4",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 57,
+        "shape": "TextBox 2",
+        "text": "Раздел 5. Сборка",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 58,
+        "shape": "TextBox 2",
+        "text": "Реестр разборов: знаменатель и исключени",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 59,
+        "shape": "TextBox 2",
+        "text": "Сила свидетельства: от рутинной эксплуат",
+        "max_size_pt": 25.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 60,
+        "shape": "TextBox 2",
+        "text": "Ответ на вопрос лекции — разделы 1 и 2",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 61,
+        "shape": "TextBox 2",
+        "text": "2 : 2",
         "max_size_pt": 34.0,
         "footer_zone": false,
         "critical": true,
@@ -778,9 +2007,267 @@
         ]
       },
       {
-        "slide": 16,
+        "slide": 62,
         "shape": "TextBox 2",
-        "text": "Карта стадии: колонка «Изображение»",
+        "text": "Словарь форм переезда — на материале отр",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 62,
+        "shape": "TextBox 45",
+        "text": "Словарь форм 1–5 дан Лекцией 6, применён",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 63,
+        "shape": "TextBox 2",
+        "text": "Словарь форм переезда — растянутые случа",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 63,
+        "shape": "TextBox 25",
+        "text": "Словарь форм 1–5 дан Лекцией 6, применён",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 64,
+        "shape": "TextBox 2",
+        "text": "Сводная сетка: тип задачи × модальность",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 64,
+        "shape": "TextBox 65",
+        "text": "Сетка дана Лекцией 1",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 65,
+        "shape": "TextBox 2",
+        "text": "Сводная сетка: тип задачи × модальность ",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 65,
+        "shape": "TextBox 35",
+        "text": "Сетка дана Лекцией 1",
+        "max_size_pt": 15.0,
+        "footer_zone": true,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 514.9,
+        "dist_bottom": 3.5,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ],
+          [
+            "снизу",
+            3.5
+          ]
+        ]
+      },
+      {
+        "slide": 66,
+        "shape": "TextBox 2",
+        "text": "13 из 13",
+        "max_size_pt": 34.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 466.6,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 67,
+        "shape": "TextBox 2",
+        "text": "Свод честных пробелов",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 68,
+        "shape": "TextBox 2",
+        "text": "Где ИИ прямо не нужен",
+        "max_size_pt": 27.0,
+        "footer_zone": false,
+        "critical": true,
+        "dist_left": 39.6,
+        "dist_right": 39.6,
+        "dist_top": 28.8,
+        "dist_bottom": 445.0,
+        "violations": [
+          [
+            "слева",
+            39.6
+          ],
+          [
+            "справа",
+            39.6
+          ]
+        ]
+      },
+      {
+        "slide": 69,
+        "shape": "TextBox 2",
+        "text": "Долг вперёд: сертификация автономных сис",
         "max_size_pt": 27.0,
         "footer_zone": false,
         "critical": true,
@@ -800,81 +2287,81 @@
         ]
       }
     ],
-    "fakt": "28 критичных рамок из 181 нарушают поле/безопасную зону (52 нарушений среди всех текстовых рамок, не только критичных)",
+    "fakt": "92 критичных рамок из 729 нарушают поле/безопасную зону (182 нарушений среди всех текстовых рамок, не только критичных)",
     "verdikt": "НЕ ПРОХОДИТ"
   },
   "1.13": {
     "porog": "бюджет = (ширина_пт / 9,0) × число_строк, округлено вниз; нарушение — текст слота превышает бюджет более чем вдвое",
     "kak_merili": "слот = текстовая рамка .pptx; ширина — геометрия фигуры в пт; число строк — число строк сопоставлено по физическим строкам PDF там, где совпадение нашлось; знаков — длина текста рамки после свёртки пробелов; бюджет = floor((ширина/9.0)×строк)",
-    "vsego_ramok_s_tekstom": 181,
+    "vsego_ramok_s_tekstom": 729,
     "narusheniy_vdvoe": 0,
     "narushiteli": [],
-    "fakt": "0 рамок из 181 превышают пересчитанный бюджет более чем вдвое",
+    "fakt": "0 рамок из 729 превышают пересчитанный бюджет более чем вдвое",
     "verdikt": "проходит"
   },
   "1.12": {
     "porog": "37–74 знака в строке, идеал ≈55 (кириллическая поправка к внешнему канону)",
     "kak_merili": "физическая строка из PDF-слоя (PyMuPDF get_text('dict'), уже после переноса) — выбран .pdf, а не .pptx, потому что .pptx не хранит точку физического переноса строки внутри абзаца; счёт знаков — len() строки после свёртки пробелов (норм. пробел), без учёта регистра",
-    "vsego_strok": 262,
-    "mediana_znakov": 19.0,
-    "p10_znakov": 6.0,
-    "p90_znakov": 51.0,
+    "vsego_strok": 1124,
+    "mediana_znakov": 30.5,
+    "p10_znakov": 8.0,
+    "p90_znakov": 98.0,
     "idealnaya_dlina": 55,
-    "strok_vne_polosy": 211,
-    "dolya_vne_polosy": 0.8053,
+    "strok_vne_polosy": 805,
+    "dolya_vne_polosy": 0.7162,
     "desyat_khudshikh": [
       {
-        "kadr": 13,
-        "znakov": 138,
-        "text": "Высокий суд Англии и Уэльса, судья Joann"
+        "kadr": 22,
+        "znakov": 155,
+        "text": "Честная оговорка. Источники не называют,"
       },
       {
-        "kadr": 13,
-        "znakov": 127,
-        "text": "на одну картинку: 4 265 146 304 байта ве"
-      },
-      {
-        "kadr": 14,
-        "znakov": 114,
-        "text": "Множитель наценки сходится по девяти мод"
-      },
-      {
-        "kadr": 9,
-        "znakov": 113,
-        "text": "Порог входа опустился до ноутбука, 40 ка"
-      },
-      {
-        "kadr": 14,
-        "znakov": 1,
-        "text": "₽"
-      },
-      {
-        "kadr": 14,
-        "znakov": 1,
-        "text": "₽"
-      },
-      {
-        "kadr": 14,
-        "znakov": 1,
-        "text": "₽"
+        "kadr": 19,
+        "znakov": 131,
+        "text": "Что переехало. Продуктивность выросла по"
       },
       {
         "kadr": 6,
-        "znakov": 109,
-        "text": "Считаем то, что ушло заказчику. Экономия"
+        "znakov": 122,
+        "text": "Обратный сценарий. Если стоимость застын"
       },
       {
-        "kadr": 14,
-        "znakov": 109,
-        "text": "Hugging Face, прямой запрос к интерфейсу"
+        "kadr": 42,
+        "znakov": 120,
+        "text": "Честный пробел. SpaceX не публикует точн"
       },
       {
-        "kadr": 5,
-        "znakov": 3,
-        "text": "×73"
+        "kadr": 3,
+        "znakov": 117,
+        "text": "Union of Concerned Scientists · planet45"
+      },
+      {
+        "kadr": 58,
+        "znakov": 117,
+        "text": "Проверяемость: у каждого из 13 разборов "
+      },
+      {
+        "kadr": 59,
+        "znakov": 117,
+        "text": "одного случая а или в): след природы тел"
+      },
+      {
+        "kadr": 46,
+        "znakov": 116,
+        "text": "• Короткие упоминания (1–2 строки, тема "
+      },
+      {
+        "kadr": 68,
+        "znakov": 116,
+        "text": "Пункт 5 — честно не найден в материале э"
+      },
+      {
+        "kadr": 2,
+        "znakov": 115,
+        "text": "паспортную грузоподъёмность, а не себест"
       }
     ],
-    "fakt": "211 строк из 262 вне полосы 37–74 знаков (доля 0.8053); медиана 19, p10=6, p90=51",
+    "fakt": "805 строк из 1124 вне полосы 37–74 знаков (доля 0.7162); медиана 30, p10=8, p90=98",
     "verdikt": "НЕ ПРОХОДИТ"
   }
 }

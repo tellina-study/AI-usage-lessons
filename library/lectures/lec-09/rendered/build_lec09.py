@@ -99,9 +99,10 @@ LEC_ROOT = HERE.parent                               # .../lec-09
 REPO_ROOT = HERE.parents[3]                           # корень репозитория
 sys.path.insert(0, str(REPO_ROOT / "tools" / "presentation-build"))
 
-from deckkit import (columns, floor, markup, media, metrics, plates,  # noqa: E402
-                     polosy, prims, report, scheme, slidefile, tables,
-                     titles, wrap)
+from deckkit import (arhitektura, columns, floor, markup, media, metrics,  # noqa: E402
+                     plates, polosy, prims, report, scheme, slidefile,
+                     tables, timeline, titles, wrap)
+from deckkit import axis as _axis                      # noqa: E402
 from deckkit import render as rnd                     # noqa: E402
 from deckkit.theme import (DEEP, GOLD, LIGHT, MID, SURFACE, TEAL,  # noqa: E402
                            WHITE, SLIDE_H, SLIDE_W)
@@ -254,6 +255,48 @@ POLOSY = polosy.PolosyStyle(lab_pt=15.0, val_pt=15.0, mn_pt=15.0,
                             leg_pt=15.0, tick_pt=15.0, unit_pt=15.0,
                             cap_pt=15.0)
 
+# ─── Фаза 7 (issue #317): две новые формы ───────────────────────────
+# Владелец, глядя на деку Фазы 6: «где диаграммы, схемы, графики, воронки,
+# тренды? нет вообще» — Фаза 6 подключила только плашки/схему-ряды/
+# столбцы/таблицы/полосы (см. докстринг файла выше), а каталог форм
+# (`02-KATALOG-FORM*.md`) шире. `ARH` — та же архитектура-с-разбором-
+# внутри-боксов (`arhitektura.py`), что `build_lec08_v5.ARH`; тот же приём
+# подъёма пола, что `PLATES`/`SCHEME`/`POLOSY` выше.
+ARH = arhitektura.ArhStyle(role_pt=15.0, head_lo=15.0, line_lo=15.0,
+                           line_hi=16.0, vyn_pt=15.0)
+
+# `timeline:` — стадии процесса на одной линии (для keystone-кадра s09:
+# цепочка «шахта DARPA → архитектура → лунная труба» читается ПОЛОЖЕНИЕМ
+# привязки на линии, не абзацем текста). Тот же приём подъёма пола, что
+# `build_lec08_v5._TIME`.
+_TIME = replace(timeline.DEFAULT, unit_pt=15.0, cap_pt=15.0, stage_pt=15.0,
+                head_pt=15.0, txt_pt=15.0, lab_pt=15.0, val_pt=15.0,
+                srok_txt_pt=15.0, end_pt=15.0)
+
+# `scheme: kind: shkala` — засечки на одной прямой (`axis.py`), для трендов
+# введения (s02 цена/кг, s03 число спутников): величина ВИДНА положением
+# засечки на линии, а не читается в карточке. Модуль уже встроен в
+# `scheme.py` (`KINDS["shkala"] = axis`), но собственные `height`/`check`/
+# `draw` модуля зовутся БЕЗ декиного стиля (`mod.height(sch, w)` — тот же
+# безымянный вызов, которым `scheme_h`/`check_scheme`/`draw_scheme` зовут
+# ЛЮБОЙ `kind`) и уходят на `axis.DEFAULT` (пол 12 пт). Обёртки ниже — тот
+# же приём, что `build_lec08_v5._obyortki`: подменяем МОДУЛЬНЫЕ алиасы
+# декиным стилем, не трогая ни `scheme.py`, ни `axis.py`.
+_AXIS = replace(_axis.DEFAULT, lab_pt=15.0, unit_pt=15.0, cap_pt=15.0,
+                end_pt=15.0)
+
+
+def _obyortki(mod, st, h_fn, c_fn, d_fn):
+    """Тонкая обёртка модуля формы — с декиным стилем вместо его
+    умолчания. Три алиаса, ровно те, что зовёт `scheme.py` через `KINDS`."""
+    mod.height = lambda d, w: h_fn(d, w, st)
+    mod.check = lambda sid, d, w: c_fn(sid, d, w, st)
+    mod.draw = lambda s, sid, d, x, y, w, tag=None: d_fn(
+        s, sid, d, x, y, w, st, tag=tag)
+
+
+_obyortki(_axis, _AXIS, _axis.axis_h, _axis.check_axis, _axis.draw_axis)
+
 # `TBL_ROW_MIN` 0,40"→0,32": найдено на `s62`/`s63` (14 строк со шляпкой —
 # `s63`, сводная сетка «тип задачи × модальность», 13 разборов). При кегле
 # на самом полу (`TBL_FLOOR=8,0`) ОДНОСТРОЧНАЯ ячейка естественно высотой
@@ -289,7 +332,8 @@ def fit_table_height(tbl, hi, avail_h, w):
     return tables.TBL_FLOOR
 
 CONTENT_TYPES_WITH_FIELDS = ("blocks", "scheme", "columns", "table",
-                             "matrix_empty", "headline_number", "polosy")
+                             "matrix_empty", "headline_number", "polosy",
+                             "arhitektura", "timeline")
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -496,7 +540,8 @@ def footer(s, sl):
 def check_prims(sl, kind):
     for f, name in (("blocks", "плашки"), ("scheme", "схема"),
                     ("columns", "столбцы"), ("table", "таблица"),
-                    ("matrix_empty", "матрица"), ("polosy", "полосы")):
+                    ("matrix_empty", "матрица"), ("polosy", "полосы"),
+                    ("arhitektura", "архитектура"), ("timeline", "таймлайн")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
@@ -788,6 +833,24 @@ def content(p, sl, root):
     if sch:
         scheme.check_scheme(sl.sid, sch, body_w_top, SCHEME)
         y += scheme.draw_scheme(s, sl.sid, sch, MX, y, body_w_top, SCHEME) + GAP
+
+    # Архитектура (устройство механизма, разбор ВНУТРИ боксов) — Фаза 7,
+    # issue #317: s18 (SLAM трёх уровней), s30 (контроллер + тёплый старт +
+    # предсказательная компенсация), s41 (внимание на сетке погоды).
+    arh = arhitektura.arhitektura_of(sl, ARH) if is_content else None
+    if arh:
+        arhitektura.check_arhitektura(sl.sid, arh, body_w_top, ARH)
+        y += arhitektura.draw_arhitektura(s, sl.sid, arh, MX, y,
+                                          body_w_top, ARH) + GAP
+
+    # Таймлайн (стадии процесса на одной линии) — Фаза 7: s09 keystone,
+    # цепочка DARPA Subterranean Challenge → LAMP 2.0 → COROB-X.
+    tml = timeline.timeline_of(sl) if is_content else None
+    if tml:
+        timeline.check_timeline(sl.sid, tml, body_w_top, _TIME)
+        y += timeline.draw_timeline(s, sl.sid, tml, MX, y, body_w_top,
+                                    _TIME) + GAP
+
     cols = columns_from(sl) if is_content else None
     tbl = table_from(sl) if is_content else None
 

@@ -7,7 +7,7 @@ title: "Пример: ИИ-модели прогноза погоды AIFS и AI
 assertion: "AIFS считает 10-дневный прогноз за 2,5 минуты вместо часов суперкомпьютера — но свою ассимиляцию данных не делает"
 source: "[ECMWF (arXiv 2406.01465, GMD Copernicus 2026)](https://arxiv.org/abs/2406.01465) · [NOAA (NWS SCN 25-89)](https://www.weather.gov/media/notification/pdf_2025/scn25-89_AIGFS_AIGEFS_and_HGEFS.pdf)"
 media: "assets/razdel-3/aifs-aigefs/ecmwf-aifs-forecasting-system-diagram.jpg"
-media_needed: "уже скачан (Tier 1, ECMWF)."
+media_needed: "уже скачан (Tier 1, ECMWF). Испробован hero-масштаб (issue #317, задача A) — тот же структурный конфликт, что у `s31`/`s32`/`s42`: hero сужает колонку 4 плашек этого кадра ниже рабочей ширины `PLATES`, блокирующие `[ширина]`/`[высота]` не уходят даже на target ниже порога hero 40%. Оставлен прежний боковой размер."
 graf: "а"
 blocks:
   - {label: "Классический режим (IFS / GEFSv12)", value: "часы на суперкомпьютере", note: "более тысячи процессоров, прогноз на 10–16 дней"}

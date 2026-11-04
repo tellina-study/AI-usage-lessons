@@ -7,7 +7,7 @@ title: "Пример: предсказательная компенсация з
 assertion: "Модель предсказывает картину на величину задержки и снижает время задачи до 26% — но решения всё равно принимает человек"
 source: "[Frontiers in Space Technologies 10.3389/frspt.2026.1920649](https://www.frontiersin.org/journals/space-technologies/articles/10.3389/frspt.2026.1920649/xml) · [ScienceDirect S1526149226000639](https://www.sciencedirect.com/org/science/article/pii/S1526149226000639)"
 media: "assets/razdel-2/latency-compensation/08-INFOGRAPHIC-lstm-delay-compensation-architecture.png"
-media_needed: "уже скачан (Tier 1). Инфографика архитектуры LSTM-компенсации."
+media_needed: "уже скачан (Tier 1). Инфографика архитектуры LSTM-компенсации. Испробован hero-масштаб (issue #317, задача A) — тот же структурный конфликт, что у `s31`/`s42`/`s44` (см. их `media_needed`): hero сужает колонку плашек этого кадра ниже рабочей ширины `PLATES`, блокирующие `[ширина]`/`[высота]` не уходят даже на target ниже порога hero 40%. Оставлен прежний боковой размер."
 graf: "б"
 blocks:
   - {label: "Цена перестраховки", value: "медленная, часто останавливающаяся работа", note: "оператор ждёт, чтобы убедиться, что картина «догнала» реальность"}

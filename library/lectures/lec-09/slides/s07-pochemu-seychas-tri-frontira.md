@@ -2,16 +2,26 @@
 id: s07
 local_id: В-07
 section: "0. Вход"
-type: schema_matrix
+type: schema_timeline
 title: "Почему именно сейчас — три фронтира"
 assertion: "Космическая энергетика, лунные базы и добыча на астероидах — идеи 1970-х; порог входа упал только сейчас"
-source: "Overview Energy/Meta (27.04.2026) · Firefly Aerospace, Blue Ghost Mission 1 (02.03.2025) · AstroForge"
+source: "[Overview Energy/Meta (27.04.2026)](https://www.overviewenergy.com/updates/overview-and-meta) · [Firefly Aerospace, Blue Ghost Mission 1 (02.03.2025)](https://fireflyspace.com/news/firefly-aerospaces-blue-ghost-mission-1-successfully-launches-and-begins-45-day-transit-to-the-moon/) · [AstroForge](https://www.astroforge.com/deepspace-2)"
 media: ""
-media_needed: "Таблица 3×2: направление × (барьер входа / экономика). Фаза 6."
-blocks:
-  - {label: "Космическая энергетика", value: "5–10× дороже наземной", note: "Overview Energy/Meta: контракт на 1 ГВт, демо 2028, поставка 2030"}
-  - {label: "Лунные базы", value: "барьер снят", note: "Firefly Blue Ghost — первая успешная коммерческая посадка, 02.03.2025"}
-  - {label: "Добыча на астероидах", value: "экономика не решена", note: "AstroForge: первая миссия (Odin, запуск 26.02.2025) признана неуспешной в начале марта 2025; вторая — план Q4 2026, ещё не запущена"}
+media_needed: "Было таблицей 3×2 (Фаза 6); переведено на `timeline` (issue #317, задача Б) — три направления от общей идеи 1970-х к своему статусу 2025–2026, тот же модуль, что `s02`/`s09`. Дат и чисел сверх уже названных на кадре не добавлено."
+timeline:
+  unit: "зрелость направления, 2025–2026"
+  caption: "Общий старт у всех трёх — идея 1970-х; общий триггер — обвал стоимости запуска. Экономику направления это не решает само по себе"
+  stages: ["Экономика не решена", "Порог назван, не пройден", "Барьер снят — рутина"]
+  marks:
+    - at: 0
+      head: "Добыча на астероидах"
+      text: "AstroForge Odin (26.02.2025) неуспешна; вторая миссия — Q4 2026, ещё не запущена"
+    - at: 1
+      head: "Космическая энергетика"
+      text: "5–10× дороже наземной — Overview Energy/Meta: контракт на 1 ГВт, демо 2028"
+    - at: 2
+      head: "Лунные базы"
+      text: "Firefly Blue Ghost — первая успешная коммерческая посадка, 02.03.2025"
 in_bucket: true
 status: draft
 ---

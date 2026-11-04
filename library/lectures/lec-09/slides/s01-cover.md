@@ -9,7 +9,7 @@ source: "—"
 media: "assets/razdel-1/corob-x/corobx-12-pia12954-marius-hills-skylight-moon.jpg"
 media_hero: true
 media_needed: "уже скачан (Tier 1, NASA PIA12954). Снимок — вход в лунную лавовую трубку Marius Hills, снятый камерой LRO. Реальное, не стилизованное изображение, ≥40% площади кадра. Атрибуция на кадре НЕ ставится (О17/О18) — провенанс в assets/razdel-1/corob-x/corobx-12-....jpg.url"
-media_note: "Снимок напрямую предвосхищает keystone (§0.6, s09): это тот самый лунный skylight, к которому в тройке keystone переносится архитектура, рождённая для земной шахты."
+media_note: "Снимок напрямую предвосхищает опорный разбор начала лекции (§0.6, s09): это тот самый лунный skylight, к которому переносится архитектура, рождённая для земной шахты."
 in_bucket: false
 status: draft
 ---

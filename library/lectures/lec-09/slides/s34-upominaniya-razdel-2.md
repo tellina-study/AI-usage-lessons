@@ -5,7 +5,7 @@ section: "2. Удалённое управление"
 type: norm
 title: "Упоминания раздела 2"
 assertion: "Телехирургия через Starlink работает на задержке ~130 мс — но обученной модели в решении нет вовсе"
-source: "University of Bristol · ESA · PMC (телехирургия)"
+source: "[University of Bristol](https://phys.org/news/2025-11-robotic-exosuit-trousers-boost-astronauts.html) · ESA · [PMC (телехирургия)](https://pmc.ncbi.nlm.nih.gov/articles/PMC12712185/)"
 media: ""
 media_needed: "Список-перечень, каждая строка — одно наблюдение. Фаза 6."
 in_bucket: true

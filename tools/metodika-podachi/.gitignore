@@ -2,5 +2,5 @@
 # Провенанс и адреса, откуда они берутся, лежат в etalony/PASPORTA.md.
 etalony/**
 obraztsy/**
-zamer/syroe-*.json
+zamer/sydoe-*.json
 !etalony/PASPORTA.md

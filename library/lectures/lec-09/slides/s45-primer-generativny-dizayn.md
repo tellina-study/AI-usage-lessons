@@ -5,7 +5,7 @@ section: "3. Проектирование и новые возможности"
 type: case_study
 title: "Пример: генеративный дизайн конструкций NASA Goddard"
 assertion: "Генеративный дизайн NASA Goddard сам производит геометрию детали — не оценивает готовую, а создаёт новую"
-source: "NASA NTRS (citations/20230013955, Ryan McClelland) · Fast Company"
+source: "[NASA NTRS (citations/20230013955, Ryan McClelland)](https://ntrs.nasa.gov/citations/20230013955) · [Fast Company](https://www.fastcompany.com/90851698/nasas-new-generative-ai-designed-parts-look-like-theyre-from-an-alien-starship)"
 media: "assets/razdel-3/generative-design/nasa-excite-bracket-three-manufacturing-variants.jpg"
 media_needed: "уже скачан (Tier 1, NASA)."
 graf: "б"
@@ -20,7 +20,7 @@ status: draft
 
 ## Видимый текст слайда
 
-**Четвёртый разбор раздела — исключение из правила «до трёх на раздел».** Качественно новый тип вклада: модель не предсказывает число по готовой конфигурации — **она сама производит геометрию**.
+**Четвёртый разбор раздела — исключение из правила «до трёх».** Качественно новый вклад: модель не предсказывает число по готовой конфигурации — **она сама производит геометрию**.
 
 *Генерация на структурированных данных — первое занятие клетки «генерация × структурированные данные» в сетке лекции.*
 

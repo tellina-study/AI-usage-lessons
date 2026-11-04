@@ -5,14 +5,21 @@ section: "0. Вход"
 type: norm
 title: "Порог, а не обещание"
 assertion: "Google называет порог $200/кг для орбитальных вычислений — сегодня они дороже земных в 2,5–3 раза"
-source: "Google (проект Suncatcher) · Starcloud · BCG, отчёт 08.2026"
+source: "[Google (проект Suncatcher)](https://blog.google/innovation-and-ai/technology/research/google-project-suncatcher/) · [Starcloud](https://www.starcloud.com/starcloud-1) · [BCG, отчёт 08.2026](https://www.bcg.com/publications/2026/space-based-data-centers-cost-outlook)"
 media: ""
-media_needed: "QuickChart: шкала стоимости — сегодня профильные орбитальные миссии $1500-2900/кг, порог Google $200/кг, порог Starcloud $500/кг. Фаза 6."
+media_needed: "Фаза 8 (issue #317): заменено осью с засечками (`scheme: kind: shkala`) — четыре порога/цены в одной единице ($/кг) видны положением на прямой, а не четырьмя одинаковыми прямоугольниками подряд (находка student-simulator: «четвёртый слайд подряд с теми же 4 карточками»). Разница BCG ($/МВт, другая база) остаётся плашкой — на одну ось с $/кг не кладётся (`axis.py`: «форма НЕ сводит на одну ось величины с РАЗНЫМИ базами»)."
+scheme:
+  kind: shkala
+  unit: "$ за кг груза на орбиту"
+  caption: "Сегодня дороже порога Google в разы — порог назван, не выдуман"
+  from: 0
+  marks:
+    - {value: 200, label: "порог Google, ≤2035"}
+    - {value: 500, label: "порог Starcloud, ~2028"}
+    - {value: 1500, label: "сегодня, от"}
+    - {value: 2900, label: "сегодня, до", key: true}
 blocks:
-  - {label: "Порог Google для конкурентности орбитальных вычислений", value: "≤$200 за кг", note: "ожидаемая достижимость — 2035 год, при 180 запусках Starship/год", key: true}
-  - {label: "Сегодняшняя цена профильных орбитальных миссий", value: "$1 500–2 900 за кг", note: "порог далёк, но назван, не выдуман"}
-  - {label: "Порог окупаемости Starcloud", value: "~$500 за кг", note: "ожидание — середина-конец 2028 года"}
-  - {label: "Орбитальные датацентры сегодня vs наземные", value: "дороже в 2,5–3 раза", note: "BCG: $660–750 млн/МВт против $230–300 млн/МВт на Земле"}
+  - {label: "Орбитальные датацентры сегодня vs наземные", value: "дороже в 2,5–3 раза", note: "BCG: $660–750 млн/МВт против $230–300 млн/МВт на Земле", key: true}
 in_bucket: true
 status: draft
 ---

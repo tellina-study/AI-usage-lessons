@@ -5,7 +5,7 @@ section: "3. Проектирование и новые возможности"
 type: norm
 title: "Упоминания раздела 3"
 assertion: "Sentry-II и ATLAS уже сегодня оценивают риск столкновения с астероидом на 100 лет вперёд"
-source: "NVIDIA · EarthDaily Agriculture · NASA (Sentry-II, ATLAS) · science.nasa.gov (NEO Surveyor)"
+source: "[NVIDIA](https://www.nvidia.com/en-us/high-performance-computing/weather-climate/) · [EarthDaily Agriculture](https://earthdaily.com/insurance-and-lending) · [NASA (Sentry-II, ATLAS)](https://www.universetoday.com/articles/nasas-new-asteroid-impact-monitoring-system-comes-online) · [science.nasa.gov (NEO Surveyor)](https://science.nasa.gov/mission/neo-surveyor/)"
 media: ""
 media_needed: "Список-перечень, разные веса: 2 коммерческих + 1 весовое (планетарная защита) + 3 коротких. Фаза 6."
 in_bucket: true

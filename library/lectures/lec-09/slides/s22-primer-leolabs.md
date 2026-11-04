@@ -5,7 +5,7 @@ section: "1. Автономные роботы в космосе"
 type: case_study
 title: "Пример: LeoLabs — приоритизация радара и предупреждения о столкновениях"
 assertion: "LeoLabs приоритизирует радар и выдаёт до 400% больше предупреждений о сближении — но не знает, сколько манёвров из них вышло"
-source: "LeoLabs (eoportal.org, leolabs.space/conjunction-alerts, SpaceNews)"
+source: "[LeoLabs (eoportal.org, leolabs.space/conjunction-alerts, SpaceNews)](https://leolabs.space/conjunction-alerts/)"
 media: ""
 media_needed: "Честный пробел — ассет не найден в этой задаче (gap-анализ LeoLabs добавлен отдельно от основного Tier 1–6 прохода по разделу 1). Фаза 6: попытка 6-tier acquisition перед fallback."
 graf: "б"

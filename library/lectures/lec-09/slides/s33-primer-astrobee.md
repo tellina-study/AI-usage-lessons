@@ -5,7 +5,7 @@ section: "2. Удалённое управление"
 type: case_study
 title: "Пример: Astrobee — ML-ассистированное пилотирование"
 assertion: "Astrobee показал «тёплый старт»: модель предлагает траекторию, классический контроллер её уточняет"
-source: "Stanford + NASA, демонстрация 12.2025"
+source: "[Stanford + NASA, демонстрация 12.2025](https://news.stanford.edu/stories/2025/12/ai-robot-international-space-station-autonomous-missions)"
 media: "assets/razdel-2/astrobee/03-astrobee-autonomous-maneuver.jpg"
 media_needed: "уже скачан (Tier 1, NASA)."
 graf: "б"

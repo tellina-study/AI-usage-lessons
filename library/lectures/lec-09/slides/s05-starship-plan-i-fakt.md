@@ -5,7 +5,7 @@ section: "0. Вход"
 type: norm
 title: "Второй виток падения: Starship, план и факт"
 assertion: "Starship совершил 14 полётов и ловил бустер трижды — но вторую ступень не поймал ни разу"
-source: "SpaceX, квартальный отчёт 20.10.2026 · Aerospace Corporation / Ars Technica · Ark Invest · NASA OIG, отчёт 03.2026"
+source: "SpaceX, квартальный отчёт 20.10.2026 · [Aerospace Corporation / Ars Technica](https://csps.aerospace.org/sites/default/files/2026-06/Jones_SuperHeavyLift_FINAL20260614.pdf) · [Ark Invest](https://www.ark-funds.com/articles/etf/big-ideas-the-investment-opportunity-report-2026-summary) · [NASA OIG, отчёт 03.2026](https://oig.nasa.gov/wp-content/uploads/2026/03/final-report-ig-26-004-nasas-management-of-the-human-landing-system-contracts.pdf)"
 media: ""
 media_needed: "QuickChart: диапазон оценок стоимости — Маск <$100/кг (цель) vs Aerospace $67–500/кг vs Ark Invest $115–200/кг. Разные цвета для плана/факта/оценки. Фаза 6."
 blocks:

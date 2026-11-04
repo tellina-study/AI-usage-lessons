@@ -5,7 +5,7 @@ section: "0. Вход"
 type: norm
 title: "Спутников и данных стало на порядок больше"
 assertion: "Спутников стало в ~12 раз больше за 10 лет, данных — в разы больше: обслуживать это вручную уже нельзя"
-source: "Union of Concerned Scientists · planet4589.org (Дж. Макдауэлл) · CelesTrak · BryceTech · NASA EOSDIS · Copernicus/DLR"
+source: "[Union of Concerned Scientists](https://www.ucsusa.org/resources/satellite-database) · [planet4589.org (Дж. Макдауэлл)](https://planet4589.org/) · [CelesTrak](https://celestrak.org/) · [BryceTech](https://brycetech.com/) · [NASA EOSDIS](https://www.earthdata.nasa.gov/) · [Copernicus/DLR](https://www.copernicus.eu/en)"
 media: ""
 media_needed: "Фаза 7 (issue #317): заменено осью с засечками (`scheme: kind: shkala`) для числа спутников — величина видна положением на прямой. Доля Starlink/запуски/архив остались плашками: другая единица, на одну ось с числом спутников не кладутся (`axis.py`: «форма НЕ сводит на одну ось величины с РАЗНЫМИ базами»)."
 scheme:

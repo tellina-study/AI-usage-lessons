@@ -5,7 +5,7 @@ section: "3. Проектирование и новые возможности"
 type: case_study
 title: "Пример: суррогатные модели в дизайне двигателя Raptor"
 assertion: "Суррогатная модель SpaceX перебирает тысячи конфигураций двигателя вместо десятков — но финал решает стенд"
-source: "Вакансии и публикации команды SpaceX «AI for Vehicle Engineering»"
+source: "[Вакансии и публикации команды SpaceX «AI for Vehicle Engineering»](https://job-boards.greenhouse.io/spacex/jobs/8559015002?gh_jid=8559015002)"
 media: "assets/razdel-3/raptor/raptor2-full-flow-combustion-cycle-diagram.svg"
 media_needed: "уже скачан (Tier 1)."
 graf: "а"

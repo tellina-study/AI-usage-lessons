@@ -5,7 +5,7 @@ section: "2. Удалённое управление"
 type: case_study
 title: "Пример: предсказательная компенсация задержки"
 assertion: "Модель предсказывает картину на величину задержки и снижает время задачи до 26% — но решения всё равно принимает человек"
-source: "Frontiers in Space Technologies 10.3389/frspt.2026.1920649 · ScienceDirect S1526149226000639"
+source: "[Frontiers in Space Technologies 10.3389/frspt.2026.1920649](https://www.frontiersin.org/journals/space-technologies/articles/10.3389/frspt.2026.1920649/xml) · [ScienceDirect S1526149226000639](https://www.sciencedirect.com/org/science/article/pii/S1526149226000639)"
 media: "assets/razdel-2/latency-compensation/08-INFOGRAPHIC-lstm-delay-compensation-architecture.png"
 media_needed: "уже скачан (Tier 1). Инфографика архитектуры LSTM-компенсации."
 graf: "б"

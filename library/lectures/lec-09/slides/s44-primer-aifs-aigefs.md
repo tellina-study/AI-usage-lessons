@@ -5,7 +5,7 @@ section: "3. Проектирование и новые возможности"
 type: case_study
 title: "Пример: ИИ-модели прогноза погоды AIFS и AIGEFS"
 assertion: "AIFS считает 10-дневный прогноз за 2,5 минуты вместо часов суперкомпьютера — но свою ассимиляцию данных не делает"
-source: "ECMWF (arXiv 2406.01465, GMD Copernicus 2026) · NOAA (NWS SCN 25-89)"
+source: "[ECMWF (arXiv 2406.01465, GMD Copernicus 2026)](https://arxiv.org/abs/2406.01465) · [NOAA (NWS SCN 25-89)](https://www.weather.gov/media/notification/pdf_2025/scn25-89_AIGFS_AIGEFS_and_HGEFS.pdf)"
 media: "assets/razdel-3/aifs-aigefs/ecmwf-aifs-forecasting-system-diagram.jpg"
 media_needed: "уже скачан (Tier 1, ECMWF)."
 graf: "а"

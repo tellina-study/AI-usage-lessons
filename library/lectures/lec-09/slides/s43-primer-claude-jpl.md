@@ -5,7 +5,7 @@ section: "3. Проектирование и новые возможности"
 type: case_study
 title: "Пример: Claude/Anthropic планирует маршрут марсохода"
 assertion: "Claude спланировал маршрут ровера по кратеру Езеро — цифровой двойник проверил план по 500 000 переменных"
-source: "Anthropic + NASA/JPL, кратер Езеро, 8 и 10 декабря 2025"
+source: "[Anthropic + NASA/JPL, кратер Езеро, 8 и 10 декабря 2025](https://www.anthropic.com/features/claude-on-mars)"
 media: "assets/razdel-3/claude-jpl/anthropic-hero-first-ai-planned-drive.webp"
 media_needed: "уже скачан (Tier 1, Anthropic)."
 graf: "б"

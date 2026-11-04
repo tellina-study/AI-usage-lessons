@@ -5,7 +5,7 @@ section: "4. Космос для ИИ"
 type: case_study
 title: "Пример: Google Project Suncatcher"
 assertion: "Google Project Suncatcher — спутник с четырьмя TPU, план на 81 аппарат в едином лазерном кластере"
-source: "CNN, 01.10.2026"
+source: "[CNN, 01.10.2026](https://www.cnn.com/2026/10/01/science/google-ai-data-center-satellites-space)"
 media: "assets/razdel-4/suncatcher/suncatcher-transporter18-liftoff.jpg"
 media_needed: "уже скачан (Tier 1)."
 graf: "в"

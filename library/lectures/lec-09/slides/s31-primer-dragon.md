@@ -5,7 +5,7 @@ section: "2. Удалённое управление"
 type: case_study
 title: "Пример: автономная стыковка Dragon к МКС"
 assertion: "На дистанции 220 метров управление Dragon заранее передано автоматике — рутинно с 2020 года"
-source: "NASA/SpaceX, миссия Demo-2 (2020)"
+source: "[NASA/SpaceX, миссия Demo-2 (2020)](https://www.nasa.gov/news-release/nasa-astronauts-launch-from-america-in-historic-test-flight-of-spacex-crew-dragon/)"
 media: "assets/razdel-2/dragon/07-INFOGRAPHIC-esa-docking-sequence.png"
 media_needed: "уже скачан (Tier 1, ESA). Официальная инфографика последовательности стыковки."
 graf: "б"

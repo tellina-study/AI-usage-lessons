@@ -5,7 +5,7 @@ section: "2. Удалённое управление"
 type: norm
 title: "Сцена: экипаж смотрит, как корабль паркуется сам"
 assertion: "Экипаж держит руки на экране, а корабль сам подводит себя к станции"
-source: "SpaceX/NASA, миссия Demo-2 (2020)"
+source: "[SpaceX/NASA, миссия Demo-2 (2020)](https://www.nasa.gov/news-release/nasa-astronauts-launch-from-america-in-historic-test-flight-of-spacex-crew-dragon/)"
 media: "assets/razdel-2/dragon/01-nhq202005310008-demo2-docking-control-room.jpg"
 media_needed: "уже скачан (Tier 1, NASA)."
 in_bucket: false

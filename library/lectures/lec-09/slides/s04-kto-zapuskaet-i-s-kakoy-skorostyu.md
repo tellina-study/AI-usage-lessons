@@ -5,7 +5,7 @@ section: "0. Вход"
 type: schema_matrix
 title: "Кто запускает и с какой скоростью"
 assertion: "Многоразовость — уже не привилегия одной компании, но больше половины мировых запусков — одна страна"
-source: "flightatlas.org (31.10.2026) · ОЭСР, «The Space Economy at a Glance 2026» (09.2026) · BryceTech"
+source: "[flightatlas.org (31.10.2026)](https://www.flightatlas.org/history/2026/statistics) · [ОЭСР, «The Space Economy at a Glance 2026» (09.2026)](https://www.oecd.org/en/publications/2026/09/the-space-economy-at-a-glance-2026_92b228b7.html) · [BryceTech](https://brycetech.com/reports/report-documents/global-orbital-activity-2025/)"
 media: ""
 media_needed: "Таблица компаний с посадкой/повторным использованием — текстовая матрица, без графики. Фаза 6."
 media_note: "[VERIFY-DAY-OF] список компаний с подтверждённой посадкой и повторным использованием меняется быстрее, чем обновляется лекция — проверить состав на день лекции."

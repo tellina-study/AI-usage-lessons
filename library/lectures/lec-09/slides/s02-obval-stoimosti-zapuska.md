@@ -5,7 +5,7 @@ section: "0. Вход"
 type: norm
 title: "Падение стоимости запуска — опора лекции"
 assertion: "Доставка килограмма на орбиту подешевела в 18–20 раз за два десятилетия — опора всей лекции"
-source: "Harry W. Jones, «The Recent Large Reduction in Space Launch Cost», NASA NTRS"
+source: "[Harry W. Jones, «The Recent Large Reduction in Space Launch Cost», NASA NTRS](https://ntrs.nasa.gov/citations/20200001093)"
 media: ""
 media_needed: "Фаза 7 (issue #317): заменено полосами сроков (`timeline: mode: sroki`) — длина полосы несёт «во сколько раз дешевле», как её и задумал каталог форм. Ось с засечками (`scheme: kind: shkala`) пробована первой и откачена: при разбросе значений 18–20 раз два близких деления (2 900 и 6 000) садятся у самого левого края линии, а ширина подписи засечки (треть кадра, по числу засечек, не по длине текста) выносит подпись за левое поле — структурное ограничение `axis.py` на кластере значений у края, не опечатка деки. QuickChart не понадобился."
 timeline:

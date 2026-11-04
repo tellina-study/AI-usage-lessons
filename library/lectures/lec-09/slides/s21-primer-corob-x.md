@@ -5,7 +5,7 @@ section: "1. Автономные роботы в космосе"
 type: case_study
 title: "Пример: COROB-X — три робота в лавовой трубке"
 assertion: "Три робота разведали лунную лавовую трубку там, где классического аналога на Земле не было вовсе"
-source: "DFKI (Германия) совместно с Space Applications Services · полевые испытания, Лансароте, 02.2023"
+source: "[DFKI (Германия) совместно с Space Applications Services](https://www.dfki.de/en/web/news/corobx-feldtests-lanzarote) · [полевые испытания, Лансароте, 02.2023](https://www.gmv.com/en/communication/news/final-field-testing-completed-corob-x)"
 media: "assets/razdel-1/corob-x/corobx-13-infographic-mission-phases-figure2.png"
 media_needed: "уже скачан (Tier 1). Официальная инфографика четырёх фаз миссии."
 graf: "в"

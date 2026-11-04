@@ -5,7 +5,7 @@ section: "1. Автономные роботы в космосе"
 type: norm
 title: "Упоминания раздела 1"
 assertion: "Классика везёт Perseverance на 90% маршрута без единой нейросети; Starlink совершает 300 000 манёвров в год сам"
-source: "NASA JPL · NASA NTRS (IPEx) · ICON · Starlink"
+source: "[NASA JPL](https://www.jpl.nasa.gov/) · [NASA NTRS (IPEx)](https://ntrs.nasa.gov/citations/20220005125) · [ICON](https://www.iconbuild.com/) · [Starlink](https://www.space.com/space-exploration/satellites/every-spacex-starlink-satellite-has-to-dodge-a-collision-almost-weekly-and-experts-fear-the-worst)"
 media: ""
 media_needed: "Список-перечень, каждая строка — одно наблюдение, не имя (§5.15). Фаза 6."
 in_bucket: true

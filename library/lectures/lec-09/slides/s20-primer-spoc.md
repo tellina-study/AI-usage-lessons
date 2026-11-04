@@ -5,7 +5,7 @@ section: "1. Автономные роботы в космосе"
 title: "Пример: SPOC — разметка марсианского грунта нейросетью"
 type: case_study
 assertion: "SPOC размечает марсианский грунт глубокой сетью с точностью 98% — уже сейчас на Земле, бортом — только в будущем"
-source: "NASA JPL, страница проекта SPOC (nasa-jpl.github.io/SPOC) · AI4Mars/Zooniverse"
+source: "[NASA JPL, страница проекта SPOC (nasa-jpl.github.io/SPOC)](https://nasa-jpl.github.io/SPOC/) · [AI4Mars/Zooniverse](https://www.zooniverse.org/projects/hiro-ono/ai4mars)"
 media: "assets/razdel-1/spoc/spoc-03-sidebyside-segmentation.png"
 media_needed: "уже скачан (Tier 1). Вход (снимок) vs выход (карта классов SPOC) side-by-side — показывает устройство прямо."
 graf: "б"

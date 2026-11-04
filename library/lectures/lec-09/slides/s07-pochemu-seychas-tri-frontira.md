@@ -5,7 +5,7 @@ section: "0. Вход"
 type: schema_matrix
 title: "Почему именно сейчас — три фронтира"
 assertion: "Космическая энергетика, лунные базы и добыча на астероидах — идеи 1970-х; порог входа упал только сейчас"
-source: "Overview Energy/Meta (27.04.2026) · Firefly Aerospace, Blue Ghost Mission 1 (02.03.2025) · AstroForge"
+source: "[Overview Energy/Meta (27.04.2026)](https://www.overviewenergy.com/updates/overview-and-meta) · [Firefly Aerospace, Blue Ghost Mission 1 (02.03.2025)](https://fireflyspace.com/news/firefly-aerospaces-blue-ghost-mission-1-successfully-launches-and-begins-45-day-transit-to-the-moon/) · [AstroForge](https://www.astroforge.com/deepspace-2)"
 media: ""
 media_needed: "Таблица 3×2: направление × (барьер входа / экономика). Фаза 6."
 blocks:

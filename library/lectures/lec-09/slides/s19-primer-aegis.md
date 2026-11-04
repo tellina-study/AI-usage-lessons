@@ -5,7 +5,7 @@ section: "1. Автономные роботы в космосе"
 type: case_study
 title: "Пример: AEGIS — автономный выбор научных целей на Марсе"
 assertion: "AEGIS поднял точность выбора цели с 24% до 93% — без единой команды с Земли"
-source: "Francis et al., Science Robotics 2017 · JPL, страница проекта AEGIS"
+source: "[Francis et al., Science Robotics 2017](https://www.science.org/doi/abs/10.1126/scirobotics.aan4582) · [JPL, страница проекта AEGIS](https://ai.jpl.nasa.gov/public/projects/aegis/)"
 media: "assets/razdel-1/aegis/aegis-01-pia20762-curiosity-target-selection.jpg"
 media_needed: "уже скачан (Tier 1, NASA PIA20762)."
 graf: "а"

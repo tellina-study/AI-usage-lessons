@@ -1,0 +1,1658 @@
+[
+  {
+    "label": "S2 · haiku · bez_pravki · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1128",
+    "node_ms": 1377,
+    "wall_s": 2.3,
+    "prompt_tokens": 3794,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004094,
+    "cache_discount": null,
+    "or_id": "gen-1793256288-rR8j95D3mwQNx6tSy3Fd",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004094,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": null,
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "bez_pravki",
+      "rol": "holodnyi",
+      "nonce": "56288627"
+    }
+  },
+  {
+    "label": "S2 · haiku · bez_pravki · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1129",
+    "node_ms": 1010,
+    "wall_s": 2.18,
+    "prompt_tokens": 3794,
+    "completion_tokens": 58,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004084,
+    "cache_discount": null,
+    "or_id": "gen-1793256292-gEuB9bx9p1Aq0Bvvn9S2",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004084,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 2.9e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2).",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "bez_pravki",
+      "rol": "teplyi",
+      "nonce": "56288627"
+    }
+  },
+  {
+    "label": "S2 · haiku · bez_pravki · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1130",
+    "node_ms": 962,
+    "wall_s": 2.19,
+    "prompt_tokens": 3794,
+    "completion_tokens": 58,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004084,
+    "cache_discount": null,
+    "or_id": "gen-1793256296-uYUryBeX2lhjIlbKywm8",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004084,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 2.9e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2).",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "bez_pravki",
+      "rol": "zamer",
+      "nonce": "56288627"
+    }
+  },
+  {
+    "label": "S2 · haiku · dopisan_v_konets · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1131",
+    "node_ms": 913,
+    "wall_s": 1.12,
+    "prompt_tokens": 3794,
+    "completion_tokens": 59,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004089,
+    "cache_discount": null,
+    "or_id": "gen-1793256299-9B4q9ezhbqm4Ad7aSNON",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004089,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 2.95e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2).",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "dopisan_v_konets",
+      "rol": "holodnyi",
+      "nonce": "56299802"
+    }
+  },
+  {
+    "label": "S2 · haiku · dopisan_v_konets · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1132",
+    "node_ms": 1439,
+    "wall_s": 2.17,
+    "prompt_tokens": 3794,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004094,
+    "cache_discount": null,
+    "or_id": "gen-1793256302-yhq5pfw7KGwcjumqI9qS",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004094,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2). Если до",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "dopisan_v_konets",
+      "rol": "teplyi",
+      "nonce": "56299802"
+    }
+  },
+  {
+    "label": "S2 · haiku · dopisan_v_konets · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1133",
+    "node_ms": 1306,
+    "wall_s": 2.17,
+    "prompt_tokens": 3863,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004163,
+    "cache_discount": null,
+    "or_id": "gen-1793256306-wrgZHRSVThaVx0Qwzyye",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004163,
+      "upstream_inference_prompt_cost": 0.0003863,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести конкретное занятие можно не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Если поз",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "dopisan_v_konets",
+      "rol": "zamer",
+      "nonce": "56299802"
+    }
+  },
+  {
+    "label": "S2 · haiku · vstavlen_v_seredinu · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1134",
+    "node_ms": 951,
+    "wall_s": 2.18,
+    "prompt_tokens": 3794,
+    "completion_tokens": 59,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004089,
+    "cache_discount": null,
+    "or_id": "gen-1793256309-hCESzNScew1nSGy7bjcz",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004089,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 2.95e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2).",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "holodnyi",
+      "nonce": "56309765"
+    }
+  },
+  {
+    "label": "S2 · haiku · vstavlen_v_seredinu · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1135",
+    "node_ms": 855,
+    "wall_s": 1.13,
+    "prompt_tokens": 3794,
+    "completion_tokens": 59,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004089,
+    "cache_discount": null,
+    "or_id": "gen-1793256313-inA3Vv9EIlDQzKt2NFpN",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004089,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 2.95e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2).",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "teplyi",
+      "nonce": "56309765"
+    }
+  },
+  {
+    "label": "S2 · haiku · vstavlen_v_seredinu · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1136",
+    "node_ms": 1067,
+    "wall_s": 2.42,
+    "prompt_tokens": 3863,
+    "completion_tokens": 59,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004158,
+    "cache_discount": null,
+    "or_id": "gen-1793256316-75b7vTjg9H6aHcvFIMGZ",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004158,
+      "upstream_inference_prompt_cost": 0.0003863,
+      "upstream_inference_completions_cost": 2.95e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2).",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "zamer",
+      "nonce": "56309765"
+    }
+  },
+  {
+    "label": "S2 · haiku · pravka_v_nachale · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1137",
+    "node_ms": 954,
+    "wall_s": 2.18,
+    "prompt_tokens": 3794,
+    "completion_tokens": 59,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004089,
+    "cache_discount": null,
+    "or_id": "gen-1793256320-mfdnX3OaMBsc3z9C0OPG",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004089,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 2.95e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2).",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "pravka_v_nachale",
+      "rol": "holodnyi",
+      "nonce": "56319994"
+    }
+  },
+  {
+    "label": "S2 · haiku · pravka_v_nachale · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1138",
+    "node_ms": 839,
+    "wall_s": 1.13,
+    "prompt_tokens": 3794,
+    "completion_tokens": 59,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004089,
+    "cache_discount": null,
+    "or_id": "gen-1793256323-IwWHDhpDmUvcUyWMeHUI",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004089,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 2.95e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2).",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "pravka_v_nachale",
+      "rol": "teplyi",
+      "nonce": "56319994"
+    }
+  },
+  {
+    "label": "S2 · haiku · pravka_v_nachale · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1139",
+    "node_ms": 945,
+    "wall_s": 2.14,
+    "prompt_tokens": 3863,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004163,
+    "cache_discount": null,
+    "or_id": "gen-1793256326-0kn1pvEUgFb6IlZjc1Qw",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004163,
+      "upstream_inference_prompt_cost": 0.0003863,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала через личный кабинет (кнопка «Перенести») или сообщением администратору. Если позже 24 час",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "haiku",
+      "variant": "pravka_v_nachale",
+      "rol": "zamer",
+      "nonce": "56319994"
+    }
+  },
+  {
+    "label": "S2 · gemini · bez_pravki · holodnyi",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1140",
+    "node_ms": 476,
+    "wall_s": 1.12,
+    "prompt_tokens": 2455,
+    "completion_tokens": 19,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.000784,
+    "cache_discount": null,
+    "or_id": "gen-1793256330-SHZhf1nhCZNpvDZx0bse",
+    "cost_details": {
+      "upstream_inference_cost": 0.000784,
+      "upstream_inference_prompt_cost": 0.0007365,
+      "upstream_inference_completions_cost": 4.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести конкретное занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "bez_pravki",
+      "rol": "holodnyi",
+      "nonce": "56329950"
+    }
+  },
+  {
+    "label": "S2 · gemini · bez_pravki · teplyi",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1141",
+    "node_ms": 540,
+    "wall_s": 1.14,
+    "prompt_tokens": 2455,
+    "completion_tokens": 19,
+    "cached_tokens": 2041,
+    "cache_write_tokens": 0,
+    "cost": 0.00023293,
+    "cache_discount": null,
+    "or_id": "gen-1793256332-ZzYKAAsLyY7Pi9ZYr2bj",
+    "cost_details": {
+      "upstream_inference_cost": 0.00023293,
+      "upstream_inference_prompt_cost": 0.00018543,
+      "upstream_inference_completions_cost": 4.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести конкретное занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "bez_pravki",
+      "rol": "teplyi",
+      "nonce": "56329950"
+    }
+  },
+  {
+    "label": "S2 · gemini · bez_pravki · ZAMER",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1142",
+    "node_ms": 437,
+    "wall_s": 1.1,
+    "prompt_tokens": 2455,
+    "completion_tokens": 19,
+    "cached_tokens": 2041,
+    "cache_write_tokens": 0,
+    "cost": 0.00023293,
+    "cache_discount": null,
+    "or_id": "gen-1793256335-K5PAqvE2dfBjrwwI08h8",
+    "cost_details": {
+      "upstream_inference_cost": 0.00023293,
+      "upstream_inference_prompt_cost": 0.00018543,
+      "upstream_inference_completions_cost": 4.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести конкретное занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "bez_pravki",
+      "rol": "zamer",
+      "nonce": "56329950"
+    }
+  },
+  {
+    "label": "S2 · gemini · dopisan_v_konets · holodnyi",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1143",
+    "node_ms": 483,
+    "wall_s": 1.12,
+    "prompt_tokens": 2455,
+    "completion_tokens": 17,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.000779,
+    "cache_discount": null,
+    "or_id": "gen-1793256338-hKN4seWYHt6Qh7R8ifen",
+    "cost_details": {
+      "upstream_inference_cost": 0.000779,
+      "upstream_inference_prompt_cost": 0.0007365,
+      "upstream_inference_completions_cost": 4.25e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "dopisan_v_konets",
+      "rol": "holodnyi",
+      "nonce": "56337811"
+    }
+  },
+  {
+    "label": "S2 · gemini · dopisan_v_konets · teplyi",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1144",
+    "node_ms": 463,
+    "wall_s": 1.67,
+    "prompt_tokens": 2455,
+    "completion_tokens": 19,
+    "cached_tokens": 2041,
+    "cache_write_tokens": 0,
+    "cost": 0.00023293,
+    "cache_discount": null,
+    "or_id": "gen-1793256341-ybMr6xnXj5PzkfPC3HWZ",
+    "cost_details": {
+      "upstream_inference_cost": 0.00023293,
+      "upstream_inference_prompt_cost": 0.00018543,
+      "upstream_inference_completions_cost": 4.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести конкретное занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "dopisan_v_konets",
+      "rol": "teplyi",
+      "nonce": "56337811"
+    }
+  },
+  {
+    "label": "S2 · gemini · dopisan_v_konets · ZAMER",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1145",
+    "node_ms": 450,
+    "wall_s": 1.11,
+    "prompt_tokens": 2500,
+    "completion_tokens": 19,
+    "cached_tokens": 2041,
+    "cache_write_tokens": 0,
+    "cost": 0.00024643,
+    "cache_discount": null,
+    "or_id": "gen-1793256343-xCVaXLqsXfsxWvlv6xLw",
+    "cost_details": {
+      "upstream_inference_cost": 0.00024643,
+      "upstream_inference_prompt_cost": 0.00019893,
+      "upstream_inference_completions_cost": 4.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести конкретное занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "dopisan_v_konets",
+      "rol": "zamer",
+      "nonce": "56337811"
+    }
+  },
+  {
+    "label": "S2 · gemini · vstavlen_v_seredinu · holodnyi",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1146",
+    "node_ms": 417,
+    "wall_s": 1.11,
+    "prompt_tokens": 2455,
+    "completion_tokens": 17,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.000779,
+    "cache_discount": null,
+    "or_id": "gen-1793256346-9kyxQZC6tN9bDGQ8kC1J",
+    "cost_details": {
+      "upstream_inference_cost": 0.000779,
+      "upstream_inference_prompt_cost": 0.0007365,
+      "upstream_inference_completions_cost": 4.25e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "holodnyi",
+      "nonce": "56346206"
+    }
+  },
+  {
+    "label": "S2 · gemini · vstavlen_v_seredinu · teplyi",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1147",
+    "node_ms": 477,
+    "wall_s": 1.11,
+    "prompt_tokens": 2455,
+    "completion_tokens": 19,
+    "cached_tokens": 2041,
+    "cache_write_tokens": 0,
+    "cost": 0.00023293,
+    "cache_discount": null,
+    "or_id": "gen-1793256349-xNIpheUW98wA7FjE8X9b",
+    "cost_details": {
+      "upstream_inference_cost": 0.00023293,
+      "upstream_inference_prompt_cost": 0.00018543,
+      "upstream_inference_completions_cost": 4.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести конкретное занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "teplyi",
+      "nonce": "56346206"
+    }
+  },
+  {
+    "label": "S2 · gemini · vstavlen_v_seredinu · ZAMER",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1148",
+    "node_ms": 408,
+    "wall_s": 1.17,
+    "prompt_tokens": 2500,
+    "completion_tokens": 17,
+    "cached_tokens": 1020,
+    "cache_write_tokens": 0,
+    "cost": 0.0005171,
+    "cache_discount": null,
+    "or_id": "gen-1793256351-JYgF6XStPesLf5uRvRuc",
+    "cost_details": {
+      "upstream_inference_cost": 0.0005171,
+      "upstream_inference_prompt_cost": 0.0004746,
+      "upstream_inference_completions_cost": 4.25e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "zamer",
+      "nonce": "56346206"
+    }
+  },
+  {
+    "label": "S2 · gemini · pravka_v_nachale · holodnyi",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1149",
+    "node_ms": 442,
+    "wall_s": 1.16,
+    "prompt_tokens": 2455,
+    "completion_tokens": 17,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.000779,
+    "cache_discount": null,
+    "or_id": "gen-1793256354-oqeH1wZgVUtBWDRjm88a",
+    "cost_details": {
+      "upstream_inference_cost": 0.000779,
+      "upstream_inference_prompt_cost": 0.0007365,
+      "upstream_inference_completions_cost": 4.25e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "pravka_v_nachale",
+      "rol": "holodnyi",
+      "nonce": "56354101"
+    }
+  },
+  {
+    "label": "S2 · gemini · pravka_v_nachale · teplyi",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1150",
+    "node_ms": 433,
+    "wall_s": 1.12,
+    "prompt_tokens": 2455,
+    "completion_tokens": 17,
+    "cached_tokens": 2041,
+    "cache_write_tokens": 0,
+    "cost": 0.00022793,
+    "cache_discount": null,
+    "or_id": "gen-1793256356-mWKl0yY0N8TBdwtCc1Sj",
+    "cost_details": {
+      "upstream_inference_cost": 0.00022793,
+      "upstream_inference_prompt_cost": 0.00018543,
+      "upstream_inference_completions_cost": 4.25e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "pravka_v_nachale",
+      "rol": "teplyi",
+      "nonce": "56354101"
+    }
+  },
+  {
+    "label": "S2 · gemini · pravka_v_nachale · ZAMER",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1151",
+    "node_ms": 464,
+    "wall_s": 1.12,
+    "prompt_tokens": 2500,
+    "completion_tokens": 17,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0007925,
+    "cache_discount": null,
+    "or_id": "gen-1793256359-mg0XTJeMYqkOpdDKlp1n",
+    "cost_details": {
+      "upstream_inference_cost": 0.0007925,
+      "upstream_inference_prompt_cost": 0.00075,
+      "upstream_inference_completions_cost": 4.25e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gemini",
+      "variant": "pravka_v_nachale",
+      "rol": "zamer",
+      "nonce": "56354101"
+    }
+  },
+  {
+    "label": "S2 · gpt · bez_pravki · holodnyi",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1152",
+    "node_ms": 965,
+    "wall_s": 2.14,
+    "prompt_tokens": 2428,
+    "completion_tokens": 19,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0010016,
+    "cache_discount": null,
+    "or_id": "gen-1793256362-wrPbToRSJWDOg0rLAgGF",
+    "cost_details": {
+      "upstream_inference_cost": 0.0010016,
+      "upstream_inference_prompt_cost": 0.0009712,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "bez_pravki",
+      "rol": "holodnyi",
+      "nonce": "56361997"
+    }
+  },
+  {
+    "label": "S2 · gpt · bez_pravki · teplyi",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1153",
+    "node_ms": 958,
+    "wall_s": 2.15,
+    "prompt_tokens": 2428,
+    "completion_tokens": 19,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0010016,
+    "cache_discount": null,
+    "or_id": "gen-1793256365-ovhXYu2OfiAQQoHwporJ",
+    "cost_details": {
+      "upstream_inference_cost": 0.0010016,
+      "upstream_inference_prompt_cost": 0.0009712,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "bez_pravki",
+      "rol": "teplyi",
+      "nonce": "56361997"
+    }
+  },
+  {
+    "label": "S2 · gpt · bez_pravki · ZAMER",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1154",
+    "node_ms": 779,
+    "wall_s": 1.11,
+    "prompt_tokens": 2428,
+    "completion_tokens": 19,
+    "cached_tokens": 2304,
+    "cache_write_tokens": 0,
+    "cost": 0.0003104,
+    "cache_discount": null,
+    "or_id": "gen-1793256369-URETQkTCQMddXzHJOrqH",
+    "cost_details": {
+      "upstream_inference_cost": 0.0003104,
+      "upstream_inference_prompt_cost": 0.00028,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "bez_pravki",
+      "rol": "zamer",
+      "nonce": "56361997"
+    }
+  },
+  {
+    "label": "S2 · gpt · dopisan_v_konets · holodnyi",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1155",
+    "node_ms": 866,
+    "wall_s": 2.62,
+    "prompt_tokens": 2428,
+    "completion_tokens": 19,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0010016,
+    "cache_discount": null,
+    "or_id": "gen-1793256372-dCvNMK2FlzVMzCjlYbEO",
+    "cost_details": {
+      "upstream_inference_cost": 0.0010016,
+      "upstream_inference_prompt_cost": 0.0009712,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "dopisan_v_konets",
+      "rol": "holodnyi",
+      "nonce": "56371895"
+    }
+  },
+  {
+    "label": "S2 · gpt · dopisan_v_konets · teplyi",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1156",
+    "node_ms": 981,
+    "wall_s": 1.39,
+    "prompt_tokens": 2428,
+    "completion_tokens": 19,
+    "cached_tokens": 2304,
+    "cache_write_tokens": 0,
+    "cost": 0.0003104,
+    "cache_discount": null,
+    "or_id": "gen-1793256376-CGLsoRjtGneDOkEvMLVL",
+    "cost_details": {
+      "upstream_inference_cost": 0.0003104,
+      "upstream_inference_prompt_cost": 0.00028,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "dopisan_v_konets",
+      "rol": "teplyi",
+      "nonce": "56371895"
+    }
+  },
+  {
+    "label": "S2 · gpt · dopisan_v_konets · ZAMER",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1157",
+    "node_ms": 835,
+    "wall_s": 1.11,
+    "prompt_tokens": 2470,
+    "completion_tokens": 19,
+    "cached_tokens": 1920,
+    "cache_write_tokens": 0,
+    "cost": 0.0004424,
+    "cache_discount": null,
+    "or_id": "gen-1793256379-jLJLHsatHUaXYKSBVJwS",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004424,
+      "upstream_inference_prompt_cost": 0.000412,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "dopisan_v_konets",
+      "rol": "zamer",
+      "nonce": "56371895"
+    }
+  },
+  {
+    "label": "S2 · gpt · vstavlen_v_seredinu · holodnyi",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1158",
+    "node_ms": 949,
+    "wall_s": 2.17,
+    "prompt_tokens": 2428,
+    "completion_tokens": 19,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0010016,
+    "cache_discount": null,
+    "or_id": "gen-1793256381-qssogalU1oEseoV0rSvJ",
+    "cost_details": {
+      "upstream_inference_cost": 0.0010016,
+      "upstream_inference_prompt_cost": 0.0009712,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "holodnyi",
+      "nonce": "56381511"
+    }
+  },
+  {
+    "label": "S2 · gpt · vstavlen_v_seredinu · teplyi",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1159",
+    "node_ms": 794,
+    "wall_s": 1.12,
+    "prompt_tokens": 2428,
+    "completion_tokens": 19,
+    "cached_tokens": 2304,
+    "cache_write_tokens": 0,
+    "cost": 0.0003104,
+    "cache_discount": null,
+    "or_id": "gen-1793256385-mnN6JgdHlGNhMHR1fW1j",
+    "cost_details": {
+      "upstream_inference_cost": 0.0003104,
+      "upstream_inference_prompt_cost": 0.00028,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "teplyi",
+      "nonce": "56381511"
+    }
+  },
+  {
+    "label": "S2 · gpt · vstavlen_v_seredinu · ZAMER",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1160",
+    "node_ms": 783,
+    "wall_s": 1.13,
+    "prompt_tokens": 2470,
+    "completion_tokens": 19,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0010184,
+    "cache_discount": null,
+    "or_id": "gen-1793256388-973EAKQleNI4TeAggxUU",
+    "cost_details": {
+      "upstream_inference_cost": 0.0010184,
+      "upstream_inference_prompt_cost": 0.000988,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "zamer",
+      "nonce": "56381511"
+    }
+  },
+  {
+    "label": "S2 · gpt · pravka_v_nachale · holodnyi",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1161",
+    "node_ms": 998,
+    "wall_s": 3.21,
+    "prompt_tokens": 2428,
+    "completion_tokens": 19,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0010016,
+    "cache_discount": null,
+    "or_id": "gen-1793256390-yBc9RLo4JtGXdr4DBTdX",
+    "cost_details": {
+      "upstream_inference_cost": 0.0010016,
+      "upstream_inference_prompt_cost": 0.0009712,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "pravka_v_nachale",
+      "rol": "holodnyi",
+      "nonce": "56390431"
+    }
+  },
+  {
+    "label": "S2 · gpt · pravka_v_nachale · teplyi",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1162",
+    "node_ms": 995,
+    "wall_s": 2.15,
+    "prompt_tokens": 2428,
+    "completion_tokens": 19,
+    "cached_tokens": 2304,
+    "cache_write_tokens": 0,
+    "cost": 0.0003104,
+    "cache_discount": null,
+    "or_id": "gen-1793256395-128frBGXkBexpSRStgIE",
+    "cost_details": {
+      "upstream_inference_cost": 0.0003104,
+      "upstream_inference_prompt_cost": 0.00028,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "pravka_v_nachale",
+      "rol": "teplyi",
+      "nonce": "56390431"
+    }
+  },
+  {
+    "label": "S2 · gpt · pravka_v_nachale · ZAMER",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1163",
+    "node_ms": 1048,
+    "wall_s": 2.27,
+    "prompt_tokens": 2470,
+    "completion_tokens": 19,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0010184,
+    "cache_discount": null,
+    "or_id": "gen-1793256399-sgUEICNJP5UVjxBCeNhb",
+    "cost_details": {
+      "upstream_inference_cost": 0.0010184,
+      "upstream_inference_prompt_cost": 0.000988,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S2",
+      "model_klyuch": "gpt",
+      "variant": "pravka_v_nachale",
+      "rol": "zamer",
+      "nonce": "56390431"
+    }
+  }
+]

@@ -1,0 +1,566 @@
+[
+  {
+    "label": "S5 · haiku · s-tochkoy · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1733",
+    "node_ms": 1296,
+    "wall_s": 2.26,
+    "prompt_tokens": 851,
+    "completion_tokens": 55,
+    "cached_tokens": 0,
+    "cache_write_tokens": 823,
+    "cost": 0.000133175,
+    "cache_discount": null,
+    "or_id": "gen-1793256771-yc8dblFjBCUh16VCtNEb",
+    "cost_details": {
+      "upstream_inference_cost": 0.000133175,
+      "upstream_inference_prompt_cost": 0.000105675,
+      "upstream_inference_completions_cost": 2.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "haiku",
+      "tochka": "s-tochkoy",
+      "rol": "holodnyi",
+      "nonce": "56770927",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  },
+  {
+    "label": "S5 · haiku · s-tochkoy · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1734",
+    "node_ms": 1201,
+    "wall_s": 2.18,
+    "prompt_tokens": 851,
+    "completion_tokens": 55,
+    "cached_tokens": 823,
+    "cache_write_tokens": 0,
+    "cost": 3.853e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256774-BumFZACxBFI4rfnkrcRG",
+    "cost_details": {
+      "upstream_inference_cost": 3.853e-05,
+      "upstream_inference_prompt_cost": 1.103e-05,
+      "upstream_inference_completions_cost": 2.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "haiku",
+      "tochka": "s-tochkoy",
+      "rol": "teplyi",
+      "nonce": "56770927",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  },
+  {
+    "label": "S5 · haiku · s-tochkoy · teplyi2",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1735",
+    "node_ms": 985,
+    "wall_s": 2.16,
+    "prompt_tokens": 851,
+    "completion_tokens": 55,
+    "cached_tokens": 823,
+    "cache_write_tokens": 0,
+    "cost": 3.853e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256778-bv60kBNvi3peAr4sX7h3",
+    "cost_details": {
+      "upstream_inference_cost": 3.853e-05,
+      "upstream_inference_prompt_cost": 1.103e-05,
+      "upstream_inference_completions_cost": 2.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "haiku",
+      "tochka": "s-tochkoy",
+      "rol": "teplyi2",
+      "nonce": "56770927",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  },
+  {
+    "label": "S5 · haiku · bez-tochki · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1736",
+    "node_ms": 878,
+    "wall_s": 1.11,
+    "prompt_tokens": 852,
+    "completion_tokens": 55,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0001127,
+    "cache_discount": null,
+    "or_id": "gen-1793256782-KWfzmzTc9GVVnkSuV8US",
+    "cost_details": {
+      "upstream_inference_cost": 0.0001127,
+      "upstream_inference_prompt_cost": 8.52e-05,
+      "upstream_inference_completions_cost": 2.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "haiku",
+      "tochka": "bez-tochki",
+      "rol": "holodnyi",
+      "nonce": "56782023",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  },
+  {
+    "label": "S5 · haiku · bez-tochki · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1737",
+    "node_ms": 855,
+    "wall_s": 1.14,
+    "prompt_tokens": 852,
+    "completion_tokens": 55,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0001127,
+    "cache_discount": null,
+    "or_id": "gen-1793256784-uKyZDxh9Gd0j2XpQpkDm",
+    "cost_details": {
+      "upstream_inference_cost": 0.0001127,
+      "upstream_inference_prompt_cost": 8.52e-05,
+      "upstream_inference_completions_cost": 2.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "haiku",
+      "tochka": "bez-tochki",
+      "rol": "teplyi",
+      "nonce": "56782023",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  },
+  {
+    "label": "S5 · haiku · bez-tochki · teplyi2",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1738",
+    "node_ms": 1208,
+    "wall_s": 2.27,
+    "prompt_tokens": 852,
+    "completion_tokens": 55,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0001127,
+    "cache_discount": null,
+    "or_id": "gen-1793256787-KhpXlDwxw8oSxowonm46",
+    "cost_details": {
+      "upstream_inference_cost": 0.0001127,
+      "upstream_inference_prompt_cost": 8.52e-05,
+      "upstream_inference_completions_cost": 2.75e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "haiku",
+      "tochka": "bez-tochki",
+      "rol": "teplyi2",
+      "nonce": "56782023",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  },
+  {
+    "label": "S5 · gemini · bez-tochki · holodnyi",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1739",
+    "node_ms": 472,
+    "wall_s": 1.12,
+    "prompt_tokens": 547,
+    "completion_tokens": 26,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0002291,
+    "cache_discount": null,
+    "or_id": "gen-1793256791-5PPq89DMhgajq2EbdFKY",
+    "cost_details": {
+      "upstream_inference_cost": 0.0002291,
+      "upstream_inference_prompt_cost": 0.0001641,
+      "upstream_inference_completions_cost": 6.5e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала через личный кабинет или сообщением администратору.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "gemini",
+      "tochka": "bez-tochki",
+      "rol": "holodnyi",
+      "nonce": "56791052",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  },
+  {
+    "label": "S5 · gemini · bez-tochki · teplyi",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1740",
+    "node_ms": 468,
+    "wall_s": 1.12,
+    "prompt_tokens": 547,
+    "completion_tokens": 26,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0002291,
+    "cache_discount": null,
+    "or_id": "gen-1793256793-nmeV4aRSzFQPGpohoIM5",
+    "cost_details": {
+      "upstream_inference_cost": 0.0002291,
+      "upstream_inference_prompt_cost": 0.0001641,
+      "upstream_inference_completions_cost": 6.5e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала через личный кабинет или сообщением администратору.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "gemini",
+      "tochka": "bez-tochki",
+      "rol": "teplyi",
+      "nonce": "56791052",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  },
+  {
+    "label": "S5 · gemini · bez-tochki · teplyi2",
+    "model_zapros": "google/gemini-2.5-flash",
+    "model_otvet": "google/gemini-2.5-flash",
+    "provider_otvet": "Google AI Studio",
+    "exec_id": "1741",
+    "node_ms": 480,
+    "wall_s": 1.13,
+    "prompt_tokens": 547,
+    "completion_tokens": 26,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0002291,
+    "cache_discount": null,
+    "or_id": "gen-1793256796-dwHmHDnLyK9ARjnJnypU",
+    "cost_details": {
+      "upstream_inference_cost": 0.0002291,
+      "upstream_inference_prompt_cost": 0.0001641,
+      "upstream_inference_completions_cost": 6.5e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала через личный кабинет или сообщением администратору.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "gemini",
+      "tochka": "bez-tochki",
+      "rol": "teplyi2",
+      "nonce": "56791052",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  },
+  {
+    "label": "S5 · gpt · bez-tochki · holodnyi",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1742",
+    "node_ms": 910,
+    "wall_s": 1.13,
+    "prompt_tokens": 549,
+    "completion_tokens": 19,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.00025,
+    "cache_discount": null,
+    "or_id": "gen-1793256799-Zg6u5Tz0zpEkaO2T7v1h",
+    "cost_details": {
+      "upstream_inference_cost": 0.00025,
+      "upstream_inference_prompt_cost": 0.0002196,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "gpt",
+      "tochka": "bez-tochki",
+      "rol": "holodnyi",
+      "nonce": "56798917",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  },
+  {
+    "label": "S5 · gpt · bez-tochki · teplyi",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1743",
+    "node_ms": 967,
+    "wall_s": 2.16,
+    "prompt_tokens": 549,
+    "completion_tokens": 19,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.00025,
+    "cache_discount": null,
+    "or_id": "gen-1793256801-6Si4DwpsryUPf5R09WEr",
+    "cost_details": {
+      "upstream_inference_cost": 0.00025,
+      "upstream_inference_prompt_cost": 0.0002196,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "gpt",
+      "tochka": "bez-tochki",
+      "rol": "teplyi",
+      "nonce": "56798917",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  },
+  {
+    "label": "S5 · gpt · bez-tochki · teplyi2",
+    "model_zapros": "openai/gpt-4.1-mini",
+    "model_otvet": "openai/gpt-4.1-mini",
+    "provider_otvet": "OpenAI",
+    "exec_id": "1744",
+    "node_ms": 984,
+    "wall_s": 2.18,
+    "prompt_tokens": 549,
+    "completion_tokens": 19,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.00025,
+    "cache_discount": null,
+    "or_id": "gen-1793256805-EoBxBMiUqUMpO0Ht66Uf",
+    "cost_details": {
+      "upstream_inference_cost": 0.00025,
+      "upstream_inference_prompt_cost": 0.0002196,
+      "upstream_inference_completions_cost": 3.04e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала.",
+    "meta": {
+      "seriya": "S5",
+      "model_klyuch": "gpt",
+      "tochka": "bez-tochki",
+      "rol": "teplyi2",
+      "nonce": "56798917",
+      "spravochnik": "nastoyashchiy-10-punktov"
+    }
+  }
+]

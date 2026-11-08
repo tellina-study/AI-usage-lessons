@@ -1,0 +1,1271 @@
+[
+  {
+    "label": "S3/R1 · bez_pravki · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1164",
+    "node_ms": 1071,
+    "wall_s": 2.24,
+    "prompt_tokens": 3793,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3765,
+    "cost": 0.000503425,
+    "cache_discount": null,
+    "or_id": "gen-1793256429-IcWIlIJPElfiJGeDVJhM",
+    "cost_details": {
+      "upstream_inference_cost": 0.000503425,
+      "upstream_inference_prompt_cost": 0.000473425,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала через личный кабинет (кнопка «Перенести») или сообщением администратору; позже этого срока занят",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "bez_pravki",
+      "rol": "holodnyi",
+      "nonce": "56429344"
+    }
+  },
+  {
+    "label": "S3/R1 · bez_pravki · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1165",
+    "node_ms": 969,
+    "wall_s": 2.19,
+    "prompt_tokens": 3793,
+    "completion_tokens": 60,
+    "cached_tokens": 3765,
+    "cache_write_tokens": 0,
+    "cost": 7.045e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256433-c0z8bM0tBT0O0Y4GVTeM",
+    "cost_details": {
+      "upstream_inference_cost": 7.045e-05,
+      "upstream_inference_prompt_cost": 4.045e-05,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": null,
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "bez_pravki",
+      "rol": "teplyi",
+      "nonce": "56429344"
+    }
+  },
+  {
+    "label": "S3/R1 · bez_pravki · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1166",
+    "node_ms": 999,
+    "wall_s": 2.17,
+    "prompt_tokens": 3793,
+    "completion_tokens": 60,
+    "cached_tokens": 3765,
+    "cache_write_tokens": 0,
+    "cost": 7.045e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256436-uMfMnpm7cF0NVOCC2ANI",
+    "cost_details": {
+      "upstream_inference_cost": 7.045e-05,
+      "upstream_inference_prompt_cost": 4.045e-05,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала через личный кабинет (кнопка «Перенести») или сообщением администратору. Если перенос запрош",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "bez_pravki",
+      "rol": "zamer",
+      "nonce": "56429344"
+    }
+  },
+  {
+    "label": "S3/R1 · dopisan_v_konets · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1167",
+    "node_ms": 1079,
+    "wall_s": 2.18,
+    "prompt_tokens": 3793,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3765,
+    "cost": 0.000503425,
+    "cache_discount": null,
+    "or_id": "gen-1793256440-lfUbVSvr5cbjDwgbtC8L",
+    "cost_details": {
+      "upstream_inference_cost": 0.000503425,
+      "upstream_inference_prompt_cost": 0.000473425,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2). Если пер",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "dopisan_v_konets",
+      "rol": "holodnyi",
+      "nonce": "56440453"
+    }
+  },
+  {
+    "label": "S3/R1 · dopisan_v_konets · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1168",
+    "node_ms": 1100,
+    "wall_s": 2.15,
+    "prompt_tokens": 3793,
+    "completion_tokens": 60,
+    "cached_tokens": 3765,
+    "cache_write_tokens": 0,
+    "cost": 7.045e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256444-Udx8hPbMnUDAkAlbGEGa",
+    "cost_details": {
+      "upstream_inference_cost": 7.045e-05,
+      "upstream_inference_prompt_cost": 4.045e-05,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2). Если до",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "dopisan_v_konets",
+      "rol": "teplyi",
+      "nonce": "56440453"
+    }
+  },
+  {
+    "label": "S3/R1 · dopisan_v_konets · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1169",
+    "node_ms": 1255,
+    "wall_s": 2.16,
+    "prompt_tokens": 3862,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3834,
+    "cost": 0.00051205,
+    "cache_discount": null,
+    "or_id": "gen-1793256447-HNTNBNkeV2q477SrAJGr",
+    "cost_details": {
+      "upstream_inference_cost": 0.00051205,
+      "upstream_inference_prompt_cost": 0.00048205,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Позже 24 час",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "dopisan_v_konets",
+      "rol": "zamer",
+      "nonce": "56440453"
+    }
+  },
+  {
+    "label": "S3/R1 · vstavlen_v_seredinu · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1170",
+    "node_ms": 1292,
+    "wall_s": 2.16,
+    "prompt_tokens": 3793,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3765,
+    "cost": 0.000503425,
+    "cache_discount": null,
+    "or_id": "gen-1793256451-uuOKptmNNnKNHcCaBDE7",
+    "cost_details": {
+      "upstream_inference_cost": 0.000503425,
+      "upstream_inference_prompt_cost": 0.000473425,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала через личный кабинет (кнопка «Перенести») или сообщением администратору; позже 24 часов зан",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "holodnyi",
+      "nonce": "56451432"
+    }
+  },
+  {
+    "label": "S3/R1 · vstavlen_v_seredinu · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1171",
+    "node_ms": 1016,
+    "wall_s": 2.62,
+    "prompt_tokens": 3793,
+    "completion_tokens": 60,
+    "cached_tokens": 3765,
+    "cache_write_tokens": 0,
+    "cost": 7.045e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256455-m8S7SMTWaofOtzsPnk5d",
+    "cost_details": {
+      "upstream_inference_cost": 7.045e-05,
+      "upstream_inference_prompt_cost": 4.045e-05,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (справочник, пункт",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "teplyi",
+      "nonce": "56451432"
+    }
+  },
+  {
+    "label": "S3/R1 · vstavlen_v_seredinu · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1172",
+    "node_ms": 964,
+    "wall_s": 2.16,
+    "prompt_tokens": 3862,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3834,
+    "cost": 0.00051205,
+    "cache_discount": null,
+    "or_id": "gen-1793256459-IkgYwVoFRzXfIMONLTeu",
+    "cost_details": {
+      "upstream_inference_cost": 0.00051205,
+      "upstream_inference_prompt_cost": 0.00048205,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2). Если до",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "zamer",
+      "nonce": "56451432"
+    }
+  },
+  {
+    "label": "S3/R1 · pravka_v_nachale · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1173",
+    "node_ms": 1087,
+    "wall_s": 2.17,
+    "prompt_tokens": 3793,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3765,
+    "cost": 0.000503425,
+    "cache_discount": null,
+    "or_id": "gen-1793256463-VvkhKQdcoX9IKrvh9CKz",
+    "cost_details": {
+      "upstream_inference_cost": 0.000503425,
+      "upstream_inference_prompt_cost": 0.000473425,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Позже 24 час",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "pravka_v_nachale",
+      "rol": "holodnyi",
+      "nonce": "56462861"
+    }
+  },
+  {
+    "label": "S3/R1 · pravka_v_nachale · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1174",
+    "node_ms": 1107,
+    "wall_s": 2.17,
+    "prompt_tokens": 3793,
+    "completion_tokens": 60,
+    "cached_tokens": 3765,
+    "cache_write_tokens": 0,
+    "cost": 7.045e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256466-APZx9TtmANRjSlC8F4hf",
+    "cost_details": {
+      "upstream_inference_cost": 7.045e-05,
+      "upstream_inference_prompt_cost": 4.045e-05,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Если до занятия ос",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "pravka_v_nachale",
+      "rol": "teplyi",
+      "nonce": "56462861"
+    }
+  },
+  {
+    "label": "S3/R1 · pravka_v_nachale · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1175",
+    "node_ms": 3072,
+    "wall_s": 4.26,
+    "prompt_tokens": 3862,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3834,
+    "cost": 0.00051205,
+    "cache_discount": null,
+    "or_id": "gen-1793256470-gMcnnoYkOGiaJSSRqwwe",
+    "cost_details": {
+      "upstream_inference_cost": 0.00051205,
+      "upstream_inference_prompt_cost": 0.00048205,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Если позже 24 ",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R1-odin-blok",
+      "model_klyuch": "haiku",
+      "variant": "pravka_v_nachale",
+      "rol": "zamer",
+      "nonce": "56462861"
+    }
+  },
+  {
+    "label": "S3/R2 · bez_pravki · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1176",
+    "node_ms": 3233,
+    "wall_s": 4.65,
+    "prompt_tokens": 3790,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3762,
+    "cost": 0.00050305,
+    "cache_discount": null,
+    "or_id": "gen-1793256476-0WuqNNyVbEkISekKEfEJ",
+    "cost_details": {
+      "upstream_inference_cost": 0.00050305,
+      "upstream_inference_prompt_cost": 0.00047305,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала через личный кабинет (кнопка «Перенести») или сообщением администратору. Если перенос позже ",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "bez_pravki",
+      "rol": "holodnyi",
+      "nonce": "56475962"
+    }
+  },
+  {
+    "label": "S3/R2 · bez_pravki · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1177",
+    "node_ms": 1216,
+    "wall_s": 2.16,
+    "prompt_tokens": 3790,
+    "completion_tokens": 60,
+    "cached_tokens": 3762,
+    "cache_write_tokens": 0,
+    "cost": 7.042e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256482-LtCLmlUqiEBNN5JKRSAE",
+    "cost_details": {
+      "upstream_inference_cost": 7.042e-05,
+      "upstream_inference_prompt_cost": 4.042e-05,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала через личный кабинет (кнопка «Перенести») или сообщением администратору. Если перенос запрош",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "bez_pravki",
+      "rol": "teplyi",
+      "nonce": "56475962"
+    }
+  },
+  {
+    "label": "S3/R2 · bez_pravki · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1180",
+    "node_ms": 6461,
+    "wall_s": 7.82,
+    "prompt_tokens": 3790,
+    "completion_tokens": 60,
+    "cached_tokens": 3762,
+    "cache_write_tokens": 0,
+    "cost": 7.042e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256486-Dcr79iex0D3lURO1MAO7",
+    "cost_details": {
+      "upstream_inference_cost": 7.042e-05,
+      "upstream_inference_prompt_cost": 4.042e-05,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала через личный кабинет (кнопка «Перенести») или сообщением администратору. Если перенос происходит",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "bez_pravki",
+      "rol": "zamer",
+      "nonce": "56475962"
+    }
+  },
+  {
+    "label": "S3/R2 · dopisan_v_konets · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1185",
+    "node_ms": 992,
+    "wall_s": 2.15,
+    "prompt_tokens": 3790,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3762,
+    "cost": 0.00050305,
+    "cache_discount": null,
+    "or_id": "gen-1793256495-NmRZSpmX0rjq47vAYNvD",
+    "cost_details": {
+      "upstream_inference_cost": 0.00050305,
+      "upstream_inference_prompt_cost": 0.00047305,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перен",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "dopisan_v_konets",
+      "rol": "holodnyi",
+      "nonce": "56495099"
+    }
+  },
+  {
+    "label": "S3/R2 · dopisan_v_konets · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1186",
+    "node_ms": 1300,
+    "wall_s": 2.47,
+    "prompt_tokens": 3790,
+    "completion_tokens": 60,
+    "cached_tokens": 3762,
+    "cache_write_tokens": 0,
+    "cost": 7.042e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256499-ntIto8GwyvSE9waI6Xur",
+    "cost_details": {
+      "upstream_inference_cost": 7.042e-05,
+      "upstream_inference_prompt_cost": 4.042e-05,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": null,
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "dopisan_v_konets",
+      "rol": "teplyi",
+      "nonce": "56495099"
+    }
+  },
+  {
+    "label": "S3/R2 · dopisan_v_konets · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1187",
+    "node_ms": 1187,
+    "wall_s": 2.15,
+    "prompt_tokens": 3858,
+    "completion_tokens": 60,
+    "cached_tokens": 3762,
+    "cache_write_tokens": 68,
+    "cost": 7.892e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256502-mJon2ACYTWjap2FsYEg0",
+    "cost_details": {
+      "upstream_inference_cost": 7.892e-05,
+      "upstream_inference_prompt_cost": 4.892e-05,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Перенести занятие можно не позднее чем за 24 часа до его начала через личный кабинет (кнопка «Перенести») или сообщением администратору. Если до занятия остал",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "dopisan_v_konets",
+      "rol": "zamer",
+      "nonce": "56495099"
+    }
+  },
+  {
+    "label": "S3/R2 · vstavlen_v_seredinu · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1196",
+    "node_ms": 1238,
+    "wall_s": 2.79,
+    "prompt_tokens": 3790,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3762,
+    "cost": 0.00050305,
+    "cache_discount": null,
+    "or_id": "gen-1793256506-mIhKIQ7ig9aodRJdMv0t",
+    "cost_details": {
+      "upstream_inference_cost": 0.00050305,
+      "upstream_inference_prompt_cost": 0.00047305,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Если позже 24 ",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "holodnyi",
+      "nonce": "56506372"
+    }
+  },
+  {
+    "label": "S3/R2 · vstavlen_v_seredinu · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1213",
+    "node_ms": 965,
+    "wall_s": 1.36,
+    "prompt_tokens": 3790,
+    "completion_tokens": 60,
+    "cached_tokens": 3762,
+    "cache_write_tokens": 0,
+    "cost": 7.042e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256510-QRZQ2KycHqKgD93nCE7X",
+    "cost_details": {
+      "upstream_inference_cost": 7.042e-05,
+      "upstream_inference_prompt_cost": 4.042e-05,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "За 24 часа до начала занятия: перенести его можно через личный кабинет (кнопка «Перенести») или сообщением администратору. Позже 24 часов занятие считается использ",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "teplyi",
+      "nonce": "56506372"
+    }
+  },
+  {
+    "label": "S3/R2 · vstavlen_v_seredinu · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1226",
+    "node_ms": 1077,
+    "wall_s": 2.48,
+    "prompt_tokens": 3858,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3830,
+    "cost": 0.00051155,
+    "cache_discount": null,
+    "or_id": "gen-1793256513-HpwIVbpPH7s1f1EAjMdS",
+    "cost_details": {
+      "upstream_inference_cost": 0.00051155,
+      "upstream_inference_prompt_cost": 0.00048155,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала через личный кабинет (кнопка «Перенести») или сообщением администратору. Если перенос позже ",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "vstavlen_v_seredinu",
+      "rol": "zamer",
+      "nonce": "56506372"
+    }
+  },
+  {
+    "label": "S3/R2 · pravka_v_nachale · holodnyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1246",
+    "node_ms": 3056,
+    "wall_s": 3.84,
+    "prompt_tokens": 3790,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3762,
+    "cost": 0.00050305,
+    "cache_discount": null,
+    "or_id": "gen-1793256517-fRSUnAJIsaXQbS1YJ9sc",
+    "cost_details": {
+      "upstream_inference_cost": 0.00050305,
+      "upstream_inference_prompt_cost": 0.00047305,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Если позже 24 ",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "pravka_v_nachale",
+      "rol": "holodnyi",
+      "nonce": "56517508"
+    }
+  },
+  {
+    "label": "S3/R2 · pravka_v_nachale · teplyi",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1273",
+    "node_ms": 1078,
+    "wall_s": 3.07,
+    "prompt_tokens": 3790,
+    "completion_tokens": 60,
+    "cached_tokens": 3762,
+    "cache_write_tokens": 0,
+    "cost": 7.042e-05,
+    "cache_discount": null,
+    "or_id": "gen-1793256523-bilIfht4hWWthkrxdpsZ",
+    "cost_details": {
+      "upstream_inference_cost": 7.042e-05,
+      "upstream_inference_prompt_cost": 4.042e-05,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Если до начала остал",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "pravka_v_nachale",
+      "rol": "teplyi",
+      "nonce": "56517508"
+    }
+  },
+  {
+    "label": "S3/R2 · pravka_v_nachale · ZAMER",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1288",
+    "node_ms": 1223,
+    "wall_s": 3.29,
+    "prompt_tokens": 3858,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 3830,
+    "cost": 0.00051155,
+    "cache_discount": null,
+    "or_id": "gen-1793256528-yrpHUPG5YPxIrCkuevqV",
+    "cost_details": {
+      "upstream_inference_cost": 0.00051155,
+      "upstream_inference_prompt_cost": 0.00048155,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Если до начала остал",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R2-chetyre-bloka",
+      "model_klyuch": "haiku",
+      "variant": "pravka_v_nachale",
+      "rol": "zamer",
+      "nonce": "56517508"
+    }
+  },
+  {
+    "label": "S3/R3 · povtor 1",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1310",
+    "node_ms": 930,
+    "wall_s": 1.61,
+    "prompt_tokens": 3794,
+    "completion_tokens": 59,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004089,
+    "cache_discount": null,
+    "or_id": "gen-1793256532-ShaLUYVMl4rB24JeWGOR",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004089,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 2.95e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору (kb2).",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R3-bez-cache-control",
+      "model_klyuch": "haiku",
+      "povtor": 1,
+      "rol": "zamer",
+      "nonce": "56532205"
+    }
+  },
+  {
+    "label": "S3/R3 · povtor 2",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1325",
+    "node_ms": 1071,
+    "wall_s": 2.35,
+    "prompt_tokens": 3794,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004094,
+    "cache_discount": null,
+    "or_id": "gen-1793256535-tOCbiKqIIXqlIAsuh6zl",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004094,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "За 24 часа до начала занятия: перенести его можно через личный кабинет (кнопка «Перенести») или сообщением администратору, позже этого срока занятие считается использованным",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R3-bez-cache-control",
+      "model_klyuch": "haiku",
+      "povtor": 2,
+      "rol": "zamer",
+      "nonce": "56532205"
+    }
+  },
+  {
+    "label": "S3/R3 · povtor 3",
+    "model_zapros": "anthropic/claude-haiku-5.5",
+    "model_otvet": "anthropic/claude-haiku-5.5",
+    "provider_otvet": "Anthropic",
+    "exec_id": "1342",
+    "node_ms": 984,
+    "wall_s": 1.54,
+    "prompt_tokens": 3794,
+    "completion_tokens": 60,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "cost": 0.0004094,
+    "cache_discount": null,
+    "or_id": "gen-1793256539-cQRUqEaWrPYlUNld9W4t",
+    "cost_details": {
+      "upstream_inference_cost": 0.0004094,
+      "upstream_inference_prompt_cost": 0.0003794,
+      "upstream_inference_completions_cost": 3e-05
+    },
+    "usage_polya": [
+      "completion_tokens",
+      "completion_tokens_details",
+      "cost",
+      "cost_details",
+      "is_byok",
+      "prompt_tokens",
+      "prompt_tokens_details",
+      "total_tokens"
+    ],
+    "prompt_tokens_details_polya": [
+      "audio_tokens",
+      "cache_write_tokens",
+      "cached_tokens",
+      "video_tokens"
+    ],
+    "error": null,
+    "otvet_text": "Занятие можно перенести не позднее чем за 24 часа до его начала — через личный кабинет (кнопка «Перенести») или сообщением администратору. Позже 24 час",
+    "meta": {
+      "seriya": "S3",
+      "raskladka": "R3-bez-cache-control",
+      "model_klyuch": "haiku",
+      "povtor": 3,
+      "rol": "zamer",
+      "nonce": "56532205"
+    }
+  }
+]

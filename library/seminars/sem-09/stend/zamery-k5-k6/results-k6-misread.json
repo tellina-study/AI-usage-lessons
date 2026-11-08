@@ -1,0 +1,183 @@
+{
+  "n_calls": 10,
+  "n_valid_json": 10,
+  "n_sum_wrong_despite_valid_json": 0,
+  "n_date_wrong_despite_valid_json": 0,
+  "by_receipt": {
+    "receipt-02": {
+      "truth": {
+        "amount": "23 450,00",
+        "sum": 23450.0,
+        "date": "03.10.2026"
+      },
+      "entries": [
+        {
+          "ok": true,
+          "execution_id": "789",
+          "raw_content": "{\"sum_rub\": 23450.00, \"date\": \"03.10.2026\", \"raw_text_seen\": \"23 450,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 23450.0,
+            "date": "03.10.2026",
+            "raw_text_seen": "23 450,00 ₽"
+          },
+          "parse_error": null,
+          "sum_correct": true,
+          "date_correct": true
+        },
+        {
+          "ok": true,
+          "execution_id": "790",
+          "raw_content": "{\"sum_rub\": 23450.00, \"date\": \"03.10.2026\", \"raw_text_seen\": \"23 450,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 23450.0,
+            "date": "03.10.2026",
+            "raw_text_seen": "23 450,00 ₽"
+          },
+          "parse_error": null,
+          "sum_correct": true,
+          "date_correct": true
+        }
+      ]
+    },
+    "receipt-03": {
+      "truth": {
+        "amount": "31 200,00",
+        "sum": 31200.0,
+        "date": "21.10.2026"
+      },
+      "entries": [
+        {
+          "ok": true,
+          "execution_id": "791",
+          "raw_content": "{\"sum_rub\": 31200.00, \"date\": \"21.10.2026\", \"raw_text_seen\": \"31 200,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 31200.0,
+            "date": "21.10.2026",
+            "raw_text_seen": "31 200,00 ₽"
+          },
+          "parse_error": null,
+          "sum_correct": true,
+          "date_correct": true
+        },
+        {
+          "ok": true,
+          "execution_id": "792",
+          "raw_content": "{\"sum_rub\": 31200.00, \"date\": \"21.10.2026\", \"raw_text_seen\": \"31 200,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 31200.0,
+            "date": "21.10.2026",
+            "raw_text_seen": "31 200,00 ₽"
+          },
+          "parse_error": null,
+          "sum_correct": true,
+          "date_correct": true
+        }
+      ]
+    },
+    "receipt-04": {
+      "truth": {
+        "amount": "9 800,00",
+        "sum": 9800.0,
+        "date": "14.07.2026"
+      },
+      "entries": [
+        {
+          "ok": true,
+          "execution_id": "793",
+          "raw_content": "{\"sum_rub\": 9800.00, \"date\": \"14.07.2026\", \"raw_text_seen\": \"9 800,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 9800.0,
+            "date": "14.07.2026",
+            "raw_text_seen": "9 800,00 ₽"
+          },
+          "parse_error": null,
+          "sum_correct": true,
+          "date_correct": true
+        },
+        {
+          "ok": true,
+          "execution_id": "794",
+          "raw_content": "{\"sum_rub\": 9800.00, \"date\": \"14.07.2026\", \"raw_text_seen\": \"9 800,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 9800.0,
+            "date": "14.07.2026",
+            "raw_text_seen": "9 800,00 ₽"
+          },
+          "parse_error": null,
+          "sum_correct": true,
+          "date_correct": true
+        }
+      ]
+    },
+    "receipt-05": {
+      "truth": {
+        "amount": "12 450,00",
+        "sum": 12450.0,
+        "date": "29.08.2026"
+      },
+      "entries": [
+        {
+          "ok": true,
+          "execution_id": "795",
+          "raw_content": "{\"sum_rub\": 12450.00, \"date\": \"29.08.2026\", \"raw_text_seen\": \"12 450,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 12450.0,
+            "date": "29.08.2026",
+            "raw_text_seen": "12 450,00 ₽"
+          },
+          "parse_error": null,
+          "sum_correct": true,
+          "date_correct": true
+        },
+        {
+          "ok": true,
+          "execution_id": "796",
+          "raw_content": "{\"sum_rub\": 12450.00, \"date\": \"29.08.2026\", \"raw_text_seen\": \"12 450,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 12450.0,
+            "date": "29.08.2026",
+            "raw_text_seen": "12 450,00 ₽"
+          },
+          "parse_error": null,
+          "sum_correct": true,
+          "date_correct": true
+        }
+      ]
+    },
+    "receipt-06": {
+      "truth": {
+        "amount": "27 300,00",
+        "sum": 27300.0,
+        "date": "05.10.2026"
+      },
+      "entries": [
+        {
+          "ok": true,
+          "execution_id": "797",
+          "raw_content": "{\"sum_rub\": 27300.00, \"date\": \"05.10.2026\", \"raw_text_seen\": \"27 300,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 27300.0,
+            "date": "05.10.2026",
+            "raw_text_seen": "27 300,00 ₽"
+          },
+          "parse_error": null,
+          "sum_correct": true,
+          "date_correct": true
+        },
+        {
+          "ok": true,
+          "execution_id": "798",
+          "raw_content": "{\"sum_rub\": 27300.00, \"date\": \"05.10.2026\", \"raw_text_seen\": \"27 300,00 ₽\"}",
+          "parsed": {
+            "sum_rub": 27300.0,
+            "date": "05.10.2026",
+            "raw_text_seen": "27 300,00 ₽"
+          },
+          "parse_error": null,
+          "sum_correct": true,
+          "date_correct": true
+        }
+      ]
+    }
+  }
+}

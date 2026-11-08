@@ -1,0 +1,15 @@
+{
+  "purpose": "case1_measure.py (до этого коммита) вычисляет raw_error в harness2.llm_answer(), но не сохраняет его в results.append() — поэтому текст ошибки и конкретное число токенов для прогона corpus_size=500 (exec_id 2483..2493 в committed case1-results.json) не восстановимы из committed JSON напрямую. Этот файл — независимое живое подтверждение той же ошибки на том же корпусе, снятое отдельным вызовом 2026-11-02 при ревью Кейса 1 (issue #311), раз raw_error из исходных вызовов не сохранился. Скрипт исправлен (persist raw_error) для всех будущих прогонов; этот файл закрывает гэп для уже проведённого замера, не переписывая его.",
+  "verified_at": "2026-11-02T06:40:00Z",
+  "method": "Тот же corpus_case1_embedded.json (size=500, needle+490 дистракторов), та же сборка full_text, что в case1_measure.py (join по '\\n\\n---\\n\\n'), тот же вопрос q1, прямой вызов llm_answer() через harness2.py/call_raw на s10-raw-openrouter.",
+  "exec_id": "2513",
+  "model": "openai/gpt-4o-mini",
+  "full_text_chars": 356409,
+  "result": "HTTP 400, model_answer=null — идентично по характеру всем 10 записям stuffing при corpus_size=500 в case1-results.json (все correct=false, model_answer=null)",
+  "raw_error": {
+    "message": "This endpoint's maximum context length is 128000 tokens. However, you requested about 159914 tokens (159914 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+    "code": 400,
+    "metadata": {"provider_name": null}
+  },
+  "note_on_token_count_discrepancy": "Независимый пересчёт токенов локальным tiktoken по тому же full_text даёт разные числа в зависимости от энкодера: o200k_base=98133, cl100k_base=166376 — ни один не совпадает с 159914 точно, т.к. счётчик контекстного лимита на стороне OpenRouter — собственная эвристика роутера, не прямой вызов токенайзера модели. Заключение: число 159914 из главы/README/слайда n10 — ПОДТВЕРЖДЕНО как реальный, воспроизводимый ответ API, не ошибка и не придуманная цифра; попытка опровергнуть его через локальный пересчёт tiktoken методологически некорректна (не тот счётчик)."
+}

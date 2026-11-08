@@ -1,0 +1,354 @@
+{
+  "summary": {
+    "n_images": 30,
+    "source": "naver-clova-ix/cord-v2, test split, первые 30 сканов",
+    "mm_model": "amazon/titan-embed-image-v1 (voyage-multimodal-3 не существует на OpenRouter этого стенда — живой прогон test_embed2.py/test_embed3.py, см. README)",
+    "mm_model_critical_finding": "живым прогоном (debug_mm.py/debug_mm3..6.py) обнаружено: на реальном разрешении скана (300x450 JPEG q80, base64 ~18-26 тыс. символов) модель возвращает БИТОВО ИДЕНТИЧНЫЙ вектор для ЛЮБЫХ двух разных картинок (cosine=1.0, совпадение до 9 знаков) — запрос не ошибается, выглядит как успех, но картинка не учитывается вообще. Порог проверен вилкой: 64x96 (~6-8 тыс. символов base64) — вектор меняется от картинки к картинке (см. ниже); 128x192 (~4.3-4.6 тыс.) — меняется слабо (cosine~0.997); 300x450 — не меняется совсем. Этот замер использует 64x96 — единственный проверенный рабочий размер, т.е. МУЛЬТИМОДАЛЬНЫЙ ЭМБЕДДИНГ ЧЕРЕЗ OPENROUTER НА ЭТОМ СТЕНДЕ РАБОТАЕТ ТОЛЬКО ДЛЯ ТЕЛЕФОННОЙ ИКОНКИ-ПРЕВЬЮ, НЕ ДЛЯ СКАНА ЧИТАЕМОГО РАЗМЕРА — архитектурно иной результат, чем план ожидал (ARCHITECTURE.md §5/§7 п.1); подробности и сырые вызовы — debug_mm*.py.",
+    "text_model": "openai/text-embedding-3-small",
+    "mm_embed_cost_usd": 0.0024,
+    "text_embed_cost_usd": 3.422e-05,
+    "n_images_mm_embedded": 30,
+    "correlation_text_vs_image_cosine_over_all_pairs": -0.077,
+    "n_pairs": 435,
+    "near_duplicate_injection_test": [
+      {
+        "id": "receipt_07",
+        "phash_hamming_vs_soft_dup": 1,
+        "phash_hamming_vs_hard_dup": 27,
+        "phash_hamming_vs_unrelated_baseline": 14,
+        "image_cosine_vs_soft_dup": 1.0,
+        "image_cosine_vs_hard_dup": 1.0,
+        "image_cosine_vs_unrelated_baseline": 1.0
+      },
+      {
+        "id": "receipt_18",
+        "phash_hamming_vs_soft_dup": 0,
+        "phash_hamming_vs_hard_dup": 10,
+        "phash_hamming_vs_unrelated_baseline": 24,
+        "image_cosine_vs_soft_dup": 1.0,
+        "image_cosine_vs_hard_dup": 1.0,
+        "image_cosine_vs_unrelated_baseline": 0.997
+      },
+      {
+        "id": "receipt_17",
+        "phash_hamming_vs_soft_dup": 0,
+        "phash_hamming_vs_hard_dup": 30,
+        "phash_hamming_vs_unrelated_baseline": 35,
+        "image_cosine_vs_soft_dup": 1.0,
+        "image_cosine_vs_hard_dup": 0.997,
+        "image_cosine_vs_unrelated_baseline": 1.0
+      },
+      {
+        "id": "receipt_04",
+        "phash_hamming_vs_soft_dup": 1,
+        "phash_hamming_vs_hard_dup": 40,
+        "phash_hamming_vs_unrelated_baseline": 23,
+        "image_cosine_vs_soft_dup": 1.0,
+        "image_cosine_vs_hard_dup": 1.0,
+        "image_cosine_vs_unrelated_baseline": 1.0
+      },
+      {
+        "id": "receipt_11",
+        "phash_hamming_vs_soft_dup": 0,
+        "phash_hamming_vs_hard_dup": 10,
+        "phash_hamming_vs_unrelated_baseline": 44,
+        "image_cosine_vs_soft_dup": 0.997,
+        "image_cosine_vs_hard_dup": 0.997,
+        "image_cosine_vs_unrelated_baseline": 1.0
+      },
+      {
+        "id": "receipt_19",
+        "phash_hamming_vs_soft_dup": 0,
+        "phash_hamming_vs_hard_dup": 10,
+        "phash_hamming_vs_unrelated_baseline": 49,
+        "image_cosine_vs_soft_dup": 1.0,
+        "image_cosine_vs_hard_dup": 0.997,
+        "image_cosine_vs_unrelated_baseline": 1.0
+      }
+    ],
+    "note_on_near_dup_test": "OCR-текст (ground truth CORD) не меняется аугментацией изображения — честно тестировать 'подпись теряет визуальное' на этой паре нельзя (реальный OCR на повороте бы деградировал, эталонная разметка нет); поэтому near-dup тест ограничен phash vs мультимодальный эмбеддинг.",
+    "total_wall_s": 53.0
+  },
+  "pairs_sample": [
+    {
+      "a": "receipt_00",
+      "b": "receipt_01",
+      "text_cosine": 0.501,
+      "image_cosine": 1.0,
+      "phash_hamming": 24
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_02",
+      "text_cosine": 0.521,
+      "image_cosine": 1.0,
+      "phash_hamming": 11
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_03",
+      "text_cosine": 0.565,
+      "image_cosine": 0.997,
+      "phash_hamming": 24
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_04",
+      "text_cosine": 0.535,
+      "image_cosine": 1.0,
+      "phash_hamming": 22
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_05",
+      "text_cosine": 0.475,
+      "image_cosine": 1.0,
+      "phash_hamming": 19
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_06",
+      "text_cosine": 0.475,
+      "image_cosine": 1.0,
+      "phash_hamming": 29
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_07",
+      "text_cosine": 0.541,
+      "image_cosine": 1.0,
+      "phash_hamming": 37
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_08",
+      "text_cosine": 0.493,
+      "image_cosine": 1.0,
+      "phash_hamming": 42
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_09",
+      "text_cosine": 0.487,
+      "image_cosine": 0.997,
+      "phash_hamming": 41
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_10",
+      "text_cosine": 0.562,
+      "image_cosine": 1.0,
+      "phash_hamming": 21
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_11",
+      "text_cosine": 0.48,
+      "image_cosine": 0.997,
+      "phash_hamming": 55
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_12",
+      "text_cosine": 0.566,
+      "image_cosine": 1.0,
+      "phash_hamming": 33
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_13",
+      "text_cosine": 0.524,
+      "image_cosine": 0.997,
+      "phash_hamming": 39
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_14",
+      "text_cosine": 0.475,
+      "image_cosine": 0.997,
+      "phash_hamming": 36
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_15",
+      "text_cosine": 0.474,
+      "image_cosine": 1.0,
+      "phash_hamming": 56
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_16",
+      "text_cosine": 0.486,
+      "image_cosine": 1.0,
+      "phash_hamming": 23
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_17",
+      "text_cosine": 0.493,
+      "image_cosine": 1.0,
+      "phash_hamming": 28
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_18",
+      "text_cosine": 0.433,
+      "image_cosine": 1.0,
+      "phash_hamming": 28
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_19",
+      "text_cosine": 0.547,
+      "image_cosine": 1.0,
+      "phash_hamming": 49
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_20",
+      "text_cosine": 0.487,
+      "image_cosine": 0.997,
+      "phash_hamming": 17
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_21",
+      "text_cosine": 0.494,
+      "image_cosine": 0.997,
+      "phash_hamming": 22
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_22",
+      "text_cosine": 0.529,
+      "image_cosine": 0.997,
+      "phash_hamming": 43
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_23",
+      "text_cosine": 0.439,
+      "image_cosine": 0.997,
+      "phash_hamming": 24
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_24",
+      "text_cosine": 0.485,
+      "image_cosine": 1.0,
+      "phash_hamming": 43
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_25",
+      "text_cosine": 0.432,
+      "image_cosine": 1.0,
+      "phash_hamming": 50
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_26",
+      "text_cosine": 0.481,
+      "image_cosine": 1.0,
+      "phash_hamming": 47
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_27",
+      "text_cosine": 0.564,
+      "image_cosine": 1.0,
+      "phash_hamming": 38
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_28",
+      "text_cosine": 0.553,
+      "image_cosine": 1.0,
+      "phash_hamming": 32
+    },
+    {
+      "a": "receipt_00",
+      "b": "receipt_29",
+      "text_cosine": 0.503,
+      "image_cosine": 1.0,
+      "phash_hamming": 42
+    },
+    {
+      "a": "receipt_01",
+      "b": "receipt_02",
+      "text_cosine": 0.527,
+      "image_cosine": 1.0,
+      "phash_hamming": 17
+    },
+    {
+      "a": "receipt_01",
+      "b": "receipt_03",
+      "text_cosine": 0.526,
+      "image_cosine": 0.997,
+      "phash_hamming": 2
+    },
+    {
+      "a": "receipt_01",
+      "b": "receipt_04",
+      "text_cosine": 0.551,
+      "image_cosine": 1.0,
+      "phash_hamming": 6
+    },
+    {
+      "a": "receipt_01",
+      "b": "receipt_05",
+      "text_cosine": 0.47,
+      "image_cosine": 1.0,
+      "phash_hamming": 13
+    },
+    {
+      "a": "receipt_01",
+      "b": "receipt_06",
+      "text_cosine": 0.495,
+      "image_cosine": 1.0,
+      "phash_hamming": 19
+    },
+    {
+      "a": "receipt_01",
+      "b": "receipt_07",
+      "text_cosine": 0.472,
+      "image_cosine": 1.0,
+      "phash_hamming": 13
+    },
+    {
+      "a": "receipt_01",
+      "b": "receipt_08",
+      "text_cosine": 0.427,
+      "image_cosine": 1.0,
+      "phash_hamming": 44
+    },
+    {
+      "a": "receipt_01",
+      "b": "receipt_09",
+      "text_cosine": 0.444,
+      "image_cosine": 0.997,
+      "phash_hamming": 27
+    },
+    {
+      "a": "receipt_01",
+      "b": "receipt_10",
+      "text_cosine": 0.51,
+      "image_cosine": 1.0,
+      "phash_hamming": 15
+    },
+    {
+      "a": "receipt_01",
+      "b": "receipt_11",
+      "text_cosine": 0.531,
+      "image_cosine": 0.997,
+      "phash_hamming": 41
+    },
+    {
+      "a": "receipt_01",
+      "b": "receipt_12",
+      "text_cosine": 0.447,
+      "image_cosine": 1.0,
+      "phash_hamming": 11
+    }
+  ]
+}

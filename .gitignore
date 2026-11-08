@@ -49,6 +49,25 @@ library/lectures/*/rendered/archive-v*/
 # Lecture rendered snapshots — derived ephemeral, regeneratable from PPTX
 library/lectures/*/rendered/snapshots/
 
+# Seminar rendered snapshots — same convention, derived ephemeral, regeneratable from PPTX
+library/seminars/*/rendered/snapshots/
+
+# Seminar measurement working copies (stend/README.md "Как пересобрать") — ephemeral,
+# canonical copies live in stend/corpus/ and stend/raw/
+library/seminars/*/stend/measure/corpus_case*.json
+library/seminars/*/stend/measure/case*-results.json
+library/seminars/*/stend/measure/*_execution.json
+library/seminars/*/stend/measure/case4_local_*_results_raw.json
+
+# Local CLIP/SigLIP inference env (issue #311, Кейс 4 локальный мультимодальный замер) —
+# venv + HF model cache, многие сотни МБ — не коммитятся, пересоздаются README-рецептом
+library/seminars/*/stend/measure/.venv-clip/
+library/seminars/*/stend/measure/.hf-cache/
+
+# Raw dataset symlink/copy used by measure scripts (/tmp/sem10-data) — never committed,
+# re-created locally per README "Как пересобрать"
+library/seminars/*/stend/measure/sberquad_val.parquet
+
 # Office temp lock files
 ~$*
 library/lectures/*/rendered/~$*

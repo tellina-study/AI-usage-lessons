@@ -114,16 +114,18 @@ def g_case_divider(sl, sid, title, blocks, pattern, assertion=""):
             extra = m.group(1).strip()
 
     tw = 10.6
-    th = M.text_h(K.plain(title), 30, tw, spacing=1.18, bold=True)
-    eh = (M.text_h(extra, 14, tw, spacing=1.3) + 0.22) if extra else 0.0
+    title_size = K.scaled(30, "head")
+    extra_size = K.scaled(14, "caption")
+    th = M.text_h(K.plain(title), title_size, tw, spacing=1.18, bold=True)
+    eh = (M.text_h(extra, extra_size, tw, spacing=1.3) + 0.22) if extra else 0.0
     total = th + eh
     y = 1.35 + max((4.5 - total) / 2, 0.0)
 
-    K.text_box(sl, 1.35, y, tw, th, title, size=30, bold=True, color=K.WHITE,
+    K.text_box(sl, 1.35, y, tw, th, title, size=title_size, bold=True, color=K.WHITE,
                spacing=1.18)
     y += th + 0.2
     if extra:
-        K.text_box(sl, 1.35, y, tw, eh, extra, size=14, italic=True,
+        K.text_box(sl, 1.35, y, tw, eh, extra, size=extra_size, italic=True,
                    color=K.ON_DARK_MUTE, spacing=1.3, rich=False)
 
     idx = D.case_idx().get(sid)
@@ -186,7 +188,8 @@ def g_cover_centered(sl, sid, title, blocks, pattern, assertion=""):
     подзаголовок стоит в середине свободной полосы, тиловой планки нет.
     «Чистая» обложка — на ней нет ни содержания кейсов, ни номера занятия, и
     пустота читается как отступ, а не как дыра на месте снятого."""
-    y, bottom = _cover_bg(sl, sid, title, tw=11.5, size=32, align=PP_ALIGN.CENTER)
+    y, bottom = _cover_bg(sl, sid, title, tw=11.5, size=K.scaled(32, "head"),
+                         align=PP_ALIGN.CENTER)
     unseen(sid, pattern, blocks, {"quote"},
            "на обложке рисуются иллюстрация (если есть) и подзаголовок")
     quotes = [b for k, b in blocks if k == "quote"]
@@ -195,13 +198,14 @@ def g_cover_centered(sl, sid, title, blocks, pattern, assertion=""):
         question = [l for l in lines if K.plain(l).rstrip("»\"' ").endswith("?")]
         rest = [l for l in lines if l not in question]
         if rest:
-            h = M.block_h([K.plain(l) for l in rest], 18, 11.5, space_after=4)
+            sub_size = K.scaled(18, "body")
+            h = M.block_h([K.plain(l) for l in rest], sub_size, 11.5, space_after=4)
             ry = (y + bottom) / 2 - h / 2
-            K.text_box(sl, 0.9, ry, 11.5, h, rest, size=18, color=K.ON_DARK,
+            K.text_box(sl, 0.9, ry, 11.5, h, rest, size=sub_size, color=K.ON_DARK,
                        align=PP_ALIGN.CENTER, space_after=4)
             y = ry + h + 0.26
         if question:
-            K.form_question(sl, 0.9, y, 11.5, question, size=17,
+            K.form_question(sl, 0.9, y, 11.5, question, size=K.scaled(17, "accent"),
                             max_h=max(bottom - y, 0.7),
                             label=f"{sid} центральный вопрос")
     K.slide_number_mark(sl, D.slide_number(sid), on_dark=True)
@@ -234,7 +238,7 @@ def g_question(sl, sid, title, blocks, pattern, assertion=""):
             # пустой. Карточкам дан более широкий коридор: они занимают место,
             # а не висят в верхней половине (правка владельца, круг 9).
             drawers.append(lambda sl, y, mh, c=b: K.option_row(
-                sl, D.LEFT, y, D.WIDTH, c, highlight_idx=None, size=15.0,
+                sl, D.LEFT, y, D.WIDTH, c, highlight_idx=None, size=K.scaled(15.0, "body"),
                 min_h=1.7, max_h=min(mh or 2.4, 2.4), label=f"{sid} варианты"))
         else:
             d = block_drawer(kind, b, sid, pattern)
@@ -357,7 +361,7 @@ def g_closing(sl, sid, title, blocks, pattern, assertion=""):
         if kind == "quote" and first:
             first = False
             drawers.append(lambda sl, y, mh, q=b: K.form_question(
-                sl, D.LEFT, y, D.WIDTH, q, size=15.5, max_h=mh,
+                sl, D.LEFT, y, D.WIDTH, q, size=K.scaled(15.5, "accent"), max_h=mh,
                 label=f"{sid} вопрос открытия"))
             fig = D.figure_for(sid)
             if fig:

@@ -1,0 +1,547 @@
+{
+  "purpose": "issue #311 — owner question: почему не попробовали ЛОКАЛЬНУЮ модель эмбеддинга картинок (CLIP/SigLIP/DINOv2 — индустриальный стандарт для этой задачи, без API/rate-limit/цены за вызов)? Тот же замер, что уже прогнан для nvidia/nemotron-3.5-embed-1b:free (case4_full_retrieval_30.py), теперь локальной моделью CLIP ViT-B/32, для честного сравнения числом.",
+  "model": "openai/clip-vit-base-patch32",
+  "environment": {
+    "install_method": "python3 -m virtualenv .venv-clip (система externally-managed, без root/venv-apt — virtualenv поставлен через pip install --user --break-system-packages virtualenv)",
+    "packages": "torch (CPU-only wheel, download.pytorch.org/whl/cpu) + transformers + pillow + numpy",
+    "device": "CPU (нет GPU в этом окружении — не требуется для ViT-B/32)",
+    "clip_checkpoint_load_s": 1.73
+  },
+  "timing": {
+    "avg_clip_forward_pass_s_per_image": 0.1201,
+    "n_images_embedded": 90,
+    "total_wall_s_this_script": 22.7,
+    "for_context_openrouter_nemotron_total_wall_s": 140.7,
+    "for_context_openrouter_avg_s_per_mm_call": 1.56,
+    "note": "OpenRouter-время включает сетевой round-trip через n8n-вебхук + поллинг execution (harness_call.py опрашивает каждую секунду) + явный sleep(0.3) между вызовами — не чистое время инференса модели на стороне провайдера; сравнение honest-but-approximate, не apples-to-apples замер серверного GPU-времени."
+  },
+  "part_A_near_dup_retrieval": {
+    "method": "Те же soft_dup/hard_dup из case4_full_retrieval_30.py (детерминированные, без random) — для каждой пары (оригинал, дубль) CLIP-эмбеддинг дубля, поиск ближайшего ОРИГИНАЛА среди всех 30 по cosine; recall@1 = доля, где ближайший — тот самый оригинал.",
+    "summary": {
+      "n_scans": 30,
+      "clip_model": "openai/clip-vit-base-patch32",
+      "clip_soft_dup_recall_at_1": 1.0,
+      "clip_hard_dup_recall_at_1": 0.7666666666666667
+    },
+    "details": [
+      {
+        "id": "receipt_00",
+        "clip_soft_nearest": "receipt_00",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9448,
+        "clip_hard_nearest": "receipt_07",
+        "clip_hard_correct": false,
+        "clip_hard_cosine": 0.8876
+      },
+      {
+        "id": "receipt_01",
+        "clip_soft_nearest": "receipt_01",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9476,
+        "clip_hard_nearest": "receipt_21",
+        "clip_hard_correct": false,
+        "clip_hard_cosine": 0.9162
+      },
+      {
+        "id": "receipt_02",
+        "clip_soft_nearest": "receipt_02",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9725,
+        "clip_hard_nearest": "receipt_02",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.9334
+      },
+      {
+        "id": "receipt_03",
+        "clip_soft_nearest": "receipt_03",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9691,
+        "clip_hard_nearest": "receipt_03",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.8913
+      },
+      {
+        "id": "receipt_04",
+        "clip_soft_nearest": "receipt_04",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9368,
+        "clip_hard_nearest": "receipt_04",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.9232
+      },
+      {
+        "id": "receipt_05",
+        "clip_soft_nearest": "receipt_05",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9537,
+        "clip_hard_nearest": "receipt_05",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.9155
+      },
+      {
+        "id": "receipt_06",
+        "clip_soft_nearest": "receipt_06",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9729,
+        "clip_hard_nearest": "receipt_06",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.8844
+      },
+      {
+        "id": "receipt_07",
+        "clip_soft_nearest": "receipt_07",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9725,
+        "clip_hard_nearest": "receipt_07",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.7224
+      },
+      {
+        "id": "receipt_08",
+        "clip_soft_nearest": "receipt_08",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9479,
+        "clip_hard_nearest": "receipt_08",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.8375
+      },
+      {
+        "id": "receipt_09",
+        "clip_soft_nearest": "receipt_09",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9865,
+        "clip_hard_nearest": "receipt_21",
+        "clip_hard_correct": false,
+        "clip_hard_cosine": 0.8671
+      },
+      {
+        "id": "receipt_10",
+        "clip_soft_nearest": "receipt_10",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.963,
+        "clip_hard_nearest": "receipt_10",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.8552
+      },
+      {
+        "id": "receipt_11",
+        "clip_soft_nearest": "receipt_11",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9475,
+        "clip_hard_nearest": "receipt_11",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.8771
+      },
+      {
+        "id": "receipt_12",
+        "clip_soft_nearest": "receipt_12",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9351,
+        "clip_hard_nearest": "receipt_12",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.9242
+      },
+      {
+        "id": "receipt_13",
+        "clip_soft_nearest": "receipt_13",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9514,
+        "clip_hard_nearest": "receipt_13",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.8753
+      },
+      {
+        "id": "receipt_14",
+        "clip_soft_nearest": "receipt_14",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9829,
+        "clip_hard_nearest": "receipt_14",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.9517
+      },
+      {
+        "id": "receipt_15",
+        "clip_soft_nearest": "receipt_15",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.938,
+        "clip_hard_nearest": "receipt_15",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.8409
+      },
+      {
+        "id": "receipt_16",
+        "clip_soft_nearest": "receipt_16",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9615,
+        "clip_hard_nearest": "receipt_16",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.87
+      },
+      {
+        "id": "receipt_17",
+        "clip_soft_nearest": "receipt_17",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9595,
+        "clip_hard_nearest": "receipt_17",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.897
+      },
+      {
+        "id": "receipt_18",
+        "clip_soft_nearest": "receipt_18",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9808,
+        "clip_hard_nearest": "receipt_21",
+        "clip_hard_correct": false,
+        "clip_hard_cosine": 0.8635
+      },
+      {
+        "id": "receipt_19",
+        "clip_soft_nearest": "receipt_19",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9246,
+        "clip_hard_nearest": "receipt_19",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.88
+      },
+      {
+        "id": "receipt_20",
+        "clip_soft_nearest": "receipt_20",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9415,
+        "clip_hard_nearest": "receipt_20",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.938
+      },
+      {
+        "id": "receipt_21",
+        "clip_soft_nearest": "receipt_21",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9556,
+        "clip_hard_nearest": "receipt_21",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.9421
+      },
+      {
+        "id": "receipt_22",
+        "clip_soft_nearest": "receipt_22",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9523,
+        "clip_hard_nearest": "receipt_22",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.831
+      },
+      {
+        "id": "receipt_23",
+        "clip_soft_nearest": "receipt_23",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9698,
+        "clip_hard_nearest": "receipt_23",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.8637
+      },
+      {
+        "id": "receipt_24",
+        "clip_soft_nearest": "receipt_24",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9606,
+        "clip_hard_nearest": "receipt_24",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.8646
+      },
+      {
+        "id": "receipt_25",
+        "clip_soft_nearest": "receipt_25",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9606,
+        "clip_hard_nearest": "receipt_25",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.9069
+      },
+      {
+        "id": "receipt_26",
+        "clip_soft_nearest": "receipt_26",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.947,
+        "clip_hard_nearest": "receipt_21",
+        "clip_hard_correct": false,
+        "clip_hard_cosine": 0.874
+      },
+      {
+        "id": "receipt_27",
+        "clip_soft_nearest": "receipt_27",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9669,
+        "clip_hard_nearest": "receipt_20",
+        "clip_hard_correct": false,
+        "clip_hard_cosine": 0.8705
+      },
+      {
+        "id": "receipt_28",
+        "clip_soft_nearest": "receipt_28",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9299,
+        "clip_hard_nearest": "receipt_28",
+        "clip_hard_correct": true,
+        "clip_hard_cosine": 0.8444
+      },
+      {
+        "id": "receipt_29",
+        "clip_soft_nearest": "receipt_29",
+        "clip_soft_correct": true,
+        "clip_soft_cosine": 0.9812,
+        "clip_hard_nearest": "receipt_20",
+        "clip_hard_correct": false,
+        "clip_hard_cosine": 0.9031
+      }
+    ]
+  },
+  "part_C_semantic_similarity_agreement": {
+    "summary": {
+      "method": "Ground truth 'семантически ближайший ДРУГОЙ чек' = text_gold_nearest, взятый ПРЯМО из уже готового ../raw/case4_mm_full_retrieval.json (top-1 среди остальных 29 по text-embedding(OCR) cosine, тот же золотой сосед, что уже использован для nemotron-3.5-embed-1b:free и phash) — НЕ пересчитан заново. recall@1(CLIP) = доля чеков, где CLIP-эмбеддинг (на ОРИГИНАЛЬНЫХ, неаугментированных сканах) выбирает ТОГО ЖЕ ближайшего соседа, что текст.",
+      "n_scans": 30,
+      "chance_level_recall_at_1": 0.0345,
+      "clip_model": "openai/clip-vit-base-patch32",
+      "clip_semantic_agreement_recall_at_1": 0.13333333333333333
+    },
+    "details": [
+      {
+        "id": "receipt_00",
+        "text_gold_nearest": "receipt_12",
+        "clip_nearest": "receipt_20",
+        "clip_cosine": 0.8922,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_01",
+        "text_gold_nearest": "receipt_04",
+        "clip_nearest": "receipt_21",
+        "clip_cosine": 0.8773,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_02",
+        "text_gold_nearest": "receipt_11",
+        "clip_nearest": "receipt_13",
+        "clip_cosine": 0.8255,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_03",
+        "text_gold_nearest": "receipt_10",
+        "clip_nearest": "receipt_12",
+        "clip_cosine": 0.8315,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_04",
+        "text_gold_nearest": "receipt_14",
+        "clip_nearest": "receipt_12",
+        "clip_cosine": 0.8342,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_05",
+        "text_gold_nearest": "receipt_25",
+        "clip_nearest": "receipt_22",
+        "clip_cosine": 0.8521,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_06",
+        "text_gold_nearest": "receipt_25",
+        "clip_nearest": "receipt_20",
+        "clip_cosine": 0.8862,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_07",
+        "text_gold_nearest": "receipt_14",
+        "clip_nearest": "receipt_12",
+        "clip_cosine": 0.8859,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_08",
+        "text_gold_nearest": "receipt_16",
+        "clip_nearest": "receipt_16",
+        "clip_cosine": 0.8312,
+        "clip_agrees_with_text": true
+      },
+      {
+        "id": "receipt_09",
+        "text_gold_nearest": "receipt_27",
+        "clip_nearest": "receipt_18",
+        "clip_cosine": 0.8856,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_10",
+        "text_gold_nearest": "receipt_02",
+        "clip_nearest": "receipt_20",
+        "clip_cosine": 0.747,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_11",
+        "text_gold_nearest": "receipt_02",
+        "clip_nearest": "receipt_22",
+        "clip_cosine": 0.8947,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_12",
+        "text_gold_nearest": "receipt_03",
+        "clip_nearest": "receipt_20",
+        "clip_cosine": 0.9125,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_13",
+        "text_gold_nearest": "receipt_27",
+        "clip_nearest": "receipt_27",
+        "clip_cosine": 0.8684,
+        "clip_agrees_with_text": true
+      },
+      {
+        "id": "receipt_14",
+        "text_gold_nearest": "receipt_20",
+        "clip_nearest": "receipt_20",
+        "clip_cosine": 0.8694,
+        "clip_agrees_with_text": true
+      },
+      {
+        "id": "receipt_15",
+        "text_gold_nearest": "receipt_02",
+        "clip_nearest": "receipt_00",
+        "clip_cosine": 0.8449,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_16",
+        "text_gold_nearest": "receipt_08",
+        "clip_nearest": "receipt_08",
+        "clip_cosine": 0.8312,
+        "clip_agrees_with_text": true
+      },
+      {
+        "id": "receipt_17",
+        "text_gold_nearest": "receipt_14",
+        "clip_nearest": "receipt_20",
+        "clip_cosine": 0.8588,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_18",
+        "text_gold_nearest": "receipt_26",
+        "clip_nearest": "receipt_09",
+        "clip_cosine": 0.8856,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_19",
+        "text_gold_nearest": "receipt_00",
+        "clip_nearest": "receipt_12",
+        "clip_cosine": 0.8738,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_20",
+        "text_gold_nearest": "receipt_14",
+        "clip_nearest": "receipt_12",
+        "clip_cosine": 0.9125,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_21",
+        "text_gold_nearest": "receipt_26",
+        "clip_nearest": "receipt_23",
+        "clip_cosine": 0.8889,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_22",
+        "text_gold_nearest": "receipt_06",
+        "clip_nearest": "receipt_11",
+        "clip_cosine": 0.8947,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_23",
+        "text_gold_nearest": "receipt_25",
+        "clip_nearest": "receipt_21",
+        "clip_cosine": 0.8889,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_24",
+        "text_gold_nearest": "receipt_17",
+        "clip_nearest": "receipt_26",
+        "clip_cosine": 0.8297,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_25",
+        "text_gold_nearest": "receipt_23",
+        "clip_nearest": "receipt_20",
+        "clip_cosine": 0.8207,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_26",
+        "text_gold_nearest": "receipt_21",
+        "clip_nearest": "receipt_18",
+        "clip_cosine": 0.8461,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_27",
+        "text_gold_nearest": "receipt_20",
+        "clip_nearest": "receipt_13",
+        "clip_cosine": 0.8684,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_28",
+        "text_gold_nearest": "receipt_14",
+        "clip_nearest": "receipt_22",
+        "clip_cosine": 0.8508,
+        "clip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_29",
+        "text_gold_nearest": "receipt_14",
+        "clip_nearest": "receipt_20",
+        "clip_cosine": 0.8657,
+        "clip_agrees_with_text": false
+      }
+    ]
+  },
+  "comparison_table": {
+    "columns": [
+      "nvidia/nemotron-3.5-embed-1b:free (API)",
+      "CLIP ViT-B/32 (локально)",
+      "perceptual hash",
+      "текст (эталон)"
+    ],
+    "recall_at_1_soft_dup": [
+      1.0,
+      1.0,
+      0.9667,
+      null
+    ],
+    "recall_at_1_hard_dup_rotation": [
+      0.9667,
+      0.7667,
+      0.2333,
+      null
+    ],
+    "recall_at_1_semantic_agreement": [
+      0.2667,
+      0.1333,
+      0.0333,
+      0.9667
+    ],
+    "chance_level_semantic": 0.0345
+  }
+}

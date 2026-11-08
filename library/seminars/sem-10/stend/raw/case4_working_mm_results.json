@@ -1,0 +1,174 @@
+{
+  "purpose": "issue #311 — по прямому указанию владельца («давай попробуем тут всё-таки рабочий кейс сделать») — поиск РАБОЧЕЙ мультимодальной embedding-модели на стенде OpenRouter этого занятия, помимо уже документированного провала amazon/titan-embed-image-v1 (stend/README.md §'Открытый технический риск'). Контролируется той же дисциплиной честного замера: простой факт 'ответ без ошибки' не принимается как доказательство работы, нужен контролируемый тест двумя заведомо разными/похожими входами.",
+  "step0_catalog_discovery": {
+    "finding": "Основной каталог GET /v1/models (453 модели, живой запрос 2026-11-04) НЕ содержит ни одной embedding-модели вообще (output_modalities у всех 453 — только текст/картинка/аудио как ВЫХОД чат-модели, никогда 'embeddings') — подтверждает предыдущую находку README. Реальный каталог эмбеддингов живёт на недокументированном эндпоинте GET https://openrouter.ai/api/v1/embeddings/models (без credential-ключа, публичный) — 40 моделей, из них 9 с 'image' в architecture.input_modalities (т.е. реально мультимодальные, не только текстовые).",
+    "endpoint": "https://openrouter.ai/api/v1/embeddings/models",
+    "total_embedding_models": 40,
+    "multimodal_candidates_found": 9
+  },
+  "step1_pairwise_discrimination_test": {
+    "method": "Для каждого из 9 мультимодальных кандидатов — тот же контролируемый тест, что уже применялся к amazon/titan-embed-image-v1 (README, n60/n61/n62): два ЗАВЕДОМО РАЗНЫХ скана CORD (receipt_00.jpg, receipt_15.jpg — та же пара, что в raw/case4_resolution_probe.json, для сравнимости), разрешение 300×450 JPEG q80 ('реальный скан'). cosine между эмбеддингами ОБЯЗАН заметно отличаться от 1.0.",
+    "test_pair": [
+      "receipt_00.jpg",
+      "receipt_15.jpg"
+    ],
+    "candidates": [
+      {
+        "model": "amazon/titan-embed-image-v1",
+        "status": "BROKEN_IGNORES_IMAGE",
+        "cosine_different_receipts": 1.0,
+        "bit_identical": true
+      },
+      {
+        "model": "cohere/embed-5-fast",
+        "status": "DISTINGUISHES_IMAGES",
+        "cosine_different_receipts": 0.975686969,
+        "bit_identical": false
+      },
+      {
+        "model": "cohere/embed-5-pro",
+        "status": "DISTINGUISHES_IMAGES",
+        "cosine_different_receipts": 0.939615338,
+        "bit_identical": false
+      },
+      {
+        "model": "nvidia/nemotron-3.5-embed-1b:free",
+        "status": "DISTINGUISHES_IMAGES",
+        "cosine_different_receipts": 0.360984316,
+        "bit_identical": false
+      },
+      {
+        "model": "nvidia/nemotron-3.5-embed-8b:free",
+        "status": "DISTINGUISHES_IMAGES",
+        "cosine_different_receipts": 0.350626715,
+        "bit_identical": false
+      },
+      {
+        "model": "mongodb/voyage-multimodal-3.5",
+        "status": "DISTINGUISHES_IMAGES",
+        "cosine_different_receipts": 0.993391237,
+        "bit_identical": false
+      },
+      {
+        "model": "google/gemini-embedding-2",
+        "status": "DISTINGUISHES_IMAGES",
+        "cosine_different_receipts": 0.955057013,
+        "bit_identical": false
+      },
+      {
+        "model": "google/gemini-embedding-2-preview",
+        "status": "DISTINGUISHES_IMAGES",
+        "cosine_different_receipts": 0.955057013,
+        "bit_identical": false
+      },
+      {
+        "model": "nvidia/llama-nemotron-embed-vl-1b-v2:free",
+        "status": "DISTINGUISHES_IMAGES",
+        "cosine_different_receipts": 0.565357285,
+        "bit_identical": false
+      }
+    ],
+    "verdict": "8 из 9 кандидатов РЕАЛЬНО различают картинки (cosine заметно < 1.0, не bit-identical) — только amazon/titan-embed-image-v1 остаётся BROKEN. Но этот тест сам по себе НЕДОСТАТОЧЕН (см. шаг 2) — различать ДВА случайных разных изображения не значит быть пригодным для retrieval: нужен margin-тест."
+  },
+  "step2_margin_test_same_doc_vs_diff_doc": {
+    "method": "Для топ-5 кандидатов шага 1 (по разбросу cosine) — более строгий тест: cosine (оригинал, МЯГКИЙ почти-дубль ТОГО ЖЕ чека — пересжатие+resize*0.97, имитация повторного скана) ОБЯЗАН быть заметно ВЫШЕ cosine(оригинал, другой случайный чек) — margin = same_doc_cosine - diff_doc_cosine. Проверено на 3 чеках (receipt_00/15/07) для устойчивости (не один шумный замер).",
+    "candidates": {
+      "nvidia/nemotron-3.5-embed-1b:free": {
+        "margins": [
+          0.6326151639833828,
+          0.6339141863977537,
+          0.5127767060557966
+        ],
+        "avg_margin": 0.593102018812311
+      },
+      "nvidia/llama-nemotron-embed-vl-1b-v2:free": {
+        "margins": [
+          0.42098035333182404,
+          0.4285284248195712,
+          0.327008225180492
+        ],
+        "avg_margin": 0.39217233444396243
+      },
+      "mongodb/voyage-multimodal-3.5": {
+        "margins": [
+          -0.0034371907028447612,
+          -0.017721760423041966,
+          -0.008111089552638284
+        ],
+        "avg_margin": -0.009756680226175004
+      },
+      "google/gemini-embedding-2": {
+        "margins": [
+          0.018310072507660258,
+          -0.0024485177416507797,
+          -0.006779125387983087
+        ],
+        "avg_margin": 0.00302747645934213
+      },
+      "cohere/embed-5-fast": {
+        "margins": [
+          -2.4439054327918264e-05,
+          -0.008191304796760446,
+          -0.011370229525255238
+        ],
+        "avg_margin": -0.006528657792114534
+      }
+    },
+    "verdict": "Резкое расслоение: nvidia/nemotron-3.5-embed-1b:free (avg margin 0.593) и nvidia/llama-nemotron-embed-vl-1b-v2:free (avg margin 0.392) — РЕАЛЬНО различают 'тот же документ, пересжатый' от 'другой документ'. mongodb/voyage-multimodal-3.5 (avg margin -0.010), google/gemini-embedding-2 (avg margin 0.003), cohere/embed-5-fast (avg margin -0.007) — margin около нуля или отрицательный: формально 'различают два случайных изображения' (шаг 1), но ПРАКТИЧЕСКИ БЕСПОЛЕЗНЫ для retrieval — они не отличают дубль документа от чужого документа. Это та же методологическая ловушка, что уже была с amazon/titan-embed-image-v1: 'отвечает без ошибки и различает два входа' ≠ 'пригодно для задачи'. nvidia/nemotron-3.5-embed-8b:free показал тот же margin (0.633), что и 1b, на одном прогоне, но дважды возвращал HTTP 502 'service inference failed' (nvidia free-tier, нестабильно) — выбран 1b как более надёжный.",
+    "selected_model": "nvidia/nemotron-3.5-embed-1b:free",
+    "selected_model_note": "free-tier модель NVIDIA (цена $0 за токен/изображение по каталогу /v1/embeddings/models) — воспроизводимо на 3 разных чеках, самый большой margin среди 9 кандидатов."
+  },
+  "step3_full_retrieval_30_scans": {
+    "model": "nvidia/nemotron-3.5-embed-1b:free",
+    "part_A_exact_rescan_retrieval": {
+      "role": "Роль варианта 3 (perceptual hash) из n57-k4-vopros.md: 'это буквально тот же самый документ, просто пересканированный ещё раз'. Для ВСЕХ 30 сканов (не выборки 6, как в прежнем near_duplicate_injection_test) — мягкая аугментация (пересжатие+resize*0.97, имитация повторного скана) и жёсткая (поворот 12°+обрезка 4% краёв, имитация съёмки под углом) — ищем ближайший ОРИГИНАЛ среди всех 30 по cosine (mm) / Hamming (phash); recall@1 = доля верных попаданий.",
+      "summary": {
+        "n_scans": 30,
+        "mm_model": "nvidia/nemotron-3.5-embed-1b:free",
+        "mm_n_embedded_ok": 30,
+        "mm_soft_dup_recall_at_1": 1.0,
+        "mm_hard_dup_recall_at_1": 0.9666666666666667,
+        "phash_soft_dup_recall_at_1": 0.9666666666666667,
+        "phash_hard_dup_recall_at_1": 0.23333333333333334
+      },
+      "headline": "mm (nemotron-1b): soft-dup recall@1 = 1.000 (30/30), hard-dup recall@1 = 0.967 (29/30). phash: soft-dup recall@1 = 0.967 (29/30), hard-dup recall@1 = 0.233 (7/30). На ПОВОРОТЕ+обрезке рабочая мультимодальная модель заметно обгоняет perceptual hash (0.967 vs 0.233) — ровно то архитектурное предсказание n64 ('сравнивать картинки в их собственном числовом представлении'), которое раньше не имело рабочей реализации на этом стенде."
+    },
+    "part_B_text_content_query_recall": {
+      "role": "Роль варианта 1 (подпись+текстовый поиск) — число по ВСЕЙ выборке вместо качественного 'эмбеддинги содержательно различаются'.",
+      "method": "Запрос = название позиции чека (gt_parse.menu.nm, короткий содержательный фрагмент, не вся OCR-строка) -> text-embedding-3-small -> cosine top-1 среди ВСЕХ 30 OCR-эмбеддингов чеков -> совпадает ли top-1 с чеком-источником запроса.",
+      "n_queries": 30,
+      "recall_at_1": 0.9666666666666667,
+      "pairwise_text_cosine_stats_all_435_pairs": {
+        "n_pairs": 435,
+        "mean": 0.5206,
+        "min": 0.2766,
+        "max": 0.8487
+      }
+    },
+    "part_C_semantic_similarity_agreement": {
+      "role": "Роль варианта 2 (искать картинку по картинке) по честному прочтению n57-k4-vopros.md: 'похож ли этот скан по смыслу на один из прошлых' — это НЕ задача part_A (точный повтор) и не задача phash. Ground truth для 'семантически ближайший ДРУГОЙ чек в этой выборке' взят из уже проверенного рабочего метода — текстового эмбеддинга OCR (part B/part (а) выше).",
+      "summary": {
+        "method": "Ground truth 'семантически ближайший ДРУГОЙ чек' = top-1 среди остальных 29 по text-embedding(OCR) cosine (проверенный рабочий метод, part (a)). recall@1(mm) = доля чеков, где mm-эмбеддинг (на ОРИГИНАЛЬНЫХ, неаугментированных сканах) выбирает ТОГО ЖЕ ближайшего соседа, что текст. Аналогично для phash. Chance-level при 29 кандидатах ≈ 1/29 = 0.034.",
+        "n_scans": 30,
+        "chance_level_recall_at_1": 0.0345,
+        "mm_model": "nvidia/nemotron-3.5-embed-1b:free",
+        "mm_semantic_agreement_recall_at_1": 0.26666666666666666,
+        "phash_semantic_agreement_recall_at_1": 0.03333333333333333,
+        "pearson_correlation_text_vs_mm_cosine_all_pairs": 0.5289,
+        "pearson_correlation_text_cosine_vs_phash_similarity_all_pairs": -0.0705,
+        "n_pairs_for_correlation": 435
+      },
+      "headline": "mm (nemotron-1b) согласуется с текстовым 'golden' ближайшим соседом в 26.7% случаев (8/30) — против chance-level 3.4% (1/29): это ПОЧТИ В 8 РАЗ выше случайного угадывания, т.е. mm-эмбеддинг реально несёт семантический сигнал, коррелирующий с содержанием (Pearson r=0.529 между text_cosine и mm_cosine по всем 435 парам — для сравнения, тот же показатель для amazon/titan-embed-image-v1 был -0.077, статистический шум). phash согласуется с текстом в 3.3% случаев (1/30) — РОВНО на уровне chance (3.4%), что и ожидалось архитектурно: отпечаток общего вида не несёт содержательного сигнала вовсе (Pearson r=-0.071 — тоже шум)."
+    }
+  },
+  "conclusion": "РАБОЧАЯ мультимодальная модель НАЙДЕНА: nvidia/nemotron-3.5-embed-1b:free — в отличие от amazon/titan-embed-image-v1 (игнорирует картинку полностью, cosine=1.0 на разных чеках), она реально использует содержимое изображения. Польза РЕАЛЬНАЯ, но НЕРАВНОМЕРНАЯ по двум ролям n57-k4-vopros.md: (1) точный повтор/пересъёмка того же документа — уверенно лучше perceptual hash, особенно под поворотом (recall@1 0.967 vs 0.233); (2) семантическое сходство (похож ли скан по смыслу на один из прошлых, не точный повтор) — заметно выше случайности (recall@1 agreement с текстом 0.267 против chance 0.0345, ~7.7×; корреляция с текстом 0.529 против -0.077 у titan), НО далеко от текстового метода, который тут служит эталоном (0.267 vs 0.967 recall@1 самого текстового поиска) — ограниченная, а не полная замена подписи+текстового поиска для смысловой задачи. Это МЕНЯЕТ архитектурный вывод предыдущего прохода лишь частично: провал на этом стенде был свойством КОНКРЕТНОЙ МОДЕЛИ (amazon/titan-embed-image-v1), не всего подхода 'мультимодальный эмбеддинг через OpenRouter' — но и найденная рабочая модель не превращает прямое сравнение картинок в безусловную замену комбинации текст+phash, а добавляет третий, частично перекрывающий обе задачи вариант. Отдельная находка самого поиска кандидатов: 3 из 5 проверенных margin-тестом моделей (включая прямого наследника изначально запланированного voyage-multimodal-3 — voyage-multimodal-3.5) ПРОХОДЯТ простую проверку 'различает два случайных изображения', но ПРОВАЛИВАЮТ более строгую 'отличает дубль документа от чужого документа' — тот же урок n61/n62 о недостаточности простого smoke-теста, воспроизведённый на новом наборе моделей.",
+  "source_scripts": [
+    "measure/case4_find_working_mm.py",
+    "measure/case4_rank_candidates.py",
+    "measure/case4_rank_candidates2.py",
+    "measure/case4_full_retrieval_30.py"
+  ],
+  "raw_working_copies_ephemeral_not_committed": [
+    "raw/case4_mm_full_retrieval.json (полный детальный вывод case4_full_retrieval_30.py — per-scan rows для частей A/B/C, не только сводки)"
+  ]
+}

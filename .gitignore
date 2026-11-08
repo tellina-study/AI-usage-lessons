@@ -57,6 +57,12 @@ library/seminars/*/rendered/snapshots/
 library/seminars/*/stend/measure/corpus_case*.json
 library/seminars/*/stend/measure/case*-results.json
 library/seminars/*/stend/measure/*_execution.json
+library/seminars/*/stend/measure/case4_local_*_results_raw.json
+
+# Local CLIP/SigLIP inference env (issue #311, Кейс 4 локальный мультимодальный замер) —
+# venv + HF model cache, многие сотни МБ — не коммитятся, пересоздаются README-рецептом
+library/seminars/*/stend/measure/.venv-clip/
+library/seminars/*/stend/measure/.hf-cache/
 
 # Raw dataset symlink/copy used by measure scripts (/tmp/sem10-data) — never committed,
 # re-created locally per README "Как пересобрать"

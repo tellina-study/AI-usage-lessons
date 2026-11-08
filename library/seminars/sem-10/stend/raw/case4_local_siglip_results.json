@@ -1,0 +1,514 @@
+{
+  "purpose": "Дополнительная (не обязательная) вторая локальная точка сравнения к CLIP ViT-B/32 — SigLIP считается более современным на задачах similarity.",
+  "model": "google/siglip-base-patch16-224",
+  "environment": {
+    "device": "CPU",
+    "clip_checkpoint_load_s": 1.07
+  },
+  "timing": {
+    "avg_forward_pass_s_per_image": 0.2405,
+    "n_images_embedded": 90,
+    "total_wall_s_this_script": 32.5
+  },
+  "part_A_near_dup_retrieval": {
+    "summary": {
+      "n_scans": 30,
+      "siglip_model": "google/siglip-base-patch16-224",
+      "siglip_soft_dup_recall_at_1": 1.0,
+      "siglip_hard_dup_recall_at_1": 0.8
+    },
+    "details": [
+      {
+        "id": "receipt_00",
+        "siglip_soft_nearest": "receipt_00",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9796,
+        "siglip_hard_nearest": "receipt_02",
+        "siglip_hard_correct": false,
+        "siglip_hard_cosine": 0.8793
+      },
+      {
+        "id": "receipt_01",
+        "siglip_soft_nearest": "receipt_01",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9704,
+        "siglip_hard_nearest": "receipt_01",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8601
+      },
+      {
+        "id": "receipt_02",
+        "siglip_soft_nearest": "receipt_02",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9595,
+        "siglip_hard_nearest": "receipt_02",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.9425
+      },
+      {
+        "id": "receipt_03",
+        "siglip_soft_nearest": "receipt_03",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9503,
+        "siglip_hard_nearest": "receipt_02",
+        "siglip_hard_correct": false,
+        "siglip_hard_cosine": 0.8103
+      },
+      {
+        "id": "receipt_04",
+        "siglip_soft_nearest": "receipt_04",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9736,
+        "siglip_hard_nearest": "receipt_04",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8612
+      },
+      {
+        "id": "receipt_05",
+        "siglip_soft_nearest": "receipt_05",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9438,
+        "siglip_hard_nearest": "receipt_05",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8701
+      },
+      {
+        "id": "receipt_06",
+        "siglip_soft_nearest": "receipt_06",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9264,
+        "siglip_hard_nearest": "receipt_02",
+        "siglip_hard_correct": false,
+        "siglip_hard_cosine": 0.8236
+      },
+      {
+        "id": "receipt_07",
+        "siglip_soft_nearest": "receipt_07",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9396,
+        "siglip_hard_nearest": "receipt_02",
+        "siglip_hard_correct": false,
+        "siglip_hard_cosine": 0.8965
+      },
+      {
+        "id": "receipt_08",
+        "siglip_soft_nearest": "receipt_08",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9703,
+        "siglip_hard_nearest": "receipt_08",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8434
+      },
+      {
+        "id": "receipt_09",
+        "siglip_soft_nearest": "receipt_09",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9565,
+        "siglip_hard_nearest": "receipt_09",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8043
+      },
+      {
+        "id": "receipt_10",
+        "siglip_soft_nearest": "receipt_10",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9048,
+        "siglip_hard_nearest": "receipt_10",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8754
+      },
+      {
+        "id": "receipt_11",
+        "siglip_soft_nearest": "receipt_11",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9142,
+        "siglip_hard_nearest": "receipt_11",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8349
+      },
+      {
+        "id": "receipt_12",
+        "siglip_soft_nearest": "receipt_12",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9658,
+        "siglip_hard_nearest": "receipt_12",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.9098
+      },
+      {
+        "id": "receipt_13",
+        "siglip_soft_nearest": "receipt_13",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.949,
+        "siglip_hard_nearest": "receipt_13",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8518
+      },
+      {
+        "id": "receipt_14",
+        "siglip_soft_nearest": "receipt_14",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.95,
+        "siglip_hard_nearest": "receipt_14",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.9085
+      },
+      {
+        "id": "receipt_15",
+        "siglip_soft_nearest": "receipt_15",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9366,
+        "siglip_hard_nearest": "receipt_15",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8548
+      },
+      {
+        "id": "receipt_16",
+        "siglip_soft_nearest": "receipt_16",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9501,
+        "siglip_hard_nearest": "receipt_16",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8382
+      },
+      {
+        "id": "receipt_17",
+        "siglip_soft_nearest": "receipt_17",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.97,
+        "siglip_hard_nearest": "receipt_17",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.9267
+      },
+      {
+        "id": "receipt_18",
+        "siglip_soft_nearest": "receipt_18",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9621,
+        "siglip_hard_nearest": "receipt_18",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8589
+      },
+      {
+        "id": "receipt_19",
+        "siglip_soft_nearest": "receipt_19",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9253,
+        "siglip_hard_nearest": "receipt_19",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8175
+      },
+      {
+        "id": "receipt_20",
+        "siglip_soft_nearest": "receipt_20",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.945,
+        "siglip_hard_nearest": "receipt_02",
+        "siglip_hard_correct": false,
+        "siglip_hard_cosine": 0.9067
+      },
+      {
+        "id": "receipt_21",
+        "siglip_soft_nearest": "receipt_21",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9627,
+        "siglip_hard_nearest": "receipt_21",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8997
+      },
+      {
+        "id": "receipt_22",
+        "siglip_soft_nearest": "receipt_22",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9338,
+        "siglip_hard_nearest": "receipt_22",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.833
+      },
+      {
+        "id": "receipt_23",
+        "siglip_soft_nearest": "receipt_23",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9477,
+        "siglip_hard_nearest": "receipt_23",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8637
+      },
+      {
+        "id": "receipt_24",
+        "siglip_soft_nearest": "receipt_24",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9273,
+        "siglip_hard_nearest": "receipt_24",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8635
+      },
+      {
+        "id": "receipt_25",
+        "siglip_soft_nearest": "receipt_25",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9415,
+        "siglip_hard_nearest": "receipt_25",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.7917
+      },
+      {
+        "id": "receipt_26",
+        "siglip_soft_nearest": "receipt_26",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9553,
+        "siglip_hard_nearest": "receipt_26",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.846
+      },
+      {
+        "id": "receipt_27",
+        "siglip_soft_nearest": "receipt_27",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9681,
+        "siglip_hard_nearest": "receipt_27",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.8369
+      },
+      {
+        "id": "receipt_28",
+        "siglip_soft_nearest": "receipt_28",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9568,
+        "siglip_hard_nearest": "receipt_02",
+        "siglip_hard_correct": false,
+        "siglip_hard_cosine": 0.8597
+      },
+      {
+        "id": "receipt_29",
+        "siglip_soft_nearest": "receipt_29",
+        "siglip_soft_correct": true,
+        "siglip_soft_cosine": 0.9631,
+        "siglip_hard_nearest": "receipt_29",
+        "siglip_hard_correct": true,
+        "siglip_hard_cosine": 0.88
+      }
+    ]
+  },
+  "part_C_semantic_similarity_agreement": {
+    "summary": {
+      "method": "Ground truth = text_gold_nearest взятый ПРЯМО из ../raw/case4_mm_full_retrieval.json (как в case4_local_clip_retrieval_30.py), не пересчитан.",
+      "n_scans": 30,
+      "chance_level_recall_at_1": 0.0345,
+      "siglip_model": "google/siglip-base-patch16-224",
+      "siglip_semantic_agreement_recall_at_1": 0.13333333333333333
+    },
+    "details": [
+      {
+        "id": "receipt_00",
+        "text_gold_nearest": "receipt_12",
+        "siglip_nearest": "receipt_20",
+        "siglip_cosine": 0.8289,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_01",
+        "text_gold_nearest": "receipt_04",
+        "siglip_nearest": "receipt_00",
+        "siglip_cosine": 0.8178,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_02",
+        "text_gold_nearest": "receipt_11",
+        "siglip_nearest": "receipt_20",
+        "siglip_cosine": 0.8834,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_03",
+        "text_gold_nearest": "receipt_10",
+        "siglip_nearest": "receipt_00",
+        "siglip_cosine": 0.7093,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_04",
+        "text_gold_nearest": "receipt_14",
+        "siglip_nearest": "receipt_12",
+        "siglip_cosine": 0.8261,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_05",
+        "text_gold_nearest": "receipt_25",
+        "siglip_nearest": "receipt_02",
+        "siglip_cosine": 0.8216,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_06",
+        "text_gold_nearest": "receipt_25",
+        "siglip_nearest": "receipt_20",
+        "siglip_cosine": 0.7927,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_07",
+        "text_gold_nearest": "receipt_14",
+        "siglip_nearest": "receipt_20",
+        "siglip_cosine": 0.8723,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_08",
+        "text_gold_nearest": "receipt_16",
+        "siglip_nearest": "receipt_29",
+        "siglip_cosine": 0.8364,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_09",
+        "text_gold_nearest": "receipt_27",
+        "siglip_nearest": "receipt_18",
+        "siglip_cosine": 0.7854,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_10",
+        "text_gold_nearest": "receipt_02",
+        "siglip_nearest": "receipt_02",
+        "siglip_cosine": 0.7235,
+        "siglip_agrees_with_text": true
+      },
+      {
+        "id": "receipt_11",
+        "text_gold_nearest": "receipt_02",
+        "siglip_nearest": "receipt_21",
+        "siglip_cosine": 0.7392,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_12",
+        "text_gold_nearest": "receipt_03",
+        "siglip_nearest": "receipt_20",
+        "siglip_cosine": 0.8679,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_13",
+        "text_gold_nearest": "receipt_27",
+        "siglip_nearest": "receipt_14",
+        "siglip_cosine": 0.8376,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_14",
+        "text_gold_nearest": "receipt_20",
+        "siglip_nearest": "receipt_20",
+        "siglip_cosine": 0.8648,
+        "siglip_agrees_with_text": true
+      },
+      {
+        "id": "receipt_15",
+        "text_gold_nearest": "receipt_02",
+        "siglip_nearest": "receipt_02",
+        "siglip_cosine": 0.7019,
+        "siglip_agrees_with_text": true
+      },
+      {
+        "id": "receipt_16",
+        "text_gold_nearest": "receipt_08",
+        "siglip_nearest": "receipt_08",
+        "siglip_cosine": 0.8344,
+        "siglip_agrees_with_text": true
+      },
+      {
+        "id": "receipt_17",
+        "text_gold_nearest": "receipt_14",
+        "siglip_nearest": "receipt_28",
+        "siglip_cosine": 0.7953,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_18",
+        "text_gold_nearest": "receipt_26",
+        "siglip_nearest": "receipt_09",
+        "siglip_cosine": 0.7854,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_19",
+        "text_gold_nearest": "receipt_00",
+        "siglip_nearest": "receipt_04",
+        "siglip_cosine": 0.741,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_20",
+        "text_gold_nearest": "receipt_14",
+        "siglip_nearest": "receipt_02",
+        "siglip_cosine": 0.8834,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_21",
+        "text_gold_nearest": "receipt_26",
+        "siglip_nearest": "receipt_12",
+        "siglip_cosine": 0.813,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_22",
+        "text_gold_nearest": "receipt_06",
+        "siglip_nearest": "receipt_14",
+        "siglip_cosine": 0.8017,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_23",
+        "text_gold_nearest": "receipt_25",
+        "siglip_nearest": "receipt_02",
+        "siglip_cosine": 0.7938,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_24",
+        "text_gold_nearest": "receipt_17",
+        "siglip_nearest": "receipt_20",
+        "siglip_cosine": 0.7851,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_25",
+        "text_gold_nearest": "receipt_23",
+        "siglip_nearest": "receipt_06",
+        "siglip_cosine": 0.7924,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_26",
+        "text_gold_nearest": "receipt_21",
+        "siglip_nearest": "receipt_28",
+        "siglip_cosine": 0.7925,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_27",
+        "text_gold_nearest": "receipt_20",
+        "siglip_nearest": "receipt_13",
+        "siglip_cosine": 0.7285,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_28",
+        "text_gold_nearest": "receipt_14",
+        "siglip_nearest": "receipt_13",
+        "siglip_cosine": 0.8343,
+        "siglip_agrees_with_text": false
+      },
+      {
+        "id": "receipt_29",
+        "text_gold_nearest": "receipt_14",
+        "siglip_nearest": "receipt_08",
+        "siglip_cosine": 0.8364,
+        "siglip_agrees_with_text": false
+      }
+    ]
+  }
+}

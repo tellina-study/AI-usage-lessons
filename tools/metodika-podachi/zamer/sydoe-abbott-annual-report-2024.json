@@ -1,0 +1,108 @@
+{
+  "name": "abbott-annual-report-2024",
+  "razryad": "планка подачи",
+  "n_frames": 86,
+  "unit": "кадр (страница/слайд)",
+  "tipografika": {
+    "min_kegl_osnovnogo_teksta": 5.0,
+    "median_kegl_osnovnogo_teksta": 8.5,
+    "min_kegl_bez_filtra_shuma": 3.0,
+    "dolya_simvolov_na_etom_minimalnom_kegle": 9e-05,
+    "n_stupeney_keglya": 7,
+    "stupeni_pt": [
+      5.0,
+      6.0,
+      6.5,
+      7.5,
+      8.5,
+      10.0,
+      10.5
+    ],
+    "otnosheniya_sosednih_stupeney": [
+      1.2,
+      1.083,
+      1.154,
+      1.133,
+      1.176,
+      1.05
+    ],
+    "n_garnitur_nachertaniy": 26,
+    "garnitury": [
+      "BrandonGrotesque-Black",
+      "BrandonGrotesque-BlackIt",
+      "BrandonGrotesque-Bold",
+      "BrandonGrotesque-BoldIta",
+      "BrandonGrotesque-Light",
+      "BrandonGrotesque-Medium",
+      "BrandonGrotesque-MediumI",
+      "BrandonGrotesque-Regular",
+      "BrandonText-Black",
+      "BrandonText-Light",
+      "BrandonText-Medium",
+      "BrandonText-MediumItalic",
+      "BrandonText-Regular",
+      "Courier",
+      "Helvetica",
+      "MercuryTabFigs-Roman",
+      "MercuryTextG1-Bold",
+      "MercuryTextG1-Italic",
+      "MercuryTextG1-Roman",
+      "MercuryTextG1-Semibold"
+    ],
+    "kak_otdelili_kolontitul": "верхние 5% и нижние 8% высоты кадра исключены из расчёта кегля/гарнитур основного текста; отдельно исключены span'ы из одних цифр длиной ≤3 символов (номера страниц)"
+  },
+  "tsvet": {
+    "n_unikalnyh_tsvetov_teksta": 23,
+    "n_unikalnyh_tsvetov_zalivok": 60,
+    "samyy_yarkiy_akcent": "#f0e418",
+    "dolya_ploshchadi_pod_akcentom": 0.0048,
+    "kak_merili": "цвет текста — span.color (PDF) / run.font.color.rgb (PPTX), квантован кратно 4 на канал; «самый яркий акцент» выбран по насыщенность×значение (HSV) среди различимых заливок, НЕ по площади — так крупная тёмная фоновая плашка не обгоняет настоящий яркий акцент своим размером; площадь акцента — сумма площадей заливок именно ЭТОГО цвета самого насыщенного неахроматичного цвета, делённая на сумму площадей ВСЕХ учтённых заливок (не площадь кадра — заливки часто не покрывают кадр целиком, поэтому это доля \"внутри учтённых плашек\", а не кадра)"
+  },
+  "plotnost": {
+    "slov_na_kadr_mediana": 368.5,
+    "slov_na_kadr_p90": 921.0,
+    "slov_na_kadr_max": 1283,
+    "dolya_ploshchadi_pod_tekstom_mediana": 0.4131,
+    "dolya_ploshchadi_pod_tekstom_p90": 0.6229,
+    "dolya_ploshchadi_pod_tekstom_max": 0.6792,
+    "dolya_kadrov_tolko_zagolovok": 0.0,
+    "kak_merili": "слова — page.get_text('words')/текст прогонов; площадь текста — доля сетки 64×64, покрытая объединением bbox текстовых блоков (не сумма bbox — так не дублируется перекрытие); «только заголовок» — слов ≤12 и площадь текста ≤0.05"
+  },
+  "izobrazhenie": {
+    "dolya_kadrov_s_krupnym_izobrazheniem": 0.3837,
+    "dolya_kadrov_bez_izobrazheniy": 0.5814,
+    "srednee_chislo_izobrazheniy_na_kadr": 3.616,
+    "kak_merili": "изображение — растровый блок (PDF: block type==1 из get_text('dict'); PPTX: shape_type==PICTURE); «крупное» — доля площади кадра ≥0.4 по той же сетке 64×64"
+  },
+  "ritm": {
+    "n_raznyh_raskladok": 38,
+    "dliny_seriy_odinakovyh_podryad_max": 18,
+    "dliny_seriy_odinakovyh_podryad_mediana": 1,
+    "dliny_seriy_odinakovyh_podryad_raspredelenie": [
+      [
+        1,
+        53
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        18,
+        1
+      ]
+    ],
+    "dolya_stranits_razdeliteley": 0.0116,
+    "kak_merili": "кластеризация иерархическая (scipy.cluster.hierarchy, average-linkage) по вектору: occupancy текста и изображений по сетке 3×3 (18 бит) + число текстовых блоков + число изображений + доля площади текста/изображения; порог отсечения — эвристика 0.6×средней попарной дистанции нормированных признаков, НЕ статистический критерий — число раскладок зависит от порога, трактовать как порядок величины; разделитель — слов ≤20 и есть кегль ≥1.4× медианного кегля кадра"
+  },
+  "path": "/home/harness/harness-projects/256/.worktrees/folder-288/session-0b2adb13-7ee7af40/notes/research/dizayn-metodika/etalony/abbott-annual-report-2024/abbott-ars-2024.pdf",
+  "vremya_s": 5.9
+}

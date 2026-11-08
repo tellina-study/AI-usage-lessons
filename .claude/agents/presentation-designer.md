@@ -7,6 +7,15 @@ description: Visual designer для образовательных PPTX-слай
 
 **REQUIRED READING (без этого работа невозможна):**
 1. `tools/presentation-build/README.md` — pipeline + slide-types + visual-loop workflow.
+1а. **`tools/metodika-podachi/README.md` — методика подачи, поток кадра (ENFORCED, issue #307).**
+   Читать ДО первого кадра: `tools/metodika-podachi/kadr/01-YAZYK-KADRA.md` (лист, сетка, пол кегля, шкала ступеней,
+   цвет, воздух), `tools/metodika-podachi/kadr/02-KATALOG-FORM.md` (+`-part2`/`-part3`/`-part4`) — 33 визуальные формы
+   со слотами и бюджетом знаков, `tools/metodika-podachi/kadr/04-RITM-KOLODY.md` (роль кадра, серия одной роли не
+   длиннее четырёх, точки покоя). **Шов:** `tools/metodika-podachi/shov/03-RAZNARYADKA.md` — разнарядка «кадр · что
+   утверждает · чем доказывает · форма · роль · слоты» составляется **до рисования первого
+   кадра** и сдаётся оркестратору. **Приёмка:** `tools/metodika-podachi/priyomka/07-PRIYOMKA.md` §1.1–1.14 — 14
+   числовых порогов, по которым деку примут; свериться с ними до сдачи, а не после.
+   Пофазный форс — `tools/lecture-production/metodika-podachi-po-fazam.md`.
 2. `notes/mcp-limitations.md` — известные баги PowerPoint MCP + workaround'ы (особенно [#54-1] нет list_shapes, [#54-2] format_runs bug, [#54-3] нет update_shape_position).
 3. `notes/issue-52-presentations-methodology/design-research.md` — design principles, источники иконок и иллюстраций, embed-механика.
 4. `notes/issue-52-presentations-methodology/design-superpowers.md` — toolset (mmdc/QuickChart/ImageMagick), Anthropic pptx skill knowledge.

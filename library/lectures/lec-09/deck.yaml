@@ -1,121 +1,504 @@
-# library/lectures/lec-09/deck.yaml
-#
-# Deck-структура Лекции 9 «AI в авиакосмической отрасли и оборонном комплексе»
-# (v3: 35 слайдов, P0 fact fixes + SPLIT s-15 + acronym inline + Lavender RU chart).
-#
-# Source: chapter v3 (status=finalized, ~17k слов) + plan v2.
-# Phase 5 multi-artifact pipeline. Issue #118.
-#
-# v2 changes from v1 (43 → 34 slides):
-#   - MERGE s09+s10 → s09 (constellation + edge-AI on one slide)
-#   - MERGE s12+s13 → s12 (predictive maintenance + F-35 ALIS)
-#   - DELETE s15, s23, s30 (criteria slides — consolidated in s39 7-criteria matrix)
-#   - MERGE s18+s19+s20 → s18 (Decide vendor landscape: Palantir/Scale/Helsing/Anthropic/RU)
-#   - MERGE s33+s34 → s33 (UN GGE + ICRC/SKR civil society)
-#   - MERGE s40+s41 → s40 (career + reading list)
-#
-# v2 photo additions: 15 real Wikimedia Commons CC-BY-SA images added.
-# v2 anglicism cleanup: ~50+ англицизмов в visible body заменены на русские.
-
 deck:
   lecture_number: 9
-  title: "AI в авиакосмической отрасли и оборонном комплексе"
-  audience: "студенты-инженеры 3 курса"
+  title: "Фронтир, который сам становится лабораторией"
+  subtitle: "ИИ в гражданской космической отрасли"
+  audience: "студенты-инженеры 3 курса, универсальная"
   duration_min: 75
-  central_question: "Где в цепи Sense → Decide → Act AI действительно даёт измеримое преимущество — и где он становится либо опасной автоматизацией, либо предметом международного договора?"
-  learning_outcomes: [LO1a, LO1b, LO2, LO3, LO7]
+  central_question: "Какие решения космос заставил придумать — и существовали ли они до того, как он потребовал их?"
+  axis: "Космос — фронтир: экстремальные условия (расстояние, отсутствие готовой инфраструктуры, цена ошибки) делают готовые инженерные решения недостаточными и вынуждают создавать новые — причём не заимствованные из более мягких условий, а изобретённые именно под этим давлением."
+  learning_outcomes: [LO1, LO2, LO3, LO4, LO5]
   language: ru
+  chapter_ref: "library/lectures/lec-09/chapter.md (+ part1b, part2, part2b, part3)"
   status: draft
-  version: v3
-  source: chapter v4 (status=finalized, ~17k слов, Du→Ye + CENTCOM→EUCOM fixed)
-  plan: notes/lecture-9-review/plan-v2.md
-  keystone_axis: "OODA — Sense → Decide → Act (Boyd 1976)"
+  version: v1
+  issue: 310
+  branch: "issue-310-lec-09-refresh"
+  note: >
+    Phase 5 (структура + содержимое слайдов). Рендер (PPTX, Phase 6) не выполнялся —
+    media-поля указывают на реально скачанные ассеты где они есть
+    (library/lectures/lec-09/assets/razdel-{1,2,3,4}/...) либо честно помечены
+    media_needed/gap там, где ассет не найден (LeoLabs — gap, зафиксирован явно).
+    Keystone Ряд 2 (§0.6) оставлен явным открытым плейсхолдером для владельца —
+    не заполнять за него.
+  sections:
+    - {n: 0, name: "Вход", slides: "s01-s13"}
+    - {n: 1, name: "Автономные роботы в космосе", term: "автономная робототехника", slides: "s14-s25"}
+    - {n: 2, name: "Удалённое управление", term: "телеоперация", slides: "s26-s36"}
+    - {n: 3, name: "Проектирование и новые возможности", term: "ИИ-ассистированное проектирование и прогноз", slides: "s37-s48"}
+    - {n: 4, name: "Космос для ИИ", term: "орбитальные вычисления", slides: "s49-s56"}
+    - {n: 5, name: "Сборка", slides: "s57-s66"}
+    - {n: 6, name: "Закрытие", slides: "s67-s68"}
+    - {n: "QA", name: "Вопросы", slides: "s69"}
 
-# v3 changes from v2 (34 → 35 slides):
-#   - P0-1 fact fix: Du et al. 2024 → Ye et al. 2023 (slide s14 adversarial SAR)
-#   - P0-2 fact fix: CENTCOM → INDOPACOM/EUCOM (Scale Thunderforge deployment)
-#   - P0-3 structural: SPLIT s-15 (Decide vendors) на 2 slides — US (Palantir+Scale+Anthropic) +
-#     EU/RU (Helsing + Russian C2) для self-containedness через 2 нед
-#   - P1: Lavender chart RU labels (Помечено / 90 % точности / Ложные срабатывания)
-#   - P1: ghost text «D01²/001¹» на s-08 + «2024-2026» на s-27 (Maven Эра 3) fixed
-#   - P1: 8 acronyms inline expansion (CCA, MCAS, IFF, ROE, BVR, ALIS, FedRAMP HIGH, FMEA/FTA)
-#   - P1: Russian codename context inline (Красуха-4, Geran-2 как модификация Shahed-136)
-#   - P1: Slingshot Agatha/TALOS disambig (TALOS dropped from constellation card)
-#   - P1: Era 2 Anduril dates trajectory; UN press vs SKR disambig 164/6/7 vs 156/5/8
-#   - P1: easyJet «44 cancellations в июле 2024» (year framing precision)
-#   - P2: cover progress bar removed; «Анти-хайп»/«redesign»/«hype» russified
-#   - P2: L4-L5 «когда плохая идея» callout (strict-in strengthening)
-#
-# Final slide list (35 slides):
-#
-# Section 0 — Открытие + keystone + roadmap (≈5 мин):
-#   s01 — hook satellite (Sentinel-2 real imagery + Maxar Sentry sidebar)
-#   s02 — cover
-#   s03 — lecture-map (6 horizontal cards)
-#   s04 — glossary mini (6 acronyms × 2 cols)
-#   s05 — keystone OODA (3-card chain + dual-use band + Boyd footnote)
-#
-# Section divider 1
-#   s06 — divider Section 1: Sense
-#
-# Section 1 — Sense (≈12 мин):
-#   s07 — sense intro (4 sensor types + 3 reasons "why AI works here")
-#   s08 — Maxar Sentry (real satellite imagery + 4 info cards)
-#   s09 — MERGED: constellation 4 vendors + edge AI on-orbit 4 categories
-#   s11 — Russian sat layer (3 cards: ТЕРРА ТЕХ / СКАНЭКС / СПУТНИКС)
-#   s12 — MERGED: predictive maintenance success + F-35 ALIS failure (with photos)
-#   s14 — adversarial SAR ATR + GPS spoofing
-#
-# Section divider 2
-#   s16 — divider Section 2: Decide
-#
-# Section 2 — Decide (≈14 мин):
-#   s17 — decide intro (4-source pipeline + 10% × 37000 = 3700 callout)
-#   s18 — SPLIT v3 part 1: US vendor landscape (Palantir + Scale + Anthropic-AWS)
-#   s18b — SPLIT v3 part 2: EU + Russian C2 (Helsing + Svod/Glaz/Groza + caveat)
-#   s21 — Lavender (chart с RU labels + 3 lessons)
-#   s22 — Lancet rollback + Vincennes 1988 (with Lancet + Iran Air photos)
-#
-# Section divider 3
-#   s24 — divider Section 3: Act
-#
-# Section 3 — Act (≈14 мин):
-#   s25 — act intro (L1-L5 mini-preview + $300 vs $3M cost-asymmetry)
-#   s26 — Anduril Fury YFQ-44A (real Anduril Sentry photo + L3 badge + Arsenal-1)
-#   s27 — X-62A VISTA (real DARPA photo) + Saker Scout (Bayraktar photo proxy)
-#   s28 — Geran-2 (Shahed photo) + Cognitive Pilot (KAMAZ photo)
-#   s29 — MCAS 4 lessons + crash timeline + Patriot callback (with 737 MAX + Patriot photos)
-#
-# Section divider 4
-#   s31 — divider Section 4: Граница и регулирование
-#
-# Section 4 — Граница и регулирование (≈15 мин):
-#   s32 — L1-L5 ladder (5-row table + boundary callouts)
-#   s33 — MERGED: UN GGE timeline + ICRC/SKR civil society
-#   s35 — Maven walkout → vendor replacement → big-tech возврат (3 eras)
-#   s36 — HITL / HOOL / HOTL triada (3 panels + ms-to-intervention)
-#   s37 — Россия votes + 3 actions for engineer
-#
-# Section divider 5
-#   s38 — divider Section 5: Сборка
-#
-# Section 5 — Сборка (≈6 мин):
-#   s39 — Семь критериев (7-row matrix with gold-highlight rows 4-5)
-#   s40 — MERGED: career profiles + reading list
-#   s42 — closing callback (OODA chain repeat + gold takeaway)
-#   s43 — Q&A
-#
-# Notes (v2):
-# - Slide IDs preserved with gaps (s10, s13, s15, s19, s20, s23, s30, s34, s41 deleted)
-# - This keeps stable references in chapter.md, speech.md
-# - The actual rendered PPTX has sequential numbering (1-34)
-#
-# Anti-anglicism mandate (v2 cleanup, memory rule feedback_russification):
-# - Generic English jargon в visible body заменено на русское
-# - Кept allowed: brand names (Maxar, BlackSky, Palantir, Anduril, Helsing),
-#   technical acronyms with расшифровка (HITL, HOOL, HOTL, LAWS, OODA, IL6),
-#   proper system names (Saker Scout, Lancet, F-35, Patriot)
-#
-# Real photos baseline (v2, memory rule feedback_no_mock_fallbacks):
-# - 17 real Wikimedia Commons CC-BY-SA images embedded across 12 slides
-# - All licensed correctly with attribution in captions
+slides:
+  # ===== Раздел 0. Вход =====
+  - id: s01
+    file: slides/s01-cover.md
+    type: hero_cover
+    section: "0. Вход"
+    assertion: "Фронтир, который сам становится лабораторией"
+    learning_goal: "Hook + заявка темы: гражданский космос как фронтир, который вынуждает изобретать, не только применять"
+    media: "assets/razdel-1/corob-x/corobx-12-pia12954-marius-hills-skylight-moon.jpg"
+
+  - id: s02
+    file: slides/s02-obval-stoimosti-zapuska.md
+    type: norm
+    section: "0. Вход"
+    assertion: "Доставка килограмма на орбиту подешевела в 18–20 раз за два десятилетия — опора всей лекции"
+    learning_goal: "§0.1: число, которое держит весь обзор отрасли, с методической оговоркой про прайс-лист"
+
+  - id: s03
+    file: slides/s03-sputnikov-i-dannykh-na-poryadok-bolshe.md
+    type: norm
+    section: "0. Вход"
+    assertion: "Спутников стало в ~12 раз больше за 10 лет, данных — в разы больше: обслуживать это вручную уже нельзя"
+    learning_goal: "§0.2: второй взрыв — рост числа спутников и объёма данных как прямое следствие первого"
+
+  - id: s04
+    file: slides/s04-kto-zapuskaet-i-s-kakoy-skorostyu.md
+    type: schema_matrix
+    section: "0. Вход"
+    assertion: "Многоразовость — уже не привилегия одной компании, но больше половины мировых запусков — одна страна"
+    learning_goal: "§0.2а: структура игроков, концентрация, скорость оборота ускорителя"
+
+  - id: s05
+    file: slides/s05-starship-plan-i-fakt.md
+    type: norm
+    section: "0. Вход"
+    assertion: "Starship совершил 14 полётов и ловил бустер трижды — но вторую ступень не поймал ни разу"
+    learning_goal: "§0.3: второй виток падения стоимости — честная грань факта и цели"
+
+  - id: s06
+    file: slides/s06-porog-a-ne-obeschanie.md
+    type: norm
+    section: "0. Вход"
+    assertion: "Google называет порог $200/кг для орбитальных вычислений — сегодня они дороже земных в 2,5–3 раза"
+    learning_goal: "§0.4: что открывает падение стоимости — порог, а не достигнутое состояние"
+
+  - id: s07
+    file: slides/s07-pochemu-seychas-tri-frontira.md
+    type: schema_matrix
+    section: "0. Вход"
+    assertion: "Космическая энергетика, лунные базы и добыча на астероидах — идеи 1970-х; порог входа упал только сейчас"
+    learning_goal: "§0.4а: почему именно сейчас — барьер входа против барьера экономики"
+
+  - id: s08
+    file: slides/s08-os-lektsii-i-adresa-platezha.md
+    type: norm
+    section: "0. Вход"
+    assertion: "Фронтир не просто требует решений — он их порождает"
+    learning_goal: "§0.5: ось лекции и четыре адреса платежа (расстояние, данные, время человека, новая возможность)"
+
+  - id: s09
+    file: slides/s09-keystone-ot-shakhty-do-lunnoy-trubki.md
+    type: norm
+    section: "0. Вход"
+    assertion: "Решение для земной шахты оказалось пригодным для лунной лавовой трубки — фронтир сам стал лабораторией"
+    learning_goal: "§0.6 Keystone: тройка NeBula/LAMP — предъявляет ось одним измеренным случаем"
+
+  - id: s10
+    file: slides/s10-vopros-lektsii.md
+    type: norm
+    section: "0. Вход"
+    assertion: "Какие решения космос заставил придумать — и существовали ли они до того, как он потребовал их?"
+    learning_goal: "§0.7: вопрос лекции, произносится здесь впервые"
+
+  - id: s11
+    file: slides/s11-karta-vechera-chetyre-fronta.md
+    type: schema_matrix
+    section: "0. Вход"
+    assertion: "Четыре фронта: машина решает сама, человек управляет на расстоянии, модель проектирует, вычисления переезжают в космос"
+    learning_goal: "§0.8: карта вечера — lecture-map слайд"
+
+  - id: s12
+    file: slides/s12-kak-chitat-chisla.md
+    type: norm
+    section: "0. Вход"
+    assertion: "Число-факт, число-порог, число-оценка аналитика — три разных типа чисел, и путать их нельзя"
+    learning_goal: "§0.8а: правило чтения чисел этой лекции"
+
+  - id: s13
+    file: slides/s13-forma-razbora-pyat-shagov.md
+    type: schema_pipeline
+    section: "0. Вход"
+    assertion: "Каждый разбор дальше устроен одинаково: цена ошибки → классический режим → модель → устройство → что переехало"
+    learning_goal: "§0.9: форма разбора — шаблон, по которому читаются все 13 случаев"
+
+  # ===== Раздел 1. Автономные роботы в космосе =====
+  - id: s14
+    file: slides/s14-divider-razdel-1.md
+    type: divider
+    section: "1. Автономные роботы в космосе"
+    assertion: "1. Автономные роботы в космосе"
+    learning_goal: "Divider: AEGIS, SPOC, COROB-X, LeoLabs — максимум автономии главы"
+
+  - id: s15
+    file: slides/s15-stadiya-avtonomnaya-robototekhnika.md
+    type: norm
+    section: "1. Автономные роботы в космосе"
+    assertion: "Автономная робототехника — решение и физическое действие без диспетчера на каждом шаге"
+    learning_goal: "§1.1: термин, данные, способы их получения, решение, альтернатива — максимум автономии главы"
+
+  - id: s16
+    file: slides/s16-gde-klassika-gde-model.md
+    type: norm
+    section: "1. Автономные роботы в космосе"
+    assertion: "Геометрия решена классикой без обучения; узнавание объекта среди шума — обучаемой моделью"
+    learning_goal: "§1.2: граница между автоматикой и обученной моделью на материале раздела"
+
+  - id: s17
+    file: slides/s17-metody-geometriya-i-sluchayny-les.md
+    type: norm
+    section: "1. Автономные роботы в космосе"
+    assertion: "Стереопара вычисляет дальность геометрией, не обучением; случайный лес — ансамбль деревьев, который можно прочитать до конца"
+    learning_goal: "§1.2а, блоки 1–2: стереозрение/параллакс и random forest — держат AEGIS"
+
+  - id: s18
+    file: slides/s18-metody-karta-bez-gps-i-detektor.md
+    type: schema_layered
+    section: "1. Автономные роботы в космосе"
+    assertion: "Три уровня SLAM сшивают карты роботов без GPS; детектор YOLO находит объект за один проход"
+    learning_goal: "§1.2а, блоки 3–4: SLAM с графом поз и CNN-детекция — держат COROB-X, продолжают keystone"
+
+  - id: s19
+    file: slides/s19-primer-aegis.md
+    type: case_study
+    section: "1. Автономные роботы в космосе"
+    assertion: "AEGIS поднял точность выбора цели с 24% до 93% — без единой команды с Земли"
+    learning_goal: "§1.3: разбор AEGIS, граф а, keystone-уровень доказательности"
+
+  - id: s20
+    file: slides/s20-primer-spoc.md
+    type: case_study
+    section: "1. Автономные роботы в космосе"
+    assertion: "SPOC размечает марсианский грунт глубокой сетью с точностью 98% — уже сейчас на Земле, бортом — только в будущем"
+    learning_goal: "§1.4: разбор SPOC, граф б, Earth-side инструмент плюс форвард-часть"
+
+  - id: s21
+    file: slides/s21-primer-corob-x.md
+    type: case_study
+    section: "1. Автономные роботы в космосе"
+    assertion: "Три робота разведали лунную лавовую трубку там, где классического аналога на Земле не было вовсе"
+    learning_goal: "§1.5: разбор COROB-X, граф в — задача новая"
+
+  - id: s22
+    file: slides/s22-primer-leolabs.md
+    type: case_study
+    section: "1. Автономные роботы в космосе"
+    assertion: "LeoLabs приоритизирует радар и выдаёт до 400% больше предупреждений о сближении — но не знает, сколько манёвров из них вышло"
+    learning_goal: "§1.5a: разбор LeoLabs, четвёртый разбор раздела (исключение 3+6), граф б"
+
+  - id: s23
+    file: slides/s23-upominaniya-razdel-1.md
+    type: norm
+    section: "1. Автономные роботы в космосе"
+    assertion: "Классика везёт Perseverance на 90% маршрута без единой нейросети; Starlink совершает 300 000 манёвров в год сам"
+    learning_goal: "§1.6: шесть упоминаний — другой тип задачи, другой статус готовности"
+
+  - id: s24
+    file: slides/s24-chto-dalo-i-potrebovalo-razdel-1.md
+    type: schema_matrix
+    section: "1. Автономные роботы в космосе"
+    assertion: "Выигрыш крупный там, где технология летает годами; там, где не летала — сказано прямо"
+    learning_goal: "§1.7 + накопительная карта стадии: что дало, что потребовало, три клетки сетки занято"
+
+  - id: s25
+    file: slides/s25-vyvod-razdela-1.md
+    type: norm
+    section: "1. Автономные роботы в космосе"
+    assertion: "Геометрия — классике, распознавание объекта среди шума — модели, совсем новая задача — не имеет классического аналога вовсе"
+    learning_goal: "§1.8: вывод раздела 1, мост к разделу 2"
+
+  # ===== Раздел 2. Удалённое управление =====
+  - id: s26
+    file: slides/s26-divider-razdel-2.md
+    type: divider
+    section: "2. Удалённое управление"
+    assertion: "2. Удалённое управление"
+    learning_goal: "Divider: Dragon, предсказательная компенсация задержки, Astrobee — минимум автономии главы"
+
+  - id: s27
+    file: slides/s27-stsena-korabl-parkuetsya-sam.md
+    type: norm
+    section: "2. Удалённое управление"
+    assertion: "Экипаж держит руки на экране, а корабль сам подводит себя к станции"
+    learning_goal: "§2.1: сцена, сознательный разрыв формы вместо определения термина"
+
+  - id: s28
+    file: slides/s28-stadiya-teleoperatsiya.md
+    type: norm
+    section: "2. Удалённое управление"
+    assertion: "Телеоперация — управление на расстоянии, при котором решение остаётся за человеком"
+    learning_goal: "§2.2: термин и общее описание стадии — после сцены, не до неё"
+
+  - id: s29
+    file: slides/s29-gde-nuzhen-chelovek-granitsa-sdvinuta.md
+    type: schema_timeline
+    section: "2. Удалённое управление"
+    assertion: "Задержка до МКС — доли секунды, до Луны — 1,3 секунды, до Марса — от 3 до 22 минут: скорость света не обойти"
+    learning_goal: "§2.3: где человек нужен в контуре, где граница уже сдвинута — физика ограничения"
+
+  - id: s30
+    file: slides/s30-metody-kontroller-i-tyoplyy-start.md
+    type: schema_pipeline
+    section: "2. Удалённое управление"
+    assertion: "Классический контроллер меряет, сравнивает и правит десятки раз в секунду; тёплый старт только подсказывает ему хорошую точку начала"
+    learning_goal: "§2.3а: механика классического контроллера, тёплого старта и предсказательной компенсации задержки"
+
+  - id: s31
+    file: slides/s31-primer-dragon.md
+    type: case_study
+    section: "2. Удалённое управление"
+    assertion: "На дистанции 220 метров управление Dragon заранее передано автоматике — рутинно с 2020 года"
+    learning_goal: "§2.4: разбор Dragon, граф б, override как принцип"
+
+  - id: s32
+    file: slides/s32-primer-predskazatelnaya-kompensatsiya.md
+    type: case_study
+    section: "2. Удалённое управление"
+    assertion: "Модель предсказывает картину на величину задержки и снижает время задачи до 26% — но решения всё равно принимает человек"
+    learning_goal: "§2.5: разбор предсказательной компенсации задержки, исследовательская стадия"
+
+  - id: s33
+    file: slides/s33-primer-astrobee.md
+    type: case_study
+    section: "2. Удалённое управление"
+    assertion: "Astrobee показал «тёплый старт»: модель предлагает траекторию, классический контроллер её уточняет"
+    learning_goal: "§2.6: разбор Astrobee, TRL5, явно названная организация-разработчик"
+
+  - id: s34
+    file: slides/s34-upominaniya-razdel-2.md
+    type: norm
+    section: "2. Удалённое управление"
+    assertion: "Телехирургия через Starlink работает на задержке ~130 мс — но обученной модели в решении нет вовсе"
+    learning_goal: "§2.7: экзоскелеты, задержка Земля–МКС, телехирургия как честный нулевой случай"
+
+  - id: s35
+    file: slides/s35-chto-dalo-i-potrebovalo-razdel-2.md
+    type: schema_matrix
+    section: "2. Удалённое управление"
+    assertion: "От автоматики на заранее выделенном участке — к автоматике на каждом цикле, но не финальным словом"
+    learning_goal: "§2.8 + накопительная карта стадии: пять клеток занято после двух разделов"
+
+  - id: s36
+    file: slides/s36-vyvod-razdela-2.md
+    type: norm
+    section: "2. Удалённое управление"
+    assertion: "Человек остаётся в контуре, пока задержка и скорость событий это реально позволяют"
+    learning_goal: "§2.9: вывод раздела 2, мост к разделу 1 — почему автономия на Марсе необходима, не просто удобна"
+
+  # ===== Раздел 3. Проектирование и новые возможности =====
+  - id: s37
+    file: slides/s37-divider-razdel-3.md
+    type: divider
+    section: "3. Проектирование и новые возможности"
+    assertion: "3. Проектирование и новые возможности"
+    learning_goal: "Divider: суррогат Raptor, маршрут ровера Claude, AIFS/AIGEFS, генеративный дизайн NASA"
+
+  - id: s38
+    file: slides/s38-stadiya-proektirovanie-i-prognoz.md
+    type: norm
+    section: "3. Проектирование и новые возможности"
+    assertion: "Не автономия действия, а мышление за кульманом, которое раньше требовало только человека или суперкомпьютер"
+    learning_goal: "§3.1: термин и общее описание стадии — четыре предметные области, один тип вклада"
+
+  - id: s39
+    file: slides/s39-gde-model-daet-novuyu-vozmozhnost.md
+    type: norm
+    section: "3. Проектирование и новые возможности"
+    assertion: "Модель меняет не то, что делает процесс, а сколько вариантов можно рассмотреть за то же время"
+    learning_goal: "§3.2: где модель даёт новую возможность, где финальная проверка всё равно классическая"
+
+  - id: s40
+    file: slides/s40-metody-surrogat-i-generativny-poisk.md
+    type: schema_pipeline
+    section: "3. Проектирование и новые возможности"
+    assertion: "Суррогат учится на дорогих расчётах один раз и дальше предсказывает почти бесплатно — но только в пределах того, что видел"
+    learning_goal: "§3.2а, часть 1: суррогатная регрессионная модель — держит Raptor и генеративный дизайн"
+
+  - id: s41
+    file: slides/s41-metody-vnimanie-na-setke-pogody.md
+    type: norm
+    section: "3. Проектирование и новые возможности"
+    assertion: "Тот же механизм внимания, что в языковой модели (Лекция 2) — только соседи здесь не токены, а точки сетки атмосферы"
+    learning_goal: "§3.2а, часть 2: graph-attention и message-passing — прямая связь с Лекцией 2"
+
+  - id: s42
+    file: slides/s42-primer-raptor.md
+    type: case_study
+    section: "3. Проектирование и новые возможности"
+    assertion: "Суррогатная модель SpaceX перебирает тысячи конфигураций двигателя вместо десятков — но финал решает стенд"
+    learning_goal: "§3.3: разбор суррогатных ML-моделей Raptor, граф а"
+
+  - id: s43
+    file: slides/s43-primer-claude-jpl.md
+    type: case_study
+    section: "3. Проектирование и новые возможности"
+    assertion: "Claude спланировал маршрут ровера по кратеру Езеро — цифровой двойник проверил план по 500 000 переменных"
+    learning_goal: "§3.4: разбор Claude/Anthropic — самый свежий материал главы, декабрь 2025"
+
+  - id: s44
+    file: slides/s44-primer-aifs-aigefs.md
+    type: case_study
+    section: "3. Проектирование и новые возможности"
+    assertion: "AIFS считает 10-дневный прогноз за 2,5 минуты вместо часов суперкомпьютера — но свою ассимиляцию данных не делает"
+    learning_goal: "§3.5: разбор AIFS/AIGEFS, граф а, самый высокий разряд свидетельства раздела"
+
+  - id: s45
+    file: slides/s45-primer-generativny-dizayn.md
+    type: case_study
+    section: "3. Проектирование и новые возможности"
+    assertion: "Генеративный дизайн NASA Goddard сам производит геометрию детали — не оценивает готовую, а создаёт новую"
+    learning_goal: "§3.6: разбор генеративного дизайна, четвёртый разбор раздела (исключение 3+6)"
+
+  - id: s46
+    file: slides/s46-upominaniya-razdel-3.md
+    type: norm
+    section: "3. Проектирование и новые возможности"
+    assertion: "Sentry-II и ATLAS уже сегодня оценивают риск столкновения с астероидом на 100 лет вперёд"
+    learning_goal: "§3.7: шесть упоминаний — коммерческий прогноз, агростраховка, планетарная защита, три коротких"
+
+  - id: s47
+    file: slides/s47-chto-dalo-i-potrebovalo-razdel-3.md
+    type: schema_matrix
+    section: "3. Проектирование и новые возможности"
+    assertion: "Цена ошибки модели растёт от часов инженера до решений, которые касаются совсем не связанных с моделью людей"
+    learning_goal: "§3.8 + накопительная карта стадии: восемь клеток занято после трёх разделов"
+
+  - id: s48
+    file: slides/s48-vyvod-razdela-3.md
+    type: norm
+    section: "3. Проектирование и новые возможности"
+    assertion: "Модель расширяет пространство вариантов — финальную проверку не заменяет ни в одном из четырёх случаев"
+    learning_goal: "§3.9: вывод раздела 3, мост к разделу 4 — если задача не требует присутствия, нужна ли инфраструктура рядом?"
+
+  # ===== Раздел 4. Космос для ИИ =====
+  - id: s49
+    file: slides/s49-divider-razdel-4.md
+    type: divider
+    section: "4. Космос для ИИ"
+    assertion: "4. Космос для ИИ"
+    learning_goal: "Divider: Starcloud, Google Project Suncatcher — зеркало всей главы"
+
+  - id: s50
+    file: slides/s50-stadiya-orbitalnye-vychisleniya.md
+    type: norm
+    section: "4. Космос для ИИ"
+    assertion: "Не космос становится умнее с ИИ — ИИ физически переезжает в космос, где больше солнца"
+    learning_goal: "§4.1: термин и общее описание стадии — последнее применение общей схемы главы"
+
+  - id: s51
+    file: slides/s51-chto-uzhe-rabotaet-chto-demonstrator.md
+    type: norm
+    section: "4. Космос для ИИ"
+    assertion: "Железо реально летает и отвечает на реальные запросы — но это единицы чипов против десятков тысяч на Земле"
+    learning_goal: "§4.2: что уже работает, что пока размер демонстратора — разворот логики главы"
+
+  - id: s52
+    file: slides/s52-primer-starcloud.md
+    type: case_study
+    section: "4. Космос для ИИ"
+    assertion: "Starcloud-1 — первый H100 датацентрового класса в космосе, уже обслуживает запросы к модели Gemma"
+    learning_goal: "§4.3: разбор Starcloud, граф в — классического земного аналога не существует"
+
+  - id: s53
+    file: slides/s53-primer-suncatcher.md
+    type: case_study
+    section: "4. Космос для ИИ"
+    assertion: "Google Project Suncatcher — спутник с четырьмя TPU, план на 81 аппарат в едином лазерном кластере"
+    learning_goal: "§4.4: разбор Suncatcher, тот же сдвиг критерия, независимо подтверждённый вторым участником рынка"
+
+  - id: s54
+    file: slides/s54-upominaniya-razdel-4.md
+    type: norm
+    section: "4. Космос для ИИ"
+    assertion: "Starcloud подала заявку на констелляцию из 88 000 спутников — это план, не факт сегодняшнего дня"
+    learning_goal: "§4.5: два упоминания — масштаб заявленных планов и возврат к числам обзора отрасли"
+
+  - id: s55
+    file: slides/s55-chto-dalo-i-potrebovalo-razdel-4.md
+    type: schema_matrix
+    section: "4. Космос для ИИ"
+    assertion: "Доказан принцип: оборудование работает в космосе. Доказан не масштаб, при котором это выгодно"
+    learning_goal: "§4.6 + финальная сводная карта стадии по всем четырём разделам"
+
+  - id: s56
+    file: slides/s56-vyvod-razdela-4.md
+    type: norm
+    section: "4. Космос для ИИ"
+    assertion: "Вычисления для ИИ начинают физически конкурировать за место не только на Земле"
+    learning_goal: "§4.7: вывод раздела 4, мост к Сборке"
+
+  # ===== Раздел 5. Сборка =====
+  - id: s57
+    file: slides/s57-razdel-5-sborka.md
+    type: norm
+    section: "5. Сборка"
+    assertion: "Три способа свести тринадцать разборов в один ответ"
+    learning_goal: "Вводный кадр раздела 5 — что делает сборка и в каком порядке"
+
+  - id: s58
+    file: slides/s58-reestr-razborov.md
+    type: schema_matrix
+    section: "5. Сборка"
+    assertion: "13 подробных разборов и 18 упоминаний — 31 позиция, знаменатель назван до чисел"
+    learning_goal: "§5.0: реестр разборов — знаменатель и явно названные исключения"
+
+  - id: s60
+    file: slides/s60-otvet-na-vopros-razdely-1-2.md
+    type: norm
+    section: "5. Сборка"
+    assertion: "SLAM придуман для земной шахты и перенесён на лунную трубку; телехирургия — космос создал новую конфигурацию"
+    learning_goal: "§5.1, часть 1: ответ на вопрос лекции по разделам 1 и 2"
+
+  - id: s61
+    file: slides/s61-otvet-na-vopros-razdely-3-4.md
+    type: norm
+    section: "5. Сборка"
+    assertion: "Два раздела из четырёх — измеренное рождение решения фронтиром; два — честный перенос готового инструмента"
+    learning_goal: "§5.1, часть 2: ответ по разделам 3 и 4, итоговое 2:2"
+
+  - id: s64
+    file: slides/s64-schet-trinadtsat-razborov.md
+    type: norm
+    section: "5. Сборка"
+    assertion: "В тринадцати разборах из тринадцати финальная проверка осталась за классическим шагом — эта граница не нарушена ни разу"
+    learning_goal: "§5.4: главный счёт главы, названный поимённо по каждому разбору"
+
+  - id: s65
+    file: slides/s65-svod-chestnykh-probelov.md
+    type: norm
+    section: "5. Сборка"
+    assertion: "То, что источники честно не раскрывают — не пробел подготовки, а карта границы публичного знания"
+    learning_goal: "§5.5: свод честных пробелов, собранных в одном месте"
+
+  - id: s66
+    file: slides/s66-gde-ii-ne-nuzhen.md
+    type: schema_matrix
+    section: "5. Сборка"
+    assertion: "Пять конкретных ситуаций, где обученная модель не нужна или не оправдана — не абстрактная теория"
+    learning_goal: "§5.6: сводный критерий «где ИИ прямо не нужен»"
+
+  # ===== Раздел 6. Закрытие =====
+  - id: s67
+    file: slides/s67-dolg-vperyod-sertifikatsiya.md
+    type: norm
+    section: "6. Закрытие"
+    assertion: "Ни один из тринадцати разборов не летает под формальной сертификацией именно автономного поведения"
+    learning_goal: "§6.1: долг вперёд — сертификация автономных систем"
+
+  - id: s68
+    file: slides/s68-zarabotannoe-utverzhdenie.md
+    type: hero_closing
+    section: "6. Закрытие"
+    assertion: "Фронтир не просто принял готовое решение — в заметной части случаев он заставил придумать то, чего не было"
+    learning_goal: "§6.2: заработанное утверждение; мост к следующей лекции курса — сельское хозяйство"
+    media: "assets/razdel-4/suncatcher/suncatcher-transporter18-liftoff.jpg"
+
+  # ===== Q&A =====
+  - id: s69
+    file: slides/s69-voprosy.md
+    type: qa
+    section: "Вопросы"
+    assertion: "Вопросы"
+    learning_goal: "Отдельный Q&A слайд (не merged); backup-материал — Q&A backup главы, не выводится на кадр"

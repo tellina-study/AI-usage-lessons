@@ -1,0 +1,1708 @@
+{
+  "summary": {
+    "10": {
+      "n_questions": 10,
+      "stuffing": {
+        "accuracy": 0.7,
+        "avg_prompt_tokens": 2118.6,
+        "avg_cost_usd": 0.00018867,
+        "avg_wall_s": 1.3290000000000002
+      },
+      "keyword": {
+        "accuracy": 0.5,
+        "retrieval_recall@1": 0.8,
+        "avg_prompt_tokens": 280.8,
+        "avg_cost_usd": 4.836e-05,
+        "avg_wall_s": 1.534
+      },
+      "vector": {
+        "accuracy": 0.6,
+        "retrieval_recall@1": 1.0,
+        "avg_prompt_tokens": 271.6,
+        "avg_cost_usd": 4.86e-05,
+        "avg_wall_s": 1.761
+      }
+    },
+    "50": {
+      "n_questions": 10,
+      "stuffing": {
+        "accuracy": 0.7,
+        "avg_prompt_tokens": 9762.6,
+        "avg_cost_usd": 0.0008091900000000001,
+        "avg_wall_s": 1.335
+      },
+      "keyword": {
+        "accuracy": 0.5,
+        "retrieval_recall@1": 0.8,
+        "avg_prompt_tokens": 280.8,
+        "avg_cost_usd": 4.836e-05,
+        "avg_wall_s": 1.4600000000000002
+      },
+      "vector": {
+        "accuracy": 0.7,
+        "retrieval_recall@1": 1.0,
+        "avg_prompt_tokens": 271.6,
+        "avg_cost_usd": 4.818e-05,
+        "avg_wall_s": 1.736
+      }
+    },
+    "200": {
+      "n_questions": 10,
+      "stuffing": {
+        "accuracy": 0.7,
+        "avg_prompt_tokens": 39516.6,
+        "avg_cost_usd": 0.0032040899999999997,
+        "avg_wall_s": 1.457
+      },
+      "keyword": {
+        "accuracy": 0.4,
+        "retrieval_recall@1": 0.8,
+        "avg_prompt_tokens": 280.8,
+        "avg_cost_usd": 5.0100000000000005e-05,
+        "avg_wall_s": 1.431
+      },
+      "vector": {
+        "accuracy": 0.6,
+        "retrieval_recall@1": 1.0,
+        "avg_prompt_tokens": 271.6,
+        "avg_cost_usd": 4.812e-05,
+        "avg_wall_s": 1.455
+      }
+    },
+    "500": {
+      "n_questions": 10,
+      "stuffing": {
+        "accuracy": 0.0,
+        "avg_prompt_tokens": 0.0,
+        "avg_cost_usd": 0.0,
+        "avg_wall_s": 1.222
+      },
+      "keyword": {
+        "accuracy": 0.5,
+        "retrieval_recall@1": 0.8,
+        "avg_prompt_tokens": 280.8,
+        "avg_cost_usd": 4.998e-05,
+        "avg_wall_s": 1.9900000000000002
+      },
+      "vector": {
+        "accuracy": 0.7,
+        "retrieval_recall@1": 0.9,
+        "avg_prompt_tokens": 272.0,
+        "avg_cost_usd": 4.896e-05,
+        "avg_wall_s": 1.643
+      }
+    }
+  },
+  "details": [
+    {
+      "corpus_size": 10,
+      "qid": "q1",
+      "question": "Как называется круг кровообращения, функционирующий через легкие?",
+      "reference_answer": "малый",
+      "gold_doc_id": "needle-1",
+      "stuffing": {
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 2113,
+        "completion_tokens": 10,
+        "cost_usd": 0.00032295,
+        "wall_s": 2.21,
+        "exec_id": "2393"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "keyword_score": 1,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 2.16,
+        "exec_id": "2394"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "cosine_score": 0.6163178222651524,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 1.09,
+        "exec_id": "2395"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q2",
+      "question": "Сколько длилось путешествие Моцарта в 1789 году?",
+      "reference_answer": "Путешествие длилось без малого три месяца",
+      "gold_doc_id": "needle-2",
+      "stuffing": {
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 2112,
+        "completion_tokens": 27,
+        "cost_usd": 0.0001794,
+        "wall_s": 2.16,
+        "exec_id": "2396"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "keyword_score": 5,
+        "model_answer": "Путешествие длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": true,
+        "prompt_tokens": 344,
+        "completion_tokens": 24,
+        "cost_usd": 6.6e-05,
+        "wall_s": 1.13,
+        "exec_id": "2397"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "cosine_score": 0.6177550270626744,
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 344,
+        "completion_tokens": 27,
+        "cost_usd": 6.78e-05,
+        "wall_s": 1.1,
+        "exec_id": "2398"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q3",
+      "question": "Какая температура летом не дает возможности марафонцам показывать наилучшие результаты?",
+      "reference_answer": "высокая",
+      "gold_doc_id": "needle-3",
+      "stuffing": {
+        "model_answer": "нет информации",
+        "correct": false,
+        "prompt_tokens": 2115,
+        "completion_tokens": 2,
+        "cost_usd": 0.00016485,
+        "wall_s": 1.12,
+        "exec_id": "2399"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "keyword_score": 6,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 1.12,
+        "exec_id": "2400"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "cosine_score": 0.5693151581977827,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 2.18,
+        "exec_id": "2401"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q4",
+      "question": "В каком году была возрождена дискуссия палеонтологами Нильсов Элдриджем и Стивеном Гулдом?",
+      "reference_answer": "1972",
+      "gold_doc_id": "needle-4",
+      "stuffing": {
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 2129,
+        "completion_tokens": 6,
+        "cost_usd": 0.00016935,
+        "wall_s": 1.1,
+        "exec_id": "2402"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": false,
+        "keyword_score": 1,
+        "model_answer": "нет информации",
+        "correct": false,
+        "prompt_tokens": 361,
+        "completion_tokens": 2,
+        "cost_usd": 5.535e-05,
+        "wall_s": 1.12,
+        "exec_id": "2403"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-4",
+        "retrieved_correct": true,
+        "cosine_score": 0.3722983804462846,
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 6,
+        "cost_usd": 4.905e-05,
+        "wall_s": 1.34,
+        "exec_id": "2404"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q5",
+      "question": "Какому розыгрышу Кубка мира в 1950 году предшествовала резонансная трагедия?",
+      "reference_answer": "Первому послевоенному розыгрышу.",
+      "gold_doc_id": "needle-5",
+      "stuffing": {
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 2122,
+        "completion_tokens": 19,
+        "cost_usd": 0.0001761,
+        "wall_s": 1.15,
+        "exec_id": "2405"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "keyword_score": 8,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 14,
+        "cost_usd": 4.59e-05,
+        "wall_s": 3.22,
+        "exec_id": "2406"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "cosine_score": 0.5233230576324489,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 19,
+        "cost_usd": 4.89e-05,
+        "wall_s": 3.2,
+        "exec_id": "2407"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q6",
+      "question": "В чем заключается функция митохондрий?",
+      "reference_answer": "в окислении органических соединений и последующем синтезе АТФ",
+      "gold_doc_id": "needle-6",
+      "stuffing": {
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и последующем синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": true,
+        "prompt_tokens": 2106,
+        "completion_tokens": 38,
+        "cost_usd": 0.0001851,
+        "wall_s": 1.13,
+        "exec_id": "2408"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 26,
+        "cost_usd": 4.89e-05,
+        "wall_s": 1.1,
+        "exec_id": "2409"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "cosine_score": 0.5956466409659753,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 26,
+        "cost_usd": 4.89e-05,
+        "wall_s": 2.16,
+        "exec_id": "2410"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q7",
+      "question": "Кровью каких животных в основном питаются двукрылые кровососы?",
+      "reference_answer": "млекопитающих",
+      "gold_doc_id": "needle-7",
+      "stuffing": {
+        "model_answer": "Двукрылые кровососы в основном питаются кровью млекопитающих, реже — птиц и насекомых.",
+        "correct": true,
+        "prompt_tokens": 2115,
+        "completion_tokens": 31,
+        "cost_usd": 0.00018225,
+        "wall_s": 1.1,
+        "exec_id": "2411"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "В основном млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 8,
+        "cost_usd": 3.93e-05,
+        "wall_s": 1.12,
+        "exec_id": "2412"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "cosine_score": 0.5857860729720794,
+        "model_answer": "Двукрылые кровососы в основном питаются кровью млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 21,
+        "cost_usd": 4.71e-05,
+        "wall_s": 2.15,
+        "exec_id": "2413"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q8",
+      "question": "Какая страна в 2001 году стала первой из пяти арктических стран, обратившейся с заявкой о расширении границ своего континентального шельфа свыше стандартного 322-километрового предела?",
+      "reference_answer": "Россия",
+      "gold_doc_id": "needle-8",
+      "stuffing": {
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 2150,
+        "completion_tokens": 2,
+        "cost_usd": 0.0001701,
+        "wall_s": 1.11,
+        "exec_id": "2414"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "keyword_score": 19,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 2.15,
+        "exec_id": "2415"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "cosine_score": 0.6316103502960787,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 1.11,
+        "exec_id": "2416"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q9",
+      "question": "Какая структура управляет Центральным банком?",
+      "reference_answer": "Правление банка",
+      "gold_doc_id": "needle-9",
+      "stuffing": {
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 2107,
+        "completion_tokens": 12,
+        "cost_usd": 0.00016965,
+        "wall_s": 1.1,
+        "exec_id": "2417"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "keyword_score": 4,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
+        "wall_s": 1.1,
+        "exec_id": "2418"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "cosine_score": 0.6723626731190123,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
+        "wall_s": 2.15,
+        "exec_id": "2419"
+      }
+    },
+    {
+      "corpus_size": 10,
+      "qid": "q10",
+      "question": "Как звали ученого, модель системы мира которого была взята за основу Кеплером?",
+      "reference_answer": "Коперник",
+      "gold_doc_id": "needle-10",
+      "stuffing": {
+        "model_answer": "Коперник.",
+        "correct": true,
+        "prompt_tokens": 2117,
+        "completion_tokens": 5,
+        "cost_usd": 0.00016695,
+        "wall_s": 1.11,
+        "exec_id": "2420"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": false,
+        "keyword_score": 2,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 272,
+        "completion_tokens": 3,
+        "cost_usd": 4.26e-05,
+        "wall_s": 1.12,
+        "exec_id": "2421"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-10",
+        "retrieved_correct": true,
+        "cosine_score": 0.5687593164083498,
+        "model_answer": "Коперник.",
+        "correct": true,
+        "prompt_tokens": 238,
+        "completion_tokens": 5,
+        "cost_usd": 3.87e-05,
+        "wall_s": 1.13,
+        "exec_id": "2422"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q1",
+      "question": "Как называется круг кровообращения, функционирующий через легкие?",
+      "reference_answer": "малый",
+      "gold_doc_id": "needle-1",
+      "stuffing": {
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 9757,
+        "completion_tokens": 10,
+        "cost_usd": 0.00131595,
+        "wall_s": 2.18,
+        "exec_id": "2423"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "keyword_score": 1,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 1.1,
+        "exec_id": "2424"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "cosine_score": 0.6163178222651524,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 1.11,
+        "exec_id": "2425"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q2",
+      "question": "Сколько длилось путешествие Моцарта в 1789 году?",
+      "reference_answer": "Путешествие длилось без малого три месяца",
+      "gold_doc_id": "needle-2",
+      "stuffing": {
+        "model_answer": "Путешествие Моцарта длилось почти три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 9756,
+        "completion_tokens": 26,
+        "cost_usd": 0.000759,
+        "wall_s": 1.13,
+        "exec_id": "2426"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "keyword_score": 5,
+        "model_answer": "Путешествие длилось без малого три месяца.",
+        "correct": true,
+        "prompt_tokens": 344,
+        "completion_tokens": 11,
+        "cost_usd": 5.82e-05,
+        "wall_s": 2.15,
+        "exec_id": "2427"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "cosine_score": 0.6177550270626744,
+        "model_answer": "Путешествие длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": true,
+        "prompt_tokens": 344,
+        "completion_tokens": 24,
+        "cost_usd": 6.6e-05,
+        "wall_s": 2.15,
+        "exec_id": "2428"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q3",
+      "question": "Какая температура летом не дает возможности марафонцам показывать наилучшие результаты?",
+      "reference_answer": "высокая",
+      "gold_doc_id": "needle-3",
+      "stuffing": {
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 9759,
+        "completion_tokens": 3,
+        "cost_usd": 0.00074565,
+        "wall_s": 1.11,
+        "exec_id": "2429"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "keyword_score": 6,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 1.1,
+        "exec_id": "2430"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "cosine_score": 0.5693151581977827,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 2.16,
+        "exec_id": "2431"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q4",
+      "question": "В каком году была возрождена дискуссия палеонтологами Нильсов Элдриджем и Стивеном Гулдом?",
+      "reference_answer": "1972",
+      "gold_doc_id": "needle-4",
+      "stuffing": {
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 9773,
+        "completion_tokens": 6,
+        "cost_usd": 0.00074955,
+        "wall_s": 1.11,
+        "exec_id": "2432"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": false,
+        "keyword_score": 1,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 361,
+        "completion_tokens": 3,
+        "cost_usd": 5.595e-05,
+        "wall_s": 1.12,
+        "exec_id": "2433"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-4",
+        "retrieved_correct": true,
+        "cosine_score": 0.3722983804462846,
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 6,
+        "cost_usd": 4.905e-05,
+        "wall_s": 2.16,
+        "exec_id": "2434"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q5",
+      "question": "Какому розыгрышу Кубка мира в 1950 году предшествовала резонансная трагедия?",
+      "reference_answer": "Первому послевоенному розыгрышу.",
+      "gold_doc_id": "needle-5",
+      "stuffing": {
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 9766,
+        "completion_tokens": 19,
+        "cost_usd": 0.0007563,
+        "wall_s": 1.11,
+        "exec_id": "2435"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "keyword_score": 8,
+        "model_answer": "Первому послевоенному розыгрыше Кубка мира.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 14,
+        "cost_usd": 4.59e-05,
+        "wall_s": 1.12,
+        "exec_id": "2436"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "cosine_score": 0.5233230576324489,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 14,
+        "cost_usd": 4.59e-05,
+        "wall_s": 2.15,
+        "exec_id": "2437"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q6",
+      "question": "В чем заключается функция митохондрий?",
+      "reference_answer": "в окислении органических соединений и последующем синтезе АТФ",
+      "gold_doc_id": "needle-6",
+      "stuffing": {
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и последующем синтезе АТФ с использованием энергии этих соединений.",
+        "correct": true,
+        "prompt_tokens": 9750,
+        "completion_tokens": 35,
+        "cost_usd": 0.0007635,
+        "wall_s": 1.13,
+        "exec_id": "2438"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 35,
+        "cost_usd": 5.43e-05,
+        "wall_s": 1.11,
+        "exec_id": "2439"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "cosine_score": 0.5956466409659753,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 35,
+        "cost_usd": 5.43e-05,
+        "wall_s": 2.16,
+        "exec_id": "2440"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q7",
+      "question": "Кровью каких животных в основном питаются двукрылые кровососы?",
+      "reference_answer": "млекопитающих",
+      "gold_doc_id": "needle-7",
+      "stuffing": {
+        "model_answer": "Кровью млекопитающих, реже птиц и насекомых.",
+        "correct": true,
+        "prompt_tokens": 9759,
+        "completion_tokens": 18,
+        "cost_usd": 0.00075465,
+        "wall_s": 2.17,
+        "exec_id": "2441"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "В основном двукрылые кровососы питаются кровью млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 20,
+        "cost_usd": 4.65e-05,
+        "wall_s": 1.12,
+        "exec_id": "2442"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "cosine_score": 0.5857860729720794,
+        "model_answer": "В основном они питаются кровью млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 13,
+        "cost_usd": 4.23e-05,
+        "wall_s": 1.1,
+        "exec_id": "2443"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q8",
+      "question": "Какая страна в 2001 году стала первой из пяти арктических стран, обратившейся с заявкой о расширении границ своего континентального шельфа свыше стандартного 322-километрового предела?",
+      "reference_answer": "Россия",
+      "gold_doc_id": "needle-8",
+      "stuffing": {
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 9794,
+        "completion_tokens": 2,
+        "cost_usd": 0.0007503,
+        "wall_s": 1.12,
+        "exec_id": "2444"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "keyword_score": 19,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 2.16,
+        "exec_id": "2445"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "cosine_score": 0.6316103502960787,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 1.11,
+        "exec_id": "2446"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q9",
+      "question": "Какая структура управляет Центральным банком?",
+      "reference_answer": "Правление банка",
+      "gold_doc_id": "needle-9",
+      "stuffing": {
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 9751,
+        "completion_tokens": 12,
+        "cost_usd": 0.00074985,
+        "wall_s": 1.11,
+        "exec_id": "2447"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "keyword_score": 4,
+        "model_answer": "Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 4,
+        "cost_usd": 3e-05,
+        "wall_s": 2.16,
+        "exec_id": "2448"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "cosine_score": 0.6723626731190123,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
+        "wall_s": 2.15,
+        "exec_id": "2449"
+      }
+    },
+    {
+      "corpus_size": 50,
+      "qid": "q10",
+      "question": "Как звали ученого, модель системы мира которого была взята за основу Кеплером?",
+      "reference_answer": "Коперник",
+      "gold_doc_id": "needle-10",
+      "stuffing": {
+        "model_answer": "Коперник.",
+        "correct": true,
+        "prompt_tokens": 9761,
+        "completion_tokens": 5,
+        "cost_usd": 0.00074715,
+        "wall_s": 1.18,
+        "exec_id": "2450"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": false,
+        "keyword_score": 2,
+        "model_answer": "нет информации",
+        "correct": false,
+        "prompt_tokens": 272,
+        "completion_tokens": 2,
+        "cost_usd": 4.2e-05,
+        "wall_s": 1.46,
+        "exec_id": "2451"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-10",
+        "retrieved_correct": true,
+        "cosine_score": 0.5687593164083498,
+        "model_answer": "Коперник.",
+        "correct": true,
+        "prompt_tokens": 238,
+        "completion_tokens": 5,
+        "cost_usd": 3.87e-05,
+        "wall_s": 1.11,
+        "exec_id": "2452"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q1",
+      "question": "Как называется круг кровообращения, функционирующий через легкие?",
+      "reference_answer": "малый",
+      "gold_doc_id": "needle-1",
+      "stuffing": {
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 39511,
+        "completion_tokens": 10,
+        "cost_usd": 0.00521265,
+        "wall_s": 2.2,
+        "exec_id": "2453"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "keyword_score": 1,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 1.11,
+        "exec_id": "2454"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "cosine_score": 0.6163178222651524,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 1.1,
+        "exec_id": "2455"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q2",
+      "question": "Сколько длилось путешествие Моцарта в 1789 году?",
+      "reference_answer": "Путешествие длилось без малого три месяца",
+      "gold_doc_id": "needle-2",
+      "stuffing": {
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 39510,
+        "completion_tokens": 27,
+        "cost_usd": 0.0029859,
+        "wall_s": 2.2,
+        "exec_id": "2456"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "keyword_score": 5,
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 344,
+        "completion_tokens": 27,
+        "cost_usd": 6.78e-05,
+        "wall_s": 2.16,
+        "exec_id": "2457"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "cosine_score": 0.6177550270626744,
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 344,
+        "completion_tokens": 27,
+        "cost_usd": 6.78e-05,
+        "wall_s": 1.12,
+        "exec_id": "2458"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q3",
+      "question": "Какая температура летом не дает возможности марафонцам показывать наилучшие результаты?",
+      "reference_answer": "высокая",
+      "gold_doc_id": "needle-3",
+      "stuffing": {
+        "model_answer": "Летняя высокая температура не позволяет марафонцам показывать наилучшие результаты.",
+        "correct": true,
+        "prompt_tokens": 39513,
+        "completion_tokens": 18,
+        "cost_usd": 0.00298095,
+        "wall_s": 1.15,
+        "exec_id": "2459"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "keyword_score": 6,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 2.15,
+        "exec_id": "2460"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "cosine_score": 0.5693151581977827,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 1.11,
+        "exec_id": "2461"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q4",
+      "question": "В каком году была возрождена дискуссия палеонтологами Нильсов Элдриджем и Стивеном Гулдом?",
+      "reference_answer": "1972",
+      "gold_doc_id": "needle-4",
+      "stuffing": {
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 39527,
+        "completion_tokens": 6,
+        "cost_usd": 0.00297585,
+        "wall_s": 1.13,
+        "exec_id": "2462"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": false,
+        "keyword_score": 1,
+        "model_answer": "нет информации",
+        "correct": false,
+        "prompt_tokens": 361,
+        "completion_tokens": 2,
+        "cost_usd": 5.535e-05,
+        "wall_s": 2.14,
+        "exec_id": "2463"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-4",
+        "retrieved_correct": true,
+        "cosine_score": 0.3722983804462846,
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 6,
+        "cost_usd": 4.905e-05,
+        "wall_s": 2.16,
+        "exec_id": "2464"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q5",
+      "question": "Какому розыгрышу Кубка мира в 1950 году предшествовала резонансная трагедия?",
+      "reference_answer": "Первому послевоенному розыгрышу.",
+      "gold_doc_id": "needle-5",
+      "stuffing": {
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 39520,
+        "completion_tokens": 19,
+        "cost_usd": 0.0029826,
+        "wall_s": 1.14,
+        "exec_id": "2465"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "keyword_score": 8,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 19,
+        "cost_usd": 4.89e-05,
+        "wall_s": 1.22,
+        "exec_id": "2466"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "cosine_score": 0.5233230576324489,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 14,
+        "cost_usd": 4.59e-05,
+        "wall_s": 1.43,
+        "exec_id": "2467"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q6",
+      "question": "В чем заключается функция митохондрий?",
+      "reference_answer": "в окислении органических соединений и последующем синтезе АТФ",
+      "gold_doc_id": "needle-6",
+      "stuffing": {
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": false,
+        "prompt_tokens": 39504,
+        "completion_tokens": 35,
+        "cost_usd": 0.0029898,
+        "wall_s": 2.18,
+        "exec_id": "2468"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 35,
+        "cost_usd": 5.43e-05,
+        "wall_s": 1.1,
+        "exec_id": "2469"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "cosine_score": 0.5956466409659753,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 35,
+        "cost_usd": 5.43e-05,
+        "wall_s": 1.1,
+        "exec_id": "2470"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q7",
+      "question": "Кровью каких животных в основном питаются двукрылые кровососы?",
+      "reference_answer": "млекопитающих",
+      "gold_doc_id": "needle-7",
+      "stuffing": {
+        "model_answer": "Кровью млекопитающих, реже птиц и насекомых.",
+        "correct": true,
+        "prompt_tokens": 39513,
+        "completion_tokens": 18,
+        "cost_usd": 0.00298095,
+        "wall_s": 1.14,
+        "exec_id": "2471"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "В основном двукрылые кровососы питаются кровью млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 20,
+        "cost_usd": 4.65e-05,
+        "wall_s": 1.12,
+        "exec_id": "2472"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "cosine_score": 0.5857860729720794,
+        "model_answer": "В основном млекопитающих, реже птиц и насекомых.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 17,
+        "cost_usd": 4.47e-05,
+        "wall_s": 1.1,
+        "exec_id": "2473"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q8",
+      "question": "Какая страна в 2001 году стала первой из пяти арктических стран, обратившейся с заявкой о расширении границ своего континентального шельфа свыше стандартного 322-километрового предела?",
+      "reference_answer": "Россия",
+      "gold_doc_id": "needle-8",
+      "stuffing": {
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 39548,
+        "completion_tokens": 2,
+        "cost_usd": 0.0029766,
+        "wall_s": 1.15,
+        "exec_id": "2474"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "keyword_score": 19,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 1.1,
+        "exec_id": "2475"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "cosine_score": 0.6316103502960787,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 2.15,
+        "exec_id": "2476"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q9",
+      "question": "Какая структура управляет Центральным банком?",
+      "reference_answer": "Правление банка",
+      "gold_doc_id": "needle-9",
+      "stuffing": {
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 39505,
+        "completion_tokens": 12,
+        "cost_usd": 0.00297615,
+        "wall_s": 1.15,
+        "exec_id": "2477"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "keyword_score": 4,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
+        "wall_s": 1.1,
+        "exec_id": "2478"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "cosine_score": 0.6723626731190123,
+        "model_answer": "Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 4,
+        "cost_usd": 3e-05,
+        "wall_s": 2.17,
+        "exec_id": "2479"
+      }
+    },
+    {
+      "corpus_size": 200,
+      "qid": "q10",
+      "question": "Как звали ученого, модель системы мира которого была взята за основу Кеплером?",
+      "reference_answer": "Коперник",
+      "gold_doc_id": "needle-10",
+      "stuffing": {
+        "model_answer": "Модель системы мира была основана на работах Коперника.",
+        "correct": true,
+        "prompt_tokens": 39515,
+        "completion_tokens": 15,
+        "cost_usd": 0.00297945,
+        "wall_s": 1.13,
+        "exec_id": "2480"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": false,
+        "keyword_score": 2,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 272,
+        "completion_tokens": 3,
+        "cost_usd": 4.26e-05,
+        "wall_s": 1.11,
+        "exec_id": "2481"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-10",
+        "retrieved_correct": true,
+        "cosine_score": 0.5687593164083498,
+        "model_answer": "Коперник.",
+        "correct": true,
+        "prompt_tokens": 238,
+        "completion_tokens": 5,
+        "cost_usd": 3.87e-05,
+        "wall_s": 1.11,
+        "exec_id": "2482"
+      }
+    },
+    {
+      "corpus_size": 500,
+      "qid": "q1",
+      "question": "Как называется круг кровообращения, функционирующий через легкие?",
+      "reference_answer": "малый",
+      "gold_doc_id": "needle-1",
+      "stuffing": {
+        "model_answer": null,
+        "correct": false,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "cost_usd": null,
+        "wall_s": 1.2,
+        "exec_id": "2483"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "keyword_score": 1,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 2.16,
+        "exec_id": "2484"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-1",
+        "retrieved_correct": true,
+        "cosine_score": 0.6163178222651524,
+        "model_answer": "Малый круг кровообращения.",
+        "correct": true,
+        "prompt_tokens": 372,
+        "completion_tokens": 10,
+        "cost_usd": 6.18e-05,
+        "wall_s": 1.11,
+        "exec_id": "2485"
+      }
+    },
+    {
+      "corpus_size": 500,
+      "qid": "q2",
+      "question": "Сколько длилось путешествие Моцарта в 1789 году?",
+      "reference_answer": "Путешествие длилось без малого три месяца",
+      "gold_doc_id": "needle-2",
+      "stuffing": {
+        "model_answer": null,
+        "correct": false,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "cost_usd": null,
+        "wall_s": 1.16,
+        "exec_id": "2486"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "keyword_score": 5,
+        "model_answer": "Путешествие длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": true,
+        "prompt_tokens": 344,
+        "completion_tokens": 24,
+        "cost_usd": 6.6e-05,
+        "wall_s": 1.11,
+        "exec_id": "2487"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": true,
+        "cosine_score": 0.6177550270626744,
+        "model_answer": "Путешествие Моцарта длилось без малого три месяца: с 8 апреля по 4 июня 1789 года.",
+        "correct": false,
+        "prompt_tokens": 344,
+        "completion_tokens": 27,
+        "cost_usd": 6.78e-05,
+        "wall_s": 1.11,
+        "exec_id": "2488"
+      }
+    },
+    {
+      "corpus_size": 500,
+      "qid": "q3",
+      "question": "Какая температура летом не дает возможности марафонцам показывать наилучшие результаты?",
+      "reference_answer": "высокая",
+      "gold_doc_id": "needle-3",
+      "stuffing": {
+        "model_answer": null,
+        "correct": false,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "cost_usd": null,
+        "wall_s": 1.62,
+        "exec_id": "2489"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": true,
+        "keyword_score": 6,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 270,
+        "completion_tokens": 3,
+        "cost_usd": 4.23e-05,
+        "wall_s": 2.14,
+        "exec_id": "2490"
+      },
+      "vector": {
+        "retrieved_doc_id": "distractor-237",
+        "retrieved_correct": false,
+        "cosine_score": 0.6860593961749208,
+        "model_answer": "Температура выше 14—16 °С ухудшает результаты марафонцев.",
+        "correct": false,
+        "prompt_tokens": 274,
+        "completion_tokens": 18,
+        "cost_usd": 5.19e-05,
+        "wall_s": 1.11,
+        "exec_id": "2491"
+      }
+    },
+    {
+      "corpus_size": 500,
+      "qid": "q4",
+      "question": "В каком году была возрождена дискуссия палеонтологами Нильсов Элдриджем и Стивеном Гулдом?",
+      "reference_answer": "1972",
+      "gold_doc_id": "needle-4",
+      "stuffing": {
+        "model_answer": null,
+        "correct": false,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "cost_usd": null,
+        "wall_s": 1.21,
+        "exec_id": "2492"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-2",
+        "retrieved_correct": false,
+        "keyword_score": 1,
+        "model_answer": "нет информации",
+        "correct": false,
+        "prompt_tokens": 361,
+        "completion_tokens": 2,
+        "cost_usd": 5.535e-05,
+        "wall_s": 2.17,
+        "exec_id": "2493"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-4",
+        "retrieved_correct": true,
+        "cosine_score": 0.3722983804462846,
+        "model_answer": "В 1972 году.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 6,
+        "cost_usd": 4.905e-05,
+        "wall_s": 2.16,
+        "exec_id": "2494"
+      }
+    },
+    {
+      "corpus_size": 500,
+      "qid": "q5",
+      "question": "Какому розыгрышу Кубка мира в 1950 году предшествовала резонансная трагедия?",
+      "reference_answer": "Первому послевоенному розыгрышу.",
+      "gold_doc_id": "needle-5",
+      "stuffing": {
+        "model_answer": null,
+        "correct": false,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "cost_usd": null,
+        "wall_s": 1.17,
+        "exec_id": "2495"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "keyword_score": 8,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 19,
+        "cost_usd": 4.89e-05,
+        "wall_s": 3.2,
+        "exec_id": "2496"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-5",
+        "retrieved_correct": true,
+        "cosine_score": 0.5233230576324489,
+        "model_answer": "Первому послевоенному розыгрышу Кубка мира в 1950 году.",
+        "correct": false,
+        "prompt_tokens": 250,
+        "completion_tokens": 19,
+        "cost_usd": 4.89e-05,
+        "wall_s": 2.15,
+        "exec_id": "2497"
+      }
+    },
+    {
+      "corpus_size": 500,
+      "qid": "q6",
+      "question": "В чем заключается функция митохондрий?",
+      "reference_answer": "в окислении органических соединений и последующем синтезе АТФ",
+      "gold_doc_id": "needle-6",
+      "stuffing": {
+        "model_answer": null,
+        "correct": false,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "cost_usd": null,
+        "wall_s": 1.17,
+        "exec_id": "2498"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и синтезе АТФ с использованием энергии окисленных соединений.",
+        "correct": false,
+        "prompt_tokens": 222,
+        "completion_tokens": 35,
+        "cost_usd": 5.43e-05,
+        "wall_s": 2.57,
+        "exec_id": "2499"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-6",
+        "retrieved_correct": true,
+        "cosine_score": 0.5956466409659753,
+        "model_answer": "Функция митохондрий заключается в окислении органических соединений и последующем синтезе АТФ.",
+        "correct": true,
+        "prompt_tokens": 222,
+        "completion_tokens": 29,
+        "cost_usd": 5.07e-05,
+        "wall_s": 2.17,
+        "exec_id": "2500"
+      }
+    },
+    {
+      "corpus_size": 500,
+      "qid": "q7",
+      "question": "Кровью каких животных в основном питаются двукрылые кровососы?",
+      "reference_answer": "млекопитающих",
+      "gold_doc_id": "needle-7",
+      "stuffing": {
+        "model_answer": null,
+        "correct": false,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "cost_usd": null,
+        "wall_s": 1.15,
+        "exec_id": "2501"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "keyword_score": 2,
+        "model_answer": "Двукрылые кровососы в основном питаются кровью млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 21,
+        "cost_usd": 4.71e-05,
+        "wall_s": 2.16,
+        "exec_id": "2502"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-7",
+        "retrieved_correct": true,
+        "cosine_score": 0.5857860729720794,
+        "model_answer": "В основном млекопитающих.",
+        "correct": true,
+        "prompt_tokens": 230,
+        "completion_tokens": 8,
+        "cost_usd": 3.93e-05,
+        "wall_s": 2.16,
+        "exec_id": "2503"
+      }
+    },
+    {
+      "corpus_size": 500,
+      "qid": "q8",
+      "question": "Какая страна в 2001 году стала первой из пяти арктических стран, обратившейся с заявкой о расширении границ своего континентального шельфа свыше стандартного 322-километрового предела?",
+      "reference_answer": "Россия",
+      "gold_doc_id": "needle-8",
+      "stuffing": {
+        "model_answer": null,
+        "correct": false,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "cost_usd": null,
+        "wall_s": 1.18,
+        "exec_id": "2504"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "keyword_score": 19,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 1.12,
+        "exec_id": "2505"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-8",
+        "retrieved_correct": true,
+        "cosine_score": 0.6316103502960787,
+        "model_answer": "Россия.",
+        "correct": true,
+        "prompt_tokens": 303,
+        "completion_tokens": 2,
+        "cost_usd": 4.665e-05,
+        "wall_s": 1.1,
+        "exec_id": "2506"
+      }
+    },
+    {
+      "corpus_size": 500,
+      "qid": "q9",
+      "question": "Какая структура управляет Центральным банком?",
+      "reference_answer": "Правление банка",
+      "gold_doc_id": "needle-9",
+      "stuffing": {
+        "model_answer": null,
+        "correct": false,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "cost_usd": null,
+        "wall_s": 1.18,
+        "exec_id": "2507"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "keyword_score": 4,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
+        "wall_s": 1.11,
+        "exec_id": "2508"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-9",
+        "retrieved_correct": true,
+        "cosine_score": 0.6723626731190123,
+        "model_answer": "Центральным банком управляет Правление банка.",
+        "correct": true,
+        "prompt_tokens": 184,
+        "completion_tokens": 12,
+        "cost_usd": 3.48e-05,
+        "wall_s": 1.11,
+        "exec_id": "2509"
+      }
+    },
+    {
+      "corpus_size": 500,
+      "qid": "q10",
+      "question": "Как звали ученого, модель системы мира которого была взята за основу Кеплером?",
+      "reference_answer": "Коперник",
+      "gold_doc_id": "needle-10",
+      "stuffing": {
+        "model_answer": null,
+        "correct": false,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "cost_usd": null,
+        "wall_s": 1.18,
+        "exec_id": "2510"
+      },
+      "keyword": {
+        "retrieved_doc_id": "needle-3",
+        "retrieved_correct": false,
+        "keyword_score": 2,
+        "model_answer": "нет информации.",
+        "correct": false,
+        "prompt_tokens": 272,
+        "completion_tokens": 3,
+        "cost_usd": 4.26e-05,
+        "wall_s": 2.16,
+        "exec_id": "2511"
+      },
+      "vector": {
+        "retrieved_doc_id": "needle-10",
+        "retrieved_correct": true,
+        "cosine_score": 0.5687593164083498,
+        "model_answer": "Коперник.",
+        "correct": true,
+        "prompt_tokens": 238,
+        "completion_tokens": 5,
+        "cost_usd": 3.87e-05,
+        "wall_s": 2.25,
+        "exec_id": "2512"
+      }
+    }
+  ],
+  "total_wall_s": 186.50717544555664,
+  "embed_meta": {
+    "model": "openai/text-embedding-3-small",
+    "total_cost_usd": 0.00326242,
+    "total_wall_s": 49.55569243431091,
+    "n_docs": 500,
+    "n_queries": 10
+  },
+  "model": "openai/gpt-4o-mini",
+  "embed_model": "openai/text-embedding-3-small"
+}

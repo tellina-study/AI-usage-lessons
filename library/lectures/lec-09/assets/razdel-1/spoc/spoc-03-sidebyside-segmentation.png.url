@@ -1,0 +1,12 @@
+source: https://nasa-jpl.github.io/SPOC/ (официальная страница проекта SPOC, NASA-JPL GitHub Pages)
+direct_asset: https://nasa-jpl.github.io/SPOC/assets/images/sidebyside.png
+title: "SPOC side-by-side: исходный снимок vs карта классификации грунта"
+credit: NASA/JPL-Caltech (официальная институциональная страница проекта)
+date_accessed: 2026-10-31
+tier: "Tier 1 (официальная страница проекта, og:image-класс)"
+description: >
+  ИНФОГРАФИКА/иллюстрация метода. Сопоставление "вход → выход": исходный снимок
+  Mars-поверхности рядом с картой классов грунта, которую выдаёт SPOC по каждому
+  пикселю. Прямая визуализация § 1.4 "Устройство": "Вход — снимок... Выход — карта
+  классов грунта и объектов для каждого участка снимка".
+license: NASA public domain (US government work), официальная институциональная страница проекта.

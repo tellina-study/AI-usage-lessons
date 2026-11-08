@@ -1,0 +1,41 @@
+{
+  "name": "lengler-periodic-table",
+  "razryad": "справочник форм",
+  "n_frames": 6,
+  "unit": "кадр (страница/слайд)",
+  "tipografika": {
+    "min_kegl_osnovnogo_teksta": 9.0,
+    "median_kegl_osnovnogo_teksta": 9.5,
+    "min_kegl_bez_filtra_shuma": 8.5,
+    "dolya_simvolov_na_etom_minimalnom_kegle": 0.0048,
+    "n_stupeney_keglya": 2,
+    "stupeni_pt": [
+      9.0,
+      9.5
+    ],
+    "otnosheniya_sosednih_stupeney": [
+      1.056
+    ],
+    "n_garnitur_nachertaniy": 5,
+    "garnitury": [
+      "ArialUnicodeMS",
+      "SymbolMT",
+      "TimesNewRomanPS-BoldMT",
+      "TimesNewRomanPS-ItalicMT",
+      "TimesNewRomanPSMT"
+    ],
+    "kak_otdelili_kolontitul": "верхние 5% и нижние 8% высоты кадра исключены из расчёта кегля/гарнитур основного текста; отдельно исключены span'ы из одних цифр длиной ≤3 символов (номера страниц)"
+  },
+  "tsvet": {
+    "n_unikalnyh_tsvetov_teksta": 2,
+    "n_unikalnyh_tsvetov_zalivok": 1,
+    "samyy_yarkiy_akcent": "#0000ff",
+    "dolya_ploshchadi_pod_akcentom": 1.0,
+    "kak_merili": "цвет текста — span.color (PDF) / run.font.color.rgb (PPTX), квантован кратно 4 на канал; «самый яркий акцент» выбран по насыщенность×значение (HSV) среди различимых заливок, НЕ по площади — так крупная тёмная фоновая плашка не обгоняет настоящий яркий акцент своим размером; площадь акцента — сумма площадей заливок именно ЭТОГО цвета самого насыщенного неахроматичного цвета, делённая на сумму площадей ВСЕХ учтённых заливок (не площадь кадра — заливки часто не покрывают кадр целиком, поэтому это доля \"внутри учтённых плашек\", а не кадра)"
+  },
+  "plotnost": "неприменимо — справочник форм, не колода для показа",
+  "izobrazhenie": "неприменимо — справочник форм, не колода для показа",
+  "ritm": "неприменимо — справочник форм, не колода для показа",
+  "path": "/home/harness/harness-projects/256/.worktrees/folder-288/session-0b2adb13-7ee7af40/notes/research/dizayn-metodika/etalony/lengler-periodic-table/periodic_table.pdf",
+  "vremya_s": 0.5
+}

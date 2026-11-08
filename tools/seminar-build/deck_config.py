@@ -95,12 +95,21 @@ LANG = "ru"
 SPEECH_OPEN = ASK = CAVEAT_OPEN = CAVEAT = None
 WRAP_PAIRS = ()
 
+# Шкала кегля методики подачи (issue #307, §1.3-1.4 `tools/metodika-podachi/
+# priyomka/07-PRIYOMKA.md`). `False` — нулевое умолчание: у шестнадцати из
+# семнадцати семинаров в `deck-config.yaml` нет ключа `type_scale`, и для них
+# `deck_kit.scaled()`/`scale_floor()`/`scale_ladder()`/`scale_step_down()`
+# возвращают переданное значение БЕЗ ИЗМЕНЕНИЙ — это и есть гейт нулевого
+# влияния правки issue #311 на остальные деки курса. Семинар 10 включает её
+# явным ключом `type_scale: true` в своём конфиге.
+TYPE_SCALE_OVERRIDE = False
+
 _DECK_CACHE = {}
 
 
 def configure(seminar, lang="ru"):
     """Прочитать конфиг занятия и встать на него. `seminar` — «07» или «7»."""
-    global SEM, ROOT, HERE, FIGDIR, CFG
+    global SEM, ROOT, HERE, FIGDIR, CFG, TYPE_SCALE_OVERRIDE
     SEM = f"{int(seminar):02d}"
     ROOT = SEMINARS / f"sem-{SEM}"
     HERE = ROOT / "rendered"
@@ -112,6 +121,7 @@ def configure(seminar, lang="ru"):
             f"Он описывает то, что у семинара своё (разметка, словарь приёмов, "
             f"пути) — см. tools/seminar-build/README.md.")
     CFG = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    TYPE_SCALE_OVERRIDE = bool(CFG.get("type_scale"))
     _DECK_CACHE.clear()
     set_lang(lang)
     # Длина дорожки кейсов обязана совпадать с числом записей в `case_idx`:

@@ -9,7 +9,16 @@ description: Критикует методическую глубину + пед
 1. `tools/lecture-production/README.md` — pipeline (твоя роль = Phase 1, 3, 7).
 2. `notes/decisions.md` — образовательные принципы курса (LO, audience).
 3. `tools/presentation-build/README.md` § anti-patterns — методические запреты.
-4. Целевой артефакт целиком (`chapter.md`, `plan.md`, или `slides/*.md` + `deck.yaml`).
+4. **`tools/metodika-podachi/README.md` — методика подачи, ОБА потока (ENFORCED, issue #307),**
+   и `tools/lecture-production/metodika-podachi-po-fazam.md` — что на твоих фазах обязательно.
+   **Повествование:** на плане (Phase 1) проверяешь линию по `tools/metodika-podachi/povestvovanie/09-POVESTVOVANIE-SBORKA.md`
+   §2 (одиннадцать шагов сборки: материал → отбор разборов → ось/keystone/вопрос → хребет →
+   смысловой ритм) и чеклисту из 14 проверок `-part2.md` §5; поля записи линии —
+   `tools/metodika-podachi/povestvovanie/08-POVESTVOVANIE-ZAPIS.md` §2. **Шов:** на Phase 5 принимаешь **разнарядку до
+   рисования кадров** — `tools/metodika-podachi/shov/03-RAZNARYADKA.md` §1–3, дерево выбора формы §3, три исхода отказа
+   §4; отсутствие разнарядки — структурный пробел, а не polish. **Кадр:** на Phase 7 пол приёмки
+   `tools/metodika-podachi/priyomka/07-PRIYOMKA.md` §1.1–1.14.
+5. Целевой артефакт целиком (`chapter.md`, `plan.md`, или `slides/*.md` + `deck.yaml`).
 
 ## Роль
 

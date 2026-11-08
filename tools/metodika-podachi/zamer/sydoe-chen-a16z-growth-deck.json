@@ -1,0 +1,88 @@
+{
+  "name": "chen-a16z-growth-deck",
+  "razryad": "эталон плотности",
+  "n_frames": 87,
+  "unit": "кадр (страница/слайд)",
+  "tipografika": {
+    "min_kegl_osnovnogo_teksta": 8.0,
+    "median_kegl_osnovnogo_teksta": 14.0,
+    "min_kegl_bez_filtra_shuma": 8.0,
+    "dolya_simvolov_na_etom_minimalnom_kegle": 0.15302,
+    "n_stupeney_keglya": 7,
+    "stupeni_pt": [
+      8.0,
+      10.0,
+      14.0,
+      18.0,
+      20.0,
+      24.0,
+      30.0
+    ],
+    "otnosheniya_sosednih_stupeney": [
+      1.25,
+      1.4,
+      1.286,
+      1.111,
+      1.2,
+      1.25
+    ],
+    "n_garnitur_nachertaniy": 8,
+    "garnitury": [
+      "Arial-BoldMT",
+      "Arial-ItalicMT",
+      "ArialMT",
+      "Lato-Black",
+      "Lato-Bold",
+      "Lato-BoldItalic",
+      "Lato-Italic",
+      "Lato-Regular"
+    ],
+    "kak_otdelili_kolontitul": "верхние 5% и нижние 8% высоты кадра исключены из расчёта кегля/гарнитур основного текста; отдельно исключены span'ы из одних цифр длиной ≤3 символов (номера страниц)"
+  },
+  "tsvet": {
+    "n_unikalnyh_tsvetov_teksta": 5,
+    "n_unikalnyh_tsvetov_zalivok": 9,
+    "samyy_yarkiy_akcent": "#0464c0",
+    "dolya_ploshchadi_pod_akcentom": 0.0,
+    "kak_merili": "цвет текста — span.color (PDF) / run.font.color.rgb (PPTX), квантован кратно 4 на канал; «самый яркий акцент» выбран по насыщенность×значение (HSV) среди различимых заливок, НЕ по площади — так крупная тёмная фоновая плашка не обгоняет настоящий яркий акцент своим размером; площадь акцента — сумма площадей заливок именно ЭТОГО цвета самого насыщенного неахроматичного цвета, делённая на сумму площадей ВСЕХ учтённых заливок (не площадь кадра — заливки часто не покрывают кадр целиком, поэтому это доля \"внутри учтённых плашек\", а не кадра)"
+  },
+  "plotnost": {
+    "slov_na_kadr_mediana": 21,
+    "slov_na_kadr_p90": 63.80000000000001,
+    "slov_na_kadr_max": 450,
+    "dolya_ploshchadi_pod_tekstom_mediana": 0.1267,
+    "dolya_ploshchadi_pod_tekstom_p90": 0.2422,
+    "dolya_ploshchadi_pod_tekstom_max": 0.439,
+    "dolya_kadrov_tolko_zagolovok": 0.1954,
+    "kak_merili": "слова — page.get_text('words')/текст прогонов; площадь текста — доля сетки 64×64, покрытая объединением bbox текстовых блоков (не сумма bbox — так не дублируется перекрытие); «только заголовок» — слов ≤12 и площадь текста ≤0.05"
+  },
+  "izobrazhenie": {
+    "dolya_kadrov_s_krupnym_izobrazheniem": 0.1954,
+    "dolya_kadrov_bez_izobrazheniy": 0.5402,
+    "srednee_chislo_izobrazheniy_na_kadr": 0.989,
+    "kak_merili": "изображение — растровый блок (PDF: block type==1 из get_text('dict'); PPTX: shape_type==PICTURE); «крупное» — доля площади кадра ≥0.4 по той же сетке 64×64"
+  },
+  "ritm": {
+    "n_raznyh_raskladok": 27,
+    "dliny_seriy_odinakovyh_podryad_max": 3,
+    "dliny_seriy_odinakovyh_podryad_mediana": 1,
+    "dliny_seriy_odinakovyh_podryad_raspredelenie": [
+      [
+        1,
+        61
+      ],
+      [
+        2,
+        10
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "dolya_stranits_razdeliteley": 0.023,
+    "kak_merili": "кластеризация иерархическая (scipy.cluster.hierarchy, average-linkage) по вектору: occupancy текста и изображений по сетке 3×3 (18 бит) + число текстовых блоков + число изображений + доля площади текста/изображения; порог отсечения — эвристика 0.6×средней попарной дистанции нормированных признаков, НЕ статистический критерий — число раскладок зависит от порога, трактовать как порядок величины; разделитель — слов ≤20 и есть кегль ≥1.4× медианного кегля кадра"
+  },
+  "path": "/home/harness/harness-projects/256/.worktrees/folder-288/session-0b2adb13-7ee7af40/notes/research/dizayn-metodika/etalony/chen-a16z-growth-deck/a16z_growth_deck.pdf",
+  "vremya_s": 0.6
+}

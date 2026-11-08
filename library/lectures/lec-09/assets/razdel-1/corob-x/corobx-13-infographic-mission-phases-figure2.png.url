@@ -1,0 +1,21 @@
+source: https://insu.hal.science/insu-03751549v1/file/corob-x_astra22.pdf (открытый доступ, HAL open science)
+direct_asset: https://insu.hal.science/insu-03751549v1/file/corob-x_astra22.pdf (Figure 2, стр. 3 PDF — извлечено как изображение через pymupdf, обрезка region)
+paper: "Dettmann, Voegele, Ocón, Dragomir, Govindaraj, de Benedetti, Ciarletti, Hassen-Khodja, Germa, Viards, et al. — COROB-X: A Cooperative robot team for the exploration of lunar skylights. ASTRA 2022, 16th Symposium on Advanced Space Technologies in Robotics and Automation, ESA-ESTEC, июнь 2022, Noordwijk, Netherlands. HAL Id: insu-03751549."
+title: "Figure 2: Mission Phases of Lunar analogue mission (MP-1..MP-4)"
+credit: авторы статьи (DFKI + соавторы ASTRA 2022), публикация под HAL Open Science authorization
+date_accessed: 2026-10-31
+tier: "Tier 2/3 (открытый академический препринт через институциональный репозиторий HAL — не агрегатор, рецензируемая конференция ESA-ESTEC)"
+description: >
+  ИНФОГРАФИКА. Официальная схема всех четырёх фаз миссии COROB-X (MP-1 Cooperative
+  Exploration, MP-2 Sensor Cube Deployment, MP-3 Tethered Descent, MP-4 Lava Tube
+  Exploration) с указанием сенсоров каждого робота (Stereo Cam, TOF Cam, GPR, LIDAR)
+  и потоков данных (RMS = remote mission station, стрелки — беспроводная/кабельная
+  передача). Прямая визуализация § 1.5 "Работа идёт в четыре фазы" — редкий случай,
+  когда одна академическая иллюстрация покрывает весь абзац разбора целиком.
+  Извлечено из открытого PDF (HAL insu-03751549v1) через pymupdf, обрезана область
+  рисунка с 3-й страницы документа; подпись "Figure 2: Mission Phases of Lunar
+  analogue mission" авторов статьи сохранена на изображении.
+license: >
+  Открытый академический препринт (HAL "Autorisation HAL" — свободное распространение
+  для научных/образовательных целей); при использовании на слайде указывать авторов
+  и конференцию ASTRA 2022.

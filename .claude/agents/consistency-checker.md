@@ -7,6 +7,11 @@ description: Проверяет согласованность между chapte
 
 **REQUIRED READING:** Before any work, read:
 1. `tools/lecture-production/README.md` — pipeline (твоя роль = Phase 10).
+1а. **`tools/metodika-podachi/povestvovanie/08-POVESTVOVANIE-ZAPIS.md` §2 (ENFORCED, issue #307)**
+   — поля записанной линии повествования (занятие, раздел, разбор, шов, сквозная линия,
+   закрытие). Это тот документ, с которым сверяются все три артефакта: расхождение главы, деки и
+   речи ищется против записанной линии, а не попарно между артефактами. Вход —
+   `tools/metodika-podachi/README.md`.
 2. **Все 3 артефакта** целиком:
    - `library/lectures/lec-NN/chapter.md`
    - `library/lectures/lec-NN/deck.yaml` + `slides/*.md` + `rendered/snapshots/*.png`

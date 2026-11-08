@@ -52,6 +52,39 @@ decks:
     created_at: "2026-05-16"
     drive_published: false  # Drive integration отложена
 
+  # Лекция 8 «AI в креативных индустриях и медиа» — v4 перестройка (issue #289)
+  - lecture: 8
+    repo_dir: lec-08
+    title: "Лекция 8. Узнавание стоило доверия бесплатно — сколько оно стоит теперь"
+    type: pptx-local
+    format: pptx
+    pipeline_version: "v4 (deckkit)"
+    status: final
+    slides_count: 71
+    sum_timing_min: 80.7
+    coverage: "s01–s71 (полная лекция, 6 разделов: Вход · Продакшн/исполнение · Редакционный контроль · Релиз и приём аудиторией · Счёт: права/рынок/критерии отказа · Закрытие)"
+    local_path: "library/lectures/lec-08/rendered/lec-08.pptx"
+    pdf_path: "library/lectures/lec-08/rendered/lec-08.pdf"
+    snapshots_path: "library/lectures/lec-08/rendered/snapshots/"
+    source:
+      deck_yaml: ["library/lectures/lec-08/rework/deck/deck.yaml", "library/lectures/lec-08/rework/deck/deck-part2.yaml"]
+      slides_dir: "library/lectures/lec-08/slides/"
+      builder: "library/lectures/lec-08/rework/deck/build_lec08.py"
+      renumbering_map: "library/lectures/lec-08/rework/v4-slide-renumbering-map.md"
+    qa_reports: []
+    iterations: ["v3 (76 слайдов, финализирована 2026-10-22)", "v4 (71 слайд, перестройка #289, финализирована 2026-10-26)"]
+    issue: 289
+    created_at: "2026-10-22"
+    updated_at: "2026-10-26"
+    notes: |
+      v4 — перестройка структуры (вставлен R-блок про распознавание, слит
+      латент-кадр s18+s19, слиты разделы 4-6 в единый «Счёт»). Финализация
+      этой сессии: selftest 93/93, полный ре-рендер детерминирован (байт-в-байт
+      тот же файл), snapshots переименованы k-NN→sNN, удалён промежуточный
+      chastichnaya-sborka.pptx. Одна находка: s28 (под-дивайдер R-блока) без
+      обязательного золотого акцента — вынесена владельцу, не исправлена здесь.
+    drive_published: false
+
   # Reference — старая загруженная PPTX (контекстная), не пилот
   - id: 1j-7csuSNLQimTNz1gkV5aupormpqfPEL
     title: "ИИ и мир.pptx (старая презентация для контекста)"

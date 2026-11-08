@@ -1,0 +1,117 @@
+{
+  "name": "С10 · сырой вызов OpenRouter (универсальный)",
+  "nodes": [
+    {
+      "id": "trig",
+      "name": "Тело запроса",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -180,
+        0
+      ],
+      "webhookId": "s10-raw-openrouter",
+      "parameters": {
+        "path": "s10-raw-openrouter",
+        "formTitle": "С10 · замер — сырое тело запроса",
+        "formDescription": "Служебный стенд измерений, не форма студента",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "URL",
+              "fieldType": "text",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Тело",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "http",
+      "name": "OpenRouter raw",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        60,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json['URL'] }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openRouterApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json['Тело'] }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          },
+          "timeout": 180000
+        }
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "res",
+      "name": "Result",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        300,
+        0
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Готово",
+        "completionMessage": "ok",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Тело запроса": {
+      "main": [
+        [
+          {
+            "node": "OpenRouter raw",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter raw": {
+      "main": [
+        [
+          {
+            "node": "Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

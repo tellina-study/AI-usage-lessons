@@ -1,0 +1,13 @@
+source: https://science.nasa.gov/resource/martian-terrain-as-viewed-in-ai4mars/ (через пресс-релиз https://www.jpl.nasa.gov/news/nasas-mars-rover-drivers-need-your-help/)
+direct_asset: https://assets.science.nasa.gov/content/dam/science/psd/mars/downloadable_items/4/4/44955_PIA23897.jpg
+catalog_id: PIA23897
+title: "Martian Terrain as Viewed in AI4Mars"
+credit: NASA/JPL-Caltech
+date_released: 2020-06-12
+date_accessed: 2026-10-31
+tier: "Tier 1 (официальный пресс-ассет NASA/JPL)"
+description: >
+  Три снимка NavCam/Mastcam Curiosity с типами марсианского грунта, как их видит
+  инструмент AI4Mars (soil/bedrock/sand/big rock). Прямая иллюстрация обучающих данных
+  SPOC — § 1.4 "Обучающие данные SPOC... проект AI4Mars на платформе Zooniverse".
+license: NASA public domain (US government work).

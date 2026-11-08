@@ -1,0 +1,218 @@
+# library/lectures/lec-08/rework-v5/deck/deck-part2.yaml  --  часть 2 из 2
+# Продолжение `deck.yaml`. Выгружено `make_deck_yaml_v5.py`, руками не правится.
+
+slides:
+
+  - id: s74
+    file: slides/s74-dva-masshtaba-odnoy-tekhniki.md
+    type: schema_layered
+    title: "Два масштаба одной техники: тридцать секунд на кадр и одна миллисекунда на кадр"
+    source: "Mildenhall et al., ECCV 2020; RIFE, ECCV 2022, arXiv:2011.06294; Waymo World Model, февраль 2026 (демонстрация без независимой проверки)"
+    timing_min: 1.20
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
+  - id: s75
+    file: slides/s75-setka-idyot-na-peredelku.md
+    type: schema_pipeline
+    title: "Сгенерированная сетка идёт на переделку: ретопология, развёртка, риггинг"
+    source: "QuadGPT, Tencent Hunyuan и HKUST, arXiv:2509.21420 (2025); https://arxiv.org/abs/2509.21420"
+    timing_min: 1.00
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+  - id: s76
+    file: slides/s76-net-razmerov.md
+    type: assertion_visual
+    title: "У сгенерированного объекта нет размеров"
+    timing_min: 1.00
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+  - id: s77
+    file: slides/s77-chego-net-v-istochnikakh.md
+    type: assertion_visual
+    title: "Чего в открытых источниках не нашлось"
+    timing_min: 0.30
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+  - id: s77a
+    file: slides/s77a-karta-vechera-kolonka-tryohmernoe.md
+    type: assertion_visual
+    title: "Карта вечера: колонка «Трёхмерное»"
+    timing_min: 0.20
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
+    karta_vechera: { columns: 4, to_come: 1 }
+  # ─── 5. Распознавание и происхождение · 11 кадров · 8.00 мин ───
+  - id: s78
+    file: slides/s78-divider-raspoznavanie-proiskhozhdenie.md
+    type: section_divider
+    title: "Раздел 5. Распознавание и происхождение"
+    timing_min: 0.00
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s79
+    file: slides/s79-chto-za-rabota-raspoznavanie.md
+    type: assertion_visual
+    title: "Что это за работа и как её делали без модели"
+    source: "независимые аудиты точности газетных материалов"
+    timing_min: 0.80
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s80
+    file: slides/s80-razbor-svitki-gerkulanuma.md
+    type: analitika
+    title: "Разбор: свитки Геркуланума — свиток прочитан целиком"
+    source: "Vesuvius Challenge и EduceLab, проф. Брент Силз, Университет Кентукки, совместно с Национальной библиотекой Неаполя; https://scrollprize.org/"
+    timing_min: 0.40
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
+  - id: s80a
+    file: slides/s80a-kak-chitayut-nerazvyornutyy-svitok.md
+    type: analitika
+    title: "Как читают неразвёрнутый свиток — и по каким датам"
+    source: "Vesuvius Challenge и EduceLab, проф. Брент Силз, Университет Кентукки, совместно с Национальной библиотекой Неаполя; https://scrollprize.org/"
+    timing_min: 0.80
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+  - id: s81
+    file: slides/s81-nol-protiv-devyanosta.md
+    type: comparison
+    title: "Свиток Геркуланума и «Волшебник страны Оз» в Sphere: ноль домысленного против девяноста процентов"
+    timing_min: 0.40
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+  - id: s83
+    file: slides/s83-ustroystvo-raspoznavatelya.md
+    type: schema_architecture
+    title: "Устройство распознавателя: те же блоки внимания, обратная задача"
+    source: "Dosovitskiy et al., ICLR 2021, arXiv:2010.11929; Radford et al., ICML 2021, arXiv:2103.00020; Nature, октябрь 2024, doi:10.1038/s41586-024-08025-4; публичные страницы раскрытия Steam; сообщения площадки о дубляже, 11 февраля 2025"
+    timing_min: 1.10
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
+  - id: s84
+    file: slides/s84-raspoznavatel-na-chuzhoy-modeli.md
+    type: analitika
+    title: "Распознаватель сгенерированного на незнакомой модели"
+    source: "Corvi et al., ICASSP 2023, arXiv:2211.00680; https://arxiv.org/abs/2211.00680"
+    timing_min: 1.00
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+  - id: s85
+    file: slides/s85-podpis-kamery-nikon.md
+    type: comparison
+    title: "Обход подписи камеры: эксплойт и дыра в спецификации"
+    source: "David Buchanan (retr0id), «C2PA Cameras Do Not Survive Contact With Reality», личный блог исследователя, 25 августа 2026 (первое открытие) и 2 октября 2026 (второе); CVE-2026-43499; независимый разбор второго открытия — workos.com, с цитатами первоисточника"
+    timing_min: 1.00
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: needs_media }
+  - id: s86
+    file: slides/s86-razbor-cnet.md
+    type: analitika
+    title: "Разбор: CNET — 41 исправление из 77 статей"
+    source: "CNET, «CNET Is Testing an AI Engine. Here's What We've Learned, Mistakes and All», 25 января 2023; https://www.cnet.com/tech/cnet-is-testing-an-ai-engine-heres-what-weve-learned-mistakes-and-all/"
+    timing_min: 1.30
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s87
+    file: slides/s87-razbor-rossiyskie-media.md
+    type: analitika
+    title: "Разбор: российские медиа — 18% статей со следами генерации"
+    source: "Кирилл Пшинник, сооснователь Zerocoder, публикация 16 октября 2026"
+    timing_min: 0.80
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: wired }
+  - id: s87a
+    file: slides/s87a-karta-vechera-kolonka-raspoznavanie-karta.md
+    type: analitika
+    title: "Карта вечера: колонка «Распознавание» — карта полна"
+    source: "Кирилл Пшинник, сооснователь Zerocoder, публикация 16 октября 2026"
+    timing_min: 0.40
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
+    karta_vechera: { columns: 5, to_come: 0 }
+  # ─── 6. Сборка · 10 кадров · 6.00 мин ───
+  - id: s88
+    file: slides/s88-divider-sborka.md
+    type: section_divider
+    title: "Раздел 6. Сборка"
+    timing_min: 0.00
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s88a
+    file: slides/s88a-put-ot-zaprosa-k-rezultatu-svod.md
+    type: analitika
+    title: "Путь от запроса к результату: та же фигура, пять разных стартов и узких мест"
+    source: "сведено по принятым кадрам устройства разделов 1–5: s16 · s41 · s59/s60 · s68a/s71 · s83"
+    timing_min: 0.20
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+  - id: s89
+    file: slides/s89-tri-adresa-platezha.md
+    type: assertion_visual
+    title: "Исполнение перестало быть дефицитом. Что теперь дефицит — и в каких единицах за него платят?"
+    timing_min: 0.70
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
+  - id: s90
+    file: slides/s90-dolya-kataloga-i-dolya-deneg.md
+    type: analitika
+    title: "Доля каталога не равна доле денег: четыре рынка, измерявшие независимо"
+    source: "Deezer Newsroom, июль 2026 · Cinevva, 20 июля 2026 и независимый счёт Totally Human по 53 597 релизам · Audio Publishers Association и Edison Research, итоги 2025 · независимый замер по 5,7 млн профилей Яндекс Музыки"
+    timing_min: 0.80
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
+  - id: s91
+    file: slides/s91-kuda-idyot-industriya.md
+    type: analitika
+    title: "Куда идёт индустрия: чем ограничено качество, права и размер рынка"
+    source: "техническая статья SD3, 2024 · карточка модели Stable Diffusion v1 · Genie 3, Google DeepMind, август 2025 · независимая проверка WRBench, 23 модели, июнь 2026 (arXiv:2606.20545) · выпуск Suno v6 от 09.09.2026 и ElevenMusic от 01.04.2026 · четыре отраслевых обзора рынка за 2026 год"
+    timing_min: 0.30
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
+  - id: s92
+    file: slides/s92-chetyre-kriteriya-otkaza.md
+    type: assertion_visual
+    title: "Четыре критерия отказа: когда модель — не тот инструмент"
+    source: "Делл'Аква и соавт., «Navigating the Jagged Technological Frontier», SSRN 4573321, 18.09.2023 (полевой опыт с Boston Consulting Group)"
+    timing_min: 0.70
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+  - id: s92a
+    file: slides/s92a-pochemu-kriterii-pishut-do-nachala.md
+    type: assertion_visual
+    title: "Почему критерии пишут до начала работы"
+    source: "Делл'Аква и соавт., «Navigating the Jagged Technological Frontier», SSRN 4573321, 18.09.2023 (полевой опыт с Boston Consulting Group)"
+    timing_min: 0.60
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
+  - id: s93
+    file: slides/s93-peng-protiv-metr.md
+    type: analitika
+    title: "Пэн против METR: та же работа, измерения расходятся в знаке"
+    source: "Пэн и соавт., «The Impact of AI on Developer Productivity: Evidence from GitHub Copilot», arXiv:2302.06590, 13.02.2023 · METR, «Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity», 10.07.2025, arXiv:2507.09089"
+    timing_min: 1.40
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+  - id: s94
+    file: slides/s94-obrushenie-raznoobraziya.md
+    type: analitika
+    title: "Обрушение разнообразия: Цзюй и Арал, 2 234 участника — и режим, при котором его нет"
+    source: "Ной С., Чжан У., Science 381(6654):187–192, 14.07.2023, doi:10.1126/science.adh2586 (рабочая версия MIT — 02.03.2023) · Цзюй Х., Арал С., «Collaborating with AI Agents», arXiv:2503.18238, MIT IDE"
+    timing_min: 0.70
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: needs_media }
+  - id: s94a
+    file: slides/s94a-dva-rezhima-raboty-cheloveka-s.md
+    type: analitika
+    title: "Два режима работы человека с моделью, и разброс схлопывается только в одном"
+    source: "Ной С., Чжан У., Science 381(6654):187–192, 14.07.2023, doi:10.1126/science.adh2586 (рабочая версия MIT — 02.03.2023) · Цзюй Х., Арал С., «Collaborating with AI Agents», arXiv:2503.18238, MIT IDE"
+    timing_min: 0.60
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: no_decision }
+  # ─── 7. Закрытие · 3 кадров · 2.00 мин ───
+  - id: s95
+    file: slides/s95-schyot-skvoznoy-linii.md
+    type: analitika
+    title: "Счёт сквозной линии: тринадцать разборов и три неравные части"
+    timing_min: 0.80
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s96
+    file: slides/s96-podeshevela-oshibka.md
+    type: assertion_visual
+    title: "Подешевела не работа — подешевела ошибка"
+    timing_min: 0.70
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
+  - id: s97
+    file: slides/s97-dolg-vperyod-lektsiya-14.md
+    type: hero_closing
+    title: "Долг вперёд: Лекция 14"
+    timing_min: 0.50
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+
+totals:
+  slides: 100
+  timing_min: 88.00
+  timing_missing: 0
+  strict_in_min: 29.00            # кадры с `in_bucket: true`, сложено по минутам
+  strict_in_share: "33.0%"       # порог курса 30%; partial → out
+  vfy_slides: 10
+  by_status:
+    "собран": 100
+  media:
+    wired: 26
+    needs_media: 57
+    no_decision: 17
+  karta_vechera_predyavleniy: 6

@@ -1,0 +1,11 @@
+source: https://superintelligence.jpl.nasa.gov/public/projects/aegis/ (ранее ai.jpl.nasa.gov/public/projects/aegis/ — редирект после ребрендинга JPL AI group)
+direct_asset: https://superintelligence.jpl.nasa.gov/public/projects/aegis/images/coverphoto.png
+title: "Rockster algorithm detection example (AEGIS project page cover photo)"
+credit: NASA/JPL-Caltech (JPL Machine Learning & Instrument Autonomy / AI group, official project page)
+date_accessed: 2026-10-31
+tier: "Tier 1 (official JPL project page asset, og:image-class cover photo)"
+description: >
+  Официальный пример работы алгоритма Rockster — детекции кандидатов на NavCam-снимке,
+  помеченные рамками/маркерами. Прямая иллюстрация "что видит Rockster до ранжирования
+  random forest" — инженерный слой, который держит § 1.2а Блок 1-2 и § 1.3.
+license: NASA public domain (US government work), публикуется на официальной странице проекта JPL.

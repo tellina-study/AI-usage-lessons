@@ -23,6 +23,7 @@ from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.util import Inches, Pt
 from lxml import etree
 
+import deck_config as D
 import metrics as M
 
 # ── Палитра Ocean Gradient (зафиксирована курсом) ────────────────────────────
@@ -67,6 +68,81 @@ CODE_LIGHT_LABEL = SLATE                 # подпись карточки
 W_IN, H_IN = 13.333, 7.5
 FONT, MONO = "Arial", "Consolas"
 NS = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
+
+
+# ── Шкала кегля методики подачи (issue #307 §1.3-1.4; issue #311) ───────────
+#
+# Включается ТОЛЬКО через `D.TYPE_SCALE_OVERRIDE` — его выставляет
+# `deck_config.configure()` из ключа `type_scale` конфига ЗАНЯТИЯ (сейчас
+# только у Семинара 10). У остальных шестнадцати семинаров этого ключа нет,
+# `D.TYPE_SCALE_OVERRIDE` для них остаётся `False`, и каждая из четырёх
+# функций ниже возвращает переданное значение БЕЗ ИЗМЕНЕНИЙ — ни один байт их
+# собранной деки не меняется. Это гейт нулевого влияния, не намёк на него:
+# каждый вызов в этом ките и в `genres.py`, который раньше нёс кеглевый
+# литерал, теперь идёт через одну из этих функций.
+#
+# Геометрическая прогрессия ×1,25 от пола 15,0 пт (`../kadr/01-YAZYK-
+# KADRA.md` §2.1): 15 / 18,75 / 23,4375 / 29,296875, округлено до десятых —
+# ровно четыре регулярные ступени §1.4 приёмки. Пятая категория приёмки,
+# «кегль героя-числа», в эту деку не входит: в ней нет самостоятельной
+# крупной цифры-статистики вне порядковых значков.
+SCALE = (15.0, 18.75, 23.4, 29.3)             # ступени 0..3, по возрастанию
+SCALE_DESC = tuple(sorted(SCALE, reverse=True))
+SCALE_ROLE = {"caption": 0, "body": 1, "accent": 2, "head": 3}
+
+
+def scaled(default, role="body"):
+    """Кегль литерала по месту: `default`, если у занятия не включена шкала
+    §1.4; иначе — фиксированная ступень `role`, независимо от `default`.
+    `default` не «подправляется» от старого значения — ступень не выводится
+    из прежнего кегля, она назначена по смыслу работы блока (§1.4 приёмки,
+    таблица ролей в брифе issue #311)."""
+    if not D.TYPE_SCALE_OVERRIDE:
+        return default
+    return SCALE[SCALE_ROLE[role]]
+
+
+def scale_floor(default):
+    """Нижняя граница лестницы сжатия (`CELL_SIZES`-подобные, циклы
+    `while size > N: size -= 0.5`): пол §1.3 (15,0 пт), если у занятия
+    включена шкала, иначе прежний технический минимум приёма."""
+    return 15.0 if D.TYPE_SCALE_OVERRIDE else default
+
+
+def scale_ladder(default_ladder):
+    """Лестница подбора по месту (`fit_size` и подобные): ровно четыре
+    ступени §1.4 по убыванию, если шкала включена, иначе прежняя лестница
+    приёма."""
+    return SCALE_DESC if D.TYPE_SCALE_OVERRIDE else tuple(default_ladder)
+
+
+def scale_pad(default):
+    """Единый внутренний отступ §1.14 (0,20″ — тот же, что у `table_card`,
+    самого частого приёма деки), если у занятия включена шкала, иначе
+    собственный отступ приёма. Промах поля (`promah_polya.py`) не находит
+    НИ ОДНОЙ видимой закрашенной/окаймлённой фигуры этой деки не на
+    канонической кромке (`D.LEFT`/`D.LEFT+D.WIDTH`) — все 365 «промахов»
+    замера — это внутренние текстовые рамки без своей рамки/заливки и
+    внутренние линии таблиц, смещённые от кромки на РАЗНЫЕ отступы разных
+    форм (0,20–0,30″). Эта функция не чинит видимую границу (её нечему
+    чинить), а сокращает число РАЗЛИЧНЫХ отступов — то, что §1.14 просит
+    напрямую."""
+    return 0.20 if D.TYPE_SCALE_OVERRIDE else default
+
+
+def scale_step_down(size):
+    """Шаг уступки кегля при подгонке под `max_h`: следующая ступень §1.4
+    ВНИЗ от `size` (никогда ниже пола 15,0), если шкала включена — вместо
+    непрерывного шага −0,5 pt. Непрерывный шаг и фиксированные четыре
+    ступени несовместимы: подгонка плавным шагом неизбежно печатала бы
+    промежуточные кегли между ступенями на первом же тесном слайде, и порог
+    §1.4 («не более пяти кеглей на колоду») нарушался бы при первом тесном
+    блоке. Прыжком между ступенями эта лестница остаётся той же, что у
+    остального видимого слоя."""
+    if not D.TYPE_SCALE_OVERRIDE:
+        return size - 0.5
+    lower = [s for s in SCALE if s < size - 1e-6]
+    return max(lower) if lower else SCALE[0]
 
 
 # ── Разметка внутри строки: **жирный** и `моноширинный` ──────────────────────
@@ -337,7 +413,7 @@ def auto_header(sl, title, *, x=0.55, w=12.23, y=0.34, color=INK):
     Заголовок встал НА МЕСТО надзаголовка (`y` не менялся), и 0,34″ достались
     содержимому слайда, а не верхнему полю."""
     ty = y
-    size = M.fit_size(plain(title), w, 1.55, HEAD_SIZES, spacing=1.14, bold=True)
+    size = M.fit_size(plain(title), w, 1.55, scale_ladder(HEAD_SIZES), spacing=1.14, bold=True)
     h = M.text_h(plain(title), size, w, spacing=1.14, bold=True) + 0.06
     M.fits(plain(title), size, w, h, label=f"заголовок «{plain(title)[:24]}»", spacing=1.14, bold=True)
     text_box(sl, x, ty, w, h, title, size=size, bold=True, color=color, spacing=1.14)
@@ -375,14 +451,15 @@ def slide_number_mark(sl, number, *, on_dark=False):
     if number is None:
         return
     color = WHITE if on_dark else SLATE
-    text_box(sl, W_IN - 1.35, H_IN - 0.46, 1.0, 0.3, str(number), size=10.5,
+    text_box(sl, W_IN - 1.35, H_IN - 0.46, 1.0, 0.3, str(number),
+             size=scaled(10.5, "caption"),
              color=color, align=PP_ALIGN.RIGHT, rich=False)
 
 
 # ── Коробка-выноска ─────────────────────────────────────────────────────────
 
 def gold_callout(sl, x, y, w, text, *, size=14, bold=True, align=PP_ALIGN.LEFT,
-                 min_h=0.0, max_h=None, pad=0.24, label="выноска"):
+                 min_h=0.0, max_h=None, pad=None, label="выноска"):
     """Золотая коробка. Означает ровно одно: ВОПРОС, который зал должен решить,
     или ФОРМУЛА, которую надо запомнить. Один раз на слайде — иначе акцент
     обнуляется частотой (в прежней деке эта коробка стояла на 33 слайдах из 56
@@ -397,13 +474,15 @@ def gold_callout(sl, x, y, w, text, *, size=14, bold=True, align=PP_ALIGN.LEFT,
     золотую коробку запас не красит (в ней и так есть поле), но `check_tracks_
     pdf.py` меряет НЕВИДИМУЮ рамку текста, а не коробку, и ловит разницу как
     «фигура режет строку» — живой случай n13, `~4 pt` перебора на 16,5 pt."""
+    pad = scale_pad(0.24) if pad is None else pad
     WRAP_SAFETY = 0.12
     lines = text if isinstance(text, (list, tuple)) else [text]
     inner = w - 2 * pad - WRAP_SAFETY
     if max_h:
-        while size > 10.5 and M.rich_block_h(lines, size, inner,
+        floor = scale_floor(10.5)
+        while size > floor and M.rich_block_h(lines, size, inner,
                                         spacing=1.22, space_after=3) + 2 * 0.16 > max_h:
-            size -= 0.5
+            size = scale_step_down(size)
     th = M.rich_block_h(lines, size, inner, spacing=1.22, space_after=3)
     h = max(min_h, th + 0.32)
     if max_h:
@@ -415,14 +494,16 @@ def gold_callout(sl, x, y, w, text, *, size=14, bold=True, align=PP_ALIGN.LEFT,
     return h
 
 
-def quote_box(sl, x, y, w, lines, *, size=13.5, max_h=None, on_dark=False, label="цитата"):
+def quote_box(sl, x, y, w, lines, *, size=None, max_h=None, on_dark=False, label="цитата"):
     """Спокойная коробка для реплики или пояснения — НЕ золотая. Золото
     остаётся за вопросом и формулой."""
-    pad = 0.24
+    size = scaled(13.5, "body") if size is None else size
+    pad = scale_pad(0.24)
     inner = w - 2 * pad
     if max_h:
-        while size > 10 and M.rich_block_h(lines, size, inner, space_after=3) + 0.3 > max_h:
-            size -= 0.5
+        floor = scale_floor(10)
+        while size > floor and M.rich_block_h(lines, size, inner, space_after=3) + 0.3 > max_h:
+            size = scale_step_down(size)
     h = M.rich_block_h(lines, size, inner, space_after=3) + 0.3
     if max_h:
         h = min(h, max_h)
@@ -589,7 +670,10 @@ def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
                 highlight[i] = "gold"
     inner_w = w - 2 * pad
 
-    sizes = CELL_SIZES if cell_size is None else (cell_size,)
+    if cell_size is not None:
+        sizes = (max(cell_size, scale_floor(cell_size)),)
+    else:
+        sizes = (SCALE[0],) if D.TYPE_SCALE_OVERRIDE else CELL_SIZES
 
     def geometry(size, tighten):
         """Ширины колонок, высота шапки и высоты строк при заданных кегле и
@@ -600,7 +684,7 @@ def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
         # вызов, который просит строки ВЫШЕ штатных.
         mrh = min_row_h * (mrh / TIGHTEN[0][2])
         # Кегль шапки считается ДО ширин: он в них входит (см. `_col_shares`).
-        hsz = header_size if header_size is not None else min(size, 11.5)
+        hsz = header_size if header_size is not None else min(size, scale_floor(11.5))
         sh = col_w or _col_shares(headers, rows, ncol, w - 2 * box_pad, size, hsz)
         hh = (max(M.text_h(plain(h_).upper(), hsz, sh[j] - gap, bold=True)
                   for j, h_ in enumerate(headers)) + 0.12) if headers else 0.0
@@ -627,8 +711,14 @@ def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
             chosen, step, geo = best[0], best[1], best[2]
 
     shares, hs, head_h, rh, pad, cell_spacing, row_pad, h = geo
-    M.floor_reached(chosen, sizes[-1], label=label,
-                    chars=sum(len(plain(c)) for r in rows for c in r))
+    if len(sizes) > 1:
+        # Лестница из ОДНОГО значения (пол §1.3 под включённой шкалой — см.
+        # `sizes` выше) не «исчерпывается»: на ней нечему исчерпываться, это
+        # не уступка, а единственный разрешённый кегль. Предупреждение о
+        # «дне» здесь означало бы, что КАЖДАЯ таблица деки стоит на дне, —
+        # шум без новой информации сверх того, что уже скажет ПЕРЕПОЛНЕНИЕ.
+        M.floor_reached(chosen, sizes[-1], label=label,
+                        chars=sum(len(plain(c)) for r in rows for c in r))
     if step:
         # Подгонка совершилась молча — и это ровно то, о чём потом спорят
         # («почему эта таблица мельче соседней?»). Поэтому она остаётся в
@@ -687,11 +777,12 @@ def table_card(sl, x, y, w, headers, rows, *, col_w=None, highlight=None,
 
 # ── Карточки-варианты ───────────────────────────────────────────────────────
 
-def option_row(sl, x, y, w, options, *, highlight_idx=None, size=13.5, gap=0.16,
+def option_row(sl, x, y, w, options, *, highlight_idx=None, size=None, gap=0.16,
                min_h=1.15, max_h=1.7, label="карточки"):
     """Ряд карточек-вариантов. Выбранный вариант — пунктирная ЗОЛОТАЯ рамка и
     тёмно-золотой текст; остальные спокойные. На слайде-вопросе не подсвечен
     ни один: голосование идёт вслепую, разбор — на следующем слайде."""
+    size = scaled(13.5, "body") if size is None else size
     n = max(len(options), 1)
     cw = (w - gap * (n - 1)) / n
     inner = cw - 0.24
@@ -702,10 +793,11 @@ def option_row(sl, x, y, w, options, *, highlight_idx=None, size=13.5, gap=0.16,
     def _widest_word(size_):
         return max((M.text_w(wd, size_, bold=True)
                     for o in options for wd in plain(o).split()), default=0.0)
-    while fs > 9.0 and (
+    floor = scale_floor(9.0)
+    while fs > floor and (
             max(M.text_h(plain(o), fs, inner, spacing=1.16) for o in options) + 0.28 > max_h
             or _widest_word(fs) > inner):
-        fs -= 0.5
+        fs = scale_step_down(fs)
     h = max(min_h, max(M.text_h(plain(o), fs, inner, spacing=1.16) for o in options) + 0.34)
     cx = x
     for i, opt in enumerate(options):
@@ -723,24 +815,30 @@ def option_row(sl, x, y, w, options, *, highlight_idx=None, size=13.5, gap=0.16,
     return h
 
 
-def numbered_list(sl, x, y, w, items, *, size=13.5, marker=TEAL, max_h=None,
+def numbered_list(sl, x, y, w, items, *, size=None, marker=TEAL, max_h=None,
                   numbered=False, label="список"):
     """Список в коробке. Маркер — тиловый кружок (или номер); высота строки
     считается по измеренному тексту, поэтому пункт в две строки не выдавливает
     последний пункт наружу (прежняя вёрстка считала `0.32 × число пунктов`)."""
+    size = scaled(13.5, "body") if size is None else size
     pad, mk = 0.24, 0.42
     inner = w - 2 * pad - mk
     fs = size
     if max_h:
-        while fs > 9.5 and sum(M.text_h(plain(i), fs, inner) + 0.14 for i in items) + 2 * pad > max_h:
-            fs -= 0.5
+        floor = scale_floor(9.5)
+        while fs > floor and sum(M.text_h(plain(i), fs, inner) + 0.14 for i in items) + 2 * pad > max_h:
+            fs = scale_step_down(fs)
     ih = [M.text_h(plain(i), fs, inner) + 0.14 for i in items]
     h = sum(ih) + 2 * pad
     ocean_box(sl, x, y, w, h, fill=SURFACE, stroke=SOFT_GREY, stroke_pt=1.2)
     iy = y + pad
+    # Маркер-номер на СВОЕЙ ступени шкалы не растёт на +2 pt сверх `fs`: под
+    # включённой шкалой это ввело бы ПЯТЫЙ кегль (например 20,75 pt при
+    # fs=18,75), нарушая порог §1.4. Без шкалы поведение прежнее.
+    marker_fs = fs if D.TYPE_SCALE_OVERRIDE else fs + 2
     for i, item in enumerate(items):
         if numbered:
-            text_box(sl, x + pad, iy, mk - 0.06, ih[i], str(i + 1), size=fs + 2, bold=True,
+            text_box(sl, x + pad, iy, mk - 0.06, ih[i], str(i + 1), size=marker_fs, bold=True,
                      color=marker, anchor=MSO_ANCHOR.MIDDLE, rich=False)
         else:
             rect(sl, x + pad + 0.04, iy + ih[i] / 2 - 0.055, 0.11, 0.11, marker,
@@ -752,25 +850,27 @@ def numbered_list(sl, x, y, w, items, *, size=13.5, marker=TEAL, max_h=None,
     return h
 
 
-def criterion_plate(sl, x, y, w, title, items, *, size=11.5, accent=SLATE, max_h=None,
+def criterion_plate(sl, x, y, w, title, items, *, size=None, accent=SLATE, max_h=None,
                     min_h=0.0, label="критерий"):
     """Плашка критерия: заголовок капителями + пункты через тонкие линии.
     Приём для слайдов «ещё рано / не нужно вообще» — там, где прежняя вёрстка
     ставила две одинаковые сетки друг над другом."""
+    size = scaled(11.5, "body") if size is None else size
     pad = 0.2
     inner = w - 2 * pad
     fs = size
     if max_h:
-        while fs > 8.5 and 0.42 + sum(M.text_h(plain(i), fs, inner) + 0.16 for i in items) + pad > max_h:
-            fs -= 0.5
+        floor = scale_floor(8.5)
+        while fs > floor and 0.42 + sum(M.text_h(plain(i), fs, inner) + 0.16 for i in items) + pad > max_h:
+            fs = scale_step_down(fs)
     ih = [M.text_h(plain(i), fs, inner) + 0.16 for i in items]
     h = max(min_h, 0.42 + sum(ih) + pad)
     ocean_box(sl, x, y, w, h, fill=SURFACE, stroke=SOFT_GREY, stroke_pt=1.2)
     # Заголовок плашки рисуется БЕЗ разбора разметки (`rich=False`), поэтому
     # звёздочки жирного начертания из исходной ячейки напечатались бы как текст:
     # «РАСЩЕПЛЯТЬ **НУЖНО**». Замечено владельцем на Семинаре 7, круг 9.
-    text_box(sl, x + pad, y + 0.12, inner, 0.3, plain(title).upper(), size=11, bold=True,
-             color=accent, rich=False)
+    text_box(sl, x + pad, y + 0.12, inner, 0.3, plain(title).upper(), size=scaled(11, "caption"),
+             bold=True, color=accent, rich=False)
     iy = y + 0.42
     for i, item in enumerate(items):
         M.fits(plain(item), fs, inner, ih[i], label=f"{label} {i}")
@@ -812,7 +912,7 @@ def code_w(ln, size, markup):
     return sum(M.text_w(seg, size, bold=mo, mono=True) for seg, _b, mo in inline_runs(ln))
 
 
-def code_card(sl, x, y, w, lines, *, size=11.5, max_h=None, title=None,
+def code_card(sl, x, y, w, lines, *, size=None, max_h=None, title=None,
               label="код", markup=False, dark=False):
     """Моноширинная карточка для листинга файла и вывода команды. Высота — по
     числу РЕАЛЬНЫХ строк; перенос моноширинного текста не делается, длинная
@@ -840,13 +940,15 @@ def code_card(sl, x, y, w, lines, *, size=11.5, max_h=None, title=None,
     команды в оболочке, например), и убрать её значило бы соврать про то, что
     карточка обещает показать дословно. Решает автор, пометив ограждение
     языком, — вёрстка не угадывает."""
-    pad = 0.24
+    size = scaled(11.5, "caption") if size is None else size
+    pad = scale_pad(0.24)
     inner = w - 2 * pad
     fs = size
     if max_h:
+        floor = scale_floor(7.5)
         head = 0.32 if title else 0.0
-        while fs > 7.5 and head + len(lines) * M.line_h(fs, 1.3) + 2 * pad > max_h:
-            fs -= 0.5
+        while fs > floor and head + len(lines) * M.line_h(fs, 1.3) + 2 * pad > max_h:
+            fs = scale_step_down(fs)
     head = 0.32 if title else 0.0
     h = head + len(lines) * M.line_h(fs, 1.3) + 2 * pad
     if max_h:
@@ -864,9 +966,14 @@ def code_card(sl, x, y, w, lines, *, size=11.5, max_h=None, title=None,
         rect(sl, x, y + 0.04, 0.055, h - 0.08, TEAL)
         title_color, body_color = CODE_LIGHT_LABEL, CODE_LIGHT_FG
     if title:
-        text_box(sl, x + pad, y + 0.12, inner, 0.28, title, size=10.5, bold=True,
-                 color=title_color, rich=False)
-    M.floor_reached(fs, 7.5, label=label, chars=sum(len(ln) for ln in lines))
+        text_box(sl, x + pad, y + 0.12, inner, 0.28, title, size=scaled(10.5, "caption"),
+                 bold=True, color=title_color, rich=False)
+    if not D.TYPE_SCALE_OVERRIDE:
+        # Под включённой шкалой карточка кода стартует ОТ пола (роль «caption»
+        # = 15,0 = сам пол) — «дно» здесь не уступка, а исходное состояние
+        # любой карточки, и предупреждение на каждой было бы шумом без
+        # новой информации (см. тот же довод у `table_card`).
+        M.floor_reached(fs, 7.5, label=label, chars=sum(len(ln) for ln in lines))
     for ln in lines:
         if code_w(ln, fs, markup) > inner:
             M._WARNINGS.append(f"ПЕРЕПОЛНЕНИЕ [{label}]: строка кода «{ln[:40]}…» шире карточки")
@@ -985,21 +1092,37 @@ def tag_plate(sl, x, y, text, *, w=6.2, stroke=GOLD, color=GOLD, size=11.5):
 
 
 def roadmap(sl, stages, cur_idx, *, x=0.55, y=6.55, w=12.23):
-    """Дорожная карта занятия внизу дивайдера: где мы среди ступеней."""
+    """Дорожная карта занятия внизу дивайдера: где мы среди ступеней.
+
+    Под включённой шкалой (§1.4: «дорожка кейса» — ступень 2) кегль подписи
+    растёт с 12,5 до 23,4 pt, и хотя бы одно название кейса («Разбиение
+    документа на части») перестаёт помещаться в одну строку фиксированной
+    плашки 0,42″ — замерено `metrics.text_h` до правки: 3 строки, 1,15″.
+    Плашка здесь поэтому САМА считает нужную высоту по самому длинному
+    названию и прижимается к низу полотна (а не растёт вниз за его край) —
+    без шкалы (`D.TYPE_SCALE_OVERRIDE` ложь у всех остальных занятий)
+    высота и исходная `y` остаются прежними, без единого изменения."""
     n = len(stages)
     gap = 0.2
     cw = (w - gap * (n - 1)) / n
+    fs = scaled(12.5, "accent")
+    if D.TYPE_SCALE_OVERRIDE:
+        ph = max(0.42, max(M.text_h(plain(s), fs, cw - 0.12, bold=True)
+                           for s in stages) + 0.14)
+        y = H_IN - 0.2 - ph
+    else:
+        ph = 0.42
     cx = x
     for i, name in enumerate(stages):
         on = (i == cur_idx)
         done = (i < cur_idx)
-        rect(sl, cx, y, cw, 0.42, GOLD if on else (TEAL if done else PILL_OFF),
+        rect(sl, cx, y, cw, ph, GOLD if on else (TEAL if done else PILL_OFF),
              radius=True, radius_adj=0.3)
-        text_box(sl, cx, y, cw, 0.42, name, size=12.5, bold=on,
+        text_box(sl, cx, y, cw, ph, name, size=fs, bold=on,
                  color=DEEP if on else (WHITE if done else ON_DARK_MUTE),
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, rich=False)
         cx += cw + gap
-    return 0.42
+    return ph
 
 
 # ── Грамматика деки: одна работа слайда — одна форма ────────────────────────
@@ -1023,23 +1146,26 @@ def roadmap(sl, stages, cur_idx, *, x=0.55, y=6.55, w=12.23):
 # Золотая ЗАЛИВКА С РАМКОЙ существует ровно в одном месте — на вопросе.
 
 
-def form_question(sl, x, y, w, lines, *, size=16.5, max_h=None, label="вопрос"):
+def form_question(sl, x, y, w, lines, *, size=None, max_h=None, label="вопрос"):
     """Вопрос залу. Единственная форма с золотой заливкой И золотой рамкой —
     ни одна другая работа слайда её не получает."""
+    size = scaled(16.5, "accent") if size is None else size
     return gold_callout(sl, x, y, w, lines, size=size, bold=True, align=PP_ALIGN.CENTER,
                         max_h=max_h, min_h=0.9, label=label)
 
 
-def form_formula(sl, x, y, w, lines, *, size=15, max_h=None, label="формула"):
+def form_formula(sl, x, y, w, lines, *, size=None, max_h=None, label="формула"):
     """Формула или тезис-итог — то, что надо запомнить. Толстая золотая планка
     слева и жирный текст без заливки: вес есть, а золотой коробки нет, поэтому
     с вопросом не спутать."""
-    bar, pad = 0.09, 0.3
+    size = scaled(15, "accent") if size is None else size
+    bar, pad = 0.09, scale_pad(0.3)
     inner = w - bar - pad - 0.2
     if max_h:
-        while size > 11 and M.rich_block_h(lines, size, inner,
+        floor = scale_floor(11)
+        while size > floor and M.rich_block_h(lines, size, inner,
                                     spacing=1.24, space_after=3) + 0.3 > max_h:
-            size -= 0.5
+            size = scale_step_down(size)
     h = M.rich_block_h(lines, size, inner, spacing=1.24, space_after=3) + 0.3
     if max_h:
         h = min(h, max_h)
@@ -1050,16 +1176,18 @@ def form_formula(sl, x, y, w, lines, *, size=15, max_h=None, label="формул
     return h
 
 
-def form_speech(sl, x, y, w, lines, *, size=13, max_h=None, label="реплика"):
+def form_speech(sl, x, y, w, lines, *, size=None, max_h=None, label="реплика"):
     """Реплика докладчика в кавычках. Тихая форма: тонкая тиловая линия слева,
     курсив, приглушённый цвет, никакой заливки. Студент видит, что это слова
     преподавателя, а не тезис слайда."""
-    bar, pad = 0.035, 0.26
+    size = scaled(13, "body") if size is None else size
+    bar, pad = 0.035, scale_pad(0.26)
     inner = w - bar - pad - 0.2
     if max_h:
-        while size > 10 and M.rich_block_h(lines, size, inner,
+        floor = scale_floor(10)
+        while size > floor and M.rich_block_h(lines, size, inner,
                                     spacing=1.26, space_after=3) + 0.2 > max_h:
-            size -= 0.5
+            size = scale_step_down(size)
     h = M.rich_block_h(lines, size, inner, spacing=1.26, space_after=3) + 0.2
     if max_h:
         h = min(h, max_h)
@@ -1070,15 +1198,17 @@ def form_speech(sl, x, y, w, lines, *, size=13, max_h=None, label="реплик�
     return h
 
 
-def form_caveat(sl, x, y, w, lines, *, size=12.5, max_h=None, label="оговорка"):
+def form_caveat(sl, x, y, w, lines, *, size=None, max_h=None, label="оговорка"):
     """Честный пробел, оговорка, «этого измерить не удалось». Пунктирная серая
     рамка — та же пунктирная грамматика, что у пустого слота: «здесь чего-то
     нет, и мы об этом говорим вслух»."""
-    pad = 0.26
+    size = scaled(12.5, "body") if size is None else size
+    pad = scale_pad(0.26)
     inner = w - 2 * pad
     if max_h:
-        while size > 9.5 and M.rich_block_h(lines, size, inner, space_after=3) + 0.3 > max_h:
-            size -= 0.5
+        floor = scale_floor(9.5)
+        while size > floor and M.rich_block_h(lines, size, inner, space_after=3) + 0.3 > max_h:
+            size = scale_step_down(size)
     h = M.rich_block_h(lines, size, inner, space_after=3) + 0.3
     if max_h:
         h = min(h, max_h)
@@ -1089,17 +1219,19 @@ def form_caveat(sl, x, y, w, lines, *, size=12.5, max_h=None, label="огово�
     return h
 
 
-def form_fact(sl, x, y, w, lines, *, size=13.5, max_h=None, label="факт"):
+def form_fact(sl, x, y, w, lines, *, size=None, max_h=None, label="факт"):
     """Факт, число, наблюдение. Тиловая заливка и тиловая планка — нейтральная
     отметка, которая не претендует ни на вопрос, ни на вывод.
 
     Заодно здесь наконец работает TEAL: вторичный цвет палитры был
     импортирован прежним рендерером и не использован ни разу."""
-    bar, pad = 0.07, 0.26
+    size = scaled(13.5, "body") if size is None else size
+    bar, pad = 0.07, scale_pad(0.26)
     inner = w - bar - 2 * pad
     if max_h:
-        while size > 10 and M.rich_block_h(lines, size, inner, space_after=3) + 0.3 > max_h:
-            size -= 0.5
+        floor = scale_floor(10)
+        while size > floor and M.rich_block_h(lines, size, inner, space_after=3) + 0.3 > max_h:
+            size = scale_step_down(size)
     h = M.rich_block_h(lines, size, inner, space_after=3) + 0.3
     if max_h:
         h = min(h, max_h)
@@ -1134,7 +1266,7 @@ def pill_rows_h(items, w, size):
     return n * (PILL_H + PILL_GAP) - PILL_GAP if n else 0.0
 
 
-def term_pills(sl, x, y, w, items, *, size=13, label="термины", center=True):
+def term_pills(sl, x, y, w, items, *, size=None, label="термины", center=True):
     """Ряд терминов — работа «ЗАПОМНИ». Компактные тиловые пилюли по ширине
     текста, в одну-две строки.
 
@@ -1146,6 +1278,7 @@ def term_pills(sl, x, y, w, items, *, size=13, label="термины", center=Tr
     `center=False` — для узкой колонки (дорожка «база» Такта Б): ряд из двух
     пилюль, поставленный по центру полуширины, читается как случайно съехавший
     от края текста, под которым он стоит."""
+    size = scaled(13, "caption") if size is None else size
     pad, gap, ph = PILL_PAD, PILL_GAP, PILL_H
     rows = pill_rows(items, w, size)
     ry = y

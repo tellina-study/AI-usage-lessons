@@ -5,10 +5,10 @@ issue: 101
 status: finalized
 version: v2
 length_min: 75
-length_words: "~5775 произносимых / ~6300 файл"
+length_words: "~5,775 spoken / ~6,300 in the file"
 slides_covered: [s01, s02, s03, s04, s05, s06, s07, s08, s09, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20, s21, s22, s23, s24, s25, s26, s27, s28, s29, s30, s31, s32]
-derived_from: "chapter.md (status=reviewed, ~12 860 слов) + deck.yaml (32 слайда, finalized) + plan-v2.md"
-note: "Conversational. Local-binding РАЗРЕШЁН (речь для зала ИУ6 МГТУ Баумана). Mars Climate Orbiter — сквозной мотив (крючок ~s11, кульминация s23, callback s26 + s32)."
+derived_from: "chapter.md (status=reviewed, ~12,860 words) + deck.yaml (32 slides, finalized) + plan-v2.md"
+note: "Conversational. Local binding is PERMITTED (a speech for the IU6 MSTU Bauman room). Mars Climate Orbiter is the throughline motif (hook ~s11, climax s23, callback s26 + s32)."
 ---
 
 # Lecturer's Speech · Lecture 6. AI in Engineering Design and CAD/CAM

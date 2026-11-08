@@ -1,0 +1,488 @@
+# library/lectures/lec-06/deck.en.yaml
+#
+# Deck structure of Lecture 6 "AI in Engineering Design and CAD/CAM" (32 slides).
+# This is the ENGLISH source-of-truth twin of deck.yaml (bilingual rule, CLAUDE.md §
+# Bilingual Production Rule, issue #172). RU is the source of truth; this file is a full
+# faithful duplicate, not a machine gloss. It is documentation, NOT read at render time
+# (EN render is a later phase).
+#
+# Source: chapter v2 (status=reviewed, ~12,860 words) +
+#   plan v2 (notes/lecture-6-review/plan-v2.md §4 — slide-by-slide plan) +
+#   cascade constraints qa-reports/2026-05-17-v1/SYNTHESIS.md "NOT for Phase 4."
+# Phase 6 multi-artifact pipeline — deck render v1 (book-first).
+# Issue #101 (RU) / #324 (EN twin) · downstream cascade from the chapter (source of truth).
+#
+# Phase 6 structural edit (RU): a 6th section divider was added before Part 6
+#   (s29 "Part 6. Synthesis"); worked-decision → s30, rule+matrix → s31,
+#   Q&A → s32. 32 slides total. duration_min sums to 75.0 (Part 6's
+#   minutes redistributed: divider 0.3 + s30 2.4 + s31 2.4 + s32 0.9).
+#
+# Lec-N-1 pattern (lec-07): a lecture map (s03), 6 section dividers
+#   (s04/s09/s15/s20/s25/s29), a dedicated Q&A (s32). The roadmap bar appears ONLY on
+#   dividers + the cover (NOT on every content slide).
+#
+# Palette LOCKED — Ocean Gradient: Primary deep `#21295C` /
+#   Primary mid `#065A82` / Primary light `#1C7293` + Teal secondary
+#   `#028090` + Gold highlight `#F0AB00` (≥1×/slide). Visual motif —
+#   "Ocean rounded box" (radius 12, surface `#F4F7FA`, stroke `#1C7293`)
+#   on every content slide (NOT on the cover).
+#
+# Cascade constraints (MANDATORY at Phase 6 render):
+#   - s12/s17/s19/s21/s27 — ≤3 numbers / ≤4 product names per slide.
+#   - s23 — Mars Climate Orbiter leads, Gimli/Hyatt in one line each.
+#   - s24 — do NOT mix benchmarks with catastrophes (that's a separate slide).
+#   - APM FEM "~70% of volume" — NOT given as an exact number on the slide (a vendor
+#     claim; "per the vendor's claim" goes only in speaker_notes).
+#   - Unverified exact numbers are given as ranges ("mass −~40%",
+#     "~45–63%", "up to ~10³×"). [VERIFY-DAY-OF] — speaker_notes only.
+#
+# Terminology: tools/lecture-production/glossary-ru-en.md (the course-wide RU→EN lock,
+#   issue #172) — "topology optimization", "generative design", "surrogate model",
+#   "finite element analysis (FEA)", "failure"/"lesson (learned)", ESKD/ASCON/Rostekhnadzor
+#   Part B transliterations, etc. Lecture-6-specific EN phrasing (Mars Climate Orbiter as
+#   "a seam between systems", "spectral bias" for PINN smoothing, "silent error",
+#   "OKB Sukhoi", "MS-21-300", "Federal Law 187"/"Federal Law 58") is cross-checked against
+#   the already-finalized speech.en.md for this lecture, so slides and speech agree.
+
+deck:
+  lecture_number: 6
+  title: "AI in Engineering Design and CAD/CAM"
+  audience: "3rd-year engineering students, IU6 department, Bauman Moscow State Technical University (universal framing, no local binding)"
+  duration_min: 75
+  central_question: "Before trusting a tool with a design decision — name the kind of AI: deterministic math or a trained probabilistic model? What is being optimized and who set the constraints? Who bears responsibility?"
+  learning_outcomes: [LO1, LO2, LO7]
+  language: en
+  status: finalized
+  version: v2
+  source: "chapter v2 (status=reviewed, ~12,860 words) — EN twin"
+  plan: "notes/lecture-6-review/plan-v2.md"
+
+slides:
+  # ─── Part 0. Hook + central question + map (7 min) ───
+  - id: s01
+    file: slides-en/s01-cover.md
+    type: cover
+    duration_min: 0.5
+    assertion: "Lecture 6. AI in Engineering Design and CAD/CAM"
+    learning_goal: "Cover slide: title + metadata"
+    learning_outcomes: []
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "Hero cover: a large outline '06' (200pt) + 36pt title + duration + date; Ocean palette, hero motif on the right"
+
+  - id: s02
+    file: slides-en/s02-hook-bracket.md
+    type: assertion_visual
+    duration_min: 4
+    assertion: "This 'organic' bracket was not designed by generative AI but by a deterministic optimizer — a formulation going back to 1904."
+    learning_goal: "Concept-reveal hook: debunking 'AI came up with the part' → entry into the central question"
+    learning_outcomes: [LO1]
+    chapter_ref: "§0 — The bracket mistaken for the work of a neural network"
+    references: [autodesk-gm-bracket, michell-1904]
+    visual:
+      pattern: assertion_visual
+      primary: "Photo of the GM seat bracket (openwork 'organic' shape) in an Ocean rounded box; question overlay 'What kind of AI designed this?' → reveal block 'None. Deterministic optimization, 1904'"
+
+  - id: s03
+    file: slides-en/s03-lecture-map.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "The lecture's spine is three questions to yourself and six parts: classification across all 6 classes of AI, depth for the three with the highest cost of error."
+    learning_goal: "Lecture map: 3 anchor questions + 6 parts"
+    learning_outcomes: [LO1]
+    chapter_ref: "§Introduction — the three questions; §1.2 promise/delivery"
+    references: []
+    visual:
+      pattern: roadmap
+      primary: "3 anchor questions, large, in an Ocean rounded box + a 6-card horizontal roadmap bar (parts 0–6); the current part is gold. The roadmap bar appears here, and from now on, only on dividers"
+
+  # ─── Section divider (1) ───
+  - id: s04
+    file: slides-en/s04-section1-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Part 1 — Name the kind of AI: the foundation and the taxonomy of six classes"
+    learning_goal: "Visual divider — transition into the foundation part"
+    learning_outcomes: [LO1]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "A large '1' + title + a one-phrase frame + a 7-card progress bar with the current part gold-highlighted"
+
+  # ─── Part 1. Foundation + taxonomy (13 min) ───
+  - id: s05
+    file: slides-en/s05-foundation-solve-vs-guess.md
+    type: assertion_visual
+    duration_min: 3.5
+    assertion: "Deterministic optimization solves an equation set by the engineer; a trained generative model guesses from examples and contains no physical law inside it."
+    learning_goal: "The lecture's load-bearing axis: solving an equation vs. guessing from examples (foundation before taxonomy)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.1 — The fundamental distinction"
+    references: []
+    visual:
+      pattern: comparison
+      primary: "Two equal columns in an Ocean rounded box: on the left 'SOLVES a given equation' (the physical law present, same input → same output), on the right 'GUESSES from examples' (no law inside, reproduces 'what the usual answer looks like'). No formulas"
+
+  - id: s06
+    file: slides-en/s06-taxonomy-axis.md
+    type: assertion_visual
+    duration_min: 3.5
+    assertion: "Six classes of AI in design fall on one axis — deterministic ↔ probabilistic; the farther right, the fewer the built-in guarantees."
+    learning_goal: "Skeleton of the taxonomy: one axis, 6 labels with a micro-definition (NOT the full matrix — that's s31)"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.2 — Skeleton of the taxonomy: one axis, six labels"
+    references: []
+    visual:
+      pattern: schema_axis
+      primary: "A horizontal axis 'deterministic → probabilistic' with an arrow; 6 labels along the axis (optimization/topology · evolutionary/GA · surrogate/PINN · CV · LLM assistant · generative AI for geometry), each with a one-line micro-definition. Caption: 'The full matrix — at the end of the lecture'"
+
+  - id: s07
+    file: slides-en/s07-pair-optim-surrogate.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "Optimization ML and surrogate/PINN — recognized by the boundary: when yes, when no, what the classical alternative is."
+    learning_goal: "Recognizing pair 1 (optimization ML + surrogate/PINN): example + boundary + alternative"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.3 — The six classes: recognition, example, boundary"
+    references: [michell-1904, bendsoe-kikuchi-1988]
+    visual:
+      pattern: matrix
+      primary: "2 row cards (Optimization ML / Surrogate-PINN) × 3 columns (When YES · When NO · Classical alternative); Lucide icons per row"
+
+  - id: s08
+    file: slides-en/s08-pair-genai-cv-ga.md
+    type: assertion_visual
+    duration_min: 3.2
+    assertion: "Generative AI/LLM, computer vision, and evolutionary/GA — three classes, each with one real example and an explicit boundary of applicability."
+    learning_goal: "Recognizing pair 2 (generative AI/LLM + CV + GA); the 3 anchor questions as a recurring frame"
+    learning_outcomes: [LO1]
+    chapter_ref: "§1.3 — The six classes; the three anchor questions"
+    references: [nasa-st5-antenna-2006]
+    visual:
+      pattern: matrix
+      primary: "3 row cards (Generative AI/LLM / Computer vision / Evolutionary-GA) × 3 columns (When YES · When NO · Alternative); at the bottom, the 3 anchor questions repeated small"
+
+  # ─── Section divider (2) ───
+  - id: s09
+    file: slides-en/s09-section2-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Part 2 — Generative design is not generative AI"
+    learning_goal: "Visual divider — transition into the optimization ML part"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "A large '2' + title + a one-phrase frame + a 7-card progress bar with the current part gold-highlighted"
+
+  # ─── Part 2. GD = optimization ML ≠ generative AI (15 min) ───
+  - id: s10
+    file: slides-en/s10-terminology-trap.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "'AI generates the design' is a marketing substitution: under the hood, a deterministic optimizer solves the problem the engineer posed — not a generative model."
+    learning_goal: "The terminological trap (FAILURE/judgment): asking 'what kind of AI is this' before trust"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.1 — The terminological trap"
+    references: [autodesk-fusion-blog-topopt]
+    visual:
+      pattern: comparison
+      primary: "Two contrasting columns in an Ocean rounded box: 'Marketing says: AI generates the design' vs. 'What's actually happening: a deterministic optimizer solves the problem the engineer posed'; a gold lesson at the bottom"
+
+  - id: s11
+    file: slides-en/s11-classical-pedigree.md
+    type: assertion_visual
+    duration_min: 3.8
+    assertion: "Topology optimization is gradient descent, moving not the weights of a network but the density of material, minimizing mass under the strength-of-materials constraint σ_vM ≤ [σ]."
+    learning_goal: "Classical lineage from the KNOWN (strength of materials + gradient descent from Lecture 2) → SIMP; KKT/Lagrange as a name-drop only"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.2 — Classical lineage: from the known to SIMP; §2.3 — KKT (name-drop)"
+    references: [michell-1904, cauchy-1847, bendsoe-kikuchi-1988, bendsoe-1989-simp]
+    visual:
+      pattern: schema_timeline
+      primary: "A horizontal lineage timeline: known from strength of materials → Michell 1904 (intuition) → Cauchy 1847 / gradient descent from Lecture 2 → Bendsøe–Kikuchi 1988 → SIMP 1989. Em-dash captions, single line. KKT — a small footnote, 'the formal optimality condition, details in the chapter.' A conclusion plate: 'convergence to the optimum, NOT a sample from a distribution'"
+
+  - id: s12
+    file: slides-en/s12-industrial-cases.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "GM's seat bracket and the Airbus bionic partition: a radical mass reduction obtained by numerical optimization and enumeration — not by a diffusion model."
+    learning_goal: "Real cases — the kind of AI is optimization+enumeration, NOT diffusion; cascade: ≤3 numbers / ≤4 product names"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.4 — Real industrial cases"
+    references: [autodesk-gm-bracket, airbus-bionic-partition]
+    visual:
+      pattern: matrix
+      primary: "2 case cards in an Ocean rounded box: GM seat bracket (8→1 part, mass −~40%) + Airbus bionic partition (mass −~45%, Scalmalloy). ≤3 numbers per card; a kind-of-AI label on each; icons"
+
+  - id: s13
+    file: slides-en/s13-russia-honest.md
+    type: assertion_visual
+    duration_min: 2.8
+    assertion: "In Russia, APM FEM in KOMPAS-3D is deterministic SIMP, not AI: the same terminological trap, on a domestic tool."
+    learning_goal: "Russia (honest): OKB Sukhoi's achievements + the substitution of concepts in RU marketing + an honest gap"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§2.5 — Russia: an honest picture"
+    references: [okb-sukhoi-bracket-tass, askon-apm-fem]
+    visual:
+      pattern: matrix
+      primary: "3 honest cards in an Ocean rounded box: Real achievements (OKB Sukhoi — the Su-57 bracket, ~a quarter lighter, LPBF) · Substitution of concepts (APM FEM = deterministic SIMP, not AI; the C3D kernel — a strategic asset) · Where we honestly lag (essentially no mature AI-generative engine at the level of Fusion). No exact number for APM FEM"
+
+  - id: s14
+    file: slides-en/s14-section2-failure.md
+    type: assertion_visual
+    duration_min: 2.9
+    assertion: "The main risk of topology optimization is not a 'hallucination' but garbage-in → optimal garbage: a flawless optimum for an incompletely posed problem."
+    learning_goal: "The part's failure (FAILURE): incomplete constraints + non-manufacturability + alternative (parametrics + manual topology optimization)"
+    learning_outcomes: [LO2, LO7]
+    chapter_ref: "§2.6 — The part's failure: garbage-in → optimal garbage"
+    references: [isicad-generative-ru, mcgan-2024]
+    visual:
+      pattern: schema_pipeline
+      primary: "Pipeline 'Incomplete statement → deterministic optimizer → a mathematically flawless, engineering-unusable shape' (RIGHT_ARROW); a non-manufacturability callout + a gold alternative"
+
+  # ─── Section divider (3) ───
+  - id: s15
+    file: slides-en/s15-section3-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Part 3 — AI speeds up the computation, it does not replace the physics"
+    learning_goal: "Visual divider — transition into the surrogate/PINN part"
+    learning_outcomes: [LO2]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "A large '3' + title + a one-phrase frame + a 7-card progress bar with the current part gold-highlighted"
+
+  # ─── Part 3. Surrogate/PINN: speeds up the computation, does not replace the physics (12 min) ───
+  - id: s16
+    file: slides-en/s16-known-to-surrogate.md
+    type: assertion_visual
+    duration_min: 3
+    assertion: "FE analysis solves the equilibrium equations on a mesh; a surrogate does not solve them — it guesses the stress field from thousands of past computations."
+    learning_goal: "From KNOWN FE analysis to a surrogate; Galerkin/K·u=f mentioned in one phrase only (the derivation is in the chapter)"
+    learning_outcomes: [LO2]
+    chapter_ref: "§3.1 — From known FE analysis to a surrogate; §3.2 — the weak form (one phrase)"
+    references: [turner-clough-1956]
+    visual:
+      pattern: comparison
+      primary: "Two columns in an Ocean rounded box: 'FE solver: a mesh → solves K·u=f → a stress field (traceable)' vs. 'Surrogate: input → learned the mapping on thousands of computations → an instant answer, NOT solving the equation'. Caption: 'under the hood — a system of equilibrium equations; the surrogate does not solve it'"
+
+  - id: s17
+    file: slides-en/s17-state-2026.md
+    type: data_chart
+    duration_min: 2.5
+    assertion: "By 2026, major vendors have turned surrogates into a product; claimed speedups of 'up to N×' are an upper bound on a narrow class of problems, not the typical case."
+    learning_goal: "State of 2026 (ranges, critical reading of numbers); cascade: ≤3–4 product names"
+    learning_outcomes: [LO2]
+    chapter_ref: "§3.3 — State of 2026: what the market offers"
+    references: [ansys-simai-2026, altair-physicsai-2026, nvidia-physicsnemo]
+    visual:
+      pattern: matrix
+      primary: "3–4 product cards in an Ocean rounded box with a speedup of 'up to ~10²–10³×'; a gold caveat plate 'N× is on a case favorable to the vendor; the cost of the training archive is excluded from the ROI'"
+
+  - id: s18
+    file: slides-en/s18-pinn-hype-vs-reality.md
+    type: assertion_visual
+    duration_min: 3.3
+    assertion: "A PINN smooths out sharp transitions: at a stress concentrator (known from strength of materials), it 'smears' the peak and produces an underestimate — the worst type of error in a strength calculation."
+    learning_goal: "PINN: hype vs. reality (FAILURE/limitation) — spectral bias at the concentrator; where it is genuinely useful"
+    learning_outcomes: [LO2]
+    chapter_ref: "§3.4 — PINN: hype versus reality"
+    references: [pinn-flaws-sciencedirect-2025, pinn-vs-fem-oxford]
+    visual:
+      pattern: assertion_visual
+      primary: "Sketch: the true sharp stress peak at a groove/hole vs. the smoothed, underestimated PINN curve, with a gold marker on the underestimate. On the right: 'where a PINN is genuinely useful' — sparse data, inverse problems, complex geometry (NOT a replacement for FEM/CFD)"
+
+  - id: s19
+    file: slides-en/s19-why-surrogate-criterion.md
+    type: assertion_visual
+    duration_min: 2.6
+    assertion: "A surrogate speeds up the evaluation of hundreds of variants at the search stage; the final calculation for the selected candidates is done by a certified deterministic solver."
+    learning_goal: "Why a surrogate at all + the applicability criterion (silent error out-of-domain) + Russia; cascade: ≤3 numbers / ≤4 names"
+    learning_outcomes: [LO2]
+    chapter_ref: "§3.5 — Why a surrogate at all: the applicability criterion and Russia"
+    references: [logos-rosatom, cml-bench-spbpu]
+    visual:
+      pattern: schema_pipeline
+      primary: "Pipeline 'hundreds of variants → the surrogate screens them → 5–10 candidates → a certified solver computes the final result' (RIGHT_ARROW); a gold criterion"
+
+  # ─── Section divider (4) ───
+  - id: s20
+    file: slides-en/s20-section4-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Part 4 — Where a hallucination costs dearly"
+    learning_goal: "Visual divider — transition into the generative AI/LLM part"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "A large '4' + title + a one-phrase frame + a 7-card progress bar; the one-phrase frame recalls the foundation: generative AI contains no physical law"
+
+  # ─── Part 4. Generative AI and LLMs in CAD: the cost of a hallucination (12 min) ───
+  - id: s21
+    file: slides-en/s21-landscape-2026.md
+    type: assertion_visual
+    duration_min: 2.8
+    assertion: "What's mature is an LLM as an interface to deterministic operations; generating geometry from text, in 2026, is a concept and an early beta."
+    learning_goal: "Landscape 2026 (marketing vs. maturity); cascade: ≤3 numbers / ≤4 names; the Autodesk quote not given verbatim"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.2 — Landscape 2026: marketing versus maturity"
+    references: [autodesk-bernini, autodesk-neural-cad]
+    visual:
+      pattern: comparison
+      primary: "Two maturity columns in an Ocean rounded box: 'Mature layer: LLM copilots as an interface' (Autodesk Assistant, Siemens Design Copilot) vs. 'Immature layer: text-to-CAD / neuro-CAD' (Zoo.dev, Bernini — the vendor itself labels it 'strictly experimental'). Gold highlight on Bernini's own vendor self-rating"
+
+  - id: s22
+    file: slides-en/s22-llm-pattern.md
+    type: assertion_visual
+    duration_min: 2.7
+    assertion: "An LLM is good at generating a draft of technical text with precise terminology of form — but the factual content is subject to mandatory verification by the engineer."
+    learning_goal: "The LLM pattern: where it's useful (a draft subject to mandatory review); a demo prompt structure"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.3 — The pattern: where an LLM is useful"
+    references: []
+    visual:
+      pattern: schema_pipeline
+      primary: "Pipeline 'a prompt with precise terminology of form → LLM → a draft (explanatory memo / specification template / reworded requirement / explanation of a standard's clause) → MANDATORY engineer verification against the primary source' (RIGHT_ARROW); gold border"
+
+  - id: s23
+    file: slides-en/s23-antipattern-mars.md
+    type: assertion_visual
+    duration_min: 3.5
+    assertion: "Mars Climate Orbiter: $327M lost to an unchecked unit mismatch at a seam between systems — an LLM in a project is exactly such a 'seam.'"
+    learning_goal: "The LLM anti-pattern + historical failures (the FAILURE core); Mars LEADS, Gimli/Hyatt in one line each (cascade)"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.4 — The anti-pattern and historical failures: Mars Climate Orbiter and its brethren"
+    references: [nasa-mco-mishap-1999, gimli-glider, hyatt-regency]
+    visual:
+      pattern: assertion_visual
+      primary: "A dominant Mars Climate Orbiter block in an Ocean rounded box (loss of contact, ≈$327M, a ×4.45 unit mismatch, 'each side assumed the other would check') → a projection in gold: 'an LLM assistant = exactly such a seam between systems, confidently confusing units.' Gimli Glider and Hyatt Regency each in one line at the bottom. Caption: 'the evidence — on the next slide'"
+
+  - id: s24
+    file: slides-en/s24-benchmarks-lesson.md
+    type: data_chart
+    duration_min: 2.7
+    assertion: "On real engineering calculations, the strongest models err on about a third to a half of the problems — 'confidently wrong' is more dangerous than 'doesn't know.'"
+    learning_goal: "Benchmarks + the lesson learned (kept separate from the catastrophes — cascade s24); an LLM is not a source of truth on codes/numbers"
+    learning_outcomes: [LO1, LO7]
+    chapter_ref: "§4.5 — Benchmarks and the lesson learned"
+    references: [orca-benchmark-2025, engibench-2025, aerospace-llm-2025]
+    visual:
+      pattern: data_chart
+      primary: "Bar/range chart: ORCA ~45–63% accuracy (5 SOTA models, a range) + EngiBench's drop under rephrasing + an aerospace case (a recommendation violating 3 standards at once). Gold-highlighted lesson: an LLM is not a source of truth on grades/GOST/tolerances/numbers; independent verification at every interface with AI; an AI proposal that changes the force scheme = a formal change-request, not an 'OK' in a chat"
+
+  # ─── Section divider (5) ───
+  - id: s25
+    file: slides-en/s25-section5-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Part 5 — When to tell AI 'no'"
+    learning_goal: "Visual divider — transition into the part on criteria of non-applicability and responsibility"
+    learning_outcomes: [LO2, LO7]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "A large '5' + title + a one-phrase frame + a 7-card progress bar with the current part gold-highlighted"
+
+  # ─── Part 5. Where AI isn't needed/applicable + responsibility (12 min) ───
+  - id: s26
+    file: slides-en/s26-criteria-table.md
+    type: assertion_visual
+    duration_min: 3.8
+    assertion: "The higher the determinism of a problem and the cost of error, the less room there is for probabilistic AI — for every criterion there is a more correct tool."
+    learning_goal: "Criteria of non-applicability + the right tool (the judgment core, a table)"
+    learning_outcomes: [LO2, LO7]
+    chapter_ref: "§5.1 — Criteria of non-applicability and the right tool"
+    references: [vonmises-1913, gost-eskd]
+    visual:
+      pattern: schema_matrix
+      primary: "A table of criteria in an Ocean rounded box: rows = criteria (a certification calculation · the safety factor · normative inspection against GOST · legal responsibility · an exact solver exists · safety of life · units at a seam between systems · a change to the force scheme) × 2 columns (Why probabilistic AI doesn't fit · The more correct tool). Fill ≥75%, single-line cells, icons per row"
+
+  - id: s27
+    file: slides-en/s27-russia-norms.md
+    type: assertion_visual
+    duration_min: 2.5
+    assertion: "In Russia, the boundaries of AI geometry are concrete: the ESKD barrier, Rostekhnadzor attestation, Federal Law 187/58 (cloud vs. on-premise), a machine is not a subject of copyright."
+    learning_goal: "Russia — normative boundaries; cascade: ≤3 numbers / ≤4 names"
+    learning_outcomes: [LO2, LO7]
+    chapter_ref: "§5.2 — Russia: normative boundaries"
+    references: [eskd-gost, apm-structure3d-rostech, fz-187-kii]
+    visual:
+      pattern: matrix
+      primary: "4 boundary cards in an Ocean rounded box: The ESKD barrier · Attestation (APM Structure3D — a Rostekhnadzor certificate) · Federal Law 187/58 (cloud vs. on-premise; a licensing lockout as risk) · Authorship/IP (a machine is not a subject of copyright)"
+
+  - id: s28
+    file: slides-en/s28-human-vs-ai-triz.md
+    type: assertion_visual
+    duration_min: 2.9
+    assertion: "AI generates the shape — the human is responsible, verifies, and invents the function; TRIZ formalizes invention, while an optimizer only distributes material."
+    learning_goal: "Human vs. AI (the signature = deontology, not delegable) + the TRIZ contrast"
+    learning_outcomes: [LO2, LO7]
+    chapter_ref: "§5.3 — Human versus AI and the contrast with TRIZ"
+    references: [altshuller-triz-1946]
+    visual:
+      pattern: comparison
+      primary: "Two columns in an Ocean rounded box: 'AI: proposes a shape for a fixed function' vs. 'Human: sets the constraints, IS RESPONSIBLE (the signature = deontology), invents the function.' Below them, a TRIZ contrast: 'TRIZ (Altshuller 1946) formalizes INVENTION — a level above a shape optimizer.' A gold formula plate: 'AI generates — the human is responsible, verifies, and invents the function'"
+
+  # ─── Section divider (6) ───
+  - id: s29
+    file: slides-en/s29-section6-divider.md
+    type: section_divider
+    duration_min: 0.3
+    assertion: "Part 6 — Synthesis: a decision rule on a concrete problem"
+    learning_goal: "Visual divider — transition into the synthesizing part"
+    learning_outcomes: [LO1, LO2, LO7]
+    chapter_ref: "frontmatter"
+    references: []
+    visual:
+      pattern: section_divider_with_progress
+      primary: "A large '6' + title + a one-phrase frame + a 7-card progress bar with the current part gold-highlighted"
+
+  # ─── Part 6. Synthesis + the university context + Q&A (6 min) ───
+  - id: s30
+    file: slides-en/s30-worked-decision.md
+    type: assertion_visual
+    duration_min: 2.4
+    assertion: "One problem — lighten a bracket — gives different justified answers for serial milling and for additive manufacturing, worked through the three anchor questions."
+    learning_goal: "Worked decision (a measurable LO7): a problem → a tree through 3 questions → a justified class + why NOT the others"
+    learning_outcomes: [LO1, LO2, LO7]
+    chapter_ref: "§6.1 — Worked decision: lighten the bracket"
+    references: []
+    visual:
+      pattern: schema_pipeline
+      primary: "A decision tree: the problem 'lighten a load-bearing bracket' → 2 branches (a) serial milling / (b) additive; each branch runs through 3 anchor questions → a different justified conclusion (a: parametrics + manual topology optimization; b: deterministic topology optimization + a final step on the solver). Gold highlight: 'one anchor question split the answers'"
+
+  - id: s31
+    file: slides-en/s31-decision-rule-matrix.md
+    type: assertion_visual
+    duration_min: 2.4
+    assertion: "The decision rule is five questions; the full taxonomic matrix of six classes is assembled from all the parts; this spectrum is current engineering practice."
+    learning_goal: "The decision rule (a 5-point checklist) + the FULL taxonomic matrix (the crystallization of s06) + context on current practice"
+    learning_outcomes: [LO1, LO2, LO7]
+    chapter_ref: "§6.2 — The decision rule and the full taxonomic matrix"
+    references: []
+    visual:
+      pattern: schema_matrix
+      primary: "On the left, a mental checklist of 5 points VISUALLY DOMINATES in an Ocean rounded box (name the kind → deterministic/probabilistic? → what is optimized, who set the constraints? → is there an exact/normative tool? → who is responsible?). On the right, a compact full matrix of the 6 classes (Nature · What it guarantees · Maturity · Who is responsible), subdued confirmation, fill ≥75%, single line. At the bottom: specialized departments and supercomputing centers at technical universities work across this whole spectrum"
+
+  - id: s32
+    file: slides-en/s32-qa.md
+    type: assertion_visual
+    duration_min: 0.9
+    assertion: "Q&A"
+    learning_goal: "Open Q&A with 3 backup prompts (a dedicated slide, the Lec-N-1 pattern)"
+    learning_outcomes: []
+    chapter_ref: "frontmatter (closing)"
+    references: []
+    visual:
+      pattern: cover_distinct
+      primary: "A large 'Q&A?' at 80pt + a gold 96px `message-circle-question` icon + 3 backup-prompt chips in an Ocean rounded box (12pt italic) + a subdued course-contact card"

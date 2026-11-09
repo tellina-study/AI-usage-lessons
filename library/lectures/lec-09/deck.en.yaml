@@ -1,0 +1,511 @@
+# library/lectures/lec-09/deck.en.yaml
+#
+# English twin of deck.yaml (RU is source of truth; CLAUDE.md § Bilingual Production Rule,
+# issue #172). Faithful translation, same 66 slides, same structure. `file:` paths point at
+# slides-en/ with the same filename stems as the RU `slides/` originals (translated 1:1 by a
+# separate pass). Render (PPTX) pending, matching the RU deck's own `note:` field below.
+
+deck:
+  lecture_number: 9
+  title: "The frontier that becomes its own laboratory"
+  subtitle: "AI in civilian space"
+  audience: "3rd-year engineering students, universal"
+  duration_min: 75
+  central_question: "Which solutions did space force into existence — and did they exist before space demanded them?"
+  axis: "Space is a frontier: extreme conditions (distance, the absence of ready-made infrastructure, the cost of error) make off-the-shelf engineering solutions insufficient and force new ones to be created — not borrowed from gentler conditions, but invented specifically under this pressure."
+  learning_outcomes: [LO1, LO2, LO3, LO4, LO5]
+  language: en
+  chapter_ref: "library/lectures/lec-09/chapter.md (+ part1b, part2, part2b, part3)"
+  status: draft
+  version: v1
+  issue: 310
+  branch: "issue-310-lec-09-refresh"
+  note: >
+    Phase 5 (structure + slide content). The render (PPTX, Phase 6) has not been performed —
+    media fields point at assets that were actually downloaded, where they exist
+    (library/lectures/lec-09/assets/razdel-{1,2,3,4}/...), or are honestly marked
+    media_needed/gap where no asset was found (LeoLabs — a gap, explicitly recorded).
+    Keystone Row 2 (§0.6) is left as an explicit open placeholder for the owner —
+    do not fill it in on their behalf.
+  sections:
+    - {n: 0, name: "Introduction", slides: "s01-s13"}
+    - {n: 1, name: "Autonomous robots in space", term: "autonomous robotics", slides: "s14-s25"}
+    - {n: 2, name: "Remote control", term: "teleoperation", slides: "s26-s36"}
+    - {n: 3, name: "Design and new capabilities", term: "AI-assisted design and forecasting", slides: "s37-s48"}
+    - {n: 4, name: "Space for AI", term: "orbital computing", slides: "s49-s56"}
+    - {n: 5, name: "Wrap-up", slides: "s57-s66"}
+    - {n: 6, name: "Closing", slides: "s67-s68"}
+    - {n: "QA", name: "Questions", slides: "s69"}
+
+slides:
+  # ===== Section 0. Introduction =====
+  - id: s01
+    file: slides-en/s01-cover.md
+    type: hero_cover
+    section: "0. Introduction"
+    assertion: "The frontier that becomes its own laboratory"
+    learning_goal: "Hook + the topic's claim: civilian space as a frontier that forces invention, not just application"
+    media: "assets/razdel-1/corob-x/corobx-12-pia12954-marius-hills-skylight-moon.jpg"
+
+  - id: s02
+    file: slides-en/s02-obval-stoimosti-zapuska.md
+    type: norm
+    section: "0. Introduction"
+    assertion: "Delivering a kilogram to orbit has gotten 18–20 times cheaper over two decades — the anchor of the whole lecture"
+    learning_goal: "§0.1: the number that holds up the whole industry overview, with a methodological caveat about the price list"
+
+  - id: s03
+    file: slides-en/s03-sputnikov-i-dannykh-na-poryadok-bolshe.md
+    type: norm
+    section: "0. Introduction"
+    assertion: "The number of satellites grew ~12-fold in 10 years, and data grew by multiples more — this can no longer be serviced by hand"
+    learning_goal: "§0.2: the second explosion — the growth in satellite count and data volume as a direct consequence of the first"
+
+  - id: s04
+    file: slides-en/s04-kto-zapuskaet-i-s-kakoy-skorostyu.md
+    type: schema_matrix
+    section: "0. Introduction"
+    assertion: "Reusability is no longer one company's privilege, but more than half of the world's launches still come from one country"
+    learning_goal: "§0.2a: the structure of the players, concentration, and booster turnaround speed"
+
+  - id: s05
+    file: slides-en/s05-starship-plan-i-fakt.md
+    type: norm
+    section: "0. Introduction"
+    assertion: "Starship has flown 14 flights and caught the booster three times — but has never once caught the second stage"
+    learning_goal: "§0.3: the second turn of the cost-decline spiral — an honest line between fact and goal"
+
+  - id: s06
+    file: slides-en/s06-porog-a-ne-obeschanie.md
+    type: norm
+    section: "0. Introduction"
+    assertion: "Google names a $200/kg threshold for orbital computing — today it costs 2.5–3 times more than its terrestrial counterpart"
+    learning_goal: "§0.4: what the cost decline opens up — a threshold, not an achieved state"
+
+  - id: s07
+    file: slides-en/s07-pochemu-seychas-tri-frontira.md
+    type: schema_matrix
+    section: "0. Introduction"
+    assertion: "Space-based power, lunar bases, and asteroid mining are 1970s ideas; only now has the entry threshold fallen"
+    learning_goal: "§0.4a: why right now — the barrier of entry versus the barrier of economics"
+
+  - id: s08
+    file: slides-en/s08-os-lektsii-i-adresa-platezha.md
+    type: norm
+    section: "0. Introduction"
+    assertion: "A frontier doesn't just require solutions — it gives rise to them"
+    learning_goal: "§0.5: the lecture's axis and the four payment addresses (distance, data, human time, new capability)"
+
+  - id: s09
+    file: slides-en/s09-keystone-ot-shakhty-do-lunnoy-trubki.md
+    type: norm
+    section: "0. Introduction"
+    assertion: "A solution built for an earthly mine turned out to fit a lunar lava tube — the frontier itself became a laboratory"
+    learning_goal: "§0.6 Keystone: the NeBula/LAMP trio — presents the axis through a single measured case"
+
+  - id: s10
+    file: slides-en/s10-vopros-lektsii.md
+    type: norm
+    section: "0. Introduction"
+    assertion: "Which solutions did space force into existence — and did they exist before space demanded them?"
+    learning_goal: "§0.7: the lecture's question, spoken here for the first time"
+
+  - id: s11
+    file: slides-en/s11-karta-vechera-chetyre-fronta.md
+    type: schema_matrix
+    section: "0. Introduction"
+    assertion: "Four fronts: the machine decides on its own, a human controls at a distance, a model designs, computing moves into space"
+    learning_goal: "§0.8: the map of the evening — the lecture-map slide"
+
+  - id: s12
+    file: slides-en/s12-kak-chitat-chisla.md
+    type: norm
+    section: "0. Introduction"
+    assertion: "A fact-number, a threshold-number, and an analyst's estimate-number — three different kinds of numbers, and they must not be confused"
+    learning_goal: "§0.8a: the rule for reading the numbers in this lecture"
+
+  - id: s13
+    file: slides-en/s13-forma-razbora-pyat-shagov.md
+    type: schema_pipeline
+    section: "0. Introduction"
+    assertion: "Every case study from here on is built the same way: cost of error → the classical regime → the model → the mechanism → what shifted"
+    learning_goal: "§0.9: the form of the case study — the template by which all 13 cases are read"
+
+  # ===== Section 1. Autonomous robots in space =====
+  - id: s14
+    file: slides-en/s14-divider-razdel-1.md
+    type: divider
+    section: "1. Autonomous robots in space"
+    assertion: "1. Autonomous robots in space"
+    learning_goal: "Divider: AEGIS, SPOC, COROB-X, LeoLabs — the chapter's maximum of autonomy"
+
+  - id: s15
+    file: slides-en/s15-stadiya-avtonomnaya-robototekhnika.md
+    type: norm
+    section: "1. Autonomous robots in space"
+    assertion: "Autonomous robotics — deciding and physically acting without a dispatcher at every step"
+    learning_goal: "§1.1: the term, the data, how it is obtained, the decision, the alternative — the chapter's maximum of autonomy"
+
+  - id: s16
+    file: slides-en/s16-gde-klassika-gde-model.md
+    type: norm
+    section: "1. Autonomous robots in space"
+    assertion: "Geometry is solved by the classical approach, with no learning involved; recognizing an object amid noise is solved by a trained model"
+    learning_goal: "§1.2: the boundary between automation and a trained model, drawn on this section's material"
+
+  - id: s17
+    file: slides-en/s17-metody-geometriya-i-sluchayny-les.md
+    type: norm
+    section: "1. Autonomous robots in space"
+    assertion: "A stereo pair computes distance by geometry, not learning; a random forest is an ensemble of trees you can read all the way through"
+    learning_goal: "§1.2a, blocks 1–2: stereo vision/parallax and random forest — carry AEGIS"
+
+  - id: s18
+    file: slides-en/s18-metody-karta-bez-gps-i-detektor.md
+    type: schema_layered
+    section: "1. Autonomous robots in space"
+    assertion: "Three levels of SLAM stitch together the robots' maps without GPS; the YOLO detector finds an object in a single pass"
+    learning_goal: "§1.2a, blocks 3–4: SLAM with a pose graph and CNN detection — carry COROB-X, continuing the keystone"
+
+  - id: s19
+    file: slides-en/s19-primer-aegis.md
+    type: case_study
+    section: "1. Autonomous robots in space"
+    assertion: "AEGIS raised target-selection accuracy from 24% to 93% — without a single command from Earth"
+    learning_goal: "§1.3: the AEGIS case study, graph a, keystone-level strength of evidence"
+
+  - id: s20
+    file: slides-en/s20-primer-spoc.md
+    type: case_study
+    section: "1. Autonomous robots in space"
+    assertion: "SPOC labels Martian terrain with a deep network at 98% accuracy — already today on Earth, onboard only in the future"
+    learning_goal: "§1.4: the SPOC case study, graph b, an Earth-side tool plus a forward-looking part"
+
+  - id: s21
+    file: slides-en/s21-primer-corob-x.md
+    type: case_study
+    section: "1. Autonomous robots in space"
+    assertion: "Three robots reconnoitered a lunar lava tube where no classical analog on Earth existed at all"
+    learning_goal: "§1.5: the COROB-X case study, graph c — a genuinely new task"
+
+  - id: s22
+    file: slides-en/s22-primer-leolabs.md
+    type: case_study
+    section: "1. Autonomous robots in space"
+    assertion: "LeoLabs prioritizes the radar and issues up to 400% more conjunction warnings — but doesn't know how many maneuvers actually resulted from them"
+    learning_goal: "§1.5a: the LeoLabs case study, the section's fourth case study (the 3+6 exception), graph b"
+
+  - id: s23
+    file: slides-en/s23-upominaniya-razdel-1.md
+    type: norm
+    section: "1. Autonomous robots in space"
+    assertion: "The classical approach carries Perseverance for 90% of its route with no neural network at all; Starlink performs 300,000 maneuvers a year on its own"
+    learning_goal: "§1.6: six mentions — a different task type, a different readiness status"
+
+  - id: s24
+    file: slides-en/s24-chto-dalo-i-potrebovalo-razdel-1.md
+    type: schema_matrix
+    section: "1. Autonomous robots in space"
+    assertion: "The gain is large where the technology has been flying for years; where it hasn't flown, that is stated plainly"
+    learning_goal: "§1.7 + the cumulative stage map: what it gave, what it required, three cells of the grid filled"
+
+  - id: s25
+    file: slides-en/s25-vyvod-razdela-1.md
+    type: norm
+    section: "1. Autonomous robots in space"
+    assertion: "Geometry goes to the classical approach, recognizing an object amid noise goes to the model, and a genuinely new task has no classical analog at all"
+    learning_goal: "§1.8: the conclusion of Section 1, a bridge to Section 2"
+
+  # ===== Section 2. Remote control =====
+  - id: s26
+    file: slides-en/s26-divider-razdel-2.md
+    type: divider
+    section: "2. Remote control"
+    assertion: "2. Remote control"
+    learning_goal: "Divider: Dragon, predictive latency compensation, Astrobee — the chapter's minimum of autonomy"
+
+  - id: s27
+    file: slides-en/s27-stsena-korabl-parkuetsya-sam.md
+    type: norm
+    section: "2. Remote control"
+    assertion: "The crew keeps its hands on the screen, while the spacecraft brings itself to the station on its own"
+    learning_goal: "§2.1: a scene, a deliberate break in form instead of a term's definition"
+
+  - id: s28
+    file: slides-en/s28-stadiya-teleoperatsiya.md
+    type: norm
+    section: "2. Remote control"
+    assertion: "Teleoperation — control at a distance, in which the decision stays with the human"
+    learning_goal: "§2.2: the term and the stage's general description — after the scene, not before it"
+
+  - id: s29
+    file: slides-en/s29-gde-nuzhen-chelovek-granitsa-sdvinuta.md
+    type: schema_timeline
+    section: "2. Remote control"
+    assertion: "Latency to the ISS is fractions of a second, to the Moon 1.3 seconds, to Mars 3 to 22 minutes: the speed of light cannot be worked around"
+    learning_goal: "§2.3: where the human is needed in the loop, where the boundary has already shifted — the physics of the limitation"
+
+  - id: s30
+    file: slides-en/s30-metody-kontroller-i-tyoplyy-start.md
+    type: schema_pipeline
+    section: "2. Remote control"
+    assertion: "A classical controller measures, compares, and corrects dozens of times a second; a warm start only suggests a good starting point for it"
+    learning_goal: "§2.3a: the mechanics of the classical controller, the warm start, and predictive latency compensation"
+
+  - id: s31
+    file: slides-en/s31-primer-dragon.md
+    type: case_study
+    section: "2. Remote control"
+    assertion: "At a distance of 220 meters, control of Dragon is handed over to automation in advance — routinely since 2020"
+    learning_goal: "§2.4: the Dragon case study, graph b, override as a principle"
+
+  - id: s32
+    file: slides-en/s32-primer-predskazatelnaya-kompensatsiya.md
+    type: case_study
+    section: "2. Remote control"
+    assertion: "The model predicts the picture forward by the amount of the latency and cuts task time by up to 26% — but the human still makes the decisions"
+    learning_goal: "§2.5: the predictive latency compensation case study, a research-stage result"
+
+  - id: s33
+    file: slides-en/s33-primer-astrobee.md
+    type: case_study
+    section: "2. Remote control"
+    assertion: "Astrobee demonstrated a \"warm start\": the model proposes a trajectory, and the classical controller refines it"
+    learning_goal: "§2.6: the Astrobee case study, TRL5, with the developing organization explicitly named"
+
+  - id: s34
+    file: slides-en/s34-upominaniya-razdel-2.md
+    type: norm
+    section: "2. Remote control"
+    assertion: "Telesurgery over Starlink operates at a latency of ~130 ms — but there is no trained model in the decision at all"
+    learning_goal: "§2.7: exoskeletons, Earth–ISS latency, telesurgery as an honest zero case"
+
+  - id: s35
+    file: slides-en/s35-chto-dalo-i-potrebovalo-razdel-2.md
+    type: schema_matrix
+    section: "2. Remote control"
+    assertion: "From automation on a pre-designated segment to automation on every cycle, but never the final word"
+    learning_goal: "§2.8 + the cumulative stage map: five cells filled after two sections"
+
+  - id: s36
+    file: slides-en/s36-vyvod-razdela-2.md
+    type: norm
+    section: "2. Remote control"
+    assertion: "The human stays in the loop for as long as latency and the speed of events genuinely allow it"
+    learning_goal: "§2.9: the conclusion of Section 2, a bridge back to Section 1 — why autonomy on Mars is necessary, not merely convenient"
+
+  # ===== Section 3. Design and new capabilities =====
+  - id: s37
+    file: slides-en/s37-divider-razdel-3.md
+    type: divider
+    section: "3. Design and new capabilities"
+    assertion: "3. Design and new capabilities"
+    learning_goal: "Divider: the Raptor surrogate, Claude's rover route, AIFS/AIGEFS, NASA's generative design"
+
+  - id: s38
+    file: slides-en/s38-stadiya-proektirovanie-i-prognoz.md
+    type: norm
+    section: "3. Design and new capabilities"
+    assertion: "Not autonomy of action, but thinking at the drafting table — work that used to require either a human alone or a supercomputer"
+    learning_goal: "§3.1: the term and the stage's general description — four subject areas, one type of contribution"
+
+  - id: s39
+    file: slides-en/s39-gde-model-daet-novuyu-vozmozhnost.md
+    type: norm
+    section: "3. Design and new capabilities"
+    assertion: "The model doesn't change what the process does, but how many options can be considered in the same amount of time"
+    learning_goal: "§3.2: where the model gives a genuinely new capability, where the final check is still classical regardless"
+
+  - id: s40
+    file: slides-en/s40-metody-surrogat-i-generativny-poisk.md
+    type: schema_pipeline
+    section: "3. Design and new capabilities"
+    assertion: "A surrogate learns once from expensive simulations and from then on predicts almost for free — but only within the bounds of what it has seen"
+    learning_goal: "§3.2a, part 1: the surrogate regression model — carries Raptor and generative design"
+
+  - id: s41
+    file: slides-en/s41-metody-vnimanie-na-setke-pogody.md
+    type: norm
+    section: "3. Design and new capabilities"
+    assertion: "The same attention mechanism as in a language model (Lecture 2) — except here the neighbors are not tokens, but points on the atmosphere's grid"
+    learning_goal: "§3.2a, part 2: graph attention and message-passing — a direct link to Lecture 2"
+
+  - id: s42
+    file: slides-en/s42-primer-raptor.md
+    type: case_study
+    section: "3. Design and new capabilities"
+    assertion: "SpaceX's surrogate model sweeps through thousands of engine configurations instead of dozens — but the test stand decides the outcome"
+    learning_goal: "§3.3: the case study of Raptor's surrogate ML models, graph a"
+
+  - id: s43
+    file: slides-en/s43-primer-claude-jpl.md
+    type: case_study
+    section: "3. Design and new capabilities"
+    assertion: "Claude planned a rover route across Jezero crater — a digital twin checked the plan against 500,000 variables"
+    learning_goal: "§3.4: the Claude/Anthropic case study — the chapter's most recent material, December 2025"
+
+  - id: s44
+    file: slides-en/s44-primer-aifs-aigefs.md
+    type: case_study
+    section: "3. Design and new capabilities"
+    assertion: "AIFS computes a 10-day forecast in 2.5 minutes instead of a supercomputer's hours — but it doesn't perform its own data assimilation"
+    learning_goal: "§3.5: the AIFS/AIGEFS case study, graph a, the section's highest grade of evidence"
+
+  - id: s45
+    file: slides-en/s45-primer-generativny-dizayn.md
+    type: case_study
+    section: "3. Design and new capabilities"
+    assertion: "NASA Goddard's generative design produces the part's geometry itself — it doesn't evaluate a finished one, it creates a new one"
+    learning_goal: "§3.6: the generative design case study, the section's fourth case study (the 3+6 exception)"
+
+  - id: s46
+    file: slides-en/s46-upominaniya-razdel-3.md
+    type: norm
+    section: "3. Design and new capabilities"
+    assertion: "Sentry-II and ATLAS already assess asteroid-collision risk 100 years into the future, today"
+    learning_goal: "§3.7: six mentions — commercial forecasting, agricultural insurance, planetary defense, three short ones"
+
+  - id: s47
+    file: slides-en/s47-chto-dalo-i-potrebovalo-razdel-3.md
+    type: schema_matrix
+    section: "3. Design and new capabilities"
+    assertion: "The cost of a model's error grows from an engineer's hours to decisions that affect people who have nothing to do with the model at all"
+    learning_goal: "§3.8 + the cumulative stage map: eight cells filled after three sections"
+
+  - id: s48
+    file: slides-en/s48-vyvod-razdela-3.md
+    type: norm
+    section: "3. Design and new capabilities"
+    assertion: "The model expands the space of options — it replaces the final check in none of the four cases"
+    learning_goal: "§3.9: the conclusion of Section 3, a bridge to Section 4 — if the task doesn't require presence, does infrastructure still need to be nearby?"
+
+  # ===== Section 4. Space for AI =====
+  - id: s49
+    file: slides-en/s49-divider-razdel-4.md
+    type: divider
+    section: "4. Space for AI"
+    assertion: "4. Space for AI"
+    learning_goal: "Divider: Starcloud, Google Project Suncatcher — a mirror of the whole chapter"
+
+  - id: s50
+    file: slides-en/s50-stadiya-orbitalnye-vychisleniya.md
+    type: norm
+    section: "4. Space for AI"
+    assertion: "It's not that space gets smarter with AI — AI physically moves into space, where there is more sun"
+    learning_goal: "§4.1: the term and the stage's general description — the chapter's last application of its general scheme"
+
+  - id: s51
+    file: slides-en/s51-chto-uzhe-rabotaet-chto-demonstrator.md
+    type: norm
+    section: "4. Space for AI"
+    assertion: "The hardware really flies and answers real queries — but that's a handful of chips against tens of thousands on Earth"
+    learning_goal: "§4.2: what already works, what is still demonstrator-scale — a reversal of the chapter's logic"
+
+  - id: s52
+    file: slides-en/s52-primer-starcloud.md
+    type: case_study
+    section: "4. Space for AI"
+    assertion: "Starcloud-1 is the first datacenter-class H100 in space, already serving requests to the Gemma model"
+    learning_goal: "§4.3: the Starcloud case study, graph c — no classical earthly analog exists"
+
+  - id: s53
+    file: slides-en/s53-primer-suncatcher.md
+    type: case_study
+    section: "4. Space for AI"
+    assertion: "Google Project Suncatcher — a satellite with four TPUs, with a plan for 81 spacecraft in a single laser-linked cluster"
+    learning_goal: "§4.4: the Suncatcher case study, the same shift in criterion, independently confirmed by a second market participant"
+
+  - id: s54
+    file: slides-en/s54-upominaniya-razdel-4.md
+    type: norm
+    section: "4. Space for AI"
+    assertion: "Starcloud filed an application for a constellation of 88,000 satellites — this is a plan, not a fact of today"
+    learning_goal: "§4.5: two mentions — the scale of the filed plans and a return to the industry-overview numbers"
+
+  - id: s55
+    file: slides-en/s55-chto-dalo-i-potrebovalo-razdel-4.md
+    type: schema_matrix
+    section: "4. Space for AI"
+    assertion: "The principle is proven: the hardware works in space. What is not proven is the scale at which this becomes worthwhile"
+    learning_goal: "§4.6 + the final summary stage map across all four sections"
+
+  - id: s56
+    file: slides-en/s56-vyvod-razdela-4.md
+    type: norm
+    section: "4. Space for AI"
+    assertion: "Computing for AI is beginning to physically compete for room not only on Earth"
+    learning_goal: "§4.7: the conclusion of Section 4, a bridge to the Wrap-up"
+
+  # ===== Section 5. Wrap-up =====
+  - id: s57
+    file: slides-en/s57-razdel-5-sborka.md
+    type: norm
+    section: "5. Wrap-up"
+    assertion: "Three ways to bring thirteen case studies together into one answer"
+    learning_goal: "The opening frame of Section 5 — what the wrap-up does, and in what order"
+
+  - id: s58
+    file: slides-en/s58-reestr-razborov.md
+    type: schema_matrix
+    section: "5. Wrap-up"
+    assertion: "13 detailed case studies and 18 mentions — 31 items total, with the denominator named before the numbers"
+    learning_goal: "§5.0: the registry of case studies — the denominator and the explicitly named exceptions"
+
+  - id: s60
+    file: slides-en/s60-otvet-na-vopros-razdely-1-2.md
+    type: norm
+    section: "5. Wrap-up"
+    assertion: "SLAM was invented for an earthly mine and carried over to a lunar tube; telesurgery is a case where space created an altogether new configuration"
+    learning_goal: "§5.1, part 1: the answer to the lecture's question for Sections 1 and 2"
+
+  - id: s61
+    file: slides-en/s61-otvet-na-vopros-razdely-3-4.md
+    type: norm
+    section: "5. Wrap-up"
+    assertion: "Two sections out of four are the frontier's measured birth of a solution; two are an honest carryover of a ready-made tool"
+    learning_goal: "§5.1, part 2: the answer for Sections 3 and 4, a final 2:2"
+
+  - id: s64
+    file: slides-en/s64-schet-trinadtsat-razborov.md
+    type: norm
+    section: "5. Wrap-up"
+    assertion: "In thirteen case studies out of thirteen, the final check stayed with the classical step — that boundary was never once broken"
+    learning_goal: "§5.4: the chapter's main tally, named case study by case study"
+
+  - id: s65
+    file: slides-en/s65-svod-chestnykh-probelov.md
+    type: norm
+    section: "5. Wrap-up"
+    assertion: "What the sources honestly don't disclose is not a gap in preparation — it's a map of the boundary of public knowledge"
+    learning_goal: "§5.5: the collection of honest gaps, gathered in one place"
+
+  - id: s66
+    file: slides-en/s66-gde-ii-ne-nuzhen.md
+    type: schema_matrix
+    section: "5. Wrap-up"
+    assertion: "Five concrete situations where a trained model is not needed or not justified — not abstract theory"
+    learning_goal: "§5.6: the summary criterion for \"where AI is flatly not needed\""
+
+  # ===== Section 6. Closing =====
+  - id: s67
+    file: slides-en/s67-dolg-vperyod-sertifikatsiya.md
+    type: norm
+    section: "6. Closing"
+    assertion: "Not one of the thirteen case studies flies under formal certification specifically for autonomous behavior"
+    learning_goal: "§6.1: a debt carried forward — certification of autonomous systems"
+
+  - id: s68
+    file: slides-en/s68-zarabotannoe-utverzhdenie.md
+    type: hero_closing
+    section: "6. Closing"
+    assertion: "The frontier didn't just accept a ready-made solution — in a notable share of cases, it forced the invention of something that did not exist before"
+    learning_goal: "§6.2: the earned claim; bridge to the course's next lecture — agriculture"
+    media: "assets/razdel-4/suncatcher/suncatcher-transporter18-liftoff.jpg"
+
+  # ===== Q&A =====
+  - id: s69
+    file: slides-en/s69-voprosy.md
+    type: qa
+    section: "Questions"
+    assertion: "Questions"
+    learning_goal: "A dedicated Q&A slide (not merged); backup material — the chapter's Q&A backup, not shown on screen"

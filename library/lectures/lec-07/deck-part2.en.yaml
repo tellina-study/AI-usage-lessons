@@ -20,7 +20,61 @@
 
 slides:
 
-  # ─── 4. Ведение медицинской документации · 9 slides · 8.25 min ───
+  # ─── 4. Ведение медицинской документации · 15 slides · 12.40 min ───
+  - id: s60b
+    local_id: "s5-00"                      # SLIDE-PLAN.md number
+    file: slides-en/s60b-divider-vedenie-zapisi.md
+    type: divider
+    title: "4. Keeping the medical record"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md § Раздел 5 (вводка), §5.1"
+    timing_min: 0.55
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: real_image_needed }
+  - id: s60ba
+    local_id: "s5-01a"                     # inserted slide, no plan number
+    file: slides-en/s60ba-dannye-sposoby-i-reshenie-zapisi.md
+    type: norm
+    title: "The record: the data, the question, the decision"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md § Раздел 5 (вводка), §5.1, §5.2"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
+  - id: s60baa
+    local_id: "s5-01aa"                    # inserted slide, no plan number
+    file: slides-en/s60baa-shest-deystviy-stadii-zapisi.md
+    type: norm
+    title: "What happens at this stage: the visit note and the discharge summary"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "NOT MAPPED"
+    timing_min: 0.65
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
+  - id: s60bab
+    local_id: "s5-01ab"                    # inserted slide, no plan number
+    file: slides-en/s60bab-zachem-voobshche-vedut-zapis.md
+    type: norm
+    title: "Why keep medical documentation at all"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "NOT MAPPED"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
+  - id: s60bb
+    local_id: "s5-01b"                     # inserted slide, no plan number
+    file: slides-en/s60bb-chetyre-rezhima-pisma.md
+    type: case
+    title: "Carrying forward a previous note: the heparin case and the four writing modes"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md §5.2"
+    timing_min: 1.15
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
+  - id: s60c
+    local_id: "s5-01c"                     # inserted slide, no plan number
+    file: slides-en/s60c-kak-ustroeno-vedenie-zapisi.md
+    type: norm
+    title: "What the model took over at the record-keeping stage, and what it still can't do"
+    plan_section: "Раздел 5. Что стало с теми, кто решает"
+    chapter_ref: "chapter-part3b.md §5.1, §5.2"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s61
     local_id: "s5-07"                      # SLIDE-PLAN.md number
     file: slides-en/s61-avtomaticheskaya-zapis-priema.md
@@ -103,7 +157,7 @@ slides:
     timing_min: 0.6
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 5. Профессиональная квалификация: поддержание и износ · 2 slides · 1.20 min ───
+  # ─── 5. Профессиональная квалификация: поддержание и износ · 10 slides · 8.35 min ───
   - id: s73b
     local_id: "s5-01"                      # SLIDE-PLAN.md number
     file: slides-en/s73b-divider-navyk.md
@@ -121,3 +175,67 @@ slides:
     chapter_ref: "chapter-part5.md §10.2 (+ §10.3)"
     timing_min: 0.6
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s73ca
+    local_id: "s5-02b"                     # inserted slide, no plan number
+    file: slides-en/s73ca-tri-opory-i-odin-shag-iz-vosmi.md
+    type: norm
+    title: "The physician came back after a year: what keeps him in form, and where the model landed"
+    chapter_ref: "chapter-part5.md § Раздел 10 (вводка), §10.1"
+    timing_min: 0.65
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73cb
+    local_id: "s5-02c"                     # inserted slide, no plan number
+    file: slides-en/s73cb-primer-1-razrabotchiki.md
+    type: case
+    title: "Example 1: developers on an unfamiliar library"
+    chapter_ref: "chapter-part5.md §10.8а"
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73d
+    local_id: "s5-03"                      # SLIDE-PLAN.md number
+    file: slides-en/s73d-tsena-i-dva-rezhima-osmotra.md
+    type: case
+    title: "The withdrawal examination: the cost of a miss, and two orders of work without the model"
+    chapter_ref: "chapter-part5.md §10.4, §10.5"
+    timing_min: 1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s73da
+    local_id: "s5-03b"                     # inserted slide, no plan number
+    file: slides-en/s73da-dopusk-po-stranam.md
+    type: norm
+    title: "Does the physician's measured work result count toward his authorization: the UK, the US, Russia"
+    chapter_ref: "chapter-part5.md § Удержание квалификации по странам"
+    timing_min: 0.8
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73f
+    local_id: "s5-04"                      # SLIDE-PLAN.md number
+    file: slides-en/s73f-primer-2-dolya-bez-pomoshchnika.md
+    type: case
+    title: "\"Example 2: the rate fell without the assistant\"   # был «Пример 1» — перенумерован под новый порядок раздела (#293, Этап B): разбор на разработчиках встал первым"
+    chapter_ref: "chapter-part5.md §10.6, §10.8 (+ §10.7)"
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s73g
+    local_id: "s5-05"                      # SLIDE-PLAN.md number
+    file: slides-en/s73g-primer-3-artincol-rossiya.md
+    type: case
+    title: "\"Example 3: ArtInCol, Russia — an assistant on the same procedure\"   # был «Пример 2» — перенумерован под новый порядок раздела (#293, Этап B): разбор на разработчиках встал первым"
+    chapter_ref: "NOT MAPPED"
+    timing_min: 1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73j
+    local_id: "s5-09"                      # SLIDE-PLAN.md number
+    file: slides-en/s73gb-dva-rezhima-podsvetki.md
+    type: summary
+    title: "Two modes of one class: where the person stays, and where he is removed"
+    chapter_ref: "chapter-part5.md §10.13 (+ §10.14)"
+    timing_min: 0.9
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s73i
+    local_id: "s5-08"                      # SLIDE-PLAN.md number
+    file: slides-en/s73i-vyvod-navyk.md
+    type: summary
+    title: "Stage summary: what works, what doesn't, and what this means for you"
+    chapter_ref: "chapter-part5.md §10.14 (+ §10.8, §10.11, §10.13)"
+    timing_min: 0.6
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }

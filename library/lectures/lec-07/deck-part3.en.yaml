@@ -20,7 +20,43 @@
 
 slides:
 
-  # ─── 6. Итоги · 1 slides · 0.85 min ───
+  # ─── 6. Итоги · 5 slides · 4.80 min ───
+  - id: s96a
+    local_id: "s8-00"                      # SLIDE-PLAN.md number
+    file: slides-en/s96a-divider-sborka.md
+    type: divider
+    title: "6. Wrap-up"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "chapter-part5b.md § Раздел 11 (вводка), §11.1"
+    timing_min: 0.5
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s97
+    local_id: "s8-01"                      # SLIDE-PLAN.md number
+    file: slides-en/s97-devyat-form-slovarya-tselikom.md
+    type: summary
+    title: "The nine forms in full: what happened to the work"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "chapter-part5b.md §11.1, §11.2, §11.3"
+    timing_min: 1.05
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s98
+    local_id: "s8-02"                      # SLIDE-PLAN.md number
+    file: slides-en/s98-schet-pripisok.md
+    type: summary
+    title: "The count of misattributions: in thirteen of twenty-one cases, the win does not belong to the model"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "NOT MAPPED"
+    timing_min: 0.9
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s99
+    local_id: "s8-02a"                     # inserted slide, no plan number
+    file: slides-en/s99-rabotaet-i-net-po-tipam-zadach.md
+    type: summary
+    title: "The map of tasks and data types: four cells out of twelve, and what works in them"
+    plan_section: "Раздел 8. Сборка"
+    chapter_ref: "chapter-part5b.md §11.6"
+    timing_min: 1.5
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s102
     local_id: "s8-04"                      # SLIDE-PLAN.md number
     file: slides-en/s102-chto-menyaetsya-v-cheloveke-i-v-podpisi.md
@@ -71,10 +107,10 @@ slides:
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
 
 totals:
-  slides_en_track: 52
+  slides_en_track: 91
   slides_ru_total: 92              # full RU deck; EN track in progress
-  timing_min: 46.30
-  strict_in_min: 32.05
-  strict_in_share: "69.2%"
+  timing_min: 81.65
+  strict_in_min: 58.90
+  strict_in_share: "72.1%"
   by_status:
-    "собран": 52
+    "собран": 91

@@ -54,6 +54,16 @@ langs:
     deck: deck.yaml
     out: sem-10.pptx
     blocks: [Введение, Кейсы, Разбавитель, Закрытие]
+  en:
+    # Bilingual Production Rule (CLAUDE.md, issue #172, issue #322). EN-трек
+    # производится ПОСЛЕ приёмки RU, отдельной фазой. Термины — glossary.en.yaml
+    # (locked 2026-11-09): "Разбавитель" → "Interlude" (block label) /
+    # "Concept interlude" (prose), case_track EN-эквиваленты — тот же файл.
+    slides: slides-en
+    deck: deck.en.yaml
+    out: sem-10-en.pptx
+    head: head.en.yaml
+    blocks: [Introduction, Cases, Interlude, Closing]
 
 # Границы блоков: [от, до, индекс блока, индекс ступени или null].
 # Введение n01-n04, кейсы n05-n76, разбавитель n77-n80, закрытие n81-n83.

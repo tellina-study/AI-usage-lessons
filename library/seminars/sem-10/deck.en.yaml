@@ -1,0 +1,2031 @@
+# Knowledge Outside the Prompt
+# Файл СОБРАН генератором: python3 tools/seminar-build/make_deck_yaml.py --seminar 10
+# Поля слайдов — из фронтматтера самих слайдов; правьте слайд, а не этот файл.
+#
+# Хронометраж по блокам (считан, не переписан):
+#   Introduction n01–n04    5.50 мин
+#   Cases      n05–n76   59.75 мин
+#   Interlude  n77–n80    4.50 мин
+#   Closing    n81–n83    5.00 мин
+#   ИТОГО                  74.75 мин при слоте 90
+
+deck:
+  seminar_number: 10
+  title: Knowledge Outside the Prompt
+  audience: 3rd-year students, 09.03.01 — practicing engineers, all already use AI assistants
+  duration_min: 74.75
+  format: facilitator slides + open questions with option cards (question BEFORE the breakdown) + real
+    screenshots of the live n8n.lessons.tellian.io canvas across all four cases (captured via Playwright
+    working around `~/.cache/page-shot-libs/x`, the notes/mcp-limitations.md [#233-8] restriction lifted
+    2026-10-20) + problem-setup diagrams (solid lines for what is already built, dashed for what is still
+    to be done; canon `tools/seminar-production/forma-keysa-s-zamerom.md`) + four measured runs on this
+    rig (SberQuAD for text, CORD for images), protocols in `stend/raw/`
+  cover_hook: null
+  central_question: How to build a knowledge base that grows?
+  language: en
+  slide_count: 83
+  axis: Four claims, each one looks reliable; what each turned out to be is filled in with measurement,
+    one row per case
+  slot_min: 90
+slides:
+- id: n01
+  file: slides-en/n01-oblozhka.md
+  type: hero_cover
+  duration_min: 0.5
+  assertion: The knowledge base that lived entirely inside the prompt all through last seminar steps outside
+    it today
+  learning_goal: Cover. Names the session's topic and its rung on the arc — knowledge outside the prompt
+    (rung 4), not a new tool mechanic.
+  visual:
+    pattern: hero_cover
+    primary: 'Dark Ocean gradient, a large title centered on the canvas, a subtitle in the middle of the
+      open band. No session number on screen.
+
+      '
+    backup: 'The title is verbatim from ARCHITECTURE.md (the `title` field) and SETKA-KEYSOV.md ("Session
+      topic"): where the process gets its facts and why it considers them true. The session number is
+      deliberately not printed on the cover — owner''s decision, sem-06/qa/oblozhka-bez-nomera.md, the
+      same device as the S8/S9 covers. There is deliberately no figure on the cover: the session''s question
+      is asked verbatim on n03 and returns on n81, and a third spot on the cover would throw off the count
+      of those two (the same device used on Seminar 9''s own n01).'
+- id: n02
+  file: slides-en/n02-shov-s9-s10.md
+  type: content
+  duration_min: 1.5
+  assertion: 'By the arc''s plan, S9 is supposed to end on the question S10 literally begins with: at
+    what size does ''everything in the prompt'' stop being reasonable for the knowledge base'
+  learning_goal: 'The S9→S10 seam. The input state is named in one line of words; the frame''s load-bearing
+    work is the criterion that, per the arc''s plan, the previous session is supposed to end on (canon
+    §2 of the README: a seam is carried over verbatim, not paraphrased — applied here to the arc''s plan,
+    not to an already-produced final screen of S9).'
+  visual:
+    pattern: content
+    primary: 'A frame with no illustration: a line about the input state, below it a verbatim quote of
+      the question S9 ended on, below that a line about what''s growing.
+
+      '
+    backup: 'The combined S9 output file (sem-09/stend/sborka.py::student_file()) exists only on the unmerged
+      branch issue-299-sem-09-issledovanie (ARCHITECTURE.md §2, an open seam issue — escalated, not resolved
+      by this slide). So the shape of the input here is ONLY what ARCHITECTURE.md fixed as the criterion
+      the arc''s plan says the previous session should end on, not a reconstruction of the whole final
+      screen (which, on the unmerged branch of S9''s own work, ends on three conditions rather than one
+      criterion-phrase). S9''s five refinements are listed in prose (answering the client, checking the
+      answer, giving the code authority over the refund rule, a stable format, reading a photo) — without
+      a node diagram: there is no S9 node diagram in this working tree, and it must not be invented (canon
+      §8.7, "don''t reconstruct the unknown").'
+- id: n03
+  file: slides-en/n03-os-zanyatiya.md
+  type: keystone_axis
+  duration_min: 2.0
+  assertion: Four claims, each one looks reliable; what each turned out to be is filled in with measurement,
+    one row per case
+  learning_goal: 'The session''s load-bearing axis: where the process gets its facts and why it considers
+    them true. The session''s question is asked here verbatim and returns verbatim on n81. The right column
+    opens empty and closes on n81, not here.'
+  visual:
+    pattern: keystone_axis
+    primary: 'A two-column, four-row table. The left column is filled in, the right one is empty, with
+      dashed-outline cells. Below the table, the session''s question as a separate tile.
+
+      '
+    backup: 'The left column is verbatim from SETKA-KEYSOV.md, section "Session axis" / rework/section-0-otkrytie.md,
+      four rows in the same order. The session''s question is also verbatim from there. The same text,
+      character for character, stands on n81; cross-checking the two spots is mandatory on rebuild. THE
+      TITLE AND THE FIRST ROW ARE ABOUT THE AXIS ITSELF (Pre-USER-GATE §6): the title names the question
+      the session measures every one of its breakdowns against. Four rows (not six, like S9) — matching
+      the number of S10''s cases.'
+- id: n04
+  file: slides-en/n04-chto-segodnya.md
+  type: content
+  duration_min: 1.5
+  assertion: Four cases in a row and one concept interlude; each case rests on a run of its own rig on
+    real data
+  learning_goal: Session overview. Names the four cases by task (not by thesis) and the interlude, without
+    revealing findings. Matches the Lec-N-1 pattern of the 'what's covered today' section, adapted for
+    a seminar.
+  visual:
+    pattern: content
+    primary: 'A short five-item list (four cases + the interlude), each one a single line naming the task,
+      with no spoiler of the finding.
+
+      '
+    backup: 'Source — rework/section-0-otkrytie.md, section "What''s covered today," recast into a compact
+      list. The case names follow the task (design canon §1), matching case_track in the config verbatim.
+      The nuance about Case 4''s honest failure (rework/section-0, "A nuance the opening is obligated
+      to name directly") is deliberately NOT carried onto this slide: a finding-spoiler here would violate
+      A1/C2 (the result before the case itself). It''s named at the start of Case 4 (n60), not here.'
+- id: n05
+  file: slides-en/n05-k1-divider.md
+  type: case_divider_quote
+  duration_min: 0.5
+  assertion: The ten knowledge-base items Olga worked with last session are the base as it stood at launch,
+    not its permanent size
+  learning_goal: 'Case 1''s divider. Form — a continuation scene: a direct development of the question
+    Seminar 9 ended on. Names the problem (A2), does not hand out a measured result.'
+  visual:
+    pattern: case_divider_quote
+    primary: 'Dark background, one action line large. Below it, the four-case track for the session, with
+      the first one highlighted.
+
+      '
+    backup: 'The case title — "Knowledge Base Storage," by function (case-design canon §1 — a task, not
+      a thesis/lesson), matches case_track verbatim. The quote is a direct continuation of Seminar 9''s
+      own question, not an invented scene: SETKA-KEYSOV.md, Case 1, "Intake form."'
+- id: n06
+  file: slides-en/n06-k1-stsena.md
+  type: problem_scenario
+  duration_min: 1.5
+  assertion: Olga wants the same accurate, cheap answer at any base size; version 1 is simply to keep
+    appending the base to the same prompt with no ceiling
+  learning_goal: 'Case 1''s scene beat: a live staging of the need — what Olga wants, which version 1
+    is the natural one, and what it risks as the base grows. No verdict and no run number (rule A6/C2:
+    the finding belongs to the question beat and the breakdown, not here).'
+  visual:
+    pattern: problem_scenario
+    figure: case1-shema-postanovka-en.png
+    primary: 'On top — diagram S1 (case-design canon forma-keysa-s-zamerom.md §2): solid lines for the
+      flow already working since last session (a question via the form → the whole knowledge-base text
+      goes into the prompt in full → the model answers, seeing the whole base); a dashed gold arrow for
+      what this case builds: a separate store and a search for the needed chunk, which will take the place
+      of the "the whole knowledge base at once" node. Below the diagram — a tile with the need ("an accurate,
+      cheap answer at any base size"), three solution-shape alternatives with no numbers and no verdicts,
+      and the honest question the scene leaves open.
+
+      '
+    backup: 'The need and version 1 are verbatim from SETKA-KEYSOV.md / rework/ section-1-khranenie-bazy.md,
+      "Staging." Alongside version 1, two more genuinely considered methods are named (without a breakdown)
+      — keyword search and a vector store, exactly as the staging of the whole case (not just the question)
+      requires: there are no numbers and no advantages/drawbacks here, that''s the job of the question
+      beat (n07) and the breakdown (n10/n13).
+
+      THE STAGING DIAGRAM (rule S1) is added by this edit: `rendered/ make_figures_sem10.py::case1_shema_postanovka()`,
+      a new function that doesn''t touch the existing `case1_scheme`/`case2_scheme`/`case3_scheme`/ `case4_scheme`.
+      The solid row is the nodes that already exist and already work (the question form, the whole base''s
+      text in the prompt, the model''s answer); they carry forward Seminar 9''s own staging (`n05`, speaker
+      notes: "the process learned to answer the requester on its own — from a knowledge base of ten items,
+      written into the prompt in full"). The dashed arrow is the one element of the diagram that doesn''t
+      exist yet: it points at the "the whole knowledge base at once" node, because that is exactly what
+      this case''s solution will replace (confirmed by n15: "instead of handing the model the whole base...
+      stores the base separately"). The tool''s name (n8n, OpenRouter) is deliberately absent from this
+      diagram — it''s about the message flow, not the implementation; the implementation is layer 2, n16/n17/n18.
+
+      THE MODEL IS NAMED RIGHT ON THE DIAGRAM (C5): the "Model answers" node carries the caption `gpt-4o-mini,
+      whole base in the prompt` — the same name used everywhere in this case''s measurement (`stend/harness2.py::CHAT_MODEL`).
+      Unlike n15 (layer 1, the case''s architectural formulation, deliberately without the tool''s name
+      AND without the model''s name — it has to survive a change of both), this diagram is not the solution''s
+      architecture but the live message flow carrying Seminar 9 forward, and the model in it is already
+      being called for real, so C5 applies to it literally.'
+- id: n07
+  file: slides-en/n07-k1-vopros.md
+  type: question_with_option_cards
+  duration_min: 1.0
+  assertion: Three actions for a growing base — none is named the winner in advance
+  learning_goal: 'Case 1''s question: bare action cards, no verdicts, no cost, no solution composition
+    (A6). Each card is a design choice (design canon §5), not a fact about a tool''s properties.'
+  visual:
+    pattern: question_with_option_cards
+    primary: 'The question in a gold frame, three equal-width cards, no arguments and no verdicts. The
+      breakdown comes as the next screen.
+
+      '
+    backup: 'The cards are verbatim from SETKA-KEYSOV.md, Case 1, "the audience question": three actions,
+      not facts about a tool''s capabilities (design canon §5 check — an imperative verb fits into each
+      one: "keep appending," "search," "put").'
+- id: n08
+  file: slides-en/n08-k1-razbor.md
+  type: answer_breakdown_table
+  duration_min: 1.0
+  assertion: Three actions solve the same task by different means — which one survives the base's growth,
+    this beat still doesn't say
+  learning_goal: 'Qualitative breakdown of Case 1''s three actions RIGHT AFTER the question (course-owner
+    requirement: the breakdown follows the question directly, with no gap for the measurement-structure
+    beats — n07 → n08 → then measurement structure and result). The breakdown explains the mechanism and
+    the qualitative pros/cons with not a single result number, on the model of n62-k4-razbor.md; the S2
+    canon (`forma-keysa-s-zamerom.md`) isn''t broken — before the measurement-structure beat, not one
+    result sits on a frame. The action names repeat question card n07''s cards verbatim.'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A table: action · how it works · advantage · drawbacks. Three rows. No numbers on the frame
+      at all.
+
+      '
+    backup: Text is a number-stripped version of n13-k1-razbor.md (the "How it works" column and the qualitative
+      part of "Advantage"/"Drawbacks"); all numeric values ($, %, accuracy, recall@1) from the source
+      table are removed, leaving only the mechanism and the qualitative judgment.
+- id: n09
+  file: slides-en/n09-k1-struktura-zamera.md
+  type: measured_outcome_table
+  duration_min: 1.0
+  assertion: The same set of ten questions runs through all three actions at each of four base sizes —
+    not a single result on this frame
+  learning_goal: 'Beat S2 (measurement structure, canon forma-keysa-s-zamerom.md §1): the model and its
+    settings, what varies in the measurement, an example question and the expected answer — BEFORE a single
+    outcome number appears on the frame. Inserted between n07 (the audience question) and n10 (the summary)
+    so the audience sees the test''s structure before the first number (cost of skipping it — slide 12
+    of the Seminar 9 deck, the 2026-10-29 review: ''I don''t understand whether it answered right or wrong,''
+    when three beats are compressed into one).'
+  visual:
+    pattern: measured_outcome_table
+    primary: 'A tile with the model and settings on top, below it a table of "what varies" (base size,
+      action), below that a tile with an example question and the correct answer. Neither "correct," nor
+      "incorrect," nor a single accuracy/cost number is on this frame.
+
+      '
+    backup: 'A NEW BEAT, added by this edit (S2 canon: "the test''s structure, before any results," `forma-keysa-s-zamerom.md`
+      §1). Before this edit, n10 opened straight into a summary of results — with no separate frame for
+      the test''s structure before it, exactly the defect the canon names by quoting the owner about Seminar
+      9''s slide 12.
+
+      MODEL AND SETTINGS (C5): `openai/gpt-4o-mini` — forms the final answer from the passed-in text;
+      `openai/text-embedding-3-small` — computes embeddings of the question and the documents for vector
+      search. Both calls go through the same rig webhook (`s10-raw-openrouter`), with no explicitly set
+      additional settings (temperature and other parameters are default): `stend/harness2.py`, `CHAT_MODEL`/`EMBED_MODEL`.
+      The system instruction for the answer call is shown literally on n18 — it isn''t repeated here,
+      to avoid duplicating a frame.
+
+      CORPUS AND WHAT VARIES: `stend/measure/case1_measure.py`. Ten SberQuAD questions (an open question-answering
+      dataset built on Russian Wikipedia articles with gold-standard labeling) — THE SAME set across all
+      twelve "base size × action" combinations. The corpus at each size consists of ten documents carrying
+      the answers to these questions (the "needle") plus random distractor documents up to the needed
+      volume: 10 = needle only, 50/200/500 = needle + distractors.
+
+      EXAMPLE — verbatim from `raw/case1-results.json`, qid `q1`, base size 10 (the same question is asked,
+      unchanged, at all four sizes). The expected answer is the protocol''s own `reference_answer` field,
+      not my own wording; `gold_doc_id` is the document that contains this answer. Case 1''s questions
+      were rebuilt on 2026-11-02 (issue #311) with lexical_gap/exact_match/neutral stratification — the
+      same classification already used in Case 3 (`corpus/corpus_case1.json`, the `questions` field, `lexical_class`);
+      q1 belongs to the lexical_gap class (overlap_ratio 0.2 — the question and the document share few
+      words in their base form).
+
+      NOT A SINGLE RESULT ON THE FRAME (C2): no accuracy, no cost, no recall, not the word "error." The
+      test''s structure in full — and it stops here.'
+- id: n10
+  file: slides-en/n10-k1-rezultat-zamera.md
+  type: measured_outcome_table
+  duration_min: 1.5
+  assertion: 'At 500 documents, prompt-stuffing doesn''t get gradually more expensive — it holds accuracy
+    at one level for three steps in a row and then physically refuses to answer: the request exceeds the
+    model''s context'
+  learning_goal: 'Beat S2 (summary) — a direct continuation of n09 (structure). The headline finding is
+    pulled out into its own gold tile (rule A11). Tables are kept apart per S6: accuracy is a share, cost
+    is dollars, recall is its own tile, not mixed into one cell.'
+  visual:
+    pattern: measured_outcome_table
+    primary: 'Two compact 4×3 tables (base size · whole prompt · keyword · vector) — one for accuracy
+      only, one for cost in dollars only — and a golden tile with the headline failure number at 500 documents.
+
+      '
+    backup: 'Numbers — SETKA-KEYSOV.md Case 1 / stend/raw/case1-results.json, 10 SberQuAD questions ×
+      4 base sizes (10/50/200/500, 500 added by an extra pass on 2026-11-01 per the owner''s comment "the
+      current measurement is too easy") × 3 options. The questions were rebuilt a second time on 2026-11-02
+      (issue #311) with lexical_gap/exact_match/ neutral stratification (Case 3''s methodology) — the
+      old 10 questions were almost all "exact match," which trivially gave keyword recall@1=1.0 and didn''t
+      test what was claimed. "Accuracy" = strict substring containment of the gold short answer — this
+      understates the absolute numbers EQUALLY for every option (methodological disclaimer — in the notes,
+      not on screen). The HTTP 400 error text is verbatim from the `exec_id: "2483"` field, the run of
+      this rebuild.
+
+      TWO TABLES INSTEAD OF ONE (rule S6 — "one column, one dimension," canon `forma-keysa-s-zamerom.md`
+      §6): accuracy (a share) and cost (dollars) in separate tables. Recall@1 gets its own tile, because
+      keyword and vector behave differently on it (keyword holds 0.8 across all four sizes without change;
+      vector holds 1.0 on three of four and dips to 0.9 at 500) — that''s no longer one fact shared by
+      both, but two separate observations, and mixing them into one sentence would be wrong.'
+- id: n11
+  file: slides-en/n11-k1-razbor-oshibok.md
+  type: measured_outcome_table
+  duration_min: 0.75
+  assertion: For keyword, Russian case endings throw off the word match at any base size — the cause isn't
+    the base's scale, it's the method
+  learning_goal: 'Beat S2/S3/S4 (breakdown by group, n10''s successor): an explicit verdict on every example
+    (S3), a systematic error on its own tile (S4). The group here isn''t a type of action but a type of
+    ERROR, found in the measurement data itself after the questions were rebuilt on 2026-11-02 (issue
+    #311). Part 1 of 2 (n12 is the vector error): split so each error gets its own frame (issue #311,
+    the 15pt type floor leaves no room for two tables on one slide).'
+  visual:
+    pattern: measured_outcome_table
+    primary: 'A table of examples: keyword misses the document because of case endings, repeating at any
+      base size. Every row carries an INCORRECT verdict; the conclusion sits under the table.
+
+      '
+    backup: 'The example is verbatim from `stend/raw/case1-results.json` (the `details` field) and `corpus/corpus_case1.json`
+      (document texts), with no change to the model''s answers.
+
+      Error 1 (q4, q10 — keyword): `retrieved_doc_id` does NOT match `gold_doc_id` at ALL FOUR base sizes
+      identically, including size 10, where there are no distractors at all — so the cause isn''t the
+      base''s scale, it''s the comparison method itself. q4: the question "by paleontologists... Eldredge
+      and... Gould" (instrumental case in Russian) against a document reading "paleontologists Eldredge
+      and Gould" (nominative case); the overlap with the correct document, needle-4, is just one word
+      ("year"); keyword found needle-2 (about Mozart, off-topic) — also one shared word ("year"), a coincidental
+      match on an everyday word; with a tied score, keyword picked the wrong document. q10: the question
+      "the model of the universe... taken as a basis" against document needle-10, "the Keplerian model
+      of the universe is based on Copernicus''s model" — the overlap with the correct document is one
+      word ("universe"); keyword found needle-3 (about a marathon) — there TWO words matched, "model"
+      (from the phrase "the whole training model") and "universe" (from the phrase "world championships"),
+      and the 2-to-1 margin pulled the choice away from the correct document.'
+- id: n12
+  file: slides-en/n12-k1-razbor-oshibok-vector.md
+  type: measured_outcome_table
+  duration_min: 0.75
+  assertion: For vector, at 500 documents, a neighboring paragraph of the same article turns out closer
+    in meaning than the gold one — a labeling edge case, not a miss by the method
+  learning_goal: 'Beat S2/S3/S4 (breakdown by group, n11''s successor): an explicit verdict on the example
+    (S3), a systematic error on its own tile (S4), a conclusion (S10). Part 2 of 2 (continuing n11 — the
+    keyword error). Letter suffix brought to the deck''s attention (tools/seminar-production/README.md
+    §1, issue #311).'
+  visual:
+    pattern: measured_outcome_table
+    primary: 'An example table: at 500 documents, vector finds a paragraph that is substantively relevant
+      but formally incorrect, from the same article. Verdict INCORRECT, with a conclusion below the table
+      about the nature of SberQuAD''s "distractors" at this scale.
+
+      '
+    backup: 'The example is verbatim from `stend/raw/case1-results.json` (the `details` field) and `corpus/corpus_case1.json`
+      (document texts), with no change to the model''s answers.
+
+      Error 2 (q3 — vector, only at 500 documents): the gold document is needle-3, about a marathon; at
+      500 documents vector finds `distractor-237` instead — judging by the shared footnote [17] in both
+      texts, likely a neighboring paragraph of the SAME Wikipedia article about the marathon, which contains
+      the literal numeric answer ("times get worse... above 14-16°C"), unlike needle-3, where the fact
+      is phrased in general terms ("high temperatures... keep the best results out of reach"). The model
+      answered confidently and sensibly in substance, but against the gold labeling — incorrectly. On
+      this same question, keyword found the CORRECT document (needle-3), but the model still answered
+      "no information" — because the literal number wasn''t in the text it found; it sat in the neighboring
+      paragraph, which in this run went to distractor-237.
+
+      METHODOLOGICAL CONCLUSION (say it out loud, don''t hide it): at a scale of 500 documents, part of
+      SberQuAD''s "distractors" are actually neighboring paragraphs of the same article as the needle
+      document. Formally having a single `gold_doc_id` doesn''t mean the rest of the corpus is irrelevant
+      to the topic — recall@1 against one gold answer here understates the fact that the search found
+      a substantively relevant text, just not that specific paragraph where the number lives.'
+- id: n13
+  file: slides-en/n13-k1-razbor.md
+  type: answer_breakdown_table
+  duration_min: 0.75
+  assertion: 'Appending everything to the prompt pays for volume the action doesn''t have: accuracy gives
+    no warning while cost grows, until the request fails outright'
+  learning_goal: 'Breakdown right after the measurement results (an A1 derivative — here the breakdown
+    follows the numbers, not the question directly, since the case''s own S6 requires a multi-sided measurement
+    all at once, not a sequential iteration). 4-column form ''Action · How it works · Advantage · Drawbacks''
+    (rule A5), numbers from the previous screen. Part 1 of 2 (n14 — keyword and vector): split because
+    the 15pt type floor leaves no room for three table rows on one slide (issue #311).'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A table: action · how it works · advantage · drawbacks. One row — "append everything to
+      the prompt." Above it, a tile naming the model shared by all three of the case''s actions.
+
+      '
+    backup: 'Breakdown text — SETKA-KEYSOV.md Case 1 / rework/section-1-khranenie- bazy.md, "Breakdown,"
+      fit into the 4-column form without rewording the substance. Numbers are the same as n10''s, not
+      repeated in full but folded down into a range.
+
+      THE MODEL IS NAMED ONCE, FOR THE WHOLE TABLE (C5, on the model of `sem-09/slides/n08-k1-razbor.md`):
+      all three actions end up calling `gpt-4o-mini` for the final answer — the only difference is which
+      text gets passed to it (the whole base or one found chunk).'
+- id: n14
+  file: slides-en/n14-k1-razbor-poisk.md
+  type: answer_breakdown_table
+  duration_min: 0.75
+  assertion: Both separate-search methods hold the same low cost at any base size — keyword pays in accuracy,
+    vector pays in a preparation step
+  learning_goal: 'Breakdown right after the measurement results (an A1 derivative). 4-column form ''Action
+    · How it works · Advantage · Drawbacks'' (rule A5), numbers from the previous screen (n10). Part 2
+    of 2 (continuing n13 — append everything to the prompt). Letter suffix brought to the deck''s attention
+    (tools/seminar-production/README.md §1, issue #311).'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'A table: action · how it works · advantage · drawbacks. Two rows — "search by keyword" and
+      "put it in a vector store."
+
+      '
+    backup: 'Breakdown text — SETKA-KEYSOV.md Case 1 / rework/section-1-khranenie- bazy.md, "Breakdown."
+      Numbers are the same as n10''s.
+
+      The "How it works" column for the "search by keyword" action says "with no model" about THE SEARCH
+      STEP ITSELF (keyword is a word overlap, with no model) — this doesn''t contradict n13''s model tile,
+      which is about the answer, not the search.'
+- id: n15
+  file: slides-en/n15-k1-reshenie-sloy1.md
+  type: mechanism_node_graph
+  duration_min: 1.0
+  assertion: Instead of handing the model the whole base, the process stores it separately and, on each
+    question, finds only the chunks it needs
+  learning_goal: 'Layer 1 of the ''our solution'' beat (case-design canon §2): architecture with not a
+    single node name and not a single tool name. Layer 2 — the n8n screen, next slide.'
+  visual:
+    pattern: content
+    primary: 'One formula tile with the architectural thesis, with no tool name and no node name.
+
+      '
+    backup: 'Wording — SETKA-KEYSOV.md Case 1, "Solution," layer 1, verbatim. There are no node names,
+      no orchestrator name, and no Latin script on this slide deliberately: canon §2 requires layer 1''s
+      wording to survive a change of tool. The real screen is n16.'
+- id: n16
+  file: slides-en/n16-k1-n8n-ekran.md
+  type: mechanism_node_graph
+  duration_min: 0.75
+  assertion: The store node is named Simple Vector Store, and there's no stock 'embedding via OpenRouter'
+    node in n8n at all — this step is built with a plain HTTP Request
+  learning_goal: 'Layer 2 of Case 1, beat 1 of 3: a real screenshot of the rig''s live canvas (not a drawn
+    diagram — the live UI was captured by `stend/n8n_shots.py`, the workaround for [#233-8] lifted on
+    2026-10-20). The two nodes'' panels come as the next two beats (n17, n18).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: case1-n8n-canvas-real.png
+    primary: 'A real screenshot of the live rig''s n8n canvas: Question + corpus with vectors (formTrigger)
+      → Embed query (OpenRouter) → Simple Vector Store (cosine top-1) → Answer (RAG) with a model node
+      hanging below it → Result screen.
+
+      '
+    backup: 'A REAL SCREENSHOT REPLACES THE DRAWN DIAGRAM in this edit (`proektirovanie-keysa-i-voprosa.md`
+      canon §2, README §8.4: the "layer unreachable" finding gets fixed not with a substitute genre but
+      with a new capture). The previous diagram, `case1-n8n-vector- scheme.png` (`make_figures_sem10.py::case1_scheme`),
+      was legitimate at the time it was made — the live canvas was unreachable (`notes/mcp-limitations.md`
+      [#233-8]) — but that limit was lifted on 2026-10-20 (an update to the same issue number), and `stend/README.md`
+      records: "live screenshots taken, the earlier conclusion was a mistake." The earlier generator file
+      was NOT deleted (it stands as a record of the earlier solution''s build), but the slides no longer
+      reference it.
+
+      Frame source: `stend/n8n-screenshots-raw/case1-canvas.png`, captured by `stend/n8n_shots.py` on
+      the live `n8n.lessons.tellian.io`. Crop — `rendered/compose_case1_n8n_shots.py` (Pillow, the same
+      effect as `convert -crop`; ImageMagick isn''t available in this working environment) — only the
+      dangling "+" connector to the right of Result screen was removed; the canvas itself wasn''t reassembled
+      or redrawn by even one pixel.
+
+      THE MODEL IS NAMED BY NAME (C5): `gpt-4o-mini` (the answer) and `text-embedding-3-small` (the question''s
+      embedding) — `stend/harness2.py`, `CHAT_MODEL`/`EMBED_MODEL`, with no explicitly set call settings
+      (parameters such as temperature left at default). On the canvas both are visible only by a generic
+      node name ("Embed query (OpenRouter)," "Model (answer on retrieved chunk)") — the model''s own name
+      isn''t labeled in the interface (it lives inside the HTTP request body / the node''s credential),
+      so it''s named in the slide''s text, not on the frame.
+
+      A DEMO RUN, NOT A REPEAT OF THE MAIN MEASUREMENT: the question "At what pressure were helium crystals
+      obtained?" — a separate small corpus (10 documents) belonging to this demo scenario (workflow `JNXhpgEoOC937W5g`),
+      not one of the 10 SberQuAD questions from the main measurement on n09/n10. The frame''s purpose
+      is to show the canvas''s mechanics, not to repeat the measurement''s numbers (`stend/README.md`
+      § "What each demo screen confirmed," execution `2112`).'
+- id: n17
+  file: slides-en/n17-k1-panel-poiska.md
+  type: mechanism_node_graph
+  duration_min: 0.75
+  assertion: Inside the 'Simple Vector Store' node there's no separate database — it's a loop over every
+    document and a cosine comparison with the question, right in the node's body
+  learning_goal: 'Layer 2 of Case 1, beat 2 of 3: a real configuration panel for the search node, in the
+    EXPANDED code-editor view (not collapsed — Seminar 9''s own lesson: a collapsed view truncates the
+    text).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: case1-n8n-vector-panel-real.png
+    primary: 'A real screenshot of the "Simple Vector Store" node''s expanded code editor: a JavaScript
+      function `cos(a, b)` computes cosine similarity, a loop over `payload.corpus` keeps the best document
+      found.
+
+      '
+    backup: 'Frame source: `stend/n8n-screenshots-raw/case1-vector-store-panel.png` (the `Code` node,
+      "Run Once for All Items" mode, JavaScript language), captured by `stend/n8n_shots.py` in the EXPANDED
+      editor view (the expand button — the same lesson from Seminar 9, that a collapsed view truncates
+      the text). Crop — `rendered/compose_case1_n8n_shots.py`: the Parameters/Settings tabs and the Mode/Language
+      fields on top were removed (service parts of the interface, not the node''s code), as was the toolkit
+      hint at the bottom; the code itself wasn''t redrawn or changed by even one character.
+
+      WHAT''S LITERALLY VISIBLE ON THE FRAME: six lines of code. Line 1 reads the incoming `payload` (the
+      question plus the document corpus with their embeddings). Line 2 pulls out the question''s own embedding,
+      `qvec`. Line 3 is the cosine similarity function itself, written by hand (`d/(Math.sqrt(na)*Math.sqrt(nb))`),
+      with no call to an external library. Lines 4-6 are the loop over every document in the corpus, comparing
+      each one with `qvec`, keeping the best one.
+
+      WHAT ISN''T ON THE FRAME AND THEREFORE ISN''T CLAIMED IN PROSE: a separate vector-database service.
+      "Simple Vector Store" is an n8n node''s name, not the name of an external product; the store lives
+      inside the payload itself, and the search is a plain in-memory scan. This isn''t a limitation of
+      this particular run — the stock n8n node is built this way for small corpora; a real external vector
+      database would be needed not here, but once the base grows far beyond what fits in a single call''s
+      memory.'
+- id: n18
+  file: slides-en/n18-k1-panel-otveta.md
+  type: mechanism_node_graph
+  duration_min: 0.75
+  assertion: 'The answer node''s prompt explicitly forbids the model from going beyond the found chunk:
+    ''Answer ONLY from the text below. If the answer isn''t there — write "no information"'''
+  learning_goal: 'Layer 2 of Case 1, beat 3 of 3: a real prompt panel for the Answer (RAG) node, EXPANDED
+    view. This system instruction is the direct cause of the ''no information'' answers we''ll break down
+    in the next beats (a bridge to n11).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: case1-n8n-answer-panel-real.png
+    primary: 'A real screenshot of the expanded "Prompt (User Message)" field of the Answer (RAG) node:
+      "Answer ONLY from the text below. If the answer isn''t in the text — write "no information." Text:
+      {{ $json.chunk }}".
+
+      '
+    backup: 'Frame source: `stend/n8n-screenshots-raw/case1-answer-panel.png` (the HTTP Request → chat/completions
+      node, the Prompt (User Message) field), captured by `stend/n8n_shots.py` in EXPANDED view. Crop
+      — `rendered/compose_case1_n8n_shots.py`: the top "Save time with an example" block and the prompt-source
+      selector field were removed, as were the Require Specific Output Format / Enable Fallback Model
+      toggles at the bottom (not used in this node). The prompt''s own text wasn''t changed by even one
+      character — it''s verbatim from `stend/harness2.py::llm_answer`, the call''s system message.
+
+      THIS INSTRUCTION IS THE SAME FOR ALL THREE ACTIONS (a C5 corollary): prompt-stuffing gets this same
+      system instruction on top of the entire base''s text, keyword and vector get it on top of a single
+      found chunk (`{{ $json.chunk }}`). The difference between actions isn''t in the model''s instruction
+      — it''s in what text gets substituted into `{{ $json.chunk }}`: the whole knowledge base or one
+      chunk.
+
+      BRIDGE TO THE NEXT BEAT: it''s exactly this line — "if the answer isn''t in the text — write ''no
+      information''" — that''s the direct cause of why prompt-stuffing, at large base sizes, answers literally
+      "no information" several times (n11/n10): not because the model isn''t trying, but because it''s
+      explicitly allowed and instructed to say so if it can''t find the fact. At a small base there''s
+      plenty to search through; at a large one, as the number of similar distractor documents grows, correctly
+      locating its own fact inside a wall of text doesn''t always succeed — and that''s exactly when this
+      instruction kicks in.'
+- id: n19
+  file: slides-en/n19-k1-rezultat-obobshchenie.md
+  type: content
+  duration_min: 1.0
+  assertion: The requester sees no difference — Olga sees what each next answer costs as the base grows
+  learning_goal: 'Case 1''s result and generalization: what the requester sees vs. what Olga sees, and
+    the principle that carries over to any orchestrator (not just n8n).'
+  visual:
+    pattern: content
+    primary: 'Two tiles side by side: "to the requester," "to Olga" — then a formula tile with the transferable
+      principle.
+
+      '
+    backup: Text — SETKA-KEYSOV.md Case 1, "Result and generalization," verbatim.
+- id: n20
+  file: slides-en/n20-k1-nyuansy-granitsa.md
+  type: criteria_checklist_and_boundary
+  duration_min: 0.5
+  assertion: 'A store pays for itself through the base''s growth, not through its mere existence: at ten
+    documents the difference is non-critical, at five hundred there''s nothing to compare it against'
+  learning_goal: 'Case 1''s boundary in direct form (A7): ''when it''s needed · when it isn''t.'' Part
+    1 of 2 (n21 — stale index and closing the session axis''s first line): split because the 15pt type
+    floor leaves no room for the boundary and two conclusions on one slide (issue #311).'
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'The criterion on its own tile at the top, a two-column table "when it''s needed · when it
+      isn''t" below.
+
+      '
+    backup: The criterion and the boundary — SETKA-KEYSOV.md / rework/ section-1-khranenie-bazy.md, "Nuances,"
+      numbers are the same four base sizes as n10/n13, without repeating the full table.
+- id: n21
+  file: slides-en/n21-k1-ustarevshiy-indeks.md
+  type: criteria_checklist_and_boundary
+  duration_min: 0.5
+  assertion: 'A vector store is a copy of the base taken at indexing time: it holds no live link to the
+    source, and an outdated regulation gets served back honestly, but outdated'
+  learning_goal: 'A stale index as a typical problem of this rung (ARCHITECTURE.md §3), confirmed by logic,
+    not by a separate measurement. The session axis''s first line gets closed here. Part 2 of 2 (continuing
+    n20 — the criterion and the boundary). Letter suffix brought to the deck''s attention (tools/seminar-production/README.md
+    §1, issue #311).'
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A tile about the stale index, a tile closing the session axis''s first line.
+
+      '
+    backup: SETKA-KEYSOV.md / rework/section-1-khranenie-bazy.md, "Nuances."
+- id: n22
+  file: slides-en/n22-k2-divider.md
+  type: case_divider_quote
+  duration_min: 0.5
+  assertion: The base's chunks that the previous case worked with were not ten lines of FAQ, but real,
+    multi-page regulations
+  learning_goal: 'Case 2''s divider. Form — a fact from practice (canon §8.2: the entry form differs for
+    every case). Names the problem (A2), not the solution.'
+  visual:
+    pattern: case_divider_quote
+    primary: 'Dark background, one action line large. Below it, the track of four cases for the session,
+      the second one highlighted.
+
+      '
+    backup: 'The case title — "Splitting a Document into Chunks", by task, matches case_track. The transition
+      fact — from SETKA-KEYSOV.md Case 2, "Entry form": the base''s chunks aren''t ten lines, they''re
+      real documents.'
+- id: n23
+  file: slides-en/n23-k2-stsena.md
+  type: problem_scenario
+  duration_min: 1.0
+  assertion: Version 1 — cut the document into fixed-size chunks, by character count, without looking
+    at where sentence boundaries fall
+  learning_goal: 'Case 2''s scene beat: the need (the right chunk must not lose meaning after the cut)
+    + version 1 as the first natural attempt. No run number (the breakdown comes in later beats, after
+    the question).'
+  visual:
+    pattern: problem_scenario
+    figure: case2-shema-postanovka-en.png
+    primary: 'On top — diagram S1 (canon forma-keysa-s-zamerom.md §2): solid lines for chunk embedding
+      and the store, already working since last session; dashed gold lines for splitting the document
+      into chunks, the node this case builds, sitting BEFORE embedding. Below the diagram — a need tile,
+      version 1 in plain prose, the honest question the scene leaves open.
+
+      '
+    backup: 'DIAGRAM S1 ADDED (owner, comparing Seminar 9 against Seminar 10: "bring S10 up to S9''s level"
+      — every case scene in S9 opens with a diagram of "where we''re intervening", S10''s Case 2 had no
+      such diagram). `case2-shema-postanovka.png`, generator — `rendered/make_figures_sem10.py::case2_shema_postanovka()`.
+
+      No tool names appear on the diagram deliberately (layer 1 — solution architecture, not an n8n screen);
+      the real screen is n35/n36.
+
+      The need and version 1 — from SETKA-KEYSOV.md Case 2, "Setup", verbatim.'
+- id: n24
+  file: slides-en/n24-k2-vopros.md
+  type: question_with_option_cards
+  duration_min: 1.0
+  assertion: Four actions for cutting a document — different boundaries, each checked by the same run
+  learning_goal: 'Case 2''s question: four action cards, no verdicts (A6). Each is a design choice about
+    where to cut, not a fact about a tool''s properties.'
+  visual:
+    pattern: question_with_option_cards
+    primary: 'Question in a gold frame, four cards of equal width, no arguments and no verdicts.
+
+      '
+    backup: Cards — SETKA-KEYSOV.md Case 2, "Question for the room". The earlier version of this question
+      held only two cards and did not include overlap chunking — at that point the measurement hadn't
+      checked overlap at all (overlap=0 in every run). The follow-up run of 2026-11-02 (`stend/raw/case2-results.json`,
+      the same local Python measurement, not a live n8n call) checked word-boundary chunking and overlap
+      chunking the same way as the first two actions — all four cards now rest on a measured result, there
+      is no open item about overlap left (closed at n38).
+- id: n25
+  file: slides-en/n25-k2-razbor.md
+  type: answer_breakdown_table
+  duration_min: 0.6
+  assertion: 'Two fundamentally different ways to cut a document without overlap: by character count and
+    by sentence boundaries'
+  learning_goal: 'Qualitative breakdown of actions 1-2 of Case 2 right after the question (course owner''s
+    requirement: the breakdown follows the question directly — n24 → n25 → then the test structure and
+    the result). The breakdown explains the mechanism and the qualitative pros/cons without a single result
+    number, following the pattern of n62-k4-razbor.md; canon C2 is not violated — up to the test-structure
+    beat there is no result on the frame at all. Action names repeat the n24 cards verbatim. Part 1 of
+    2 (n26 — actions 3-4: cheap patches on top of the first). Regrouped 2026-11-04 per the owner''s note:
+    it used to be 3+1 rows (visually read as ''3 analyzed, the fourth tacked on''), now it''s 2+2 — two
+    fundamentally different ways kept apart from two patches on the first one, equal visual weight with
+    n26 (issue #311).'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'Table: action · how it works · advantage · drawbacks. Two rows — the two fundamentally different
+      ways to cut without overlap (by character count, by sentence boundaries). No numbers on the frame.
+
+      '
+    backup: Text — the number-free version of n33-k2-razbor.md (the "How it works" column and the qualitative
+      part of "Advantage"/"Drawbacks"); every numeric value (shares of broken answers in percent) from
+      the original table has been removed, leaving only the mechanism and the qualitative judgment.
+- id: n26
+  file: slides-en/n26-k2-razbor-perekrytie.md
+  type: answer_breakdown_table
+  duration_min: 0.65
+  assertion: 'Word-boundary chunking and chunking with overlap are two cheap patches on the first method:
+    both reduce the rate of breaks without reaching the level of sentence-boundary chunking'
+  learning_goal: 'Qualitative breakdown of actions 3-4 of Case 2, continuing n25 (owner''s requirement:
+    the breakdown follows the question directly). The breakdown explains the mechanism and the qualitative
+    pros/cons without a single result number. Part 2 of 2 (n25 — actions 1-2: the two fundamentally different
+    ways). Regrouped 2026-11-04 per the owner''s note: it used to be 3+1 rows (visually read as ''3 analyzed,
+    the fourth tacked on''), now it''s 2+2 — two fundamentally different ways kept apart from two patches
+    on the first one, equal visual weight with n25 (issue #311).'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'Table: action · how it works · advantage · drawbacks. Two rows — the two cheap patches on
+      the first method (by word boundaries, by character count with overlap). No numbers on the frame.
+
+      '
+    backup: Text — the number-free version of n33-k2-razbor.md, the same method as n25.
+- id: n27
+  file: slides-en/n27-k2-struktura-testa.md
+  type: measured_outcome_table
+  duration_min: 1.0
+  assertion: 60 documents, 72 questions, five chunk sizes — and not a single model at this step
+  learning_goal: 'Beat 1 of the measurement exposition for Case 2 (canon forma-keysa-s-zamerom.md §1,
+    rule C2): test structure BEFORE the result — corpus, a finding about data quality, five size groups,
+    a concrete example with its gold answer. No results on the frame. The model is explicitly NOT named
+    (C5 by contraposition) — it has no part in this step, the cutting is entirely classical code. Restructured
+    2026-11-04 per the owner''s note (''a wall of text, unreadable''): run-together multi-line paragraphs
+    split into separate paragraphs within the same tiles, the number of tiles unchanged (issue #311).'
+  visual:
+    pattern: measured_outcome_table
+    primary: 'Corpus tile, finding-about-labeling tile, five-size-groups tile, a concrete document/question/answer
+      example in prose, "no model here" tile. No result anywhere on the frame.
+
+      '
+    backup: The corpus and the finding about offsets — stend/measure/case2_chunking.py, exact calculation
+      (22.0% = 1108/5036). The example — execution 2369 (stend/raw/case2_chunking_execution.json), a real
+      run of the demo scenario on the rig, the same document that's in the measurement's sample[:60] (seed=7).
+      The five size groups and their order match exactly the ones on n28 (summary) and in the nuances
+      on n38 — canon requires names and order to match across beats.
+- id: n28
+  file: slides-en/n28-k2-rezultat-zamera.md
+  type: measured_outcome_table
+  duration_min: 1.25
+  assertion: At the headline size, version 2 breaks the answer in 1.4% of cases against 12.5% for version
+    1 — and this holds across all five tested sizes
+  learning_goal: 'Beat 2 of the measurement exposition (canon forma-keysa-s-zamerom.md §1, C2): the summary
+    — the load-bearing pair of numbers, large (A11), then a breakdown by the same size groups as in n27,
+    in the same order. Version 1''s non-monotonicity gets its own beat in n38, not duplicated here (C11).
+    Revised 2026-11-04 per the owner''s note (''the slide doesn''t read, what is this — a share of successful
+    answers or what?? needs to describe what we''re doing and what we''re measuring''): the metric ''broken''
+    is now defined explicitly right on the frame, one line before the numbers, not only in the speaker
+    notes/n27/n31. Redundant duplication of v3/v4 numbers (already in the 5×4 table below) removed from
+    the visible body (C11). The notes'' ending was revised the same day, in a second pass (issue #311,
+    the owner''s note from the same round: ''this should be earlier, next to the measurements on question
+    fragments''): the honest measurement of the final answer (n37/n38 under the old numbering) was moved
+    here, right after this beat, so the transition now leads into it rather than into the document breakdown.'
+  visual:
+    pattern: measured_outcome_table
+    figure: case2-razryv-metriki-en.png
+    primary: 'One tile: an explicit definition of the "broken" metric as the first line, then the load-bearing
+      pair of numbers at the headline size (180) as the main v1/v2 contrast. Below the tile, a 5×4 table
+      (chunk size · share of broken answers across all four versions) — the same five groups and the same
+      order as n27; v3/v4 numbers are read from the table, not duplicated in a separate tile.
+
+      '
+    backup: 'Numbers — SETKA-KEYSOV.md Case 2 / stend/raw/case2-results.json: 60 SberQuAD documents (≥500
+      characters, answer offsets verified directly — 22.0% of the source dataset''s rows excluded per
+      the finding about corrupted labeling), 72 questions, 5 chunk sizes, the same run gives numbers for
+      all four cutting versions at once (follow-up run 2026-11-02 — local Python measurement, not a live
+      n8n call, exec_id doesn''t apply here; the live demo example with exec_id 2522 is separate, see
+      n31/n35).
+
+      Version 1''s non-monotonicity by chunk size is carried over to n38 (this measurement''s boundary)
+      — here only the summary, so as not to repeat the same finding twice in a row (C11, canon §11).'
+- id: n29
+  file: slides-en/n29-k2-itog-otveta.md
+  type: measured_outcome_table
+  duration_min: 1.0
+  assertion: On the honest measurement of the final answer, version 2 answers correctly in 72% of cases
+    at K=1 against 57% for version 1 — the gap holds even when the model gets several chunks, not one
+  learning_goal: 'Follow-up pass 2026-11-04 (issue #311), a direct instruction from the owner: ''for the
+    chunking case we''re missing measurements on the answers... we need a measurement of the final outcome.''
+    Moved the same day to right after n28 (the owner''s second note from the same round: ''this should
+    be earlier, next to the measurements on question fragments'' — the beat used to sit at the end of
+    Case 2, after the solution architecture and the closing nuances, even though it logically continues
+    the first direct measurement, not the solution breakdown). The previous beat (n28) measured a proxy
+    — is the gold span intact inside ONE chunk; this beat measures the outcome of the full pipeline: question
+    embedding → top-K search across ALL 60 documents → `gpt-4o-mini` answers from the retrieved chunks
+    → checked by the same `contains_answer` criterion as Case 1 (not a new metric with a different threshold).
+    Added an explicit statement of the measurement''s basis (the round''s third note: ''it''s not clear,
+    if we cut differently, how was this measured, on what'' — the frame now states plainly that all four
+    versions were run on the same base as the previous beat). Part 1 of 2 (n30 — the gap narrows but doesn''t
+    close): split because the 15pt floor size doesn''t leave room for two definition tiles, a 5×4 table,
+    and the conclusion about the narrowing gap on one frame.'
+  visual:
+    pattern: measured_outcome_table
+    primary: 'A "what we''re measuring and what K means" tile, a headline-comparison tile at K=1, a 5×4
+      table (cutting version · K=1 · K=2 · K=3 · K=5, accuracy_strict).
+
+      '
+    backup: Numbers — stend/raw/case2_e2e_results.json::summary (1152 calls to gpt-4o-mini, 4 versions
+      × 4 K × 72 questions), interpretation — stend/README.md "Case 2, follow-up pass 2026-11-04". Correctness
+      criterion — `harness2.contains_answer`, the same function Case 1 already uses (`accuracy_strict`,
+      not a new metric). Fractions out of 72 — the product of accuracy_strict × 72, a whole number with
+      no remainder in each of the 16 cells (verified by direct count, not rounded by eye).
+- id: n30
+  file: slides-en/n30-k2-suzhenie-razryva.md
+  type: measured_outcome_table
+  duration_min: 0.75
+  assertion: Growing K narrows the gap between version 1 and version 2 by more than half, but version
+    2 remains the better version at every one of the four tested K without exception
+  learning_goal: 'Continuation of n29 — the answer to the course owner''s hypothesis (''if we return several
+    chunks, doesn''t that compensate for the gap between the versions''). The hypothesis was partly confirmed:
+    the gap in accuracy_strict narrows from 15.3 to 7.0 percentage points (more than 2×), but doesn''t
+    close to zero — version 2 stays the better version at every one of the four K, and version 1 needs
+    to return roughly 5× more candidates (K=5) to approach what version 2 already delivers at K=1. Part
+    2 of 2 (continuing n29: the measurement''s definition and the 5×4 table live there, not repeated here,
+    canon C11). Moved together with n29 the same day to right after n28 (issue #311, the round''s second
+    note 2026-11-04 — see n29). The notes'' ending was revised in the same round: the transition now leads
+    into the breakdown on one real document (next beat), not into Case 3''s divider. Letter-suffix pending
+    deck finalization (tools/seminar-production/README.md §1, issue #311).'
+  visual:
+    pattern: measured_outcome_table
+    primary: 'Tile on the narrowing gap (15.3 → 7.0 p.p.), tile "version 2 remains the best at every K"
+      comparing v1@K=5 and v2@K=1.
+
+      '
+    backup: 'Numbers — stend/README.md "Case 2, follow-up pass 2026-11-04", sections "The owner''s hypothesis
+      confirmed — at K≥3, not earlier" and "Second honest conclusion". Gap in accuracy_strict: 15.3 p.p.
+      (K=1) → 23.6 p.p. (K=2, breaks monotonicity — honest noise from a small sample: 72 questions, 1
+      question = 1.4 p.p., named separately in the notes, not hidden) → 13.9 p.p. (K=3) → 7.0 p.p. (K=5).
+      v1@K=5 = 73.6% (53/72), v2@K=1 = 72.2% (52/72) — a difference of one notch out of 72 questions,
+      hence "roughly" in the frame''s text.'
+- id: n31
+  file: slides-en/n31-k2-razbor-primera.md
+  type: measured_outcome_table
+  duration_min: 0.75
+  assertion: Character-count cutting can tear not just a sentence but a word in half — on this document,
+    it did
+  learning_goal: 'Beat 3 of the measurement exposition (canon forma-keysa-s-zamerom.md §1, C2): a breakdown
+    on a concrete document with an explicit verdict for each version (C3: INTACT/BROKEN). Part 1 of 2
+    (n32 — the systematic error, one document doesn''t overturn the summary, conclusion): split because
+    the 15pt floor size doesn''t leave room for the table and three tiles on one slide (issue #311).'
+  visual:
+    pattern: measured_outcome_table
+    primary: 'A short document quote with the cut boundary marked, a 4×3 table (version · where the cut
+      falls · verdict).
+
+      '
+    backup: 'All numbers and text — verbatim from execution 2522 (stend/raw/case2_chunking_execution.json).
+      Chunk boundaries: v1 — [0,180)/[180,360)/[360,540)/[540,587); v2 — [0,189)/[190,410)/ [411,587);
+      v3 — [0,173)/[173,348)/[348,528)/[528,587); v4 — [0,180)/[153,333)/[306,486)/[459,587). Gold answer
+      "from any sources" — positions 528–547.'
+- id: n32
+  file: slides-en/n32-k2-svod-ne-otmenyaet.md
+  type: measured_outcome_table
+  duration_min: 0.5
+  assertion: Version 1's systematic error is that it doesn't look at the text at all — and one lucky document
+    still doesn't overturn the summary across the whole sample
+  learning_goal: 'The systematic error named in its own tile (C4), an explicit conclusion from the single-document
+    breakdown, returning to the summary (C10) — canon forma-keysa-s-zamerom.md §1. Part 2 of 2 (continuing
+    n31 — the breakdown on the cybernetics document). Letter-suffix pending deck finalization (tools/seminar-production/README.md
+    §1, issue #311). Restructured 2026-11-04 per the owner''s note (''a wall of text, unreadable''): run-together
+    paragraphs split into separate paragraphs within the same tiles, the number of tiles unchanged.'
+  visual:
+    pattern: measured_outcome_table
+    primary: 'Tile on version 1''s systematic error, a warning tile about a single document, a conclusion
+      tile that returns to the summary across sixty documents.
+
+      '
+    backup: 'IMPORTANT: v3 and v4 are intact specifically on the cybernetics document (n31) — the summary
+      across the whole sample (n28) still shows them worse than version 2 (8.3% and 5.6% broken answers
+      against 1.4%); don''t carry the single-document conclusion over to the general case.'
+- id: n33
+  file: slides-en/n33-k2-razbor.md
+  type: answer_breakdown_table
+  duration_min: 1.0
+  assertion: Version 2 costs a bit more implementation complexity — and pays for it with a share of broken
+    answers that drops several times over
+  learning_goal: 'Breakdown after the measurement (the story of one iteration — design canon §4): v1 tried
+    → problem found by the numbers → v2 as the fix; v3/v4 — two additional options, measured by the same
+    run. 4-column form (rule A5), four rows.'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'Table: action · how it works · advantage · drawbacks. Four rows.
+
+      '
+    backup: Text — SETKA-KEYSOV.md Case 2, "Breakdown of the options", fit into the 4-column form. v3/v4
+      numbers — follow-up run 2026-11-02 (local Python measurement, `stend/raw/case2-results.json`, not
+      a live n8n call).
+- id: n34
+  file: slides-en/n34-k2-reshenie-sloy1.md
+  type: mechanism_node_graph
+  duration_min: 0.75
+  assertion: A chunk's boundary must coincide with a boundary of meaning inside the document, not with
+    an arbitrary character count
+  learning_goal: 'Layer 1 of Case 2: architecture without a tool name. The n8n screen comes next slide.
+    The rejection of a model is explicitly named (C5 by contraposition) — all four versions of this step
+    are purely algorithmic, this is an architectural fact, not an implementation detail.'
+  visual:
+    pattern: content
+    primary: 'One formula tile with the architectural thesis, below it a short tile about the absence
+      of a model at this step.
+
+      '
+    backup: Wording — SETKA-KEYSOV.md Case 2, "Solution", layer 1, verbatim.
+- id: n35
+  file: slides-en/n35-k2-n8n-ekran.md
+  type: mechanism_node_graph
+  duration_min: 0.75
+  assertion: On the real canvas there are seven nodes in a row, and not one of them calls a model — all
+    four chunking versions and their comparison are built with plain code
+  learning_goal: 'Layer 2 of Case 2, beat 1 (design canon §2): a real snapshot of the live rig, not a
+    drawn diagram. The canvas is a demo comparison of the four versions on one document, with no embedding
+    and no model (C5 by contraposition: explicitly name the absence of a model).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: case2-n8n-canvas-real.png
+    primary: 'A real screenshot of the live n8n canvas: a "Whole document" form → code "Fixed-size chunking"
+      → code "Sentence-boundary chunking" → code "Word-boundary chunking" → code "Fixed-size chunking
+      with overlap" → code "Comparison: did the answer land whole in one chunk" → result screen. Seven
+      nodes in one row, not one of them a model call.
+
+      '
+    backup: 'The screenshot is real: stend/n8n-screenshots-raw/case2-canvas.png, taken by stend/n8n_shots.py
+      on n8n.lessons.tellian.io after the follow-up run of 2026-11-02, copied WITHOUT cropping to rendered/figures/case2-n8n-canvas-real.png
+      via rendered/compose_case2_real_screens.py (no cropping needed — the canvas was captured already
+      zoomed "to fit", nothing extra at the edges). The screenshot has already been reassembled for 7
+      nodes; the file name hasn''t changed. There is no longer a stylized diagram standing in for the
+      screenshot: the earlier drawn scheme rendered/figures/case2-n8n-splitter-scheme.png (generator make_figures_sem10.py::case2_scheme())
+      is left on disk as a record of the earlier (mistaken) solution''s design — the slide no longer references
+      it (canon §8.4).
+
+      THIS IS A DEMO COMPARISON, NOT A PRODUCTION PIPELINE: the scenario `s10-case2-chunking` (id `oLiJHPEy6uII7W5J`)
+      runs ALL FOUR chunking versions on one document and compares the result right on screen — this isn''t
+      the same canvas on which Case 1 assembles the embedding and the store write (there, the cutting
+      step would sit BEFORE embedding in a single chain). Layer 1 (n34) states the architectural boundary
+      regardless of which specific scenario it''s configured in; here is the real screen showing how all
+      four chunking nodes are built.
+
+      THE MODEL ISN''T NAMED BECAUSE IT ISN''T HERE (C5 by contraposition): `stend/sborka.py::case2_chunking_workflow()`
+      and `stend/measure/case2_chunking.py` — not one of the seven nodes calls either an LLM or an embedding;
+      the whole canvas is plain code (a Code node, JavaScript). The contrast with the embedding step from
+      Case 1 (`text-embedding-3-small`, already named on n27/n34) is stated explicitly in the slide''s
+      body, not left for the reader to infer.'
+- id: n36
+  file: slides-en/n36-k2-nastroyka-uzlov.md
+  type: mechanism_node_graph
+  duration_min: 1.0
+  assertion: 'On the left — a loop over the character count; on the right — splitting by sentence boundaries
+    and accumulating to the target size: one type of node, different code inside'
+  learning_goal: 'Layer 2 of Case 2, beat 2 (design canon §2): real expanded panels of two Code nodes
+    with concrete configuration details (Mode/Language/JS code, not just the node''s name). JS is a direct
+    port of the Python from case2_chunking.py, not a separate implementation.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: case2-n8n-code-panels-real.png
+    primary: 'Two expanded Code-node panels side by side: on the left, "Fixed-size chunking" (chunkFixed
+      — a loop over size with a step of size-overlap); on the right, "Sentence-boundary chunking" (chunkStructural
+      — splitting by a sentence-boundary regular expression, accumulating to target characters).
+
+      '
+    backup: 'The screenshots are real: stend/n8n-screenshots-raw/case2-fixed-chunk-panel.png and case2-structural-chunk-panel.png,
+      taken by stend/n8n_shots.py, the expanded view of the code editor (the expand button — a C9 lesson:
+      the collapsed view cuts off the text). Composed side by side via rendered/compose_case2_real_screens.py
+      — WITHOUT ImageMagick (in this working environment `convert`/`montage` aren''t installed, Pillow
+      was used instead: the same result, crop plus stitch without redrawing the source screenshot''s pixels)
+      — rendered/figures/case2-n8n-code-panels-real.png. Each panel is cropped at the n8n interface''s
+      bottom orange hint ("Type $ for a list…") — this is a UI hint, not part of the node''s content.
+
+      The JS is a DIRECT PORT of the Python from stend/measure/case2_chunking.py (`chunk_fixed`/`chunk_structural`/`answer_intact`),
+      confirmed by the docstring of stend/sborka.py::case2_chunking_workflow(): "a direct port of …, not
+      an independent implementation — must not diverge from what was actually measured." The node on the
+      left reads `payload.chunk_size` (default 180) — the same parameter that was varied across five values
+      in the summary (n28).'
+- id: n37
+  file: slides-en/n37-k2-rezultat-obobshchenie.md
+  type: content
+  duration_min: 1.0
+  assertion: The requester sees a broken answer; Olga sees a number — what share of questions risks getting
+    one under the current setting
+  learning_goal: 'Result and generalization for Case 2: what the requester sees vs. what Olga sees, and
+    the transferable principle (a store chunk is a unit inside which meaning must be preserved).'
+  visual:
+    pattern: content
+    primary: 'Two tiles side by side: "to the requester", "to Olga" — then a formula tile with the transferable
+      principle.
+
+      '
+    backup: Text — SETKA-KEYSOV.md Case 2, "Result and generalization", verbatim.
+- id: n38
+  file: slides-en/n38-k2-nyuansy-granitsa.md
+  type: criteria_checklist_and_boundary
+  duration_min: 0.75
+  assertion: Chunk size doesn't behave monotonically on its own — checking against your own data is needed
+    for any size choice
+  learning_goal: 'Nuances and boundary for Case 2 in direct form (A7): the open item about overlap is
+    now closed with a measured number, not a third hypothesis. The session''s second axis line closes
+    here, now on the material of four measured versions.'
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A tile on size non-monotonicity, a tile on the partial gain from overlap and from word-boundary
+      cutting, a tile closing the session''s second axis line.
+
+      '
+    backup: SETKA-KEYSOV.md / rework/section-2-razbienie-dokumenta.md, "Nuances", verbatim. Overlap was
+      measured by the follow-up run of 2026-11-02 (`stend/raw/case2-results.json`, a local Python measurement
+      on the same 60 documents/72 questions, not a live n8n call) — the previous version of the slide's
+      open item is now closed with a number, not dropped as a question.
+- id: n39
+  file: slides-en/n39-k3-divider.md
+  type: case_divider_quote
+  duration_min: 0.5
+  assertion: Chunks are split correctly by meaning — but the right chunk still has to be found among hundreds
+    of identical-looking ones
+  learning_goal: 'Case 3''s divider. Its entry form is an observation that follows directly from Case
+    2 (canon §8.2: every case''s entry form is different).'
+  visual:
+    pattern: case_divider_quote
+    primary: 'Dark background, one large line of action. Below it — a four-case track, the third highlighted.
+
+      '
+    backup: 'Case title — "Choosing a Search Method," by task, matches case_track. Transition — SETKA-KEYSOV.md
+      Case 3, "Entry form": the observation follows directly from Case 2.'
+- id: n40
+  file: slides-en/n40-k3-stsena.md
+  type: problem_scenario
+  duration_min: 1.0
+  assertion: Version 1 — search by meaning, through a vector; it seems that since it understands meaning,
+    it must surely be better than keyword search
+  learning_goal: 'Case 3''s scene beat: the staging diagram (S1 — solid/dashed, canon forma-keysa-s-zamerom.md
+    §2) + the need (find the right chunk among hundreds) + version 1, formulated as an intuition that
+    the case checks by measurement, not accepted as a given.'
+  visual:
+    pattern: problem_scenario
+    figure: case3-shema-postanovka-en.png
+    primary: 'On top — the staging diagram (S1): solid nodes "Requester''s question" → "Base split by
+      meaning" (done since Case 2) → "Answer from the found chunk," a dashed gold node below points into
+      the gap between the second and third — this is exactly the step today''s case builds. Below — a
+      tile for the need, version 1 as an intuitive expectation, an honest question.
+
+      '
+    backup: Diagram — `rendered/make_figures_sem10.py::case3_shema_postanovka` (Case 3's function, added
+      by this edit). Tile text — SETKA- KEYSOV.md Case 3, "Staging," verbatim.
+- id: n41
+  file: slides-en/n41-k3-vopros.md
+  type: question_with_option_cards
+  duration_min: 1.0
+  assertion: Four actions, from the cheapest by signal to the most expensive by model-based re-ranking
+  learning_goal: 'Case 3''s question: four action cards, no verdicts (A6). The fourth card is a design
+    choice — ''hand off to the model for re-ranking'' — not a fact about the reranker''s properties. Cards
+    are named with industry terms (owner''s edit, issue #311: ''professional audience, use industry terminology''),
+    the human-readable sense in parentheses, the same pairing already carried through n42/n44.'
+  visual:
+    pattern: question_with_option_cards
+    primary: 'Question in a gold frame, four equal-width cards, no arguments and no verdicts.
+
+      '
+    backup: 'Cards — SETKA-KEYSOV.md Case 3, "Question to the room," the same four actions in substance;
+      names raised to industry terms (full-text / vector / hybrid search, reranker) by the issue #311
+      edit — the "Question to the room" text in SETKA-KEYSOV.md is a working draft, not mirrored word-for-word
+      on the frame in any deck of this course.'
+- id: n42
+  file: slides-en/n42-k3-razbor.md
+  type: answer_breakdown_table
+  duration_min: 1.0
+  assertion: Three actions search for candidates using different signals, and they can be combined with
+    each other
+  learning_goal: 'Qualitative breakdown of the first three actions of Case 3 RIGHT AFTER the question
+    (owner''s requirement: the breakdown follows the question directly — n41 → n42 → then the test structure
+    and result). The breakdown explains the mechanism and the qualitative pros/cons without a single result
+    number, following the pattern of n62-k4-razbor.md; C2 canon isn''t violated — there isn''t a single
+    result on the frame before the test-structure beat. Action names are raised to industry terms (owner''s
+    edit, issue #311), the mechanism is named explicitly (BM25, cosine similarity of embeddings, Reciprocal
+    Rank Fusion) — the previous version called RRF impersonally (''by the rank-merging rule''), even though
+    n50/n54 later in this same deck already name it explicitly: the mismatch between slides of the same
+    case was itself the defect, not just the missing term as such. A breakdown of RRF arithmetic by example
+    comes on the next frame, n43: here only the formula''s name and a verbal principle — a detailed calculation
+    doesn''t fit into the table (15pt half-size type leaves no room for it). Part 1 of 2 (n44 — the fourth
+    action, the reranker): split because 15pt half-size type leaves no room for four table rows on one
+    slide (issue #311).'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'Table: action · how it works · advantage · drawbacks. Three rows — three candidate-search
+      signals. No numbers on the frame.
+
+      '
+    backup: Text — a number-stripped version of n50-k3-razbor.md (three signals without a model doing
+      the ranking), with RRF's name restored (n50 names it, the previous "stripped" version of this slide
+      did not) and with the names BM25/cosine similarity, which weren't in n50 at all (there the action
+      was called by the plain "search by words"/"search by meaning").
+- id: n43
+  file: slides-en/n43-k3-rrf-mekhanika.md
+  type: content
+  duration_min: 0.5
+  assertion: RRF adds up a document's scores from both lists — the most even-handed candidate comes out
+    on top, and simply being first somewhere once isn't enough for that
+  learning_goal: 'An explicit request from the owner (issue #311): ''add an explanation to the case of
+    what RRF is'' — not just the formula''s name (n42 already names that), but the mechanism in words
+    and a numeric example on several documents, at a professional level, with no formula-as-literal-text
+    on screen (15pt half-size type and the ban on scientific notation, §5.14 trebovaniya-k-soderzhaniyu-forma.md).
+    Letter-suffix inserted before deck-wide renumbering (tools/seminar-production/README.md §1, issue
+    #311), placed between n42 (actions, formula named explicitly) and n44 (fourth action, reranker) —
+    RRF belongs to the third action (hybrid), not the fourth.'
+  visual:
+    pattern: content
+    primary: 'A principle-in-words tile + a table on three illustrative candidates: rank by words · rank
+      by meaning · outcome after RRF. The numbers are a teaching illustration of the mechanics, not a
+      measured result from the rig (measured numbers appear on n51/n58 later in this same case).
+
+      '
+    backup: 'k=60 is the real constant of the rig''s merge node (`stend/measure/ case3_measure.py`, the
+      same node the real n8n panel later in this case draws in literal code). The three candidates'' ranks
+      are an invented teaching example, not a question from the corpus: chosen so that NONE of the three
+      is first in either of the two lists (first place in both lists belongs to a candidate off-screen)
+      — exactly the case where RRF is shown rewarding evenness, not first place in a single signal. Arithmetic:
+      a document''s score in a list = 1/(k+rank), k=60; the scores from the lists are summed; the winner
+      has the largest sum. A: 1/62+1/64=0.0318; B: 1/63+1/62=0.0320; V: 1/64+1/63=0.0315 — B wins by the
+      smallest margin, not by a landslide, which is exactly what shows the mechanics honestly (not a rigged
+      "convenient" example with a wide gap).'
+- id: n44
+  file: slides-en/n44-k3-razbor-reranker.md
+  type: answer_breakdown_table
+  duration_min: 0.75
+  assertion: The fourth action doesn't search for candidates — it reviews an already-assembled list with
+    a separate model call
+  learning_goal: 'Qualitative breakdown of Case 3''s fourth action, continuing n42 (owner''s requirement:
+    the breakdown follows the question directly). n41''s question names four cards (three search signals
+    + the reranker), so the breakdown takes up the reranker too, not just the three base signals. The
+    action in the table is named with the industry term ''reranker,'' not the plain ''hand off to the
+    model for review'' (owner''s edit, issue #311). The reranker''s internal diagram (bi-encoder vs. cross-encoder)
+    and the explanation of why reading jointly is more accurate come on a separate frame, n45, further
+    on: there''s physically no room for the diagram on this frame (the table already takes up most of
+    the height at 15pt half-size type), and the form-of-presentation rule §5.13 requires that a detailed
+    breakdown not be squeezed to save space. Part 2 of 3 (n42 → n44 → n45). Letter-suffix inserted before
+    deck-wide renumbering (tools/seminar-production/README.md §1, issue #311).'
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'Table: action · how it works · advantage · drawbacks. One row — "reranker." No numbers on
+      the frame.
+
+      '
+    backup: 'Text — a number-stripped version of n51-k3-reranker.md: recall@1=0.96 and the $ price are
+      removed, leaving only the mechanism "the model reviews the final order" and the qualitative price
+      "a separate model call, more expensive than steps without a model." The action''s name is raised
+      to the industry term ("reranker") by the issue #311 edit — matching the n41 card and this same slide''s
+      own title/assertion, where the term was already in place.'
+- id: n45
+  file: slides-en/n45-k3-biencoder-vs-crossencoder.md
+  type: content
+  duration_min: 0.75
+  assertion: The source of the reranker's accuracy is reading the query and the document jointly, as one
+    input, instead of comparing two finished numbers computed separately
+  learning_goal: 'An explicit request from the owner (issue #311): ''add a diagram and a description of
+    the reranker''s workings — how it works and why it''s more accurate.'' The diagram — a bi-encoder
+    (ordinary vector search: the query and the document are encoded SEPARATELY, the comparison is by distance
+    between finished vectors) against a cross-encoder (the reranker: the query and EACH candidate are
+    fed into the model TOGETHER, as a single input, with no intermediate compression into a vector). Letter-suffix
+    inserted before deck-wide renumbering (tools/seminar-production/README.md §1, issue #311), the third
+    frame of the n42/n44/n45 cluster: n42 named the actions and the RRF formula, n44 gave a qualitative
+    breakdown of the reranker as an action, this frame is the only one with a full diagram of its internal
+    design and the reason for its accuracy, for which n44 had physically no room (the table already took
+    up most of the height at 15pt half-size type).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: case3-biencoder-vs-crossencoder-en.png
+    primary: 'A two-column diagram: on the left, a bi-encoder (vector search, separate encoding, vectors
+      compared as the last step); on the right, a cross-encoder/reranker (a single input one step earlier,
+      the model reads both texts in full). Below — a "why it''s more accurate" tile.
+
+      '
+    backup: 'Diagram — `rendered/make_figures_sem10.py::case3_biencoder_vs_crossencoder`, a programmatic
+      figure (not an n8n screenshot) — on n8n''s canvas the reranker is visible as an HTTP Request node
+      with a request body (n55 further on), not the model''s internal design; these are different levels
+      of breakdown, both legitimate and not duplicating each other. The diagram''s asymmetry (the right
+      column merges into a single input one level earlier than the left) is itself the diagram''s content,
+      not a stylistic choice: it''s exactly the moment of merging that decides whether the model sees
+      the interaction between the query''s and the document''s words, or only a finished number.'
+- id: n46
+  file: slides-en/n46-k3-struktura-testa.md
+  type: content
+  duration_min: 0.75
+  assertion: Fifty questions, a pool of five hundred documents, three groups, selected by code — not by
+    eye
+  learning_goal: 'Case 3''s measurement-exposition beat (canon forma-keysa-s-zamerom.md §1, C2): test
+    structure BEFORE the result — the corpus, the confusable clusters, the first two question groups with
+    an example and an expectation each. Inserted as a letter-suffix between n41 (question) and n48 (summary)
+    — see tools/seminar-production/README.md §1. Part 1 of 2 (n47 — the third group and the search-by-meaning
+    model): split because 15pt half-size type leaves no room for three table rows plus the model tile
+    on one frame (issue #311).'
+  visual:
+    pattern: content
+    primary: 'A corpus tile (500 documents, 8 confusable clusters) · a table of two question groups (16/16)
+      with an example, expected answer, and the reason for the group. No results on the frame.
+
+      '
+    backup: 'Numbers — SETKA-KEYSOV.md Case 3 + stend/corpus/case3_questions.json (classification by code
+      — stend/measure/build_corpus_v2.py: lexical_gap = overlap_ratio ≤0.3; exact_match = a shared number/term
+      where overlap >0.3; otherwise neutral). Group examples — c3q22 (lexical gap), c3q4 (exact match),
+      c3q42 (neutral, the same question as in the nuances breakdown n57 further on). Qid appears only
+      in this production note, NOT on the visible slide (canon §3 proektirovanie-keysa-i- voprosa.md +
+      the S9 n48 precedent: "run numbers don''t belong on the visible layer").
+
+      The slide was inserted as a letter-suffix (n46) between n41 and n48, outside the running numbering
+      at the time of insertion; `renumber_ slides.py` dropped the suffix at the subsequent full deck-wide
+      renumbering for the session (tools/seminar-production/README.md §1) — the number is already part
+      of the running numbering.'
+- id: n47
+  file: slides-en/n47-k3-model-poiska.md
+  type: content
+  duration_min: 0.75
+  assertion: 'The third group is neutral: neither a gap nor an exact match. Semantic search is computed
+    by the same embedding model that already worked in Case 1'
+  learning_goal: 'Case 3''s measurement-exposition beat, continuing n46: the third question group (neutral),
+    which model computes semantic search, and the shared metric across all variants. Still no results
+    on the frame. Part 2 of 2. Letter-suffix inserted before deck-wide renumbering (tools/seminar-production/README.md
+    §1, issue #311).'
+  visual:
+    pattern: content
+    primary: 'A table of the third question group (neutral, 18) with an example, expected answer, and
+      the reason for the group. A tile for the semantic-search model and the shared metric across all
+      three variants. No results on the frame.
+
+      '
+    backup: 'Neutral — c3q42 (the same question as in the nuances breakdown n57 further on). Semantic-search
+      model — `text-embedding-3-small` via OpenRouter (stend/measure/case3_measure.py), the same one that
+      already worked in Case 1 of this session (C5). Comparison setup — cosine similarity against all
+      embeddings of the corpus at once, with no cutoff threshold: all 500 documents are ranked, none are
+      filtered out.'
+- id: n48
+  file: slides-en/n48-k3-rezultat-zamera.md
+  type: measured_outcome_table
+  duration_min: 1.0
+  assertion: Semantic search wins recall@1, the merge wins recall@3 and average rank — no single method
+    wins on every metric at once
+  learning_goal: 'Case 3''s summary beat (C2, canon forma-keysa-s-zamerom.md §1): the aggregate across
+    three methods. Part 1 of 2 (n49 — the breakdown by question group and the systematic finding): split
+    because 15pt half-size type leaves no room for two tables and three tiles on one slide (issue #311).'
+  visual:
+    pattern: measured_outcome_table
+    primary: 'A gold headline-number tile · a 3×3 table (method · recall@1 · recall@3 · average rank).
+
+      '
+    backup: Aggregate — SETKA-KEYSOV.md Case 3 / stend/raw/case3-results.json.
+- id: n49
+  file: slides-en/n49-k3-rezultat-po-gruppam.md
+  type: measured_outcome_table
+  duration_min: 0.75
+  assertion: The hybrid does NOT win in a SINGLE one of the three question groups on its own — its aggregate
+    result comes from nowhere being the worst
+  learning_goal: 'Case 3''s summary beat, continuing n48: a breakdown of recall@1 by the same three groups
+    the previous beat (n46) named — the same verbatim group structure. The systematic finding (C4): the
+    hybrid doesn''t win in ANY single group by recall@1. Part 2 of 2. Letter-suffix inserted before deck-wide
+    renumbering (tools/seminar-production/README.md §1, issue #311).'
+  visual:
+    pattern: measured_outcome_table
+    primary: 'A 3×3 table (group · recall@1 for three methods, with the group''s winner highlighted) ·
+      a systematic-finding tile (C4).
+
+      '
+    backup: 'The breakdown by group — recomputed from stend/raw/case3-results.json `details` by `lexical_class`
+      from stend/corpus/case3_questions.json (a field on each question), tallied across three classes
+      × three methods × recall@1: lexical_gap keyword 4/16=0.25 vector 15/16=0.94 hybrid 11/16=0.69; exact_match
+      keyword 16/16=1.00 vector 13/16=0.81 hybrid 15/16=0.94; neutral keyword 17/18=0.94 vector 15/18=0.83
+      hybrid 16/18=0.89. These numbers are NOT printed in either SETKA-KEYSOV.md or `raw/case3-results.json::summary`
+      (only the aggregate is there) — recomputed by this edit with a direct pass over the `details` of
+      the same file, the same methodology as measure/case3_measure.py, with no new measurement run.'
+- id: n50
+  file: slides-en/n50-k3-razbor.md
+  type: answer_breakdown_table
+  duration_min: 1.0
+  assertion: No single one of the three signals wins on every metric at once — each has its own zone where
+    it's strong
+  learning_goal: Breakdown of the three base methods (with no model at the ranking step), the 4-column
+    form (A5). The reranker comes next, as a separate beat (sequential iteration, design canon §4).
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'Table: action · how it works · advantage · drawbacks. Three rows.
+
+      '
+    backup: Text — SETKA-KEYSOV.md Case 3, "Breakdown of options," the three base methods, fit into the
+      4-column form.
+- id: n51
+  file: slides-en/n51-k3-reranker.md
+  type: measured_outcome_table
+  duration_min: 1.5
+  assertion: 'The reranker raises recall@1 to 0.96 on both bases — and it doesn''t do that for free: a
+    separate model call is more expensive than the entire Case 1 pipeline'
+  learning_goal: The fourth action as the next step after the hybrid (sequential iteration, design canon
+    §4), not a parallel alternative from the very start. A specific example of a fix — not an abstract
+    percentage improvement.
+  visual:
+    pattern: measured_outcome_table
+    primary: 'A transition tile ("the hybrid merged two signals with no model call at all — what if the
+      final order is handed off to the model for review?"), a 2×3 table (base · recall@1 · $/question),
+      a specific example of a fix.
+
+      '
+    backup: Numbers — stend/raw/case3-rerank-results.json. gpt-4o-mini on top of the top-10 candidates
+      of RRF or of pure vector — the same credential/webhook already used in Case 1 (zero new infra).
+      Example c3q10 — verbatim from the raw JSON.
+- id: n52
+  file: slides-en/n52-k3-reshenie-sloy1.md
+  type: mechanism_node_graph
+  duration_min: 1.0
+  assertion: Search is a merge of at least two relevance signals, and after the merge comes an optional
+    step of review by the model
+  learning_goal: 'Layer 1 of Case 3: the architecture with no tool name attached, including the optional
+    rerank step. The n8n screen comes next.'
+  visual:
+    pattern: content
+    primary: 'A single formula tile with the architectural thesis in two parts: merging signals + optional
+      review by the model.
+
+      '
+    backup: Wording — SETKA-KEYSOV.md Case 3, "Solution," layer 1, verbatim.
+- id: n53
+  file: slides-en/n53-k3-n8n-ekran.md
+  type: mechanism_node_graph
+  duration_min: 0.75
+  assertion: 'The canvas is a single sequential chain of eight nodes, not two parallel branches: ranking
+    by words and embedding the query are computed one after another, with the merge and reranker coming
+    only after both'
+  learning_goal: 'Layer 2 of Case 3, beat 1 of 3: a real screenshot of the rig''s live canvas (not a programmatic
+    diagram — the live UI was captured by `stend/n8n_shots.py`, the workaround for [#233-8] lifted on
+    2026-10-20, the same approach as Cases 1/2/4 of this session). The panels of the two nodes come as
+    the next two beats (n54, n55).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: case3-n8n-canvas-real.png
+    primary: 'A real screenshot of the live n8n canvas on the rig: Question + corpus with embeddings →
+      Keyword overlap → Embed query (OpenRouter) → Cosine ranking (vector) → RRF fusion (hybrid) → LLM
+      reranker (gpt-4o-mini) → Parse reranker response + outcome → Result screen.
+
+      '
+    backup: 'THE PROGRAMMATIC DIAGRAM IS REPLACED WITH A REAL SCREENSHOT by this edit (canon `proektirovanie-keysa-i-voprosa.md`
+      §2, §8.4 of the README). The previous diagram `case3-n8n-hybrid-rerank-scheme.png` (`make_figures_sem10.py::case3_scheme`)
+      was legitimate at the time it was made — the live canvas was unreachable (`notes/mcp-limitations.md`
+      [#233-8]) — but the limitation was lifted on 2026-10-20, and `stend/README.md` records: "real screenshots
+      have been captured, the previous output was an error." The old generator file is NOT deleted (it
+      remains a record of the previous solution''s design), but the slides no longer reference it.
+
+      Source of the frame: `stend/n8n-screenshots-raw/case3-canvas.png`, captured by `stend/n8n_shots.py`
+      on the live `n8n.lessons.tellian.io`, an execution on this demo scenario (workflow `s10-case3-search`,
+      the id isn''t carried onto the slide — canon §3 of the design doc). Crop — `rendered/compose_case3_n8n_shots.py`
+      (Pillow, the same effect as `convert -crop`; ImageMagick is unavailable in this working environment)
+      — only a dangling "+" connector to the right of Result screen is removed, the canvas itself isn''t
+      reassembled or redrawn by a single pixel.
+
+      WHAT IS LITERALLY VISIBLE ON THE CANVAS, AND THIS MATTERS: the chain is LINEAR, not two parallel
+      branches merging into one node (which is how the previous programmatic diagram drew it — that''s
+      exactly where it diverged from how the scenario is really assembled). "Keyword overlap" computes
+      the ranking by words as the FIRST node, using the corpus''s already-finished embeddings carried
+      in the input form; "Embed query (OpenRouter)" computes the embedding ONLY of the question (the documents''
+      embeddings are already computed ahead of time, as in Case 1); "Cosine ranking (vector)" compares
+      that embedding against all documents; and only after BOTH lists (`keyword_rank`, `vector_rank`)
+      are ready does the node "RRF fusion (hybrid)" merge them. The two signals are logically independent
+      and could in principle be computed in two parallel branches — the real scenario chose a linear chain
+      of a single execution; this is an implementation decision, not a requirement of the architecture
+      (layer 1, n52).
+
+      THE MODEL IS NAMED EXPLICITLY (C5): `text-embedding-3-small` (query embedding, node "Embed query")
+      and `gpt-4o-mini` (reranker, node "LLM reranker") — both visible right in the node labels on the
+      canvas, unlike Case 1, where the model''s name isn''t shown in the node label.
+
+      A DEMO RUN, NOT A REPEAT OF THE MAIN MEASUREMENT: shows the canvas mechanics on a small subset of
+      the corpus (8 documents, including the confusable pair on the "Zvyozdny" entity), it does not repeat
+      the recall@1/@3 numbers of the main measurement on 500 documents/50 questions (n46/n48) — `stend/README.md`
+      § "Supplementary pass 2026-11-01," an execution on this scenario.'
+- id: n54
+  file: slides-en/n54-k3-panel-sliyaniya.md
+  type: mechanism_node_graph
+  duration_min: 0.75
+  assertion: 'The merge is thirteen lines of code: Reciprocal Rank Fusion with k=60, with not a single
+    model call'
+  learning_goal: 'Layer 2 of Case 3, beat 2 of 3: a real configuration panel of the merge node, the EXPANDED
+    view of the code editor (not collapsed — a Seminar 9 lesson: the collapsed view cuts off text).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: case3-n8n-rrf-panel-real.png
+    primary: 'A real screenshot of the expanded code editor of the "RRF fusion (hybrid)" node: the function
+      `rrf(rankA, rankB, k=60)` computes Reciprocal Rank Fusion of two lists and returns the top-10 candidates
+      with their text.
+
+      '
+    backup: 'Source of the frame: `stend/n8n-screenshots-raw/case3-rrf-panel.png` (a `Code` node, mode
+      "Run Once for All Items," language JavaScript), captured by `stend/n8n_shots.py` in the EXPANDED
+      view of the editor. Crop — `rendered/compose_case3_n8n_shots.py`: the Parameters/Settings tabs and
+      the Mode/Language fields at the top are removed (the interface''s housekeeping part, not the node''s
+      code), as is the toolkit hint at the bottom; all 13 lines of code are visible in full, none are
+      cut off.
+
+      WHAT IS LITERALLY VISIBLE ON THE FRAME: the function `rrf(rankA, rankB, k=60)` (lines 2–7) — the
+      classic Reciprocal Rank Fusion formula: each document of each list is scored `1/(k+i+1)`, where
+      `i` is the document''s position in that list, and the scores from both lists are summed. Line 8
+      calls it on `d.keyword_rank` and `d.vector_rank` — the two lists the previous canvas nodes already
+      computed (n53). Lines 9–12 take the top-10 documents of the merged ranking and pull their text from
+      the corpus. Line 13 returns the result — the merged rank, the top-10 ids, and their text — to the
+      next node.
+
+      THE MODEL ISN''T NAMED, AND THAT''S HONEST (a C5 consequence): there isn''t one in this node. RRF
+      is a classic, non-AI formula; this is plainly visible from the code — not a single HTTP call, not
+      a single call to OpenRouter. The only two numbers this code decides on its own, with no model, are
+      `k=60` (the formula''s smoothing constant) and `TOP_N=10` (how many candidates to pass on to the
+      reranker).'
+- id: n55
+  file: slides-en/n55-k3-panel-reranker.md
+  type: mechanism_node_graph
+  duration_min: 0.75
+  assertion: 'The reranker''s request body is an ordinary chat-completions call: the model openai/gpt-4o-mini
+    and a system prompt in Russian that directly names the task — ''a search-result reranker'''
+  learning_goal: 'Layer 2 of Case 3, beat 3 of 3: a real configuration panel of the reranker node''s request
+    body, EXPANDED view. This system instruction is the direct cause of why the reranker sometimes spoils
+    an already-correct result (a bridge to n57).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: case3-n8n-reranker-panel-real.png
+    primary: 'A real screenshot of the expanded JSON field of the "LLM reranker (gpt-4o-mini)" node: `model:
+      ''openai/gpt-4o-mini''`, system role — "You are a search-result reranker. You are given a question
+      and N candidate excerpts..."
+
+      '
+    backup: 'Source of the frame: `stend/n8n-screenshots-raw/case3-reranker- panel.png` (an HTTP Request
+      node → chat/completions, Body field → JSON), captured by `stend/n8n_shots.py` in the EXPANDED view.
+      Crop — `rendered/compose_case3_n8n_shots.py`: the upper Method/URL/ Authentication/Credential Type
+      fields are NOT taken into the frame — this same HTTP Request node, pointed at the same OpenRouter
+      credential, was already shown once and named in text on the panels of Case 1 (n16/n17/n18); a repeat
+      breakdown would add nothing new, just the same thing again. The single substantive piece taken is
+      "Specify Body: Using JSON" → the JSON field, where the MODEL''S NAME and the start of the system
+      prompt are visible.
+
+      FULL TEXT OF THE SYSTEM PROMPT (not fully visible on the frame, clipped by panel height; verbatim
+      in the original — `stend/measure/case3_rerank_measure.py::rerank_llm`): "You are a search-result
+      reranker. You are given a question and {N} candidate excerpts, numbered 1..{N}. Reorder the candidate
+      numbers from most relevant to the question to least relevant. Reply with STRICTLY a JSON array of
+      numbers — a permutation of all the numbers, with no explanations. Example answer: [3,1,4,2,5,6,7,8,9,10]"
+      — with N=10 (the merge node''s TOP_N, n54). The user message — "Question: {question}\n\nCandidates:\n{numbered
+      list of texts}". TRANSLATOR''S FLAG: the real stend run actually sent this prompt to gpt-4o-mini
+      in RUSSIAN, not in this English rendering — the glossary note on this point (glossary.en.yaml "notes"
+      list) says to translate quoted prompt content like any other text but flag that the real run used
+      Russian; this note is that flag, the English above is the natural EN equivalent for the slide, not
+      a claim about what was actually transmitted to the model.
+
+      THE MODEL IS NAMED EXPLICITLY (C5): `openai/gpt-4o-mini` — visible right in the JSON body on the
+      frame, with no call settings beyond the required ones (no explicit temperature). THE COST OF THE
+      STEP, COMPUTED (not an abstract percentage): ~$0.00033 per call — more expensive than the entire
+      keyword/vector search-and-answer pipeline of Case 1 (~$0.00005) — stend/raw/case3-rerank-results.json,
+      n51.
+
+      BRIDGE TO n57: the prompt asks the model to return a STRICT permutation of the numbers — it neither
+      adds nor removes candidates, only rearranges the ten already given. This is the direct reason why
+      the reranker physically cannot raise a document that wasn''t among the top-10 candidates before
+      it (the nuance about the question with vector at 26th place, n57), and why it sometimes moves an
+      already-correct result to the wrong place (the nuance about the question "An example of water barriers?",
+      n57): the model reads only those ten texts and decides anew, not knowing that one of them was already
+      right.'
+- id: n56
+  file: slides-en/n56-k3-rezultat-obobshchenie.md
+  type: content
+  duration_min: 1.0
+  assertion: The requester sees hybrid search as a more stable answer regardless of how the question is
+    phrased; Olga sees a number — the share of questions that found the correct document among the top
+    results
+  learning_goal: 'Case 3''s result and generalization: what the requester sees vs. what Olga sees, the
+    transferable principle (semantic search doesn''t replace keyword search) + the role of the optional
+    review step.'
+  visual:
+    pattern: content
+    primary: 'Two tiles side by side: "to the requester," "to Olga" — then a formula tile for the transferable
+      principle.
+
+      '
+    backup: Text — SETKA-KEYSOV.md Case 3, "Result and generalization," verbatim.
+- id: n57
+  file: slides-en/n57-k3-nyuansy-granitsa.md
+  type: criteria_checklist_and_boundary
+  duration_min: 0.5
+  assertion: Hybrid search is needed on a large, heterogeneous base with a high cost of ranking error
+    — on a small, uniform base the gain isn't visible
+  learning_goal: 'Case 3''s hybrid boundary in direct form (A7): a small, uniform base is a candidate
+    for cutting if the slot runs short. Part 1 of 2 (n58 — the reranker''s boundary, closing the third
+    axis line): split because 15pt half-size type leaves no room for two boundaries and the closing of
+    the axis line on one slide (issue #311).'
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'The hybrid''s boundary criterion, a "when it''s needed · when it isn''t" table.
+
+      '
+    backup: SETKA-KEYSOV.md / rework/section-3-chem-iskat.md, "Nuances."
+- id: n58
+  file: slides-en/n58-k3-granitsa-reranker.md
+  type: criteria_checklist_and_boundary
+  duration_min: 0.75
+  assertion: 'The reranker is a second boundary of the same kind: it can both raise the correct document
+    from 10th place to 1st, and knock an already-correct result from 1st place to 3rd'
+  learning_goal: 'Case 3''s reranker boundary, continuing n57 (cost, the gain''s inconsistency, powerlessness
+    without the document in the top-10). The third axis line closes here. Part 2 of 2. Letter-suffix inserted
+    before deck-wide renumbering (tools/seminar-production/README.md §1, issue #311).'
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A tile on the reranker with both sides, a tile closing the third axis line.
+
+      '
+    backup: Numbers — stend/raw/case3-rerank-results.json (questions c3q7, c3q42).
+- id: n59
+  file: slides-en/n59-k4-divider.md
+  type: case_divider_quote
+  duration_min: 0.5
+  assertion: The training center gets scans of forms and receipts regularly — and a new request often
+    looks like one of the past ones
+  learning_goal: Case 4's divider. Names the task, not a thesis. Explicitly continues the binary-data
+    line from S8→S9 (ARCHITECTURE.md §2), not presenting images as a brand-new topic from scratch.
+  visual:
+    pattern: case_divider_quote
+    primary: 'Dark background, one action line large. At the bottom a track of four cases, the fourth
+      highlighted.
+
+      '
+    backup: 'Case title — "Image Search," by task, matches case_track. Transition — SETKA-KEYSOV.md Case
+      4, "Entry Form": an explicit continuation of the binary-data line.'
+- id: n60
+  file: slides-en/n60-k4-stsena.md
+  type: problem_scenario
+  duration_min: 1.0
+  assertion: Version 1 — caption the picture in text and search that caption with the same mechanism as
+    in Case 3
+  learning_goal: 'Case 4''s scene beat: the need (find a similar past scan) + version 1 as a direct continuation
+    of the three previous cases. The honest nuance about the coming failure is named outright (rework/section-0
+    requires this at the opening; here — at the entry into the case itself).'
+  visual:
+    pattern: problem_scenario
+    figure: case4-shema-postanovka-en.png
+    primary: 'On top — diagram S1 (canon forma-keysa-s-zamerom.md §2): solid lines for the flow this session
+      has already built (scan → caption/OCR turns the picture into text → text search finds a similar
+      one, Cases 1–3); a dashed gold arrow points at the caption/OCR node — this is the one step Case
+      4 tries to bypass, by comparing the picture itself directly. Below the diagram — a tile for the
+      need, version 1 in plain prose, an honest warning that one of the three options will end in failure
+      — without revealing details.
+
+      '
+    backup: 'THE STAGING DIAGRAM (rule S1) added by this edit: `rendered/make_figures_sem10.py::case4_shema_postanovka()`,
+      a new function, doesn''t touch `case1_scheme`/`case2_scheme`/`case3_scheme`/ `case4_scheme`. The
+      solid row continues the staging the room has already seen across Cases 1–3 of this same session
+      (storage, cutting, text search), rather than inventing a separate flow from scratch (S8: relying
+      on the room''s memory of past SESSIONS is forbidden — but this is the same day, the same three previous
+      beats, described again by a diagram, not by memory). The dashed arrow points specifically at the
+      "caption/OCR" node, not at the input or output as a whole — because that''s the one step version
+      2 (searching picture-by-picture directly) tries to replace; the text search further down the chain
+      (Cases 1–3) stays untouched either way.
+
+      SETKA-KEYSOV.md Case 4, "Staging," verbatim. The honest warning about the coming failure — rework/section-0-otkrytie.md,
+      "The nuance the opening is required to name outright": failure is part of the story, not a footnote,
+      and must be named, not sprung on the room suddenly during the breakdown.'
+- id: n61
+  file: slides-en/n61-k4-vopros.md
+  type: question_with_option_cards
+  duration_min: 1.0
+  assertion: Three actions for finding a similar scan — none of them named as a failure in advance
+  learning_goal: 'Case 4''s question: three action cards, no verdicts (A6), including the option the breakdown
+    will later honestly call unworkable — the card stays neutral, the failure is revealed by the breakdown,
+    not by the question.'
+  visual:
+    pattern: question_with_option_cards
+    primary: 'The question in a gold frame, three equal-width cards, no arguments and no verdicts.
+
+      '
+    backup: 'Cards — SETKA-KEYSOV.md Case 4, "Question to the room," meaning kept. The third card is reworded
+      by this edit (issue #311, owner''s note "slide 57/58 — need to reword the third option and explain
+      it more broadly"): "search for exact repeats by a separate, fast method" → "compare pictures by
+      a short fingerprint, without calling a model." The old form named a narrow scope of use in advance
+      ("exact repeats") — that''s closer to hinting at a verdict than to a neutral action name (rule A6);
+      the new one names the mechanism, not the outcome.'
+- id: n62
+  file: slides-en/n62-k4-razbor.md
+  type: answer_breakdown_table
+  duration_min: 1.0
+  assertion: One of the three options works correctly, one doesn't work on this rig at all, one solves
+    only a narrow subclass of the task
+  learning_goal: Breakdown of the three options, 4-column form (A5). The second option's failure is named
+    briefly here; the breakdown of the failure is a separate beat (n63-n66), not dissolved into this table.
+  visual:
+    pattern: answer_breakdown_table
+    primary: 'Table: action · how it works · advantage · drawbacks. Three rows.
+
+      '
+    backup: 'Text — SETKA-KEYSOV.md Case 4, "Breakdown of options," 30 CORD scans. The third option''s
+      row is reworded by this edit (issue #311, owner''s note "slide 57/58 — need to reword the third
+      option and explain it more broadly"): the name and the "How it works"/"Drawbacks" columns are expanded
+      with the physics of the method (what gets hashed, Hamming distance between bit fingerprints, why
+      this is about "the same file again," not about "a document similar in meaning") — the facts and
+      numbers weren''t changed.'
+- id: n63
+  file: slides-en/n63-k4-proval-shag1.md
+  type: content
+  duration_min: 1.0
+  assertion: The model the plan was counting on doesn't exist on this rig under any spelling of its id
+    — but a replacement was found quickly
+  learning_goal: 'Failure, step 1 of 3: the model from the plan wasn''t found; a search found a working
+    replacement. The first third of the failure''s story is an honest search, not an instant dead end.
+    Edit per issue #311 (owner: ''slide 59 isn''t clear and what''s it for?''): the fix — do NOT merge
+    with n64/n66 (SETKA-KEYSOV.md Case 4, ''Note (Case 4''s internal asymmetry, the failure beats),''
+    names outright the reason for presenting it separately: this is a sequential REFUTATION of option
+    (b) by a live run — candidate found → how it was checked → what the check showed — not a single result
+    snapshot that could have been shown upfront; merging would destroy that order). Instead of merging
+    — an explicit frame BEFORE Step 1 itself: why check whether the model exists at all, rather than jumping
+    straight to whether it works.'
+  visual:
+    pattern: content
+    primary: 'A frame tile: why this beat exists — a provider''s model list is not a fact you can rely
+      on in advance when planning; the only reliable check is a direct API call. A fact tile: the plan''s
+      model wasn''t found, the catalog of 452 models contains no embedding models in the main listing;
+      a fact tile: a working candidate was found.
+
+      '
+    backup: 'SETKA-KEYSOV.md Case 4, "The failure that is part of the case''s story," Step 1, verbatim
+      + a new frame tile added by this edit (issue #311).'
+- id: n64
+  file: slides-en/n64-k4-struktura-proverki.md
+  type: content
+  duration_min: 1.0
+  assertion: The same call at the same resolution must give different vectors for two different receipts
+    — otherwise the check proved nothing
+  learning_goal: 'S2 beat 1 for Case 4''s finding (forma-keysa-s-zamerom.md §1): the structure of the
+    check BEFORE the result — what''s being compared (three resolutions of the same pair of receipts),
+    which model and with what settings. There''s no result on this frame — it''s on n66. Part 1 of 2 (n65
+    — the expectation): split, because the 15pt floor font size leaves no room for the call tile, the
+    table, and the expectation tile on one frame (issue #311).'
+  visual:
+    pattern: content
+    primary: 'A fact tile: the model and the call (S5) — `amazon/titan-embed-image-v1`, POST `/v1/embeddings`,
+      input — a data URL (base64 JPEG). A table of three resolutions of the same pair of CORD receipts,
+      with not a single result in it.
+
+      '
+    backup: 'The setting numbers — stend/measure/case4_measure.py::to_data_url (w,h,q default 64×96×80)
+      and debug_mm.py…debug_mm6.py (a sweep of resolutions, live calls). stend/README.md, "Open technical
+      risk, ARCHITECTURE.md §5/§7 point 1" — the table "Picture resolution → base64, characters," the
+      exact figures for the ranges. The beat''s form — canon forma-keysa-s-zamerom.md §1, beat 1 of 3:
+      corpus/groups/ model/expectation, no result. The three resolutions here are THREE GROUPS in the
+      canon''s terms, not three independent runs: the same call, the same pair of receipts, only the input
+      picture size differs.'
+- id: n65
+  file: slides-en/n65-k4-ozhidanie.md
+  type: content
+  duration_min: 0.5
+  assertion: Two DIFFERENT receipts at the same resolution must give two DIFFERENT vectors — a plain error-free
+    response won't prove that
+  learning_goal: 'S2 beat 1 for Case 4''s finding, continuing n64: what the expectation is, if the model
+    really sees the picture. There''s still no result on this frame — it''s on n66. Part 2 of 2. Letter-suffix
+    pending deck reconciliation (tools/seminar-production/README.md §1, issue #311).'
+  visual:
+    pattern: content
+    primary: 'An expectation tile: different receipts at the same resolution must give different vectors.
+
+      '
+    backup: 'The beat''s form — canon forma-keysa-s-zamerom.md §1, beat 1 of 3: corpus/groups/model/expectation,
+      no result.'
+- id: n66
+  file: slides-en/n66-k4-proval-shag2-3.md
+  type: content
+  duration_min: 0.75
+  assertion: 'At all three resolutions — failure or noise: at the real scan''s resolution the model returns
+    a bit-identical vector for any two different receipts'
+  learning_goal: 'S2 beats 2-3 (summary + breakdown by group, forma-keysa-s-zamerom.md §1) for Case 4''s
+    finding: the summary (none of the three resolutions gave reliable distinguishing) → a breakdown by
+    resolution with an explicit verdict on every row (S3: ''IDENTICAL VECTOR,'' not a vague ''kind of'').
+    Part 1 of 2 (n67 — the lesson and the contrast with perceptual hash): split, because the 15pt floor
+    font size leaves no room for the table and two conclusions on one slide (issue #311).'
+  visual:
+    pattern: content
+    primary: 'A summary tile (one aggregate across all three resolutions). A breakdown table — Resolution
+      · Verdict · What the test showed, each row''s verdict in capitals.
+
+      '
+    backup: 'SETKA-KEYSOV.md Case 4, "The failure that is part of the case''s story," Steps 2-3, verbatim.
+      Numbers — stend/raw/case4-results.json, correlation_text_vs_image_cosine_over_all_pairs = -0.077;
+      stend/README.md table "Picture resolution → Behavior."
+
+      The 128×192 row was corrected on 2026-11-02 per a live repeat check (`stend/raw/case4_resolution_probe.json`,
+      exec_id 2514-2517, two real CORD scans): the earlier caveat "cosine ≈ 0.997, a barely noticeable
+      difference" did not reproduce on this pair — the same bit-identical vector was obtained (cosine
+      = 1.0) as at 300×450. The 300×450 and 64×96 rows were not changed.'
+- id: n67
+  file: slides-en/n67-k4-urok-i-kontrast.md
+  type: content
+  duration_min: 0.75
+  assertion: '''Answers without error'' and ''uses the input'' are different things: the only check is
+    to feed two knowingly different pictures and compare the output'
+  learning_goal: 'S2 beat 3 (breakdown, forma-keysa-s-zamerom.md §1) for Case 4''s finding, continuing
+    n66: a headline lesson + a contrast with perceptual hash as a separate tile, a different unit of measurement
+    (S6: one unit per comparison, don''t mix them in one table). Part 2 of 2. Letter-suffix pending deck
+    reconciliation (tools/seminar-production/README.md §1, issue #311).'
+  visual:
+    pattern: content
+    primary: 'A formula tile with the headline lesson. A contrast tile with perceptual hash — a different
+      unit of measurement, explicitly labeled.
+
+      '
+    backup: 'The contrast with phash — a separate tile, not a fourth table row (S6): cosine and Hamming
+      bits are different units, mixing them in one column would be dishonest even with superficially similar-looking
+      numbers.'
+- id: n68
+  file: slides-en/n68-k4-reshenie-sloy1.md
+  type: mechanism_node_graph
+  duration_min: 1.0
+  assertion: 'The architectural thesis stays true even without a working implementation: a correct idea
+    may simply have no ready-made realization with a specific provider at a specific moment'
+  learning_goal: 'Case 4''s layer 1: the architecture stays correct, the n8n screen honestly shows a real
+    attempt that didn''t succeed. The case''s working solution is assembled from the two remaining parts
+    of the breakdown (a+c), not from the failed one (b).'
+  visual:
+    pattern: content
+    primary: 'A formula tile for the architectural thesis, a tile for the working solution (caption+text
+      plus perceptual hash together).
+
+      '
+    backup: Wording — SETKA-KEYSOV.md Case 4, "Solution," layer 1, verbatim.
+- id: n69
+  file: slides-en/n69-k4-n8n-ekran.md
+  type: mechanism_node_graph
+  duration_min: 0.75
+  assertion: The screen is really assembled and really executed — the architectural thesis is honestly
+    not confirmed by this run
+  learning_goal: 'Case 4''s layer 2, beat 1 of 2: a real screenshot of the rig''s live canvas (not a program-drawn
+    diagram — a live UI capture by stend/n8n_shots.py, the workaround [#233-8] lifted 2026-10-20) — a
+    real attempt to realize the architecture that didn''t succeed. No less real a layer 2 than the working
+    examples of Cases 1-3. The node settings panel — next beat (n70). The inset holds the role of fact
+    (quote_role_force).'
+  visual:
+    pattern: mechanism_node_graph
+    figure: case4-n8n-canvas-real.png
+    primary: 'A real screenshot of the rig''s live n8n canvas: Form scan (data URL, formTrigger) → Embed
+      image (amazon/titan-embed-image-v1, HTTP Request to OpenRouter /embeddings) → Result screen. Inset
+      — the finding about the identical vector.
+
+      '
+    backup: 'THE PROGRAM-DRAWN DIAGRAM REPLACED WITH A REAL SCREENSHOT by this edit (canon proektirovanie-keysa-i-voprosa.md
+      §2, README §8.4: the finding "layer unreachable" is lifted not by a stand-in genre, but by a new
+      capture — the same edit already applied to Cases 1 and 2 of this session). The earlier diagram `case4-n8n-mm-scheme.png`
+      (`make_figures_sem10.py::case4_scheme`) was legitimate at the time it was made — the live canvas
+      was unreachable (`notes/mcp-limitations.md` [#233-8]) — but that limitation was lifted on 2026-10-20,
+      and `stend/README.md` records: "live screenshots taken, the earlier conclusion was a mistake." The
+      earlier generator file is NOT deleted (it stays on record as the device of the earlier solution),
+      the slide just no longer refers to it.
+
+      Source of the frame: `stend/n8n-screenshots-raw/case4-canvas.png`, taken by `stend/n8n_shots.py`
+      on the live `n8n.lessons.tellian.io`. Crop — `rendered/compose_case4_real_screens.py` (Pillow, the
+      same effect as `convert -crop`; ImageMagick isn''t available in this working environment) — only
+      the dangling "+" connector to the right of the `Result screen` node was removed, the canvas itself
+      isn''t reassembled or redrawn by a single pixel.
+
+      THE MODEL IS NAMED BY ID (S5): `amazon/titan-embed-image-v1`, a call with no explicit settings beyond
+      the input itself — a data URL (base64 JPEG). On the canvas, the model name is partially visible
+      in the node''s label ("Embed image (amazon/titan-embed-…"), cut off by the UI to the width of the
+      card — the full name is given by the slide''s text, not by the frame.
+
+      AN HONEST CAVEAT, REQUIRED BY THIS CROP: the run standing on this screen was really executed and
+      really returned a vector without an error — but the fact that this vector doesn''t depend on the
+      picture at the real scan''s resolution is a property of THE RUN ITSELF (revealed by the controlled
+      check on n66), not a property of this screenshot. The screenshot shows that the node is configured
+      and executes; it can''t (and shouldn''t) show by itself what happens inside the model at the other
+      end of the request.'
+- id: n70
+  file: slides-en/n70-k4-n8n-panel.md
+  type: mechanism_node_graph
+  duration_min: 0.5
+  assertion: 'The request body isn''t text with the model''s name in view, but the expression `{{ $json.body
+    }}`: the picture and the model are assembled by an earlier node, this node only sends them'
+  learning_goal: 'Case 4''s layer 2, beat 2 of 2: the real settings panel of the Embed image node — a
+    JSON body as an expression, not a literal. The OpenRouter credential — the same type as in Case 1
+    (not repeated in detail here — already named and shown on n17, S8: don''t assume the room remembers
+    another session, but this is the same day and the same course node, a reference is enough). A separate
+    beat (letter-tail, per README §1 reconciliation), not folded into n69.'
+  visual:
+    pattern: mechanism_node_graph
+    figure: case4-n8n-embed-panel-real.png
+    primary: 'A real screenshot of the bottom part of the `Embed image` node''s settings panel: `Body
+      Content Type: JSON` → `Specify Body: Using JSON` → `JSON: {{ $json.body }}`.
+
+      '
+    backup: 'Source: `stend/n8n-screenshots-raw/case4-embed-image-panel.png` (846×1846, taken by `stend/n8n_shots.py`),
+      crop — `rendered/compose_case4_real_screens.py::embed_panel()` — cut out at (0,1253)-(846,1621),
+      frame proportion 846×368 ≈ 2.3 (the same proportion as the crop of Case 1''s `Simple Vector Store`
+      panel, matched to the same height ceiling, `deck_kit.FIG_NATURAL_H`, otherwise the frame ends up
+      as a narrow column with a "DIAGRAM SQUEEZED" warning).
+
+      WHY THIS PART OF THE PANEL WAS TAKEN, AND NOT THE TOP ONE (`Method`/ `URL`/`Authentication`/`Credential
+      Type`/`OpenRouter account`): the full node form, 846×1846, doesn''t fit a landscape frame as a single
+      piece of the needed height — a choice between top and bottom is unavoidable, and the bottom was
+      chosen. The URL endpoint `/v1/embeddings` and the credential type "OpenRouter" were already shown
+      and named once in text on Case 1''s panel (`n17`, the same session day) — going over it again here
+      would add not something new, but the same thing again (the selection rule — node design, Case 4
+      of Seminar 8: "confirming the node''s identity, not a second lecture on the same thing"). The bottom
+      part shows exactly what wasn''t on Case 1''s panel at all: the request body as an EXPRESSION, not
+      literal text.
+
+      WHAT EXACTLY IS VISIBLE AND WHAT FOLLOWS FROM IT: the `JSON` field holds not the picture itself
+      and not the model''s name literally, but a reference `{{ $json.body }}` — an n8n expression substituting
+      a value computed FURTHER UP the chain (in the node that assembles the request body — the model''s
+      name, the picture''s data URL, and the JSON structure). This honestly shows the node''s setup rather
+      than hiding it: the picture itself isn''t visible on this frame for the same reason it isn''t visible
+      on any panel in the course — system identifiers and large binary values aren''t surfaced on screen
+      (canon proektirovanie-keysa-i-voprosa.md §3) — and here additionally, simply because by the time
+      the panel is shown live, the node hasn''t yet been executed with a real input (the same property
+      of the capture moment as the empty `INPUT` on Case 4''s panels in Seminar 8).'
+- id: n71
+  file: slides-en/n71-k4-rezultat-obobshchenie.md
+  type: content
+  duration_min: 1.0
+  assertion: 'Olga can see the boundary: semantic similarity needs one mechanism, literal similarity needs
+    another, cheaper one'
+  learning_goal: 'Case 4''s result and generalization: what the requester sees vs. Olga, the portable
+    principle (an architectural idea can be correct without a ready-made working realization with a specific
+    provider).'
+  visual:
+    pattern: content
+    primary: 'Two tiles side by side: "to the requester," "to Olga" — then a formula tile for the portable
+      principle.
+
+      '
+    backup: Text — SETKA-KEYSOV.md Case 4, "Result and generalization," verbatim.
+- id: n72
+  file: slides-en/n72-k4-nyuansy-granitsa.md
+  type: criteria_checklist_and_boundary
+  duration_min: 0.5
+  assertion: Perceptual hash confidently catches near-duplicates under recompression — and weakens noticeably
+    under rotation, in places down to the level of a random stranger receipt
+  learning_goal: 'Case 4''s perceptual-hash boundary in direct form (A7): the geometry of the shot, confirmed
+    by a measured limit. Part 1 of 2 (n73 — when to try multimodal search, closing the session''s fourth
+    row): split, because the 15pt floor font size leaves no room for the table and three tiles on one
+    slide (issue #311).'
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A table "soft duplicate · hard duplicate vs. random stranger," a tile for phash''s boundary
+      of applicability.
+
+      '
+    backup: SETKA-KEYSOV.md / rework/section-4-poisk-po-izobrazheniyam.md, "Nuances," verbatim. Numbers
+      — stend/raw/case4-results.json, 6 receipts.
+- id: n73
+  file: slides-en/n73-k4-kogda-probovat.md
+  type: criteria_checklist_and_boundary
+  duration_min: 0.75
+  assertion: Trying multimodal search of picture by picture is worth it only after a controlled test at
+    the needed resolution — on this rig it failed
+  learning_goal: 'The honest limit of the check itself (the reference labeling doesn''t degrade along
+    with the picture) + when it''s worth trying multimodal search directly. The session''s fourth axis
+    row closes here — the last of four. Part 2 of 2 (continuing n72 — perceptual hash''s boundary). Letter-suffix
+    pending deck reconciliation (tools/seminar-production/README.md §1, issue #311).'
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A tile for the check''s honest limit, a tile closing the session''s fourth axis row.
+
+      '
+    backup: SETKA-KEYSOV.md / rework/section-4-poisk-po-izobrazheniyam.md, "Nuances," verbatim.
+- id: n74
+  file: slides-en/n74-k4-rabochaya-model-povorot.md
+  type: criteria_checklist_and_boundary
+  duration_min: 0.75
+  assertion: 'Under rotation — right where n72 named perceptual hash''s boundary — a working multimodal
+    model tells a duplicate and a stranger receipt apart reliably: 96.7% against 23.3% across all 30 scans'
+  learning_goal: 'Follow-up pass 2026-11-04 (issue #311), the owner''s direct instruction: ''let''s try
+    to actually make a working case out of this after all.'' n73 honestly promised: a different model
+    or provider might behave differently, and the only way to find out is to repeat the same controlled
+    test. The repeat was done: OpenRouter''s catalog `/v1/embeddings/models` (40 models, 9 accepting a
+    picture) was checked with the same margin test that told titan apart (n63/n64) — 3 of 5 candidates
+    formally tell two random images apart but fail the margin test (don''t tell a recompressed duplicate
+    apart from a stranger document). The working candidate — `nvidia/nemotron-3.5-embed-1b:free`. Part
+    1 of 2 (n75 — semantic similarity, the other role of the same version 2): split, because the 15pt
+    floor font size leaves no room for two tables and a conclusion on one frame.'
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A table "soft duplicate · hard duplicate (rotation)" for the working model and perceptual
+      hash across all 30 CORD scans, a tile with n72''s boundary.
+
+      '
+    backup: 'Numbers — stend/raw/case4_mm_full_retrieval.json::part_A_near_dup_retrieval (`nvidia/nemotron-3.5-embed-1b:free`,
+      recall@1 across all 30 scans, not the sample of 6 as in n72''s near_duplicate_injection_test). The
+      model''s choice — stend/raw/case4_working_mm_results.json, steps 1-2 (a margin test on 3 receipts:
+      nemotron-3.5-embed-1b avg margin 0.593; voyage-multimodal-3.5, gemini-embedding-2, cohere-embed-5-fast
+      — margin ≈ 0, formally tell pictures apart, but useless for retrieval). Methodology — the same origin
+      as stend/README.md "Case 4, follow-up pass 2026-11-04."'
+- id: n75
+  file: slides-en/n75-k4-smysl-ogranichenny-signal.md
+  type: criteria_checklist_and_boundary
+  duration_min: 0.75
+  assertion: On semantic similarity, the working model has a real signal — almost 8 times above random
+    guessing — but it's noticeably weaker than text search by caption
+  learning_goal: 'The second, honest role of version 2 (n59/n61): not a repeat/rotation of the same scan
+    (n74), but ''does this scan look similar by meaning to another, different document.'' The result —
+    neither a repeat of titan''s failure, nor a replacement of n71''s architecture (caption+text for meaning,
+    phash for literal repeat): a measurable but limited signal, clearly weaker than the text reference.
+    Part 2 of 2 (continuing n74: finding the model and the rotation boundary). Letter-suffix pending deck
+    reconciliation (tools/seminar-production/README.md §1, issue #311).'
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A table "method · agreement with the text reference · chance level · correlation with text,"
+      an honest-conclusion tile (there is a signal, but it doesn''t replace n71''s architecture).
+
+      '
+    backup: 'Numbers — stend/raw/case4_mm_full_retrieval.json::part_C_semantic_ similarity_agreement.
+      The gold labeling "semantically nearest receipt" — from the already-checked working method, text
+      embedding of the OCR (part B, recall@1 0.967 — its own, separate task: finds the right menu item
+      from a short description, not the same question as part C). chance-level — 1/29 (one of 29 remaining
+      scans under random choice).'
+- id: n76
+  file: slides-en/n76-k4-lokalno-bez-openrouter.md
+  type: criteria_checklist_and_boundary
+  duration_min: 0.5
+  assertion: An image-embedding model run locally, entirely without OpenRouter, works with no network
+    and no provider catalog — and on this measurement is noticeably weaker than the found API candidate
+    on both substantive metrics
+  learning_goal: 'The one, separate experiment — not a continuation of the candidate search inside OpenRouter
+    (n74/n75), but a different class of solution: embedding a picture with no provider at all. The reason
+    — the owner''s remark on the session''s plan: ''is there really no local embedding model for pictures?''
+    — a fair point that CLIP (and its neighbors SigLIP, DINOv2) is the local industry standard for exactly
+    this task, with no dependence on a provider''s model list, which changes without warning (the same
+    problem that opened the section at n61).'
+  visual:
+    pattern: criteria_checklist_and_boundary
+    primary: 'A table "metric · CLIP locally · API candidate (context) · perceptual hash (context)," an
+      honest-conclusion tile (works, less accurate, but no network and no provider catalog).
+
+      '
+    backup: 'Numbers — stend/raw/case4_local_clip_results.json: part_A_near_dup_ retrieval.summary (clip_hard_dup_recall_at_1,
+      30 scans), part_C_semantic_similarity_agreement.summary (clip_semantic_agreement_ recall_at_1 and
+      chance_level_recall_at_1, 30 scans), timing (avg_clip_ forward_pass_s_per_image), environment (install_method,
+      packages). The API-candidate and perceptual-hash columns are the same numbers already shown on n74/n75
+      (nvidia/nemotron-3.5-embed-1b:free), here only for context on the gap''s size, not a repeat measurement.'
+- id: n77
+  file: slides-en/n77-razbavitel-divider.md
+  type: case_divider_quote
+  duration_min: 0.5
+  assertion: Today's four cases all taught finding the needed chunk — not one of them checked whether
+    what was found was correct
+  learning_goal: Opening of the concept interlude. The form is the same as the case dividers (case_divider_quote),
+    but it is NOT registered in the config's case_idx — the case track isn't drawn (the interlude sits
+    outside case_track, ARCHITECTURE.md §4). Names the problem, not the solution.
+  visual:
+    pattern: case_divider_quote
+    primary: 'Dark background, one action line, large. There is NO case track on this screen — the interlude
+      isn''t part of case_track (unlike n05/n22/n39/n59).
+
+      '
+    backup: The transition — SETKA-KEYSOV.md / rework/section-5-razbavitel-ai- overviews.md, "Why this
+      is here," verbatim. sid n77 is deliberately absent from the config's case_idx — g_case_divider only
+      draws the track if idx is found, otherwise it draws the divider without one.
+- id: n78
+  file: slides-en/n78-razbavitel-ai-overviews.md
+  type: content
+  duration_min: 1.5
+  assertion: Google AI Overviews found text that really was about cheese and pizza — the source turned
+    out to be an old joke, not a cooking recommendation
+  learning_goal: 'Incident 1 of the concept interlude: Google AI Overviews, 2024. The facts are given
+    at the level of a widely documented public incident (multiple independent media outlets), without
+    an inflated precision of dates/quotes that this level of verification cannot confirm.'
+  visual:
+    pattern: content
+    primary: 'A fact tile about the incident, a conclusion tile about the difference between "relevant"
+      and "correct."
+
+      '
+    backup: The incident is widely and independently documented by multiple outlets (May 2024, the launch
+      of AI Overviews in Google Search) — one of the year's most publicly discussed examples. The exact
+      wording of the source (a joking forum comment) is given without asserting an exact publication date
+      for the original comment — see fact_check_flags rework/section-5; this level of detail was not verified
+      by reading the primary source directly within this session.
+- id: n79
+  file: slides-en/n79-razbavitel-nyc-mycity.md
+  type: content
+  duration_min: 1.5
+  assertion: The MyCity chatbot answered confidently, grammatically flawlessly, and with material that
+    was genuinely on-topic for the question — while its conclusion contradicted city law
+  learning_goal: 'Incident 2 of the concept interlude: NYC''s MyCity chatbot, documented by journalistic
+    investigation (The Markup, 2024). Facts at the level of a widely documented incident, without an inflated
+    precision of detail.'
+  visual:
+    pattern: content
+    primary: 'A fact tile about the incident, a conclusion tile about confidence without correctness.
+
+      '
+    backup: 'An incident documented by The Markup''s journalistic investigation (Colin Lecher, March 29,
+      2024): New York City''s municipal chatbot for small businesses gave legally incorrect answers —
+      in particular, it said employers could keep employees'' tips for themselves, and that landlords
+      could refuse tenants with housing subsidies.'
+- id: n80
+  file: slides-en/n80-razbavitel-sintez.md
+  type: content
+  duration_min: 1.0
+  assertion: None of today's four cases is automatically insured against this just by the fact that it
+    uses search
+  learning_goal: 'The interlude''s synthesis: why this concerns all four of the session''s cases. The
+    recall/rank metric criterion is explicitly named as insufficient on its own. A bridge to S12 (quality
+    evaluation and the kill switch) is named, without revealing its mechanics.'
+  visual:
+    pattern: content
+    primary: 'A synthesis tile (why it concerns all 4 cases), a tile on why this isn''t a reason to give
+      up on search, a bridge tile to a future rung.
+
+      '
+    backup: SETKA-KEYSOV.md / rework/section-5, "Why this concerns everyone" + "A nuance for the interlude,"
+      verbatim. The mention of S12 — ARCHITECTURE.md §1 (rung 6 of the arc's ladder), without revealing
+      the evaluation/kill-switch mechanics.
+- id: n81
+  file: slides-en/n81-os-zakryta.md
+  type: recap_table
+  duration_min: 2.0
+  assertion: 'The axis''s four rows are filled in with measurement: in each one, the intuition wasn''t
+    foolish — it was an incomplete picture, which the run completed'
+  learning_goal: Closing of the session's axis. Every right-hand cell is a number from a run the room
+    has already seen. The session's question returns verbatim, the same text as on n03.
+  visual:
+    pattern: recap_table
+    primary: 'The same table that opened the session (n03), now with the right column filled in. Below
+      it — the session''s question, the same text.
+
+      '
+    backup: 'The left column is verbatim the same as on n03. The right one is assembled from the four
+      cases'' "generalization" and "nuances" beats, the numbers from the current version of SETKA-KEYSOV.md
+      (an additional pass on 2026-11-01, Case 1''s question set rebuilt on 2026-11-02): this slide uses
+      only the final, rebuilt numbers.'
+- id: n82
+  file: slides-en/n82-schyot-zanyatiya.md
+  type: content
+  duration_min: 1.5
+  assertion: Four cases, four independent measurements on real data — not one of them on a made-up number,
+    and one of them ended in an honest failure, not a patched-up substitute
+  learning_goal: The session's tally (the through-line gets a number, not just an impression — CLAUDE.md
+    stroenie-i-povestvovanie.md §4.2). What carries forward through the cycle — the cost of each case's
+    solution, not a free win.
+  visual:
+    pattern: content
+    primary: 'A tally tile (4 cases, real datasets, 1 honest failure), a "what carries forward" tile for
+      each case.
+
+      '
+    backup: 'The tally is by corpus: SberQuAD (Cases 1–3), CORD (Case 4). "What carries forward" — SETKA-KEYSOV.md
+      / rework/section-6-zakrytie.md, "What carries forward through the cycle," numbers brought up to
+      date with the final version of the measurement.'
+- id: n83
+  file: slides-en/n83-mostik-k-s11.md
+  type: bridge_forward
+  duration_min: 1.5
+  assertion: Today the process learned to find facts outside the prompt; the next rung is what happens
+    when the process is given not just knowledge, but the right to act on the company's behalf
+  learning_goal: Bridge to S11 (rung 5 of the arc's ladder — a model with authority). The content of the
+    promise is limited to what's fixed by the owner's decision (rung 5's name and question, ARCHITECTURE.md
+    §1), not a draft of S11's mechanics.
+  visual:
+    pattern: bridge_forward
+    primary: 'The next rung''s question as a tile, below it how S9''s and S10''s questions converge on
+      it, below that a line about what knowledge outside the prompt, on its own, doesn''t fix.
+
+      '
+    backup: 'Rung 5''s name and question — ARCHITECTURE.md §1 ("A Model With Authority — S11"), KONTSEPTSIYA-7-12.md
+      §6 (the arc''s ladder). S11''s mechanics are not carried onto this slide (the same discipline as
+      S9→S10: don''t promise the next session''s mechanics ahead of time). An honest limit is separately
+      named: this session''s interlude (relevant ≠ correct) isn''t fixed by taking the base outside or
+      by granting authority — it''s fixed by rung 6 (S12, quality evaluation and the kill switch).'

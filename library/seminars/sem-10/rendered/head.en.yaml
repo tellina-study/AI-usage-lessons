@@ -1,0 +1,19 @@
+# EN prose header for Seminar 10 — Bilingual Production Rule (CLAUDE.md, issue
+# #172/#322). Cannot be carried over from the RU deck.yaml (that would leak
+# Cyrillic into an English artifact) — see make_deck_yaml.py's own docstring
+# "Английский манифест". Values are a direct, faithful translation of
+# `head_defaults` in `rendered/deck-config.yaml`, not a rewrite.
+
+seminar_number: 10
+audience: "3rd-year students, 09.03.01 — practicing engineers, all already use AI assistants"
+format: >-
+  facilitator slides + open questions with option cards (question BEFORE the
+  breakdown) + real screenshots of the live n8n.lessons.tellian.io canvas
+  across all four cases (captured via Playwright working around
+  `~/.cache/page-shot-libs/x`, the notes/mcp-limitations.md [#233-8]
+  restriction lifted 2026-10-20) + problem-setup diagrams (solid lines for
+  what is already built, dashed for what is still to be done; canon
+  `tools/seminar-production/forma-keysa-s-zamerom.md`) + four measured runs
+  on this rig (SberQuAD for text, CORD for images), protocols in `stend/raw/`
+language: en
+slot_min: 90

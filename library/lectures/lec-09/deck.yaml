@@ -167,12 +167,36 @@ slides:
     assertion: "AEGIS поднял точность выбора цели с 24% до 93% — без единой команды с Земли"
     learning_goal: "§1.3: разбор AEGIS, граф а, keystone-уровень доказательности"
 
+  - id: s19a
+    file: slides/s19a-aegis-na-marse.md
+    type: case_study
+    section: "1. Автономные роботы в космосе"
+    assertion: "То же AEGIS, что поднял точность до 93% на Curiosity, в 2022 году впервые сработало на Perseverance — с другим инструментом, SuperCam"
+
+  - id: s19b
+    file: slides/s19b-aegis-kak-vstroyeno.md
+    type: schema_layered
+    section: "1. Автономные роботы в космосе"
+    assertion: "Человек настраивает профиль цели заранее, на Земле; выбор конкретной цели в моменте делает алгоритм на борту"
+
   - id: s20
     file: slides/s20-primer-spoc.md
     type: case_study
     section: "1. Автономные роботы в космосе"
     assertion: "SPOC размечает марсианский грунт глубокой сетью с точностью 98% — уже сейчас на Земле, бортом — только в будущем"
     learning_goal: "§1.4: разбор SPOC, граф б, Earth-side инструмент плюс форвард-часть"
+
+  - id: s20a
+    file: slides/s20a-spoc-marsianskiy-grunt.md
+    type: case_study
+    section: "1. Автономные роботы в космосе"
+    assertion: "Три типа поверхности на этом снимке — исходные данные AI4Mars, того же проекта, на выборке которого продолжает учиться SPOC"
+
+  - id: s20b
+    file: slides/s20b-spoc-kak-vstroyeno.md
+    type: schema_layered
+    section: "1. Автономные роботы в космосе"
+    assertion: "SPOC размечает карту проходимости, но ехать или не ехать решает водитель ровера, а не модель"
 
   - id: s21
     file: slides/s21-primer-corob-x.md
@@ -181,12 +205,30 @@ slides:
     assertion: "Три робота разведали лунную лавовую трубку там, где классического аналога на Земле не было вовсе"
     learning_goal: "§1.5: разбор COROB-X, граф в — задача новая"
 
+  - id: s21a
+    file: slides/s21a-corob-x-polevoy-test.md
+    type: case_study
+    section: "1. Автономные роботы в космосе"
+    assertion: "Это настоящий полевой тест 2023 года на Земле, не Луна: ровер на тросе спускается в ту же лавовую трубку, которую раньше разведывал человек"
+
+  - id: s21b
+    file: slides/s21b-corob-x-kak-vstroyeno.md
+    type: schema_layered
+    section: "1. Автономные роботы в космосе"
+    assertion: "SherpaTT, Coyote III и LUVMI-X картографируют каждый сам по себе; единую карту трубки сшивает ровно тот трёхуровневый SLAM, что разобран на соседнем кадре"
+
   - id: s22
     file: slides/s22-primer-leolabs.md
     type: case_study
     section: "1. Автономные роботы в космосе"
     assertion: "LeoLabs приоритизирует радар и выдаёт до 400% больше предупреждений о сближении — но не знает, сколько манёвров из них вышло"
     learning_goal: "§1.5a: разбор LeoLabs, четвёртый разбор раздела (исключение 3+6), граф б"
+
+  - id: s22a
+    file: slides/s22a-leolabs-kak-vstroyeno.md
+    type: schema_layered
+    section: "1. Автономные роботы в космосе"
+    assertion: "Модель решает, что наблюдать следующим; маневрировать или нет — решает оператор конкретного спутника, не LeoLabs"
 
   - id: s23
     file: slides/s23-upominaniya-razdel-1.md
@@ -245,12 +287,30 @@ slides:
     assertion: "Классический контроллер меряет, сравнивает и правит десятки раз в секунду; тёплый старт только подсказывает ему хорошую точку начала"
     learning_goal: "§2.3а: механика классического контроллера, тёплого старта и предсказательной компенсации задержки"
 
+  - id: s30a
+    file: slides/s30a-metody-predskazatelnaya-kompensatsiya.md
+    type: schema_layered
+    section: "2. Удалённое управление"
+    assertion: "Обучаемая модель предсказывает картину вперёд на величину задержки и меняет то, что оператор видит, — не то, что он решает"
+
   - id: s31
     file: slides/s31-primer-dragon.md
     type: case_study
     section: "2. Удалённое управление"
     assertion: "На дистанции 220 метров управление Dragon заранее передано автоматике — рутинно с 2020 года"
     learning_goal: "§2.4: разбор Dragon, граф б, override как принцип"
+
+  - id: s31a
+    file: slides/s31a-dragon-stykovochnyy-uzel.md
+    type: case_study
+    section: "2. Удалённое управление"
+    assertion: "Это узлы настоящего оборудования NASA Docking System — то, что физически принимает автоматику Dragon на последних метрах"
+
+  - id: s31b
+    file: slides/s31b-dragon-kak-vstroyeno.md
+    type: schema_layered
+    section: "2. Удалённое управление"
+    assertion: "Вход и выход автоматики Dragon известны по открытым данным; что происходит внутри — SpaceX публично не раскрывает"
 
   - id: s32
     file: slides/s32-primer-predskazatelnaya-kompensatsiya.md
@@ -259,12 +319,30 @@ slides:
     assertion: "Модель предсказывает картину на величину задержки и снижает время задачи до 26% — но решения всё равно принимает человек"
     learning_goal: "§2.5: разбор предсказательной компенсации задержки, исследовательская стадия"
 
+  - id: s32a
+    file: slides/s32a-luna-poligon.md
+    type: case_study
+    section: "2. Удалённое управление"
+    assertion: "Это земной аналоговый полигон LUNA в Германии, не реальная лунная поверхность — именно здесь испытывают предсказательную компенсацию задержки"
+
   - id: s33
     file: slides/s33-primer-astrobee.md
     type: case_study
     section: "2. Удалённое управление"
     assertion: "Astrobee показал «тёплый старт»: модель предлагает траекторию, классический контроллер её уточняет"
     learning_goal: "§2.6: разбор Astrobee, TRL5, явно названная организация-разработчик"
+
+  - id: s33a
+    file: slides/s33a-astrobee-na-mks.md
+    type: case_study
+    section: "2. Удалённое управление"
+    assertion: "Astrobee летает внутри станции сам, на вентиляторах, без троса и без рук — именно этим свободным полётом управляет тёплый старт"
+
+  - id: s33b
+    file: slides/s33b-astrobee-kak-vstroyeno.md
+    type: schema_layered
+    section: "2. Удалённое управление"
+    assertion: "Astrobee летает без троса на вентиляторах; модель лишь подсказывает маршрут через модуль станции, финальную проверку несёт классический контроллер"
 
   - id: s34
     file: slides/s34-upominaniya-razdel-2.md
@@ -330,12 +408,36 @@ slides:
     assertion: "Суррогатная модель SpaceX перебирает тысячи конфигураций двигателя вместо десятков — но финал решает стенд"
     learning_goal: "§3.3: разбор суррогатных ML-моделей Raptor, граф а"
 
+  - id: s42a
+    file: slides/s42a-raptor-ispytanie.md
+    type: case_study
+    section: "3. Проектирование и новые возможности"
+    assertion: "Это настоящее огневое испытание двигателя Raptor на Starship SN4 — тот самый стенд, который финально проверяет кандидатов, отобранных суррогатной моделью"
+
+  - id: s42b
+    file: slides/s42b-raptor-kak-vstroyeno.md
+    type: schema_layered
+    section: "3. Проектирование и новые возможности"
+    assertion: "Суррогат, обученный на CFD-расчётах инженеров SpaceX, подсказывает конфигурацию почти мгновенно; финальное слово остаётся за полной CFD-проверкой и стендом"
+
   - id: s43
     file: slides/s43-primer-claude-jpl.md
     type: case_study
     section: "3. Проектирование и новые возможности"
     assertion: "Claude спланировал маршрут ровера по кратеру Езеро — цифровой двойник проверил план по 500 000 переменных"
     learning_goal: "§3.4: разбор Claude/Anthropic — самый свежий материал главы, декабрь 2025"
+
+  - id: s43a
+    file: slides/s43a-marsokhod-kamera.md
+    type: case_study
+    section: "3. Проектирование и новые возможности"
+    assertion: "Этот кадр — передняя камера Perseverance, сол 1707, 8 декабря 2025 года: день, когда Claude спланировал маршрут по этому самому участку"
+
+  - id: s43b
+    file: slides/s43b-claude-jpl-kak-vstroyeno.md
+    type: schema_layered
+    section: "3. Проектирование и новые возможности"
+    assertion: "Claude планирует и сам проверяет план по безопасности, но финальная проверка перед полётом — у цифрового двойника, не у Claude"
 
   - id: s44
     file: slides/s44-primer-aifs-aigefs.md
@@ -344,12 +446,36 @@ slides:
     assertion: "AIFS считает 10-дневный прогноз за 2,5 минуты вместо часов суперкомпьютера — но свою ассимиляцию данных не делает"
     learning_goal: "§3.5: разбор AIFS/AIGEFS, граф а, самый высокий разряд свидетельства раздела"
 
+  - id: s44a
+    file: slides/s44a-aifs-operatsionnyy-tsentr.md
+    type: case_study
+    section: "3. Проектирование и новые возможности"
+    assertion: "Официальная графика ECMWF отмечает переход AIFS из исследовательской стадии в рутинный операционный статус"
+
+  - id: s44b
+    file: slides/s44b-aifs-kak-vstroyeno.md
+    type: schema_layered
+    section: "3. Проектирование и новые возможности"
+    assertion: "Без классической ассимиляции данных у AIFS и AIGEFS просто нет входа — модель считает прогноз, но не собирает картину атмосферы сама"
+
   - id: s45
     file: slides/s45-primer-generativny-dizayn.md
     type: case_study
     section: "3. Проектирование и новые возможности"
     assertion: "Генеративный дизайн NASA Goddard сам производит геометрию детали — не оценивает готовую, а создаёт новую"
     learning_goal: "§3.6: разбор генеративного дизайна, четвёртый разбор раздела (исключение 3+6)"
+
+  - id: s45a
+    file: slides/s45a-generativny-dizayn-kak-rabotaet.md
+    type: case_study
+    section: "3. Проектирование и новые возможности"
+    assertion: "Инженер задаёт нагрузки и ограничения; алгоритм сам перебирает геометрию внутри них и выдаёт готовую форму"
+
+  - id: s45b
+    file: slides/s45b-generativny-dizayn-detali.md
+    type: case_study
+    section: "3. Проектирование и новые возможности"
+    assertion: "Деталь, которую нашёл алгоритм, выглядит выращенной, а не вычерченной — прямых граней и симметрии в ней нет вовсе"
 
   - id: s46
     file: slides/s46-upominaniya-razdel-3.md
@@ -387,6 +513,12 @@ slides:
     assertion: "Не космос становится умнее с ИИ — ИИ физически переезжает в космос, где больше солнца"
     learning_goal: "§4.1: термин и общее описание стадии — последнее применение общей схемы главы"
 
+  - id: s50a
+    file: slides/s50a-metody-inferens-i-obuchenie.md
+    type: norm
+    section: "4. Космос для ИИ"
+    assertion: "В космос переезжает готовая, уже обученная сеть; само обучение требует кластера и остаётся на Земле"
+
   - id: s51
     file: slides/s51-chto-uzhe-rabotaet-chto-demonstrator.md
     type: norm
@@ -401,12 +533,36 @@ slides:
     assertion: "Starcloud-1 — первый H100 датацентрового класса в космосе, уже обслуживает запросы к модели Gemma"
     learning_goal: "§4.3: разбор Starcloud, граф в — классического земного аналога не существует"
 
+  - id: s52a
+    file: slides/s52a-starcloud-komanda.md
+    type: case_study
+    section: "4. Космос для ИИ"
+    assertion: "Это настоящая команда компании, которая построила и запустила Starcloud-1 — не концепт-рендер будущей констелляции"
+
+  - id: s52b
+    file: slides/s52b-starcloud-kak-vstroyeno.md
+    type: schema_pipeline
+    section: "4. Космос для ИИ"
+    assertion: "Единственное отличие от земного датацентра — спутниковый канал связи на входе и выходе; сам инференс внутри процессора идентичен земному"
+
   - id: s53
     file: slides/s53-primer-suncatcher.md
     type: case_study
     section: "4. Космос для ИИ"
     assertion: "Google Project Suncatcher — спутник с четырьмя TPU, план на 81 аппарат в едином лазерном кластере"
     learning_goal: "§4.4: разбор Suncatcher, тот же сдвиг критерия, независимо подтверждённый вторым участником рынка"
+
+  - id: s53a
+    file: slides/s53a-suncatcher-apparatnoye.md
+    type: case_study
+    section: "4. Космос для ИИ"
+    assertion: "Это настоящее оборудование в чистой комнате, не рендер-концепт — те же тензорные процессоры, что уже отвечают на запросы на орбите"
+
+  - id: s53b
+    file: slides/s53b-suncatcher-upravlenie-stroem.md
+    type: schema_layered
+    section: "4. Космос для ИИ"
+    assertion: "У Suncatcher есть второй, отдельный случай применения ИИ: модель в реальном времени держит строй десятков спутников без столкновений — не отвечает на запрос пользователя"
 
   - id: s54
     file: slides/s54-upominaniya-razdel-4.md

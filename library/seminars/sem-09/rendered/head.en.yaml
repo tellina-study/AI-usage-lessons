@@ -1,0 +1,17 @@
+# EN prose header for Seminar 9 — Bilingual Production Rule (CLAUDE.md, issue
+# #172/#319). Cannot be carried over from the RU deck.yaml (that would leak
+# Cyrillic into an English artifact) — see make_deck_yaml.py's own docstring
+# "Английский манифест". Values are a direct, faithful translation of
+# `head_defaults` in `rendered/deck-config.yaml`, not a rewrite.
+
+seminar_number: 9
+audience: "3rd-year students, 09.03.01 — practicing engineers, all already use AI assistants"
+format: >-
+  facilitator slides + open questions with option cards (question BEFORE the
+  breakdown) + real screenshots of the live n8n.lessons.tellian.io rig +
+  eight measured runs on that rig (1461 calls that reached the model,
+  protocols in `stend/`); during the session the facilitator does not edit
+  any node live — only runs already-prepared workflows (owner decision,
+  ARCHITECTURE.md §4)
+language: en
+slot_min: 90

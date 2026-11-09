@@ -174,12 +174,36 @@ slides:
     assertion: "AEGIS raised target-selection accuracy from 24% to 93% — without a single command from Earth"
     learning_goal: "§1.3: the AEGIS case study, graph a, keystone-level strength of evidence"
 
+  - id: s19a
+    file: slides-en/s19a-aegis-na-marse.md
+    type: case_study
+    section: "1. Autonomous robots in space"
+    assertion: "The same AEGIS that raised accuracy to 93% on Curiosity first fired on Perseverance in 2022 — with a different instrument, SuperCam"
+
+  - id: s19b
+    file: slides-en/s19b-aegis-kak-vstroyeno.md
+    type: schema_layered
+    section: "1. Autonomous robots in space"
+    assertion: "A human sets the target profile in advance, on Earth; the algorithm onboard makes the actual target choice in the moment"
+
   - id: s20
     file: slides-en/s20-primer-spoc.md
     type: case_study
     section: "1. Autonomous robots in space"
     assertion: "SPOC labels Martian terrain with a deep network at 98% accuracy — already today on Earth, onboard only in the future"
     learning_goal: "§1.4: the SPOC case study, graph b, an Earth-side tool plus a forward-looking part"
+
+  - id: s20a
+    file: slides-en/s20a-spoc-marsianskiy-grunt.md
+    type: case_study
+    section: "1. Autonomous robots in space"
+    assertion: "The three surface types in this image are the raw data of AI4Mars, the same project whose data set SPOC keeps learning from"
+
+  - id: s20b
+    file: slides-en/s20b-spoc-kak-vstroyeno.md
+    type: schema_layered
+    section: "1. Autonomous robots in space"
+    assertion: "SPOC labels the traversability map, but whether to drive or not is decided by the rover driver, not the model"
 
   - id: s21
     file: slides-en/s21-primer-corob-x.md
@@ -188,12 +212,30 @@ slides:
     assertion: "Three robots reconnoitered a lunar lava tube where no classical analog on Earth existed at all"
     learning_goal: "§1.5: the COROB-X case study, graph c — a genuinely new task"
 
+  - id: s21a
+    file: slides-en/s21a-corob-x-polevoy-test.md
+    type: case_study
+    section: "1. Autonomous robots in space"
+    assertion: "This is a real 2023 field test on Earth, not the Moon: a tethered rover descends into the same lava tube a human once explored"
+
+  - id: s21b
+    file: slides-en/s21b-corob-x-kak-vstroyeno.md
+    type: schema_layered
+    section: "1. Autonomous robots in space"
+    assertion: "SherpaTT, Coyote III, and LUVMI-X each map on their own; the exact same three-tier SLAM broken down on the neighboring slide stitches the tube into one map"
+
   - id: s22
     file: slides-en/s22-primer-leolabs.md
     type: case_study
     section: "1. Autonomous robots in space"
     assertion: "LeoLabs prioritizes the radar and issues up to 400% more conjunction warnings — but doesn't know how many maneuvers actually resulted from them"
     learning_goal: "§1.5a: the LeoLabs case study, the section's fourth case study (the 3+6 exception), graph b"
+
+  - id: s22a
+    file: slides-en/s22a-leolabs-kak-vstroyeno.md
+    type: schema_layered
+    section: "1. Autonomous robots in space"
+    assertion: "The model decides what to observe next; whether to maneuver or not is decided by the specific satellite's operator, not LeoLabs"
 
   - id: s23
     file: slides-en/s23-upominaniya-razdel-1.md
@@ -252,12 +294,30 @@ slides:
     assertion: "A classical controller measures, compares, and corrects dozens of times a second; a warm start only suggests a good starting point for it"
     learning_goal: "§2.3a: the mechanics of the classical controller, the warm start, and predictive latency compensation"
 
+  - id: s30a
+    file: slides-en/s30a-metody-predskazatelnaya-kompensatsiya.md
+    type: schema_layered
+    section: "2. Teleoperation"
+    assertion: "A trained model predicts the picture forward by the amount of the delay and changes what the operator sees — not what they decide"
+
   - id: s31
     file: slides-en/s31-primer-dragon.md
     type: case_study
     section: "2. Remote control"
     assertion: "At a distance of 220 meters, control of Dragon is handed over to automation in advance — routinely since 2020"
     learning_goal: "§2.4: the Dragon case study, graph b, override as a principle"
+
+  - id: s31a
+    file: slides-en/s31a-dragon-stykovochnyy-uzel.md
+    type: case_study
+    section: "2. Teleoperation"
+    assertion: "These are the components of real NASA Docking System hardware — the thing that physically receives Dragon's automation on the final meters"
+
+  - id: s31b
+    file: slides-en/s31b-dragon-kak-vstroyeno.md
+    type: schema_layered
+    section: "2. Teleoperation"
+    assertion: "Dragon automation's input and output are known from public data; what happens inside — SpaceX does not publicly disclose"
 
   - id: s32
     file: slides-en/s32-primer-predskazatelnaya-kompensatsiya.md
@@ -266,12 +326,30 @@ slides:
     assertion: "The model predicts the picture forward by the amount of the latency and cuts task time by up to 26% — but the human still makes the decisions"
     learning_goal: "§2.5: the predictive latency compensation case study, a research-stage result"
 
+  - id: s32a
+    file: slides-en/s32a-luna-poligon.md
+    type: case_study
+    section: "2. Teleoperation"
+    assertion: "This is the LUNA analog facility in Germany on Earth, not an actual lunar surface — this is exactly where predictive latency compensation is tested"
+
   - id: s33
     file: slides-en/s33-primer-astrobee.md
     type: case_study
     section: "2. Remote control"
     assertion: "Astrobee demonstrated a \"warm start\": the model proposes a trajectory, and the classical controller refines it"
     learning_goal: "§2.6: the Astrobee case study, TRL5, with the developing organization explicitly named"
+
+  - id: s33a
+    file: slides-en/s33a-astrobee-na-mks.md
+    type: case_study
+    section: "2. Teleoperation"
+    assertion: "Astrobee flies inside the station on its own, on fans, with no tether and no hands — this exact free flight is what the warm start controls"
+
+  - id: s33b
+    file: slides-en/s33b-astrobee-kak-vstroyeno.md
+    type: schema_layered
+    section: "2. Teleoperation"
+    assertion: "Astrobee flies with no tether, on fans; the model only suggests a route through the station's module, the final check rests with the classical controller"
 
   - id: s34
     file: slides-en/s34-upominaniya-razdel-2.md
@@ -337,12 +415,36 @@ slides:
     assertion: "SpaceX's surrogate model sweeps through thousands of engine configurations instead of dozens — but the test stand decides the outcome"
     learning_goal: "§3.3: the case study of Raptor's surrogate ML models, graph a"
 
+  - id: s42a
+    file: slides-en/s42a-raptor-ispytanie.md
+    type: case_study
+    section: "3. Design and new capabilities"
+    assertion: "This is an actual static fire test of the Raptor engine on Starship SN4 — the very test stand that gives the final check to candidates selected by the surrogate model"
+
+  - id: s42b
+    file: slides-en/s42b-raptor-kak-vstroyeno.md
+    type: schema_layered
+    section: "3. Design and new capabilities"
+    assertion: "A surrogate, trained on SpaceX engineers' own CFD computations, suggests a configuration almost instantly; the final word stays with the full CFD check and the test stand"
+
   - id: s43
     file: slides-en/s43-primer-claude-jpl.md
     type: case_study
     section: "3. Design and new capabilities"
     assertion: "Claude planned a rover route across Jezero crater — a digital twin checked the plan against 500,000 variables"
     learning_goal: "§3.4: the Claude/Anthropic case study — the chapter's most recent material, December 2025"
+
+  - id: s43a
+    file: slides-en/s43a-marsokhod-kamera.md
+    type: case_study
+    section: "3. Design and new capabilities"
+    assertion: "This frame is from Perseverance's front camera, sol 1707, December 8, 2025: the day Claude planned a route across this exact stretch of terrain"
+
+  - id: s43b
+    file: slides-en/s43b-claude-jpl-kak-vstroyeno.md
+    type: schema_layered
+    section: "3. Design and new capabilities"
+    assertion: "Claude plans and checks its own plan for safety, but the final check before flight belongs to the digital twin, not to Claude"
 
   - id: s44
     file: slides-en/s44-primer-aifs-aigefs.md
@@ -351,12 +453,36 @@ slides:
     assertion: "AIFS computes a 10-day forecast in 2.5 minutes instead of a supercomputer's hours — but it doesn't perform its own data assimilation"
     learning_goal: "§3.5: the AIFS/AIGEFS case study, graph a, the section's highest grade of evidence"
 
+  - id: s44a
+    file: slides-en/s44a-aifs-operatsionnyy-tsentr.md
+    type: case_study
+    section: "3. Design and new capabilities"
+    assertion: "Official ECMWF graphics mark AIFS's move from a research stage to routine operational status"
+
+  - id: s44b
+    file: slides-en/s44b-aifs-kak-vstroyeno.md
+    type: schema_layered
+    section: "3. Design and new capabilities"
+    assertion: "Without classical data assimilation, AIFS and AIGEFS simply have no input — the model computes the forecast, but does not assemble the picture of the atmosphere itself"
+
   - id: s45
     file: slides-en/s45-primer-generativny-dizayn.md
     type: case_study
     section: "3. Design and new capabilities"
     assertion: "NASA Goddard's generative design produces the part's geometry itself — it doesn't evaluate a finished one, it creates a new one"
     learning_goal: "§3.6: the generative design case study, the section's fourth case study (the 3+6 exception)"
+
+  - id: s45a
+    file: slides-en/s45a-generativny-dizayn-kak-rabotaet.md
+    type: case_study
+    section: "3. Design and new capabilities"
+    assertion: "The engineer sets the loads and constraints; the algorithm searches through geometry within them on its own and delivers a finished shape"
+
+  - id: s45b
+    file: slides-en/s45b-generativny-dizayn-detali.md
+    type: case_study
+    section: "3. Design and new capabilities"
+    assertion: "The part the algorithm found looks grown, not drafted — it has no straight edges or symmetry at all"
 
   - id: s46
     file: slides-en/s46-upominaniya-razdel-3.md
@@ -394,6 +520,12 @@ slides:
     assertion: "It's not that space gets smarter with AI — AI physically moves into space, where there is more sun"
     learning_goal: "§4.1: the term and the stage's general description — the chapter's last application of its general scheme"
 
+  - id: s50a
+    file: slides-en/s50a-metody-inferens-i-obuchenie.md
+    type: norm
+    section: "4. Space for AI"
+    assertion: "What moves to space is a finished, already-trained network; training itself needs a cluster and stays on Earth"
+
   - id: s51
     file: slides-en/s51-chto-uzhe-rabotaet-chto-demonstrator.md
     type: norm
@@ -408,12 +540,36 @@ slides:
     assertion: "Starcloud-1 is the first datacenter-class H100 in space, already serving requests to the Gemma model"
     learning_goal: "§4.3: the Starcloud case study, graph c — no classical earthly analog exists"
 
+  - id: s52a
+    file: slides-en/s52a-starcloud-komanda.md
+    type: case_study
+    section: "4. Space for AI"
+    assertion: "A real team at a real company built and launched Starcloud-1 — not a concept render of a future constellation"
+
+  - id: s52b
+    file: slides-en/s52b-starcloud-kak-vstroyeno.md
+    type: schema_pipeline
+    section: "4. Space for AI"
+    assertion: "The only difference from a ground-based data center is the satellite link in and out; the inference itself inside the chip is identical to Earth's"
+
   - id: s53
     file: slides-en/s53-primer-suncatcher.md
     type: case_study
     section: "4. Space for AI"
     assertion: "Google Project Suncatcher — a satellite with four TPUs, with a plan for 81 spacecraft in a single laser-linked cluster"
     learning_goal: "§4.4: the Suncatcher case study, the same shift in criterion, independently confirmed by a second market participant"
+
+  - id: s53a
+    file: slides-en/s53a-suncatcher-apparatnoye.md
+    type: case_study
+    section: "4. Space for AI"
+    assertion: "This is real hardware in a clean room, not a concept render — the same tensor processors that have already answered requests in orbit"
+
+  - id: s53b
+    file: slides-en/s53b-suncatcher-upravlenie-stroem.md
+    type: schema_layered
+    section: "4. Space for AI"
+    assertion: "Suncatcher has a second, separate AI use case: a model holds the formation of dozens of satellites collision-free in real time — not answering a user's request"
 
   - id: s54
     file: slides-en/s54-upominaniya-razdel-4.md

@@ -1,0 +1,565 @@
+# library/lectures/lec-08/rework-v5/deck/deck.en.yaml  --  часть 1 из 2
+#
+# EN-манифест деки Лекции 8 v5 (issue #301, #328). ВЫГРУЖЕН программой
+# `make_deck_yaml_v5_en.py` из `slides-en/*.md` — руками не правится.
+#
+# ЧЕМ ЭТО НЕ ЯВЛЯЕТСЯ — входом EN-сборки pptx (`build_lec08_v5_en.py`
+# читает фронтматтер файлов кадров напрямую). Нужен сайт-генератору
+# course-site (sync_lectures.py), которому — как и у семинаров — манифест
+# деки служит индексом истины, когда нет speech.en.md.
+#
+# СОСТАВ, посчитанный с диска: 100 кадров.
+
+deck:
+  lecture_number: 8
+  issue: 301
+  version: v5
+  language: en
+  status: draft
+  total_slides: 100
+  sum_timing_min: 88.00           # сложено по `timing_min` файлов кадров
+  builder: deck/build_lec08_v5_en.py     # относительно library/lectures/lec-08/rework-v5/
+  generator: deck/make_deck_yaml_v5_en.py
+  rendered: rendered/lec-08-v5-en.pptx
+
+palette:                         # Ocean Gradient, зафиксирована курсом
+  primary_deep: "#21295C"
+  primary_mid: "#065A82"
+  primary_light: "#1C7293"
+  teal: "#028090"
+  gold: "#F0AB00"
+  surface: "#F4F7FA"
+  background: "#FFFFFF"
+
+slide_types:                     # значения поля `type`, с числом кадров
+  analitika:             { count:  46, meaning: "breakdown with numbers: cards, columns, count" }
+  assertion_visual:      { count:  24, meaning: "assertion presented as form" }
+  comparison:            { count:   6, meaning: "two columns: what works / what doesn't" }
+  section_divider:       { count:   6, meaning: "section divider" }
+  schema_architecture:   { count:   5, meaning: "structure: parts and links" }
+  schema_matrix:         { count:   3, meaning: "grid: rows against columns" }
+  schema_pipeline:       { count:   3, meaning: "order of work" }
+  schema_timeline:       { count:   3, meaning: "timeline" }
+  hero_closing:          { count:   1, meaning: "closing frame with a mandatory illustration" }
+  hero_cover:            { count:   1, meaning: "cover with a mandatory illustration" }
+  live_demo:             { count:   1, meaning: "live demo" }
+  schema_layered:        { count:   1, meaning: "layers nested within each other" }
+
+sections:                        # разделы показа, сложено по файлам кадров
+  - { name: "0. Entry",
+      slides: 7, timing_min: 8.00, range: [s01, s07] }
+  - { name: "1. Still Image",
+      slides: 18, timing_min: 21.00, range: [s08, s32a] }
+  - { name: "2. Sound: Speech Synthesis, Performer Voice, and Music",
+      slides: 17, timing_min: 15.00, range: [s33, s49] }
+  - { name: "3. Moving Image",
+      slides: 21, timing_min: 18.00, range: [s50, s66a] }
+  - { name: "4. 3D Scenes and Real Time",
+      slides: 13, timing_min: 10.00, range: [s67, s77a] }
+  - { name: "5. Recognition and Provenance",
+      slides: 11, timing_min: 8.00, range: [s78, s87a] }
+  - { name: "6. Wrap-up",
+      slides: 10, timing_min: 6.00, range: [s88, s94a] }
+  - { name: "7. Closing",
+      slides: 3, timing_min: 2.00, range: [s95, s97] }
+
+slides:
+
+  # ─── 0. Entry · 7 кадров · 8.00 мин ───
+  - id: s01
+    file: slides-en/s01-oblozhka.md
+    type: hero_cover
+    title: "Lecture 8. AI in Creative Industries and Media"
+    timing_min: 0.50
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s02
+    file: slides-en/s02-shestdesyat-let-udeshevleniya.md
+    type: schema_timeline
+    title: "Over sixty years the tool got cheaper seven times, and each time the intermediary operation disappeared"
+    source: "Disney, \"101 Dalmatians,\" 1961 · Adobe Photoshop 1.0, 02/19/1990 · Avid Media Composer, 1989–2003 · Auto-Tune, 09/19/1997 · iStock 2000 and Shutterstock 2003 · \"The Two Towers\" 2002 and \"Avatar\" 2009 · ILM StageCraft, 2019"
+    timing_min: 1.50
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s03
+    file: slides-en/s03-keystone.md
+    type: assertion_visual
+    title: "In 2022, what got cheaper wasn't execution — it was the failed attempt."
+    source: "Manolo Arroyo, Coca-Cola, The Wall Street Journal · implicator.ai, \"Coca-Cola debuts AI holiday ads,\" 2025 · Toys \"R\" Us Studios × Native Foreign, June 2024"
+    timing_min: 2.00
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s04
+    file: slides-en/s04-odna-mehanika-v-tryoh-masshtabah.md
+    type: analitika
+    title: "One mechanism, three scales"
+    source: "ai.google.dev/gemini-api/docs/pricing (read 10/27/2026) · elevenlabs.io/pricing/api (10/27/2026) · Caixin Global, \"How AI took over China's micro-drama industry,\" 06/01/2026"
+    timing_min: 2.00
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s05
+    file: slides-en/s05-vopros-lektsii.md
+    type: assertion_visual
+    title: "Execution stopped being the scarce resource. What's scarce now — and in what units is it paid for?"
+    timing_min: 0.50
+    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+  - id: s06
+    file: slides-en/s06-karta-vechera.md
+    type: schema_matrix
+    title: "The map of the evening: six task types, one column added per section"
+    timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+    karta_vechera: { columns: 0, to_come: 5 }
+  - id: s07
+    file: slides-en/s07-put-ot-zaprosa-k-rezultatu-skelet.md
+    type: assertion_visual
+    title: "The path from request to result: one figure, five sections ahead"
+    timing_min: 0.50
+    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+  # ─── 1. Still Image · 18 кадров · 21.00 мин ───
+  - id: s08
+    file: slides-en/s08-divayder-nepodvizhnoe-izobrazhenie.md
+    type: section_divider
+    title: "Section 1. Still Image: Concept Art, Illustration, Key Frame"
+    timing_min: 0.00
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s09
+    file: slides-en/s09-chto-eto-za-rabota.md
+    type: assertion_visual
+    title: "What kind of work this is: the stage, the classics, and two cost drops before any model"
+    source: "Profi.ru, a sample of 3,848 Moscow illustrator profiles · analysis of a thousand Upwork profiles · stock agency price lists, iStock 2000, Shutterstock 2003 · Disney, \"101 Dalmatians,\" 1961 · Adobe Photoshop 1.0, February 19, 1990"
+    timing_min: 2.70
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s12
+    file: slides-en/s12-razbor-obval-tseny-edinitsy.md
+    type: analitika
+    title: "Case: The Collapse of the Per-Image Unit Price"
+    source: "ai.google.dev/gemini-api/docs/pricing (read 27.10.2026) · profi.ru, 3,848 Moscow illustrator profiles · stock agency price lists · Toys «R» Us Studios × Native Foreign, June 2024"
+    timing_min: 1.90
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s13
+    file: slides-en/s13-razbor-tzh-domashnyaya-videokarta.md
+    type: analitika
+    title: "Case: T—Zh Trained Its Own Model on a Home GPU"
+    source: "\"Tinkoff Journal,\" \"How We Used Neural Networks in Advertising,\" March 20, 2023 — https://t-j.ru/marketing-ai/"
+    timing_min: 1.30
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s14
+    file: slides-en/s14-razbor-airbus-peregorodka.md
+    type: analitika
+    title: "Case: Airbus's Bionic Partition — the Win Isn't from a Trained Model"
+    source: "Autodesk News, «Autodesk and Airbus: generative design in the aerospace factory», 2016 — https://adsknews.autodesk.com/en/news/autodesk-airbus-generative-design-aerospace-factory/"
+    timing_min: 1.30
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s15
+    file: slides-en/s15-chetyre-nablyudeniya.md
+    type: assertion_visual
+    title: "Four Observations, Each with a Number"
+    source: "Hugging Face API, 30-day downloads, queried 27.10.2026 · Kandinsky and Shedevrum user agreements · foundation-models.api.cloud.ru and Cloud.ru's pricing document, revision 23.10.2026 · Adobe's indemnification terms"
+    timing_min: 1.30
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s16
+    file: slides-en/s16-dva-semeystva-generatsii.md
+    type: schema_matrix
+    title: "There Are Two Families of Generation, and Each Generator Is Built from Parts Trained Separately"
+    source: "Ho, Jain, Abbeel, «Denoising Diffusion Probabilistic Models», 2020 · Sohl-Dickstein et al., 2015 · Rombach et al., 2021 · the SD3 technical report, 2024 · Imagen, 2022"
+    timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s17
+    file: slides-en/s17-pryamoy-i-obratnyy-protsess.md
+    type: schema_pipeline
+    title: "The path from request to result: denoising the latent"
+    source: "Ho, Jain, Abbeel, «Denoising Diffusion Probabilistic Models», 2020 · Rombach et al., 2021 · Ho and Salimans, «Classifier-Free Diffusion Guidance», 2022 · Karras et al., 2022 · Sadat et al., 2024"
+    timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s19
+    file: slides-en/s19-kartinka-eto-4096-tokenov.md
+    type: analitika
+    title: "A 1024×1024 Picture Is 4096 Tokens"
+    source: "Rombach et al., 2021 — the paper Stable Diffusion grew out of · the SD3 technical report, 2024 (the reconstruction-quality table)"
+    timing_min: 0.70
+    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+  - id: s20
+    file: slides-en/s20-promt-postoyannoe-uslovie.md
+    type: comparison
+    title: "The Description Is a Constant Condition on Every Step. And CFG Is Not Temperature"
+    source: "U-Net cross-attention · MMDiT joint attention, SD3, 2024 · Imagen, 2022 · Ho and Salimans, «Classifier-Free Diffusion Guidance», 2022 · Sadat et al., 2024"
+    timing_min: 1.10
+    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+  - id: s22
+    file: slides-en/s22-arhitektury-chetyre-pokoleniya.md
+    type: schema_timeline
+    title: "U-Net → DiT → MMDiT → Rectified Flow, and Adapters on Top of Any of Them"
+    source: "Ronneberger et al., 2015 (U-Net) · Peebles, Xie, 2022 (DiT) · the SD3 technical report, 2024 (MMDiT) · Liu, Gong, Liu, and Lipman et al., 2022 (rectified flow) · LoRA · textual inversion · DreamBooth · ControlNet · IP-Adapter"
+    timing_min: 0.80
+    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+  - id: s24
+    file: slides-en/s24-yazykovaya-protiv-media-modeli.md
+    type: analitika
+    title: "Language Model versus Media Model: Architecture, Control — and Cheaper to Train, More Expensive to Run"
+    source: "OpenAI, Addendum to GPT-4o System Card, 25.03.2025 · Gemini 2.5 Flash Image, 2025 · the SD3 technical report, 2024 · the Stable Diffusion v1 model card · independent compute trackers for frontier models"
+    timing_min: 1.40
+    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+  - id: s26
+    file: slides-en/s26-chego-metod-ne-umeet.md
+    type: assertion_visual
+    title: "What the Method Can't Do — and One Property, Read from Two Sides"
+    source: "the SD3 technical report, 2024 (the reconstruction-quality table) · GenEval, GenEval-2 (2026, arXiv:2512.16853), GenOlympiad (2026, arXiv:2610.26850), T2I-CompBench++"
+    timing_min: 1.00
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s27
+    file: slides-en/s27-tochnyh-razmerov-net.md
+    type: comparison
+    title: "There Are No Exact Dimensions: a Generator Doesn't Replace CAD. And \"RAG for Pictures\" Is a Category Error"
+    source: "OpenAI, Addendum to GPT-4o System Card, 25.03.2025 · Gemini 2.5 Flash Image, 2025"
+    timing_min: 2.00
+    marks: { in_bucket: true, status: "собран", media_status: no_decision }
+  - id: s29
+    file: slides-en/s29-chto-stalo-s-prodavtsom-izobrazheniy.md
+    type: analitika
+    title: "What Happened to the Image Seller: the Same Maneuver, Twenty Years Apart"
+    source: "Getty Images financial reports and corporate statements, 2006 and 2026 · stock agency price lists"
+    timing_min: 0.70
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s31
+    file: slides-en/s30-chem-obucheno-1-84-bayta.md
+    type: analitika
+    title: "What It Was Trained On: 1.84 Bytes per Training Image"
+    source: "the Stable Diffusion 1.5 model card · Carlini et al., «Extracting Training Data from Diffusion Models», 2023 · the LAION corpus downloader tool's report"
+    timing_min: 0.70
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s30
+    file: slides-en/s31-getty-protiv-stability.md
+    type: analitika
+    title: "Legal Case: Getty v. Stability — What the Court Decided, What It Didn't, and What It's Valued At"
+    source: "the High Court of England and Wales, Mrs Justice Joanna Smith, ruling November 4, 2025 · permission to appeal granted January 2026; no appellate ruling as of 27.10.2026 · stock agency price lists · label licensing agreement terms, 29.10.2025 and 25.11.2025 · denial of rehearing, US, March 2, 2026 · the EU AI Act, applicable from August 2, 2026 · Federal Law No. 243-FZ, in force since 01.09.2026"
+    timing_min: 1.80
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s32a
+    file: slides-en/s32a-karta-izobrazhenie.md
+    type: schema_matrix
+    title: "Map of the Evening: the \"Image\" Column Filled In"
+    timing_min: 0.30
+    marks: { in_bucket: false, status: "собран", media_status: no_decision }
+    karta_vechera: { columns: 1, to_come: 4 }
+  # ─── 2. Sound: Speech Synthesis, Performer Voice, and Music · 17 кадров · 15.00 мин ───
+  - id: s33
+    file: slides-en/s33-divider-zvuk.md
+    type: section_divider
+    title: "Section 2. Speech Synthesis, Performer Voice, and Music"
+    timing_min: 0.00
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s34
+    file: slides-en/s34-odin-golos-dve-zapisi.md
+    type: live_demo
+    title: "One voice, two recordings. Which one is real?"
+    timing_min: 0.70
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s35
+    file: slides-en/s35-chto-za-rabota-zvuk.md
+    type: assertion_visual
+    title: "What this craft is, and how it was done before the model"
+    source: "GVAA Rate Guide, 2026 edition; the SAG-AFTRA agreement on digital replicas"
+    timing_min: 0.90
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s37
+    file: slides-en/s37-golos-pri-bolezni-dvigatelnogo-neyrona.md
+    type: analitika
+    title: "Breakdown: a voice for someone whose disease was taking it away"
+    source: "ElevenLabs Impact Program; Bridging Voice; Scott-Morgan Foundation"
+    timing_min: 1.20
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s38
+    file: slides-en/s38-dublyazh-i-lokalizatsiya.md
+    type: analitika
+    title: "Breakdown: dubbing and localization"
+    source: "GVAA Rate Guide 2026; ElevenLabs and Gemini price lists, read 10/27/2026"
+    timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s39
+    file: slides-en/s39-vozvrashchennyy-golos-vala-kilmera.md
+    type: analitika
+    title: "Breakdown: Val Kilmer's voice, given back"
+    source: "Sonantic (acquired by Spotify in 2022); \"Top Gun: Maverick,\" 2022"
+    timing_min: 0.90
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s40
+    file: slides-en/s40-shest-nablyudeniy-zvuk.md
+    type: assertion_visual
+    title: "Six observations, each with a number"
+    source: "CNN, 05/06/2024; Variety, 2022; CBC, 2026; The Conversation, 2023; Signapse; Forbes, 06/16/2023"
+    timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s41
+    file: slides-en/s41-neyronnyy-audiokodek.md
+    type: schema_architecture
+    title: "The neural audio codec and residual quantization"
+    source: "SoundStream; EnCodec; MusicGen"
+    timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s41a
+    file: slides-en/s41a-put-ot-zaprosa-k-rezultatu-zvuk.md
+    type: schema_pipeline
+    title: "The path from request to result: from text to sound"
+    source: "VALL-E (Wang et al., 2023) · SoundStream · EnCodec"
+    timing_min: 0.80
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s42
+    file: slides-en/s42-chastota-kadrov-kodeka.md
+    type: analitika
+    title: "The codec's frame rate — the main lever on length"
+    source: "VibeVoice; Qwen3-TTS; DiffRhythm 2; Stable Audio 2"
+    timing_min: 1.10
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s43
+    file: slides-en/s43-avtoregressiya-protiv-diffuzii-zvuk.md
+    type: analitika
+    title: "Autoregression versus diffusion: a measured frame"
+    source: "a comparative benchmark of Stable Audio 2 and MusicGen-large-stereo"
+    timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s44
+    file: slides-en/s44-klonirovanie-i-razdelenie-istochnikov.md
+    type: assertion_visual
+    title: "Voice cloning and source separation are different tools"
+    source: "Spleeter; Demucs; BS-RoFormer; WingNut Films, 2021"
+    timing_min: 0.90
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s45
+    file: slides-en/s45-net-ponyatiya-ispolnitelya.md
+    type: assertion_visual
+    title: "The model has no concept of a performer"
+    source: "ElevenLabs documentation; F5-TTS; Stable Audio 2"
+    timing_min: 0.80
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s46
+    file: slides-en/s46-dlina-vykhoda-zadana-do-zapuska.md
+    type: assertion_visual
+    title: "Output length is set before launch: you cannot stop early"
+    timing_min: 0.70
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s47
+    file: slides-en/s47-pravo-na-golos-gk-rf.md
+    type: analitika
+    title: "The right to one's voice: no protection in the Russian Civil Code"
+    source: "Bill No. 718834-8; the ELVIS Act (Tennessee); AB 1836 (California); the Russian Voice-Over Union"
+    timing_min: 1.10
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s48
+    file: slides-en/s48-delo-andronovoy.md
+    type: analitika
+    title: "The Andronova case: 600 pages of narration in 2019 → voice in someone else's ad in 2022 → a ₽6 million lawsuit"
+    source: "Case No. 2-3580/2024, Savyolovsky District Court of Moscow, 08/12/2024; Afisha Daily"
+    timing_min: 1.10
+    marks: { in_bucket: true, status: "собран", media_status: wired }
+  - id: s49
+    file: slides-en/s49-popravka-k-schetu-trek-40-tsentov.md
+    type: analitika
+    title: "A correction to the bill: a downloadable track costs $0.40, not $0.016"
+    source: "a music service's price list, read 10/27/2026"
+    timing_min: 0.80
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+    karta_vechera: { columns: 2, to_come: 3 }
+  # ─── 3. Moving Image · 21 кадров · 18.00 мин ───
+  - id: s50
+    file: slides-en/s50-divider-dvizhushcheesya-izobrazhenie.md
+    type: section_divider
+    title: "Section 3. Moving Image"
+    timing_min: 0.00
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s51
+    file: slides-en/s51-chto-za-rabota-video.md
+    type: assertion_visual
+    title: "What Kind of Work This Is, and What Decision It Makes"
+    timing_min: 0.60
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s51a
+    file: slides-en/s51a-stadii-proizvodstva.md
+    type: comparison
+    title: "Eleven Production Stages and Nine Ways to Get the Image"
+    timing_min: 0.40
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s52
+    file: slides-en/s52-kak-delali-bez-modeli-video.md
+    type: comparison
+    title: "How This Was Done Without the Model"
+    source: "industry price surveys of the Russian market; The Irishman, 2019; Avid Media Composer, 1989; Toy Story, 1995; StageCraft, 2019"
+    timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s53
+    file: slides-en/s53-kitayskie-mikrodramy.md
+    type: analitika
+    title: "Breakdown: Chinese Micro-Dramas"
+    source: "Caixin, 06/01/2026"
+    timing_min: 1.50
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s54
+    file: slides-en/s54-kalshi-final-nba.md
+    type: analitika
+    title: "Breakdown: Kalshi, NBA Finals, June 2025"
+    source: "NPR, 06/23/2025; the work's author — PJ Accetturo"
+    timing_min: 1.30
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s55
+    file: slides-en/s55-coca-cola-holidays-are-coming.md
+    type: analitika
+    title: "Breakdown: Coca-Cola's 'Holidays Are Coming'"
+    source: "Coca-Cola's own behind-the-scenes production video; interviews with the chief marketing officer"
+    timing_min: 1.50
+    marks: { in_bucket: false, status: "собран", media_status: wired }
+  - id: s56
+    file: slides-en/s56-otvet-lyudey-stolko-zhe.md
+    type: assertion_visual
+    title: "The Answer: Just as Many People"
+    timing_min: 0.50
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s57
+    file: slides-en/s57-dve-kontrolnye-tochki-dorogogo-proizvodstva.md
+    type: analitika
+    title: "Two Control Points of Expensive Production"
+    source: "Variety, 2023; production materials on The Irishman"
+    timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s58
+    file: slides-en/s58-chetyre-poroga-za-dva-goda.md
+    type: schema_timeline
+    title: "Four Thresholds Crossed in Two Years"
+    source: "Variety, 2024; TechCrunch, 07/18/2025; Flawless AI, 05/09/2025; Semafor, 02/04/2026"
+    timing_min: 0.70
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s59
+    file: slides-en/s59-patchi-prostranstva-vremeni.md
+    type: schema_architecture
+    title: "Spacetime Patches and Spacetime Attention"
+    source: "the Sora technical report; CogVideoX"
+    timing_min: 0.50
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s59a
+    file: slides-en/s59a-tsena-svyazi-mezhdu-kadrami.md
+    type: analitika
+    title: "The Cost of the Link Between Frames: 62.1 Billion Pairs Against 2.01 Billion"
+    source: "the Sora technical report; CogVideoX"
+    timing_min: 0.30
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s60
+    file: slides-en/s60-prichinnyy-trekhmernyy-avtokodirovshchik.md
+    type: schema_architecture
+    title: "The Causal 3D Autoencoder"
+    source: "CogVideoX; HunyuanVideo; Wan 2.1; Movie Gen; LTX-Video"
+    timing_min: 0.70
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s61
+    file: slides-en/s61-arifmetika-sorok-k-odnomu.md
+    type: analitika
+    title: "Quadratic Growth on Doubling a Frame's Side: the 'Forty-to-One' Arithmetic"
+    source: "Open-Sora 2.0; a video-generation provider's price list"
+    timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s62
+    file: slides-en/s62-szhatie-rychag-stoimosti.md
+    type: analitika
+    title: "The Path from Request to Result: Denoising Spacetime"
+    source: "the Sora technical report; CogVideoX; HunyuanVideo"
+    timing_min: 1.00
+    marks: { in_bucket: false, status: "собран", media_status: needs_media }
+  - id: s63
+    file: slides-en/s63-mezhdu-kadrami-net-obekta.md
+    type: schema_architecture
+    title: "There Is No Object Between Frames That Stays 'the Same'"
+    source: "the Sora technical report; CogVideoX"
+    timing_min: 0.80
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s63a
+    file: slides-en/s63a-gde-postoyanstvo-lomaetsya.md
+    type: analitika
+    title: "Where Consistency Breaks Down, by the Developers' Own Admission"
+    source: "the Sora technical report; CogVideoX; papers on exposure bias"
+    timing_min: 0.70
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s64
+    file: slides-en/s64-fizika-vyuchena-kak-korrelyatsiya.md
+    type: analitika
+    title: "Physics Was Learned as Correlation, and It's Been Measured"
+    source: "Physics-IQ"
+    timing_min: 1.50
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s65
+    file: slides-en/s65-instrument-ischezaet-ranshe.md
+    type: analitika
+    title: "The Tool Disappears Faster Than Training the Team Pays Off"
+    source: "a provider's documentation page, read 10/27/2026; reports on Sora's shutdown"
+    timing_min: 1.50
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s66
+    file: slides-en/s66-skrytaya-tsena-otbora.md
+    type: analitika
+    title: "The Hidden Cost of Selection"
+    source: "'Air Head,' April 2024; Toys 'R' Us, June 2024"
+    timing_min: 1.00
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+  - id: s66a
+    file: slides-en/s66a-karta-video.md
+    type: analitika
+    title: "The Cumulative Map: the 'Video' Column Filled In"
+    timing_min: 0.50
+    marks: { in_bucket: true, status: "собран", media_status: needs_media }
+    karta_vechera: { columns: 3, to_come: 2 }
+  # ─── 4. 3D Scenes and Real Time · 13 кадров · 10.00 мин ───
+  - id: s67
+    file: slides-en/s67-divider-trekhmernaya-stsena.md
+    type: section_divider
+    title: "Section 4. 3D Scenes and Real Time"
+    timing_min: 0.00
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s68
+    file: slides-en/s68-chto-za-rabota-trekhmernaya.md
+    type: assertion_visual
+    title: "What this work actually is, and how it was done without a model"
+    source: "Mildenhall et al., ECCV 2020, arXiv:2003.08934; QuadGPT, arXiv:2509.21420"
+    timing_min: 0.60
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: wired }
+  - id: s68a
+    file: slides-en/s68a-klassicheskiy-konveyer-asseta-i-pyat.md
+    type: analitika
+    title: "The path from request to result: a 3D scene"
+    source: "Poole, Jain, Barron, Mildenhall, 2022, https://arxiv.org/abs/2209.14988; Kerbl, Kopanas, Leimkühler, Drettakis, SIGGRAPH 2023, https://arxiv.org/abs/2308.04079"
+    timing_min: 0.30
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+  - id: s68b
+    file: slides-en/s68b-pyat-sposobov-poluchit-dannye-o.md
+    type: assertion_visual
+    title: "The classical asset pipeline: what the model touched"
+    source: "Mildenhall et al., ECCV 2020, arXiv:2003.08934; QuadGPT, arXiv:2509.21420"
+    timing_min: 0.30
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: no_decision }
+  - id: s69
+    file: slides-en/s69-razbor-oz-v-sphere.md
+    type: analitika
+    title: "Breakdown: \"The Wizard of Oz\" at Sphere — over 90% of the frame touched"
+    source: "Sphere Entertainment and Warner Bros., project statements, 2025; https://www.thesphere.com/"
+    timing_min: 1.30
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }
+  - id: s70
+    file: slides-en/s70-tri-primeneniya-trekhmernoe.md
+    type: assertion_visual
+    title: "The LED stage, the asset generator, the described environment"
+    source: "Google DeepMind, Genie 3, August 2025 · independent verification WRBench, 23 models, June 2026 (arXiv:2606.20545) · Waymo World Model, February 2026 (demonstration, no independent verification)"
+    timing_min: 1.00
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: wired }
+  - id: s71
+    file: slides-en/s71-nerf-i-gaussovo-spryskivanie.md
+    type: analitika
+    title: "NeRF and Gaussian splatting: what got traded for speed"
+    source: "Kerbl et al., SIGGRAPH 2023, arXiv:2308.04079; Mildenhall et al., ECCV 2020, arXiv:2003.08934; https://arxiv.org/abs/2308.04079"
+    timing_min: 1.70
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+  - id: s73
+    file: slides-en/s73-diffuziya-srazu-v-trekhmernom.md
+    type: analitika
+    title: "Generating an object: diffusion straight in 3D versus optimization through rendering"
+    source: "Poole et al., arXiv:2209.14988; Microsoft Research TRELLIS, arXiv:2412.01506; https://arxiv.org/abs/2412.01506"
+    timing_min: 1.10
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: needs_media }
+  - id: s74
+    file: slides-en/s74-dva-masshtaba-odnoy-tekhniki.md
+    type: schema_layered
+    title: "Two scales of one technique: thirty seconds per frame and one millisecond per frame"
+    source: "Mildenhall et al., ECCV 2020; RIFE, ECCV 2022, arXiv:2011.06294; Waymo World Model, February 2026 (demonstration, no independent verification)"
+    timing_min: 1.20
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: needs_media }

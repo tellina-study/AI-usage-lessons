@@ -24,8 +24,8 @@ deck:
   title: "Lecture 7. The human decision: who looks, who signs, who pays"
   language: en
   status: karkas
-  total_slides_en_track: 52          # slides-en/ files present at generation time, out of 92
-  sum_timing_min: 46.30
+  total_slides_en_track: 91          # slides-en/ files present at generation time, out of 92
+  sum_timing_min: 81.65
   axis: "the path of one decision about a person: reading the data got cheaper — paid for in attention, skill, signature, and arbitration"
   central_question: "The model looked first. What does the person do now — and who measured it?"
   source_of_truth: "deck.yaml (RU) — this file mirrors its structural slide list for the EN track only"
@@ -34,32 +34,32 @@ deck:
   generator: rework/deck/make_deck_yaml_en.py
 
 slide_types:                     # type field values seen so far
-  case:        { count:  19, meaning: "case breakdown or workplace picture" }
-  norm:        { count:  12, meaning: "norm, mechanism, or rule" }
-  summary:     { count:   7, meaning: "section takeaway or recap" }
-  analitika:   { count:   5, meaning: "chart/analytics slide" }
-  divider:     { count:   3, meaning: "section divider" }
-  udar:        { count:   2, meaning: "single-figure slide" }
+  case:        { count:  38, meaning: "case breakdown or workplace picture" }
+  norm:        { count:  18, meaning: "norm, mechanism, or rule" }
+  summary:     { count:  13, meaning: "section takeaway or recap" }
+  analitika:   { count:   6, meaning: "chart/analytics slide" }
+  divider:     { count:   6, meaning: "section divider" }
+  comparison:  { count:   4, meaning: "two columns: what works / what does not" }
+  udar:        { count:   3, meaning: "single-figure slide" }
   cover:       { count:   1, meaning: "cover" }
   map:         { count:   1, meaning: "stage map or course grid" }
-  comparison:  { count:   1, meaning: "two columns: what works / what does not" }
   question:    { count:   1, meaning: "audience question or closing Q&A" }
 
 sections:                        # RU section names — see module docstring on why these stay untranslated
   - { name: "0. Вход",
       slides: 9, timing_min: 6.90, range: [s01, s05] }
   - { name: "1. Первичный скрининг и отбор на обследование",
-      slides: 13, timing_min: 10.45, range: [s11, s20b] }
+      slides: 16, timing_min: 13.25, range: [s11, s20b] }
   - { name: "2. Инструментальная и лабораторная диагностика",
-      slides: 4, timing_min: 2.90, range: [s22, s26] }
+      slides: 15, timing_min: 13.85, range: [s22, s33a] }
   - { name: "3. Постановка диагноза",
-      slides: 10, timing_min: 12.05, range: [s36, s49d] }
+      slides: 17, timing_min: 18.40, range: [s35, s50] }
   - { name: "4. Ведение медицинской документации",
-      slides: 9, timing_min: 8.25, range: [s61, s64] }
+      slides: 15, timing_min: 12.40, range: [s60b, s64] }
   - { name: "5. Профессиональная квалификация: поддержание и износ",
-      slides: 2, timing_min: 1.20, range: [s73b, s73c] }
+      slides: 10, timing_min: 8.35, range: [s73b, s73i] }
   - { name: "6. Итоги",
-      slides: 1, timing_min: 0.85, range: [s102, s102] }
+      slides: 5, timing_min: 4.80, range: [s96a, s102] }
   - { name: "7. Закрытие",
       slides: 4, timing_min: 3.70, range: [s102_1, s106] }
 
@@ -140,7 +140,7 @@ slides:
     timing_min: 1.15
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 1. Первичный скрининг и отбор на обследование · 13 slides · 10.45 min ───
+  # ─── 1. Первичный скрининг и отбор на обследование · 16 slides · 13.25 min ───
   - id: s11
     local_id: "s1-01"                      # SLIDE-PLAN.md number
     file: slides-en/s11-divider-otbor.md
@@ -181,6 +181,14 @@ slides:
     chapter_ref: "chapter-part1b.md §1.3"
     timing_min: 0.85
     marks: { in_bucket: false, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s15
+    local_id: "s1-04"                      # SLIDE-PLAN.md number
+    file: slides-en/s15-triazh-po-predskazannomu-risku.md
+    type: comparison
+    title: "Example 1, with a model: who gets the second reading"
+    chapter_ref: "chapter-part1b.md §1.4"
+    timing_min: 0.95
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: builder_drawn }
   - id: s15a
     local_id: "s1-04b"                     # inserted slide, no plan number
     file: slides-en/s15a-arbitrazh-i-asimmetriya-doveriya.md
@@ -189,6 +197,22 @@ slides:
     chapter_ref: "chapter-part1b.md §1.4"
     timing_min: 1.0
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s16
+    local_id: "s1-07"                      # SLIDE-PLAN.md number
+    file: slides-en/s16-chat-bot-pervoy-linii.md
+    type: case
+    title: "Example 2: a first-line chatbot replaces a call to the practice"
+    chapter_ref: "chapter-part1b.md §1.5"
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s16a
+    local_id: "s1-07b"                     # inserted slide, no plan number
+    file: slides-en/s16a-ustroystvo-chat-bota-bez-modeli.md
+    type: case
+    title: "Example 2, the architecture: who said what about what's inside Babylon"
+    chapter_ref: "chapter-part1b.md §1.5"
+    timing_min: 0.75
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s18
     local_id: "s1-08"                      # SLIDE-PLAN.md number
     file: slides-en/s18-glaznoe-dno-bez-oftalmologa.md
@@ -247,7 +271,7 @@ slides:
     timing_min: 0.8
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 2. Инструментальная и лабораторная диагностика · 4 slides · 2.90 min ───
+  # ─── 2. Инструментальная и лабораторная диагностика · 15 slides · 13.85 min ───
   - id: s22
     local_id: "s2-01"                      # SLIDE-PLAN.md number
     file: slides-en/s22-divider-analiz-dannykh.md
@@ -282,8 +306,104 @@ slides:
     timing_min: 0.55
     marks: { in_bucket: false, vfy: false, status: "собран", media_status: acquired }
     media_asset: "rework/deck/assets/s26-tekhnik-stavit-cheloveka-k-priboru.jpg"
+  - id: s27
+    local_id: "s2-05"                      # SLIDE-PLAN.md number
+    file: slides-en/s27-skolko-potoka-chitaet-model.md
+    type: analitika
+    title: "How much of the stream the model reads: one basis for three countries"
+    chapter_ref: "chapter-part1c.md §2.5а"
+    timing_min: 1.1
+    marks: { in_bucket: false, vfy: true, status: "собран", media_status: no_decision }
+  - id: s27_1
+    local_id: "s2-04_1"                    # inserted slide, no plan number
+    file: slides-en/s27_1-udar-55-iz-sta.md
+    type: udar
+    title: "Moscow, the preventive stream: how many images no human opens"
+    chapter_ref: "chapter-part1c.md §2.5а"
+    timing_min: 0.3
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s27a
+    local_id: "s2-05a"                     # inserted slide, no plan number
+    file: slides-en/s27a-avtonomnaya-sortirovka-profilakticheskikh-snimkov.md
+    type: case
+    title: "Example 1: Moscow — preventive images that no human reads"
+    chapter_ref: "chapter-part1c.md §2.5б"
+    timing_min: 1.3
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s27b
+    local_id: "s2-05b"                     # inserted slide, no plan number
+    file: slides-en/s27b-tsena-290-propuskov-i-tarif.md
+    type: case
+    title: "Example 1, cost: it got cheaper only because nobody reads half of it"
+    chapter_ref: "chapter-part1c.md §2.5б"
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: no_decision }
+  - id: s27c
+    local_id: "s2-05c"                     # inserted slide, no plan number
+    file: slides-en/s27c-krovoizliyanie-model-odna-protiv-vracha.md
+    type: case
+    title: "Example 2: Moscow — intracranial hemorrhage, where autonomy was withheld"
+    chapter_ref: "chapter-part1c.md §2.5в"
+    timing_min: 1.3
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s28
+    local_id: "s2-06"                      # SLIDE-PLAN.md number
+    file: slides-en/s28-godnost-snimka-v-pole.md
+    type: case
+    title: "Example 3: Thailand — fundus reading in a primary-care office"
+    chapter_ref: "chapter-part1c.md §2.6"
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s30
+    local_id: "s2-07"                      # SLIDE-PLAN.md number
+    file: slides-en/s30-kozha-i-sostav-nabora.md
+    type: case
+    title: "Example 4: skin, and the composition of the dataset"
+    chapter_ref: "chapter-part1c.md §2.7"
+    timing_min: 0.85
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s30a
+    local_id: "s2-07a"                     # inserted slide, no plan number
+    file: slides-en/s30a-kozha-tsena-sostav-dannykh.md
+    type: case
+    title: "Example 4, cost: dataset composition is what heals the gap"
+    chapter_ref: "chapter-part1c.md §2.7"
+    timing_min: 0.8
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s31
+    local_id: "s2-08"                      # SLIDE-PLAN.md number
+    file: slides-en/s31-raskhody-vmesto-bolezni.md
+    type: case
+    title: "Example 5: selection into a high-attention program — a score instead of a physician's decision"
+    chapter_ref: "chapter-part1c.md §2.8"
+    timing_min: 1.65
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s33
+    local_id: "s2-09"                      # SLIDE-PLAN.md number
+    file: slides-en/s33-vyvod-instrumentalnaya-diagnostika.md
+    type: comparison
+    title: "Section conclusion: the reading itself failed once out of five"
+    chapter_ref: "chapter-part1c.md §2.9"
+    timing_min: 0.75
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s33a
+    local_id: "s2-09a"                     # inserted slide, no plan number
+    file: slides-en/s33a-pyat-voprosov-do-voprosa-o-tochnosti.md
+    type: summary
+    title: "Five questions asked before the question of accuracy"
+    chapter_ref: "chapter-part1c.md §2.9"
+    timing_min: 0.7
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
 
-  # ─── 3. Постановка диагноза · 10 slides · 12.05 min ───
+  # ─── 3. Постановка диагноза · 17 slides · 18.40 min ───
+  - id: s35
+    local_id: "s3-01"                      # SLIDE-PLAN.md number
+    file: slides-en/s35-divider-postanovka-diagnoza.md
+    type: divider
+    title: "3. Diagnosis"
+    chapter_ref: "chapter-part2.md § Раздел 3 (вводка), §3.1"
+    timing_min: 0.6
+    marks: { in_bucket: false, vfy: false, status: "собран", media_status: builder_drawn }
   - id: s36
     local_id: "s3-02"                      # SLIDE-PLAN.md number
     file: slides-en/s36-kak-ustroena-postanovka-diagnoza.md
@@ -333,6 +453,14 @@ slides:
     chapter_ref: "chapter-part2b.md §3.9"
     timing_min: 2.2
     marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
+  - id: s49
+    local_id: "s3-12"                      # SLIDE-PLAN.md number
+    file: slides-en/s49-doverie-i-stazh.md
+    type: case
+    title: "An EKG with a machine readout: what happens when the readout is wrong"
+    chapter_ref: "chapter-part2b.md §3.10"
+    timing_min: 0.45
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: real_image_needed }
   - id: s49_1
     local_id: "s3-12_1"                    # inserted slide, no plan number
     file: slides-en/s49_1-vskrytie-kardiogrammy.md
@@ -365,4 +493,44 @@ slides:
     title: "The answer, assembled: four cases, four effects, one conclusion"
     chapter_ref: "chapter-part2.md § Раздел 3 (вводка), §3.3, §3.4"
     timing_min: 0.95
+    marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }
+  - id: s49e
+    local_id: "s3-17"                      # SLIDE-PLAN.md number
+    file: slides-en/s49e-primer-5-model-rannego-preduprezhdeniya.md
+    type: case
+    title: "Example 5: an early-warning model for sepsis"
+    chapter_ref: "chapter-part3.md §4.1-§4.5"
+    timing_min: 1.1
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s49f
+    local_id: "s3-17a"                     # inserted slide, no plan number
+    file: slides-en/s49f-primer-5-tsena-arifmetika-potoka.md
+    type: case
+    title: "Example 5, the cost: eighteen alerts per hundred admissions"
+    chapter_ref: "chapter-part3.md §4.6-§4.9"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s49g
+    local_id: "s3-18"                      # SLIDE-PLAN.md number
+    file: slides-en/s49g-primer-6-moskva-aida.md
+    type: case
+    title: "Example 6: Moscow, Russia — a model suggests a final diagnosis from the medical record"
+    chapter_ref: "chapter-part2b.md §3.11а"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s49h
+    local_id: "s3-18a"                     # inserted slide, no plan number
+    file: slides-en/s49h-primer-6-tsena-raskhozhdeniya.md
+    type: case
+    title: "Example 6, the cost: where the physician and the model disagree"
+    chapter_ref: "chapter-part2b.md §3.11а"
+    timing_min: 1.0
+    marks: { in_bucket: true, vfy: true, status: "собран", media_status: builder_drawn }
+  - id: s50
+    local_id: "s3-13"                      # SLIDE-PLAN.md number
+    file: slides-en/s50-vyvod-diagnoz.md
+    type: comparison
+    title: "Section conclusion: one tool, opposite outcomes"
+    chapter_ref: "chapter-part2b.md §3.12, §3.13"
+    timing_min: 1.2
     marks: { in_bucket: true, vfy: false, status: "собран", media_status: builder_drawn }

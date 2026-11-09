@@ -1,8 +1,8 @@
 ---
 name: glossary-ru-en
-issue: 172, 204, 211
+issue: 172, 204, 211, 328
 status: locked
-terms_count: 429---
+terms_count: 435---
 
 # RU→EN Terminology Glossary (course "AI-usage-lessons")
 
@@ -634,3 +634,22 @@ exception rather than letting a translator either violate the lock or lose a pro
 | RU | EN (US) | Note |
 |---|---|---|
 | форк (режим субагента, наследующий всё) | fork | **The only exception to Part C's `never fork`.** This is not a translation of «развилка» — it is the name of a documented subagent mode (the one that inherits everything from the calling session) as the harness's own documentation spells it, and the slide quotes that documentation. One occurrence, on the subagent one-pager. The consequence for checking: `grep -ci 'fork'` over a Seminar 6 EN deck must come back **1** — a 0 means a product's name was translated away, a 3 means `развилка` leaked. |
+
+## Part F — Lecture 8 terms (AI in creative industries and media, v5, issue #328)
+
+Added during the Lecture 8 v5 EN translation pass. Part A already locks the generic ML/AI
+terms this lecture uses (diffusion model, voice cloning, deepfake, watermark / content
+provenance). The rows below are the lecture-specific additions and deliberate departures,
+each documented per the glossary's own rule ("never invent a one-off variant... add it here
+first").
+
+| RU | EN (US) | Note |
+|---|---|---|
+| синтез речи (as a section/topic name) | speech synthesis | **Deliberate departure from Part A's `синтез речи / нейросинтез аудио → neural audio synthesis`, scoped to Lecture 8 only.** The lecture's own section title (locked as "Sound: Speech Synthesis, Performer Voice, and Music") reads naturally with the plain term; Part A's stricter "neural audio synthesis" governs other lectures' architecture-level references to the same underlying technique. Do not re-import this exception elsewhere without a similar explicit section-title anchor. |
+| узнавание (payment-address sense, "адрес платежа") | discernment | **Not "recognition".** This lecture uses two different Russian words sharing one root: `распознавание` (the modality / section name, a model's task) → *recognition*, and `узнавание` (the audience's own effort telling a real result from a generated one, in the "map of the evening" footer band and s89/s95/s97) → *discernment*. Collapsing both to "recognition" erases the distinction the lecture's closing section depends on (`grep -c discernment` over the EN deck should find it on s06/s32a/s66a/s77a/s87a/s89/s95/s97 — a 0 means the distinction was lost in translation). |
+| карта вечера | the map of the evening | The recurring six-row × five-column matrix (task type × modality), presented six times across the lecture (`BRIEF-DEKA.md §12`). Six row labels, locked: *Generate a first approximation* · *Bring to production quality* · *Restore what already exists* · *Hold exact measurements* · *Fit the real-time budget* · *Answer "who is accountable"*. Five columns, locked: *Image* · *Sound* · *Video* · *3D* · *Recognition*. |
+| адрес платежа | payment address | The footer band under the map of the evening; accumulates three values in order: *selection* (отбор) · *rights* (права) · *discernment* (узнавание — see above, not "recognition"). |
+| Т—Ж / Тинькофф Журнал | T—Zh / Tinkoff Journal | Russian personal-finance magazine (s13 case: trained its own model on a home GPU). Shorthand "T—Zh" in titles/mentions, full name "Tinkoff Journal" on first citation. |
+| гауссово спрыскивание | Gaussian splatting | The standard English name for this 3D-reconstruction technique (paired with NeRF, kept verbatim). |
+
+Section-local terms that did not need a lock here (single-occurrence, non-recurring vocabulary — e.g. voice-over industry terms in the sound section, VFX/graphics terms in the 3D section) are documented instead in the translation-agent reports for `library/lectures/lec-08/rework-v5/slides-en/`, not duplicated in this table.

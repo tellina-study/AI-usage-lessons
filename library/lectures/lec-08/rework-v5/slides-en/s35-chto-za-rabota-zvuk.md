@@ -1,0 +1,45 @@
+---
+id: s35
+local_id: "s35"
+section: "2. Sound: Speech Synthesis, Performer Voice, and Music"
+type: assertion_visual
+title: "What this craft is, and how it was done before the model"
+assertion: "Five crafts live under the word 'sound' — speech synthesis, voice cloning, localization and dubbing, music generation, source separation; the stage's decision is whose voice and what music the finished material speaks in. The classical mode counted this in one unit — the price of a finished minute: a live voice talent $50–450, a separate line item for broadcast rights $650–6,500, a stock track $20–100; two honest gaps — voice banking and subtitles — have no number of their own in this unit"
+source: "GVAA Rate Guide, 2026 edition; the SAG-AFTRA agreement on digital replicas"
+chapter_ref: "chapter-part2.md §2.1, §2.1(e)"
+media: ""
+media_needed: "the shot assets/screenshots/s35-studio-control-room-portret.jpg has been acquired (Wikimedia, public domain, provenance images-log.md), but even in portrait crop it does not find width alongside three plates — the side column does not fit at any width up to 4.00\". Bring it back once the frame is unloaded"
+blocks_per_row: 2
+blocks:
+  - {label: "Five crafts and the stage's decision", value: "synthesis · cloning · dubbing · music · separation", note: "recognizability and term/territory — what an image does not have"}
+  - {label: "Classical modes 1–2 — the voice talent and broadcast rights", value: "$50–450 per minute + $650–6,500 beyond the session", note: "the recording and the right to air it are different purchases"}
+  - {label: "Classical mode 3 — licensed stock music", value: "$20–100 per track", note: "extended $100–500+; in Russia 10,000–50,000 ₽; a reference point for comparison, not a commissioned score"}
+  - {label: "Two honest gaps", value: "voice banking · subtitles — no number", note: "no publication names the hours of protocol or the rate per minute", key: true}
+timing_min: 0.9
+in_bucket: false
+status: собран
+---
+
+## Visible slide text
+
+**Five crafts, one word. The decision — whose voice and what music the material speaks in.**
+
+**The classical mode counted this in the price of a finished minute — the same unit as the model.**
+
+## Speaker notes
+
+The first thing to pull apart is five stages that in everyday usage share one word, and that differ from one another in data, in task, and in who is accountable for the result. Speech synthesis turns written text into spoken speech; the voice here is a property of the system, and a narrator preset exists apart from any living performer. Voice cloning — in the unions' contract language, a digital replica — builds a model of a specific person's voice and then uses it to voice arbitrary text; here a second party enters with their own rights — consent, a contract, a term, posthumous authority. Localization and dubbing carry finished spoken material into another language; classically this is three separate jobs — translation, timing adaptation, and the dubbing actor's recording session, each with its own performer and its own rate. Music generation produces a piece from a description, sometimes with vocals; there is no source material at all here. Source separation takes a mixed-down recording and returns the component tracks, synthesizing nothing new: what is sought is physically present in the input signal.
+
+There are fewer ways to acquire material for these five crafts than it seems, and each of them is still alive today. A studio session has been the main method for the last seventy years: a booth, a microphone, a sound engineer, several takes per line. A home booth became mass-market from the mid-2010s on and opened up the price band this section counts further on. A remote session with remote direction keeps take-by-take correction over the network. An archive — recordings made at some point for another purpose — is, for cloning the voice of the dead or those who have lost speech, the only source. Voice banking is a clinical practice: a person with a diagnosis that threatens the loss of speech records a large corpus of words and phrases in advance, while they can still speak clearly. A licensed library supplies training material with cleared rights — twenty thousand hours of music at one open model alone.
+
+The decision at this stage is simple, and it carries three consequences. Term and territory: a voice on air is bought for a term, for a territory, and for a type of medium, and each coordinate costs its own money, unlike an image, which is bought once. Recognizability: a voice is identified by the listener as belonging to a specific person, a property that neither an illustration nor a background has. The third is deferred in time: recorded material outlives both the contract under which it was made and the technology it was recorded for — an archive of corporate voice recordings from 2019 was made for a call center, and in 2022 turned out to be a training set, and the dispute over this is examined in the single Russian case that reached a ruling.
+
+Without a description of the classical mode, any win the model produces would have to be counted from zero, and a win counted from zero is not something the course accepts. Three classical modes are counted in one unit — the price of a finished minute, with every take included in the price. A live voice talent: the global band, per industry rate guides, is $50–450 per finished minute, with three segments by experience (beginner $50–150, mid-level $150–350, senior from $350, with the top going over a thousand); the width of the range is a factor of nine between top and bottom — and the price band for generation further on is built the same way, so it has to be compared band to band. A separate line item — broadcast rights: the recording and the right to air it are different purchases, and the client pays twice; per the 2026 edition of the rate guide, national advertising costs from $650 beyond the session, a year of national airplay $3,200–3,500, and a perpetual buyout up to $6,500. Licensed stock music: $20–100 for standard, $100–500 and up for extended; in Russia, 10,000–50,000 ₽ for a licensed track from a library, from 150,000 ₽ for an original. This is the correct reference pair for comparing against generation — a commissioned original score ($200–1,500 per minute) lives in a different product category altogether, and comparing against it produces a false gap of five or six orders of magnitude.
+
+The union rate for a digital voice copy belongs here as its own line item, because it is unique: where the voice is copied, the union managed to set a price ahead of the lawmaker. A consent session for creating a digital replica — $956.75 for four hours, $1,914.25 for six, plus 16.5 percent on top into union funds; using the copy in advertising — at one-and-a-half times the session rate. Before any law on voice existed, the industry set a price on copying it itself, by contract — the one place in the lecture where the synthetic version turns out more expensive than the human one.
+
+Two honest gaps need to be named here, because the breakdowns further on depend on them. Voice banking — the clinical mode in which a person with a diagnosis that threatens the loss of speech records a large corpus in advance — has no number of its own: no publication in the sample names either the hours of recording the protocol requires or what the service costs. Subtitles as an alternative to dubbing are named in the material, but the sample likewise has no rate per minute of finished material for them, even though that figure is public within the localization industry. Both gaps are flagged and will recur in the section's breakdowns.
+
+And the anchor point of the classical chain, without which the section would hang in the air. Auto-Tune came out on September 19, 1997; its author is a geophysics engineer, a digital-signal-processing specialist, and the algorithm grew out of processing seismic data in oil exploration. In its first year, the tool was used point-by-point to fix a single off-pitch note. In 1998, one well-known recording pushed the settings to the extreme, erasing smooth transitions between notes and producing a sound that immediately became an artistic device in its own right. The lesson carries over to 2026 without a single edit: a tool made to fix a defect became, within a single year, the source of a new genre — and the argument "this is deceiving the listener" was carried on then in literally the same words used today to argue about machine vocals.
+
+Why sound is placed second among the sections is visible from three numbers in one row: an image sized 1,024 by 1,024 pixels is 4,096 tokens; a minute of speech, in a neural codec's representation, is 9,000 to 36,000 tokens; five seconds of high-definition video is 249,240 tokens. Sound sits in the middle of the scale, and this is exactly where both families of generative models work on the same task side by side, where they can be compared by measurement rather than by analogy.

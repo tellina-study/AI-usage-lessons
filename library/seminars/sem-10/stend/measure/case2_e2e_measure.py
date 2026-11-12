@@ -31,7 +31,7 @@ import pandas as pd
 
 from harness2 import contains_answer, embed_batch, llm_answer
 
-CHUNK_SIZE = 180  # то же заголовочное значение, что headline-строка прокси-замера
+CHUNK_SIZE = int(os.environ.get("CASE2_E2E_CHUNK_SIZE", "180"))  # заголовочное значение прокси-замера; env-переопределение — для прогона по всему диапазону размеров куска
 # env-переопределения — ТОЛЬКО для быстрого smoke-теста перед полным прогоном
 # (по умолчанию полный замер: все 4 версии x K=[1,2,3,5]); не трогать для финального прогона.
 K_VALUES = [int(x) for x in os.environ.get("CASE2_E2E_K", "1,2,3,5").split(",")]

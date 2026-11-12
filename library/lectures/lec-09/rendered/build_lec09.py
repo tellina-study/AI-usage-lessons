@@ -446,50 +446,92 @@ def draw_chip_scale(s, x, y, w):
     return cy + 0.40 - y
 
 
-def draw_musk_target_bar(s, sid, d, x, y, w, st=None):
-    """s02: цель Маска («<$100/кг, план на 2030») как 4-я метка на ТОЙ ЖЕ
-    шкале сроков, нарисованная МИМО формулы `timeline.bar_w` (решение
-    владельца, issue #317 — замена прежней версии, где цель жила СТРОКОЙ
-    текста в `timeline.caption`).
+def check_sroki_s02(sid, d, w, st=None):
+    """Копия `timeline._check_sroki`, но без проверки `min_bar` на
+    ПОСЛЕДНЕЙ строке (цель Маска, нарисованная фиксированной шириной в
+    `draw_sroki_s02` ниже, не формулой `bar_w`) — иначе честный сторож
+    модуля заблокировал бы ровно то, что владелец попросил сделать:
+    метку короче порога видимости по длине, компенсированную толщиной."""
+    st = st or timeline.DEFAULT
+    n = len(d["rows"])
+    if n < st.min_rows:
+        report.warn(f"[таймлайн] {sid}: сроков {n} (< {st.min_rows})")
+    if n > st.max_rows:
+        report.warn(f"[таймлайн] {sid}: сроков {n} (> {st.max_rows})")
+    for i, r in enumerate(d["rows"]):
+        if not r["label"]:
+            report.warn(f"[таймлайн] {sid}: у срока «{r['shown']}» нет `label`")
+        if i == n - 1:
+            continue
+        bw = timeline.bar_w(r, d, w, st)
+        if bw < st.min_bar:
+            report.warn(
+                f"[таймлайн] {sid}: полоса срока «{r['label'] or r['shown']}»"
+                f" выходит {bw:.2f}\" (< {st.min_bar:.2f}\")")
 
-    Почему не 4-я строка `rows`: цель $100/кг против верхней границы
-    шкалы $54 500/кг — отношение 1:545. По формуле `bar_w` полоса такой
-    длины выходит короче `min_bar` (0,12\") в разы, и `check_sroki` (см.
-    `deckkit/timeline.py`) её же честно заблокировал бы `[таймлайн]` — тот
-    же механизм, что уже откатил на этом кадре ось с засечками при
-    разбросе всего 18–20×. Решение: метка остаётся, но рисуется ВРУЧНУЮ,
-    отдельно от `rows`/`draw_sroki` — короче самого короткого настоящего
-    бара (Falcon 9), но ЗАМЕТНО толще его по высоте и с золотой обводкой:
-    видна насыщенностью, не длиной. Левый край — тот же `x`, что у
-    настоящих баров (положение на шкале, у нуля, честное); длина и
-    толщина — НЕТ, и подпись называет это прямо («метка не в масштабе»),
-    чтобы зал не читал длину как точную долю от 54 500."""
-    st = st or _TIME
-    y0 = y
-    falcon = d["rows"][-1]                    # Falcon 9 — самый короткий
-    falcon_bw = timeline.bar_w(falcon, d, w, st)
-    bw = max(st.min_bar, falcon_bw * 0.5)      # заметно короче Falcon 9
-    bh = st.bar_h * 1.4                        # жирнее обычной полосы
 
-    label = ("Цель Маска, план на 2030 — план, не факт "
-             "(метка не в масштабе)")
-    lh = metrics.est_h(label, st.lab_pt, w, st.lab_ls, True)
-    floor.pt(st.lab_pt, f"{sid}/маск-метка", "подпись метки Маска")
-    prims.text_box(s, x, y, w, lh, label, size=st.lab_pt, bold=True,
-                   color=DEEP, ls=st.lab_ls, tag=f"{sid}/маск-метка")
-    y += lh + st.bar_gap
-
-    prims.rect(s, x, y, bw, bh, DEEP, stroke=GOLD, stroke_pt=2.4,
-               count="маск-метка")
-    cap = "<$100"
-    chip_w = metrics.text_w(cap, st.val_pt, True) / 72.0 + 2 * st.val_pad
-    floor.pt(st.val_pt, f"{sid}/маск-значение", "плашка цели Маска")
-    prims.chip(s, x + bw + st.val_gap, y + (bh - st.bar_h) / 2, chip_w,
-               st.bar_h, cap, fill=GOLD, color=DEEP, size=st.val_pt,
-               bold=True, tag=f"{sid}/маск-значение")
-    report.GOLD_SEEN.add(sid)
-    y += bh
-    return y - y0
+def draw_sroki_s02(s, sid, d, x, y, w, st=None):
+    """s02: та же отрисовка, что `timeline.draw_sroki`, но 4-я строка
+    (цель Маска) — ВНУТРИ общей последовательности баров, между Falcon 9
+    и общей шкалой, а не отдельным блоком после неё (решение владельца,
+    issue #317 — первая версия рисовала метку ПОСЛЕ всего таймлайна,
+    владелец явно поправил: «почему цель Маска отдельно внизу, а не в
+    общем графике»). Ширина этой строки — фиксированная (короче Falcon 9,
+    самого короткого настоящего бара), а не по формуле `bar_w`: при
+    отношении 1:545 к максимуму шкалы формула даёт полосу короче порога
+    видимости `min_bar`, и `timeline.check_timeline` сам честно
+    заблокировал бы её (`check_sroki_s02` выше это учитывает). Ни рамки,
+    ни отдельной оговорки у этой строки нет — владелец явно попросил
+    убрать и то, и другое: «в рамке зачем-то» / «убери оговорку»."""
+    st = st or timeline.DEFAULT
+    vw, bmax = timeline.val_w(d, st), timeline.bar_max(d, w, st)
+    cy = y
+    n = len(d["rows"])
+    for i, r in enumerate(d["rows"]):
+        if r["label"]:
+            floor.pt(st.lab_pt, sid, "подпись срока")
+            lh = metrics.est_h(r["label"], st.lab_pt, w, st.lab_ls, True)
+            prims.text_box(s, x, cy, w, lh, r["label"], size=st.lab_pt,
+                           bold=True, color=DEEP, ls=st.lab_ls,
+                           tag=f"{sid}/срок{i + 1}")
+            cy += lh + st.bar_gap
+        if i == n - 1:
+            bw = max(st.min_bar,
+                     timeline.bar_w(d["rows"][-2], d, w, st) * 0.5)
+        else:
+            bw = timeline.bar_w(r, d, w, st)
+        prims.rect(s, x, cy, max(bw, 0.02), st.bar_h,
+                   DEEP if i == 0 else TEAL, count="полоса срока")
+        floor.pt(st.val_pt, sid, "значение срока")
+        prims.chip(s, x + bw + st.val_gap, cy, vw, st.bar_h, r["shown"],
+                   fill=GOLD, color=DEEP, size=st.val_pt, bold=True,
+                   tag=f"{sid}/значение{i + 1}")
+        report.GOLD_SEEN.add(sid)
+        cy += st.bar_h
+        if r["text"]:
+            floor.pt(st.srok_txt_pt, sid, "разбор срока")
+            th = metrics.est_h(r["text"], st.srok_txt_pt, w, st.srok_txt_ls)
+            prims.text_box(s, x, cy + st.srok_txt_gap, w, th, r["text"],
+                           size=st.srok_txt_pt, color=DEEP,
+                           ls=st.srok_txt_ls, tag=f"{sid}/разбор{i + 1}")
+            cy += st.srok_txt_gap + th
+        if i < n - 1:
+            cy += st.srok_gap
+    cy += st.rule_gap
+    prims.rect(s, x, cy, bmax, st.rule_h, timeline.OUTLINE, count="шкала")
+    vmax = max(r["v"] for r in d["rows"])
+    floor.pt(st.end_pt, sid, "конец шкалы сроков")
+    prims.text_box(s, x, cy + st.rule_h + 0.02, 0.9, st.end_h, "0",
+                   size=st.end_pt, color=LIGHT, ls=1.0, tag=f"{sid}/ноль",
+                   quiet=True)
+    prims.text_box(s, x + bmax - 0.9, cy + st.rule_h + 0.02, 0.9,
+                   st.end_h, timeline._fmt(vmax), size=st.end_pt,
+                   color=LIGHT, align=PP_ALIGN.RIGHT, ls=1.0,
+                   tag=f"{sid}/предел", quiet=True)
+    cy += st.rule_h + st.end_h
+    cy = timeline._tail(s, sid, d, x, cy, w, st, sid)
+    report.PRIM["таймлайн"] += 1
+    return cy - y
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -1157,17 +1199,21 @@ def content(p, sl, root):
     # цепочка DARPA Subterranean Challenge → LAMP 2.0 → COROB-X.
     tml = timeline.timeline_of(sl) if is_content else None
     if tml:
-        timeline.check_timeline(sl.sid, tml, body_w_top, _TIME)
-        y += timeline.draw_timeline(s, sl.sid, tml, MX, y, body_w_top,
-                                    _TIME) + GAP
         if sl.sid == "s02":
-            # Цель Маска — 4-я метка на той же шкале, нарисованная МИМО
-            # `rows`/`bar_w` (см. `draw_musk_target_bar` выше). Рисуется
-            # ПОСЛЕ обычной отрисовки таймлайна (включая его шкалу и
-            # подпись), не внутри неё — композиция слайд-специфична и
-            # правки общего модуля `timeline.py` не требует.
-            y += draw_musk_target_bar(s, sl.sid, tml, MX, y, body_w_top,
-                                      _TIME) + GAP
+            # Цель Маска — 4-я строка ВНУТРИ общей последовательности
+            # баров (между Falcon 9 и шкалой), не отдельным блоком после
+            # неё — владелец явно поправил первую версию
+            # (`draw_sroki_s02` выше несёт полную историю решения).
+            # `shown` переопределён на «<100»: автоформатирование `_fmt`
+            # дало бы голое «100».
+            tml["rows"][-1]["shown"] = "<100"
+            check_sroki_s02(sl.sid, tml, body_w_top, _TIME)
+            y += draw_sroki_s02(s, sl.sid, tml, MX, y, body_w_top,
+                                _TIME) + GAP
+        else:
+            timeline.check_timeline(sl.sid, tml, body_w_top, _TIME)
+            y += timeline.draw_timeline(s, sl.sid, tml, MX, y, body_w_top,
+                                        _TIME) + GAP
 
     cols = columns_from(sl) if is_content else None
     tbl = table_from(sl) if is_content else None

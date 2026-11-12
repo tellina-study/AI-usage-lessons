@@ -51,8 +51,9 @@ slides:
     file: slides/s03-sputnikov-i-dannykh-na-poryadok-bolshe.md
     type: norm
     section: "0. Вход"
-    assertion: "Спутников стало в ~12 раз больше за 10 лет, данных — в разы больше: обслуживать это вручную уже нельзя"
+    assertion: "Спутников стало на порядок больше за 10 лет — и, по прогнозу McKinsey, вырастет ещё почти вдвое к 2030-му; данных — тем же темпом"
     learning_goal: "§0.2: второй взрыв — рост числа спутников и объёма данных как прямое следствие первого"
+    media: "assets/razdel-0/earth/s03-blue-marble-apollo17.jpg"
 
   - id: s04
     file: slides/s04-kto-zapuskaet-i-s-kakoy-skorostyu.md

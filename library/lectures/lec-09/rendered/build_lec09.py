@@ -92,7 +92,9 @@ import sys
 from dataclasses import replace
 from pathlib import Path
 
+from pptx.enum.shapes import MSO_SHAPE
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
+from pptx.util import Inches, Pt
 
 HERE = Path(__file__).resolve().parent              # .../lec-09/rendered
 LEC_ROOT = HERE.parent                               # .../lec-09
@@ -442,6 +444,290 @@ def draw_chip_scale(s, x, y, w):
                    "порядки, не проценты.", size=15.0, italic=True,
                    color=LIGHT, tag="s51/сноска")
     return cy + 0.40 - y
+
+
+def draw_musk_target_bar(s, sid, d, x, y, w, st=None):
+    """s02: цель Маска («<$100/кг, план на 2030») как 4-я метка на ТОЙ ЖЕ
+    шкале сроков, нарисованная МИМО формулы `timeline.bar_w` (решение
+    владельца, issue #317 — замена прежней версии, где цель жила СТРОКОЙ
+    текста в `timeline.caption`).
+
+    Почему не 4-я строка `rows`: цель $100/кг против верхней границы
+    шкалы $54 500/кг — отношение 1:545. По формуле `bar_w` полоса такой
+    длины выходит короче `min_bar` (0,12\") в разы, и `check_sroki` (см.
+    `deckkit/timeline.py`) её же честно заблокировал бы `[таймлайн]` — тот
+    же механизм, что уже откатил на этом кадре ось с засечками при
+    разбросе всего 18–20×. Решение: метка остаётся, но рисуется ВРУЧНУЮ,
+    отдельно от `rows`/`draw_sroki` — короче самого короткого настоящего
+    бара (Falcon 9), но ЗАМЕТНО толще его по высоте и с золотой обводкой:
+    видна насыщенностью, не длиной. Левый край — тот же `x`, что у
+    настоящих баров (положение на шкале, у нуля, честное); длина и
+    толщина — НЕТ, и подпись называет это прямо («метка не в масштабе»),
+    чтобы зал не читал длину как точную долю от 54 500."""
+    st = st or _TIME
+    y0 = y
+    falcon = d["rows"][-1]                    # Falcon 9 — самый короткий
+    falcon_bw = timeline.bar_w(falcon, d, w, st)
+    bw = max(st.min_bar, falcon_bw * 0.5)      # заметно короче Falcon 9
+    bh = st.bar_h * 1.4                        # жирнее обычной полосы
+
+    label = ("Цель Маска, план на 2030 — план, не факт "
+             "(метка не в масштабе)")
+    lh = metrics.est_h(label, st.lab_pt, w, st.lab_ls, True)
+    floor.pt(st.lab_pt, f"{sid}/маск-метка", "подпись метки Маска")
+    prims.text_box(s, x, y, w, lh, label, size=st.lab_pt, bold=True,
+                   color=DEEP, ls=st.lab_ls, tag=f"{sid}/маск-метка")
+    y += lh + st.bar_gap
+
+    prims.rect(s, x, y, bw, bh, DEEP, stroke=GOLD, stroke_pt=2.4,
+               count="маск-метка")
+    cap = "<$100"
+    chip_w = metrics.text_w(cap, st.val_pt, True) / 72.0 + 2 * st.val_pad
+    floor.pt(st.val_pt, f"{sid}/маск-значение", "плашка цели Маска")
+    prims.chip(s, x + bw + st.val_gap, y + (bh - st.bar_h) / 2, chip_w,
+               st.bar_h, cap, fill=GOLD, color=DEEP, size=st.val_pt,
+               bold=True, tag=f"{sid}/маск-значение")
+    report.GOLD_SEEN.add(sid)
+    y += bh
+    return y - y0
+
+
+# ════════════════════════════════════════════════════════════════════
+# s03 — Земля в круге + три кольца растущей толщины (issue #317, Фаза 9)
+# ════════════════════════════════════════════════════════════════════
+# Разнарядка владельца: «замени всё на картинку земли, обрезанную по
+# кругу, и вокруг неё синим тонкий донат — количество спутников до 2013,
+# потом толще серым сколько сейчас, и потом ещё толще какой-то прогноз на
+# 30-е годы, с подписями по годам, долей старлинка вокруг и объёмом
+# данных». В `deckkit` нет формы концентрических колец (`timeline.py`
+# рисует только прямые полосы сроков — `axis.py`/`scheme: kind: shkala`
+# тоже прямая линия с засечками, не круг) — заводить такую форму в общем
+# ядре под один кадр одной лекции было бы преждевременным обобщением;
+# композиция слайд-специфична и живёт здесь, рядом с
+# `place_hero_centered`/`draw_chip_scale` выше, по тому же правилу
+# («раскладка — дело деки, не ядра»).
+#
+# «Серым» из устной просьбы здесь — НЕ новый цвет (палитра LOCKED, см.
+# `CLAUDE.md`): в ней нет серого, и три кольца различены тремя её синими
+# по нарастающей толщине — TEAL (тоньше всего, 2013) → MID (толще,
+# сегодня) → LIGHT (толще всех, прогноз 2030), а не оттенком. Числа —
+# chapter.md §0.2 (строки ~118-128): 2013 (UCS) → сегодня (planet4589.org
+# + CelesTrak) → прогноз McKinsey на 2030 (сценарий «Base») — тот же
+# честный приём «план, не факт», что уже стоит в главе для цели Маска.
+_S03_RING_COLOR = (TEAL, MID, LIGHT)
+_S03_TH = (0.055, 0.17, 0.32)             # толщина колец — растёт наружу
+_S03_GAP = (0.12, 0.13, 0.13)             # фото→1, 1→2, 2→3
+_S03_LEAD = 0.12                           # длина выноски к плашке-ярлыку
+_S03_CHIP_PT = 15.0                        # пол видимого слоя этой деки
+
+
+def _circle_crop(path):
+    """Квадратный кроп по центру снимка + альфа-маска круга, кеш в
+    `assets-cache/`. У `python-pptx` кроп фигуры только прямоугольный
+    (`crop_left/right/top/bottom`) — круглый снимок даёт не фигура-рамка,
+    а собственная прозрачность PNG поверх белого фона кадра. Источник на
+    диске не трогается — производная кладётся рядом, тот же приём, что
+    `convert_if_needed` выше для `.svg`/`.webp`."""
+    path = Path(path)
+    out = ASSET_CACHE / (path.stem + "-circle.png")
+    if out.exists() and out.stat().st_mtime >= path.stat().st_mtime:
+        return out
+    from PIL import Image, ImageDraw
+    im = Image.open(path).convert("RGB")
+    # Снимок планеты лежит на чёрном фоне космоса, и у исходного кадра
+    # своё поле ВОКРУГ диска (у s03 — ~70 px из 1280 на сторону): круглая
+    # маска по ВСЕМУ квадрату обводит и это поле, и между краем Земли и
+    # первым кольцом ложится чёрная кайма (найдено на первой же пробе,
+    # прежде чем числа ушли в деку — проверено глазами на PNG). Порог по
+    # яркости находит собственную окружность ДИСКА, а не кадра вокруг
+    # него; снимок без чёрного поля (bbox ≈ весь кадр) этим путём не
+    # двигается — отличие от прежнего «взять весь квадрат» нулевое.
+    bbox = im.convert("L").point(lambda p: 255 if p > 10 else 0).getbbox()
+    if bbox:
+        left, top, right, bottom = bbox
+        side = min(right - left, bottom - top)
+        cx0, cy0 = (left + right) // 2, (top + bottom) // 2
+        half = side // 2
+        im = im.crop((cx0 - half, cy0 - half, cx0 + half, cy0 + half))
+    else:
+        iw, ih = im.size
+        side = min(iw, ih)
+        left, top = (iw - side) // 2, (ih - side) // 2
+        im = im.crop((left, top, left + side, top + side))
+    im = im.convert("RGBA")
+    side = im.size[0]
+    mask = Image.new("L", (side, side), 0)
+    ImageDraw.Draw(mask).ellipse((0, 0, side, side), fill=255)
+    im.putalpha(mask)
+    ASSET_CACHE.mkdir(parents=True, exist_ok=True)
+    im.save(out, "PNG")
+    return out
+
+
+def _s03_ring(s, cx, cy, r_in, th, color):
+    """Кольцо между радиусами `r_in` и `r_in+th` — овал без заливки,
+    обводкой `th` ТОЛЩИНОЙ, отцентрованной на среднем радиусе: у
+    `python-pptx`/LibreOffice обводка фигуры лежит на границе её
+    собственного бокса, половина внутрь, половина наружу, поэтому бокс
+    строится по среднему радиусу (`r_in + th/2`), а не по `r_in` самому —
+    иначе видимый внешний край кольца сходится не туда, куда метит
+    выноска-ярлык снаружи."""
+    r_mid = r_in + th / 2
+    shp = s.shapes.add_shape(MSO_SHAPE.OVAL, Inches(cx - r_mid),
+                             Inches(cy - r_mid), Inches(2 * r_mid),
+                             Inches(2 * r_mid))
+    shp.fill.background()
+    shp.line.color.rgb = color
+    shp.line.width = Pt(th * 72.0)
+    prims.no_shadow(shp)
+    report.PRIM["кольцо"] += 1
+    return shp
+
+
+def _s03_chip_w(text, size=_S03_CHIP_PT):
+    """Ширина плашки-ярлыка под СВОЙ текст в одну строку, с запасом
+    `metrics.W_SAFE` (та же мера, которой `plates._val_fit` решает,
+    влезает ли значение на одном кегле) и внутренними полями `prims.chip`
+    (0,07\" слева и справа)."""
+    return metrics.text_w(text, size, True) / 72.0 / metrics.W_SAFE + 0.20
+
+
+def draw_s03_rings(s, sl, y, w, col_bot, img):
+    """Композиция s03: фото Земли (круглый кроп) + три кольца растущей
+    толщины вокруг него (2013 → сегодня → прогноз 2030) + 2 плашки
+    снаружи (доля Starlink, объём данных — другая единица, на кольцо
+    числа спутников не кладётся, тот же принцип разведения единиц, что
+    `axis.py` держит для `scheme: kind: shkala`). Возвращает None —
+    рисует до самого низа отведённого места (`col_bot`), как и прочие
+    кадры с собственной геометрией (`place_hero_centered`)."""
+    tag = f"{sl.sid}/кольца"
+    plates_w = 4.40
+    rings_w = w - plates_w - COL_GAP
+
+    # ── «Видимый текст слайда»: короткий bold-тезис сверху, курсивная
+    # оговорка про прогноз снизу — КОНТЕНТ лежит в .md-файле кадра (как
+    # везде в этой деке), раскладка — здесь.
+    para = next((t for k, t in slidefile.body_blocks(sl) if k == "para"), "")
+    cap = next((t for k, t in slidefile.body_blocks(sl) if k == "cap"), "")
+
+    y_rings = y
+    if para:
+        floor.pt(_S03_CHIP_PT, tag, "вступление")
+        runs = markup.inline_runs(para, _S03_CHIP_PT, DEEP)
+        ih = metrics.runs_h(runs, w - 0.08, 1.20)
+        prims.text_runs(s, MX + 0.04, y, w - 0.08, ih, runs, ls=1.20,
+                        tag=f"{tag}/вступление")
+        y_rings = y + ih + 0.16
+
+    cav_h = 0.0
+    if cap:
+        floor.pt(_S03_CHIP_PT, tag, "оговорка прогноза")
+        cav_h = metrics.est_h(cap, _S03_CHIP_PT, rings_w, 1.18, False, True)
+
+    cav_gap = 0.10
+    avail_h = (col_bot - y_rings) - (cav_gap + cav_h if cap else 0.0)
+    if avail_h < 1.8:
+        report.warn(f"[высота] {tag}: на кольца и плашки осталось "
+                    f"{avail_h:.2f}\" — тесно")
+
+    th1, th2, th3 = _S03_TH
+    g0, g1, g2 = _S03_GAP
+
+    # Плашка-ярлык «сейчас» (кольцо 2, внизу) высовывается ЗА кольцо 3 —
+    # измерено явно и учтено фиксированной надбавкой, а не угадано (та
+    # же дисциплина, что `_tail`/`plate_h` держат для своих хвостов):
+    # бюджет между кольцом 2 и внешним краем кольца 3 — `g2+th3`, а
+    # ярлыку снизу нужно `_S03_LEAD + chip_h`.
+    chip2_txt = "сейчас · ~16 800–17 100"
+    chip2_w = _s03_chip_w(chip2_txt)
+    chip_h = metrics.est_h(chip2_txt, _S03_CHIP_PT, chip2_w - 0.14, 1.05,
+                           True) + 0.05
+    bottom_overflow = max(0.0, (_S03_LEAD + chip_h) - (g2 + th3))
+    r3_from_h = (avail_h - bottom_overflow) / 2.0
+
+    chip3_txt = "2030 (прогноз) · ~27 000"
+    chip3_w = _s03_chip_w(chip3_txt)
+    r3_from_w = (rings_w - (_S03_LEAD + chip3_w)) / 2.0 - 0.10
+
+    r3_out = max(1.1, min(r3_from_h, r3_from_w))
+    r2_out = r3_out - g2 - th3
+    r1_out = r2_out - g1 - th2
+    r_photo = r1_out - g0 - th1
+    if r_photo < 0.55:
+        report.warn(f"[ширина] {tag}: радиус фото {r_photo:.2f}\" — "
+                    "кольца съели слишком много места под фото")
+
+    cx = MX + rings_w - r3_out - 0.12
+    cy = y_rings + r3_out
+
+    # ── фото Земли, круглый кроп ──
+    circ = _circle_crop(img)
+    s.shapes.add_picture(str(circ), Inches(cx - r_photo), Inches(cy - r_photo),
+                         Inches(2 * r_photo), Inches(2 * r_photo))
+    report.PRIM["кадр"] += 1
+
+    # ── три кольца, толщина растёт наружу ──
+    _s03_ring(s, cx, cy, r_photo + g0, th1, _S03_RING_COLOR[0])
+    _s03_ring(s, cx, cy, r1_out + g1, th2, _S03_RING_COLOR[1])
+    _s03_ring(s, cx, cy, r2_out + g2, th3, _S03_RING_COLOR[2])
+
+    def leader(x1, y1, x2, y2):
+        if abs(x1 - x2) < 0.01:
+            prims.rect(s, x1 - 0.015, min(y1, y2), 0.03, abs(y2 - y1),
+                       LIGHT, count="выноска")
+        else:
+            prims.rect(s, min(x1, x2), y1 - 0.015, abs(x2 - x1), 0.03,
+                       LIGHT, count="выноска")
+
+    def chip_at(text, cx0, y0, w0, h0):
+        prims.chip(s, cx0, y0, w0, h0, text, fill=GOLD, color=DEEP,
+                   size=_S03_CHIP_PT, bold=True, tag=f"{tag}/{text[:8]}")
+        report.GOLD_SEEN.add(sl.sid)
+
+    # Ярлык кольца 1 (2013) — сверху, короткая выноска вверх.
+    chip1_txt = "2013 · ~1 165"
+    chip1_w = _s03_chip_w(chip1_txt)
+    chip1_h = metrics.est_h(chip1_txt, _S03_CHIP_PT, chip1_w - 0.14, 1.05,
+                            True) + 0.05
+    top_y = cy - r1_out - _S03_LEAD - chip1_h
+    leader(cx, top_y + chip1_h, cx, cy - r1_out)
+    chip_at(chip1_txt, cx - chip1_w / 2, top_y, chip1_w, chip1_h)
+
+    # Ярлык кольца 2 (сегодня) — снизу, короткая выноска вниз.
+    bot_y = cy + r2_out + _S03_LEAD
+    leader(cx, cy + r2_out, cx, bot_y)
+    chip_at(chip2_txt, cx - chip2_w / 2, bot_y, chip2_w, chip_h)
+
+    # Ярлык кольца 3 (прогноз 2030) — слева, короткая выноска влево.
+    left_x = cx - r3_out - _S03_LEAD - chip3_w
+    chip3_h = metrics.est_h(chip3_txt, _S03_CHIP_PT, chip3_w - 0.14, 1.05,
+                            True) + 0.05
+    leader(cx - r3_out, cy - 0.015, cx - r3_out - _S03_LEAD, cy - 0.015)
+    chip_at(chip3_txt, left_x, cy - chip3_h / 2, chip3_w, chip3_h)
+
+    bottom_most = max(bot_y + chip_h, cy + r3_out)
+    if cap:
+        prims.text_box(s, MX, bottom_most + cav_gap, rings_w, cav_h, cap,
+                       size=_S03_CHIP_PT, italic=True, color=LIGHT, ls=1.18,
+                       tag=f"{tag}/оговорка")
+
+    # ── 2 плашки снаружи колец: доля Starlink, объём данных ──
+    # Числа — chapter.md §0.2 (строки ~122/126): Starlink ~65% всех
+    # активных спутников; архив Copernicus ×9 за 7 лет, EOSDIS к ~600 ПБ
+    # к 2030-му. Другая единица измерения (доля / петабайты, не штуки
+    # спутников) — на кольцо не кладётся, тот же принцип, что `axis.py`
+    # формулирует для `scheme: kind: shkala`.
+    s03_blocks = [
+        {"label": "Доля Starlink от всех активных спутников", "value": "~65%",
+         "note": "~11 100–11 150 спутников одной констелляции", "key": True},
+        {"label": "Архив Copernicus (Sentinel), 2018 → 2025",
+         "value": "9,7 → ~91 петабайт",
+         "note": "рост ×9 за 7 лет; EOSDIS ~116 ПБ (2024) → ожидание "
+                 "~600 ПБ к 2030", "key": False},
+    ]
+    pst = replace(PLATES, max_per_row=1)
+    plates.draw_plates(s, sl.sid, s03_blocks, MX + rings_w + COL_GAP, y_rings,
+                       plates_w, pst, tag=f"{sl.sid}/плашки")
 
 
 def heading(s, sl, width=None, color=DEEP):
@@ -823,6 +1109,18 @@ def content(p, sl, root):
     else:
         y = heading(s, sl)
 
+    if sl.sid == "s03":
+        # Композиция слайд-специфична (концентрические кольца — формы,
+        # которой нет в `deckkit`) — рисует ВСЁ сама, без плашек/схемы/
+        # столбцов/таблицы/боковой иллюстрации общего пути ниже; это тот
+        # же приём раннего `return`, которым `qa()`/`divider()`/`cover()`
+        # выше не проходят через `content()` вовсе, только для одного
+        # кадра внутри самой `content()`.
+        draw_s03_rings(s, sl, y, FULL_W, bb, img)
+        gold_tick(s, sl.sid, MX, sl.tick_y or (TITLE_Y + 0.98))
+        footer(s, sl)
+        return s
+
     is_content = str(sl.meta.get("type") or "norm") in CONTENT_TYPES
     if not is_content:
         check_prims(sl, str(sl.meta.get("type") or "?"))
@@ -862,6 +1160,14 @@ def content(p, sl, root):
         timeline.check_timeline(sl.sid, tml, body_w_top, _TIME)
         y += timeline.draw_timeline(s, sl.sid, tml, MX, y, body_w_top,
                                     _TIME) + GAP
+        if sl.sid == "s02":
+            # Цель Маска — 4-я метка на той же шкале, нарисованная МИМО
+            # `rows`/`bar_w` (см. `draw_musk_target_bar` выше). Рисуется
+            # ПОСЛЕ обычной отрисовки таймлайна (включая его шкалу и
+            # подпись), не внутри неё — композиция слайд-специфична и
+            # правки общего модуля `timeline.py` не требует.
+            y += draw_musk_target_bar(s, sl.sid, tml, MX, y, body_w_top,
+                                      _TIME) + GAP
 
     cols = columns_from(sl) if is_content else None
     tbl = table_from(sl) if is_content else None

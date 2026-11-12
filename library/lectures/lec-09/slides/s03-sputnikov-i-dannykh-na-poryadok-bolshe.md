@@ -4,7 +4,7 @@ local_id: В-03
 section: "0. Вход"
 type: norm
 title: "Спутников и данных стало на порядок больше"
-assertion: "Спутников стало на порядок больше за 10 лет — и, по прогнозу McKinsey, вырастет ещё почти вдвое к 2030-му; данных — тем же темпом"
+assertion: "Спутников больше в 30 раз за 25 лет — и данных со спутников столько же"
 source: "[Union of Concerned Scientists](https://www.ucsusa.org/resources/satellite-database) · [planet4589.org (Дж. Макдауэлл)](https://planet4589.org/) · [CelesTrak](https://celestrak.org/) · [McKinsey](https://www.mckinsey.com/industries/aerospace-and-defense/our-insights/space-launch-are-we-heading-for-oversupply-or-a-shortfall) · [NASA EOSDIS](https://www.earthdata.nasa.gov/) · [Copernicus/DLR](https://www.copernicus.eu/en)"
 media: "assets/razdel-0/earth/s03-blue-marble-apollo17.jpg"
 media_needed: "Фаза 9 (issue #317), разнарядка владельца: заменено на круглое фото Земли + три кольца растущей толщины вокруг него (2013 → сегодня → прогноз 2030) + 2 плашки снаружи (доля Starlink, объём данных). В `deckkit` нет формы концентрических колец (`timeline.py` — только прямые полосы сроков) — композиция слайд-специфична, нарисована прямо в `build_lec09.py` (`draw_s03_rings`/`_circle_crop`/`_s03_ring`), без правки общих модулей ядра. Снятые поля `scheme:`/`blocks:` (ось с засечками + полоса плашек) заменены этой композицией целиком. Фото — Apollo 17 «Blue Marble» (NASA, 7 декабря 1972, общественное достояние, Wikimedia Commons, Tier 2 — провенанс в `assets/razdel-0/earth/s03-blue-marble-apollo17.jpg.url`); круглый кроп кешируется в `assets-cache/`."
@@ -14,9 +14,7 @@ status: draft
 
 ## Видимый текст слайда
 
-**Три кольца — один и тот же рост: спутников стало на порядок больше за десять лет, и прогноз на 2030 год продолжает ту же кривую, а не начинает новую.**
-
-*Прогноз на 2030 год — сценарий McKinsey «Base», план, а не достигнутый результат (как и цель Маска по стоимости запуска, § 0.3).*
+**Спутников больше в 30 раз за 25 лет.**
 
 ## Заметки лектора
 

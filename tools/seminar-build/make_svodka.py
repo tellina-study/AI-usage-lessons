@@ -55,6 +55,30 @@ def sl(n):
     return f"{n} слайд" + ("" if last == 1 else "а")
 
 
+def numeratsiya(ids):
+    """Как описать нумерацию деки — по тому, что в ней действительно есть.
+
+    Слово «сквозная» держалось в f-строке статуса безусловно и для С10 стало
+    неправдой: у него живут хвосты `n72a` и `n76a`–`n76d` (renumber не
+    прогонялся, потому что правит ссылки в кадрах соседней сессии). То же у
+    С08 и С09. Хвосты называются списком, соседние по одному номеру — одним
+    диапазоном; деке без хвостов печатается прежняя строка, байт в байт.
+    """
+    gr = []
+    for i in ids:
+        m = re.fullmatch(r"(n\d+)([a-z]+)", i)
+        if not m:
+            continue
+        if gr and gr[-1][0] == m.group(1):
+            gr[-1][1].append(i)
+        else:
+            gr.append((m.group(1), [i]))
+    if not gr:
+        return f"сквозная нумерация n01…{ids[-1]}"
+    tails = ", ".join(g[0] if len(g) == 1 else f"{g[0]}–{g[-1]}" for _, g in gr)
+    return f"нумерация n01…{ids[-1]} с буквенными хвостами {tails}"
+
+
 def headline(rel):
     for line in (D.ROOT / rel).read_text(encoding="utf-8").splitlines():
         if line.startswith("# "):
@@ -119,7 +143,7 @@ def main():
     L.append(f"обновлена: {date.today().isoformat()}")
     L.append(f'статус: "СОБРАНА генератором tools/seminar-build/make_svodka.py из фронтматтера слайдов: '
              f'{sl(len(slides))}, {mins(total_min)} минуты при слоте {slot}, '
-             f'сквозная нумерация n01…{slides[-1]["id"]}"')
+             f'{numeratsiya([s["id"] for s in slides])}"')
     L.append(f'источник: "library/seminars/sem-{D.SEM}/{D.slides_dir()}/n*.md — поля '
              f'id / type / duration_min и первая строка заголовка"')
     L.append("---")

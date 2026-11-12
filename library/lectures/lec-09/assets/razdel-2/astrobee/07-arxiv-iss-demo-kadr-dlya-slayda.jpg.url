@@ -1,0 +1,9 @@
+arXiv 2505.05588v2 (Banerjee et al., «Deep Learning Warm Starts for Trajectory
+Optimization on the International Space Station») | https://arxiv.org/abs/2505.05588
+Рис. 1 (hero), ЛЕВАЯ ЧАСТЬ — первая лётная демонстрация тёплого старта на МКС:
+Astrobee в последовательных положениях вдоль траектории внутри модуля, рядом
+астронавт. Кадрирование (0,0,560,539 из 1280x539) сделано намеренно: правая
+половина оригинала — схема «Start, Goal & Obstacles → Learned model → SCP →
+Optimal trajectory» с английскими подписями, которые на русский кадр лекции
+идти не должны; содержание этой схемы предъявлено на кадрах s33b/s33c
+по-русски, родными формами деки.

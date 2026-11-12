@@ -467,7 +467,7 @@ slides:
     learning_goal: "§4.1: термин и общее описание стадии — последнее применение общей схемы главы"
 
   - id: s50a
-    file: slides/s50a-metody-inferens-i-obuchenie.md
+    file: slides/s50a-pochemu-inferens-a-ne-obuchenie.md
     type: norm
     section: "4. Космос для ИИ"
     assertion: "В космос переезжает готовая, уже обученная сеть; само обучение требует кластера и остаётся на Земле"
@@ -515,7 +515,7 @@ slides:
     file: slides/s53b-suncatcher-upravlenie-stroem.md
     type: schema_layered
     section: "4. Космос для ИИ"
-    assertion: "У Suncatcher есть второй, отдельный случай применения ИИ: модель в реальном времени держит строй десятков спутников без столкновений — не отвечает на запрос пользователя"
+    assertion: "У Suncatcher есть отдельный случай применения ИИ — модель лётного управления строем: обучается на Земле по симуляции орбитальной динамики, и это предложенный дизайн будущей констелляции, а не летающая сегодня система"
 
   - id: s54
     file: slides/s54-upominaniya-razdel-4.md

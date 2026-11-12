@@ -126,20 +126,6 @@ slides:
     assertion: "Геометрия решена классикой без обучения; узнавание объекта среди шума — обучаемой моделью"
     learning_goal: "§1.2: граница между автоматикой и обученной моделью на материале раздела"
 
-  - id: s17
-    file: slides/s17-metody-geometriya-i-sluchayny-les.md
-    type: norm
-    section: "1. Автономные роботы в космосе"
-    assertion: "Стереопара вычисляет дальность геометрией, не обучением; случайный лес — ансамбль деревьев, который можно прочитать до конца"
-    learning_goal: "§1.2а, блоки 1–2: стереозрение/параллакс и random forest — держат AEGIS"
-
-  - id: s18
-    file: slides/s18-metody-karta-bez-gps-i-detektor.md
-    type: schema_layered
-    section: "1. Автономные роботы в космосе"
-    assertion: "Три уровня SLAM сшивают карты роботов без GPS; детектор YOLO находит объект за один проход"
-    learning_goal: "§1.2а, блоки 3–4: SLAM с графом поз и CNN-детекция — держат COROB-X, продолжают keystone"
-
   - id: s19
     file: slides/s19-primer-aegis.md
     type: case_study
@@ -195,7 +181,7 @@ slides:
     file: slides/s21b-corob-x-kak-vstroyeno.md
     type: schema_layered
     section: "1. Автономные роботы в космосе"
-    assertion: "SherpaTT, Coyote III и LUVMI-X картографируют каждый сам по себе; единую карту трубки сшивает ровно тот трёхуровневый SLAM, что разобран на соседнем кадре"
+    assertion: "SherpaTT, Coyote III и LUVMI-X картографируют каждый сам по себе; единую карту трубки сшивает трёхуровневый SLAM, а находки на кадрах отмечает обучаемый детектор"
 
   - id: s22
     file: slides/s22-primer-leolabs.md
@@ -205,24 +191,16 @@ slides:
     learning_goal: "§1.5a: разбор LeoLabs, четвёртый разбор раздела (исключение 3+6), граф б"
 
   - id: s22a
-    file: slides/s22a-leolabs-kak-vstroyeno.md
+    file: slides/s22a-leolabs-radar.md
+    type: case_study
+    section: "1. Автономные роботы в космосе"
+    assertion: "Сеть, выдающая предупреждения о сближении, — это не программа в облаке, а одиннадцать таких полей антенн на семи площадках"
+
+  - id: s22b
+    file: slides/s22b-leolabs-kak-vstroyeno.md
     type: schema_layered
     section: "1. Автономные роботы в космосе"
     assertion: "Модель решает, что наблюдать следующим; маневрировать или нет — решает оператор конкретного спутника, не LeoLabs"
-
-  - id: s23
-    file: slides/s23-upominaniya-razdel-1.md
-    type: norm
-    section: "1. Автономные роботы в космосе"
-    assertion: "Классика везёт Perseverance на 90% маршрута без единой нейросети; Starlink совершает 300 000 манёвров в год сам"
-    learning_goal: "§1.6: шесть упоминаний — другой тип задачи, другой статус готовности"
-
-  - id: s24
-    file: slides/s24-chto-dalo-i-potrebovalo-razdel-1.md
-    type: schema_matrix
-    section: "1. Автономные роботы в космосе"
-    assertion: "Выигрыш крупный там, где технология летает годами; там, где не летала — сказано прямо"
-    learning_goal: "§1.7 + накопительная карта стадии: что дало, что потребовало, три клетки сетки занято"
 
   - id: s25
     file: slides/s25-vyvod-razdela-1.md

@@ -335,7 +335,7 @@ def fit_table_height(tbl, hi, avail_h, w):
 
 CONTENT_TYPES_WITH_FIELDS = ("blocks", "scheme", "columns", "table",
                              "matrix_empty", "headline_number", "polosy",
-                             "arhitektura", "timeline")
+                             "arhitektura", "timeline", "tsikl", "vstuplenie")
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -772,6 +772,293 @@ def draw_s03_rings(s, sl, y, w, col_bot, img):
                        plates_w, pst, tag=f"{sl.sid}/плашки")
 
 
+# ════════════════════════════════════════════════════════════════════
+# ВСТУПЛЕНИЕ `vstuplenie:` — описание решаемой задачи НАД полосой плашек
+# ════════════════════════════════════════════════════════════════════
+# Замечание владельца по Разделу 1 (issue #317, разнарядка
+# `rework/zamechaniya-chast1-postanovka.md` §5): разбор начинается полосой
+# чисел, а что это за система и какую задачу она решает — не сказано нигде.
+# Студент не знает, что такое AEGIS, SPOC, COROB-X или LeoLabs, и по
+# названию не догадается. Подвальный блок «Что переехало / Честный пробел»
+# с кадра снят; на его место сверху встаёт описание задачи.
+#
+# ПОЧЕМУ НОВОЕ ПОЛЕ, А НЕ РАСШИРЕНИЕ ВЕТКИ `pure_table`. Сборщик рисует тело
+# кадра НАД содержимым только для кадров-только-таблиц (ветка ниже в
+# `content()`). Расширить то же условие на тип `case_study` было бы дешевле
+# на одну строку — и перевернуло бы тело у ВСЕХ ТРИНАДЦАТИ разборов деки
+# разом, включая девять в Разделах 2-4, которых эта задача не касается и у
+# которых тело — комментарий к уже увиденному («Что переехало»), а не
+# вступление. Отдельное поле включается покадрово: кадр, который его не
+# объявил, рисуется ровно как прежде.
+VST_PT = 16.0                 # ступенью выше тела (15 пт) — читается первым
+VST_LS = 1.24
+VST_H_MAX = 1.35              # потолок: три строки на всю ширину кадра
+
+
+def draw_vstuplenie(s, sl, text, y, w, bot):
+    """Описание решаемой задачи под заголовком — БЕЗ коробки мотива.
+
+    Коробка здесь была бы повторением снятого подвала: серая плашка на всю
+    ширину, из-за которой владелец этот блок и убрал снизу. Вступление —
+    простой текст, читаемый как продолжение заголовка."""
+    tag = f"{sl.sid}/вступление"
+    floor.pt(VST_PT, tag, "вступление")
+    runs = markup.inline_runs(text, VST_PT, DEEP)
+    budget = max(0.40, min(VST_H_MAX, (bot - y) * 0.40))
+    metrics.fit_runs(runs, w - 0.08, budget, ls=VST_LS, tag=tag,
+                     proj_base=VST_PT)
+    floor.check_runs(runs, tag, "вступление")
+    h = metrics.runs_h(runs, w - 0.08, VST_LS)
+    prims.text_runs(s, MX + 0.04, y, w - 0.08, h, runs, ls=VST_LS, tag=tag)
+    return h
+
+
+# ════════════════════════════════════════════════════════════════════
+# ФОРМА «ЦИКЛ» `tsikl:` — замкнутый контур решения и действующее лицо
+# снаружи либо внутри него
+# ════════════════════════════════════════════════════════════════════
+# Заказ владельца (issue #317, разнарядка §2.2): на кадре, открывающем
+# стадию, вместо полосы плашек — схема «измерение → данные → решение» с
+# ОБЯЗАТЕЛЬНОЙ стрелкой возврата и человеком СНАРУЖИ контура. Тот же узор с
+# переставленным действующим лицом (человек ВНУТРИ) заказан на `s28`
+# «Стадия: телеоперация» — перестановка и несёт смысл обоих разделов.
+#
+# ВЫБОР ПУТИ РЕАЛИЗАЦИИ — три были на столе (разнарядка §2.2), взят второй:
+#
+# 1. Новая форма `scheme: kind: koltso` в ядре `deckkit`. Отклонено: общий
+#    договор формы ядра (мера высоты до рисования · собственный тег находки ·
+#    самопроверка · запись в каталоге форм · прогон по регрессу чужих дек)
+#    — заметная работа ради одного живого вызывающего СЕГОДНЯ: второй кадр
+#    (`s28`) переделывается другой задачей и другой сессией, третий и
+#    четвёртый (`s38`, `s50`) — только кандидаты, решения владельца по ним
+#    нет. Ровно то, от чего предостерегает сам каталог форм: «код, который
+#    никто не зовёт». Путь остаётся открытым: когда форму попросит ВТОРАЯ
+#    дека, эта функция переносится в ядро как есть.
+# 2. Собственная геометрия в сборщике деки — ВЗЯТО. Прецедент в этой же
+#    деке и не один: `draw_sroki_s02` (полосы сроков) и `draw_s03_rings`
+#    (кольца вокруг Земли) нарисованы здесь же по той же причине. И это
+#    прямо то, что `deckkit/README.md` оставляет за декой: «раскладка кадра
+#    — дело деки, не ядра».
+# 3. Приближение через существующий `arhitektura:` (три бокса вход/работа/
+#    выход). Отклонено по существу, а не по цене: эта форма не рисует ни
+#    стрелку возврата, ни действующее лицо вне контура — то есть не
+#    утверждает ровно того, ради чего кадр и делается.
+#
+# ФОРМА ПОЛЕМ, А НЕ НОМЕРОМ КАДРА: функция ниже не знает ни одного `sid` и
+# включается объявлением `tsikl:` во фронтматтере — `s28` переделывается
+# добавлением поля, без правки сборщика.
+#
+# Контракт фронтматтера:
+#
+#     tsikl:
+#       shagi:                       # ровно три; меньше — не контур, больше
+#         - head: "Измерение"        #   не читается с задних рядов
+#           lines: ["камеры, LIDAR", "все на борту самой машины"]
+#         - {head: "Данные",  lines: [...]}
+#         - {head: "Решение", lines: [...]}
+#       vozvrat: "результат меняет окружение — это и есть следующее измерение"
+#       chelovek:
+#         gde: "snaruzhi"            # или "vnutri" — положение несёт смысл
+#         head: "Человек"
+#         lines: ["настраивает до начала", "читает результат после"]
+_TS_SHAGOV = 3                 # ровно три шага: контур из двух не читается
+_TS_HEAD_PT = 17.0
+_TS_LINE_PT = 15.0             # пол видимого слоя деки
+_TS_LAB_PT = 15.0
+_TS_PAD = 0.16                 # поле внутри узла
+_TS_GAPA = 0.56                # просвет между узлами — в нём стоит стрелка
+_TS_ARROW_W, _TS_ARROW_H = 0.40, 0.26
+_TS_BAR = 0.035                # толщина линии возврата
+_TS_LEAD = 0.30                # просвет между человеком и рядом узлов
+_TS_RET = 0.34                 # глубина, на которую возврат опускается
+
+
+def _ts_box_h(head, lines, iw):
+    h = metrics.est_h(head, _TS_HEAD_PT, iw, 1.10, True) + 0.06
+    for ln in lines:
+        h += metrics.est_h(ln, _TS_LINE_PT, iw, 1.16) + 0.03
+    return h + 2 * _TS_PAD
+
+
+def _ts_draw_box(s, x, y, w, h, head, lines, tag, *, fill=SURFACE):
+    prims.ocean_box(s, x, y, w, h, fill=fill)
+    iw = w - 2 * _TS_PAD
+    yy = y + _TS_PAD
+    hh = metrics.est_h(head, _TS_HEAD_PT, iw, 1.10, True)
+    prims.text_box(s, x + _TS_PAD, yy, iw, hh, head, size=_TS_HEAD_PT,
+                   bold=True, color=DEEP, ls=1.10, tag=f"{tag}/шапка")
+    yy += hh + 0.06
+    for ln in lines:
+        lh = metrics.est_h(ln, _TS_LINE_PT, iw, 1.16)
+        prims.text_box(s, x + _TS_PAD, yy, iw, lh, ln, size=_TS_LINE_PT,
+                       color=MID, ls=1.16, tag=f"{tag}/строка")
+        yy += lh + 0.03
+
+
+def _ts_read(sl):
+    """`tsikl:` → разобранный словарь либо None. Незнакомый ключ и неверное
+    число шагов — находка, а не молчаливый пропуск."""
+    d = sl.meta.get("tsikl")
+    if not d:
+        return None
+    if not isinstance(d, dict):
+        report.warn(f"[цикл] {sl.sid}: поле `tsikl` — не словарь")
+        return None
+    unknown = set(d) - {"shagi", "vozvrat", "chelovek"}
+    if unknown:
+        report.warn(f"[цикл] {sl.sid}: незнакомые ключи — "
+                    + ", ".join(sorted(unknown)))
+    shagi = d.get("shagi") or []
+    if len(shagi) != _TS_SHAGOV:
+        report.warn(f"[цикл] {sl.sid}: шагов {len(shagi)}, а форма держит "
+                    f"ровно {_TS_SHAGOV} — контур из другого числа узлов "
+                    "не читается с задних рядов")
+        return None
+    for b in shagi:
+        if not b.get("head") or not b.get("lines"):
+            report.warn(f"[цикл] {sl.sid}: у шага нет `head` либо `lines` — "
+                        "пустой узел превращает контур в чужую форму")
+            return None
+    ch = d.get("chelovek") or {}
+    gde = str(ch.get("gde") or "snaruzhi")
+    if gde not in ("snaruzhi", "vnutri"):
+        report.warn(f"[цикл] {sl.sid}: `chelovek.gde` = «{gde}» — "
+                    "известны только «snaruzhi» и «vnutri»")
+        gde = "snaruzhi"
+    return {"shagi": shagi, "vozvrat": str(d.get("vozvrat") or "").strip(),
+            "chelovek": ch, "gde": gde}
+
+
+def draw_tsikl(s, sl, y, w, bot, img):
+    """Замкнутый контур «измерение → данные → решение» + возврат + человек.
+
+    Возвращает низ нарисованного. Боковой снимок (если у кадра объявлен
+    `media:` и он не hero) занимает правую колонку и рисуется ЗДЕСЬ, а не
+    общим путём `content()`: общий путь кладёт снимок ПОД всё содержимое, то
+    есть в щель высотой в палец, а на этом кадре снимок — вторая половина
+    утверждения («вот та самая машина, которая действует без диспетчера»)."""
+    d = _ts_read(sl)
+    if d is None:
+        return y
+    tag = f"{sl.sid}/цикл"
+    loop_w, img_box = w, None
+    if img is not None:
+        # 3,50" — не доля ширины, а измеренный предел: при более широкой
+        # колонке снимка узлу контура остаётся внутренняя ширина около
+        # двух дюймов, и строка «камеры-стереопары, LIDAR, инерциальные
+        # датчики» не укладывается на полу кегля ни в сколько строк
+        # (`[ширина]`, первая сборка этого кадра).
+        iw = min(3.50, w * 0.29)
+        loop_w = w - iw - COL_GAP
+        img_box = (MX + loop_w + COL_GAP, iw)
+
+    node_w = (loop_w - (_TS_SHAGOV - 1) * _TS_GAPA) / _TS_SHAGOV
+    inner = node_w - 2 * _TS_PAD
+    node_h = max(_ts_box_h(b["head"], b["lines"], inner) for b in d["shagi"])
+
+    ch = d["chelovek"]
+    ch_lines = list(ch.get("lines") or [])
+    ch_head = str(ch.get("head") or "Человек")
+    # Человек стоит на ширине КОНТУРА без крайних просветов — его рамка не
+    # должна совпадать с рамкой ряда узлов до пикселя, иначе читается как
+    # четвёртый узел, а не как действующее лицо вне цепочки.
+    ch_w = loop_w - 2 * (node_w * 0.18)
+    ch_h = _ts_box_h(ch_head, ch_lines, ch_w - 2 * _TS_PAD)
+
+    lab_h = (metrics.est_h(d["vozvrat"], _TS_LAB_PT, loop_w - 1.2, 1.16,
+                           False, True) if d["vozvrat"] else 0.0)
+    total = ch_h + _TS_LEAD + node_h + _TS_RET + lab_h + 0.10
+    avail = bot - y
+    if total > avail + 0.03:
+        # Тег `[высота]`, а не собственный `[цикл]`: не влезший контур
+        # наезжает на подвал — это ровно то, что остальная дека объявляет
+        # блокирующим, и сторож, не останавливающий сборку, перестаёт быть
+        # сторожем. Первый же прогон этого кадра так и уехал в снимок:
+        # подпись возврата легла поверх источника, а предупреждение
+        # с собственным тегом утонуло среди прочих. Структурные отказы
+        # формы (незнакомый ключ, не три шага) остаются на `[цикл]` —
+        # они до рисования, и кадр от них просто не рисуется.
+        report.warn(f"[высота] {tag}: контур не влезает — {total:.2f}\" при "
+                    f"пределе {avail:.2f}\"; шаги длиннее, чем держит кадр")
+    floor.pt(_TS_LINE_PT, tag, "строка узла")
+    floor.pt(_TS_LAB_PT, tag, "подпись возврата")
+
+    # ── раскладка по вертикали ──
+    if d["gde"] == "snaruzhi":
+        y_ch = y
+        y_nodes = y + ch_h + _TS_LEAD
+        y_ret = y_nodes + node_h + _TS_RET
+    else:
+        # Человек ВНУТРИ контура: между рядом узлов и линией возврата, в
+        # пространстве, которое контур собой замыкает. Узор тот же, смысл
+        # обратный — и это единственное, чем два кадра различаются.
+        y_ch = y + node_h + _TS_LEAD * 0.7
+        y_nodes = y
+        y_ret = y_ch + ch_h + _TS_LEAD * 0.7
+
+    xs = [MX + i * (node_w + _TS_GAPA) for i in range(_TS_SHAGOV)]
+    for i, b in enumerate(d["shagi"]):
+        _ts_draw_box(s, xs[i], y_nodes, node_w, node_h, b["head"],
+                     b["lines"], f"{tag}/{i + 1}")
+        if i < _TS_SHAGOV - 1:
+            ax = xs[i] + node_w + (_TS_GAPA - _TS_ARROW_W) / 2
+            prims.arrow(s, ax, y_nodes + node_h / 2 - _TS_ARROW_H / 2,
+                        _TS_ARROW_W, _TS_ARROW_H, MID)
+
+    # ── возврат: вниз от решения, влево под рядом, вверх в измерение ──
+    x_first, x_last = xs[0] + node_w / 2, xs[-1] + node_w / 2
+    node_bot = y_nodes + node_h
+    prims.rect(s, x_last - _TS_BAR / 2, node_bot, _TS_BAR, y_ret - node_bot,
+               LIGHT, count="возврат")
+    prims.rect(s, x_first, y_ret - _TS_BAR / 2, x_last - x_first, _TS_BAR,
+               LIGHT, count="возврат")
+    up = s.shapes.add_shape(MSO_SHAPE.UP_ARROW, Inches(x_first - 0.13),
+                            Inches(node_bot), Inches(0.26),
+                            Inches(y_ret - node_bot))
+    up.fill.solid()
+    up.fill.fore_color.rgb = LIGHT
+    up.line.fill.background()
+    prims.no_shadow(up)
+    report.PRIM["возврат"] += 1
+    if d["vozvrat"]:
+        prims.text_box(s, x_first + 0.18, y_ret + 0.06, loop_w - 1.2, lab_h,
+                       d["vozvrat"], size=_TS_LAB_PT, italic=True, color=LIGHT,
+                       ls=1.16, tag=f"{tag}/возврат")
+
+    # ── человек и две связи с контуром ──
+    x_ch = MX + (loop_w - ch_w) / 2
+    _ts_draw_box(s, x_ch, y_ch, ch_w, ch_h, ch_head, ch_lines, f"{tag}/человек",
+                 fill=WHITE)
+    # Две связи человека с контуром, и направление у них РАЗНОЕ: вниз, в
+    # первый шаг — настройка до начала работы; вверх, из последнего — чтение
+    # результата после. Одинаковыми стрелками это читалось бы как участие в
+    # цикле, то есть ровно наоборот тому, что кадр утверждает.
+    if d["gde"] == "snaruzhi":
+        y_lead, h_lead = y_ch + ch_h, _TS_LEAD
+    else:
+        y_lead, h_lead = y_ch - _TS_LEAD * 0.7, _TS_LEAD * 0.7
+    for shape, x_at in ((MSO_SHAPE.DOWN_ARROW if d["gde"] == "snaruzhi"
+                         else MSO_SHAPE.UP_ARROW, x_first),
+                        (MSO_SHAPE.UP_ARROW if d["gde"] == "snaruzhi"
+                         else MSO_SHAPE.DOWN_ARROW, x_last)):
+        a = s.shapes.add_shape(shape, Inches(x_at - 0.13), Inches(y_lead),
+                               Inches(0.26), Inches(h_lead))
+        a.fill.solid()
+        a.fill.fore_color.rgb = TEAL
+        a.line.fill.background()
+        prims.no_shadow(a)
+        report.PRIM["выноска"] += 1
+
+    bottom = y_ret + lab_h + 0.06
+    if img_box is not None:
+        bx, bw = img_box
+        mw, mh = media.media_box_size(media.img_ar(img, sl.sid) or 1.4, bw,
+                                      bottom - y)
+        media.draw_media(s, sl.sid, img, bx + (bw - mw) / 2,
+                         y + (bottom - y - mh) / 2, mw, mh)
+    return bottom
+
+
 def heading(s, sl, width=None, color=DEEP):
     """Заголовок кадра — лестницей (`deckkit.titles`), с `headline_number`
     (s08/s61/s64 этой деки) там, где он объявлен и непуст."""
@@ -803,7 +1090,14 @@ def heading(s, sl, width=None, color=DEEP):
 def source_runs(sl):
     src = str(sl.meta.get("source") or "").strip()
     cap = str(sl.meta.get("media_caption") or "").strip()
-    if cap and (sl.meta.get("media_hero") or sl.meta.get("media_document")):
+    # Подпись снимка уходит в подвал ВСЕГДА, когда объявлена, — не только у
+    # hero-кадров. Прежнее условие (`media_hero or media_document`) было
+    # описанием факта, а не правилом: все тринадцать кадров деки с
+    # `media_caption` оказались hero, и ограничение ничего не отсекало.
+    # Фаза #317, Раздел 1: подпись понадобилась боковому снимку `s15`
+    # (марсоход у схемы цикла), который hero не является и не станет —
+    # половину кадра там держит сама схема.
+    if cap:
         src = f"{src} · {cap}" if src and src != "—" else cap
     if not src or src == "—":
         return []
@@ -869,7 +1163,8 @@ def check_prims(sl, kind):
     for f, name in (("blocks", "плашки"), ("scheme", "схема"),
                     ("columns", "столбцы"), ("table", "таблица"),
                     ("matrix_empty", "матрица"), ("polosy", "полосы"),
-                    ("arhitektura", "архитектура"), ("timeline", "таймлайн")):
+                    ("arhitektura", "архитектура"), ("timeline", "таймлайн"),
+                    ("tsikl", "цикл"), ("vstuplenie", "вступление")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
@@ -1167,6 +1462,22 @@ def content(p, sl, root):
     if not is_content:
         check_prims(sl, str(sl.meta.get("type") or "?"))
 
+    # Вступление — описание решаемой задачи, ДО полосы чисел (см. докстринг
+    # `draw_vstuplenie`). Кадр, не объявивший поля, идёт прежним путём.
+    vst = str(sl.meta.get("vstuplenie") or "").strip() if is_content else ""
+    if vst:
+        y += draw_vstuplenie(s, sl, vst, y, body_w_top, col_bot) + GAP
+
+    # Замкнутый контур `tsikl:` — рисует кадр ЦЕЛИКОМ (включая свой боковой
+    # снимок) и выходит досрочно, тем же приёмом, что `draw_s03_rings` выше:
+    # плашки/схема/столбцы/таблица общего пути ниже на таком кадре не стоят,
+    # а боковой снимок общему пути пришлось бы класть под контуром, в щель.
+    if is_content and sl.meta.get("tsikl"):
+        draw_tsikl(s, sl, y, FULL_W, col_bot, img)
+        gold_tick(s, sl.sid, MX, sl.tick_y or (TITLE_Y + 0.98))
+        footer(s, sl)
+        return s
+
     # `polosy:` (форма №21, см. docstring `POLOSY` выше) вместо плашек —
     # НЕ рядом с ними: на кадре, который объявил `polosy`, поле `blocks`
     # не стоит (сверено на `s19` при написании этой правки), и разбор
@@ -1325,6 +1636,24 @@ def content(p, sl, root):
     # Боковая (НЕ hero) иллюстрация — только теперь, рядом с оставшимся
     # телом-рассказом, а не рядом с плашками/схемой/таблицей выше.
     body_w, media_bot, draw_img = body_w_top, 0.0, None
+    # Порог 0,75" — граница между «маленький» и «сломанный», не между
+    # «маленький» и «хороший». Коробка мотива держит поле 0,3" с каждой
+    # стороны: ниже 0,6" от снимка не остаётся ничего, а на остатке
+    # близком к нулю `media_box_size` возвращает отрицательную высоту и
+    # снимок уезжает за нижнюю грань тела прямо на подвал. Найдено на
+    # `s20` после того, как подвальный блок ушёл с разборов (#317,
+    # Раздел 1, задача 4): тело кончилось, остаток под плашками стал почти
+    # нулевым, и прежний код всё равно честно пытался что-то нарисовать.
+    # Выше порога сторож молчит СОЗНАТЕЛЬНО: «снимок мелковат» — суждение
+    # о кадре, и решать его за кадры, которых эта задача не касается
+    # (`s32` Раздела 2 идёт ровно по этой границе, 1,05"), сторож не
+    # вправе.
+    if not hero and img and (col_bot - y) < 0.75:
+        report.warn(f"[высота] {sl.sid}/снимок: под боковую иллюстрацию "
+                    f"осталось {col_bot - y:.2f}\" — это меньше, чем нужно "
+                    "коробке мотива; снимок не рисуется. Либо кадру нечего "
+                    "отдать снимку, либо снимок здесь лишний")
+        img = None
     if not hero and img:
         mw, mh = media.media_box_size(
             media.img_ar(img, sl.sid), sl.media_w or MEDIA_W,

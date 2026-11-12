@@ -154,7 +154,7 @@ title: "Карта слайдов — Семинар 10"
 | `n76` | `content` | Что видно Ольге и что — обратившемуся | 1 |
 | `n76a` | `criteria_checklist_and_boundary` | Хранение и индексация: когда сканов не тридцать | 0,75 |
 | `n76b` | `criteria_checklist_and_boundary` | Слияние сигналов на картинках: замер на тридцати сканах | 0,75 |
-| `n76c` | `criteria_checklist_and_boundary` | Локальная модель без каталога провайдера | 0,5 |
+| `n76c` | `criteria_checklist_and_boundary` | Два кандидата прямого сравнения картинок | 0,5 |
 | `n76d` | `criteria_checklist_and_boundary` | Когда прямое сравнение картинок нужно и когда нет | 0,75 |
 
 ## Блок 2 — Релевантно ≠ верно — Google AI Overviews и чат-бот NYC MyCity (4,5 мин, 4 слайда)

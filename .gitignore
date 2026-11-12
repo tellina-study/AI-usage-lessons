@@ -58,6 +58,12 @@ library/seminars/*/stend/measure/corpus_case*.json
 library/seminars/*/stend/measure/case*-results.json
 library/seminars/*/stend/measure/*_execution.json
 library/seminars/*/stend/measure/case4_local_*_results_raw.json
+library/seminars/*/stend/measure/case4_quality_limits_*_raw.json
+library/seminars/*/stend/measure/case4_quality_limits_*_ckpt.json
+library/seminars/*/stend/measure/case4_quality_limits_*.log
+library/seminars/*/stend/measure/case4_fusion_raw.json
+library/seminars/*/stend/measure/case4_fusion_ckpt.json
+library/seminars/*/stend/measure/case4_fusion.log
 
 # Local CLIP/SigLIP inference env (issue #311, Кейс 4 локальный мультимодальный замер) —
 # venv + HF model cache, многие сотни МБ — не коммитятся, пересоздаются README-рецептом

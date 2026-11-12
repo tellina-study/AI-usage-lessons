@@ -3,22 +3,22 @@
   "nodes": [
     {
       "id": "trig",
-      "name": "Скан бланка (data URL)",
+      "name": "Запрос-скан + индекс",
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2.2,
       "position": [
-        -220,
+        -480,
         0
       ],
       "webhookId": "s10-case4-mm",
       "parameters": {
         "path": "s10-case4-mm",
-        "formTitle": "С10 · Кейс 4 — мультимодальный эмбеддинг (демо)",
-        "formDescription": "JSON-тело: {model, input: [...]}, как ожидает OpenRouter /embeddings",
+        "formTitle": "С10 · Кейс 4 — поиск по картинке (демо)",
+        "formDescription": "JSON: {query: {label, image}, index: [{label, image}, ...]} — картинки как data URL",
         "formFields": {
           "values": [
             {
-              "fieldLabel": "body",
+              "fieldLabel": "payload",
               "fieldType": "textarea",
               "requiredField": true
             }
@@ -30,12 +30,25 @@
       }
     },
     {
+      "id": "prep",
+      "name": "Тело запроса: nemotron-3.5-embed-1b",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -220,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Рабочая модель Кейса 4: прошла margin-тест (0,593), recall@1 на повороте\n// 0,967 на 30 сканах CORD. Предыдущая (amazon/titan-embed-image-v1) отдавала\n// один и тот же вектор на разные картинки — см. README-part2.md.\nconst MODEL = 'nvidia/nemotron-3.5-embed-1b:free';\nconst payload = JSON.parse($input.first().json.payload);\n// Одним вызовом: сначала вектор запроса, затем векторы индекса — одна модель,\n// один эндпоинт, обе стороны сравнения в одном числовом пространстве.\nconst input = [payload.query.image, ...payload.index.map(s => s.image)];\nreturn [{json: {\n  model: MODEL,\n  labels: {query: payload.query.label, index: payload.index.map(s => s.label)},\n  body: {model: MODEL, input: input},\n}}];"
+      }
+    },
+    {
       "id": "http",
-      "name": "Embed image (amazon/titan-embed-image-v1)",
+      "name": "Эмбеддинги сканов",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        60,
+        40,
         0
       ],
       "parameters": {
@@ -45,14 +58,14 @@
         "nodeCredentialType": "openRouterApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ $json.body }}",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
         "options": {
           "response": {
             "response": {
               "neverError": true
             }
           },
-          "timeout": 60000
+          "timeout": 120000
         }
       },
       "credentials": {
@@ -63,19 +76,32 @@
       }
     },
     {
-      "id": "res",
-      "name": "Result screen",
-      "type": "n8n-nodes-base.form",
-      "typeVersion": 1,
+      "id": "cos",
+      "name": "Косинусное расстояние до индекса",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
         300,
         0
       ],
       "parameters": {
+        "jsCode": "// Косинусное расстояние эмбеддингов — то, что сравнивается в этом кейсе.\n// cos = 1 → векторы совпали по направлению; расстояние = 1 − cos.\nfunction cos(a, b) {\n  let dot = 0, na = 0, nb = 0;\n  for (let i = 0; i < a.length; i++) { dot += a[i]*b[i]; na += a[i]*a[i]; nb += b[i]*b[i]; }\n  return dot / (Math.sqrt(na) * Math.sqrt(nb));\n}\nconst prep = $('Тело запроса: nemotron-3.5-embed-1b').first().json;\nconst resp = $input.first().json;\nif (!resp.data) { throw new Error('эндпоинт не вернул векторы: ' + JSON.stringify(resp).slice(0, 300)); }\nconst vectors = resp.data.map(d => d.embedding);\nconst qvec = vectors[0];                       // вектор запроса\nconst indexVectors = vectors.slice(1);         // векторы проиндексированных сканов\nconst ranked = indexVectors\n  .map((v, i) => { const s = cos(qvec, v); return {label: prep.labels.index[i], similarity: s, distance: 1 - s}; })\n  .sort((a, b) => b.similarity - a.similarity);\nconst best = ranked[0];\nconst margin = ranked.length > 1 ? best.similarity - ranked[1].similarity : null;\nconst lines = ranked.map((r, i) => `${i + 1}. ${r.label} — сходство ${r.similarity.toFixed(4)}, расстояние ${r.distance.toFixed(4)}`);\nconst summary = `Запрос: ${prep.labels.query}\\n`\n  + `Модель: ${prep.model}; длина вектора: ${qvec.length} чисел\\n`\n  + `Сравниваем: косинусное расстояние вектора запроса до векторов ${ranked.length} проиндексированных сканов\\n\\n`\n  + `Ближайший: ${best.label}\\n`\n  + `  сходство ${best.similarity.toFixed(4)}, расстояние ${best.distance.toFixed(4)}\\n`\n  + (margin === null ? '' : `  отрыв от второго: ${margin.toFixed(4)}\\n`)\n  + `\\nВся выдача по убыванию сходства:\\n${lines.join('\\n')}`;\nreturn [{json: {query: prep.labels.query, model: prep.model, dim: qvec.length,\n  best_label: best.label, best_similarity: best.similarity, best_distance: best.distance,\n  margin: margin, ranking: ranked, summary: summary}}];"
+      }
+    },
+    {
+      "id": "res",
+      "name": "Result screen",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        560,
+        0
+      ],
+      "parameters": {
         "operation": "completion",
         "respondWith": "text",
-        "completionTitle": "Готово",
-        "completionMessage": "ok",
+        "completionTitle": "Ближайший скан",
+        "completionMessage": "={{ $json.summary }}",
         "options": {
           "appendAttribution": false
         }
@@ -83,18 +109,40 @@
     }
   ],
   "connections": {
-    "Скан бланка (data URL)": {
+    "Запрос-скан + индекс": {
       "main": [
         [
           {
-            "node": "Embed image (amazon/titan-embed-image-v1)",
+            "node": "Тело запроса: nemotron-3.5-embed-1b",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Embed image (amazon/titan-embed-image-v1)": {
+    "Тело запроса: nemotron-3.5-embed-1b": {
+      "main": [
+        [
+          {
+            "node": "Эмбеддинги сканов",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Эмбеддинги сканов": {
+      "main": [
+        [
+          {
+            "node": "Косинусное расстояние до индекса",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Косинусное расстояние до индекса": {
       "main": [
         [
           {

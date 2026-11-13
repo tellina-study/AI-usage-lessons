@@ -289,31 +289,76 @@ STRINGS = {
     "«отвечает без ошибки» ≠ «использует вход» — проверено подачей двух разных входов":
         "‘answers with no error’ ≠ ‘uses the input’ — verified by feeding it two different inputs",
 
-    # ── case4-shema-postanovka.png ──────────────────────────────────────────
-    "Где в потоке поиска встанет сравнение самой картинки":
-        "Where in the search flow comparing the image itself will sit",
-    "подпись и текстовый поиск уже работают — вопрос в том, можно ли пропустить":
-        "captioning and text search already work — the question is whether it's possible to skip",
-    "шаг «превратить картинку в текст» и сравнивать саму картинку":
-        "the step ‘turn the picture into text’ and compare the picture itself",
-    "Скан бланка или чека":
-        "Scan of a form or receipt",
-    "в заявке Ольге":
-        "in a request to Olga",
-    "Подпись: OCR → текст":
-        "Caption: OCR → text",
-    "картинка пересказана словами":
-        "the picture retold in words",
-    "Текстовый поиск находит похожий":
-        "Text search finds a similar one",
+    # ── case4-shema-postanovka.png (перерисована 2026-11-12, issue #311:
+    # кейс переписан с «подписать картинку словами» на прямое сравнение
+    # изображений, и прежние строки схемы сняты вместе с прежними узлами) ──
+    "Где в потоке поиска встанет сравнение самих изображений":
+        "Where in the search flow comparing the images themselves will sit",
+    "хранилище и поиск уже собраны сегодня — вопрос в том, что класть в хранилище,":
+        "the vector store and the search are already built today — the question is what goes "
+        "into the store",
+    "когда документ не текст, а картинка":
+        "when the document is not text but a picture",
+    "Скан приходит в заявке":
+        "A scan arrives in a request",
+    "бланк или чек у Ольги":
+        "a form or a receipt at Olga’s",
+    "Хранилище":
+        "Vector store",
+    "собрано Кейсом 1 этого занятия":
+        "built by Case 1 of this session",
+    "Поиск находит похожее":
+        "Search finds something similar",
     "Кейсы 1–3 этого занятия":
         "Cases 1–3 of this session",
-    "Пробуем сегодня:":
-        "Trying today:",
-    "сравнивать саму картинку в её числовом представлении":
-        "comparing the image itself in its numeric representation",
-    "— без шага «превратить в текст»":
-        "— without the step ‘turn it into text’",
+    "Делаем сегодня:":
+        "Doing today:",
+    "сравнивать сами изображения в их числовом представлении":
+        "comparing the images themselves in their numeric representation",
+    "— минуя пересказ картинки словами":
+        "— bypassing any retelling of the picture in words",
+
+    # ── case4-edinoe-prostranstvo.png (новая схема, issue #311) ─────────────
+    "Одна модель, одно числовое пространство, одно сравнение":
+        "One model, one numeric space, one comparison",
+    "картинку и подпись к ней считает одна и та же модель — поэтому их числовые":
+        "the picture and its caption are computed by one and the same model — so their numeric",
+    "ряды лежат в одном пространстве и сравнимы между собой напрямую":
+        "rows lie in one space and are directly comparable with each other",
+    "Скан чека":
+        "Receipt scan",
+    "пиксели":
+        "pixels",
+    "Подпись к чеку":
+        "Caption of the receipt",
+    "слова":
+        "words",
+    "Одна модель":
+        "One model",
+    "Вектор картинки":
+        "Image vector",
+    "Вектор подписи":
+        "Caption vector",
+    "одно числовое пространство":
+        "one numeric space",
+    "Косинус":
+        "Cosine",
+    "двух векторов":
+        "of two vectors",
+    "— одно число":
+        "— one number",
+    "Длина вектора":
+        "Vector length",
+    "2048 чисел":
+        "2,048 numbers",
+    "Косинус 1":
+        "Cosine 1",
+    "направления совпали":
+        "the directions coincide",
+    "Расстояние":
+        "Distance",
+    "1 − косинус":
+        "1 − cosine",
 
     # ── shared: N8N_DISCLAIMER (n8n_canvas_kit.py), drawn identically on all
     # four n8n-style schemes (case1/2/3/4-n8n-*-scheme.png) ─────────────────
@@ -466,17 +511,40 @@ BY_FIG = {
     ],
 
     "case4-shema-postanovka.png": [
-        "Где в потоке поиска встанет сравнение самой картинки",
-        "подпись и текстовый поиск уже работают — вопрос в том, можно ли пропустить",
-        "шаг «превратить картинку в текст» и сравнивать саму картинку",
-        "Скан бланка или чека",
-        "в заявке Ольге",
-        "Подпись: OCR → текст",
-        "картинка пересказана словами",
-        "Текстовый поиск находит похожий",
+        "Где в потоке поиска встанет сравнение самих изображений",
+        "хранилище и поиск уже собраны сегодня — вопрос в том, что класть в хранилище,",
+        "когда документ не текст, а картинка",
+        "Скан приходит в заявке",
+        "бланк или чек у Ольги",
+        "Хранилище",
+        "собрано Кейсом 1 этого занятия",
+        "Поиск находит похожее",
         "Кейсы 1–3 этого занятия",
-        "Пробуем сегодня:",
-        "сравнивать саму картинку в её числовом представлении",
-        "— без шага «превратить в текст»",
+        "Делаем сегодня:",
+        "сравнивать сами изображения в их числовом представлении",
+        "— минуя пересказ картинки словами",
+    ],
+
+    "case4-edinoe-prostranstvo.png": [
+        "Одна модель, одно числовое пространство, одно сравнение",
+        "картинку и подпись к ней считает одна и та же модель — поэтому их числовые",
+        "ряды лежат в одном пространстве и сравнимы между собой напрямую",
+        "Скан чека",
+        "пиксели",
+        "Подпись к чеку",
+        "слова",
+        "Одна модель",
+        "Вектор картинки",
+        "Вектор подписи",
+        "одно числовое пространство",
+        "Косинус",
+        "двух векторов",
+        "— одно число",
+        "Длина вектора",
+        "2048 чисел",
+        "Косинус 1",
+        "направления совпали",
+        "Расстояние",
+        "1 − косинус",
     ],
 }

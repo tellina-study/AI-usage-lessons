@@ -10,13 +10,20 @@ LD_LIBRARY_PATH не доживёт, и chromium упадёт с exitCode=127):
 
     source tools/presentation-build/setup_page_shots.sh
     set -a; source /home/harness/.n8n-lab-credentials; set +a
-    python3 library/seminars/sem-10/stend/n8n_shots.py
+    python3 library/seminars/sem-10/stend/n8n_shots.py                  # все 4 кейса
+    python3 library/seminars/sem-10/stend/n8n_shots.py --only case4     # ровно один
 
 Секреты читаются из окружения, в этот файл не вписаны и в вывод не печатаются.
 
 Снимает для всех 4 кейсов Семинара 10:
   - холст воркфлоу (широкий кроп главного пути, без боковых панелей/поповеров)
   - панель параметров (NDV) для 1-2 узлов, несущих механику кейса, в РАЗВЁРНУТОМ виде
+
+`--only` сужает прогон до перечисленных кейсов — кадры остальных остаются как были.
+Кейс 4 переписан 2026-11-12 на рабочую модель, и его новые кадры носят новые имена
+(`case4-canvas-working`, `case4-embed-working-panel`, `case4-cosine-panel`): прежние
+titan-кадры (`case4-canvas.png`, `case4-embed-image-panel.png`) кейсу ещё нужны как
+запись не удавшейся попытки и не перезаписываются.
 """
 import os
 import time
@@ -185,44 +192,74 @@ def save_panel(page, node_name, name, what, expand_editor=False):
     close_node_panel(page)
 
 
-def main():
+ALL_CASES = ("case1", "case2", "case3", "case4")
+
+
+def main(cases=ALL_CASES):
+    """Снять кадры для перечисленных кейсов. `cases` сужается флагом `--only`.
+
+    Выключатель заведён 2026-11-12: прогон ради ОДНОГО переписанного кейса не должен
+    перезаснимать (то есть перезаписывать) кадры трёх остальных — они уже отобраны,
+    обрезаны и стоят на слайдах; новый снимок того же холста отличается хотя бы зумом,
+    и фигуры пришлось бы пересобирать без причины.
+    """
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page(viewport=VIEW_CANVAS, device_scale_factor=2)
         login(page)
 
         # --- Кейс 1 — векторное хранилище -------------------------------------------
-        save_canvas(page, WF_CASE1, "case1-canvas",
-                    "Embed query → Simple Vector Store (cosine top-1) → Answer (RAG)")
-        save_panel(page, "Simple Vector Store (cosine top-1)", "case1-vector-store-panel",
-                   "код cosine top-1 по присланным эмбеддингам документов", expand_editor=True)
-        save_panel(page, "Answer (RAG)", "case1-answer-panel",
-                   "промт ответа только по найденному куску")
+        if "case1" in cases:
+            save_canvas(page, WF_CASE1, "case1-canvas",
+                        "Embed query → Simple Vector Store (cosine top-1) → Answer (RAG)")
+            save_panel(page, "Simple Vector Store (cosine top-1)", "case1-vector-store-panel",
+                       "код cosine top-1 по присланным эмбеддингам документов", expand_editor=True)
+            save_panel(page, "Answer (RAG)", "case1-answer-panel",
+                       "промт ответа только по найденному куску")
 
         # --- Кейс 2 — нарезка документа -----------------------------------------------
-        save_canvas(page, WF_CASE2, "case2-canvas",
-                    "Документ → нарезка фикс. размером → нарезка по предложениям → сравнение")
-        save_panel(page, "Нарезка фиксированным размером", "case2-fixed-chunk-panel",
-                   "код нарезки фиксированным размером (порт chunk_fixed)", expand_editor=True)
-        save_panel(page, "Нарезка по границам предложений", "case2-structural-chunk-panel",
-                   "код нарезки по границам предложений (порт chunk_structural)", expand_editor=True)
+        if "case2" in cases:
+            save_canvas(page, WF_CASE2, "case2-canvas",
+                        "Документ → нарезка фикс. размером → нарезка по предложениям → сравнение")
+            save_panel(page, "Нарезка фиксированным размером", "case2-fixed-chunk-panel",
+                       "код нарезки фиксированным размером (порт chunk_fixed)", expand_editor=True)
+            save_panel(page, "Нарезка по границам предложений", "case2-structural-chunk-panel",
+                       "код нарезки по границам предложений (порт chunk_structural)", expand_editor=True)
 
         # --- Кейс 3 — виды поиска + реранкер -------------------------------------------
-        save_canvas(page, WF_CASE3, "case3-canvas",
-                    "keyword → embed query → cosine → RRF fusion → LLM-реранкер → разбор")
-        save_panel(page, "RRF fusion (hybrid)", "case3-rrf-panel",
-                   "код RRF-слияния (k=60) keyword+vector рангов", expand_editor=True)
-        save_panel(page, "LLM-реранкер (gpt-4o-mini)", "case3-reranker-panel",
-                   "тело запроса LLM-реранкера: промт с top-N кандидатами")
+        if "case3" in cases:
+            save_canvas(page, WF_CASE3, "case3-canvas",
+                        "keyword → embed query → cosine → RRF fusion → LLM-реранкер → разбор")
+            save_panel(page, "RRF fusion (hybrid)", "case3-rrf-panel",
+                       "код RRF-слияния (k=60) keyword+vector рангов", expand_editor=True)
+            save_panel(page, "LLM-реранкер (gpt-4o-mini)", "case3-reranker-panel",
+                       "тело запроса LLM-реранкера: промт с top-N кандидатами")
 
         # --- Кейс 4 — мультимодальный эмбеддинг -----------------------------------------
-        save_canvas(page, WF_CASE4, "case4-canvas",
-                    "Скан бланка (data URL) → Embed image (amazon/titan-embed-image-v1)")
-        save_panel(page, "Embed image (amazon/titan-embed-image-v1)", "case4-embed-image-panel",
-                   "настройки HTTP-узла эмбеддинга картинки")
+        # Сценарий переписан 2026-11-12 на РАБОЧУЮ модель + узел сравнения
+        # (sborka.py::case4_multimodal_workflow). Кадры прежнего, titan-холста
+        # (case4-canvas.png / case4-embed-image-panel.png) НЕ перезаписываются: они
+        # остаются записью не удавшейся попытки, которую кейс рассказывает. Новым
+        # кадрам — новые имена.
+        if "case4" in cases:
+            save_canvas(page, WF_CASE4, "case4-canvas-working",
+                        "Запрос-скан + индекс → Тело запроса: nemotron-3.5-embed-1b → "
+                        "Эмбеддинги сканов → Косинусное расстояние до индекса")
+            save_panel(page, "Тело запроса: nemotron-3.5-embed-1b",
+                       "case4-embed-working-panel",
+                       "имя рабочей модели литералом + сборка тела: запрос и индекс одним вызовом",
+                       expand_editor=True)
+            save_panel(page, "Косинусное расстояние до индекса", "case4-cosine-panel",
+                       "код косинуса: вектор запроса против векторов индекса, ближайший + отрыв",
+                       expand_editor=True)
 
         browser.close()
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--only", nargs="+", choices=ALL_CASES, default=list(ALL_CASES),
+                    metavar="CASE", help=f"снять кадры только этих кейсов, из: {', '.join(ALL_CASES)}")
+    main(tuple(ap.parse_args().only))

@@ -21,19 +21,23 @@
    Это и есть ответ на открытый флаг ARCHITECTURE.md §5/§7 п.5 для Кейса 1.
 
 3. **«С10 · Кейс 4 — мультимодальный эмбеддинг (демо-экран)»** (вебхук `s10-case4-mm`) —
-   HTTP Request → OpenRouter `/embeddings`, вход — картинка (data URL), настоящий вызов.
-   **Модель — `amazon/titan-embed-image-v1`, не `voyage-multimodal-3`**: живой прогон
-   (`stend/measure/debug_mm*.py`) показал, что `voyage-multimodal-3` на этом стенде в
-   каталоге OpenRouter просто не существует (`"Model ... does not exist"`), а
-   `amazon/titan-embed-image-v1` существует, но на реальном разрешении скана (300×450,
-   ~20к символов base64) отдаёт БИТОВО ОДИНАКОВЫЙ вектор для любых двух разных картинок —
-   рабочий диапазон найден вилкой только у маленьких превью (~64×96, ~6-8к символов), и
-   даже там различимость слабая. Подробности и правка плана по факту замера — `README.md`
-   §«Открытый технический риск» и `SETKA-KEYSOV.md` Кейс 4.
+   запрос-скан + небольшой проиндексированный набор сканов (data URL) → один вызов
+   OpenRouter `/embeddings` на РАБОЧЕЙ модели `nvidia/nemotron-3.5-embed-1b:free` →
+   Code-узел считает косинусное расстояние вектора запроса до векторов индекса и выдаёт
+   ближайший. Переписан 2026-11-12: прежний вид (один узел на
+   `amazon/titan-embed-image-v1`, без сравнения) показывал механику, которая не работала —
+   та модель отдавала битово одинаковый вектор на разные картинки
+   (`README-part2.md` §«Кейс 4, доп. проход 2026-11-04»). Подробности выбора формы —
+   докстринг `case4_multimodal_workflow()`.
 
 Usage:
     set -a; source /home/harness/.n8n-lab-credentials; set +a
-    python3 sborka.py --push
+    python3 sborka.py --push                               # все сценарии
+    python3 sborka.py --only case4-multimodal.json --push  # ровно один
+    python3 sborka.py --only case4-multimodal.json         # только перезаписать json, без стенда
+
+`--only` обязателен, когда рядом идёт замер: публикация без него переопределяет и
+`s10-raw-openrouter`, которым в этот момент может считать другой прогон.
 """
 import argparse
 import json
@@ -195,52 +199,166 @@ def case1_vector_workflow():
 
 
 def case4_multimodal_workflow():
-    """Сценарий 3 — демо-экран Кейса 4: мультимодальный эмбеддинг одной картинки."""
+    """Сценарий 3 — демо-экран Кейса 4: прямое сравнение картинок мультимодальным
+    эмбеддингом на РАБОЧЕЙ модели `nvidia/nemotron-3.5-embed-1b:free`.
+
+    Что показывает экран (вся механика кейса целиком, не один вызов):
+    форма принимает запрос-скан и небольшой проиндексированный набор сканов (data URL) →
+    Code-узел собирает тело запроса, где имя модели стоит ЛИТЕРАЛОМ в коде (видно и в
+    подписи узла на холсте, и на панели) → один HTTP Request к
+    `https://openrouter.ai/api/v1/embeddings` переводит ВСЕ картинки в векторы →
+    Code-узел считает косинус вектора запроса до каждого проиндексированного вектора и
+    выдаёт ближайший с отрывом от второго → экран результата называет ближайший скан,
+    сходство, расстояние (1 − сходство) и всю выдачу по убыванию.
+
+    **Почему индекс считается тем же вызовом внутри сценария, а не лежит узлом-константой.**
+    Вектор этой модели — 2048 чисел; пять проиндексированных сканов константой — около
+    200 КБ нечитаемых цифр в Code-узле, то есть кадр, на котором не видно ничего, кроме
+    простыни чисел. Считать индекс тем же вызовом честнее на кадре по трём причинам:
+    (1) видно, что обе стороны сравнения получены ОДНОЙ моделью и ОДНИМ эндпоинтом — это
+    и есть то, что кейс обязан показать; (2) ни одна часть экрана не «подготовлена
+    заранее» в смысле «посчитана где-то не здесь»; (3) на панели узла сравнения видно сам
+    косинус, а не результат чужого счёта. Чего эта форма НЕ показывает и что названо
+    прямо: в работе индекс считают один раз и хранят в векторной базе, а не пересчитывают
+    на каждый запрос — демо-экран жертвует этим ради видимости механики.
+
+    **Это демо-экран механики, а не замер** — ровно в том же смысле, что демо-экраны
+    Кейсов 2/3. Числа Кейса 4 живут в `raw/case4_mm_full_retrieval.json` и
+    `raw/case4_working_mm_results.json` (30 сканов CORD, три независимые части A/B/C,
+    `measure/case4_full_retrieval_30.py`) и ЭТИМ СЦЕНАРИЕМ НЕ ПЕРЕСЧИТЫВАЮТСЯ: здесь
+    индекс из 3–5 сканов, там — все 30; здесь один запрос, там 30 запросов на каждую
+    часть. Прогон этого сценария — `measure/trigger_case4_mm.py`, протокол живого
+    выполнения — `raw/case4_mm_working_execution.json`.
+
+    Прежний вид сценария (один узел `Embed image (amazon/titan-embed-image-v1)`, без
+    сравнения) переписан 2026-11-12: та модель отдавала битово одинаковый вектор на разные
+    картинки, то есть демо-экран показывал механику, которая на самом деле не работала
+    (`README-part2.md` §«Кейс 4, доп. проход 2026-11-04»). Скрины того холста
+    (`n8n-screenshots-raw/case4-canvas.png`, `case4-embed-image-panel.png`) НЕ удалены —
+    они остаются записью не удавшейся попытки, которую кейс рассказывает.
+    """
     webhook_id = "s10-case4-mm"
+    model_id = "nvidia/nemotron-3.5-embed-1b:free"
+    # Подписи узлов держатся в пределах того, что холст n8n ПОКАЗЫВАЕТ, а не обрезает:
+    # метка узла — две строки примерно по 22 знака, длинный неразрывный токен не
+    # переносится, а срезается многоточием. Замерено снимком 2026-11-12: подпись
+    # «Тело запроса (nvidia/nemotron-3.5-embed-1b:free)» вышла на холст как
+    # «Тело запроса (nvidia/nemotron-3.5-…» — то есть имя модели на кадре пропадало,
+    # а правило курса требует обратного. Отсюда короткий вид имени в подписи; полный
+    # идентификатор с вендором и тарифом стоит литералом в коде узла (виден на панели)
+    # и уходит в тело запроса.
+    model_short = "nemotron-3.5-embed-1b"
+    node_trigger = "Запрос-скан + индекс"
+    node_body = f"Тело запроса: {model_short}"
+    node_http = "Эмбеддинги сканов"
+    node_cos = "Косинусное расстояние до индекса"
     return {
         "name": "С10 · Кейс 4 — мультимодальный эмбеддинг (демо-экран)",
         "nodes": [
             {
-                "id": "trig", "name": "Скан бланка (data URL)",
+                "id": "trig", "name": node_trigger,
                 "type": "n8n-nodes-base.formTrigger", "typeVersion": 2.2,
-                "position": [-220, 0], "webhookId": webhook_id,
+                "position": [-480, 0], "webhookId": webhook_id,
                 "parameters": {
                     "path": webhook_id,
-                    "formTitle": "С10 · Кейс 4 — мультимодальный эмбеддинг (демо)",
-                    "formDescription": "JSON-тело: {model, input: [...]}, как ожидает OpenRouter /embeddings",
+                    "formTitle": "С10 · Кейс 4 — поиск по картинке (демо)",
+                    "formDescription": "JSON: {query: {label, image}, index: [{label, image}, ...]} — "
+                                       "картинки как data URL",
                     "formFields": {"values": [
-                        {"fieldLabel": "body", "fieldType": "textarea", "requiredField": True},
+                        {"fieldLabel": "payload", "fieldType": "textarea", "requiredField": True},
                     ]},
                     "options": {"appendAttribution": False}},
             },
             {
-                "id": "http", "name": "Embed image (amazon/titan-embed-image-v1)",
+                "id": "prep", "name": node_body,
+                "type": "n8n-nodes-base.code", "typeVersion": 2,
+                "position": [-220, 0],
+                "parameters": {
+                    "jsCode": (
+                        "// Рабочая модель Кейса 4: прошла margin-тест (0,593), recall@1 на повороте\n"
+                        "// 0,967 на 30 сканах CORD. Предыдущая (amazon/titan-embed-image-v1) отдавала\n"
+                        "// один и тот же вектор на разные картинки — см. README-part2.md.\n"
+                        "const MODEL = '" + model_id + "';\n"
+                        "const payload = JSON.parse($input.first().json.payload);\n"
+                        "// Одним вызовом: сначала вектор запроса, затем векторы индекса — одна модель,\n"
+                        "// один эндпоинт, обе стороны сравнения в одном числовом пространстве.\n"
+                        "const input = [payload.query.image, ...payload.index.map(s => s.image)];\n"
+                        "return [{json: {\n"
+                        "  model: MODEL,\n"
+                        "  labels: {query: payload.query.label, index: payload.index.map(s => s.label)},\n"
+                        "  body: {model: MODEL, input: input},\n"
+                        "}}];"
+                    ),
+                },
+            },
+            {
+                "id": "http", "name": node_http,
                 "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2,
-                "position": [60, 0],
+                "position": [40, 0],
                 "parameters": {
                     "method": "POST",
                     "url": "https://openrouter.ai/api/v1/embeddings",
                     "authentication": "predefinedCredentialType",
                     "nodeCredentialType": "openRouterApi",
                     "sendBody": True, "specifyBody": "json",
-                    "jsonBody": "={{ $json.body }}",
-                    "options": {"response": {"response": {"neverError": True}}, "timeout": 60000},
+                    "jsonBody": "={{ JSON.stringify($json.body) }}",
+                    "options": {"response": {"response": {"neverError": True}}, "timeout": 120000},
                 },
                 "credentials": OPENROUTER_CRED,
             },
             {
-                "id": "res", "name": "Result screen",
-                "type": "n8n-nodes-base.form", "typeVersion": 1,
+                "id": "cos", "name": node_cos,
+                "type": "n8n-nodes-base.code", "typeVersion": 2,
                 "position": [300, 0],
                 "parameters": {
+                    "jsCode": (
+                        "// Косинусное расстояние эмбеддингов — то, что сравнивается в этом кейсе.\n"
+                        "// cos = 1 → векторы совпали по направлению; расстояние = 1 − cos.\n"
+                        "function cos(a, b) {\n"
+                        "  let dot = 0, na = 0, nb = 0;\n"
+                        "  for (let i = 0; i < a.length; i++) { dot += a[i]*b[i]; na += a[i]*a[i]; nb += b[i]*b[i]; }\n"
+                        "  return dot / (Math.sqrt(na) * Math.sqrt(nb));\n"
+                        "}\n"
+                        "const prep = $('" + node_body + "').first().json;\n"
+                        "const resp = $input.first().json;\n"
+                        "if (!resp.data) { throw new Error('эндпоинт не вернул векторы: ' + JSON.stringify(resp).slice(0, 300)); }\n"
+                        "const vectors = resp.data.map(d => d.embedding);\n"
+                        "const qvec = vectors[0];                       // вектор запроса\n"
+                        "const indexVectors = vectors.slice(1);         // векторы проиндексированных сканов\n"
+                        "const ranked = indexVectors\n"
+                        "  .map((v, i) => { const s = cos(qvec, v); return {label: prep.labels.index[i], similarity: s, distance: 1 - s}; })\n"
+                        "  .sort((a, b) => b.similarity - a.similarity);\n"
+                        "const best = ranked[0];\n"
+                        "const margin = ranked.length > 1 ? best.similarity - ranked[1].similarity : null;\n"
+                        "const lines = ranked.map((r, i) => `${i + 1}. ${r.label} — сходство ${r.similarity.toFixed(4)}, расстояние ${r.distance.toFixed(4)}`);\n"
+                        "const summary = `Запрос: ${prep.labels.query}\\n`\n"
+                        "  + `Модель: ${prep.model}; длина вектора: ${qvec.length} чисел\\n`\n"
+                        "  + `Сравниваем: косинусное расстояние вектора запроса до векторов ${ranked.length} проиндексированных сканов\\n\\n`\n"
+                        "  + `Ближайший: ${best.label}\\n`\n"
+                        "  + `  сходство ${best.similarity.toFixed(4)}, расстояние ${best.distance.toFixed(4)}\\n`\n"
+                        "  + (margin === null ? '' : `  отрыв от второго: ${margin.toFixed(4)}\\n`)\n"
+                        "  + `\\nВся выдача по убыванию сходства:\\n${lines.join('\\n')}`;\n"
+                        "return [{json: {query: prep.labels.query, model: prep.model, dim: qvec.length,\n"
+                        "  best_label: best.label, best_similarity: best.similarity, best_distance: best.distance,\n"
+                        "  margin: margin, ranking: ranked, summary: summary}}];"
+                    ),
+                },
+            },
+            {
+                "id": "res", "name": "Result screen",
+                "type": "n8n-nodes-base.form", "typeVersion": 1,
+                "position": [560, 0],
+                "parameters": {
                     "operation": "completion", "respondWith": "text",
-                    "completionTitle": "Готово", "completionMessage": "ok",
+                    "completionTitle": "Ближайший скан", "completionMessage": "={{ $json.summary }}",
                     "options": {"appendAttribution": False}},
             },
         ],
         "connections": {
-            "Скан бланка (data URL)": {"main": [[{"node": "Embed image (amazon/titan-embed-image-v1)", "type": "main", "index": 0}]]},
-            "Embed image (amazon/titan-embed-image-v1)": {"main": [[{"node": "Result screen", "type": "main", "index": 0}]]},
+            node_trigger: {"main": [[{"node": node_body, "type": "main", "index": 0}]]},
+            node_body: {"main": [[{"node": node_http, "type": "main", "index": 0}]]},
+            node_http: {"main": [[{"node": node_cos, "type": "main", "index": 0}]]},
+            node_cos: {"main": [[{"node": "Result screen", "type": "main", "index": 0}]]},
         },
         "settings": {"executionOrder": "v1"},
     }
@@ -663,9 +781,24 @@ def api(method, path, body=None):
     return json.loads(raw) if raw else {}
 
 
-def push():
+def _selected(only):
+    """Какие сценарии трогать. `only` — имя файла сценария (`case4-multimodal.json`).
+
+    Флаг заведён 2026-11-12: `--push` без него публикует ВСЕ пять сценариев, а это
+    недопустимо, когда рядом идёт замер через вебхук `s10-raw-openrouter` — публикация
+    переопределила бы сценарий, которым в эту минуту кто-то считает. Правка одного
+    кейса публикуется одним кейсом.
+    """
+    if not only:
+        return WORKFLOWS
+    if only not in WORKFLOWS:
+        raise SystemExit(f"--only {only}: нет такого сценария; есть {', '.join(WORKFLOWS)}")
+    return {only: WORKFLOWS[only]}
+
+
+def push(only=None):
     existing = {w["name"]: w["id"] for w in api("GET", "/workflows?limit=250")["data"]}
-    for fname, builder in WORKFLOWS.items():
+    for fname, builder in _selected(only).items():
         wf = builder()
         (HERE / fname).write_text(json.dumps(wf, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         if wf["name"] in existing:
@@ -679,8 +812,8 @@ def push():
         print("  опубликован")
 
 
-def write_only():
-    for fname, builder in WORKFLOWS.items():
+def write_only(only=None):
+    for fname, builder in _selected(only).items():
         wf = builder()
         (HERE / fname).write_text(json.dumps(wf, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(f"записан {fname}")
@@ -689,10 +822,13 @@ def write_only():
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--push", action="store_true")
+    p.add_argument("--only", metavar="FILE", default=None,
+                   help="публиковать/записывать РОВНО один сценарий по имени его json-файла, "
+                        f"из: {', '.join(WORKFLOWS)}")
     args = p.parse_args()
     if args.push:
         if not API or not KEY:
             raise SystemExit("N8N_API_URL/N8N_API_KEY не заданы — source credentials первым")
-        push()
+        push(args.only)
     else:
-        write_only()
+        write_only(args.only)

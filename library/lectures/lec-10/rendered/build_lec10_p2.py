@@ -1,6 +1,7 @@
 """
-Part 2: s15-s21 + s17 + s16a — Раздел 2 «L2 Робот». 8 слайдов: divider + LaserWeeder +
-price-ladder формы разбора + 4 cases + РФ-параллель.
+Part 2: s15-s21 + s16a + s16b — Раздел 2 «L2 Робот». 9 слайдов: divider (+ фото, issue #340
+Задача 1) + LaserWeeder hero + engineering/AI split (issue #340 Задача 2, новый s16b) +
+price-ladder формы разбора + РФ-параллель + 4 cases.
 """
 
 def build_part2(prs, H):
@@ -17,10 +18,16 @@ def build_part2(prs, H):
     load_speaker_notes, section_divider = H["load_speaker_notes"], H["section_divider"]
 
     # ============ s15 section2 divider — автономная и роботизированная техника в поле ============
+    # Issue #340 Задача 1 — тематическое фото (Tier 1 og:image, deere.com/autonomous-tractor):
+    # John Deere 9RX 640 с навесным орудием, автономный режим, поле. Отдельно от LaserWeeder-
+    # фото на s16/s37 — не дублирует конкретный вендорский кейс, иллюстрирует категорию L2 в целом.
+    divider_img = ASSETS / "photos" / "p15-deere-autonomous-tractor.jpg"
     section_divider(prs, 2, "Раздел 2. Автономная и роботизированная техника в поле",
         "L2 «Робот» — узкая специализация работает; универсальный «autonomous farm robot» банкротится.",
         current_section=2,
-        caption="LaserWeeder working case + РФ-параллель CV vs sensor-fusion · 4 working specialization cases · 3 провала (Monarch, FarmWise, strawberry)")
+        caption="LaserWeeder working case + РФ-параллель CV vs sensor-fusion · 4 working specialization cases · 3 провала (Monarch, FarmWise, strawberry)",
+        image_path=divider_img if divider_img.exists() else None,
+        image_caption="John Deere 9RX — автономный трактор. Источник: deere.com")
     s_last = prs.slides[-1]
     add_speaker_notes(s_last, load_speaker_notes("s15"))
 
@@ -41,12 +48,15 @@ def build_part2(prs, H):
              "Carbon Robotics LaserWeeder G2. Источник: carbonrobotics.com/laserweeder-g2",
              size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
-    # Right: 5 KPI cards — метрики + архитектура + цена FP (данные §2.2 часть 2)
+    # Right: 5 KPI cards — метрики деплоймента + цена FP (данные §2.2 часть 2).
+    # Issue #340 Задача 2: карточка «240 Вт лазер + CNN на 40 млн изображений»
+    # (смешивала механику лазера и CV-модель в одной строке) перенесена на новый
+    # кадр s16b — там инженерная структура и ИИ-часть разведены на два блока.
     kpis = [
         ("250 000 акров", "≈0,028% из 900M акров US ag", GOLD),
         ("15 млрд", "сорняков уничтожено", DEEP),
         ("$1,4 млн / машина", "крупные овощные и органические хозяйства", LIGHT),
-        ("240 Вт лазер", "+ CNN на 40 млн изображений", MID),
+        ("≈150 машин", "развёрнуто в 14 странах", MID),
         ("≈$90-100/акр", "цена FP — оценка по USDA NASS, не прямой источник", TEAL),
     ]
     cy = 1.5
@@ -95,6 +105,96 @@ def build_part2(prs, H):
 
     add_footer(s, "Источники: Carbon Robotics businesswire 2025-02-10 · carbonrobotics.com/laserweeder-g2 · GeekWire 2025 · Western Growers Case Study, март 2024")
     add_speaker_notes(s, load_speaker_notes("s16"))
+
+    # ============ s16b LaserWeeder — инженерная структура vs ИИ-часть (issue #340 Задача 2) ============
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s,
+        "LaserWeeder G2 — механика лазерной штанги и модель распознавания сорняков",
+        size=21)
+
+    col_w = 5.95; col_h = 4.55
+    cy = 1.5
+
+    # LEFT: Engineering / mechanics — Teal-tint (паттерн s17)
+    ocean_box(s, 0.6, cy, col_w, col_h, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 0.8, cy + 0.1, col_w - 0.4, 0.4, "Механика: что двигает и жжёт",
+             size=15, bold=True, color=DEEP)
+    text_box(s, 0.8, cy + 0.52, col_w - 0.4, 0.3, "эту часть можно пощупать",
+             size=11, italic=True, color=TEAL)
+    hr_line(s, 0.8, cy + 0.92, col_w - 0.4, color=TEAL, weight=1.0)
+
+    eng_rows = [
+        ("6,6-60 футов", "модульная штанга (G2, с февраля 2025) — камер больше с шириной"),
+        ("240 Вт", "диодный лазер, water-cooled"),
+        ("25 мс / 1-2 Дж", "импульс — выжигает меристему сорняка"),
+        ("≈25 000/час", "сорняков обработано на одну машину"),
+        ("30-50 кВт", "энергопотребление — экологический след переезжает на электричество"),
+    ]
+    ey = cy + 1.08
+    for big, lbl in eng_rows:
+        text_runs(s, 0.8, ey, col_w - 0.4, 0.5,
+            [{"text": big + " — ", "size": 13, "bold": True, "color": TEAL},
+             {"text": lbl, "size": 11.5, "color": DARK_GREY}],
+            line_spacing=1.1)
+        ey += 0.45
+    text_box(s, 0.8, ey + 0.03, col_w - 0.4, 0.4,
+             "≈5 тонн без буксировщика · эксплуатация (без капекса) ≈$200-400 тыс/год",
+             size=10.5, italic=True, color=DARK_GREY, line_spacing=1.1)
+    ey += 0.52
+    ocean_box(s, 0.8, ey, col_w - 0.8, 0.62, fill=SOFT_GREY, stroke=DARK_GREY, stroke_pt=1.0)
+    text_box(s, 0.93, ey + 0.06, col_w - 1.06, 0.5,
+             "Типичный отказ: пыль на объективе или разряженный источник питания — "
+             "машина простаивает, чинит инженер на поле",
+             size=10.5, italic=True, color=DEEP, line_spacing=1.1)
+
+    # RIGHT: AI / vision model — Gold-tint
+    rx = 6.85
+    ocean_box(s, rx, cy, col_w, col_h, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, rx + 0.2, cy + 0.1, col_w - 0.4, 0.4, "ИИ-часть: что видит и решает",
+             size=15, bold=True, color=DEEP)
+    text_box(s, rx + 0.2, cy + 0.52, col_w - 0.4, 0.3, "эту часть пощупать нельзя",
+             size=11, italic=True, color=GOLD)
+    hr_line(s, rx + 0.2, cy + 0.92, col_w - 0.4, color=GOLD, weight=1.0)
+
+    ai_rows = [
+        ("40 млн", "размеченных изображений в обучающей выборке"),
+        (">100 видов", "культур, которые модель отличает от сорняков"),
+    ]
+    ay = cy + 1.08
+    for big, lbl in ai_rows:
+        text_runs(s, rx + 0.2, ay, col_w - 0.4, 0.5,
+            [{"text": big + " — ", "size": 13, "bold": True, "color": MID},
+             {"text": lbl, "size": 11.5, "color": DARK_GREY}],
+            line_spacing=1.1)
+        ay += 0.45
+    text_box(s, rx + 0.2, ay + 0.02, col_w - 0.4, 0.58,
+             "~80% точность на visually-похожей паре (velvetleaf в сое) — ниже, чем >95% у "
+             "See & Spray на Palmer amaranth в хлопке: другая система, другой сорняк",
+             size=11, color=DARK_GREY, line_spacing=1.1)
+    ay += 0.68
+    ocean_box(s, rx + 0.2, ay, col_w - 0.8, 0.62, fill=SOFT_GREY, stroke=DARK_GREY, stroke_pt=1.0)
+    text_box(s, rx + 0.33, ay + 0.06, col_w - 1.06, 0.5,
+             "Известный сбой: pigweed в шпинате — оба amaranthus, листва в фазе 2-3 "
+             "листьев почти неразличима",
+             size=10.5, italic=True, color=DEEP, line_spacing=1.1)
+    ay += 0.74
+    text_box(s, rx + 0.2, ay, col_w - 0.4, 0.55,
+             "Камера видит в реальном времени; лазер должен навестись, пока машина не "
+             "проехала точку — вендор не публикует задержку сверх длительности импульса",
+             size=10, italic=True, color=DARK_GREY, line_spacing=1.1)
+
+    # Bottom gold strip — pipeline connecting both halves
+    pipe_y = cy + col_h + 0.1
+    ocean_box(s, 0.6, pipe_y, 12.13, 0.72, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    text_box(s, 0.85, pipe_y + 0.08, 11.6, 0.56,
+             "Один проход: камера видит точку → модель классифицирует «культура / сорняк» → "
+             "если сорняк — координаты на лазер → импульс 25 мс выжигает меристему. Отказ бывает "
+             "двух разных типов: механический (пыль, нет питания) и модельный (спутала культуру с сорняком).",
+             size=11, bold=True, italic=True, color=DEEP, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+
+    add_footer(s, "Источники: Carbon Robotics businesswire 2025-02-10 · carbonrobotics.com/laserweeder-g2 · "
+                  "GeekWire 2025 · See & Spray / Palmer amaranth — GrowIWM deep-dive 2024 (другая система, для масштаба)")
+    add_speaker_notes(s, load_speaker_notes("s16b"))
 
     # ============ s16a LaserWeeder — форма разбора: цена ошибок + 2 режима ============
     s = blank(prs); set_slide_bg(s, WHITE)

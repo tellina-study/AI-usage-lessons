@@ -1,6 +1,7 @@
 """
 Part 3: s22-s38 — L3 Животное + L4 Цепочка + Р4-bis Среда + L5 Полка + closing + Q&A.
-17 слайдов.
+18 слайдов (issue #340: +s23c SenseHub engineering/AI split; 4 дивайдера s22/s27/
+s33/s36 получили hero-фото через divider_hero()).
 """
 
 def build_part3(prs, H):
@@ -17,12 +18,55 @@ def build_part3(prs, H):
     load_speaker_notes, section_divider = H["load_speaker_notes"], H["section_divider"]
     disable_shadow = H["disable_shadow"]
     Inches, Pt = H["Inches"], H["Pt"]
+    FONT_HEAD = H["FONT_HEAD"]
+
+    def divider_hero(number, title, frame_phrase, current_section, caption,
+                      image_filename, image_caption, title_size=22):
+        """Section divider с hero-фото справа (issue #340, owner note: добавить
+        иллюстрации на 4 дивайдера — s22/s27/s33/s36). Левая колонка — компактный
+        decorative number + title + frame_phrase; правая — real photo (6-tier
+        acquisition, Wikimedia CC) в ocean box, ≥40% площади слайда, с caption-
+        источником. Caption-строка статистики раздела и progress bar — тот же
+        паттерн и та же позиция, что у plain-дивайдеров (section_divider)."""
+        s = blank(prs); set_slide_bg(s, WHITE)
+
+        # Left column — number (крупный, несёт визуальный вес колонки) + title +
+        # frame_phrase идут сразу друг за другом компактно; единственный зазор —
+        # внизу, перед caption-строкой (а не растянут между title и frame —
+        # см. Visual Mass Balance, «плавающее» пустое пространство).
+        text_box(s, 0.5, 0.3, 4.5, 2.3, str(number),
+                 size=160, bold=True, color=COVER_OUTLINE,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_HEAD, line_spacing=0.9)
+        text_box(s, 0.5, 2.65, 4.5, 0.95, title,
+                 size=title_size, bold=True, color=DEEP, line_spacing=1.15)
+        text_box(s, 0.5, 3.7, 4.5, 1.5, frame_phrase,
+                 size=14.5, italic=True, color=MID, line_spacing=1.25)
+
+        # Right column — hero photo (≥40% площади слайда: 7.383×5.55" ≈ 41.0in²
+        # из 100in² полного кадра 13.333×7.5"; aspect 1.330 ≈ 4:3 источника —
+        # минимальный stretch при cover-crop на этапе подготовки фото).
+        box_x, box_w = 5.15, 7.683
+        ocean_box(s, box_x, 0.35, box_w, 5.75, fill=SURFACE, stroke=LIGHT)
+        p = ASSETS / "photos" / image_filename
+        if p.exists():
+            add_image(s, p, box_x + 0.15, 0.45, w=box_w - 0.3, h=5.55)
+        text_box(s, box_x + 0.15, 6.15, box_w - 0.3, 0.24, image_caption,
+                 size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+
+        # Caption + progress bar
+        text_box(s, 0.6, 6.55, 12.13, 0.35, caption,
+                 size=12, italic=True, color=LIGHT, align=PP_ALIGN.LEFT)
+        add_progress_bar(s, current_section=current_section, y=6.95)
+        return s
 
     # ============ s22 section3 divider — L3 Животное ============
-    section_divider(prs, 3, "Точное животноводство",
+    divider_hero(3, "Точное животноводство",
         "L3 — уровень «животное». Полузакрытая среда + измерения на уровне особи. ИИ работает стабильнее, чем на L1-L2.",
         current_section=3,
-        caption="4 working cases (SenseHub, CattleEye, DeLaval, Birdoo) · 3 анти-хайп урока (Cainthus, tie-stall, Holstein-bias)")
+        caption="4 working cases (SenseHub, CattleEye, DeLaval, Birdoo) · 3 анти-хайп урока (Cainthus, tie-stall, Holstein-bias)",
+        image_filename="p22-cow-eartag-milking-robot.jpg",
+        image_caption="Коровы с ушными бирками у автоматической доильной системы · Wikimedia, CC BY-SA 4.0")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s22"))
 
     # ============ s22a Precision livestock — what stage (D2) ============
@@ -206,6 +250,98 @@ def build_part3(prs, H):
 
     add_footer(s, "Источники: Merck Animal Health 2025; Allflex/sensehub.co.nz pricing 2026; MSU/California dairy economics")
     add_speaker_notes(s, load_speaker_notes("s23"))
+
+    # ============ s23c SenseHub — engineering vs AI split (issue #340, owner note) ============
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s, "SenseHub — ошейник и модель по отдельности", size=24, y=0.3)
+    text_box(s, 0.6, 1.0, 12.13, 0.4,
+             "Теперь разделим это на слои: что в ошейнике — и что в облаке.",
+             size=14, italic=True, color=MID)
+
+    col_w = (12.13 - 0.3) / 2
+    col_h = 4.3
+    col_y = 1.55
+    lx = 0.6
+    rx = lx + col_w + 0.3
+
+    # Left column — «Железо»
+    ocean_box(s, lx, col_y, col_w, col_h, fill=LIGHT_TINT, stroke=LIGHT)
+    ip = ASSETS / "icons" / "radar-96.png"
+    if ip.exists():
+        add_image(s, ip, lx + 0.25, col_y + 0.22, w=0.6, h=0.6)
+    text_box(s, lx + 1.0, col_y + 0.28, col_w - 1.2, 0.5, "Железо — ошейник-сенсор",
+             size=16, bold=True, color=DEEP)
+    text_box(s, lx + 0.3, col_y + 1.0, col_w - 0.6, 0.6,
+             "Акселерометр + температурный датчик + position-tracking — три измеряемых сигнала",
+             size=11.5, color=DEEP, italic=True, line_spacing=1.25)
+
+    ip2 = ASSETS / "icons" / "zap-48.png"
+    if ip2.exists():
+        add_image(s, ip2, lx + 0.3, col_y + 1.72, w=0.4, h=0.4)
+    text_box(s, lx + 0.82, col_y + 1.68, col_w - 1.1, 0.55,
+             "Батарея — 5-7 лет работы без замены",
+             size=12.5, bold=True, color=GOLD, line_spacing=1.2)
+
+    text_box(s, lx + 0.3, col_y + 2.35, col_w - 0.6, 0.85,
+             "Канал передачи данных с фермы в облако — в открытых источниках "
+             "Merck/Allflex не детализирован (честно названный пробел)",
+             size=10.5, color=DARK_GREY, italic=True, line_spacing=1.25)
+
+    ocean_box(s, lx + 0.2, col_y + col_h - 0.95, col_w - 0.4, 0.78, fill=SURFACE, stroke=LIGHT, stroke_pt=1.0)
+    text_box(s, lx + 0.35, col_y + col_h - 0.86, col_w - 0.7, 0.6,
+             "Физически один и тот же сенсор — вне зависимости от того, какой "
+             "алгоритм обрабатывает сигнал дальше",
+             size=10.5, italic=True, color=MID, line_spacing=1.2, anchor=MSO_ANCHOR.MIDDLE)
+
+    # Right column — «Модель»
+    ocean_box(s, rx, col_y, col_w, col_h, fill=TEAL_TINT, stroke=TEAL)
+    ip3 = ASSETS / "icons" / "cpu-96.png"
+    if ip3.exists():
+        add_image(s, ip3, rx + 0.25, col_y + 0.22, w=0.6, h=0.6)
+    text_box(s, rx + 1.0, col_y + 0.28, col_w - 1.2, 0.5, "Модель — облачный ML-конвейер",
+             size=16, bold=True, color=DEEP)
+    text_box(s, rx + 0.3, col_y + 1.0, col_w - 0.6, 0.72,
+             "Обучение на индивидуальном базовом уровне каждой коровы — первые "
+             "недели после установки ошейника",
+             size=11.5, color=DEEP, italic=True, line_spacing=1.25)
+
+    ip4 = ASSETS / "icons" / "layers-48.png"
+    if ip4.exists():
+        add_image(s, ip4, rx + 0.3, col_y + 1.85, w=0.4, h=0.4)
+    text_box(s, rx + 0.82, col_y + 1.80, col_w - 1.1, 0.55,
+             "Сравнение с опорным уровнем стада И конкретной коровы",
+             size=11.5, bold=True, color=TEAL, line_spacing=1.2)
+
+    alerts_row_y = col_y + 2.55
+    text_box(s, rx + 0.3, alerts_row_y, col_w - 0.6, 0.3,
+             "Классификация отклонения в 5 типов алертов:",
+             size=11, bold=True, color=DEEP)
+    alerts5 = ["эструс", "отёл", "хромота", "мастит", "BRD"]
+    aw = (col_w - 0.6 - 4 * 0.08) / 5
+    ax = rx + 0.3
+    for al in alerts5:
+        ocean_box(s, ax, alerts_row_y + 0.35, aw, 0.42, fill=GOLD_TINT, stroke=GOLD)
+        text_box(s, ax, alerts_row_y + 0.35, aw, 0.42, al, size=9, bold=True, color=DEEP,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        ax += aw + 0.08
+
+    ocean_box(s, rx + 0.2, col_y + col_h - 0.95, col_w - 0.4, 0.78, fill=SURFACE, stroke=TEAL, stroke_pt=1.0)
+    text_box(s, rx + 0.35, col_y + col_h - 0.86, col_w - 0.7, 0.6,
+             "Обновляется отдельно от железа — новая версия модели не требует "
+             "замены ошейника на ферме",
+             size=10.5, italic=True, color=TEAL, line_spacing=1.2, anchor=MSO_ANCHOR.MIDDLE)
+
+    # Bottom synthesis band
+    synth_y = col_y + col_h + 0.15
+    ocean_box(s, 0.6, synth_y, 12.13, 0.75, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, synth_y + 0.08, 11.6, 0.6,
+             "Почему это разделение важно: цена ошибки (FP/FN), которую разберём дальше, — "
+             "свойство модели, а не датчика. Тот же ошейник с другим алгоритмом даёт другую экономику.",
+             size=12, bold=True, italic=True, color=DEEP, line_spacing=1.2, anchor=MSO_ANCHOR.MIDDLE)
+
+    add_footer(s, "Источники: Merck Animal Health 2025; SenseHub product info (Allflex/Merck) — "
+                  "транспортный протокол передачи данных не раскрыт в открытых источниках")
+    add_speaker_notes(s, load_speaker_notes("s23c"))
 
     # ============ s23a SenseHub — three regimes + threshold (mandatory form triple) ============
     s = blank(prs); set_slide_bg(s, WHITE)
@@ -416,10 +552,12 @@ def build_part3(prs, H):
     add_speaker_notes(s, load_speaker_notes("s26"))
 
     # ============ s27 section4 divider ============
-    section_divider(prs, 4, "Агрологистика и товарный трейдинг",
+    divider_hero(4, "Агрологистика и товарный трейдинг",
         "L4 — уровень «цепочка». Агентный ИИ лидирует. Результат измеряется в долях процента за минуты, не в сезонах.",
         current_section=4,
-        caption="4 working cases (Cargill CMAX, Tract, Olam, Walmart×Cropin) · 2 провала (USDA, Verra) · РФ-параллель (X5/Магнит/РСХБ)")
+        caption="4 working cases (Cargill CMAX, Tract, Olam, Walmart×Cropin) · 2 провала (USDA, Verra) · РФ-параллель (X5/Магнит/РСХБ)",
+        image_filename="p27-grain-terminal-halifax.jpg",
+        image_caption="Балкер у зернового терминала порта Галифакс · Wikimedia, CC BY 4.0")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s27"))
 
     # ============ s28 Cargill CMAX ============
@@ -647,11 +785,16 @@ def build_part3(prs, H):
     add_speaker_notes(s, load_speaker_notes("s32"))
 
     # ============ s33 section4bis divider — Среда ============
-    # Decorative digit stays plain "4" — "4-bis" as a literal string overflows at 400pt.
-    section_divider(prs, 4, "Инфраструктурные условия: связь, привязка к вендору, регуляторика",
+    # Decorative digit stays plain "4" — "4-bis" as a literal string overflows at 130pt.
+    # Title shortened for divider-card legibility (full assertion — в slides/s33-*.md);
+    # перечень трёх подтем сохранён («связь / вендор / регуляторика»).
+    divider_hero(4, "Инфраструктурные условия: связь, вендор, регуляторика",
         "Сквозной meta-уровень: всё, без чего ни одна ступень не работает.",
         current_section=5,
-        caption="3 sub-блока (связь / vendor lock-in двойная оптика / регуляторика) · 3 анти-ИИ критерия (AP5, AP6, AP7)")
+        caption="3 sub-блока (связь / vendor lock-in двойная оптика / регуляторика) · 3 анти-ИИ критерия (AP5, AP6, AP7)",
+        image_filename="p33-john-deere-starfire-gps.jpg",
+        image_caption="John Deere 8295R со спутниковым приёмником StarFire на крыше кабины · Wikimedia, CC BY-SA 3.0",
+        title_size=20)
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s33"))
 
     # ============ s34 Connectivity + GNSS ============
@@ -814,10 +957,12 @@ def build_part3(prs, H):
     add_speaker_notes(s, load_speaker_notes("s35"))
 
     # ============ s36 section5 divider — Полка ============
-    section_divider(prs, 5, "Управление спросом в розничной цепочке",
+    divider_hero(5, "Управление спросом в розничной цепочке",
         "L5 — уровень «полка». Розничный ИИ зрел + пять анти-ИИ критериев + чек-лист + карьерный ландшафт + замыкание к Plenty.",
         current_section=6,
-        caption="L5 кратко (Walmart, Tesco, X5, Магнит F&R) + 5 критериев + чек-лист + карьера + closing callback")
+        caption="L5 кратко (Walmart, Tesco, X5, Магнит F&R) + 5 критериев + чек-лист + карьера + closing callback",
+        image_filename="p36-supermarket-shelf-aisle.jpg",
+        image_caption="Ряд полок супермаркета Intermarché, Квебек-Сити · Wikimedia, CC BY-SA 4.0")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s36"))
 
     # ============ s37s L5 retail — hero photo + 2×2 grid (D1 Магнит F&R as 4th card) ============

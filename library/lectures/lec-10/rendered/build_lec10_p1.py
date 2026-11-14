@@ -1,6 +1,9 @@
 """
-Part 1: s01-s14 — Раздел 0 (Открытие) + L1 «Поле».
-14 слайдов: hook + cover + lecture-map + glossary + keystone + Р1 divider + 8 content.
+Part 1: s01-s14 (+ s05a/s05b/s07c, issue #340) — Раздел 0 (Открытие) + L1 «Поле».
+20 слайдов: hook + cover + lecture-map + glossary + keystone + 2 обзора отрасли
+(цикл «от поля к полке» + четыре силы, Задача 1) + Р1 divider с реальным фото
+(Задача 2) + 8 content + See & Spray разведён на инженерию (s07a) и ИИ-модель
+(s07c, Задача 3).
 """
 
 def build_part1(prs, H):
@@ -348,15 +351,169 @@ def build_part1_full(prs, H):
 
     add_speaker_notes(s, load_speaker_notes("s05"))
 
+    # ============ s05a — Обзор отрасли: цикл «от поля к полке» (issue #340 Задача 1) ============
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s, "Обзор отрасли — цикл «от поля к полке»", size=22)
+    text_box(s, 0.6, 1.08, 12.13, 0.25,
+             "Лестница уровней — наша линза. Стадии ниже — первичны и существовали до неё",
+             size=11, italic=True, color=MID)
+
+    def stage_row(label, items, y, icon_w=0.34):
+        text_box(s, 0.6, y, 12.13, 0.2, label, size=11, bold=True, color=MID)
+        row_y = y + 0.22
+        n = len(items)
+        bw = (12.13 - (n - 1) * 0.32) / n
+        bx = 0.6
+        for i, (icon, name, gold) in enumerate(items):
+            ocean_box(s, bx, row_y, bw, 0.68,
+                      fill=GOLD_TINT if gold else LIGHT_TINT, stroke=GOLD if gold else LIGHT)
+            ip = ASSETS / "icons" / f"{icon}-48.png"
+            if ip.exists():
+                add_image(s, ip, bx + 0.1, row_y + 0.14, w=icon_w, h=icon_w)
+            text_box(s, bx + 0.1 + icon_w + 0.08, row_y + 0.06, bw - icon_w - 0.26, 0.56, name,
+                     size=10.5, bold=True, color=GOLD if gold else DEEP, line_spacing=1.08,
+                     anchor=MSO_ANCHOR.MIDDLE)
+            if i < n - 1:
+                add_arrow(s, bx + bw + 0.02, row_y + 0.24, 0.28, 0.2, fill=LIGHT)
+            bx += bw + 0.32
+        return row_y + 0.68
+
+    row1_end = stage_row("Растениеводство — поле", [
+        ("sprout", "Севооборот и подготовка почвы", False),
+        ("wheat", "Посев", False),
+        ("leaf", "Защита растений и питание (точное земледелие)", True),
+        ("tractor", "Полевые операции + автономная техника", False),
+    ], 1.4)
+
+    row2_y = row1_end + 0.14
+    text_box(s, 0.6, row2_y, 12.13, 0.2, "Животноводство — параллельная ветвь", size=11, bold=True, color=MID)
+    ocean_box(s, 0.6, row2_y + 0.22, 12.13, 0.5, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.8, row2_y + 0.22, 11.73, 0.5,
+             "Кормопроизводство · содержание поголовья · доение/откорм · ветеринарное "
+             "сопровождение · воспроизводство стада",
+             size=10, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
+    row2_end = row2_y + 0.22 + 0.5
+
+    conv_y = row2_end + 0.06
+    text_box(s, 0.6, conv_y, 12.13, 0.22, "↓ сходятся", size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+
+    row3_end = stage_row("От уборки к полке", [
+        ("package", "Послеуборочная обработка и хранение", False),
+        ("factory", "Первичная переработка", False),
+        ("truck", "Агрологистика и товарный трейдинг", False),
+        ("shopping-cart", "Распределительные центры и розница", False),
+    ], conv_y + 0.26)
+
+    infra_y = row3_end + 0.1
+    ocean_box(s, 0.6, infra_y, 12.13, 0.42, fill=SURFACE)
+    text_box(s, 0.8, infra_y, 11.73, 0.42,
+             "Сквозь все стадии — связь и спутниковое позиционирование · права на "
+             "оборудование и данные · нормативное регулирование",
+             size=10, italic=True, color=DARK_GREY, anchor=MSO_ANCHOR.MIDDLE)
+
+    models_y = infra_y + 0.54
+    text_box(s, 0.6, models_y, 12.13, 0.24, "Где в цикле появляется модель — шесть мест, не «везде, где написано AI»",
+             size=12, bold=True, color=DEEP)
+    loci = [
+        ("satellite", "Дистанционное зондирование", "спутник/БПЛА → карта индекса вегетации"),
+        ("camera", "Распознавание на изображении", "сорняк, болезнь листа, походка животного, партия"),
+        ("compass", "Навигация и управление машиной", "траектория, кромка, препятствие"),
+        ("trending-up", "Прогноз", "урожайность, цена, спрос, риск болезни"),
+        ("settings", "Оптимизация и планирование", "норма внесения, маршрут, состав хеджа"),
+        ("clipboard-check", "Документооборот и отчётность", "прослеживаемость партии, выбросы, нормативы"),
+    ]
+    mcol_w = (12.13 - 2 * 0.12) / 3
+    mcol_h = 0.64
+    my0 = models_y + 0.28
+    for i, (icon, name, ex) in enumerate(loci):
+        col = i % 3; row = i // 3
+        mx = 0.6 + col * (mcol_w + 0.12)
+        my = my0 + row * (mcol_h + 0.08)
+        ocean_box(s, mx, my, mcol_w, mcol_h, fill=SURFACE)
+        ip = ASSETS / "icons" / f"{icon}-48.png"
+        if ip.exists():
+            add_image(s, ip, mx + 0.08, my + 0.1, w=0.42, h=0.42)
+        text_box(s, mx + 0.56, my + 0.05, mcol_w - 0.64, 0.28, name,
+                 size=10.5, bold=True, color=MID, line_spacing=1.0)
+        text_box(s, mx + 0.56, my + 0.33, mcol_w - 0.64, 0.28, ex,
+                 size=9.3, italic=True, color=DARK_GREY, line_spacing=1.0)
+
+    add_footer(s, "На поле преобладают первые три места; в трейдинге и рознице — четвёртое, "
+                  "пятое, шестое.")
+    add_speaker_notes(s, load_speaker_notes("s05a"))
+
+    # ============ s05b — Куда движется отрасль: четыре силы (issue #340 Задача 1) ============
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s, "Куда движется отрасль — четыре силы толкают её к новым инструментам", size=20)
+    text_box(s, 0.6, 1.08, 12.13, 0.25,
+             "Отрасль не в покое. Закрывает ли задачу именно ИИ — решается отдельно и по каждому случаю",
+             size=11, italic=True, color=MID)
+
+    forces = [
+        ("users", "① Дефицит рабочих рук",
+         "Классические режимы держатся на людях: обход контура, обход стада, ручной сбор, оператор в кабине.",
+         "$43 000/акр/год", "сбор клубники, Калифорния",
+         "H-2A визы дороже и менее предсказуемы; стадо в тысячи голов — визуальный обход упирается в физику.",
+         False, LIGHT, LIGHT_TINT),
+        ("handshake", "② Консолидация",
+         "Укрупняется с двух сторон — поставщики технологий и сами хозяйства.",
+         "$3,85 млрд", "MSD / Antelliq 2024 · также $305M+$250M Deere/Blue River+Bear Flag",
+         "Инструмент, названный «работающим», почти всегда работает у крупного (< 500 га — порог See & Spray).",
+         True, GOLD, GOLD_TINT),
+        ("thermometer", "③ Климатическая волатильность",
+         "Решение — заранее, результат — на уборке через 5-6 месяцев; чем меньше сезон похож на прошлый, "
+         "тем меньше стоит и опыт, и модель, настроенная по старым данным.",
+         "Числовой оценки нет", "Волатильность растёт — утверждение остаётся качественным, "
+         "цифра к этой лекции не найдена.",
+         "", False, SOFT_GREY, WHITE),
+        ("shield", "④ Регуляторное и торговое давление",
+         "Приходит с двух сторон, минуя поле — от регулятора и от покупателя.",
+         "АПК 2024: −3,2%", "EU AI Act 2024/1689 — высокий риск; цель «АПК будущего» (удвоение) не достигнута",
+         "Торговая половина работает быстрее регуляторной — отчётность по выбросам заказывает покупатель.",
+         False, LIGHT, LIGHT_TINT),
+    ]
+    cw = (12.13 - 0.2) / 2
+    ch = 2.62
+    positions = [(0.6, 1.45), (0.6 + cw + 0.2, 1.45), (0.6, 1.45 + ch + 0.15), (0.6 + cw + 0.2, 1.45 + ch + 0.15)]
+    for (icon, head, intro, big, sub, foot, gold_foot, color, fill), (px, py) in zip(forces, positions):
+        ocean_box(s, px, py, cw, ch, fill=fill, stroke=color if color != WHITE else SOFT_GREY,
+                  stroke_pt=1.2 if color == WHITE else 1.5)
+        ip = ASSETS / "icons" / f"{icon}-48.png"
+        if ip.exists():
+            add_image(s, ip, px + 0.16, py + 0.14, w=0.36, h=0.36)
+        text_box(s, px + 0.64, py + 0.16, cw - 0.8, 0.32, head, size=13, bold=True, color=DEEP)
+        text_box(s, px + 0.16, py + 0.56, cw - 0.32, 0.6, intro,
+                 size=9.5, italic=True, color=DARK_GREY, line_spacing=1.15)
+        is_gap_card = (fill == WHITE)
+        big_color = DARK_GREY if is_gap_card else GOLD
+        text_box(s, px + 0.16, py + 1.2, cw - 0.32, 0.4, big,
+                 size=11 if is_gap_card else 15, bold=True, color=big_color, line_spacing=1.05)
+        text_box(s, px + 0.16, py + 1.64, cw - 0.32, 0.5, sub,
+                 size=8.5, italic=True, color=MID, line_spacing=1.15)
+        if foot:
+            text_box(s, px + 0.16, py + 1.98, cw - 0.32, 0.56, foot,
+                     size=8.5, italic=True, color=GOLD if gold_foot else DARK_GREY, line_spacing=1.12)
+
+    add_footer(s, "Провал на этом фоне — не «проблемы не было», а «решение её не закрыло»; успех — "
+                  "не «ИИ работает», а «здесь закрыло, и названо почему».")
+    add_speaker_notes(s, load_speaker_notes("s05b"))
+
     # ============ s06 section1 divider — Точное земледелие (L1 Поле) ============
     # N-8 fix: заголовок — термин отрасли («Точное земледелие»), ладдер-ярлык L1 «Поле»
     # ушёл подзаголовком (frame_phrase), не в title. Caption пересчитан по фактическому
     # порядку кадров раздела (s06a..s14): 1 vendor matrix (не 3), 3 анти-ИИ критерия (не 2).
+    # Issue #340 Задача 2 — тематическое фото (Tier 2, Wikimedia Commons/Geograph, Hugh
+    # Venables, CC BY-SA 2.0): самоходный прыскиватель с развёрнутой штангой над полем
+    # пшеницы. Источник не подписан инлайн на слайде (курс-правило) — см. speaker notes +
+    # assets/photos/p06-crop-sprayer-field-16x9.jpg.url.
+    divider_img_s06 = ASSETS / "photos" / "p06-crop-sprayer-field-16x9.jpg"
     section_divider(prs, 1, "Раздел 1. Точное земледелие",
         "L1 «Поле» — открытая биологическая среда: где ИИ работает узко, и где ломается даже здесь",
         current_section=1,
-        caption="See & Spray (кейс) → vendor matrix (5) → базовые модели → 3 провала (вертикальные "
-                "фермы, ChatGPT, Plantix) → РФ · 3 анти-ИИ критерия")
+        caption="See & Spray → vendor matrix (5) → базовые модели → 3 провала "
+                "(вертикальные фермы, ChatGPT, Plantix) → РФ · 3 анти-ИИ критерия",
+        image_path=divider_img_s06 if divider_img_s06.exists() else None,
+        image_caption="Самоходный прыскиватель с развёрнутой штангой над посевами пшеницы")
     s_last = prs.slides[-1]
     add_speaker_notes(s_last, load_speaker_notes("s06"))
 
@@ -577,13 +734,14 @@ def build_part1_full(prs, H):
         text_box(s, tx + 0.12, 3.74, trio_w - 0.24, 0.32, sub, size=9, italic=True, color=MID, line_spacing=1.05)
         tx += trio_w + 0.15
 
-    # ④ Как устроено
-    text_box(s, 0.6, 4.28, 12.13, 0.22, "④ Как устроено", size=11, bold=True, color=MID)
+    # ④ Инженерный аппарат (issue #340 Задача 3 — ИИ-модель вынесена отдельно на s07c,
+    # здесь только физическое устройство: штанга, камеры, форсунки, механика срабатывания)
+    text_box(s, 0.6, 4.28, 12.13, 0.22, "④ Инженерный аппарат", size=11, bold=True, color=MID)
     ocean_box(s, 0.6, 4.5, 12.13, 0.58, fill=SURFACE)
     text_box(s, 0.78, 4.56, 11.8, 0.46,
-             "Вход — кадр камеры штанги → выход — срабатывание форсунки (<50 мс). CNN + detection head, "
-             ">1 млн размеченных изображений (2011-2020), inference on-device (NVIDIA Jetson). "
-             "Продукт: John Deere See & Spray Ultimate (ExactApply, R-серия).",
+             "36 камер по штанге (≈2500 кв. футов/сек каждая) → соленоидный клапан форсунки срабатывает "
+             "за <50 мс на скорости движения 25 км/ч. Продукт: John Deere See & Spray Ultimate "
+             "(ExactApply, R-серия, dual-tank). Как устроена сама модель внутри — на следующем кадре.",
              size=10, color=DARK_GREY, italic=True, line_spacing=1.2)
 
     # ⑤ Что переехало
@@ -605,6 +763,56 @@ def build_part1_full(prs, H):
     add_footer(s, "Источники: Avent et al. 2024, Weed Technology; Iowa State Extension 2026; "
                   "Ohio Extension 2026; Deere press ноябрь 2025")
     add_speaker_notes(s, load_speaker_notes("s07a"))
+
+    # ============ s07c — See & Spray, как устроена модель (issue #340 Задача 3) ============
+    # Разведено от s07a: s07a — инженерный аппарат (штанга/камеры/форсунки), s07c — чисто
+    # ИИ-слой (архитектура/обучение/inference/design rationale). Fact-check: правильная
+    # цифра training set — >1 млн изображений (Deere/Blue River primary source); фигура
+    # "20 млн / 40+ млн" из чернового абзаца chapter.md §1.1 "Технический deep-dive"
+    # относится к LaserWeeder G2 (см. chapter-part2.md §2.2) — НЕ используется здесь.
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s, "See & Spray — как устроена модель", size=24)
+
+    text_box(s, 0.6, 1.2, 12.13, 0.3,
+             "Штанга, камеры и форсунки — на предыдущем кадре. Здесь — только то, что "
+             "происходит между кадром камеры и решением «сорняк / не сорняк»",
+             size=11, italic=True, color=MID)
+
+    panels = [
+        ("cpu", "① Архитектура",
+         "Свёрточная нейросеть с детекционным head'ом (CNN backbone + detection head) — "
+         "семейство object detection (аналог YOLO / Faster R-CNN), проприетарная реализация "
+         "Blue River Technology. Отличает культуру от сорняка по форме листа, текстуре, "
+         "плотности, контексту кадра — не по цвету.", LIGHT, LIGHT_TINT),
+        ("database", "② Обучение",
+         ">1 млн размеченных полевых изображений (первичный источник Deere/Blue River), "
+         "собранных из 10 ключевых пшеничных, кукурузных, соевых регионов США за 2011-2020. "
+         "Облако участвует только в ночном обновлении весов — не в решении на ходу.", GOLD, GOLD_TINT),
+        ("zap", "③ Inference-конвейер",
+         "Вход — кадр одной из 36 камер → детекция в реальном времени → сигнал на форсунку. "
+         "On-device: edge-GPU класса NVIDIA Jetson на каждом боуме штанги — не облако. "
+         "<50 мс от пикселя до решения — часть общего бюджета задержки системы.", LIGHT, LIGHT_TINT),
+        ("network", "④ Почему именно так",
+         "Cloud-uplink на скорости 25 км/ч при переменной сотовой связи в поле — single point "
+         "of failure. Edge ML здесь не упрощение cloud-ML, а структурное архитектурное решение "
+         "под задачу: модель живёт там, где принимается решение, а не там, где есть связь.", GOLD, GOLD_TINT),
+    ]
+    pw = (12.13 - 0.2) / 2
+    ph = 2.55
+    positions = [(0.6, 1.65), (0.6 + pw + 0.2, 1.65), (0.6, 1.65 + ph + 0.15), (0.6 + pw + 0.2, 1.65 + ph + 0.15)]
+    for (icon, head, body, color, fill), (px, py) in zip(panels, positions):
+        ocean_box(s, px, py, pw, ph, fill=fill, stroke=color)
+        ip = ASSETS / "icons" / f"{icon}-96.png"
+        if ip.exists():
+            add_image(s, ip, px + 0.2, py + 0.2, w=0.55, h=0.55)
+        text_box(s, px + 0.92, py + 0.28, pw - 1.1, 0.4, head,
+                 size=15, bold=True, color=color if color != GOLD else GOLD)
+        text_box(s, px + 0.22, py + 0.95, pw - 0.44, ph - 1.12, body,
+                 size=13, color=DARK_GREY, italic=True, line_spacing=1.42)
+
+    add_footer(s, "Источники: John Deere press (ноябрь 2025); AgTechNavigator (2025-11-10) "
+                  "(training provenance: >1 млн, не 40 млн — та цифра принадлежит LaserWeeder G2)")
+    add_speaker_notes(s, load_speaker_notes("s07c"))
 
     # ============ s08 vendor matrix L1 ============
     # K-3/K-4 fix: добавлен РЕАЛЬНЫЙ скриншот xarvio FIELD MANAGER (Apple App Store

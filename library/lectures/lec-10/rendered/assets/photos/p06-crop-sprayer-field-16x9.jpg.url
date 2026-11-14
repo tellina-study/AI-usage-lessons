@@ -1,0 +1,9 @@
+https://commons.wikimedia.org/wiki/File:Crop_sprayer_-_geograph.org.uk_-_3038217.jpg
+Source: Geograph Britain and Ireland (https://www.geograph.org.uk/photo/3038217)
+Author: Hugh Venables
+License: CC BY-SA 2.0
+Downloaded: Wikimedia Commons direct upload link, 2026-11-14
+Acquisition tier: Tier 2 (Wikimedia Commons)
+Note: center-cropped from p06-crop-sprayer-field.jpg (1600x1200, 4:3) to 16:9
+(1600x900) via PIL to match the section_divider() helper's fixed AR — same
+source photo, same license, same author, cropping only.

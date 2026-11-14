@@ -47,8 +47,9 @@ deck:
 #       (Q&A — без отдельного divider; s37 closing + s38 dedicated Q&A)
 #   - 22 content slides:
 #       s07, s08, s09, s10, s11, s12, s13, s14 (Р1 — 8)
-#       s16, s17, s18, s19, s20, s21 (Р2 — 6; s17 RU-параллель CV vs sensor-fusion)
-#       s23, s24, s25, s26 (Р3 — 4)
+#       s16, s16b, s17, s18, s19, s20, s21 (Р2 — 7; s16b инженерия/ИИ-split добавлен issue #340;
+#         s17 RU-параллель CV vs sensor-fusion)
+#       s23, s23c, s24, s25, s26 (Р3 — 5; s23c инженерия/ИИ-split добавлен issue #340)
 #       s28, s29, s30, s31, s32 (Р4 — 5)
 #       s34, s30b, s35 (Р4-bis — 3; s30b vendor lock-in double optic)
 #       s37s, s38s, s35c, s36c (Р5 — 4; L5 retail + 5 critеria + checklist + career)
@@ -94,23 +95,32 @@ deck:
 #   s19 Monarch MK-V + TechCrunch иск headline (Tier 1)
 #   s20 FarmWise photo + Lemken/Kverneland mechanical weeder (Tier 1-3)
 #   s21 manual strawberry picker + robot prototype (Tier 2-3)
+#   s22 hero divider photo — Holstein cows + automatic milking system (Tier 2 — Wikimedia CC BY-SA 4.0)
 #   s23 SenseHub ear-tag photo (Tier 1 — Merck Animal Health)
 #   s24 CattleEye + DeLaval VMS + Cargill Birdoo product photos (Tier 1)
 #   s25 tie-stall vs free-stall + Holstein photo (Wikimedia CC-BY-SA Tier 2 + own)
 #   s26 Connectome.ai UI + Лобня infographic (Tier 1-2)
+#   s27 hero divider photo — bulk carrier at Halifax Grain Elevator (Tier 2 — Wikimedia CC BY 4.0)
 #   s28 Cargill BIG AI Award press + grain port (Tier 1)
 #   s30 4 logos + Tract Series A FreshPlaza screenshot (Tier 1)
 #   s31 USDA press + Guardian Verra article (Tier 1)
+#   s33 hero divider photo — John Deere 8295R + StarFire GNSS receiver (Tier 2 — Wikimedia CC BY-SA 3.0)
 #   s34 Stanford ITM 2025 GNSS-jamming Finland figure (Tier 1)
 #   s30b Мелитополь tractors map + FTC press conference photo (Tier 1)
+#   s36 hero divider photo — supermarket aisle, Intermarché Quebec (Tier 2 — Wikimedia CC BY-SA 4.0)
 #   s37s supermarket aisle photo (Tier 2-3 — Wikimedia / Unsplash)
 #   s37 Carbon Robotics LaserWeeder G2 hero (Tier 1)
 #
 # Own-diagrams: s02 (cover), s03 (lecture-map), s04 (glossary), s05 (keystone ladder),
-#               s06/s15/s22/s27/s33/s36 (section dividers), s11 (5-Why),
-#               s17 (Cognitive vs ИТЭЛМА), s25 (tie-stall vs free-stall),
+#               s06/s15 (section dividers без фото — plain), s11 (5-Why),
+#               s17 (Cognitive vs ИТЭЛМА), s23c (SenseHub инженерия/ИИ-split, issue #340),
+#               s25 (tie-stall vs free-stall),
 #               s29 (hedge pseudo-flow), s32 (РФ status grid), s35 (3-col regulatory),
 #               s38s (5 criteria matrix), s35c (5-block checklist), s36c (career landscape)
+#
+# Hero-photo dividers (issue #340 — owner note: добавить иллюстрации на 4 дивайдера):
+#               s22/s27/s33/s36 — decorative number + real photo (≥40% площади, Tier 2
+#               Wikimedia CC) + progress bar; s06/s15 остаются plain (вне brief'а правки).
 #
 # Anti-anglicism mandate (memory rule feedback_russification):
 #   - Visible body — преимущественно RU
@@ -215,6 +225,38 @@ slides:
       acquisition_tier: "own"
       attribution_label: ""
 
+  - id: s05a
+    title: "Обзор отрасли — цикл «от поля к полке»"
+    assertion: "Продовольствие идёт по восьми стадиям от планирования до полки, а модель появляется в шести узнаваемых местах — не «везде, где написано AI»."
+    section: "Р0"
+    slide_type: "industry_cycle_overview"
+    layout: "industry-cycle-pipeline"
+    timing_min: 1.8
+    chapter_ref: "§0.6 Часть 1 — Обзор отрасли, цикл «от поля к полке»"
+    learning_goal: "Обзор отрасли ДО первого кейса — устройство цикла «от поля к полке»: стадии + шесть мест, где в них появляется модель"
+    learning_outcomes: [LO1a]
+    media:
+      kind: "pipeline diagram (3 rows) + 6 model-locus icon cards"
+      source_candidate: "own (Lucide sprout/wheat/leaf/tractor/package/factory/truck/shopping-cart/network/lock/shield/satellite/camera/compass/trending-up/settings/clipboard-check)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  - id: s05b
+    title: "Куда движется отрасль — четыре силы толкают её к новым инструментам"
+    assertion: "Четыре силы толкают отрасль к новым инструментам одновременно — ни одна не довод в пользу ИИ, все четыре означают только, что задача настоящая."
+    section: "Р0"
+    slide_type: "industry_forces"
+    layout: "four-forces-grid-2x2"
+    timing_min: 1.8
+    chapter_ref: "§0.7 Часть 1 — Куда движется отрасль, четыре силы"
+    learning_goal: "Куда движется отрасль — четыре силы как честный фон для чтения рабочих случаев и провалов ниже"
+    learning_outcomes: [LO1a, LO5]
+    media:
+      kind: "2x2 force cards + price plates + 1 honestly-named gap card (no mock number)"
+      source_candidate: "own (Lucide users/handshake/thermometer/shield)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
   # ---------------------------------------------------------------------------
   # Section divider Р1
   # ---------------------------------------------------------------------------
@@ -224,16 +266,16 @@ slides:
     assertion: "Раздел 1. Точное земледелие (L1 «Поле»). Самый нижний уровень лестницы: где AI работает в узкой задаче (See & Spray), где ломается — в попытках generic advisory и closed-loop."
     section: "Р1"
     slide_type: "section_divider"
-    layout: "divider-with-progress"
+    layout: "divider-with-progress-and-photo"
     timing_min: 0.2
     chapter_ref: "frontmatter"
-    learning_goal: "Visual divider — переход в Р1 + 7-card progress bar с gold-подсветкой Р1"
+    learning_goal: "Visual divider — переход в Р1 + 7-card progress bar с gold-подсветкой Р1 + реальная фотография (точное земледелие)"
     learning_outcomes: [LO1a, LO1b]
     media:
-      kind: "decorative number + progress bar"
-      source_candidate: "own (Lucide `sprout`, Ocean palette)"
-      acquisition_tier: "own"
-      attribution_label: ""
+      kind: "decorative number + progress bar + real photo (self-propelled sprayer, full boom, wheat field)"
+      source_candidate: "Wikimedia Commons / Geograph — Hugh Venables, CC BY-SA 2.0"
+      acquisition_tier: "Tier 2"
+      attribution_label: "Самоходный прыскиватель с развёрнутой штангой над посевами пшеницы. Geograph/Wikimedia Commons, CC BY-SA 2.0 (not captioned inline — см. speaker notes)"
 
   # ---------------------------------------------------------------------------
   # Раздел 1 — L1 «Поле» (~17 мин)
@@ -293,12 +335,28 @@ slides:
     section: "Р1"
     slide_type: "method_form_full"
     layout: "method-form-5-step"
-    timing_min: 2.5
+    timing_min: 2.0
     chapter_ref: "§1.1 Часть 1 — See & Spray, форма разбора §4 канона"
-    learning_goal: "Форма разбора §4 канона целиком на одном кейсе: цена обеих ошибок → классические режимы → модель → устройство → что переехало"
+    learning_goal: "Форма разбора §4 канона целиком на одном кейсе: цена обеих ошибок → классические режимы → модель → инженерный аппарат → что переехало. ИИ-модель вынесена на s07c."
     learning_outcomes: [LO1a, LO1b, LO2, LO5]
     media:
-      kind: "5-step method form — price plates + spec strip + verdict columns"
+      kind: "5-step method form — price plates + spec strip (engineering only) + verdict columns"
+      source_candidate: "own table"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  - id: s07c
+    title: "See & Spray — как устроена модель"
+    assertion: "CNN + detection head на >1 млн размеченных изображений, inference on-device (NVIDIA Jetson) — не в облаке. Задержка <50 мс — архитектурное ограничение, которое диктует это решение, а не наоборот."
+    section: "Р1"
+    slide_type: "model_anatomy"
+    layout: "model-anatomy-4panel"
+    timing_min: 1.6
+    chapter_ref: "§1.1 Часть 1 — «Технический deep-dive» + «История разработки» (training provenance)"
+    learning_goal: "ИИ-часть See & Spray отдельно от инженерного аппарата: архитектура, обучение, inference pipeline и design rationale — edge ML в каноническом виде"
+    learning_outcomes: [LO1a, LO1b, LO2]
+    media:
+      kind: "4-panel model anatomy — architecture / training / inference / design rationale"
       source_candidate: "own table"
       acquisition_tier: "own"
       attribution_label: ""
@@ -436,7 +494,7 @@ slides:
       attribution_label: ""
 
   # ---------------------------------------------------------------------------
-  # Раздел 2 — L2 «Робот» (~15 мин)
+  # Раздел 2 — L2 «Робот» (~17 мин, issue #340 добавил s16b)
   # ---------------------------------------------------------------------------
 
   - id: s16
@@ -445,7 +503,7 @@ slides:
     section: "Р2"
     slide_type: "content"
     layout: "photo-hero + 5-kpi-card + economics-плашки"
-    timing_min: 2.5
+    timing_min: 2.2
     chapter_ref: "§2.2 Часть 2 — LaserWeeder G2 deep dive"
     learning_goal: "Working case L2: узкая ниша + замена физики физикой + measurable ROI, доказанный именованной экономикой organic-листовых культур"
     learning_outcomes: [LO1a, LO1b]
@@ -454,6 +512,22 @@ slides:
       source_candidate: "carbonrobotics.com/laserweeder-g2 (og:image, Tier 1)"
       acquisition_tier: "Tier 1"
       attribution_label: "Carbon Robotics LaserWeeder G2. Источник: carbonrobotics.com/laserweeder-g2"
+
+  - id: s16b
+    title: "LaserWeeder G2 — механика лазерной штанги и модель распознавания сорняков"
+    assertion: "Механика: штанга 6,6-60 футов, лазер 240 Вт, импульс 25 мс (1-2 Дж) — до 25 000 сорняков/час на машину. ИИ-часть отдельно: CNN на 40 млн изображений, >100 видов культур; точность ~80% на visually-похожей паре (velvetleaf в сое) — ниже, чем >95% у See & Spray на Palmer amaranth в хлопке (другая система)."
+    section: "Р2"
+    slide_type: "content"
+    layout: "2-col-architecture-comparison (паттерн s17) + нижняя pipeline-плашка"
+    timing_min: 1.8
+    chapter_ref: "§2.2 Часть 2 — LaserWeeder G2 deep dive (технический deep-dive + ML failure modes)"
+    learning_goal: "Разделить инженерную структуру (механика) и ИИ-часть (модель зрения) внутри одной машины — разные компоненты, разная физика отказа"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "number plates / 2-col comparison (own, no photo)"
+      source_candidate: "own (data plates, Ocean palette, паттерн s17)"
+      acquisition_tier: "own"
+      attribution_label: ""
 
   - id: s16a
     title: "LaserWeeder — цена ошибок и два классических режима, $/акр/год"
@@ -560,16 +634,16 @@ slides:
     assertion: "Раздел 3. Точное животноводство (уровень «животное»). Полу-закрытая среда + измерения на уровне индивидуального животного: AI работает стабильнее, чем на L1-L2. Ограничения — физическая конфигурация + Holstein-bias + small dairy economics."
     section: "Р3"
     slide_type: "section_divider"
-    layout: "divider-with-progress"
+    layout: "divider-with-hero-photo"
     timing_min: 0.2
     chapter_ref: "frontmatter"
-    learning_goal: "Visual divider — переход в Р3 + 7-card progress bar с gold-подсветкой Р3"
+    learning_goal: "Visual divider — переход в Р3 + hero-фото + 7-card progress bar с gold-подсветкой Р3"
     learning_outcomes: [LO1a, LO1b]
     media:
-      kind: "decorative number + progress bar"
-      source_candidate: "own (Lucide `bird` или `cow`, Ocean palette)"
-      acquisition_tier: "own"
-      attribution_label: ""
+      kind: "decorative number + hero photo (≥40% площади) + progress bar"
+      source_candidate: "Wikimedia Commons — Holstein Friesian cows queuing for milking in an automatic milking system in Bronów"
+      acquisition_tier: "Tier 2"
+      attribution_label: "Коровы с ушными бирками у автоматической доильной системы · Wikimedia, CC BY-SA 4.0"
 
   # ---------------------------------------------------------------------------
   # Раздел 3 — L3 «Животное» (~12 мин)
@@ -622,6 +696,22 @@ slides:
       source_candidate: "Merck Animal Health newsroom 2025"
       acquisition_tier: "Tier 1"
       attribution_label: "Allflex SenseHub, 2 миллиона коров milestone 2025. Источник: Merck Animal Health"
+
+  - id: s23c
+    title: "SenseHub — ошейник и модель по отдельности"
+    assertion: "Ошейник измеряет акселерометром активность, руминацию и температуру и держится на батарее 5-7 лет без замены — это физический слой, он не меняется от обновления модели. Отдельно от него стоит облачный ML-конвейер: он обучается на индивидуальном базовом уровне каждой коровы и классифицирует отклонение в один из пяти типов алертов. Точность предупреждения определяет именно вторая часть — не сам сенсор."
+    section: "Р3"
+    slide_type: "working_case"
+    layout: "two-column-split-engineering-ai"
+    timing_min: 1.7
+    chapter_ref: "§3.2 Часть 2 — Allflex SenseHub, инженерный стек"
+    learning_goal: "Явно развести физический сенсор (не меняется от апгрейда модели) и ML-классификатор (обновляется отдельно от железа) — до формы разбора цены ошибки (issue #340, owner note: разделить инженерную структуру и ИИ-часть)"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "own 2-column split (иконки radar/zap/cpu/layers), без фото — инженерная схема, не case-photo"
+      source_candidate: "own"
+      acquisition_tier: "own"
+      attribution_label: ""
 
   - id: s23a
     title: "Три режима L3 на одном стаде — порог и сегмент 1-10 коров"
@@ -696,16 +786,16 @@ slides:
     assertion: "Раздел 4. Агрологистика и товарный трейдинг (уровень «цепочка»). Место, где агентный ИИ работает в промышленном внедрении 2026: трейдеры измеряют outcome в basis-points за минуты, не за сезоны."
     section: "Р4"
     slide_type: "section_divider"
-    layout: "divider-with-progress"
+    layout: "divider-with-hero-photo"
     timing_min: 0.2
     chapter_ref: "frontmatter"
-    learning_goal: "Visual divider — переход в Р4 + 7-card progress bar с gold-подсветкой Р4"
+    learning_goal: "Visual divider — переход в Р4 + hero-фото + 7-card progress bar с gold-подсветкой Р4"
     learning_outcomes: [LO1a, LO1b]
     media:
-      kind: "decorative number + progress bar"
-      source_candidate: "own (Lucide `truck` или `package`, Ocean palette)"
-      acquisition_tier: "own"
-      attribution_label: ""
+      kind: "decorative number + hero photo (≥40% площади) + progress bar"
+      source_candidate: "Wikimedia Commons — Bulk carrier at Halifax Grain Elevator"
+      acquisition_tier: "Tier 2"
+      attribution_label: "Балкер у зернового терминала порта Галифакс · Wikimedia, CC BY 4.0"
 
   # ---------------------------------------------------------------------------
   # Раздел 4 — L4 «Цепочка поставок» (~10 мин)
@@ -800,16 +890,16 @@ slides:
     assertion: "Инфраструктурные условия: связь, привязка к вендору, регуляторика. Сквозной meta-уровень: все три — failure-перспектива. Без них ни одна ступень лестницы не работает."
     section: "Р4-bis"
     slide_type: "section_divider"
-    layout: "divider-with-progress"
+    layout: "divider-with-hero-photo"
     timing_min: 0.2
     chapter_ref: "frontmatter"
-    learning_goal: "Visual divider — переход в Р4-bis + 7-card progress bar с gold-подсветкой Р4-bis"
+    learning_goal: "Visual divider — переход в Р4-bis + hero-фото + 7-card progress bar с gold-подсветкой Р4-bis"
     learning_outcomes: [LO5]
     media:
-      kind: "decorative number + progress bar"
-      source_candidate: "own (Lucide `network` или `lock`, Ocean palette)"
-      acquisition_tier: "own"
-      attribution_label: ""
+      kind: "decorative number + hero photo (≥40% площади) + progress bar"
+      source_candidate: "Wikimedia Commons — John Deere 8295 R with StarFire receiver"
+      acquisition_tier: "Tier 2"
+      attribution_label: "John Deere 8295R со спутниковым приёмником StarFire на крыше кабины · Wikimedia, CC BY-SA 3.0"
 
   # ---------------------------------------------------------------------------
   # Раздел 4-bis — Среда (~8 мин)
@@ -872,16 +962,16 @@ slides:
     assertion: "Раздел 5. Управление спросом в розничной цепочке (уровень «полка»). Самая зрелая ступень + пятёрка критериев «когда не AI» + карьерный ландшафт + closing callback к Plenty Compton."
     section: "Р5"
     slide_type: "section_divider"
-    layout: "divider-with-progress"
+    layout: "divider-with-hero-photo"
     timing_min: 0.2
     chapter_ref: "frontmatter"
-    learning_goal: "Visual divider — переход в Р5 + 7-card progress bar с gold-подсветкой Р5"
+    learning_goal: "Visual divider — переход в Р5 + hero-фото + 7-card progress bar с gold-подсветкой Р5"
     learning_outcomes: [LO5]
     media:
-      kind: "decorative number + progress bar"
-      source_candidate: "own (Lucide `shopping-cart`, Ocean palette)"
-      acquisition_tier: "own"
-      attribution_label: ""
+      kind: "decorative number + hero photo (≥40% площади) + progress bar"
+      source_candidate: "Wikimedia Commons — Aisle in L'Intermarché supermarket in Quebec City"
+      acquisition_tier: "Tier 2"
+      attribution_label: "Ряд полок супермаркета Intermarché, Квебек-Сити · Wikimedia, CC BY-SA 4.0"
 
   # ---------------------------------------------------------------------------
   # Раздел 5 — L5 + payoff (~6 мин)

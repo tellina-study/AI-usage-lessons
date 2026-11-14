@@ -25,6 +25,113 @@ def build_part3(prs, H):
         caption="4 working cases (SenseHub, CattleEye, DeLaval, Birdoo) · 3 анти-хайп урока (Cainthus, tie-stall, Holstein-bias)")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s22"))
 
+    # ============ s22a Precision livestock — what stage (D2) ============
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s, "Точное животноводство — что это за стадия", size=26, y=0.3)
+
+    ocean_box(s, 0.6, 1.0, 12.13, 1.0)
+    text_box(s, 0.85, 1.08, 11.6, 0.3,
+             "Точное животноводство (precision livestock farming)",
+             size=15, bold=True, color=DEEP)
+    text_box(s, 0.85, 1.40, 11.6, 0.52,
+             "Наблюдение и решения — по отдельному животному, а не по стаду в среднем. "
+             "То же «точное», что в земледелии — только единица не участок поля, а голова.",
+             size=11, italic=True, color=MID, line_spacing=1.2)
+
+    # Row 2: что измеряют / какой вопрос
+    ocean_box(s, 0.6, 2.10, 5.95, 1.45, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.8, 2.20, 5.55, 0.35, "Что измеряют", size=13, bold=True, color=DEEP)
+    text_box(s, 0.8, 2.55, 5.55, 0.95,
+             "Активность · руминация · температура\nПоходка · вес · корм и вода\nУдой · репродуктивный цикл · отёл",
+             size=11, color=DEEP, italic=True, line_spacing=1.3)
+
+    ocean_box(s, 6.68, 2.10, 6.05, 1.45, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 6.88, 2.20, 5.65, 0.35, "Какой вопрос решают", size=13, bold=True, color=DEEP)
+    text_box(s, 6.88, 2.55, 5.65, 0.95,
+             "Что сейчас с этим животным — и нужно ли вмешаться:\n"
+             "осмотреть · вызвать ветеринара ·\nизолировать · осеменить · вывести из стада",
+             size=11, color=DEEP, italic=True, line_spacing=1.3)
+
+    # Row 3: 4 способа получения данных
+    text_box(s, 0.6, 3.65, 12.13, 0.3, "Как получают данные",
+             size=13, bold=True, color=MID)
+    methods = [
+        ("eye", "Визуальное наблюдение", "Обход стада и осмотр на проходе — основной способ и сегодня"),
+        ("clipboard-check", "Плановый осмотр ветеринара", "По графику или по вызову, с физическим обследованием"),
+        ("radar", "Бирка-датчик / ошейник", "Акселерометр и термодатчик — круглосуточно, не выборочно"),
+        ("camera", "Камера над проходом", "Съёмка походки на выходе из доильного зала, без контакта"),
+    ]
+    card_w = (12.13 - 3 * 0.15) / 4
+    mx = 0.6
+    for icon_name, title, body in methods:
+        ocean_box(s, mx, 4.00, card_w, 1.5)
+        icon_p = ASSETS / "icons" / f"{icon_name}-96.png"
+        if icon_p.exists():
+            add_image(s, icon_p, mx + (card_w - 0.5) / 2, 4.12, w=0.5, h=0.5)
+        text_box(s, mx + 0.1, 4.70, card_w - 0.2, 0.35, title,
+                 size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+        text_box(s, mx + 0.12, 5.05, card_w - 0.24, 0.42, body,
+                 size=9.5, color=DARK_GREY, italic=True, align=PP_ALIGN.CENTER, line_spacing=1.2)
+        mx += card_w + 0.15
+
+    # Row 4: решение и место в цикле
+    ocean_box(s, 0.6, 5.65, 12.13, 1.2, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, 5.72, 11.6, 0.3, "Решение стадии и её место в цикле",
+             size=13, bold=True, color=GOLD)
+    text_box(s, 0.85, 6.02, 11.6, 0.78,
+             "Вмешаться или нет — и чем: вызов ветеринара, лечение, изоляция, осеменение, выбраковка.\n"
+             "Стоит параллельно полю и до переработки — первая стадия, где среда частично управляема (вентиляция, кормление задаёт хозяйство).\n"
+             "Обратная связь — часы-дни, не сезон: поэтому здесь ИИ работает устойчивее, чем на L1-L2.",
+             size=10, color=DEEP, italic=True, line_spacing=1.2)
+
+    add_speaker_notes(s, load_speaker_notes("s22a"))
+
+    # ============ s22b Precision livestock — without model (D1) ============
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s, "Как это решают без модели — шесть классических режимов L3", size=22, y=0.3)
+
+    text_box(s, 0.6, 1.0, 12.13, 0.4,
+             "Шесть способов, которыми ферма и сегодня решает — без обученной модели:",
+             size=14, italic=True, color=MID)
+
+    regimes = [
+        ("1", "Визуальное наблюдение зоотехника",
+         "Обход стада с осмотром: дёшево на малом поголовье, нереализуемо на тысячах голов."),
+        ("2", "Плановые осмотры ветеринара",
+         "Регулярная проверка по графику: надёжно, но отклонение найдено не раньше следующего планового дня."),
+        ("3", "Расчёт по среднему + журнал",
+         "Отклонение видно по групповым показателям — с задержкой и без адреса на конкретное животное."),
+        ("4", "Физическое взвешивание выборки",
+         "Несколько голов на весах — результат переносится на всё поголовье (птица, откорм)."),
+        ("5", "Доильный зал с оператором",
+         "Человек сам присоединяет аппарат — и по ходу работы замечает состояние вымени."),
+        ("6", "Общинный зоотехник с рассылкой",
+         "Режим мелких хозяйств, где доход с головы слишком мал для датчика."),
+    ]
+    card_w = (12.13 - 2 * 0.15) / 3
+    card_h = 1.8
+    rx0, ry0 = 0.6, 1.7
+    for i, (num, title, body) in enumerate(regimes):
+        row, col = divmod(i, 3)
+        x = rx0 + col * (card_w + 0.15)
+        y = ry0 + row * (card_h + 0.15)
+        ocean_box(s, x, y, card_w, card_h, fill=LIGHT_TINT if row == 0 else TEAL_TINT,
+                  stroke=LIGHT if row == 0 else TEAL)
+        text_box(s, x + 0.12, y + 0.1, 0.5, 0.4, num + ".", size=18, bold=True, color=GOLD)
+        text_box(s, x + 0.12, y + 0.52, card_w - 0.24, 0.5, title,
+                 size=12.5, bold=True, color=DEEP, line_spacing=1.1)
+        text_box(s, x + 0.12, y + 1.02, card_w - 0.24, 0.72, body,
+                 size=9.5, color=DARK_GREY, italic=True, line_spacing=1.2)
+
+    bottom_y = ry0 + 2 * (card_h + 0.15) + 0.05
+    ocean_box(s, 0.6, bottom_y, 12.13, 0.75, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, bottom_y + 0.1, 11.6, 0.55,
+             "Общий знаменатель — $/год на то же стадо. Дальше — три режима на одном знаменателе "
+             "+ порог стада + сегмент 1-10 коров.",
+             size=12, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.2)
+
+    add_speaker_notes(s, load_speaker_notes("s22b"))
+
     # ============ s23 SenseHub 2M cows ============
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s, "Allflex SenseHub — 2 млн коров с сенсорами (≈0,75% из 265M dairy cows worldwide)", size=22)
@@ -42,7 +149,7 @@ def build_part3(prs, H):
              size=10, italic=True, color=MID, align=PP_ALIGN.CENTER)
 
     # Right: 3-step flow + 5 alerts
-    text_box(s, 7.3, 1.6, 5.4, 0.4, "ИИ-конвейер (раннее предупреждение)",
+    text_box(s, 7.3, 1.6, 5.4, 0.3, "ИИ-конвейер (раннее предупреждение)",
              size=14, bold=True, color=MID)
 
     flow_steps = [
@@ -50,36 +157,121 @@ def build_part3(prs, H):
         ("2. Облако", "ML-классификация поведения", MID),
         ("3. Сигнал фермеру", "Раннее предупреждение, не назначение", GOLD),
     ]
-    fy = 2.15
+    fy = 1.95
     for hdr, sub, color in flow_steps:
-        ocean_box(s, 7.3, fy, 5.4, 0.85, fill=LIGHT_TINT if color != GOLD else GOLD_TINT, stroke=color)
-        text_box(s, 7.5, fy + 0.12, 5.0, 0.35, hdr,
-                 size=15, bold=True, color=DEEP)
-        text_box(s, 7.5, fy + 0.48, 5.0, 0.32, sub,
-                 size=12, color=MID, italic=True)
-        fy += 0.95
+        ocean_box(s, 7.3, fy, 5.4, 0.68, fill=LIGHT_TINT if color != GOLD else GOLD_TINT, stroke=color)
+        text_box(s, 7.5, fy + 0.08, 5.0, 0.3, hdr,
+                 size=14, bold=True, color=DEEP)
+        text_box(s, 7.5, fy + 0.38, 5.0, 0.28, sub,
+                 size=11, color=MID, italic=True)
+        fy += 0.73
 
     # Alerts row
-    text_box(s, 7.3, 5.05, 5.4, 0.4, "5 классов сигналов",
-             size=14, bold=True, color=DEEP)
+    text_box(s, 7.3, 4.15, 5.4, 0.28, "5 классов сигналов",
+             size=13, bold=True, color=DEEP)
     alerts = ["эструс", "отёл", "хромота", "мастит", "пневмония"]
     ax = 7.3
     aw = 1.0
     for al in alerts:
-        ocean_box(s, ax, 5.5, aw, 0.55, fill=GOLD_TINT, stroke=GOLD)
-        text_box(s, ax, 5.5, aw, 0.55, al, size=11, bold=True, color=DEEP,
+        ocean_box(s, ax, 4.45, aw, 0.45, fill=GOLD_TINT, stroke=GOLD)
+        text_box(s, ax, 4.45, aw, 0.45, al, size=10.5, bold=True, color=DEEP,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
         ax += aw + 0.08
 
-    # Bottom: augmentation principle
-    ocean_box(s, 7.3, 6.2, 5.4, 0.6, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 7.5, 6.25, 5.0, 0.5,
-             "ИИ = усиление человека, не замена",
-             size=13, bold=True, color=GOLD,
-             anchor=MSO_ANCHOR.MIDDLE)
+    # NEW: цена ошибки и сравнение с визуальным наблюдением
+    text_box(s, 7.3, 4.98, 5.4, 0.28, "Цена ошибки и сравнение с визуальным наблюдением",
+             size=11.5, bold=True, color=DEEP)
+    plate_w = (5.4 - 0.15) / 2
+    ocean_box(s, 7.3, 5.30, plate_w, 1.05, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 7.42, 5.36, plate_w - 0.24, 0.3, "FP", size=11, bold=True, color=DEEP)
+    text_box(s, 7.42, 5.64, plate_w - 0.24, 0.68,
+             "Лишний вызов вета: $50-200/визит. До 733 алертов/год на стадо "
+             "при посредственной специфичности.",
+             size=9.5, color=DARK_GREY, italic=True, line_spacing=1.15)
+    ocean_box(s, 7.3 + plate_w + 0.15, 5.30, plate_w, 1.05, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 7.42 + plate_w + 0.15, 5.36, plate_w - 0.24, 0.3, "FN", size=11, bold=True, color=DEEP)
+    text_box(s, 7.42 + plate_w + 0.15, 5.64, plate_w - 0.24, 0.68,
+             "Пропущенный мастит: $500-1500/случай (эффект за лактацию); "
+             "прямые издержки ниже — $250-450.",
+             size=9.5, color=DARK_GREY, italic=True, line_spacing=1.15)
 
-    add_footer(s, "Источник: Merck Animal Health, 2025 — рубеж 2 млн молочных коров")
+    text_box(s, 7.3, 6.40, 5.4, 0.35,
+             "$/год на стадо (100 голов): SenseHub $4 600-5 700 vs визуальное наблюдение + вет $1 500-2 500",
+             size=9.5, bold=True, italic=True, color=MID, line_spacing=1.15)
+
+    # Bottom: augmentation principle (compact, one line)
+    text_box(s, 7.3, 6.76, 5.4, 0.22,
+             "ИИ = усиление человека, не замена",
+             size=10.5, bold=True, italic=True, color=GOLD)
+
+    add_footer(s, "Источники: Merck Animal Health 2025; Allflex/sensehub.co.nz pricing 2026; MSU/California dairy economics")
     add_speaker_notes(s, load_speaker_notes("s23"))
+
+    # ============ s23a SenseHub — three regimes + threshold (mandatory form triple) ============
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s, "Три режима L3 на одном стаде — и порог, где экономика переворачивается", size=21, y=0.3)
+
+    # Ступень 1 — цена ошибки (recap)
+    text_box(s, 0.6, 1.0, 12.13, 0.25, "Ступень 1 — цена ошибки (recap)", size=12, bold=True, color=MID)
+    plate_w1 = (12.13 - 0.15) / 2
+    ocean_box(s, 0.6, 1.28, plate_w1, 0.72, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.75, 1.33, plate_w1 - 0.3, 0.62,
+             "FP — лишний вызов вета: $50-200/визит; до 733 алертов/год на стадо",
+             size=10, color=DEEP, italic=True, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+    ocean_box(s, 0.6 + plate_w1 + 0.15, 1.28, plate_w1, 0.72, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.75 + plate_w1 + 0.15, 1.33, plate_w1 - 0.3, 0.62,
+             "FN — пропущенный мастит: $500-1500/случай за лактацию; прямые издержки ниже — $250-450",
+             size=10, color=DEEP, italic=True, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+
+    # Ступень 2 — три режима $/год на стадо 100 голов
+    text_box(s, 0.6, 2.18, 12.13, 0.25,
+             "Ступень 2 — три режима, один знаменатель: $/год на стадо в 100 голов", size=12, bold=True, color=MID)
+    plate_w2 = (12.13 - 2 * 0.15) / 3
+    regimes3 = [
+        ("SenseHub (ИИ)",
+         "$46-57/голова/год → $4 600-5 700/год.\n+ неучтённая цена накопленных FP-алертов — фактически выше",
+         GOLD_TINT, GOLD),
+        ("Визуальное наблюдение + вет",
+         "$1 500-2 500/год на 100 голов — классический режим.\nДешевле в 2-3 раза при этом поголовье",
+         LIGHT_TINT, LIGHT),
+        ("Общинный зоотехник + SMS",
+         "Другая единица — расходы разделены между\nтысячами фермеров (AIM for Scale). Числа $/год-\nна-стадо в открытых источниках нет",
+         TEAL_TINT, TEAL),
+    ]
+    rx = 0.6
+    for title, body, fill, stroke in regimes3:
+        ocean_box(s, rx, 2.46, plate_w2, 1.25, fill=fill, stroke=stroke)
+        text_box(s, rx + 0.12, 2.52, plate_w2 - 0.24, 0.42, title, size=11.5, bold=True, color=DEEP, line_spacing=1.1)
+        text_box(s, rx + 0.12, 2.96, plate_w2 - 0.24, 0.7, body, size=9.5, color=DARK_GREY, italic=True, line_spacing=1.2)
+        rx += plate_w2 + 0.15
+
+    # Ступень 3 — порог стада
+    text_box(s, 0.6, 3.86, 12.13, 0.25,
+             "Ступень 3 — порог стада, где экономика переворачивается", size=12, bold=True, color=MID)
+    plate_w3 = (12.13 - 0.15) / 2
+    ocean_box(s, 0.6, 4.14, plate_w3, 0.95, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.75, 4.19, plate_w3 - 0.3, 0.3, "100 голов", size=12, bold=True, color=DEEP)
+    text_box(s, 0.75, 4.50, plate_w3 - 0.3, 0.55,
+             "$4 600-5 700/год против $1 500-2 500/год → ROI отрицательный, классика выигрывает",
+             size=9.5, color=DARK_GREY, italic=True, line_spacing=1.15)
+    ocean_box(s, 0.6 + plate_w3 + 0.15, 4.14, plate_w3, 0.95, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.75 + plate_w3 + 0.15, 4.19, plate_w3 - 0.3, 0.3, "500+ голов", size=12, bold=True, color=GOLD)
+    text_box(s, 0.75 + plate_w3 + 0.15, 4.50, plate_w3 - 0.3, 0.55,
+             "$23 000-28 500/год — малая доля затрат; экономия от раннего выявления → ROI положительный",
+             size=9.5, color=DEEP, italic=True, line_spacing=1.15)
+
+    # Ступень 4 (вывод) — сегмент 1-10 коров, доход с головы
+    ocean_box(s, 0.6, 5.25, 12.13, 1.35, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 0.85, 5.33, 11.6, 0.3, "Что переехало — сегмент 1-10 коров (Восточная Африка)",
+             size=12.5, bold=True, color=TEAL)
+    text_runs(s, 0.85, 5.68, 11.6, 0.85, [
+        {"text": "Доход с коровы — $200-500/год. Любая технология дороже $46/голову/год потребляет ", "size": 11, "color": DEEP, "italic": True},
+        {"text": "9-29% годового дохода", "size": 11, "bold": True, "color": GOLD},
+        {"text": "с головы — экономически невозможно.\nРаботает только общинный зоотехник + SMS: AIM for Scale (Gates Foundation) — 40 млн фермеров в Индии через SMS, без AI-оборудования на голову.", "size": 11, "color": DEEP, "italic": True, "newpara": True},
+    ], line_spacing=1.25)
+
+    add_footer(s, "Источники: Allflex/sensehub.co.nz pricing 2026 · MSU/California dairy economics · AIM for Scale, Gates Foundation")
+    add_speaker_notes(s, load_speaker_notes("s23a"))
 
     # ============ s24 CattleEye + DeLaval + Birdoo ============
     s = blank(prs); set_slide_bg(s, WHITE)
@@ -807,86 +999,45 @@ def build_part3(prs, H):
     add_footer(s, "Рыночный ландшафт без агитации. Родовая форма — «профильные технические университеты»")
     add_speaker_notes(s, load_speaker_notes("s36c"))
 
-    # ============ s37 closing hero + 5-level ladder recap (D3) ============
+    # ============ s37 closing hero (hero photo ≥40% area + number-refrain) ============
     s = blank(prs); set_slide_bg(s, WHITE)
 
-    # Top callback box
-    ocean_box(s, 0.6, 0.3, 12.13, 1.9, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 0.4, 11.6, 0.35,
-             "Возврат к началу лекции (Plenty Compton):",
-             size=12, italic=True, color=GOLD, bold=True)
-    text_box(s, 0.85, 0.8, 11.6, 0.55,
+    # Compact top callback (Plenty Compton)
+    text_box(s, 0.6, 0.16, 12.13, 0.38,
              "Plenty не закрылась из-за плохого ИИ.",
-             size=22, bold=True, color=DEEP)
-    text_box(s, 0.85, 1.4, 11.6, 0.55,
+             size=20, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+    text_box(s, 0.6, 0.56, 12.13, 0.38,
              "Plenty закрылась из-за термодинамики LED.",
-             size=22, bold=True, color=GOLD)
-    text_box(s, 0.85, 1.95, 11.6, 0.25,
-             "Контроллер работал. CV распознавало. Модель обучалась. LED ≈ 100× энергии солнца — AP1.",
-             size=10, italic=True, color=DARK_GREY)
+             size=20, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
+    text_box(s, 0.6, 0.96, 12.13, 0.24,
+             "Контроллер работал. CV распознавало. LED ≈ 100× энергии солнца — AP1.",
+             size=10, italic=True, color=DARK_GREY, align=PP_ALIGN.CENTER)
 
-    # Mid: 5-level mini-ladder recap (D3 — на каждый уровень success / failure)
-    text_box(s, 0.6, 2.4, 12.13, 0.35,
-             "На каждый уровень лестницы — работает и ломается:",
-             size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER, italic=True)
+    # Hero photo frame — LaserWeeder G2 (same canonical success-case photo as s16,
+    # letterbox-cropped for this band; ≥40% of slide area)
+    ocean_box(s, 0.6, 1.24, 12.13, 4.05, fill=SURFACE, stroke=LIGHT)
+    p = ASSETS / "photos" / "p37-laserweeder-hero-crop.jpg"
+    if p.exists():
+        add_image(s, p, 0.68, 1.32, w=11.97, h=3.894)
+    text_box(s, 0.6, 5.33, 12.13, 0.25,
+             "Carbon Robotics LaserWeeder G2 · февраль 2025 · carbonrobotics.com",
+             size=10.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
-    ladder = [
-        ("L1 Поле",      "See & Spray (5M акров)",           "Plenty / Bowery (термодинамика)"),
-        ("L2 Робот",     "LaserWeeder G2 (узкий лазер)",     "Monarch (демо ≠ внедрение)"),
-        ("L3 Животное",  "SenseHub (2M коров)",              "Cainthus / привязное содержание"),
-        ("L4 Цепочка",   "Cargill CMAX (узкий агент)",       "USDA Climate-Smart / Verra 94%"),
-        ("L5 Полка",     "Walmart Eden / Tesco / X5",        "GNSS-jamming Финляндия"),
-    ]
-    ladder_x = 0.6
-    ladder_y = 2.8
-    row_h = 0.42
-    # Header
-    headers = [("Уровень", 2.0, DEEP), ("✓ Работает", 5.0, LIGHT), ("✗ Ломается", 5.13, GOLD)]
-    cx = ladder_x
-    for hdr, w, color in headers:
-        ocean_box(s, cx, ladder_y, w, row_h, fill=color, stroke=color)
-        text_box(s, cx, ladder_y, w, row_h, hdr,
-                 size=12, bold=True, color=WHITE,
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        cx += w + 0.0
-    ladder_y += row_h + 0.03
-    for i, (lvl, success, failure) in enumerate(ladder):
-        cx = ladder_x
-        fill = SURFACE if i % 2 == 0 else LIGHT_TINT
-        # Level
-        ocean_box(s, cx, ladder_y, 2.0, row_h, fill=fill, stroke=LIGHT, stroke_pt=0.5)
-        text_box(s, cx + 0.1, ladder_y, 1.8, row_h, lvl,
-                 size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-        cx += 2.0
-        # Success
-        ocean_box(s, cx, ladder_y, 5.0, row_h, fill=fill, stroke=LIGHT, stroke_pt=0.5)
-        text_box(s, cx + 0.1, ladder_y, 4.8, row_h, success,
-                 size=11, color=DEEP, italic=True, anchor=MSO_ANCHOR.MIDDLE)
-        cx += 5.0
-        # Failure
-        ocean_box(s, cx, ladder_y, 5.13, row_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=0.5)
-        text_box(s, cx + 0.1, ladder_y, 4.93, row_h, failure,
-                 size=11, color=DARK_GREY, italic=True, anchor=MSO_ANCHOR.MIDDLE)
-        ladder_y += row_h + 0.03
+    # Main payoff
+    text_box(s, 0.6, 5.62, 12.13, 0.33,
+             "Инженер держит лестницу в голове — и знает, где ИИ не работает и почему.",
+             size=16, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
 
-    # Bottom: main payoff + bridge to L11
-    ocean_box(s, 0.6, 5.5, 6.5, 1.4, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 0.8, 5.6, 6.1, 0.4,
-             "Инженер держит лестницу в голове целиком",
-             size=14, bold=True, color=DEEP)
-    text_box(s, 0.8, 6.0, 6.1, 0.85,
-             "и выбирает правильный инструмент для каждой ступени.\n"
-             "Знает где ИИ не работает — и почему.",
-             size=12, color=MID, italic=True, line_spacing=1.4)
+    # Bridge to Lec-11
+    text_box(s, 0.6, 5.98, 12.13, 0.28,
+             "Дальше — Лекция 11: кибер-физическое производство (L11).",
+             size=12, italic=True, color=MID, align=PP_ALIGN.CENTER)
 
-    # Bridge box
-    ocean_box(s, 7.3, 5.5, 5.45, 1.4, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 7.5, 5.6, 5.05, 0.4, "Переход к Лекции 11",
-             size=14, bold=True, color=GOLD)
-    text_box(s, 7.5, 6.0, 5.05, 0.9,
-             "L11 — кибер-физическое производство. Закрытый контур\n"
-             "как L4-L5 + физический контакт ИИ с продуктом как L2.",
-             size=11, color=DEEP, italic=True, line_spacing=1.4)
+    # Number-refrain (сквозная линия лекции)
+    ocean_box(s, 0.6, 6.30, 12.13, 0.32, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.6, 6.30, 12.13, 0.32,
+             "18 из 45 случаев этой лекции — исход приписывают ИИ, а причина другая (40%)",
+             size=11.5, bold=True, color=GOLD, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
     add_footer(s, "Спасибо. Дальше — вопросы и ответы")
     add_speaker_notes(s, load_speaker_notes("s37"))

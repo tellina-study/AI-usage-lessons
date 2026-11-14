@@ -236,24 +236,72 @@ slides:
       attribution_label: ""
 
   # ---------------------------------------------------------------------------
-  # Раздел 1 — L1 «Поле» (~14 мин)
+  # Раздел 1 — L1 «Поле» (~17 мин)
   # ---------------------------------------------------------------------------
+
+  - id: s06a
+    title: "Точное земледелие — что это за стадия"
+    assertion: "Точное земледелие — защита растений и питание культуры дифференцированно по участкам поля, а не единой нормой на весь контур. Решение принимается до прохода техники — и исправить его потом нельзя."
+    section: "Р1"
+    slide_type: "stage_overview"
+    layout: "stage-overview-4card"
+    timing_min: 1.0
+    chapter_ref: "§1.0(а)-(г) Часть 1"
+    learning_goal: "Шаг 1 строения раздела — что это за стадия: термин отрасли, данные и вопрос, способы получения данных, место стадии в цикле"
+    learning_outcomes: [LO1a]
+    media:
+      kind: "term card + 4 method icon-cards + decision band"
+      source_candidate: "own (Lucide users/plane/satellite/tractor)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  - id: s06b
+    title: "Как это решают без модели — классические режимы Раздела 1"
+    assertion: "Шесть классических режимов Раздела 1 работают прямо сейчас. Главный — сплошное опрыскивание по регламенту: ≈$65-67/акр на кукурузе, ≈$94/акр на сое. Каждый рабочий случай ниже сравнивается с одним из них, а не с нулём."
+    section: "Р1"
+    slide_type: "classical_regimes"
+    layout: "classical-regimes-hero-plus-list"
+    timing_min: 1.0
+    chapter_ref: "§1.0(д) Часть 1"
+    learning_goal: "Шаг 2 строения раздела — как это решают без модели: классические режимы по именам, с ценой в $/акр"
+    learning_outcomes: [LO1a, LO5]
+    media:
+      kind: "hero price plate + compact 5-item list"
+      source_candidate: "own table"
+      acquisition_tier: "own"
+      attribution_label: ""
 
   - id: s07
     title: "See & Spray Ultimate — каноничный success-кейс L1"
-    assertion: "5 миллионов акров сезон 2025, –50% non-residual гербицидов, +2,0 бушеля сои с акра. 36 камер по штанге + CNN на 40M размеченных изображениях. Edge ML на NVIDIA Jetson — задержка <50 мс."
+    assertion: "5 млн акров сезон 2025 (≈0,55% пашни США), –50% гербицидов, +3,9% урожайности сои (база ≈50,7 бу/акр) — вендорская цифра, независимо не подтверждена (Avent et al. 2024). 36 камер + CNN на >1M изображений, edge ML <50 мс."
     section: "Р1"
     slide_type: "content"
-    layout: "photo-left-data-right"
+    layout: "photo-left-data-right-anti-hype"
     timing_min: 2
     chapter_ref: "§1.1 Часть 1 — John Deere See & Spray Ultimate"
-    learning_goal: "Working case L1: узкая задача + edge ML + измеримый ROI"
-    learning_outcomes: [LO1a, LO1b]
+    learning_goal: "Working case L1: узкая задача + edge ML + измеримый ROI + anti-hype — что подтверждено независимо, а что нет"
+    learning_outcomes: [LO1a, LO1b, LO2]
     media:
-      kind: "photo in field + data card"
+      kind: "photo in field + anti-hype callout + data cards + price plates"
       source_candidate: "Deere press release ноябрь 2025 + AgTechNavigator 2025-11-10"
       acquisition_tier: "Tier 1"
       attribution_label: "John Deere ExactApply + See & Spray Ultimate. Источник: Deere press 2025-11"
+
+  - id: s07a
+    title: "See & Spray — цена ошибок, классика, модель, что переехало"
+    assertion: "See & Spray — полная форма разбора. Цена пропущенного сорняка: до 40 бу/акр. Цена повреждения культуры — не переводится в те же единицы, пробел назван. Против $65-94/акр классики — подписка $1/$5 за акр. Подтверждено: химия и crop injury. Не подтверждено: урожайность."
+    section: "Р1"
+    slide_type: "method_form_full"
+    layout: "method-form-5-step"
+    timing_min: 2.5
+    chapter_ref: "§1.1 Часть 1 — See & Spray, форма разбора §4 канона"
+    learning_goal: "Форма разбора §4 канона целиком на одном кейсе: цена обеих ошибок → классические режимы → модель → устройство → что переехало"
+    learning_outcomes: [LO1a, LO1b, LO2, LO5]
+    media:
+      kind: "5-step method form — price plates + spec strip + verdict columns"
+      source_candidate: "own table"
+      acquisition_tier: "own"
+      attribution_label: ""
 
   - id: s08
     title: "Vendor matrix L1 — пять платформ, разные режимы"
@@ -393,19 +441,35 @@ slides:
 
   - id: s16
     title: "Carbon Robotics LaserWeeder G2 — каноничный success L2"
-    assertion: "250 000 акров обработано, 15 млрд сорняков уничтожено, 14 стран. $1,4M / машина. 240W лазер + CNN на 40M изображений. Замена химии физикой — узкая subституция, не «autonomous tractor»."
+    assertion: "250 000 акров обработано, 15 млрд сорняков уничтожено, 14 стран. $1,4M / машина. Ручная прополка organic-листовых: $900/акр baseline → $550/акр (Braga Fresh) и $232/акр (Triangle Farms) — Western Growers, март 2024. Замена физики физикой — узкая субституция, не «autonomous tractor»."
     section: "Р2"
     slide_type: "content"
-    layout: "photo-hero + 3-card-spec"
+    layout: "photo-hero + 5-kpi-card + economics-плашки"
     timing_min: 2.5
-    chapter_ref: "§2.2 Часть 1 — LaserWeeder G2 deep dive"
-    learning_goal: "Working case L2: узкая ниша + замена физики физикой + measurable ROI"
+    chapter_ref: "§2.2 Часть 2 — LaserWeeder G2 deep dive"
+    learning_goal: "Working case L2: узкая ниша + замена физики физикой + measurable ROI, доказанный именованной экономикой organic-листовых культур"
     learning_outcomes: [LO1a, LO1b]
     media:
       kind: "LaserWeeder G2 в работе photo"
-      source_candidate: "Carbon Robotics businesswire press 2025-02-10"
+      source_candidate: "carbonrobotics.com/laserweeder-g2 (og:image, Tier 1)"
       acquisition_tier: "Tier 1"
-      attribution_label: "Carbon Robotics LaserWeeder G2 launch. Источник: businesswire 2025-02-10"
+      attribution_label: "Carbon Robotics LaserWeeder G2. Источник: carbonrobotics.com/laserweeder-g2"
+
+  - id: s16a
+    title: "LaserWeeder — цена ошибок и два классических режима, $/акр/год"
+    assertion: "Цена FP ≈$90-100/акр (оценка, USDA NASS) · цена FN не задокументирована вендором. Классика: гербицид $200-400/акр (синтез extension studies) · ручная прополка organic $900/акр (Western Growers, март 2024). LaserWeeder — $550/акр (Braga Fresh, −39%) и $232/акр (Triangle Farms). Экономика доказана для organic-листовых, не как общее заявление."
+    section: "Р2"
+    slide_type: "content"
+    layout: "4-step-price-ladder (форма разбора §4 канона)"
+    timing_min: 2.5
+    chapter_ref: "§2.2 Часть 2 — LaserWeeder G2, форма разбора §4 канона"
+    learning_goal: "Форма разбора §4 канона: цена обеих ошибок → оба классических режима на одном знаменателе → модель против них → что переехало"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "number plates / price-ladder (own, no photo)"
+      source_candidate: "own (data plates, Ocean palette)"
+      acquisition_tier: "own"
+      attribution_label: ""
 
   - id: s17
     title: "Cognitive Pilot vs ИТЭЛМА — архитектурный выбор внутри ИИ-домена"
@@ -511,6 +575,38 @@ slides:
   # Раздел 3 — L3 «Животное» (~12 мин)
   # ---------------------------------------------------------------------------
 
+  - id: s22a
+    title: "Точное животноводство: что это за стадия"
+    assertion: "Стадия называется точным животноводством — наблюдение и решения по отдельному животному, а не по стаду в среднем. Данные: активность, руминация, температура, походка, вес, корм и вода, удой, репродуктивный цикл. Вопрос — что с этим животным и нужно ли вмешаться. Способы получения: визуальное наблюдение зоотехника, плановый осмотр ветеринара, бирка-датчик/ошейник, камера над проходом. Стадия стоит параллельно полю и до переработки — первая, где среда частично управляема, поэтому обратная связь приходит за часы-дни."
+    section: "Р3"
+    slide_type: "content"
+    layout: "stage-overview-4-methods"
+    timing_min: 1.0
+    chapter_ref: "§3.0(а)-(г) Часть 2"
+    learning_goal: "«Что это за стадия» — шаг 1 строения Раздела 3 (Д2, решение о слоте 90)"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "own 4 icon-card способы получения данных, без фото"
+      source_candidate: "own (Lucide eye/clipboard-check/radar/camera, Ocean palette)"
+      acquisition_tier: "own"
+      attribution_label: ""
+
+  - id: s22b
+    title: "Как это решают без модели — шесть классических режимов L3"
+    assertion: "Шесть классических режимов L3 по именам: визуальное наблюдение зоотехника, плановые осмотры ветеринара по графику, расчёт по среднему по стаду и ручная фиксация в журнале, физическое взвешивание выборки, доильный зал с оператором, общинный зоотехник с рассылкой. Знаменатель один — $/год на то же стадо, на котором строится s23a."
+    section: "Р3"
+    slide_type: "content"
+    layout: "6-card-grid"
+    timing_min: 1.0
+    chapter_ref: "§3.0(д) Часть 2"
+    learning_goal: "«Как это решают без модели» — шаг Д1 строения Раздела 3"
+    learning_outcomes: [LO1a, LO1b]
+    media:
+      kind: "own 6-card grid классических режимов, без фото"
+      source_candidate: "own"
+      acquisition_tier: "own"
+      attribution_label: ""
+
   - id: s23
     title: "Allflex SenseHub — 2 миллиона коров mounted"
     assertion: "Ошейник с акселерометром + 5-7 лет батарея + cloud-аналитика. Алерты: эструс / отёл / хромота / мастит / BRD. AI — раннее предупреждение, не назначение лекарства. Augmentation, не replacement."
@@ -526,6 +622,22 @@ slides:
       source_candidate: "Merck Animal Health newsroom 2025"
       acquisition_tier: "Tier 1"
       attribution_label: "Allflex SenseHub, 2 миллиона коров milestone 2025. Источник: Merck Animal Health"
+
+  - id: s23a
+    title: "Три режима L3 на одном стаде — порог и сегмент 1-10 коров"
+    assertion: "SenseHub $46-57/голова/год ($4 600-5 700 на 100 голов) против визуального наблюдения + ветеринара $1 500-2 500/год на то же стадо — классика дешевле в 2-3 раза при малом поголовье. На 500+ голов экономика переворачивается: $23 000-28 500/год у SenseHub — малая доля общих затрат. В Восточной Африке доход $200-500/корова/год делает любую технологию дороже $46/голову/год потребляющей 9-29% годового дохода — экономически невозможной; работает только общинный зоотехник + SMS-рассылка (AIM for Scale)."
+    section: "Р3"
+    slide_type: "content"
+    layout: "price-plates-threshold"
+    timing_min: 2.0
+    chapter_ref: "§3.2/§3.4/§3.5a Часть 2 — SenseHub, форма разбора §4 канона + порог стада"
+    learning_goal: "Полная форма разбора L3: цена ошибки → три режима на одном знаменателе → порог стада → сегмент 1-10 коров (обязательная тройка §4 канона, не добор слота)"
+    learning_outcomes: [LO1a, LO1b, LO2]
+    media:
+      kind: "own price-plates, порог стада, без фото"
+      source_candidate: "own"
+      acquisition_tier: "own"
+      attribution_label: ""
 
   - id: s24
     title: "CattleEye + DeLaval VMS V310 + Cargill Birdoo"

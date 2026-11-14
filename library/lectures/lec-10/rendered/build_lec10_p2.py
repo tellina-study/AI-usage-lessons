@@ -1,5 +1,6 @@
 """
-Part 2: s15-s21 + s17 — Раздел 2 «L2 Робот». 7 слайдов: divider + LaserWeeder + 4 cases + РФ-параллель.
+Part 2: s15-s21 + s17 + s16a — Раздел 2 «L2 Робот». 8 слайдов: divider + LaserWeeder +
+price-ladder формы разбора + 4 cases + РФ-параллель.
 """
 
 def build_part2(prs, H):
@@ -29,39 +30,172 @@ def build_part2(prs, H):
         "Carbon Robotics LaserWeeder G2 — каноничный успех L2",
         size=24)
 
-    # Left: hero "photo" placeholder + spec card (since no real LaserWeeder photo)
-    ocean_box(s, 0.6, 1.5, 7.5, 5.1)
-    # Use FarmWise-titan as visual stand-in
-    p = ASSETS / "photos" / "p20-farmwise-titan.jpg"
+    # Left: hero photo — REAL Carbon Robotics LaserWeeder G2 (Tier 1 og:image,
+    # carbonrobotics.com/laserweeder-g2). Replaces FarmWise Titan cross-contamination
+    # (architecture.md K-2.1: that file is reused on s20 as the FAILURE case).
+    ocean_box(s, 0.6, 1.5, 7.5, 4.3)
+    p = ASSETS / "photos" / "p16-laserweeder-g2-real.jpg"
     if p.exists():
-        add_image(s, p, 0.85, 1.75, w=7.0, h=4.2)
-    text_box(s, 0.85, 6.05, 7.0, 0.3,
-             "ИИ-управляемый робот для борьбы с сорняками (репрезентативное фото · класс «Titan / LaserWeeder»)",
+        add_image(s, p, 0.9, 1.7, w=6.75, h=3.8)
+    text_box(s, 0.9, 5.55, 6.75, 0.25,
+             "Carbon Robotics LaserWeeder G2. Источник: carbonrobotics.com/laserweeder-g2",
              size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
-    # Right: 4 KPI cards — с baseline counterfactuals
+    # Right: 5 KPI cards — метрики + архитектура + цена FP (данные §2.2 часть 2)
     kpis = [
         ("250 000 акров", "≈0,028% из 900M акров US ag", GOLD),
         ("15 млрд", "сорняков уничтожено", DEEP),
-        ("$1,4 млн", "vs прыскиватель ~$50k + химия $200-400/акр → окупаемость 3-4 года на 1k+ акров", LIGHT),
+        ("$1,4 млн / машина", "крупные овощные и органические хозяйства", LIGHT),
         ("240 Вт лазер", "+ CNN на 40 млн изображений", MID),
+        ("≈$90-100/акр", "цена FP — оценка по USDA NASS, не прямой источник", TEAL),
     ]
     cy = 1.5
+    card_h = 0.78
     for big, lbl, color in kpis:
-        ocean_box(s, 8.3, cy, 4.45, 1.15, fill=LIGHT_TINT if color != GOLD else GOLD_TINT)
-        text_box(s, 8.5, cy + 0.1, 4.1, 0.55, big, size=24, bold=True, color=color)
-        text_box(s, 8.5, cy + 0.65, 4.1, 0.45, lbl,
-                 size=13, color=DEEP, italic=True)
-        cy += 1.25
+        fill = GOLD_TINT if color == GOLD else (TEAL_TINT if color == TEAL else LIGHT_TINT)
+        ocean_box(s, 8.3, cy, 4.45, card_h, fill=fill)
+        text_box(s, 8.5, cy + 0.05, 4.1, 0.4, big, size=17, bold=True, color=color)
+        text_box(s, 8.5, cy + 0.44, 4.1, 0.32, lbl,
+                 size=9.5, color=DEEP, italic=True, line_spacing=1.0)
+        cy += card_h + 0.065
 
-    # Bottom: principle
-    ocean_box(s, 0.6, 6.55, 12.13, 0.4, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 6.58, 11.6, 0.32,
-             "Замена химии физикой — узкая замена операции, не «автономный трактор». Рабочий паттерн L2.",
-             size=13, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    # Bottom-left: Economics plashki — Braga Fresh / Triangle Farms, «было → стало → %»
+    # (3 explicit short paragraphs each — avoids word-wrap overflow found in iter.1)
+    plashka_y = 5.95
+    plashka_h = 0.66
+    plashka_w = 5.965
+    ocean_box(s, 0.6, plashka_y, plashka_w, plashka_h, fill=LIGHT_TINT, stroke=LIGHT, stroke_pt=1.0)
+    text_runs(s, 0.78, plashka_y + 0.06, plashka_w - 0.36, plashka_h - 0.12,
+        [
+            {"text": "Braga Fresh: ", "size": 11, "bold": True, "color": DEEP},
+            {"text": "$900/акр → $550/акр", "size": 11, "bold": True, "color": MID},
+            {"text": "ручная $282,28 + LaserWeeder $267,72", "size": 9, "italic": True,
+             "color": DARK_GREY, "newpara": True},
+            {"text": "−39% совокупных затрат на прополку", "size": 11, "bold": True,
+             "color": GOLD, "newpara": True},
+        ], anchor=MSO_ANCHOR.TOP, line_spacing=1.08)
 
-    add_footer(s, "Источник: пресс-релиз Carbon Robotics, businesswire 2025-02-10")
+    tri_x = 6.765
+    ocean_box(s, tri_x, plashka_y, plashka_w, plashka_h, fill=LIGHT_TINT, stroke=LIGHT, stroke_pt=1.0)
+    text_runs(s, tri_x + 0.18, plashka_y + 0.06, plashka_w - 0.36, plashka_h - 0.12,
+        [
+            {"text": "Triangle Farms: ", "size": 11, "bold": True, "color": DEEP},
+            {"text": "$900/акр → $232,12/акр", "size": 11, "bold": True, "color": MID},
+            {"text": "ручная прополка (аругула) устранена полностью", "size": 9, "italic": True,
+             "color": DARK_GREY, "newpara": True},
+            {"text": "экономия $251,27/акр", "size": 11, "bold": True, "color": GOLD, "newpara": True},
+        ], anchor=MSO_ANCHOR.TOP, line_spacing=1.08)
+
+    # Synthesis line — herbicide range + industry-wide ≈40% (shortened to fit 1 line @10pt)
+    synth_y = plashka_y + plashka_h + 0.07
+    ocean_box(s, 0.6, synth_y, 12.13, 0.3, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, synth_y + 0.02, 11.6, 0.26,
+             "Гербицид (исследования себестоимости, США): $200-400/акр/год · Western Growers: прополка дешевле ≈40% после года",
+             size=10, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+
+    add_footer(s, "Источники: Carbon Robotics businesswire 2025-02-10 · carbonrobotics.com/laserweeder-g2 · GeekWire 2025 · Western Growers Case Study, март 2024")
     add_speaker_notes(s, load_speaker_notes("s16"))
+
+    # ============ s16a LaserWeeder — форма разбора: цена ошибок + 2 режима ============
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s,
+        "LaserWeeder — цена ошибок и два классических режима, $/акр/год",
+        size=22)
+
+    step_x = 0.6
+    step_w = 12.13
+    half_w = (step_w - 0.2) / 2.0
+
+    # Ступень 1 — цена двух ошибок
+    s1_y = 1.5
+    s1_h = 1.35
+    ocean_box(s, step_x, s1_y, half_w, s1_h, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, step_x + 0.18, s1_y + 0.1, half_w - 0.36, 0.32,
+             "FP — выжигание культуры", size=13, bold=True, color=DEEP)
+    text_box(s, step_x + 0.18, s1_y + 0.46, half_w - 0.36, 0.36,
+             "≈$90-100/акр", size=22, bold=True, color=TEAL)
+    text_box(s, step_x + 0.18, s1_y + 0.88, half_w - 0.36, 0.42,
+             "оценка по USDA NASS (шпинат $487М/52 800 акров × ≤1% подавления роста культуры) — не прямой источник",
+             size=10, italic=True, color=DARK_GREY, line_spacing=1.15)
+
+    s1b_x = step_x + half_w + 0.2
+    ocean_box(s, s1b_x, s1_y, half_w, s1_h, fill=SOFT_GREY, stroke=DARK_GREY)
+    text_box(s, s1b_x + 0.18, s1_y + 0.1, half_w - 0.36, 0.32,
+             "FN — пропущенный сорняк", size=13, bold=True, color=DEEP)
+    text_box(s, s1b_x + 0.18, s1_y + 0.46, half_w - 0.36, 0.36,
+             "не опубликовано", size=20, bold=True, color=DARK_GREY)
+    text_box(s, s1b_x + 0.18, s1_y + 0.88, half_w - 0.36, 0.42,
+             "вендором — пробел хуже, чем у See & Spray (там есть хотя бы качественная оценка)",
+             size=10, italic=True, color=DARK_GREY, line_spacing=1.15)
+
+    # Ступень 2 — два классических режима
+    s2_y = s1_y + s1_h + 0.14
+    s2_h = 1.25
+    ocean_box(s, step_x, s2_y, half_w, s2_h, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, step_x + 0.18, s2_y + 0.1, half_w - 0.36, 0.32,
+             "Гербицид (классика)", size=13, bold=True, color=DEEP)
+    text_box(s, step_x + 0.18, s2_y + 0.46, half_w - 0.36, 0.36,
+             "$200-400/акр/год", size=20, bold=True, color=MID)
+    text_box(s, step_x + 0.18, s2_y + 0.86, half_w - 0.36, 0.38,
+             "синтез исследований себестоимости (США) · лук Орегон/Айдахо $77,65/акр только химия",
+             size=10, italic=True, color=DARK_GREY, line_spacing=1.15)
+
+    ocean_box(s, s1b_x, s2_y, half_w, s2_h, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, s1b_x + 0.18, s2_y + 0.1, half_w - 0.36, 0.32,
+             "Ручная прополка (классика)", size=13, bold=True, color=DEEP)
+    text_box(s, s1b_x + 0.18, s2_y + 0.46, half_w - 0.36, 0.36,
+             "$900/акр/год", size=20, bold=True, color=MID)
+    text_box(s, s1b_x + 0.18, s2_y + 0.86, half_w - 0.36, 0.38,
+             "базовый уровень для органических листовых культур (baby leaf) — Western Growers Case Study, март 2024",
+             size=10, italic=True, color=DARK_GREY, line_spacing=1.15)
+
+    # Ступень 3 — модель против режимов (было → стало → итог)
+    s3_y = s2_y + s2_h + 0.14
+    s3_h = 1.35
+    ocean_box(s, step_x, s3_y, half_w, s3_h, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, step_x + 0.18, s3_y + 0.1, half_w - 0.36, 0.32,
+             "Braga Fresh", size=13, bold=True, color=DEEP)
+    text_runs(s, step_x + 0.18, s3_y + 0.46, half_w - 0.36, 0.82,
+        [
+            {"text": "$900/акр → ", "size": 16, "bold": True, "color": DEEP},
+            {"text": "$550/акр", "size": 16, "bold": True, "color": MID},
+            {"text": "ручная $282,28 + LaserWeeder $267,72", "size": 10, "italic": True,
+             "color": DARK_GREY, "newpara": True},
+            {"text": "−39% совокупных затрат на прополку", "size": 14, "bold": True,
+             "color": GOLD, "newpara": True},
+        ], line_spacing=1.2)
+
+    ocean_box(s, s1b_x, s3_y, half_w, s3_h, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, s1b_x + 0.18, s3_y + 0.1, half_w - 0.36, 0.32,
+             "Triangle Farms (аругула)", size=13, bold=True, color=DEEP)
+    text_runs(s, s1b_x + 0.18, s3_y + 0.46, half_w - 0.36, 0.82,
+        [
+            {"text": "$900/акр → ", "size": 16, "bold": True, "color": DEEP},
+            {"text": "$232,12/акр", "size": 16, "bold": True, "color": MID},
+            {"text": "ручная прополка устранена полностью", "size": 10, "italic": True,
+             "color": DARK_GREY, "newpara": True},
+            {"text": "экономия $251,27/акр", "size": 14, "bold": True, "color": GOLD, "newpara": True},
+        ], line_spacing=1.2)
+
+    # Строка под ступенью 3 — отраслевой синтез
+    s3n_y = s3_y + s3_h + 0.08
+    text_box(s, step_x + 0.1, s3n_y, step_w - 0.2, 0.3,
+             "По отрасли в целом (Western Growers) — снижение затрат на прополку ≈40% после первого года эксплуатации",
+             size=10.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+
+    # Ступень 4 — что переехало (вывод, во всю ширину)
+    s4_y = s3n_y + 0.32
+    s4_h = 0.75
+    ocean_box(s, step_x, s4_y, step_w, s4_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    text_box(s, step_x + 0.25, s4_y + 0.1, step_w - 0.5, s4_h - 0.2,
+             "Что переехало: экономика доказана убедительнее всего в органических листовых культурах "
+             "(baby leaf, аругула) — не как общее заявление «для крупных овощных хозяйств». Для "
+             "товарных пропашных культур (кукуруза, соя) и культур с густой посадкой тем же способом "
+             "она не доказана.",
+             size=12, bold=True, italic=True, color=DEEP, line_spacing=1.2, anchor=MSO_ANCHOR.MIDDLE)
+
+    add_footer(s, "Источники: USDA NASS Vegetables Annual Summary 2025/2026 · Western Growers Case Study, март 2024 · Carbon Robotics businesswire 2025-02-10")
+    add_speaker_notes(s, load_speaker_notes("s16a"))
 
     # ============ s17 Cognitive Pilot vs ИТЭЛМА — RU parallel ============
     s = blank(prs); set_slide_bg(s, WHITE)

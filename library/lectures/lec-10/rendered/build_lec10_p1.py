@@ -242,65 +242,103 @@ def build_part1_full(prs, H):
 
     add_speaker_notes(s, load_speaker_notes("s04"))
 
-    # ============ s05 keystone ladder ============
+    # ============ s05 keystone ladder (two rows + вывод-вопрос) ============
     s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s, "Лестница ИИ — пять уровней. На каждой ступени работает по-разному", size=22)
+    add_assertion_title(s, "Лестница ИИ — пять уровней. На каждой ступени работает по-разному", size=20, y=0.3)
 
-    # 5 ladder steps stacked vertically — larger boxes
+    # 5 ladder steps stacked vertically — compacted (shortened labels, not shrunk below
+    # readability floor) to leave room for Row1/Row2/вывод below
     levels = [
         ("L5", "Полка / магазин", "Полностью оцифрованная среда. ИИ зрел.",
          "Walmart Eden 2017+, Tesco 2017+, X5 2020+", GOLD),
-        ("L4", "Цепочка поставок", "Контролируемые грузопотоки + быстрая обратная связь",
+        ("L4", "Цепочка поставок", "Контролируемые потоки, быстрая связь",
          "Cargill CMAX, Tract, Olam, Walmart×Cropin", TEAL),
-        ("L3", "Животное", "Полузакрытая среда + измерения на уровне особи",
+        ("L3", "Животное", "Полузакрытая среда, уровень особи",
          "SenseHub 2M коров, CattleEye, DeLaval V310", LIGHT),
-        ("L2", "Робот", "Специализация работает; универсальный — банкротится",
+        ("L2", "Робот", "Специализация жива; обобщённый — нет",
          "LaserWeeder G2, Saga UV-C, Tevel · против Monarch/FarmWise", MID),
         ("L1", "Поле", "Открытая биология — самая трудная",
          "See & Spray работает · Plenty/AppHarvest/Bowery провалились", DEEP),
     ]
-    step_w = 9.5; step_h = 0.85; gap = 0.08
+    step_w = 9.5; step_h = 0.62; gap = 0.05
     start_x = 0.6
-    start_y = 1.6
+    start_y = 1.05
     for i, (lid, title, desc, examples, color) in enumerate(levels):
         y = start_y + i * (step_h + gap)
-        # Indent each row slightly to suggest a "ladder"
-        indent = i * 0.0
-        # Step box
-        ocean_box(s, start_x + indent, y, step_w, step_h,
+        ocean_box(s, start_x, y, step_w, step_h,
                   fill=LIGHT_TINT if color != GOLD else GOLD_TINT, stroke=color)
-        # Level badge
-        text_box(s, start_x + indent + 0.15, y + 0.2, 0.7, 0.5, lid,
-                 size=26, bold=True, color=color,
+        text_box(s, start_x + 0.12, y + 0.1, 0.65, 0.42, lid,
+                 size=20, bold=True, color=color,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-        # Title
-        text_box(s, start_x + indent + 1.0, y + 0.08, 3.0, 0.4, title,
-                 size=15, bold=True, color=DEEP)
-        # Desc
-        text_box(s, start_x + indent + 1.0, y + 0.45, 3.0, 0.35, desc,
-                 size=10, color=MID, italic=True, line_spacing=1.2)
-        # Examples
-        text_box(s, start_x + indent + 4.1, y + 0.22, step_w - 4.3, 0.45,
-                 examples, size=11, italic=True, color=DARK_GREY, line_spacing=1.3)
+        text_box(s, start_x + 0.9, y + 0.05, 3.0, 0.28, title,
+                 size=13, bold=True, color=DEEP)
+        text_box(s, start_x + 0.9, y + 0.34, 3.0, 0.24, desc,
+                 size=10, color=MID, italic=True, line_spacing=1.0)
+        text_box(s, start_x + 3.95, y + 0.16, step_w - 4.1, 0.34,
+                 examples, size=10.5, italic=True, color=DARK_GREY, line_spacing=1.05)
 
-    # Right-side axis indicator
-    ocean_box(s, 10.3, 1.6, 2.4, 4.6, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 10.5, 1.7, 2.0, 0.4, "↑ движение по лестнице",
-             size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.2)
+    ladder_h = 5 * step_h + 4 * gap  # == 3.3
+
+    # Right-side axis indicator — matched height to ladder
+    ocean_box(s, 10.3, start_y, 2.4, ladder_h, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 10.45, start_y + 0.06, 2.1, 0.3, "↑ движение",
+             size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.0)
     arrows_text = [
-        ("↑ контролируемость", "среды растёт"),
-        ("↑ измеримая отдача", "ROI растёт"),
-        ("↑ предсказуемость", "результата растёт"),
-        ("↓ биология", "неопределённость падает"),
+        ("↑ контролируемость", "среды"),
+        ("↑ ROI", "растёт"),
+        ("↑ предсказуемость", "результата"),
+        ("↓ биология", "непредсказуемость падает"),
     ]
-    ay = 2.25
+    ay = start_y + 0.46
     for hdr, dsc in arrows_text:
-        text_box(s, 10.4, ay, 2.2, 0.3, hdr, size=12, bold=True, color=GOLD)
-        text_box(s, 10.4, ay + 0.3, 2.2, 0.5, dsc,
-                 size=9, color=DARK_GREY, italic=True, line_spacing=1.2)
-        ay += 0.95
+        text_box(s, 10.4, ay, 2.2, 0.24, hdr, size=11, bold=True, color=GOLD)
+        text_box(s, 10.4, ay + 0.23, 2.2, 0.32, dsc,
+                 size=10, color=DARK_GREY, italic=True, line_spacing=1.0)
+        ay += 0.68
 
-    add_footer(s, "↑ контролируемость среды ↔ ↑ проникновение ИИ · следующая — L11 кибер-физическое производство")
+    # ---- РЯД 1 — измеренная тройка (3 плашки) ----
+    row1_y = start_y + ladder_h + 0.12
+    row1_h = 1.15
+    row1_gap = 0.14
+    row1_w = (12.13 - 2 * row1_gap) / 3
+    triple = [
+        ("$940 млн", "Plenty Compton — потери капитала",
+         "$1,9 млрд → <$15 млн (−99% за 19 мес) — закрылась не из-за ИИ"),
+        ("5 млн акров", "See & Spray Ultimate — рабочий ИИ",
+         "= 0,55% от ≈900М акров пашни США"),
+        ("45 bp → 8 bp", "ручное хеджирование vs агент",
+         "сконструированный пример для иллюстрации механизма, не измеренный кейс"),
+    ]
+    rx = 0.6
+    for big, lbl, sub in triple:
+        ocean_box(s, rx, row1_y, row1_w, row1_h, fill=LIGHT_TINT, stroke=LIGHT)
+        text_box(s, rx + 0.12, row1_y + 0.06, row1_w - 0.24, 0.36, big,
+                 size=22, bold=True, color=GOLD)
+        text_box(s, rx + 0.12, row1_y + 0.44, row1_w - 0.24, 0.26, lbl,
+                 size=11, bold=True, color=DEEP, line_spacing=1.0)
+        text_box(s, rx + 0.12, row1_y + 0.71, row1_w - 0.24, 0.42, sub,
+                 size=10, italic=True, color=MID, line_spacing=1.05)
+        rx += row1_w + row1_gap
+
+    # ---- РЯД 2 — честно названный пробел ----
+    row2_y = row1_y + row1_h + 0.1
+    row2_h = 0.48
+    ocean_box(s, 0.6, row2_y, 12.13, row2_h, fill=WHITE, stroke=SOFT_GREY, stroke_pt=1.2)
+    text_box(s, 0.85, row2_y + 0.03, 11.6, row2_h - 0.06,
+             "Своего свидетельства к этой лекции не найдено — все кейсы ниже рассказаны не от первого лица",
+             size=11, italic=True, color=DARK_GREY, anchor=MSO_ANCHOR.MIDDLE)
+
+    # ---- Строка вывода — вопрос вечера (заменяет прежний footer) ----
+    vyvod_y = row2_y + row2_h + 0.1
+    vyvod_h = 1.0
+    ocean_box(s, 0.6, vyvod_y, 12.13, vyvod_h, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, vyvod_y + 0.08, 11.6, 0.4,
+             "Привычный ответ — «ИИ приходит в сельское хозяйство».",
+             size=13, italic=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
+    text_box(s, 0.85, vyvod_y + 0.48, 11.6, 0.48,
+             "Вопрос вечера — сколько ждать ответа на его действие, и успеет ли он окупиться раньше, чем сменится среда?",
+             size=15, bold=True, color=DEEP, line_spacing=1.15)
+
     add_speaker_notes(s, load_speaker_notes("s05"))
 
     # ============ s06 section1 divider — L1 Поле ============
@@ -311,41 +349,251 @@ def build_part1_full(prs, H):
     s_last = prs.slides[-1]
     add_speaker_notes(s_last, load_speaker_notes("s06"))
 
+    # ============ s06a — что это за стадия (точное земледелие) ============
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s, "Точное земледелие — что это за стадия", size=24)
+
+    # Term card — full width
+    ocean_box(s, 0.6, 1.3, 12.13, 0.95, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.85, 1.4, 11.6, 0.35,
+             "Точное земледелие (precision agriculture)",
+             size=15, bold=True, color=DEEP)
+    text_box(s, 0.85, 1.75, 11.6, 0.45,
+             "Защита растений и питание культуры дифференцированно по участкам, а не единой нормой на весь контур. "
+             "Термин старше обучаемых моделей — ИИ пришёл в уже существующую практику.",
+             size=11, italic=True, color=MID, line_spacing=1.2)
+
+    # Left: data & question
+    ocean_box(s, 0.6, 2.4, 5.5, 2.5)
+    text_box(s, 0.85, 2.5, 5.0, 0.35, "Какие данные и какой вопрос",
+             size=13, bold=True, color=DEEP)
+    text_box(s, 0.85, 2.9, 5.0, 1.9,
+             "Сорняк и его вид · признаки болезни на листе · индекс вегетации по зонам · "
+             "влажность и плодородие почвы · фаза культуры · погода · история обработок.\n\n"
+             "Вопрос стадии: что внести, в какой дозе, на каком участке и в какой день — "
+             "и где не вносить ничего.",
+             size=11, color=DARK_GREY, italic=True, line_spacing=1.3)
+
+    # Right: 4 method icon-cards (2x2)
+    methods = [
+        ("eye", "Наземный осмотр", "точнее всех, дороже всех по времени"),
+        ("plane", "Съёмка с БПЛА", "индексы вегетации, выше разрешение спутника"),
+        ("satellite", "Спутник", "Sentinel-1/-2 — регулярное покрытие, грубое разрешение"),
+        ("tractor", "Датчики на технике", "камеры штанги, датчики урожайности — в момент прохода"),
+    ]
+    mcol_w = 2.95; mcol_h = 1.12; mgap = 0.1
+    mx0 = 6.3
+    for i, (icon, label, sub) in enumerate(methods):
+        col = i % 2; row = i // 2
+        mx = mx0 + col * (mcol_w + mgap)
+        my = 2.4 + row * (mcol_h + mgap)
+        ocean_box(s, mx, my, mcol_w, mcol_h)
+        ip = ASSETS / "icons" / f"{icon}-48.png"
+        if ip.exists():
+            add_image(s, ip, mx + 0.12, my + 0.1, w=0.38, h=0.38)
+        text_box(s, mx + 0.58, my + 0.1, mcol_w - 0.68, 0.32, label,
+                 size=12, bold=True, color=MID)
+        text_box(s, mx + 0.12, my + 0.46, mcol_w - 0.24, 0.6, sub,
+                 size=9.5, italic=True, color=DARK_GREY, line_spacing=1.1)
+
+    text_box(s, 6.3, 4.98, 5.95, 0.28,
+             "+ лабораторный анализ почвы (недели) и метеостанции — вне этих четырёх основных",
+             size=9, italic=True, color=LIGHT)
+
+    # Bottom decision band
+    ocean_box(s, 0.6, 5.3, 12.13, 1.35, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, 5.4, 11.6, 0.35,
+             "Решение стадии и почему она первая в цикле",
+             size=13, bold=True, color=GOLD)
+    text_box(s, 0.85, 5.78, 11.6, 0.8,
+             "Решение: назначить обработку — чем, в какой норме, по какому участку; после прохода техники "
+             "не отменить. Почему первая: среда не выбрана инженером (солнце, дождь, патоген заданы извне) — "
+             "и результат измеряется на уборке, обратная связь приходит через сезон (5-6 месяцев).",
+             size=11, color=DEEP, italic=True, line_spacing=1.3)
+
+    add_speaker_notes(s, load_speaker_notes("s06a"))
+
+    # ============ s06b — как это решают без модели (классика Раздела 1) ============
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s, "Как это решают без модели — классические режимы Раздела 1", size=22)
+
+    # Hero plate — regime #1 blanket spray
+    ocean_box(s, 0.6, 1.4, 12.13, 1.3, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, 1.5, 7.3, 0.35, "① Сплошное опрыскивание по регламенту (blanket spray)",
+             size=14, bold=True, color=DEEP)
+    text_box(s, 0.85, 1.9, 7.3, 0.7,
+             "Препарат на всю площадь по календарному плану, независимо от фактического распределения "
+             "сорняка. Основная база сравнения для всего раздела.",
+             size=11, italic=True, color=DARK_GREY, line_spacing=1.25)
+    text_box(s, 8.3, 1.5, 4.2, 0.55, "$65-67/акр",
+             size=24, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
+    text_box(s, 8.3, 2.08, 4.2, 0.3, "кукуруза",
+             size=11, italic=True, color=DEEP, align=PP_ALIGN.CENTER)
+    text_box(s, 8.3, 2.4, 4.2, 0.25, "соя — $94/акр (2 прохода)",
+             size=10, italic=True, color=MID, align=PP_ALIGN.CENTER)
+
+    # Compact list of remaining 5 regimes
+    regimes = [
+        ("②", "Осмотр агронома с выборочной обработкой",
+         "человек проходит контур, находит очаги; точность высокая, масштабируемость низкая"),
+        ("③", "Механическая прополка",
+         "культиваторы (Lemken Steketee, Kverneland Onyx), без химии и без модели — $21,23/акр (разброс $12-35)"),
+        ("④", "Агротехнические приёмы",
+         "севооборот, покровные культуры, сроки сева — подавляют сорняк без обработки"),
+        ("⑤", "Внесение по карте урожайности прошлых лет",
+         "переменная норма по зонам без обучения на новых данных — уже точное земледелие, но не ИИ"),
+        ("⑥", "Консультация extension service",
+         "внешняя экспертиза районного агронома вместо собственного решения"),
+    ]
+    ry = 2.9
+    rh = 0.75
+    for num, name, desc in regimes:
+        ocean_box(s, 0.6, ry, 12.13, rh, fill=SURFACE)
+        text_box(s, 0.78, ry + 0.08, 0.45, rh - 0.16, num,
+                 size=16, bold=True, color=LIGHT, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, 1.3, ry + 0.07, 4.3, rh - 0.14, name,
+                 size=12, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
+        text_box(s, 5.75, ry + 0.07, 6.9, rh - 0.14, desc,
+                 size=10, italic=True, color=DARK_GREY, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.15)
+        ry += rh + 0.06
+
+    add_footer(s, "Каждый рабочий случай раздела сравнивается с одним из этих шести, а не с нулём. "
+                  "Источники: Iowa State Extension 2026; Ohio Farm Custom Rates 2026 (OSU Extension)")
+    add_speaker_notes(s, load_speaker_notes("s06b"))
+
     # ============ s07 See & Spray ============
     s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s, "See & Spray Ultimate — каноничный успех L1", size=24)
+    add_assertion_title(s, "See & Spray Ultimate — каноничный успех L1", size=22)
 
-    # Left photo
-    ocean_box(s, 0.6, 1.6, 7.4, 4.5)
+    # Left column (55%) — photo + anti-hype callout below
+    ocean_box(s, 0.6, 1.3, 6.9, 3.05)
     p = ASSETS / "photos" / "p07-john-deere-sprayer.jpg"
     if p.exists():
-        add_image(s, p, 0.85, 1.85, w=6.9, h=4.0)
-    text_box(s, 0.85, 5.85, 6.9, 0.25, "John Deere ExactApply + See & Spray Ultimate · ноябрь 2025",
+        add_image(s, p, 0.8, 1.45, w=6.5, h=2.55)
+    text_box(s, 0.8, 4.05, 6.5, 0.25, "John Deere ExactApply + See & Spray Ultimate · ноябрь 2025",
              size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
-    # Right data cards — увеличенный шрифт (P0-7: spec text ≥14pt) + baselines
+    ocean_box(s, 0.6, 4.45, 6.9, 2.15, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.8, 4.55, 6.5, 0.35,
+             "Anti-hype — Avent et al. 2024 (Weed Technology)",
+             size=12, bold=True, color=MID)
+    text_box(s, 0.8, 4.92, 6.5, 1.6,
+             "Независимая проверка не находит статистической разницы в урожайности targeted vs broadcast "
+             "(P>0,05). Экономия гербицида реальна и воспроизводима: 62,4% PRE · 28,4% EPOST · 36,5% MPOST. "
+             "Crop injury у targeted ниже на до 5 п.п. Прямого перевода п.п. crop injury в бушели или доллары "
+             "источники не дают — это пробел, а не домысел.",
+             size=10.5, italic=True, color=DARK_GREY, line_spacing=1.3)
+
+    # Right column (45%) — 3 data cards + 2 price plates + spec
     cards = [
         ("5M акров", "сезон 2025", "≈0,55% от 900M акров US ag total", GOLD),
-        ("–50%", "контактных гербицидов", "от baseline ≈1 lb/акр AI → ≈0,5 lb", MID),
-        ("+2,0 бушеля", "сои с акра", "от среднего US ≈177 bu/A = +1,1%", LIGHT),
+        ("–50%", "гербицидов", "от baseline ≈1 lb/акр → ≈0,5 lb", MID),
+        ("+3,9%", "урожайности сои", "от базы ≈50,7 bu/A (не кукуруза, +2,0 bu/A)", LIGHT),
     ]
-    cy = 1.6
+    cy = 1.3
     for big, lbl, sub, color in cards:
-        ocean_box(s, 8.2, cy, 4.55, 1.2, fill=LIGHT_TINT if color != GOLD else GOLD_TINT)
-        text_box(s, 8.4, cy + 0.08, 2.4, 0.55, big, size=26, bold=True, color=color)
-        text_box(s, 8.4, cy + 0.65, 2.4, 0.4, lbl, size=14, color=DEEP, italic=True)
-        text_box(s, 10.9, cy + 0.3, 1.75, 0.85, sub,
-                 size=12, color=MID, italic=True, align=PP_ALIGN.RIGHT, line_spacing=1.25)
-        cy += 1.3
+        ocean_box(s, 7.75, cy, 4.98, 0.82, fill=LIGHT_TINT if color != GOLD else GOLD_TINT)
+        text_box(s, 7.93, cy + 0.06, 2.1, 0.45, big, size=20, bold=True, color=color)
+        text_box(s, 7.93, cy + 0.52, 2.1, 0.28, lbl, size=11, color=DEEP, italic=True)
+        text_box(s, 10.1, cy + 0.1, 2.55, 0.62, sub,
+                 size=9.5, color=MID, italic=True, align=PP_ALIGN.RIGHT, line_spacing=1.15)
+        cy += 0.9
 
-    # Spec card — увеличенный шрифт ≥14pt
-    ocean_box(s, 8.2, 5.5, 4.55, 0.85, fill=SURFACE)
-    text_box(s, 8.4, 5.58, 4.25, 0.7,
-             "36 камер · CNN на миллионах изображений (>1M) · NVIDIA Jetson edge · <50 мс",
-             size=12, color=DARK_GREY, italic=True, line_spacing=1.35)
+    # 2 price plates — classical regimes
+    py = cy + 0.08
+    ph = 0.95
+    pw = (4.98 - 0.14) / 2
+    plates2 = [
+        ("$65-67/акр", "сплошной спрей, кукуруза", "соя — $94/акр"),
+        ("$21,23/акр", "механ. культивация", "разброс $12-35/акр"),
+    ]
+    px = 7.75
+    for big, lbl, sub in plates2:
+        ocean_box(s, px, py, pw, ph, fill=SURFACE)
+        text_box(s, px + 0.1, py + 0.06, pw - 0.2, 0.32, big, size=15, bold=True, color=MID)
+        text_box(s, px + 0.1, py + 0.4, pw - 0.2, 0.28, lbl, size=9, italic=True, color=DEEP, line_spacing=1.1)
+        text_box(s, px + 0.1, py + 0.66, pw - 0.2, 0.26, sub, size=8.5, italic=True, color=LIGHT)
+        px += pw + 0.14
 
-    add_footer(s, "Источники: AgTechNavigator 2025-11-10; пресс-релиз John Deere ноябрь 2025; GrowIWM 2024")
+    # Spec card
+    sy = py + ph + 0.1
+    ocean_box(s, 7.75, sy, 4.98, 0.6, fill=SURFACE)
+    text_box(s, 7.93, sy + 0.06, 4.7, 0.48,
+             "36 камер · CNN-детектор + detection head · >1M изображений · NVIDIA Jetson edge · <50 мс",
+             size=10, color=DARK_GREY, italic=True, line_spacing=1.2)
+
+    add_footer(s, "Источники: AgTechNavigator 2025-11-10; Deere press ноябрь 2025; GrowIWM 2024; "
+                  "Avent et al. 2024; Iowa State Extension 2026; Ohio Extension 2026")
     add_speaker_notes(s, load_speaker_notes("s07"))
+
+    # ============ s07a — See & Spray, полная форма разбора §4 канона ============
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s, "See & Spray — цена ошибок, классика, модель, что переехало", size=20)
+
+    # ① Цена двух ошибок
+    text_box(s, 0.6, 1.25, 12.13, 0.25,
+             "① Цена двух ошибок — в бушелях с акра на базе ≈50,7 bu/А и в п.п. crop injury",
+             size=11, bold=True, color=MID)
+    err_w = (12.13 - 0.2) / 2
+    ocean_box(s, 0.6, 1.52, err_w, 1.1, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.78, 1.6, err_w - 0.3, 0.35, "≈10-14 → 40 бу/акр", size=18, bold=True, color=GOLD)
+    text_box(s, 0.78, 1.97, err_w - 0.3, 0.28, "Пропущенный сорняк (FN)", size=11, bold=True, color=DEEP)
+    text_box(s, 0.78, 2.24, err_w - 0.3, 0.35,
+             "от базы ≈50,7 бу/акр, умеренная→тяжёлая засорённость; альт. — контроль +10 бу/акр при цене >$70/акр (Миссисипи)",
+             size=8.5, italic=True, color=MID, line_spacing=1.1)
+    ocean_box(s, 0.6 + err_w + 0.2, 1.52, err_w, 1.1, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.78 + err_w + 0.2, 1.6, err_w - 0.3, 0.35, "≤5 п.п.", size=18, bold=True, color=GOLD)
+    text_box(s, 0.78 + err_w + 0.2, 1.97, err_w - 0.3, 0.28, "Повреждение культуры (FP, crop injury)", size=11, bold=True, color=DEEP)
+    text_box(s, 0.78 + err_w + 0.2, 2.24, err_w - 0.3, 0.35,
+             "targeted ниже broadcast; перевод в бу/$ источники не дают — пробел, не домысел (Avent et al. 2024)",
+             size=8.5, italic=True, color=MID, line_spacing=1.1)
+
+    # ② Классика + ③ Модель
+    text_box(s, 0.6, 2.78, 12.13, 0.25,
+             "② Классические режимы + ③ Модель против них — все в $/акр",
+             size=11, bold=True, color=MID)
+    trio_w = (12.13 - 0.3) / 3
+    trio = [
+        ("$65-67/акр", "Сплошной спрей — кукуруза", "соя — $94/акр (2 прохода)", LIGHT, LIGHT_TINT),
+        ("$21,23/акр", "Механическая культивация", "разброс $12-35/акр, без химии", LIGHT, LIGHT_TINT),
+        ("$1 / $5 за акр", "See & Spray — подписка", "$1 fallow · $5 in-crop", GOLD, GOLD_TINT),
+    ]
+    tx = 0.6
+    for big, lbl, sub, color, fill in trio:
+        ocean_box(s, tx, 3.05, trio_w, 1.05, fill=fill, stroke=color)
+        text_box(s, tx + 0.12, 3.12, trio_w - 0.24, 0.32, big, size=15, bold=True, color=color if color != GOLD else GOLD)
+        text_box(s, tx + 0.12, 3.46, trio_w - 0.24, 0.28, lbl, size=10, bold=True, color=DEEP, line_spacing=1.05)
+        text_box(s, tx + 0.12, 3.74, trio_w - 0.24, 0.32, sub, size=9, italic=True, color=MID, line_spacing=1.05)
+        tx += trio_w + 0.15
+
+    # ④ Как устроено
+    text_box(s, 0.6, 4.28, 12.13, 0.22, "④ Как устроено", size=11, bold=True, color=MID)
+    ocean_box(s, 0.6, 4.5, 12.13, 0.58, fill=SURFACE)
+    text_box(s, 0.78, 4.56, 11.8, 0.46,
+             "Вход — кадр камеры штанги → выход — срабатывание форсунки (<50 мс). CNN + detection head, "
+             ">1 млн размеченных изображений (2011-2020), inference on-device (NVIDIA Jetson). "
+             "Продукт: John Deere See & Spray Ultimate (ExactApply, R-серия).",
+             size=10, color=DARK_GREY, italic=True, line_spacing=1.2)
+
+    # ⑤ Что переехало
+    text_box(s, 0.6, 5.2, 12.13, 0.22, "⑤ Что переехало", size=11, bold=True, color=MID)
+    half_w = (12.13 - 0.2) / 2
+    ocean_box(s, 0.6, 5.42, half_w, 1.5, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.78, 5.5, half_w - 0.3, 0.3, "Подтверждено независимо", size=12, bold=True, color=MID)
+    text_box(s, 0.78, 5.82, half_w - 0.3, 1.05,
+             "Экономия гербицида: 62,4% PRE · 28,4% EPOST · 36,5% MPOST (Avent et al. 2024). "
+             "Crop injury ниже на до 5 п.п. у targeted.",
+             size=10, italic=True, color=DARK_GREY, line_spacing=1.25)
+    ocean_box(s, 0.6 + half_w + 0.2, 5.42, half_w, 1.5, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.78 + half_w + 0.2, 5.5, half_w - 0.3, 0.3, "Не подтверждено независимо", size=12, bold=True, color=GOLD)
+    text_box(s, 0.78 + half_w + 0.2, 5.82, half_w - 0.3, 1.05,
+             "Прирост урожайности +2,0 бу/акр (до 4,8 в лучших случаях) — цифра вендора (Deere, AgTechNavigator). "
+             "Avent et al. 2024: P>0,05 — различий в урожайности нет.",
+             size=10, italic=True, color=DEEP, line_spacing=1.25)
+
+    add_footer(s, "Источники: Avent et al. 2024, Weed Technology; Iowa State Extension 2026; "
+                  "Ohio Extension 2026; Deere press ноябрь 2025")
+    add_speaker_notes(s, load_speaker_notes("s07a"))
 
     # ============ s08 vendor matrix L1 ============
     s = blank(prs); set_slide_bg(s, WHITE)

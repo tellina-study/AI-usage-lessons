@@ -20,49 +20,56 @@ def build_part1(prs, H):
     load_speaker_notes = H["load_speaker_notes"]; section_divider = H["section_divider"]
     disable_shadow = H["disable_shadow"]
 
-    # ============== s01 hook — Plenty Compton split-frame ==============
+    # ============== s01 hook — Plenty Compton, 2 настоящих фото открытия ==============
+    # K-2 fix: оба фото теперь РЕАЛЬНЫЕ Compton-specific (2urbangirls.com, май 2023),
+    # не родовое фото вертикальной фермы + не chart, подменявший "AFTER"-кадр.
+    # Честного фото закрытия (дек 2024) не найдено за разумный поиск — см.
+    # iteration-log-part2.md. Суммарная площадь фото ≥40% (hero-норматив).
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "ИИ-управляемая ферма обещала революцию. 19 месяцев — и закрылась.",
         size=24)
 
-    # LEFT panel — открытие май 2023 (use vertical-farm interior photo)
-    ocean_box(s, 0.6, 1.7, 5.95, 4.0)
-    photo_p = ASSETS / "photos" / "p10-vertical-farm.jpg"
+    # LEFT panel (hero) — мэр Комптона Эмма Шариф на церемонии открытия, май 2023
+    # Photo AR = 1.5068 (pre-cropped to this ratio) -> w=5.80,h=3.85 preserves AR exactly
+    ocean_box(s, 0.6, 1.5, 5.95, 4.4)
+    photo_p = ASSETS / "photos" / "p01-plenty-ribboncutting-mayor.jpg"
     if photo_p.exists():
-        add_image(s, photo_p, 0.85, 1.95, w=5.45, h=3.5)
-    text_box(s, 0.85, 5.5, 5.45, 0.3, "май 2023 · Plenty Compton открытие",
-             size=12, italic=True, bold=True, color=MID,
-             align=PP_ALIGN.CENTER)
+        add_image(s, photo_p, 0.675, 1.63, w=5.80, h=3.85)
+    text_box(s, 0.68, 5.53, 5.8, 0.3, "Май 2023 · мэр Комптона Эмма Шариф на церемонии открытия",
+             size=10.5, italic=True, bold=True, color=MID,
+             align=PP_ALIGN.CENTER, line_spacing=1.05)
 
-    # RIGHT panel — закрытие декабрь 2024 (use chart of valuation collapse)
-    ocean_box(s, 6.8, 1.7, 5.95, 4.0)
-    chart_p = ASSETS / "charts" / "c01-plenty-collapse.png"
-    if chart_p.exists():
-        add_image(s, chart_p, 7.0, 1.85, w=5.6, h=3.4)
-    text_box(s, 7.0, 5.5, 5.6, 0.3, "декабрь 2024 · закрытие · Ch. 11 март 2025",
-             size=12, italic=True, bold=True, color=GOLD,
-             align=PP_ALIGN.CENTER)
+    # RIGHT panel — интерьер объекта, та же церемония, май 2023
+    # Photo AR = 1.3375 (pre-cropped) -> w=5.15,h=3.85 preserves AR exactly
+    ocean_box(s, 6.8, 1.5, 5.95, 4.4)
+    photo_p2 = ASSETS / "photos" / "p01-plenty-compton-interior.jpg"
+    if photo_p2.exists():
+        add_image(s, photo_p2, 7.2, 1.63, w=5.15, h=3.85)
+    text_box(s, 6.98, 5.53, 5.49, 0.3, "Май 2023 · интерьер объекта — «История фермерства в Комптоне»",
+             size=10.5, italic=True, bold=True, color=MID,
+             align=PP_ALIGN.CENTER, line_spacing=1.05)
 
-    # Bottom data strip — 3 mega-numbers
-    ocean_box(s, 0.6, 5.95, 12.13, 0.9, fill=GOLD_TINT, stroke=GOLD)
-    text_runs(s, 0.8, 6.05, 3.8, 0.8, [
-        {"text": "$940M", "size": 26, "bold": True, "color": GOLD},
+    # Bottom data strip — 3 mega-numbers (закрытие дек.2024 несёт ТЕКСТ, т.к. честного фото нет)
+    ocean_box(s, 0.6, 6.0, 12.13, 0.85, fill=GOLD_TINT, stroke=GOLD)
+    text_runs(s, 0.8, 6.08, 3.8, 0.75, [
+        {"text": "$940M", "size": 24, "bold": True, "color": GOLD},
         {"newpara": True, "text": "потерь капитала",
-         "size": 11, "italic": True, "color": DEEP},
+         "size": 10.5, "italic": True, "color": DEEP},
     ], align=PP_ALIGN.CENTER)
-    text_runs(s, 4.7, 6.05, 3.9, 0.8, [
-        {"text": "$1,9 млрд → <$15M", "size": 22, "bold": True, "color": DEEP},
+    text_runs(s, 4.7, 6.08, 3.9, 0.75, [
+        {"text": "$1,9 млрд → <$15M", "size": 20, "bold": True, "color": DEEP},
         {"newpara": True, "text": "коллапс оценки –99% за 3 года",
-         "size": 11, "italic": True, "color": MID},
+         "size": 10.5, "italic": True, "color": MID},
     ], align=PP_ALIGN.CENTER)
-    text_runs(s, 8.7, 6.05, 3.9, 0.8, [
-        {"text": "19 месяцев", "size": 26, "bold": True, "color": GOLD},
-        {"newpara": True, "text": "от открытия до закрытия",
-         "size": 11, "italic": True, "color": DEEP},
+    text_runs(s, 8.7, 6.08, 3.9, 0.75, [
+        {"text": "19 месяцев", "size": 24, "bold": True, "color": GOLD},
+        {"newpara": True, "text": "от открытия (май 2023) до закрытия (декабрь 2024)",
+         "size": 10.5, "italic": True, "color": DEEP},
     ], align=PP_ALIGN.CENTER)
 
-    add_footer(s, "Источники: Plenty press май 2023; TechCrunch 2025-03-24; Bloomberg Law 2025")
+    add_footer(s, "Источники фото: 2urbangirls.com, май 2023. Источники цифр: Plenty press май 2023; "
+                  "TechCrunch 2025-03-24; Bloomberg Law 2025")
     add_speaker_notes(s, load_speaker_notes("s01"))
 
     # ============== s02 cover ==============
@@ -341,11 +348,15 @@ def build_part1_full(prs, H):
 
     add_speaker_notes(s, load_speaker_notes("s05"))
 
-    # ============ s06 section1 divider — L1 Поле ============
-    section_divider(prs, 1, "Раздел 1 — L1 «Поле»",
-        "Открытая биологическая среда: где ИИ работает узко — и где ломается даже здесь",
+    # ============ s06 section1 divider — Точное земледелие (L1 Поле) ============
+    # N-8 fix: заголовок — термин отрасли («Точное земледелие»), ладдер-ярлык L1 «Поле»
+    # ушёл подзаголовком (frame_phrase), не в title. Caption пересчитан по фактическому
+    # порядку кадров раздела (s06a..s14): 1 vendor matrix (не 3), 3 анти-ИИ критерия (не 2).
+    section_divider(prs, 1, "Раздел 1. Точное земледелие",
+        "L1 «Поле» — открытая биологическая среда: где ИИ работает узко, и где ломается даже здесь",
         current_section=1,
-        caption="1 working case + 3 vendor matrix · 3 провала (vertical farming, ChatGPT, Plantix) · 2 анти-ИИ критерия")
+        caption="See & Spray (кейс) → vendor matrix (5) → базовые модели → 3 провала (вертикальные "
+                "фермы, ChatGPT, Plantix) → РФ · 3 анти-ИИ критерия")
     s_last = prs.slides[-1]
     add_speaker_notes(s_last, load_speaker_notes("s06"))
 
@@ -596,12 +607,20 @@ def build_part1_full(prs, H):
     add_speaker_notes(s, load_speaker_notes("s07a"))
 
     # ============ s08 vendor matrix L1 ============
+    # K-3/K-4 fix: добавлен РЕАЛЬНЫЙ скриншот xarvio FIELD MANAGER (Apple App Store
+    # listing) в правую колонку — честно подписан как иллюстрация платформы, НЕ как
+    # точный скриншот японского рисового сервиса (тот скриншотов не публиковал;
+    # press-release PDF BASF p-25-191 проверен постранично — только логотипы).
+    # Matrix + sidebar text сжаты в левую колонку (~65% ширины), чтобы освободить
+    # место для картинки справа.
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "Платформы L1 — пять вендоров, разные режимы. Бренд ≠ режим работы",
         size=22)
 
-    # 5×4 matrix
+    LEFT_W = 8.7  # левая колонка: matrix + sidebar text
+
+    # 5×4 matrix (сжат в LEFT_W)
     headers = ["Платформа", "География", "Режим работы", "Бизнес-модель"]
     rows = [
         ("BASF xarvio", "ЕС, Япония (рис)", "Подписка + советы", "Оплата за акр"),
@@ -611,16 +630,16 @@ def build_part1_full(prs, H):
         ("Taranis", "Глобально", "Компьютерное зрение + дроны", "Оплата за акр"),
     ]
     matrix_x = 0.6
-    matrix_y = 1.6
-    col_widths = [2.5, 2.3, 2.8, 2.5]
-    row_h = 0.55
+    matrix_y = 1.55
+    col_widths = [2.1, 1.95, 2.35, 2.1]  # sum 8.5 + 3*0.05 gaps = 8.65 ≈ LEFT_W
+    row_h = 0.5
 
     # Header row
     cx = matrix_x
     for i, (hdr, w) in enumerate(zip(headers, col_widths)):
         ocean_box(s, cx, matrix_y, w, row_h, fill=DEEP, stroke=DEEP)
         text_box(s, cx, matrix_y, w, row_h, hdr,
-                 size=12, bold=True, color=WHITE,
+                 size=11, bold=True, color=WHITE,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
         cx += w + 0.05
 
@@ -632,23 +651,37 @@ def build_part1_full(prs, H):
         for ci, (val, w) in enumerate(zip(row, col_widths)):
             ocean_box(s, cx, ry, w, row_h, fill=fill, stroke=LIGHT, stroke_pt=0.5)
             is_gold = (ci == 1 and ri == 1)  # FieldView выход из РФ — gold highlight
-            text_box(s, cx + 0.1, ry, w - 0.2, row_h, val,
-                     size=10, bold=(ci == 0), color=GOLD if is_gold else DEEP,
-                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.2)
+            text_box(s, cx + 0.08, ry, w - 0.16, row_h, val,
+                     size=9.5, bold=(ci == 0), color=GOLD if is_gold else DEEP,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
             cx += w + 0.05
+    matrix_bottom = matrix_y + row_h + 0.05 + len(rows) * (row_h + 0.05)  # ≈4.8
 
-    # Sidebar callout: BASF Japan rice (ключевая точка — остальные 4 для self-study)
-    ocean_box(s, 0.6, 5.5, 12.13, 1.4, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 5.6, 11.5, 0.4,
+    # Sidebar callout (текст, под matrix, той же левой колонки шириной)
+    ocean_box(s, 0.6, matrix_bottom + 0.1, LEFT_W, 1.95, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.8, matrix_bottom + 0.2, LEFT_W - 0.4, 0.5,
              "★ Ключевое на слайде — BASF xarvio в Японии: гарантия урожайности риса (октябрь 2025)",
-             size=13, bold=True, color=GOLD)
-    text_box(s, 0.85, 6.0, 11.5, 0.85,
+             size=12, bold=True, color=GOLD, line_spacing=1.1)
+    text_box(s, 0.8, matrix_bottom + 0.7, LEFT_W - 0.4, 1.3,
              "Первый случай гарантированной урожайности под ИИ-советы: BASF выплачивает компенсацию "
-             "при недоборе урожая. Закрытый контур данных + страховой механизм = единственный известный к 2026 году пример.\n"
-             "Остальные 4 платформы матрицы — для самостоятельной проработки; критерий «бренд ≠ режим работы» применяется к каждой.",
-             size=11, color=DARK_GREY, italic=True, line_spacing=1.35)
+             "при недоборе урожая. Закрытый контур данных + страховой механизм = единственный известный "
+             "к 2026 году пример.\n"
+             "Остальные 4 платформы матрицы — для самостоятельной проработки; критерий «бренд ≠ режим "
+             "работы» применяется к каждой.",
+             size=10.5, color=DARK_GREY, italic=True, line_spacing=1.25)
 
-    add_footer(s, "Источник: пресс-релиз BASF p-25-191 октябрь 2025 · TAdviser FieldView 2022")
+    # RIGHT column — настоящий скриншот xarvio FIELD MANAGER (Apple App Store)
+    img_x, img_w = 9.5, 2.65
+    shot_p = ASSETS / "photos" / "p08-xarvio-field-manager-map.jpg"
+    if shot_p.exists():
+        add_image(s, shot_p, img_x, 1.55, w=img_w, h=4.85)
+    text_box(s, img_x - 0.15, 6.42, img_w + 0.3, 0.55,
+             "xarvio FIELD MANAGER — карта поля по зонам риска. Иллюстрация платформы, "
+             "НЕ скриншот японского рисового сервиса (не публиковался)",
+             size=8.5, italic=True, color=LIGHT, line_spacing=1.1, align=PP_ALIGN.CENTER)
+
+    add_footer(s, "Источники: пресс-релиз BASF p-25-191 октябрь 2025 · TAdviser FieldView 2022 · "
+                  "скриншот — Apple App Store, xarvio FIELD MANAGER")
     add_speaker_notes(s, load_speaker_notes("s08"))
 
     # ============ s09 foundation models — simplified, 3 key claims ============
@@ -793,13 +826,16 @@ def build_part1_full(prs, H):
     add_speaker_notes(s, load_speaker_notes("s11"))
 
     # ============ s12 ChatGPT hallucinations ============
+    # K-3 fix: добавлена настоящая Figure 1 из Tzachor et al. 2024, Nature Food
+    # (og:image с nature.com — единственная не-paywalled иллюстрация статьи). Честно
+    # подписана как RLHF-архитектура, НЕ как Q/A-скриншот (такого в открытом доступе нет).
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "ChatGPT и Bard как агроном — «уверенно ошибочны» в десятках процентов",
         size=22)
 
-    # Left: study summary
-    ocean_box(s, 0.6, 1.5, 6.0, 5.0)
+    # Left: study summary + реальная Figure 1 статьи
+    ocean_box(s, 0.6, 1.5, 6.0, 5.45)
     text_box(s, 0.85, 1.65, 5.5, 0.5,
              "Tzachor et al., Nature Food, ноябрь 2023",
              size=14, bold=True, color=DEEP)
@@ -813,18 +849,27 @@ def build_part1_full(prs, H):
         ("GPT-4", "44%", "правильно"),
         ("Bard", "29%", "правильно"),
     ]
-    ry = 2.85
+    ry = 2.8
     for model, pct, lbl in results:
         text_box(s, 1.0, ry, 1.8, 0.4, model, size=13, bold=True, color=DEEP)
         text_box(s, 2.8, ry, 1.5, 0.4, pct, size=18, bold=True, color=GOLD)
         text_box(s, 4.3, ry, 2.0, 0.4, lbl, size=11, italic=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-        ry += 0.55
+        ry += 0.5
 
-    text_box(s, 0.85, 4.7, 5.5, 1.6,
-             "Остальные 56-71% ответов — уверенно неверны: модель не «не знает», "
-             "а выдаёт уверенный ответ с неверной дозировкой / неподходящим препаратом. "
-             "Режим отказа — не «модель плохая», а «применение не в её режиме».",
-             size=11, color=DARK_GREY, italic=True, line_spacing=1.4)
+    text_box(s, 0.85, 4.42, 5.5, 0.55,
+             "Остальные 56-71% — уверенно неверны: неверная дозировка/препарат, без сигнала неуверенности.",
+             size=10, color=DARK_GREY, italic=True, line_spacing=1.2)
+
+    # Настоящая Figure 1 статьи (RLHF human-in-the-loop pipeline), AR=2170/1370=1.584
+    fig_h, fig_w = 1.55, 1.55 * (2170 / 1370)
+    fig_x = 0.6 + (6.0 - fig_w) / 2
+    fig_p = ASSETS / "photos" / "p12-tzachor-fig1-rlhf.png"
+    if fig_p.exists():
+        add_image(s, fig_p, fig_x, 5.05, w=fig_w, h=fig_h)
+    text_box(s, 0.78, 6.64, 5.64, 0.3,
+             "Figure 1, Tzachor et al. 2024 — RLHF (обучение модели от обратной связи людей), "
+             "human-in-the-loop. НЕ Q/A-скриншот — такого статья не публикует",
+             size=8, italic=True, color=LIGHT, align=PP_ALIGN.CENTER, line_spacing=1.0)
 
     # Right: Anti-pattern AP4 + alternative
     ocean_box(s, 6.8, 1.5, 5.95, 5.0, fill=GOLD_TINT, stroke=GOLD)
@@ -860,33 +905,29 @@ def build_part1_full(prs, H):
     add_speaker_notes(s, load_speaker_notes("s12"))
 
     # ============ s13 Plantix ============
+    # K-2/K-3 fix: убран stylized primitive-mock телефона (класс "mock", запрещённый
+    # правилом no-mock-fallbacks) — заменён НАСТОЯЩИМ официальным скриншотом Plantix
+    # из Google Play listing (экран "Instant disease detection" — Bacterial Spot).
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "Plantix — 10-15% ошибочной диагностики × 10 млн+ загрузок = ~100 тыс. неверных рекомендаций / год",
         size=18)
 
-    # Left: stylized phone UI mock-up + stats
+    # Left: настоящий Plantix UI screenshot + caption
     ocean_box(s, 0.6, 1.6, 5.5, 5.0)
-    # Phone frame outline
-    text_box(s, 0.85, 1.8, 5.0, 0.4, "Plantix · мобильное приложение",
-             size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-    text_box(s, 0.85, 2.2, 5.0, 0.4, "10+ миллионов загрузок",
-             size=11, italic=True, color=MID, align=PP_ALIGN.CENTER)
-    # Fake phone screen
-    ocean_box(s, 1.8, 2.7, 3.1, 3.5, fill=DEEP, stroke=DEEP)
-    text_box(s, 1.95, 2.85, 2.8, 0.4, "[ камера ]",
-             size=11, italic=True, color=WHITE, align=PP_ALIGN.CENTER)
-    ocean_box(s, 1.95, 3.3, 2.8, 1.5, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 2.05, 3.4, 2.6, 1.3,
-             "Фото листа\nсоевой\n— анализ —",
-             size=11, italic=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.3,
-             anchor=MSO_ANCHOR.MIDDLE)
-    text_box(s, 1.95, 4.9, 2.8, 0.45,
-             "Диагноз:\nантракноз",
-             size=11, bold=True, color=WHITE, align=PP_ALIGN.CENTER, line_spacing=1.2)
-    text_box(s, 1.95, 5.5, 2.8, 0.45,
-             "Уверенность: 87%",
-             size=10, italic=True, color=GOLD, align=PP_ALIGN.CENTER)
+    text_box(s, 0.85, 1.72, 5.0, 0.35, "Plantix · мобильное приложение",
+             size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
+
+    # Photo AR = 1080/1920 = 0.5625
+    shot_h, shot_w = 4.05, 4.05 * (1080 / 1920)
+    shot_x = 0.6 + (5.5 - shot_w) / 2
+    shot_p = ASSETS / "photos" / "p13-plantix-diagnosis-screen.jpg"
+    if shot_p.exists():
+        add_image(s, shot_p, shot_x, 2.1, w=shot_w, h=shot_h)
+    text_box(s, 0.78, 6.18, 5.34, 0.38,
+             "Google Play listing · экран мгновенной диагностики — пример диагноза "
+             "«бактериальная пятнистость». 10+ млн загрузок",
+             size=9.5, italic=True, color=MID, align=PP_ALIGN.CENTER, line_spacing=1.1)
 
     # Right: breakdown
     ocean_box(s, 6.4, 1.6, 6.4, 2.4)
@@ -910,7 +951,7 @@ def build_part1_full(prs, H):
              "  • + разделение по критичности дозы.",
              size=11, color=DEEP, italic=True, line_spacing=1.4)
 
-    add_footer(s, "Plantix.net (интерфейс); данные Frontiers in Plant Science 2020 + самоотчёт Plantix")
+    add_footer(s, "Скриншот — Google Play listing, Plantix; данные Frontiers in Plant Science 2020 + самоотчёт Plantix")
     add_speaker_notes(s, load_speaker_notes("s13"))
 
     # ============ s14 РФ context L1 ============

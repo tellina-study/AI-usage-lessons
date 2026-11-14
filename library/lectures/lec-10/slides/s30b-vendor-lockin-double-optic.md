@@ -9,7 +9,7 @@ chapter_ref: "§5.2 Часть 3 — Привязка к поставщику + 
 references: [register-2022-05-deere, ftc-2025-01-deere, north-dakota-monitor-2025-fcc-dji]
 visual:
   pattern: schema_double_optic
-  primary: "Двойная оптика center diagram: один механизм geo-locking + VIN-locking → 2 интерпретации (Side A anti-theft / Side B vendor control); + 3 timeline events"
+  primary: "Двойная оптика 2-col comparison: Side A anti-theft (CNN фото трактора Мелитополь) / Side B vendor control (The Register фото + DJI Agras T40 официальное фото) — реальные изображения, не родовой FPV-дрон"
 ---
 
 # Привязка к поставщику — двойная оптика John Deere
@@ -29,19 +29,19 @@ visual:
 
 Под diagram — 3 horizontal timeline events в Ocean rounded boxes:
 
-**Event 1 — Май 2022: Мелитополь** (фото / map):
+**Event 1 — Май 2022: Мелитополь** (реальное новостное фото John Deere трактора в Украине, CNN 2022-05-01):
 - John Deere remote-brick 27 единиц техники
 - Перевезены из Мелитополя в Чечню (~1126 км)
 - **$5 миллионов** market value, не запустилось
 - Anti-theft AI сработал по дизайну (Side A)
 
-**Event 2 — Январь 2025: FTC v. Deere** (фото FTC press conference):
+**Event 2 — Январь 2025: FTC v. Deere** (реальное новостное фото рядa тракторов Deere, The Register 2025-01-15):
 - FTC + AG Illinois + AG Minnesota
 - Десятилетние ограничения ремонта
 - Только Deere-authorized dealers имеют **Service ADVISOR** software tool
 - Trial 2026 (vendor control surface — Side B)
 
-**Event 3 — Декабрь 2025: FCC ban DJI** (icon + press headline):
+**Event 3 — Декабрь 2025: FCC ban DJI** (официальное фото DJI Agras T40, dji.com):
 - 22 декабря 2025: foreign-made drones в Covered List
 - **DJI = 80% US ag-spray drone flights**
 - Не-китайские альтернативы (Skydio, Geo-scan) **в 2,5× дороже**
@@ -49,7 +49,7 @@ visual:
 
 Bottom callout 14pt italic в Teal-tint box: «**AP6. «AI-driven equipment» = ловушка привязки к поставщику.** Чем больше AI и телематики, тем сильнее vendor control surface. Альтернатива: open-source farming hardware (Farm Hack), право на ремонт, multi-vendor стратегия, mechanical fallback'и».
 
-Footer 12pt italic: «Источники: The Register 2022-05-02 (Мелитополь); FTC press 2025-01-15; North Dakota Monitor 2025 (FCC DJI)».
+Footer 12pt italic: «Фото: CNN 2022-05-01; The Register 2025-01-15; dji.com/t40 · Источники: The Register 2022-05-02 (Мелитополь); FTC press 2025-01-15; North Dakota Monitor 2025 (FCC DJI)».
 
 ## Speaker notes
 
@@ -77,3 +77,8 @@ Footer 12pt italic: «Источники: The Register 2022-05-02 (Мелито�
 - FTC press release (2025-01-15) — FTC v. Deere.
 - North Dakota Monitor (2025) — FCC ban DJI ag-drones.
 - CSO Online 572811 — Мелитополь analysis.
+
+Изображения (подключены в Фазе 3 вместо родового фото FPV-дрона — K-2 fix):
+- CNN (2022-05-01) — «Russian troops in Melitopol plunder $5M farm vehicles from Ukraine» (новостное фото John Deere трактора).
+- The Register (2025-01-15) — «Oh, Deere! FTC sues tractor maker» (новостное фото ряда тракторов Deere).
+- dji.com/t40/specs — официальное фото DJI Agras T40 (страница продукта).

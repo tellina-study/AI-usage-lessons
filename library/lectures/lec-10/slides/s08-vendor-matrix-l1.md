@@ -6,10 +6,10 @@ assertion: "xarvio / FieldView / Cropwise / Granular / Taranis — пять L1-�
 learning_goal: "Vendor matrix — anti-hype навыки маппинга «бренд → режим работы»"
 learning_outcomes: [LO1a, LO2]
 chapter_ref: "§1.2 Часть 1 — xarvio, FieldView, ГК «Прогресс Агро»"
-references: [basf-press-p25-191, geo-sig-ai-2025, yakov-partners-2024]
+references: [basf-press-p25-191, geo-sig-ai-2025, yakov-partners-2024, apple-appstore-xarvio-field-manager]
 visual:
   pattern: schema_matrix
-  primary: "Matrix 5×4 (платформа / продавец / география / режим + anti-hype) + sidebar BASF xarvio Japan rice yield map"
+  primary: "Matrix 5×4 (платформа / продавец / география / режим + anti-hype) + sidebar: настоящий скриншот xarvio FIELD MANAGER (карта поля по зонам риска), честно подписанный как иллюстрация платформы, не точный скриншот японского рисового сервиса"
 ---
 
 # Vendor matrix L1 — пять платформ, разные режимы
@@ -32,9 +32,9 @@ xarvio / FieldView / Cropwise / Granular / Taranis — пять L1-платфо�
 
 **Gold accent** ★ на BASF Japan rice yield guarantee — единственный outcome-based contract на L1 в 2026.
 
-Справа от matrix — sidebar 30% width: фотография/карта BASF xarvio Japan rice yield guarantee + caption «BASF Japan + AI Humus · октябрь 2025 · первая в мире outcome-based rice yield guarantee».
+Справа от matrix — sidebar: настоящий скриншот xarvio FIELD MANAGER из официального листинга Apple App Store (карта поля с зонами риска по болезням — Eyespot / Septoria tritici / Drechslera leaf spot / Powdery mildew / Yellow rust / Brown rust, цветовое кодирование зон зелёный→жёлтый→красный). **Честная оговорка на кадре мелким шрифтом под скриншотом:** «Иллюстрация интерфейса xarvio FIELD MANAGER (карта поля по зонам риска) — не скриншот конкретного японского сервиса xarvio HEALTHY FIELDS for RiTA (рисовая гарантия урожайности); скриншотов именно этого сервиса в открытом доступе не найдено — пресс-релиз BASF p-25-191 и зеркало ag.xarvio.com графики не содержат». Это честная замена по 6-уровневой процедуре: press-release PDF (BASF p-25-191) проверен постранично — содержит только логотипы, без карты; xarvio news-зеркало без изображений; найденный Apple App Store скриншот — тот же продукт/платформа (xarvio), другая локаль.
 
-Footer 12pt italic: «Источники: BASF press p-25-191, 2025-10; geo.sig.ai 2025; Яков и Партнёры 2024».
+Footer 12pt italic: «Источники: BASF press p-25-191, 2025-10; geo.sig.ai 2025; Яков и Партнёры 2024; скриншот — Apple App Store, xarvio FIELD MANAGER».
 
 ## Speaker notes
 
@@ -57,3 +57,4 @@ Footer 12pt italic: «Источники: BASF press p-25-191, 2025-10; geo.sig.
 - BASF press release p-25-191 (2025-10) — Japan rice yield guarantee.
 - geo.sig.ai (2025) — Climate FieldView 250M акров.
 - Яков и Партнёры (2024) — Digitalizing Russia's Agricultural Sector.
+- Apple App Store, xarvio FIELD MANAGER listing — источник sidebar-скриншота (карта поля по зонам риска).

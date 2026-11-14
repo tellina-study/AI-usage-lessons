@@ -12,7 +12,7 @@ visual:
   primary: "Большое «2» + title + 1-фраза-фрейм + 7-card progress bar с gold-подсветкой Р2"
 ---
 
-# Раздел 2 — L2 «Робот». Specialization побеждает generic
+# Раздел 2. Автономная и роботизированная техника в поле
 
 ## Assertion
 
@@ -20,9 +20,9 @@ visual:
 
 ## Visual
 
-Слева — огромная цифра «2» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 36pt bold «L2 — Робот / машина. Specialization побеждает generic» + 1 фраза-фрейм 20pt italic Primary mid: «Узкая ниша работает; универсальный farm robot — банкротится».
+Слева — огромная цифра «2» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 34pt bold «Раздел 2. Автономная и роботизированная техника в поле» (термин отрасли, заголовком) + 1 фраза-фрейм 18pt italic Primary mid: «L2 «Робот» — узкая специализация работает; универсальный «autonomous farm robot» банкротится» (ярлык лестницы — подзаголовком).
 
-Внизу — progress bar: 7 horizontal cards, текущая (Р2) выделена gold. Caption 12pt italic: «4 working specialization cases · 3 провала (Monarch, FarmWise, strawberry) · РФ-параллель CV vs sensor-fusion».
+Внизу — progress bar: 7 horizontal cards, текущая (Р2) выделена gold. Caption 12pt italic: «LaserWeeder working case + РФ-параллель CV vs sensor-fusion · 4 working specialization cases · 3 провала (Monarch, FarmWise, strawberry)» — порядок совпадает с фактической последовательностью кадров раздела (s16→s17→s18→s19→s20→s21).
 
 ## Speaker notes
 
@@ -30,7 +30,7 @@ visual:
 
 И здесь проявляется один из главных уроков AgTech 2026 года: специализация побеждает универсальность. Узкие специализированные роботы — LaserWeeder для weeds на конкретных культурах, Saga Robotics Thorvald для UV-C ночной обработки клубники, Tevel Aerobotics для сбора яблок — работают и масштабируются. Универсальные «farm robots» — Monarch MK-V, FarmWise — банкротятся.
 
-В этом разделе мы разберём четыре working specialization cases. Затем три провала: Monarch Tractor с исками 2025-го за «autonomous» при сломанной автономии, FarmWise wind-down плюс Naïo recovery как структурную невозможность generic CV-стека в реальном поле, и затянувшийся pilot phase робота-сборщика клубники. В финале — критическое сравнение Cognitive Pilot и ИТЭЛМА как архитектурного выбора внутри ИИ-домена, не как «AI vs не-AI».
+В этом разделе мы разберём canonical working case LaserWeeder G2, сразу за ним — критическое сравнение Cognitive Pilot и ИТЭЛМА как архитектурного выбора внутри ИИ-домена, не как «AI vs не-AI». Затем ещё четыре working specialization cases. И завершают раздел три провала: Monarch Tractor с исками 2025-го за «autonomous» при сломанной автономии, FarmWise wind-down плюс Naïo recovery как структурную невозможность generic CV-стека в реальном поле, и затянувшийся pilot phase робота-сборщика клубники.
 
 ## Источники
 

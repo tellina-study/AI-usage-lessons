@@ -16,11 +16,11 @@ def build_part2(prs, H):
     add_footer, add_assertion_title = H["add_footer"], H["add_assertion_title"]
     load_speaker_notes, section_divider = H["load_speaker_notes"], H["section_divider"]
 
-    # ============ s15 section2 divider — L2 Робот ============
-    section_divider(prs, 2, "Раздел 2 — L2 «Робот»",
-        "Специализация побеждает универсальность. Узкие победы против универсальных провалов.",
+    # ============ s15 section2 divider — автономная и роботизированная техника в поле ============
+    section_divider(prs, 2, "Раздел 2. Автономная и роботизированная техника в поле",
+        "L2 «Робот» — узкая специализация работает; универсальный «autonomous farm robot» банкротится.",
         current_section=2,
-        caption="4 working specialization cases · 3 провала (Monarch, FarmWise, strawberry) · РФ-параллель CV vs sensor-fusion")
+        caption="LaserWeeder working case + РФ-параллель CV vs sensor-fusion · 4 working specialization cases · 3 провала (Monarch, FarmWise, strawberry)")
     s_last = prs.slides[-1]
     add_speaker_notes(s_last, load_speaker_notes("s15"))
 
@@ -203,9 +203,17 @@ def build_part2(prs, H):
         "Cognitive Pilot и ИТЭЛМА — это не ИИ против не-ИИ; это два разных класса ИИ",
         size=20)
 
+    # Chart banner — own QuickChart comparison (c17-cogn-vs-itelma.png, Phase 3 K-4):
+    # two equal-width bars (несравнимые по природе величины — установки vs точность,
+    # поэтому длина бруса НЕ кодирует величину, это чисто категорийный разделитель) —
+    # каждая строка несёт свой настоящий показатель текстом.
+    cp = ASSETS / "charts" / "c17-cogn-vs-itelma.png"
+    if cp.exists():
+        add_image(s, cp, 0.6, 1.15, w=12.13, h=0.9)
+
     # 2-column architecture comparison
-    col_w = 5.95; col_h = 5.0
-    cy = 1.5
+    col_w = 5.95; col_h = 4.3
+    cy = 2.15
 
     # LEFT: Cognitive Pilot CV
     ocean_box(s, 0.6, cy, col_w, col_h, fill=LIGHT_TINT, stroke=LIGHT)
@@ -328,8 +336,11 @@ def build_part2(prs, H):
     line_w = line_x_end - line_x_start
     # Draw horizontal line
     hr_line(s, line_x_start, tline_y, line_w, color=LIGHT, weight=2.5)
-    # Card dimensions
+    # Card dimensions — compact (1.3" tall, was 1.8") to free room for the
+    # photo + headline row below (K-3/K-4: s19 was promised Monarch MK-V photo
+    # + TechCrunch иск headline, built with neither — Phase 3 fix).
     card_w = 2.05
+    card_h = 1.3
     # Dots
     for i, (year, hdr, desc, color) in enumerate(events):
         x = line_x_start + (line_w / (n - 1)) * i
@@ -343,23 +354,49 @@ def build_part2(prs, H):
         text_box(s, x - card_w/2, tline_y - 0.95, card_w, 0.4, year,
                  size=13, bold=True, color=color, align=PP_ALIGN.CENTER)
         # Card below
-        ocean_box(s, x - card_w/2, tline_y + 0.3, card_w, 1.8,
+        ocean_box(s, x - card_w/2, tline_y + 0.3, card_w, card_h,
                   fill=GOLD_TINT if color == GOLD else LIGHT_TINT, stroke=color)
-        text_box(s, x - card_w/2 + 0.05, tline_y + 0.4, card_w - 0.1, 0.5, hdr,
-                 size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.2)
-        text_box(s, x - card_w/2 + 0.05, tline_y + 0.95, card_w - 0.1, 1.1, desc,
-                 size=9, color=DARK_GREY, italic=True, align=PP_ALIGN.CENTER, line_spacing=1.3)
+        text_box(s, x - card_w/2 + 0.05, tline_y + 0.4, card_w - 0.1, 0.45, hdr,
+                 size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.15)
+        text_box(s, x - card_w/2 + 0.05, tline_y + 0.88, card_w - 0.1, 0.65, desc,
+                 size=9, color=DARK_GREY, italic=True, align=PP_ALIGN.CENTER, line_spacing=1.2)
+
+    # Photo + headline row (K-4: оба файла — реальный Monarch MK-V и настоящий
+    # заголовок TechCrunch — ранее не подключались, кадр собирался без изображений).
+    photo_row_y = tline_y + 0.3 + card_h + 0.25  # = 3.85
+    pcol_w = 5.95
+    mp = ASSETS / "photos" / "p19-monarch-mkv-real.jpg"
+    photo_h = 1.45
+    if mp.exists():
+        add_image(s, mp, 0.6, photo_row_y, w=pcol_w, h=photo_h)
+    text_box(s, 0.6, photo_row_y + photo_h + 0.04, pcol_w, 0.2,
+             "Monarch MK-V. Источник: Monarch press, публикация TechCrunch, 2025-11-18",
+             size=9.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+
+    # Right: real TechCrunch headline, quoted verbatim (not a screenshot —
+    # no headless-browser capture available; honestly presented as a text quote).
+    hx = 6.85
+    ocean_box(s, hx, photo_row_y, pcol_w, photo_h, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, hx + 0.2, photo_row_y + 0.12, pcol_w - 0.4, 0.3,
+             "TechCrunch · 18 ноября 2025", size=11, bold=True, color=MID)
+    text_box(s, hx + 0.2, photo_row_y + 0.45, pcol_w - 0.4, photo_h - 0.6,
+             "«Monarch Tractor sued over tractors that were "
+             "‘unable to operate autonomously’»",
+             size=14, bold=True, italic=True, color=DEEP, line_spacing=1.2)
+    text_box(s, hx + 0.2, photo_row_y + photo_h - 0.28, pcol_w - 0.4, 0.22,
+             "Дословный заголовок статьи об иске Burks Tractor",
+             size=9.5, italic=True, color=LIGHT)
 
     # Bottom takeaway
-    ocean_box(s, 0.6, 5.0, 12.13, 1.7, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 5.15, 11.6, 0.4,
+    takeaway_y = photo_row_y + photo_h + 0.35  # ≈ 5.70
+    ocean_box(s, 0.6, takeaway_y, 12.13, 1.05, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, takeaway_y + 0.1, 11.6, 0.35,
              "Анти-паттерн: демо ≠ промышленное внедрение",
-             size=16, bold=True, color=DEEP)
-    text_box(s, 0.85, 5.6, 11.6, 1.0,
+             size=15, bold=True, color=DEEP)
+    text_box(s, 0.85, takeaway_y + 0.46, 11.6, 0.55,
              "«Автономный» в маркетинге = юридическая ловушка, если фактическое поведение зависит от оператора.\n"
-             "Каждое обещание автономии должно проверяться независимым тестом оператора → если требует\n"
-             "присутствия оператора, автономия — частичная.",
-             size=11, color=DARK_GREY, italic=True, line_spacing=1.4)
+             "Каждое обещание автономии проверяется независимым тестом оператора → если нужен оператор, автономия частичная.",
+             size=10.5, color=DARK_GREY, italic=True, line_spacing=1.25)
 
     add_footer(s, "Источники: TechCrunch 2025-11-18, 2025-11-19, 2026-04-15")
     add_speaker_notes(s, load_speaker_notes("s19"))

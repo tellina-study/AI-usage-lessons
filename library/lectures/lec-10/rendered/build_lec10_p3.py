@@ -19,8 +19,8 @@ def build_part3(prs, H):
     Inches, Pt = H["Inches"], H["Pt"]
 
     # ============ s22 section3 divider — L3 Животное ============
-    section_divider(prs, 3, "Раздел 3 — L3 «Животное»",
-        "Полузакрытая среда + измерения на уровне особи. ИИ работает стабильнее, чем на L1-L2.",
+    section_divider(prs, 3, "Точное животноводство",
+        "L3 — уровень «животное». Полузакрытая среда + измерения на уровне особи. ИИ работает стабильнее, чем на L1-L2.",
         current_section=3,
         caption="4 working cases (SenseHub, CattleEye, DeLaval, Birdoo) · 3 анти-хайп урока (Cainthus, tie-stall, Holstein-bias)")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s22"))
@@ -134,7 +134,7 @@ def build_part3(prs, H):
 
     # ============ s23 SenseHub 2M cows ============
     s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s, "Allflex SenseHub — 2 млн коров с сенсорами (≈0,75% из 265M dairy cows worldwide)", size=22)
+    add_assertion_title(s, "Allflex SenseHub — 2 млн коров с сенсорами (≈0,75% из 265 млн молочных коров в мире)", size=22)
 
     # Left: photo
     ocean_box(s, 0.6, 1.5, 6.5, 5.1)
@@ -282,23 +282,29 @@ def build_part3(prs, H):
         ("DeLaval VMS V310", "99,8% успешного подключения", "998/1000 успешных подключений\nруки доильного аппарата", GOLD),
         ("Cargill Birdoo", ">95% точность", "Компьютерное зрение для оценки\nвеса · экономия 10-30 г корма / бройлера", MID),
     ]
+    # Real product images — named изделия, не родовые коровы (K-2 fix):
+    #   CattleEye — GEA official product page (CV bounding-box detection on cow)
+    #   DeLaval VMS V310 — press photo via DairyReporter launch article
+    #   Cargill Birdoo — official brand asset via PR Newswire press release
+    product_images = [
+        ("p24-cattleeye-ui.jpg", 1200, 675),
+        ("p24-delaval-vms.jpg", 1200, 630),
+        ("p24-birdoo-logo.png", 600, 315),
+    ]
     card_w = 3.95; card_h = 4.5; gap = 0.18
     sx = 0.6
     sy = 1.6
+    img_h = 1.75
     for i, (name, kpi, desc, color) in enumerate(cards):
         x = sx + i * (card_w + gap)
         ocean_box(s, x, sy, card_w, card_h, fill=LIGHT_TINT if color != GOLD else GOLD_TINT, stroke=color)
-        # Photo (cow) for first two
-        if i == 0:
-            p = ASSETS / "photos" / "p25-dairy-cow.jpg"
-            if p.exists(): add_image(s, p, x + 0.15, sy + 0.2, w=card_w - 0.3, h=1.8)
-        elif i == 1:
-            p = ASSETS / "photos" / "p25-holstein.jpg"
-            if p.exists(): add_image(s, p, x + 0.15, sy + 0.2, w=card_w - 0.3, h=1.8)
-        else:
-            # Birdoo — use chicken-like icon proxy
-            icon_p = ASSETS / "icons" / "bird-96.png"
-            if icon_p.exists(): add_image(s, icon_p, x + (card_w - 1.0) / 2, sy + 0.6, w=1.0, h=1.0)
+        fname, nat_w, nat_h = product_images[i]
+        p = ASSETS / "photos" / fname
+        if p.exists():
+            img_w = img_h * (nat_w / nat_h)
+            img_w = min(img_w, card_w - 0.3)
+            img_h_eff = img_w * (nat_h / nat_w)
+            add_image(s, p, x + (card_w - img_w) / 2, sy + 0.2, w=img_w, h=img_h_eff)
         text_box(s, x + 0.15, sy + 2.15, card_w - 0.3, 0.45, name,
                  size=15, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
         text_box(s, x + 0.15, sy + 2.65, card_w - 0.3, 0.5, kpi,
@@ -308,7 +314,7 @@ def build_part3(prs, H):
                  size=10, color=DARK_GREY, italic=True,
                  align=PP_ALIGN.CENTER, line_spacing=1.4)
 
-    add_footer(s, "Источники: Fortune 2025-06 (CattleEye GEA); DeLaval press 2025-04; Cargill.com 2025")
+    add_footer(s, "Источники: Fortune 2025-06; DeLaval press 2025-04; Cargill.com 2025 · Фото: gea.com/cattleeye; DairyReporter 2019; PR Newswire 2022")
     add_speaker_notes(s, load_speaker_notes("s24"))
 
     # ============ s25 Cainthus + tie-stall + Holstein-bias ============
@@ -333,12 +339,22 @@ def build_part3(prs, H):
     sy = 1.5
     for name, key, desc, icon_name in lessons:
         ocean_box(s, 0.6, sy, 12.13, 1.5)
-        icon_p = ASSETS / "icons" / f"{icon_name}-96.png"
-        if icon_p.exists():
-            add_image(s, icon_p, 0.85, sy + 0.3, w=0.9, h=0.9)
-        text_box(s, 2.05, sy + 0.15, 4.0, 0.4, name,
+        if icon_name == "lock":
+            # Привязное содержание — real tie-stall barn photo, not a generic icon.
+            photo_p = ASSETS / "photos" / "p25-tiestall-barn.jpg"
+            if photo_p.exists():
+                add_image(s, photo_p, 0.7, sy + 0.25, w=1.25, h=1.0)
+            else:
+                icon_p = ASSETS / "icons" / f"{icon_name}-96.png"
+                if icon_p.exists():
+                    add_image(s, icon_p, 0.85, sy + 0.3, w=0.9, h=0.9)
+        else:
+            icon_p = ASSETS / "icons" / f"{icon_name}-96.png"
+            if icon_p.exists():
+                add_image(s, icon_p, 0.85, sy + 0.3, w=0.9, h=0.9)
+        text_box(s, 2.1, sy + 0.15, 3.95, 0.4, name,
                  size=14, bold=True, color=DEEP)
-        text_box(s, 2.05, sy + 0.55, 4.0, 0.4, key,
+        text_box(s, 2.1, sy + 0.55, 3.95, 0.4, key,
                  size=13, bold=True, color=GOLD, italic=True)
         text_box(s, 6.5, sy + 0.15, 6.0, 1.25, desc,
                  size=11, color=DARK_GREY, italic=True, line_spacing=1.4,
@@ -400,8 +416,8 @@ def build_part3(prs, H):
     add_speaker_notes(s, load_speaker_notes("s26"))
 
     # ============ s27 section4 divider ============
-    section_divider(prs, 4, "Раздел 4 — L4 «Цепочка поставок»",
-        "Агентный ИИ лидирует. Результат измеряется в долях процента за минуты, не в сезонах.",
+    section_divider(prs, 4, "Агрологистика и товарный трейдинг",
+        "L4 — уровень «цепочка». Агентный ИИ лидирует. Результат измеряется в долях процента за минуты, не в сезонах.",
         current_section=4,
         caption="4 working cases (Cargill CMAX, Tract, Olam, Walmart×Cropin) · 2 провала (USDA, Verra) · РФ-параллель (X5/Магнит/РСХБ)")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s27"))
@@ -631,9 +647,9 @@ def build_part3(prs, H):
     add_speaker_notes(s, load_speaker_notes("s32"))
 
     # ============ s33 section4bis divider — Среда ============
-    # Use just "4" — title клейс different by «Раздел 4-bis»
-    section_divider(prs, 4, "Раздел 4-bis — Среда",
-        "Сквозные темы: связь · привязка к вендору · регуляторика. Без них ни одна ступень не работает.",
+    # Decorative digit stays plain "4" — "4-bis" as a literal string overflows at 400pt.
+    section_divider(prs, 4, "Инфраструктурные условия: связь, привязка к вендору, регуляторика",
+        "Сквозной meta-уровень: всё, без чего ни одна ступень не работает.",
         current_section=5,
         caption="3 sub-блока (связь / vendor lock-in двойная оптика / регуляторика) · 3 анти-ИИ критерия (AP5, AP6, AP7)")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s33"))
@@ -695,7 +711,7 @@ def build_part3(prs, H):
         "Привязка к вендору — двойная оптика John Deere",
         size=24)
 
-    # Left: anti-theft success
+    # Left: anti-theft success — real news photo (CNN, Melitopol story, May 2022)
     ocean_box(s, 0.6, 1.5, 6.0, 5.0, fill=LIGHT_TINT, stroke=LIGHT)
     text_box(s, 0.85, 1.65, 5.5, 0.5, "Май 2022 — успех против кражи",
              size=15, bold=True, color=LIGHT)
@@ -707,36 +723,42 @@ def build_part3(prs, H):
              "на $5 млн стали\n"
              "кирпичом по решению производителя.",
              size=12, color=DEEP, italic=True, line_spacing=1.4)
-    p = ASSETS / "photos" / "p30b-fpv-drone.jpg"
+    p = ASSETS / "photos" / "p30b-melitopol-tractor.jpg"
     if p.exists():
-        add_image(s, p, 0.85, 4.5, w=5.5, h=1.7)
-    text_box(s, 0.85, 6.25, 5.5, 0.3,
-             "ИИ-функция безопасности — успех в этой петле",
-             size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+        add_image(s, p, 0.85, 4.5, w=5.5, h=1.55)
+    text_box(s, 0.85, 6.1, 5.5, 0.3,
+             "John Deere в Украине · CNN, 2022-05-01 — ИИ-функция безопасности, успех в этой петле",
+             size=9, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
-    # Right: control surface optic
+    # Right: control surface optic — real photos (The Register / DJI.com official)
     ocean_box(s, 6.8, 1.5, 6.0, 5.0, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 7.05, 1.65, 5.5, 0.5, "Янв. 2025 — FTC против Deere",
-             size=15, bold=True, color=GOLD)
-    text_box(s, 7.05, 2.15, 5.5, 0.4, "Десятилетние ограничения ремонта",
-             size=11, italic=True, color=MID)
-    text_box(s, 7.05, 2.65, 5.5, 1.8,
+    text_box(s, 7.05, 1.65, 4.2, 0.5, "Янв. 2025 — FTC против Deere",
+             size=14, bold=True, color=GOLD)
+    text_box(s, 7.05, 2.15, 4.2, 0.4, "Десятилетние ограничения ремонта",
+             size=10.5, italic=True, color=MID)
+    ftc_p = ASSETS / "photos" / "p30b-ftc-deere-tractors.jpg"
+    if ftc_p.exists():
+        add_image(s, ftc_p, 11.4, 1.65, w=1.25, h=0.712)
+    text_box(s, 7.05, 2.65, 5.5, 1.75,
              "Один и тот же механизм:\n"
              "удалённая блокировка = безопасность сегодня =\n"
              "поверхность контроля завтра. Фермер\n"
              "не может ремонтировать без\n"
              "разрешения вендора.",
-             size=12, color=DEEP, italic=True, line_spacing=1.4)
+             size=11.5, color=DEEP, italic=True, line_spacing=1.35)
     hr_line(s, 7.05, 4.5, 5.5, color=GOLD, weight=1.2)
-    text_box(s, 7.05, 4.65, 5.5, 0.4, "Декабрь 2025 — FCC запретил DJI",
-             size=13, bold=True, color=DEEP)
-    text_box(s, 7.05, 5.05, 5.5, 1.4,
+    text_box(s, 7.05, 4.65, 4.2, 0.4, "Декабрь 2025 — FCC запретил DJI",
+             size=12.5, bold=True, color=DEEP)
+    dji_p = ASSETS / "photos" / "p30b-dji-agras.png"
+    if dji_p.exists():
+        add_image(s, dji_p, 11.5, 4.62, w=1.1, h=1.1)
+    text_box(s, 7.05, 5.1, 5.5, 1.35,
              "80-90% сельхоз-дронов в США потеряли\n"
              "легальный статус. Одно решение FCC —\n"
              "привязка к вендору стала геополитическим риском.",
-             size=11, color=DARK_GREY, italic=True, line_spacing=1.5)
+             size=10.5, color=DARK_GREY, italic=True, line_spacing=1.4)
 
-    add_footer(s, "Источники: The Register 2022-05-02; CSO Online 572811; пресс-релиз FTC 2025-01-15")
+    add_footer(s, "Фото: CNN 2022-05-01; The Register 2025-01-15; dji.com/t40 · Источники: The Register 2022-05-02; CSO Online 572811; пресс-релиз FTC 2025-01-15")
     add_speaker_notes(s, load_speaker_notes("s30b"))
 
     # ============ s35 regulatory 3-col ============
@@ -771,6 +793,11 @@ def build_part3(prs, H):
         x = sx + i * (col_w + gap)
         ocean_box(s, x, sy, col_w, col_h,
                   fill=GOLD_TINT if color == GOLD else LIGHT_TINT, stroke=color)
+        if i == 0:
+            # EU AI Act column — real EU flag badge (Wikimedia Commons, Flag of Europe.svg)
+            flag_p = ASSETS / "photos" / "p35-eu-flag.jpg"
+            if flag_p.exists():
+                add_image(s, flag_p, x + col_w - 0.65, sy + 0.12, w=0.5, h=0.333)
         text_box(s, x + 0.15, sy + 0.1, col_w - 0.3, 0.5, name,
                  size=16, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
         text_box(s, x + 0.15, sy + 0.6, col_w - 0.3, 0.4, src,
@@ -783,21 +810,33 @@ def build_part3(prs, H):
         text_box(s, x + 0.2, sy + col_h - 0.85, col_w - 0.4, 0.7, summary,
                  size=11, bold=True, color=WHITE, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
-    add_footer(s, "Источники: Cambridge EJRR 2024; USDA AI Strategy FY2025-26; Распоряжение Правительства РФ 31.12.2025")
+    add_footer(s, "Источники: Cambridge EJRR 2024; USDA AI Strategy FY2025-26; Распоряжение Правительства РФ 31.12.2025; флаг ЕС — Wikimedia Commons")
     add_speaker_notes(s, load_speaker_notes("s35"))
 
     # ============ s36 section5 divider — Полка ============
-    section_divider(prs, 5, "Раздел 5 — L5 «Полка» + 5 критериев",
-        "Розничный ИИ зрел + пять анти-ИИ критериев + чек-лист + карьерный ландшафт + замыкание к Plenty.",
+    section_divider(prs, 5, "Управление спросом в розничной цепочке",
+        "L5 — уровень «полка». Розничный ИИ зрел + пять анти-ИИ критериев + чек-лист + карьерный ландшафт + замыкание к Plenty.",
         current_section=6,
-        caption="L5 кратко (Walmart, Tesco, X5) + 5 критериев + чек-лист + карьера + closing callback")
+        caption="L5 кратко (Walmart, Tesco, X5, Магнит F&R) + 5 критериев + чек-лист + карьера + closing callback")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s36"))
 
-    # ============ s37s L5 retail — 2×2 grid (D1 Магнит F&R as 4th card) ============
+    # ============ s37s L5 retail — hero photo + 2×2 grid (D1 Магнит F&R as 4th card) ============
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "L5 — Walmart Eden + Tesco AI + X5 «Перекрёсток» + Магнит F&R (гибрид)",
-        size=22)
+        size=20, y=0.25)
+
+    # Hero context photo — real supermarket aisle (fully digitised retail environment)
+    ocean_box(s, 0.6, 1.1, 12.13, 0.92, fill=SURFACE, stroke=LIGHT)
+    hero_p = ASSETS / "photos" / "p37s-supermarket-aisle.jpg"
+    if hero_p.exists():
+        add_image(s, hero_p, 0.68, 1.16, w=0.70, h=0.80)
+    text_box(s, 1.55, 1.2, 10.9, 0.3,
+             "L5 — полностью оцифрованная среда: у каждого товара (SKU) есть цифровой след",
+             size=12, bold=True, color=DEEP)
+    text_box(s, 1.55, 1.55, 10.9, 0.4,
+             "Проход супермаркета с напольной навигацией — среда, где каждое действие фиксируется в реальном времени",
+             size=10, italic=True, color=MID, line_spacing=1.2)
 
     cards = [
         ("Walmart Eden", "ML с 2017",
@@ -814,8 +853,8 @@ def build_part3(prs, H):
          TEAL),
     ]
     # 2×2 grid
-    card_w = 6.0; card_h = 2.5; gap_x = 0.18; gap_y = 0.15
-    sx = 0.6; sy = 1.5
+    card_w = 6.0; card_h = 2.18; gap_x = 0.18; gap_y = 0.13
+    sx = 0.6; sy = 2.2
     for i, (name, kpi, desc, color) in enumerate(cards):
         col = i % 2
         row = i // 2
@@ -827,19 +866,19 @@ def build_part3(prs, H):
                   stroke=color)
         icon_p = ASSETS / "icons" / "shopping-cart-96.png"
         if icon_p.exists():
-            add_image(s, icon_p, x + 0.2, y + 0.25, w=0.7, h=0.7)
-        text_box(s, x + 1.05, y + 0.2, card_w - 1.2, 0.45, name,
-                 size=15, bold=True, color=DEEP)
-        text_box(s, x + 1.05, y + 0.65, card_w - 1.2, 0.4, kpi,
-                 size=13, bold=True, color=color, line_spacing=1.2)
-        text_box(s, x + 0.2, y + 1.15, card_w - 0.4, 1.25, desc,
-                 size=11, color=DARK_GREY, italic=True, line_spacing=1.4)
+            add_image(s, icon_p, x + 0.2, y + 0.2, w=0.6, h=0.6)
+        text_box(s, x + 0.95, y + 0.18, card_w - 1.1, 0.4, name,
+                 size=14, bold=True, color=DEEP)
+        text_box(s, x + 0.95, y + 0.58, card_w - 1.1, 0.35, kpi,
+                 size=12, bold=True, color=color, line_spacing=1.2)
+        text_box(s, x + 0.2, y + 1.0, card_w - 0.4, 1.1, desc,
+                 size=10.5, color=DARK_GREY, italic=True, line_spacing=1.3)
 
     # Bottom caveat row (compact)
-    ocean_box(s, 0.6, 6.85, 12.13, 0.45, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 6.88, 11.6, 0.35,
+    ocean_box(s, 0.6, 6.57, 12.13, 0.42, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, 6.60, 11.6, 0.35,
              "⚠ Оговорка: L5 — розничный ИИ, не агро. Магнит F&R — нюанс «гибрид»: прогноз в промышленной эксплуатации, пополнение — пилот.",
-             size=11, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+             size=10.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
 
     add_footer(s, "Walmart corporate 2025 · Tesco AI annual report · X5 Tech 2024 · Habr Магнит 2026-01")
     add_speaker_notes(s, load_speaker_notes("s37s"))

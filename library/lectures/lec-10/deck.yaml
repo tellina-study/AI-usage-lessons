@@ -146,10 +146,10 @@ slides:
     learning_goal: "Эмоциональный hook + foreshadow keystone — AI не везде работает; ось — открытая среда vs закрытая"
     learning_outcomes: [LO1a]
     media:
-      kind: "split-frame photo BEFORE/AFTER"
-      source_candidate: "Plenty press May 2023 ribbon-cutting + TechCrunch / Bloomberg Dec 2024 closure"
-      acquisition_tier: "Tier 1 (2 sources)"
-      attribution_label: "Plenty Unlimited Inc. Compton facility, май 2023 / декабрь 2024. Источники: Plenty press, TechCrunch 2025-03-24"
+      kind: "split-frame из ДВУХ настоящих фото ribbon-cutting May 2023 (оба — опенинг; честного фото закрытия Dec 2024 не найдено за разумное число попыток — см. iteration-log-part2.md)"
+      source_candidate: "2urbangirls.com 2023-05 (local news, ribbon-cutting coverage)"
+      acquisition_tier: "Tier 2 (local news og:image + in-article photos)"
+      attribution_label: "Plenty Unlimited Inc. Compton facility ribbon-cutting, май 2023. Источник: 2urbangirls.com. Цифры закрытия (декабрь 2024) — текстом, источники: TechCrunch 2025-03-24, Bloomberg Law 2025"
 
   - id: s02
     title: "Лекция 10. AI в сельском хозяйстве"
@@ -220,8 +220,8 @@ slides:
   # ---------------------------------------------------------------------------
 
   - id: s06
-    title: "Раздел 1 — L1 «Поле». Открытая биологическая среда"
-    assertion: "Раздел 1 — L1 «Поле». Самый нижний уровень: где AI работает в узкой задаче (See & Spray), где ломается — в попытках generic advisory и closed-loop."
+    title: "Раздел 1. Точное земледелие"
+    assertion: "Раздел 1. Точное земледелие (L1 «Поле»). Самый нижний уровень лестницы: где AI работает в узкой задаче (See & Spray), где ломается — в попытках generic advisory и closed-loop."
     section: "Р1"
     slide_type: "section_divider"
     layout: "divider-with-progress"
@@ -314,10 +314,10 @@ slides:
     learning_goal: "Vendor matrix — anti-hype навыки маппинга «бренд → режим работы»"
     learning_outcomes: [LO1a, LO2]
     media:
-      kind: "matrix table 5×5 + BASF xarvio Japan rice yield map"
-      source_candidate: "own table + BASF press p-25-191 2025-10"
-      acquisition_tier: "Tier 1"
-      attribution_label: "BASF Japan rice yield guarantee, октябрь 2025. Источник: BASF press p-25-191"
+      kind: "matrix table 5×5 + настоящий скриншот xarvio FIELD MANAGER (карта поля по зонам риска; честно НЕ выдаётся за японский рисовый сервис — тот скриншотов не публиковал)"
+      source_candidate: "own table + Apple App Store, xarvio FIELD MANAGER listing"
+      acquisition_tier: "Tier 1 (official app-store screenshot)"
+      attribution_label: "xarvio FIELD MANAGER — карта поля (иллюстрация платформы). Источник: Apple App Store listing. BASF Japan rice yield guarantee текстом — источник: BASF press p-25-191, 2025-10"
 
   - id: s09
     title: "Foundation models 2026 — TerraMind, Prithvi-EO 2.0"
@@ -378,10 +378,10 @@ slides:
     learning_goal: "AP4 категорический антипаттерн + альтернатива RAG-grounded"
     learning_outcomes: [LO2, LO5]
     media:
-      kind: "screenshot of model response + Nature Food paper figure"
-      source_candidate: "Phys.org 2024-05 + Nature Food 2024 supplementary"
-      acquisition_tier: "Tier 1"
-      attribution_label: "Tzachor et al., Nature Food, май 2024; Reichman University"
+      kind: "реконструированный Q/A-пример (текст, не фото) + настоящая Figure 1 из статьи (RLHF pipeline, честно НЕ выдаётся за Q/A-скриншот)"
+      source_candidate: "nature.com/articles/s43016-023-00867-x (og:image Fig1) — полный текст статьи paywalled, Q/A-скриншота в открытом доступе нет"
+      acquisition_tier: "Tier 1 (og:image с официальной страницы журнала)"
+      attribution_label: "Figure 1, Tzachor et al. 2024, Nature Food — предложенная RLHF-архитектура (human-in-the-loop), не конкретный диалог"
 
   - id: s13
     title: "Plantix — 10-15% misdiagnosis на 10M+ загрузок"
@@ -394,10 +394,10 @@ slides:
     learning_goal: "AP3 + FP/FN dose-criticality breakdown"
     learning_outcomes: [LO5]
     media:
-      kind: "Plantix mobile UI screenshot + FP/FN breakdown chart"
-      source_candidate: "Plantix.net + own QuickChart"
-      acquisition_tier: "Tier 1+own"
-      attribution_label: "Plantix.net UI; данные Frontiers in Plant Science 2020 + Plantix self-report"
+      kind: "настоящий Plantix mobile UI screenshot (официальный Google Play listing) + FP/FN breakdown table"
+      source_candidate: "Google Play listing (com.peat.GartenBank) + own table"
+      acquisition_tier: "Tier 1 (official app-store screenshot)"
+      attribution_label: "Plantix — «Instant disease detection» screen. Источник: Google Play listing; данные Frontiers in Plant Science 2020 + Plantix self-report"
 
   - id: s14
     title: "L1 РФ — ExactFarming, Прогресс Агро + политический риск"
@@ -482,8 +482,8 @@ slides:
     learning_goal: "AP2a архитектурный выбор внутри AI-домена; «где я» vs «что я вижу»"
     learning_outcomes: [LO1b, LO5]
     media:
-      kind: "comparative diagram CV vs sensor-fusion"
-      source_candidate: "own drawio (2-col: Cognitive Pilot CV-stack + ИТЭЛМА GNSS-stack)"
+      kind: "comparative banner chart (QuickChart, own data, два равных по длине бруса — величины категориально несравнимы, брус не кодирует число) + 2-col text comparison"
+      source_candidate: "own QuickChart c17-cogn-vs-itelma.png — регенерирован Фаза 3 R2: исходный рендер нёс один несуществующий общий числовой показатель и пустой брус ИТЭЛМА (K-4); исправлено на собственный показатель в подписи каждой категории"
       acquisition_tier: "own"
       attribution_label: "Источники: RTVI 2025 (Cognitive Pilot иски); Фонтанка 2026-01-26 (ИТЭЛМА)"
 
@@ -514,10 +514,10 @@ slides:
     learning_goal: "AP — demo ≠ deployment; маркетинг «autonomous» = юридическая ловушка"
     learning_outcomes: [LO2, LO5]
     media:
-      kind: "Monarch MK-V photo + TechCrunch иск headline screenshot"
-      source_candidate: "Monarch press + TechCrunch 2025-11-18"
+      kind: "Monarch MK-V real photo (og:image статьи об иске, обрезан в широкий баннер) + дословная цитата заголовка TechCrunch текстовой карточкой (не скриншот — headless-browser для захвата недоступен)"
+      source_candidate: "techcrunch.com/wp-content/uploads/2024/07/monarch-Dairy-Riley.jpg — og:image статьи techcrunch.com/2025/11/18/monarch-tractor-sued-over-tractors-that-were-unable-to-operate-autonomously/; реальный заголовок статьи процитирован дословно (прежняя версия в slide/deck несла перефразированный заголовок — исправлено)"
       acquisition_tier: "Tier 1"
-      attribution_label: "TechCrunch 2025-11-18 + 2025-11-19 + 2026-04-15"
+      attribution_label: "Monarch press, по данным TechCrunch 2025-11-18 + 2025-11-19 + 2026-04-15"
 
   - id: s20
     title: "FarmWise wind-down + Naïo recovery — open-environment ломает CV"
@@ -556,8 +556,8 @@ slides:
   # ---------------------------------------------------------------------------
 
   - id: s22
-    title: "Раздел 3 — L3 «Животное». CV стабильнее L1-L2"
-    assertion: "Раздел 3 — L3 «Животное». Полу-закрытая среда + измерения на уровне индивидуального животного: AI работает стабильнее, чем на L1-L2. Ограничения — физическая конфигурация + Holstein-bias + small dairy economics."
+    title: "Раздел 3. Точное животноводство"
+    assertion: "Раздел 3. Точное животноводство (уровень «животное»). Полу-закрытая среда + измерения на уровне индивидуального животного: AI работает стабильнее, чем на L1-L2. Ограничения — физическая конфигурация + Holstein-bias + small dairy economics."
     section: "Р3"
     slide_type: "section_divider"
     layout: "divider-with-progress"
@@ -650,10 +650,10 @@ slides:
     learning_goal: "3 working cases L3 — узкие задачи + measurable ROI"
     learning_outcomes: [LO1a]
     media:
-      kind: "3 product photos (CattleEye UI + DeLaval V310 + Cargill Birdoo)"
-      source_candidate: "Fortune 2025-06 (CattleEye) + DeLaval press 2025-04 + Cargill.com"
-      acquisition_tier: "Tier 1"
-      attribution_label: "Источники: Fortune 2025-06 (CattleEye GEA); DeLaval press 2025-04; Cargill.com 2025"
+      kind: "3 product images (CattleEye CV bounding-box demo + DeLaval VMS V310 press photo + Cargill Birdoo brand asset)"
+      source_candidate: "gea.com/cattleeye (official product page) + DairyReporter 2019-11-26 (DeLaval VMS V310 launch) + PR Newswire 2022-01-11 (Cargill Birdoo press release)"
+      acquisition_tier: "Tier 1 (og:image из официальной страницы продукта / пресс-релиза)"
+      attribution_label: "Источники: Fortune 2025-06; DeLaval press 2025-04; Cargill.com 2025 · Фото: gea.com/cattleeye; DairyReporter 2019; PR Newswire 2022"
 
   - id: s25
     title: "Cainthus, tie-stall barns, Holstein-bias — 3 anti-hype урока"
@@ -692,8 +692,8 @@ slides:
   # ---------------------------------------------------------------------------
 
   - id: s27
-    title: "Раздел 4 — L4 «Цепочка поставок». Агентный ИИ лидирует"
-    assertion: "Раздел 4 — L4 «Цепочка поставок». Place, где агентный ИИ работает в промышленном внедрении 2026: трейдеры измеряют outcome в basis-points за минуты, не за сезоны."
+    title: "Раздел 4. Агрологистика и товарный трейдинг"
+    assertion: "Раздел 4. Агрологистика и товарный трейдинг (уровень «цепочка»). Место, где агентный ИИ работает в промышленном внедрении 2026: трейдеры измеряют outcome в basis-points за минуты, не за сезоны."
     section: "Р4"
     slide_type: "section_divider"
     layout: "divider-with-progress"
@@ -796,8 +796,8 @@ slides:
   # ---------------------------------------------------------------------------
 
   - id: s33
-    title: "Раздел 4-bis — Среда: связь, привязка, регуляторика"
-    assertion: "Раздел 4-bis — Среда. Cross-cutting meta-уровень: связь / привязка к поставщику / регуляторика. Все три — failure-перспектива. Без них ни одна ступень лестницы не работает."
+    title: "Инфраструктурные условия: связь, привязка к вендору, регуляторика"
+    assertion: "Инфраструктурные условия: связь, привязка к вендору, регуляторика. Сквозной meta-уровень: все три — failure-перспектива. Без них ни одна ступень лестницы не работает."
     section: "Р4-bis"
     slide_type: "section_divider"
     layout: "divider-with-progress"
@@ -842,10 +842,10 @@ slides:
     learning_goal: "AP6 + двойная оптика как stand-alone framework"
     learning_outcomes: [LO5]
     media:
-      kind: "Мелитополь stolen tractors map + FTC press conference photo"
-      source_candidate: "CSO Online 572811 + FTC press 2025-01-15"
-      acquisition_tier: "Tier 1"
-      attribution_label: "Источники: The Register 2022-05-02; CSO Online 572811; FTC press 2025-01-15"
+      kind: "3 real news photos: John Deere трактор в Украине (CNN) + ряд тракторов Deere (The Register, FTC-иск) + DJI Agras T40 (официальное фото dji.com)"
+      source_candidate: "CNN 2022-05-01 + The Register 2025-01-15 + dji.com/t40 official product photo"
+      acquisition_tier: "Tier 1 (og:image из новостных статей и официальной страницы продукта)"
+      attribution_label: "Фото: CNN 2022-05-01; The Register 2025-01-15; dji.com/t40 · Источники: The Register 2022-05-02; CSO Online 572811; пресс-релиз FTC 2025-01-15"
 
   - id: s35
     title: "Регуляторика — EU AI Act vs USDA vs «АПК будущего»"
@@ -868,8 +868,8 @@ slides:
   # ---------------------------------------------------------------------------
 
   - id: s36
-    title: "Раздел 5 — L5 «Потребитель» + 5 критериев + payoff"
-    assertion: "Раздел 5 — L5 «Потребитель / retail». Самая зрелая ступень + пятёрка критериев «когда не AI» + карьерный ландшафт + closing callback к Plenty Compton."
+    title: "Раздел 5. Управление спросом в розничной цепочке"
+    assertion: "Раздел 5. Управление спросом в розничной цепочке (уровень «полка»). Самая зрелая ступень + пятёрка критериев «когда не AI» + карьерный ландшафт + closing callback к Plenty Compton."
     section: "Р5"
     slide_type: "section_divider"
     layout: "divider-with-progress"
@@ -888,8 +888,8 @@ slides:
   # ---------------------------------------------------------------------------
 
   - id: s37s
-    title: "L5 — Walmart Eden + Tesco AI + X5 «Перекрёсток»"
-    assertion: "Walmart Eden ML с 2017, Tesco AI –30% food waste с 2017, X5 «Перекрёсток» ML с 2020 (мировой уровень). Но L5-успех ≠ АПК-готовность: это специфика retail-AI. Большая часть L5 — не agriculture-specific."
+    title: "L5 — Walmart Eden + Tesco AI + X5 «Перекрёсток» + Магнит F&R"
+    assertion: "Walmart Eden ML с 2017, Tesco AI –30% food waste с 2017, X5 «Перекрёсток» ML с 2020 (мировой уровень), Магнит F&R: Forecasting 46 РЦ в production + Replenishment пилот на 3 РЦ. Но L5-успех ≠ АПК-готовность: это специфика retail-AI. Большая часть L5 — не agriculture-specific."
     section: "Р5"
     slide_type: "content"
     layout: "3-card-success"

@@ -32,9 +32,9 @@ visual:
 
 Под timeline — 2-column nested layout:
 
-**Левая колонка (50%):** Photo Monarch MK-V на лужайке (Monarch press) + caption «Monarch MK-V — позиционировался как полностью автономный».
+**Левая колонка (50%):** Настоящее фото Monarch MK-V в поле (og:image статьи TechCrunch 2025-11-18 про иск Burks Tractor, оригинал — Monarch press, `techcrunch.com/wp-content/uploads/2024/07/monarch-Dairy-Riley.jpg`; обрезан в широкий баннер под строку) + caption «Monarch MK-V. Источник: Monarch press, публикация TechCrunch, 2025-11-18».
 
-**Правая колонка (50%):** Screenshot headline TechCrunch «Monarch Tractor sued over autonomous tractors that aren't autonomous» (18 ноября 2025) + caption.
+**Правая колонка (50%):** Текстовая карточка с дословной цитатой реального заголовка TechCrunch — «Monarch Tractor sued over tractors that were ‘unable to operate autonomously’» (18 ноября 2025) + caption «Дословный заголовок статьи об иске Burks Tractor». Это цитата, а не скриншот (headless-browser для захвата страницы недоступен в тулинге); прежняя версия файла несла перефразированный заголовок — заменён на дословный.
 
 Bottom callout 14pt italic в Teal-tint box: «**Демо ≠ промышленное внедрение.** Маркетинг «autonomous» при том, что autonomy не выдержит судебной проверки = структурная trap. **Альтернатива:** supervised autonomy с явным disclosure capability / non-capability».
 

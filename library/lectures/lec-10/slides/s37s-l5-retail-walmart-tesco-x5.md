@@ -20,7 +20,7 @@ Walmart Eden ML с 2017, Tesco AI –30% food waste с 2017, X5 «Перекрё
 
 ## Visual
 
-Сверху (35% высоты) — hero photo supermarket aisle с свежими овощами / фруктами + shelf-edge цена. Обрамлено Ocean rounded box. Caption 12pt italic: «L5 — fully digital environment: каждая SKU имеет цифровой след».
+Сверху — hero photo: проход супермаркета с напольной навигацией (реальное фото, подключено в Фазе 3 — K-4 fix). Обрамлено Ocean rounded box. Caption 12pt italic: «L5 — полностью оцифрованная среда: у каждого товара (SKU) есть цифровой след».
 
 Под фото — 4-card grid в Ocean rounded boxes (2×2):
 

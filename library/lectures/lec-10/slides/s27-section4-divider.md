@@ -2,7 +2,7 @@
 id: s27
 type: section_divider
 duration_min: 0.2
-assertion: "Раздел 4 — L4 «Цепочка поставок». Place, где агентный ИИ работает в промышленном внедрении 2026: трейдеры измеряют outcome в basis-points за минуты, не за сезоны."
+assertion: "Раздел 4. Агрологистика и товарный трейдинг (уровень «цепочка»). Место, где агентный ИИ работает в промышленном внедрении 2026: трейдеры измеряют outcome в basis-points за минуты, не за сезоны."
 learning_goal: "Visual divider — переход в Р4 + 7-card progress bar с gold-подсветкой Р4"
 learning_outcomes: [LO1a, LO1b]
 chapter_ref: "frontmatter"
@@ -12,15 +12,15 @@ visual:
   primary: "Большое «4» + title + 1-фраза-фрейм + 7-card progress bar с gold-подсветкой Р4"
 ---
 
-# Раздел 4 — L4 «Цепочка поставок». Агентный ИИ лидирует
+# Раздел 4. Агрологистика и товарный трейдинг
 
 ## Assertion
 
-Раздел 4 — L4 «Цепочка поставок». Place, где агентный ИИ работает в промышленном внедрении 2026: трейдеры измеряют outcome в basis-points за минуты, не за сезоны.
+Раздел 4. Агрологистика и товарный трейдинг (уровень «цепочка»). Место, где агентный ИИ работает в промышленном внедрении 2026: трейдеры измеряют outcome в basis-points за минуты, не за сезоны.
 
 ## Visual
 
-Слева — огромная цифра «4» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 36pt bold «L4 — Цепочка поставок. Агентный ИИ лидирует» + 1 фраза-фрейм 20pt italic Primary mid: «Узкий агент работает; end-to-end — пока нет; federal policy — хвостовой риск».
+Слева — огромная цифра «4» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 34pt bold «Агрологистика и товарный трейдинг» + под ним 1 фраза-фрейм 18pt italic Primary mid, несущая ярлык ступени подзаголовком: «L4 — уровень «цепочка». Агентный ИИ лидирует; узкий агент работает, end-to-end — пока нет; federal policy — хвостовой риск».
 
 Внизу — progress bar: 7 horizontal cards, текущая (Р4) выделена gold. Caption 12pt italic: «4 working cases (Cargill CMAX, Tract, Olam, Walmart×Cropin) · 2 провала (USDA, Verra) · РФ-параллель (X5/Магнит/РСХБ)».
 

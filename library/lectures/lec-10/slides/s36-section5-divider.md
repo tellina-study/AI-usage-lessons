@@ -2,7 +2,7 @@
 id: s36
 type: section_divider
 duration_min: 0.2
-assertion: "Раздел 5 — L5 «Потребитель / retail». Самая зрелая ступень + пятёрка критериев «когда не AI» + карьерный ландшафт + closing callback к Plenty Compton."
+assertion: "Раздел 5. Управление спросом в розничной цепочке (уровень «полка»). Самая зрелая ступень + пятёрка критериев «когда не AI» + карьерный ландшафт + closing callback к Plenty Compton."
 learning_goal: "Visual divider — переход в Р5 + 7-card progress bar с gold-подсветкой Р5"
 learning_outcomes: [LO5]
 chapter_ref: "frontmatter"
@@ -12,17 +12,17 @@ visual:
   primary: "Большое «5» + title + 1-фраза-фрейм + 7-card progress bar с gold-подсветкой Р5"
 ---
 
-# Раздел 5 — L5 «Потребитель» + 5 критериев + payoff
+# Раздел 5. Управление спросом в розничной цепочке
 
 ## Assertion
 
-Раздел 5 — L5 «Потребитель / retail». Самая зрелая ступень + пятёрка критериев «когда не AI» + карьерный ландшафт + closing callback к Plenty Compton.
+Раздел 5. Управление спросом в розничной цепочке (уровень «полка»). Самая зрелая ступень + пятёрка критериев «когда не AI» + карьерный ландшафт + closing callback к Plenty Compton.
 
 ## Visual
 
-Слева — огромная цифра «5» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 36pt bold «L5 — Потребитель + 5 критериев + payoff» + 1 фраза-фрейм 20pt italic Primary mid: «Самая зрелая ступень + главный consolidation + callback к Plenty».
+Слева — огромная цифра «5» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 34pt bold «Управление спросом в розничной цепочке» + под ним 1 фраза-фрейм 18pt italic Primary mid, несущая ярлык ступени подзаголовком: «L5 — уровень «полка». Самая зрелая ступень + главный consolidation + callback к Plenty».
 
-Внизу — progress bar: 7 horizontal cards, текущая (Р5) выделена gold. Caption 12pt italic: «L5 кратко (Walmart, Tesco, X5) + 5 критериев + чек-лист + карьера + closing callback».
+Внизу — progress bar: 7 horizontal cards, текущая (Р5) выделена gold. Caption 12pt italic: «L5 кратко (Walmart, Tesco, X5, Магнит F&R) + 5 критериев + чек-лист + карьера + closing callback».
 
 ## Speaker notes
 

@@ -6,10 +6,10 @@ assertion: "Tzachor et al. (Reichman University, Nature Food, ноябрь 2023,
 learning_goal: "AP4 категорический антипаттерн + альтернатива RAG-grounded"
 learning_outcomes: [LO2, LO5]
 chapter_ref: "§1.5 Часть 1 — Strict-in F2 галлюцинации generic LLM"
-references: [tzachor-2024-nature-food, phys-org-2024-may]
+references: [tzachor-2024-nature-food, phys-org-2024-may, nature-food-fig1-tzachor]
 visual:
   pattern: question_answer_2col
-  primary: "Слева — Q/A пример из Tzachor 2024 paper (фермер cassava + ChatGPT confident wrong); справа — AP4 callout + RAG-grounded архитектура"
+  primary: "Слева — реконструированный Q/A пример (фермер cassava + ChatGPT confident wrong) + настоящая Figure 1 из самой статьи Tzachor et al. 2024, Nature Food (RLHF human-in-the-loop pipeline — не Q/A-скриншот, честно подписано); справа — AP4 callout + RAG-grounded архитектура"
 ---
 
 # ChatGPT/Bard как агроном — «уверенно ошибочный»
@@ -31,6 +31,8 @@ Ocean rounded box с воспроизведением Q/A:
 **Ответ GPT-4 (схематически):** "*При обнаружении заражения fall armyworm в cassava — применить glyphosate в концентрации X% за Y дней до сбора урожая*" — конкретные числа, уверенный тон.
 
 **Проблема:** glyphosate — гербицид, **не инсектицид**. Против fall armyworm нужен Bt-spray или контактный инсектицид. Generic LLM не знает контекста, отвечает confident-wrong.
+
+Под Q/A-реконструкцией — настоящая **Figure 1** из самой статьи Tzachor et al. (Nature Food, 2023, открыта через og:image на nature.com — единственная не-paywalled иллюстрация статьи): схема предложенного авторами human-in-the-loop RLHF pipeline для безопасного дообучения LLM на агрономических данных. Честная подпись под схемой 11pt italic: «Figure 1, Tzachor et al. 2024, Nature Food — предложенная архитектура RLHF с человеком в петле. Это НЕ скриншот конкретного Q/A-диалога с фермером — журнал не публикует такой скриншот в открытом доступе; полный текст статьи paywalled».
 
 Под этим — small caption 12pt italic: «Tzachor et al., Nature Food, ноябрь 2023 (press coverage 2024-05). 184 вопроса, GPT-3.5 / GPT-4 / Bard. Соавторы: США, UK, Кения, Нигерия, Колумбия».
 
@@ -66,3 +68,4 @@ Footer 12pt italic: «Источник: Tzachor et al., Nature Food, ноябр�
 
 - Tzachor et al., Nature Food (ноябрь 2023; press coverage Phys.org 2024-05) — Reichman University.
 - Phys.org coverage (май 2024).
+- nature.com/articles/s43016-023-00867-x — источник Figure 1 (og:image, единственная не-paywalled иллюстрация статьи).

@@ -220,7 +220,7 @@ This is the first of five criteria we will return to in the finale. The alternat
 
 [Transition to s12.]
 
-### [Slide 12 — ChatGPT/Bard as an agronomist] 16:30–18:00
+### [Slide 12 — ChatGPT as an agronomist] 16:30–18:00
 
 [On the slide — a screenshot of a model's answer + a quote from a Nature Food article.]
 
@@ -228,7 +228,7 @@ This is the first of five criteria we will return to in the finale. The alternat
 
 November two thousand twenty-three, a publication in Nature Food. Broad media resonance — May twenty-four via a Phys.org review. The lead author — Dr. Asaf Tzachor of Reichman University. The subject — scenarios of ChatGPT-model use by African farmers for the cassava crop.
 
-What they found. One hundred eighty-four questions. GPT-3.5, GPT-4, Bard. In tens of percent of cases — a confident answer with a factual error.
+What they found. A set of questions about pesticide application. GPT-3.5 and GPT-4.0. In tens of percent of cases — a confident answer with a factual error.
 
 [slowly]
 

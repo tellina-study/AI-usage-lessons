@@ -26,7 +26,7 @@ AP1 термодинамика > ML / AP3 порог точности ≠ вне
 |---|---|---|---|
 | **AP1** | **Закон термодинамики важнее ML** — фундаментальная экономика на порядок выше цены продукта | Vertical farming — LED ≈ 100× free sunlight; Plenty $940M, Bowery $32M | Открытый грунт при энергии <$0,10/кВт·ч; vertical только для high-value crops |
 | **AP3** | **Пороговая точность ≠ готовность к внедрению** | Plantix 10-15% misdiagnosis × 10M+ = ~100k неправильных рекомендаций/год | Calibrated confidence + abstention; «не уверен → спроси эксперта» |
-| **AP4** | **Обобщённый LLM в advisory mode** для high-stakes = категорический антипаттерн | ChatGPT/Bard рекомендация неправильного окна гербицида (Tzachor 2024) | RAG-grounded в local regulator + abstention + человек в цикле |
+| **AP4** | **Обобщённый LLM в advisory mode** для high-stakes = категорический антипаттерн | ChatGPT рекомендация неправильного окна гербицида (Tzachor 2024) | RAG-grounded в local regulator + abstention + человек в цикле |
 | **AP6** | **«AI-driven equipment» = ловушка vendor lock-in** | FTC v. Deere; Мелитополь remote-brick; FieldView выход из РФ; FCC ban DJI | Open-source hardware (Farm Hack); right-to-repair; multi-vendor; mechanical fallback |
 | **AP7** | **AI-MRV для carbon claims без direct measurement** = scaled greenwashing | Verra 94% phantom credits; Pachama 8×; Bowery $32M never-used | Direct soil sampling + transparent uncertainty bands; AI как hypothesis, не fact |
 
@@ -50,7 +50,7 @@ Bottom callout 16pt italic в gold-tint box: «**Это рабочая матр�
 
 Критерий второй — AP-три. Пороговая точность не равна готовности к внедрению. Даже девяносто процентов точности на масштабе — это сотни тысяч ошибочных high-stakes решений. Пример: Plantix десять-пятнадцать процентов misdiagnosis на десяти миллионах плюс загрузках — примерно сто тысяч неправильных рекомендаций по пестицидам в год. Альтернатива — uncertainty-aware рекомендация с abstention: не уверен — спроси эксперта.
 
-Критерий третий — AP-четыре. Обобщённый LLM в режиме советника для high-stakes решений — категорический антипаттерн. Пример: ChatGPT и Bard рекомендации неправильного окна гербицида в Tzachor et al. в Nature Food 2024 года. Альтернатива — RAG-grounded в локальный регулятор: USDA-EPA, EU-EFSA, Россельхознадзор — плюс явный отказ при низкой уверенности плюс человек в цикле.
+Критерий третий — AP-четыре. Обобщённый LLM в режиме советника для high-stakes решений — категорический антипаттерн. Пример: ChatGPT рекомендации неправильного окна гербицида в Tzachor et al. в Nature Food 2024 года. Альтернатива — RAG-grounded в локальный регулятор: USDA-EPA, EU-EFSA, Россельхознадзор — плюс явный отказ при низкой уверенности плюс человек в цикле.
 
 Критерий четвёртый — AP-шесть. AI-driven equipment — это ловушка привязки к поставщику. Чем больше AI и телематики в технике, тем сильнее vendor control surface. Примеры: FTC против Deere в 2025-м, Мелитопольский remote-brick в 2022-м, Climate FieldView выход из РФ, FCC ban DJI ag-drones. Альтернатива — open-source hardware Farm Hack, право на ремонт, multi-vendor стратегия, mechanical fallback.
 

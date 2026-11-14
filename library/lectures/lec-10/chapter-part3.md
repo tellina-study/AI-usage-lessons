@@ -245,7 +245,7 @@ issue: 340
 |---|---|---|---|
 | **AP1** | **Закон термодинамики важнее ML.** Когда фундаментальная экономика (energy/capex) на порядок выше рыночной цены продукта — ML не закрывает разрыв | Vertical farming для commodity leafy greens (LED ≈ 100× free sunlight) — Plenty $940M потерян, AppHarvest $700M в дым | Открытый грунт или greenhouse при энергии < $0,10/кВт·ч; vertical только для high-value crops |
 | **AP3** | **Пороговая точность ≠ готовность к внедрению.** Даже 90% точности на масштабе = сотни тысяч ошибочных high-stakes решений | Plantix 10-15% misdiagnosis на 10M+ загрузок = ~100k неправильных рекомендаций по пестицидам в год | Uncertainty-aware рекомендация с abstention; «не уверен → спроси эксперта» |
-| **AP4** | **Обобщённый LLM в режиме советника** для high-stakes решений — категорический антипаттерн | ChatGPT/Bard рекомендация неправильного окна гербицида (Nature Food **Tzachor et al.** 2024) | RAG-grounded в локальный регулятор (USDA-EPA, EU-EFSA, Россельхознадзор) + явный отказ при low confidence + человек в цикле |
+| **AP4** | **Обобщённый LLM в режиме советника** для high-stakes решений — категорический антипаттерн | ChatGPT рекомендация неправильного окна гербицида (Nature Food **Tzachor et al.** 2024) | RAG-grounded в локальный регулятор (USDA-EPA, EU-EFSA, Россельхознадзор) + явный отказ при low confidence + человек в цикле |
 | **AP6** | **«AI-driven equipment» = ловушка привязки к поставщику (vendor lock-in trap).** Чем больше AI и телематики в технике, тем сильнее vendor control surface | FTC v. Deere 2025-01; Мелитополь remote-brick 2022; Climate FieldView выход из РФ; FCC ban DJI ag-drones | Open-source hardware (Farm Hack); right-to-repair compliance; multi-vendor стратегия; механические fallback'и |
 | **AP7** | **AI-MRV для carbon claims без direct measurement** — inference с большой uncertainty, marketed как precise measurement = scaled greenwashing | Verra 94% phantom credits; Pachama overestimation 8×; Bowery $32M never-used equipment | Direct soil sampling + transparent uncertainty bands; AI как hypothesis, не как fact |
 
@@ -397,7 +397,7 @@ issue: 340
 
 8. **Cambridge EJRR. EU AI Act applied to agrifood. 2024.** — Юридический анализ применения EU AI Act к agricultural machinery; high-risk classification и liability cascade.
 
-9. **Nature Food (May 2024). Tzachor, A. et al. (Reichman University, Israel) — GPT inaccuracies in agricultural advisory.** <https://phys.org/news/2024-05-experts-caution-chatgpt-pesticide.html> — Первичный академический источник для F2 (галлюцинации LLM в агроконсалтинге); 184 вопроса, GPT-3.5/4 + Bard. Соавторы — США, UK, Кения, Нигерия, Колумбия.
+9. **Nature Food (May 2024). Tzachor, A. et al. (Reichman University, Israel) — GPT inaccuracies in agricultural advisory.** <https://phys.org/news/2024-05-experts-caution-chatgpt-pesticide.html> — Первичный академический источник для F2 (галлюцинации LLM в агроконсалтинге); набор агрономических Q/A-сценариев, GPT-3.5/4.0. Соавторы — США, UK, Кения, Нигерия, Колумбия.
 
 10. **The Guardian + Die Zeit + SourceMaterial. Verra investigation. January 2023.** — Журналистское расследование, инициировавшее обсуждение AI-MRV phantom credits (94% rainforest offsets worthless).
 

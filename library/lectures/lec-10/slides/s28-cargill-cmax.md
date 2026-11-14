@@ -36,7 +36,7 @@ Predictive port + shipping logistics для grain flows; CV для protein suppl
 - Waste reduction в animal protein operations
 
 **Card 3 — Scope:**
-- **70+ стран, 1000+ объектов** Cargill
+- **70+ стран** (из 195 — ≈36% мира), **1000+ объектов** Cargill
 - Узкий агент: hedge — одно действие
 - Human-in-the-loop при **>$10M notional**
 
@@ -48,7 +48,7 @@ Footer 12pt italic: «Источник: Cargill press release 2026; BIG AI Excel
 
 Канонический success-кейс четвёртой ступени 2026 года — Cargill CMAX. И CarVe — связанная платформа для protein supply chain.
 
-CMAX — commercial intelligence platform, платформа коммерческой аналитики. Она делает predictive port and shipping logistics, оптимизирующие потоки зерна; CV для белковой цепочки поставок — yield estimation, waste reduction; в Бразилии — AI-driven grain mixing. Cargill оперирует в семидесяти плюс странах с тысячью плюс объектами.
+CMAX — commercial intelligence platform, платформа коммерческой аналитики. Она делает predictive port and shipping logistics, оптимизирующие потоки зерна; CV для белковой цепочки поставок — yield estimation, waste reduction; в Бразилии — AI-driven grain mixing. Cargill оперирует в семидесяти плюс странах — это около тридцати шести процентов от ста девяноста пяти стран мира — с тысячью плюс объектами.
 
 В апреле 2026 года Cargill получила премию 2026 BIG AI Excellence Award — конкретное публичное признание развёрнутой работы. Это редкий случай в AgTech, когда вендор получает industry award не за демо-видео, а за подтверждённое промышленное внедрение.
 

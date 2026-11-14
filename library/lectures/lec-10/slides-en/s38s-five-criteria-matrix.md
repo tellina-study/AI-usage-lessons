@@ -26,7 +26,7 @@ Below the 28pt bold assertion — a large matrix in an Ocean rounded box, 6 rows
 |---|---|---|---|
 | **AP1** | **The law of thermodynamics matters more than ML** — the fundamental economics is an order of magnitude above the product price | Vertical farming — LED ≈ 100× free sunlight; Plenty $940M, Bowery $32M | Open ground where energy < $0.10/kWh; vertical only for high-value crops |
 | **AP3** | **Threshold accuracy ≠ readiness for deployment** | Plantix 10-15% misdiagnosis × 10M+ = ~100k wrong recommendations/year | Calibrated confidence + abstention; «not sure → ask an expert» |
-| **AP4** | **A generic LLM in advisor mode** for high-stakes = a categorical anti-pattern | ChatGPT/Bard recommending the wrong herbicide window (Tzachor 2024) | RAG-grounded in a local regulator + abstention + human in the loop |
+| **AP4** | **A generic LLM in advisor mode** for high-stakes = a categorical anti-pattern | ChatGPT recommending the wrong herbicide window (Tzachor 2024) | RAG-grounded in a local regulator + abstention + human in the loop |
 | **AP6** | **«AI-driven equipment» = a vendor lock-in trap** | FTC v. Deere; Melitopol remote-brick; FieldView exit from Russia; FCC ban DJI | Open-source hardware (Farm Hack); right-to-repair; multi-vendor; mechanical fallback |
 | **AP7** | **AI-MRV for carbon claims without direct measurement** = scaled greenwashing | Verra 94% phantom credits; Pachama 8×; Bowery $32M never-used | Direct soil sampling + transparent uncertainty bands; AI as a hypothesis, not fact |
 
@@ -50,7 +50,7 @@ The first criterion — AP-one. The law of thermodynamics matters more than ML. 
 
 The second criterion — AP-three. Threshold accuracy does not equal readiness for deployment. Even ninety percent accuracy at scale is hundreds of thousands of wrong high-stakes decisions. Example: Plantix ten-to-fifteen percent misdiagnosis on ten million plus downloads — about one hundred thousand wrong pesticide recommendations per year. The alternative — an uncertainty-aware recommendation with abstention: not sure — ask an expert.
 
-The third criterion — AP-four. A generic LLM in advisor mode for high-stakes decisions is a categorical anti-pattern. Example: ChatGPT and Bard recommendations of the wrong herbicide window in Tzachor et al. in Nature Food 2024. The alternative — RAG-grounded in a local regulator: USDA-EPA, EU-EFSA, Rosselkhoznadzor — plus explicit abstention under low confidence plus a human in the loop.
+The third criterion — AP-four. A generic LLM in advisor mode for high-stakes decisions is a categorical anti-pattern. Example: ChatGPT's recommendation of the wrong herbicide window in Tzachor et al. in Nature Food 2024. The alternative — RAG-grounded in a local regulator: USDA-EPA, EU-EFSA, Rosselkhoznadzor — plus explicit abstention under low confidence plus a human in the loop.
 
 The fourth criterion — AP-six. AI-driven equipment is a vendor lock-in trap. The more AI and telematics in the equipment, the stronger the vendor control surface. Examples: the FTC versus Deere in 2025, the Melitopol remote-brick in 2022, the Climate FieldView exit from Russia, the FCC ban on DJI ag-drones. The alternative — open-source hardware Farm Hack, the right to repair, a multi-vendor strategy, mechanical fallback.
 

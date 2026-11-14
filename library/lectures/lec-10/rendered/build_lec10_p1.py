@@ -831,7 +831,7 @@ def build_part1_full(prs, H):
     # подписана как RLHF-архитектура, НЕ как Q/A-скриншот (такого в открытом доступе нет).
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "ChatGPT и Bard как агроном — «уверенно ошибочны» в десятках процентов",
+        "ChatGPT как агроном — «уверенно ошибочен» в десятках процентов",
         size=22)
 
     # Left: study summary + реальная Figure 1 статьи
@@ -840,25 +840,28 @@ def build_part1_full(prs, H):
              "Tzachor et al., Nature Food, ноябрь 2023",
              size=14, bold=True, color=DEEP)
     text_box(s, 0.85, 2.15, 5.5, 0.4,
-             "Reichman University · 184 вопроса (publication 11.2023, press 05.2024)",
+             "Reichman University · агрономические Q/A-сценарии (publication 11.2023, press 05.2024)",
              size=11, italic=True, color=MID)
     hr_line(s, 0.85, 2.6, 5.3, color=LIGHT, weight=1.0)
 
-    results = [
-        ("GPT-3.5", "32%", "правильно"),
-        ("GPT-4", "44%", "правильно"),
-        ("Bard", "29%", "правильно"),
-    ]
-    ry = 2.8
-    for model, pct, lbl in results:
-        text_box(s, 1.0, ry, 1.8, 0.4, model, size=13, bold=True, color=DEEP)
-        text_box(s, 2.8, ry, 1.5, 0.4, pct, size=18, bold=True, color=GOLD)
-        text_box(s, 4.3, ry, 2.0, 0.4, lbl, size=11, italic=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-        ry += 0.5
-
-    text_box(s, 0.85, 4.42, 5.5, 0.55,
-             "Остальные 56-71% — уверенно неверны: неверная дозировка/препарат, без сигнала неуверенности.",
-             size=10, color=DARK_GREY, italic=True, line_spacing=1.2)
+    # Fact-check fix (2026-11-14): прежние цифры по моделям (GPT-3.5 32% / GPT-4 44% /
+    # Bard 29% правильно; "остальные 56-71% неверны") не подтверждаются ни
+    # первоисточником (Tzachor et al., Nature Food, 11.2023 — качественный кейс-стади
+    # на cassava-фермерах Нигерии, не количественный бенчмарк с разбивкой по моделям),
+    # ни press-освещением. Цифры придуманы при первой вёрстке и никогда не сверялись.
+    # Заменено качественной формулировкой, согласованной с slides/s12-*.md speaker
+    # notes ("В среднем — десятки процентов confident-wrong ответов") — без чисел
+    # по отдельным моделям.
+    # Fact-check fix #2 (2026-11-14, тот же круг): "184 вопроса" unverifiable (убрано
+    # выше) и "Bard" — модель НЕ тестировалась ни по abstract, ни по EurekAlert/
+    # phys.org, ни по systematic review (все называют только GPT-3.5 и GPT-4.0).
+    # Bard убран везде в блоке; пара моделей — (GPT-3.5 и GPT-4.0).
+    text_box(s, 0.85, 2.75, 5.4, 2.2,
+             "В среднем — десятки процентов confident-wrong ответов "
+             "(GPT-3.5 и GPT-4.0): неверная дозировка или препарат, "
+             "без сигнала неуверенности.",
+             size=16, color=DEEP, line_spacing=1.5,
+             anchor=MSO_ANCHOR.MIDDLE)
 
     # Настоящая Figure 1 статьи (RLHF human-in-the-loop pipeline), AR=2170/1370=1.584
     fig_h, fig_w = 1.55, 1.55 * (2170 / 1370)

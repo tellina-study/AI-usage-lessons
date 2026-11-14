@@ -81,6 +81,65 @@ def g_divider(sl, sid, title, blocks, pattern, assertion="", meta=None):
     K.slide_number_mark(sl, D.slide_number(sid), on_dark=True)
 
 
+def _g_case_divider_question(sl, sid, title, blocks):
+    """Пятый дивайдер занятия (Кейс 5 Семинара 11, n74) — единственный
+    ВИЗУАЛЬНЫЙ сбой ритма среди пяти дивайдеров-кейсов: белый холст и
+    золотая заливка вопроса по центру ВМЕСТО тёмного градиента, которым
+    рисуются остальные четыре (`g_case_divider` ниже — без единого
+    изменения для n05/n22/n38/n58).
+
+    Текстовая форма Кейса 5 уже прямой вопрос, а не утверждение (Кейсы 1/2)
+    и не цепочка фраз (Кейс 4) — дизайн-критик Фазы 6 (issue #345) указал,
+    что при этом ВСЕ пять дивайдеров рисуются одной и той же раскладкой, и
+    зал не различает текстовый сбой ритма визуально. Канон (`tools/seminar-
+    production/README.md` §4.1, болезнь 1 + П3) требует разной ФОРМЫ, не
+    только разных слов.
+
+    Почему это точечная ветка по `sid`, а не отдельное имя приёма в
+    `genres:`. Диспетчеризация жанра в этой деке идёт СТРОГО по `visual.
+    pattern` через `genres:` deck-config.yaml (`genre_fn` ниже) — ни один
+    sid не разбирается по имени нигде в общем коде (канон `tools/seminar-
+    build/README.md`, «ветвлений по номеру занятия в общем коде нет ни
+    одного»). Чистый путь — завести n74 отдельным именем приёма и смаппить
+    его новым жанром в `genres:` — но это правка `rendered/deck-config.
+    yaml`, явно выведенная из круга правок, которым заведена эта функция
+    (issue #345, Фаза 6). Второй путь без правки конфига — переиспользовать
+    уже заведённый `question_with_option_cards` (жанр `question`): он
+    технически рисует вопрос без карточек, если у слайда их нет, — но несёт
+    чужую семантику (`vote_patterns`, `deck_yaml.central_question_patterns`,
+    `svodka.zal` называют его «голосованием карточками») и исказил бы
+    СГЕНЕРИРОВАННЫЕ `deck.yaml`/`SVODKA-SLAIDOV.md` (n74 попал бы туда как
+    центральный вопрос кейса вместо n76) и ослабил бы счёт дивайдеров
+    (`divider_patterns`/`case_divider_patterns` ищут ровно
+    `case_divider_quote`). Поэтому здесь — явная, задокументированная
+    ветка внутри ЭТОЙ функции, не в диспетчере `genre_fn`: сознательное,
+    по имени, одно-единственное исключение, а не общий механизм."""
+    K.set_bg(sl, K.WHITE)
+
+    quote_lines = [ln for kind, b in blocks if kind == "quote" for ln in b]
+    question = quote_lines if quote_lines else [title]
+
+    label_size = K.scaled(14, "caption")
+    K.text_box(sl, D.LEFT, 0.85, D.WIDTH, 0.4, title, size=label_size,
+               bold=True, color=K.TEAL, align=PP_ALIGN.CENTER, rich=False)
+
+    box_w = 10.6
+    box_x = (K.W_IN - box_w) / 2
+    q_size = K.scaled(27, "head")
+    pad, safety = 0.24, 0.12
+    inner = box_w - 2 * pad - safety
+    est_h = M.rich_block_h(question, q_size, inner, spacing=1.22, space_after=3) + 0.32
+    top, bottom = 1.5, 6.1
+    y = top + max((bottom - top - est_h) / 2, 0.0)
+    K.form_question(sl, box_x, y, box_w, question, size=q_size,
+                    max_h=bottom - top, label=f"{sid} вопрос кейса")
+
+    idx = D.case_idx().get(sid)
+    if idx is not None:
+        K.roadmap(sl, D.case_track(), idx)
+    K.slide_number_mark(sl, D.slide_number(sid))
+
+
 def g_case_divider(sl, sid, title, blocks, pattern, assertion=""):
     """Дивайдер уровня КЕЙСА — легче разделительного на три вещи: без
     золотого номерного значка (кейс внутри ступени — не повод для сквозного
@@ -93,7 +152,15 @@ def g_case_divider(sl, sid, title, blocks, pattern, assertion=""):
     значило бы напечатать одну фразу дважды. Вторая содержательная строка
     (приписка с источником цитаты, второй абзац) идёт ниже, мельче и
     приглушённее. Накопление СКЛЕИВАЕТ все непустые несовпадающие строки —
-    перезапись последней роняла 2/3 текста второго абзаца."""
+    перезапись последней роняла 2/3 текста второго абзаца.
+
+    Один-единственный именованный sid-исключение: `n74` (Кейс 5 Семинара
+    11) рисуется не этой раскладкой, а `_g_case_divider_question` выше —
+    см. её докстринг за обоснованием. n05/n22/n38/n58 и любой другой sid
+    любого другого занятия продолжают рисоваться ниже без единого
+    изменения."""
+    if sid == "n74":
+        return _g_case_divider_question(sl, sid, title, blocks)
     K.divider_bg(sl)
     extra_parts = []
     title_key = K.plain(title).lower().strip(" «».")

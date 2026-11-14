@@ -1,0 +1,1594 @@
+{
+  "summary": {
+    "n_questions": 50,
+    "corpus_size": 500,
+    "reproduction_check": {
+      "mismatches_vs_sem10_published": 5,
+      "note": "0 = воспроизведённые keyword_rank_of_gold/vector_rank_of_gold идентичны опубликованным sem-10/stend/raw/case3-results.json на всех 50 вопросах"
+    },
+    "fixed_w0.5_recomputed": {
+      "recall@1": 0.84,
+      "recall@3": 0.94
+    },
+    "fixed_w0.5_sem10_published_baseline": {
+      "recall@1": 0.84,
+      "recall@3": 0.94
+    },
+    "dynamic_jev_weighted": {
+      "recall@1": 0.84,
+      "recall@3": 0.88
+    },
+    "jev_classification_vs_lexical_class_heuristic": {
+      "agree": 18,
+      "n_exact_match_or_lexical_gap": 32
+    },
+    "jev_agrees_with_actual_winner_at_1": {
+      "n_agree": 42,
+      "n_total_with_clear_winner": 49
+    },
+    "questions_where_dynamic_worse_than_fixed": [
+      "c3q1"
+    ],
+    "questions_where_dynamic_better_than_fixed": [
+      "c3q34"
+    ]
+  },
+  "details": [
+    {
+      "qid": "c3q1",
+      "question": "Какое имя у супруги Шекспира?",
+      "gold_doc_id": "distractor-99",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 5,
+        "keyword_rank_of_gold_orig": 5,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": false,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 2,
+        "recall@1": 0,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q2",
+      "question": "Какое название до 2011 года было у GBTA?",
+      "gold_doc_id": "distractor-147",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q3",
+      "question": "На сколько километров простирается Западная Сибирь от Северного Ледовитого океана до возвышенностей Казахского мелкосопочника7",
+      "gold_doc_id": "distractor-83",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q4",
+      "question": "Кто в 1395 году принял титул герцога Миланского?",
+      "gold_doc_id": "distractor-411",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q5",
+      "question": "Какое бытует мнение насчёт рациона дьявола?",
+      "gold_doc_id": "distractor-142",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 3,
+        "keyword_rank_of_gold_orig": 3,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.74,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q6",
+      "question": "Назовите дату гибели Гинтараса Паулёниса?",
+      "gold_doc_id": "distractor-418",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q7",
+      "question": "Пример водных приград?",
+      "gold_doc_id": "distractor-339",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 243,
+        "keyword_rank_of_gold_orig": 243,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.2,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 17,
+        "recall@1": 0,
+        "recall@3": 0
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 7,
+        "recall@1": 0,
+        "recall@3": 0
+      }
+    },
+    {
+      "qid": "c3q8",
+      "question": "Что такое простой вопрос, который сводится к предложению предоставления соответствующих денежных вознаграждений в обмен на усилие?",
+      "gold_doc_id": "distractor-258",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.64,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q9",
+      "question": "В каком году опубликована статья об анализе митохондриальной ДНК?",
+      "gold_doc_id": "distractor-122",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.98,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q10",
+      "question": "Какие наиболее популярные произведения были созданы на протяжении 1984-1986 гг",
+      "gold_doc_id": "cluster6-2",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 10,
+        "vector_rank_of_gold_orig": 10,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.1,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "keyword",
+      "jev_agrees_with_actual_winner": false,
+      "fixed_w0.5": {
+        "rank_of_gold": 2,
+        "recall@1": 0,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 2,
+        "recall@1": 0,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q11",
+      "question": "В каком положении большую часть времени находилась подводная лодка?",
+      "gold_doc_id": "distractor-209",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 19,
+        "keyword_rank_of_gold_orig": 20,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": false
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.06,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q12",
+      "question": "О чем книга The 4-Hour Workweek ?",
+      "gold_doc_id": "distractor-51",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.96,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q13",
+      "question": "Каков перевод термина Рабочая сила на английский язык?",
+      "gold_doc_id": "distractor-464",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.9,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q14",
+      "question": "Что пользуется большой популярностью помимо специализированных школ гостиничного бизнеса?",
+      "gold_doc_id": "distractor-75",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 2,
+        "vector_rank_of_gold_orig": 2,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.08,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "keyword",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q15",
+      "question": "Что не имеет первичной перетяжки, они имеют так называемый диффузный кинетохор, поэтому во время митоза микротрубочки веретена деления прикрепляются по всей длине хромосомы?",
+      "gold_doc_id": "distractor-346",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.64,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q16",
+      "question": "Какие еще существуют способы управления гостиничными сетями?",
+      "gold_doc_id": "distractor-325",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 4,
+        "keyword_rank_of_gold_orig": 4,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.88,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q17",
+      "question": "К какому сроку прирост в промышленности Германии сравнялся со странами-противниками?",
+      "gold_doc_id": "distractor-149",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 15,
+        "keyword_rank_of_gold_orig": 16,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": false
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.92,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": false,
+      "fixed_w0.5": {
+        "rank_of_gold": 2,
+        "recall@1": 0,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 4,
+        "recall@1": 0,
+        "recall@3": 0
+      }
+    },
+    {
+      "qid": "c3q18",
+      "question": "С какого периода на Уимблдоне введена система уайлд-кард ?",
+      "gold_doc_id": "distractor-145",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q19",
+      "question": "Какова скорость порыва ветра, признанного самым быстрым на Земле?",
+      "gold_doc_id": "distractor-439",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q20",
+      "question": "Какова главная заслуга Лейбница в физике?",
+      "gold_doc_id": "distractor-324",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 2,
+        "keyword_rank_of_gold_orig": 2,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.48,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q21",
+      "question": "Что по словам Т. С. Элиота делает шекспировские произведения современными?",
+      "gold_doc_id": "distractor-90",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.54,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q22",
+      "question": "Когда произошло сражение?",
+      "gold_doc_id": "distractor-38",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 121,
+        "keyword_rank_of_gold_orig": 121,
+        "vector_rank_of_gold_repro": 2,
+        "vector_rank_of_gold_orig": 2,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.98,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "neither",
+      "jev_agrees_with_actual_winner": false,
+      "fixed_w0.5": {
+        "rank_of_gold": 9,
+        "recall@1": 0,
+        "recall@3": 0
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 50,
+        "recall@1": 0,
+        "recall@3": 0
+      }
+    },
+    {
+      "qid": "c3q23",
+      "question": "За что некоторые студенты принимали Hwæt! ?",
+      "gold_doc_id": "distractor-123",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.74,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q24",
+      "question": "Что такое филогенез?",
+      "gold_doc_id": "cluster8-4",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 8,
+        "keyword_rank_of_gold_orig": 9,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": false
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.44,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q25",
+      "question": "Какие особенности имеет одна пара щупалец у головоногих с 10 щупальцами?",
+      "gold_doc_id": "distractor-59",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.58,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q26",
+      "question": "Когда было начато строительство в России Пулковской астрономической обсерватории?",
+      "gold_doc_id": "distractor-403",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q27",
+      "question": "Какой альбом Дилана вышел в 1969 году?",
+      "gold_doc_id": "distractor-186",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 2,
+        "vector_rank_of_gold_orig": 2,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "keyword",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q28",
+      "question": "Что служит центральной осью Садов Кью?",
+      "gold_doc_id": "cluster8-3",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.94,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q29",
+      "question": "На что надеется автор?",
+      "gold_doc_id": "distractor-52",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.98,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q30",
+      "question": "Сколько акционеров было у банка в 1895 году?",
+      "gold_doc_id": "distractor-200",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q31",
+      "question": "Куда операционная система записывает данные содержимого ОЗУ?",
+      "gold_doc_id": "distractor-214",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.76,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q32",
+      "question": "Какой язык был более тысячелетия было языком международного общения большинства стран мира.",
+      "gold_doc_id": "distractor-285",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.96,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q33",
+      "question": "На каком месте в мире находится Нигер по запасам урановой руды?",
+      "gold_doc_id": "distractor-80",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.98,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q34",
+      "question": "В результате деятельности кого произошло накопление в атмосфере кислорода согласно гипотезе?",
+      "gold_doc_id": "distractor-316",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 9,
+        "vector_rank_of_gold_orig": 9,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.84,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "keyword",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 2,
+        "recall@1": 0,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q35",
+      "question": "На ком завершилась баварская династия Теоделинды?",
+      "gold_doc_id": "distractor-135",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 2,
+        "keyword_rank_of_gold_orig": 2,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.98,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": false,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q36",
+      "question": "Как называется корректирующая оптическая система, установленная на телескоп во время первой экспедиции обслуживания в 1993 году для компенсации неточности изготовления главного зеркала?",
+      "gold_doc_id": "distractor-350",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q37",
+      "question": "Чем привлекает Люксембург иностранные банки?",
+      "gold_doc_id": "distractor-341",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 4,
+        "keyword_rank_of_gold_orig": 4,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 1,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q38",
+      "question": "Кого выбирали голосуя через компромисс?",
+      "gold_doc_id": "distractor-375",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.32,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q39",
+      "question": "Как назывался альбом новых песен, выпущенный Диланом в 1997 году?",
+      "gold_doc_id": "cluster5-1",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q40",
+      "question": "Когда были найдены останки Najash rionegrina? в 2006 году.",
+      "gold_doc_id": "distractor-430",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q41",
+      "question": "Какой закон с 1934 часто изменялся?",
+      "gold_doc_id": "distractor-66",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 4,
+        "vector_rank_of_gold_orig": 4,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.86,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "keyword",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q42",
+      "question": "Чем был обмен по бартеру в торговле?",
+      "gold_doc_id": "distractor-107",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 28,
+        "vector_rank_of_gold_orig": 26,
+        "match": false
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.84,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "keyword",
+      "jev_agrees_with_actual_winner": false,
+      "fixed_w0.5": {
+        "rank_of_gold": 2,
+        "recall@1": 0,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 8,
+        "recall@1": 0,
+        "recall@3": 0
+      }
+    },
+    {
+      "qid": "c3q43",
+      "question": "Эквивалентны ли точки на спирали, угловое расстояние между которыми 360°?",
+      "gold_doc_id": "distractor-276",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.8,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q44",
+      "question": "Как дословно на древне-греческом будет термин философия ?",
+      "gold_doc_id": "distractor-58",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 16,
+        "keyword_rank_of_gold_orig": 16,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.98,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": false,
+      "fixed_w0.5": {
+        "rank_of_gold": 3,
+        "recall@1": 0,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 5,
+        "recall@1": 0,
+        "recall@3": 0
+      }
+    },
+    {
+      "qid": "c3q45",
+      "question": "Кто описал Райсцуг в 1515 году?",
+      "gold_doc_id": "distractor-177",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q46",
+      "question": "Где выпущены патроны 38",
+      "gold_doc_id": "distractor-399",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.92,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q47",
+      "question": "Кто выделил мифологию, науку и обобщение обыденного сознания как источники философской древнегреческой мысли?",
+      "gold_doc_id": "distractor-448",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.98,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q48",
+      "question": "Сколько человек было ранено во время событий 12-15 июня 1967 года в Чимкенте?",
+      "gold_doc_id": "distractor-271",
+      "lexical_class_heuristic": "exact_match",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 1,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    },
+    {
+      "qid": "c3q49",
+      "question": "Каким вторым званием обладают жители города Рязань?",
+      "gold_doc_id": "distractor-197",
+      "lexical_class_heuristic": "lexical_gap",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 14,
+        "keyword_rank_of_gold_orig": 15,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": false
+      },
+      "jev": {
+        "choice": "exact_fact",
+        "confidence": 0.98,
+        "predicted_winner": "keyword"
+      },
+      "actual_winner_at_1": "vector",
+      "jev_agrees_with_actual_winner": false,
+      "fixed_w0.5": {
+        "rank_of_gold": 4,
+        "recall@1": 0,
+        "recall@3": 0
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.75,
+        "rank_of_gold": 5,
+        "recall@1": 0,
+        "recall@3": 0
+      }
+    },
+    {
+      "qid": "c3q50",
+      "question": "Что согласывают стороны, участвующие в системе ЗУП?",
+      "gold_doc_id": "distractor-82",
+      "lexical_class_heuristic": "neutral",
+      "repro_check": {
+        "keyword_rank_of_gold_repro": 1,
+        "keyword_rank_of_gold_orig": 1,
+        "vector_rank_of_gold_repro": 1,
+        "vector_rank_of_gold_orig": 1,
+        "match": true
+      },
+      "jev": {
+        "choice": "semantic",
+        "confidence": 0.28,
+        "predicted_winner": "vector"
+      },
+      "actual_winner_at_1": "both",
+      "jev_agrees_with_actual_winner": true,
+      "fixed_w0.5": {
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      },
+      "dynamic_jev_weighted": {
+        "w_keyword_used": 0.25,
+        "rank_of_gold": 1,
+        "recall@1": 1,
+        "recall@3": 1
+      }
+    }
+  ],
+  "weights_used": {
+    "w_keyword_if_jev_exact_fact": 0.75,
+    "w_keyword_if_jev_semantic": 0.25,
+    "w_keyword_fixed_baseline": 0.5,
+    "rrf_k": 60
+  }
+}

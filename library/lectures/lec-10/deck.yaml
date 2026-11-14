@@ -407,6 +407,22 @@ slides:
       acquisition_tier: "Tier 1"
       attribution_label: "Carbon Robotics LaserWeeder G2 launch. Источник: businesswire 2025-02-10"
 
+  - id: s17
+    title: "Cognitive Pilot vs ИТЭЛМА — архитектурный выбор внутри ИИ-домена"
+    assertion: "Cognitive Pilot CV: 1200+ установок + 4 иска фермеров на 12,7М ₽ за CV-сбои в пыли. ИТЭЛМА Квадро multi-GNSS sensor-fusion: ГЛОНАСС+GPS+Galileo+BeiDou + RTK 2-5 см. Это НЕ AI vs не-AI; это один класс AI vs другой класс AI."
+    section: "Р2"
+    slide_type: "content"
+    layout: "2-col-architecture-comparison"
+    timing_min: 2.5
+    chapter_ref: "§2.7 Часть 2 — РФ-параллель Cognitive Pilot vs ИТЭЛМА"
+    learning_goal: "AP2a архитектурный выбор внутри AI-домена; «где я» vs «что я вижу»"
+    learning_outcomes: [LO1b, LO5]
+    media:
+      kind: "comparative diagram CV vs sensor-fusion"
+      source_candidate: "own drawio (2-col: Cognitive Pilot CV-stack + ИТЭЛМА GNSS-stack)"
+      acquisition_tier: "own"
+      attribution_label: "Источники: RTVI 2025 (Cognitive Pilot иски); Фонтанка 2026-01-26 (ИТЭЛМА)"
+
   - id: s18
     title: "Узкие победы L2 — Solinftec, Saga UV-C, Tevel, AGCO Outrun"
     assertion: "Solinftec Solix +243% YoY 2025 (vendor-self ≤98% reduction herbicide). Saga Robotics 20% UK strawberry — UV-C НОЧНАЯ обработка, НЕ harvest. Tevel — flying apple pickers. AGCO PTx Outrun — retrofit для смешанного парка. Все — узкие specialization."
@@ -470,22 +486,6 @@ slides:
       source_candidate: "Wikimedia Commons CC-BY-SA + DailyRobotics / agrotech press"
       acquisition_tier: "Tier 2-3"
       attribution_label: "Wikimedia Commons (strawberry harvest, CC-BY-SA); RobotToday market analysis 2024"
-
-  - id: s17
-    title: "Cognitive Pilot vs ИТЭЛМА — архитектурный выбор внутри ИИ-домена"
-    assertion: "Cognitive Pilot CV: 1200+ установок + 4 иска фермеров на 12,7М ₽ за CV-сбои в пыли. ИТЭЛМА Квадро multi-GNSS sensor-fusion: ГЛОНАСС+GPS+Galileo+BeiDou + RTK 2-5 см. Это НЕ AI vs не-AI; это один класс AI vs другой класс AI."
-    section: "Р2"
-    slide_type: "content"
-    layout: "2-col-architecture-comparison"
-    timing_min: 2.5
-    chapter_ref: "§2.7 Часть 2 — РФ-параллель Cognitive Pilot vs ИТЭЛМА"
-    learning_goal: "AP2a архитектурный выбор внутри AI-домена; «где я» vs «что я вижу»"
-    learning_outcomes: [LO1b, LO5]
-    media:
-      kind: "comparative diagram CV vs sensor-fusion"
-      source_candidate: "own drawio (2-col: Cognitive Pilot CV-stack + ИТЭЛМА GNSS-stack)"
-      acquisition_tier: "own"
-      attribution_label: "Источники: RTVI 2025 (Cognitive Pilot иски); Фонтанка 2026-01-26 (ИТЭЛМА)"
 
   # ---------------------------------------------------------------------------
   # Section divider Р3

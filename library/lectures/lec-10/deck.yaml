@@ -56,10 +56,15 @@ deck:
 #   - 1 closing hero (s37 — Carbon Robotics LaserWeeder G2 + bridge к L11)
 #   - 1 dedicated Q&A slide (s38)
 #
-# Total: 43 slides (s01-s38 + 5 sub-IDs s30b, s37s, s38s, s35c, s36c)
+# Total: 43 slides (s01-s38 + 5 sub-IDs s30b, s37s, s38s, s35c, s36c) — ORIGINAL Phase 5
+# count. Since then: issue #340 added s05a, s05b, s07c-split, s16b, s23c, 4 divider hero
+# photos (→ 55 slides, 86,9 мин), + s05c (owner follow-up — ретроспектива отрасли по
+# годам, коллапс инвестиций −91% YoY + консолидация ×~13 + LaserWeeder honest contrast).
+# ACTUAL current total: 56 slides, 89,1 мин (source of truth — count/sum `slides:` list
+# below; this header is historical narrative, not re-derived on every edit).
 #
 # NOTE: Slide IDs preserved with gaps + sub-IDs for chapter [for-slide-sNN] cross-ref
-# stability. Actual rendered PPTX will use sequential numbering 1-43.
+# stability. Actual rendered PPTX will use sequential numbering 1-56.
 #
 # Schema slides (designer + critic readability pass required):
 #   - s05 keystone лестница (vertical 5-step + arrows)
@@ -256,6 +261,22 @@ slides:
       source_candidate: "own (Lucide users/handshake/thermometer/shield)"
       acquisition_tier: "own"
       attribution_label: ""
+
+  - id: s05c
+    title: "Ретроспектива отрасли по годам — не прорыв в десятки раз, а обвал и консолидация"
+    assertion: "Настоящая многолетняя кривая отрасли — не прорыв производительности в 10-20× как в космосе: инвестиции в ИИ для поля и вертикальных ферм упали на 91% за год (2024→2025, AgFunder), а цена сделок консолидации выросла с $305M (2017) до $3,85 млрд (2024) — почти в 13 раз."
+    section: "Р0"
+    slide_type: "industry_retrospective"
+    layout: "two-chart-retrospective-plus-contrast-strip"
+    timing_min: 2.2
+    chapter_ref: "§0.6-0.7 Часть 1 + §2.2 Часть 2 (LaserWeeder) — owner follow-up после s05a/s05b (issue #340)"
+    learning_goal: "Честный ответ на «где кратные улучшения как в космосе» — реальные многолетние точки: коллапс инвестиций −91% YoY (AgFunder) + рост цены консолидации ×~13 (не performance) + единственный измеренный success-multiplier LaserWeeder ×1,6-3,9"
+    learning_outcomes: [LO1a, LO5]
+    media:
+      kind: "2 matplotlib charts (Ocean palette, одна ось Y на график, без dual-axis) + honest-contrast gold-strip"
+      source_candidate: "own (matplotlib, gen_charts_s05c.py) — AgFunder Year-in-Review 2025 + Deere/Blue River+Bear Flag press + MSD/Antelliq press + Western Growers Case Study 2024"
+      acquisition_tier: "own (real sourced numbers, no invented intermediate years)"
+      attribution_label: "AgFunder Year-in-Review 2025 · Deere press 2017/2021 · MSD Animal Health press 2024-2025 · Western Growers Case Study, март 2024"
 
   # ---------------------------------------------------------------------------
   # Section divider Р1

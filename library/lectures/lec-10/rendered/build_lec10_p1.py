@@ -1,9 +1,11 @@
 """
-Part 1: s01-s14 (+ s05a/s05b/s07c, issue #340) — Раздел 0 (Открытие) + L1 «Поле».
-20 слайдов: hook + cover + lecture-map + glossary + keystone + 2 обзора отрасли
-(цикл «от поля к полке» + четыре силы, Задача 1) + Р1 divider с реальным фото
-(Задача 2) + 8 content + See & Spray разведён на инженерию (s07a) и ИИ-модель
-(s07c, Задача 3).
+Part 1: s01-s14 (+ s05a/s05b/s05c/s07c, issue #340) — Раздел 0 (Открытие) + L1 «Поле».
+21 слайд: hook + cover + lecture-map + glossary + keystone + 2 обзора отрасли
+(цикл «от поля к полке» + четыре силы, Задача 1) + ретроспектива отрасли по
+годам (s05c, owner follow-up — коллапс инвестиций −91% YoY + рост цены
+консолидации ×~13, честный контраст с «прорывами как в космосе») + Р1 divider
+с реальным фото (Задача 2) + 8 content + See & Spray разведён на инженерию
+(s07a) и ИИ-модель (s07c, Задача 3).
 """
 
 def build_part1(prs, H):
@@ -497,6 +499,84 @@ def build_part1_full(prs, H):
     add_footer(s, "Провал на этом фоне — не «проблемы не было», а «решение её не закрыло»; успех — "
                   "не «ИИ работает», а «здесь закрыло, и названо почему».")
     add_speaker_notes(s, load_speaker_notes("s05b"))
+
+    # ============ s05c — Ретроспектива отрасли по годам (owner follow-up, issue #340) ============
+    # Owner: «где прорывы как в космосе, в десятки раз?» Честный ответ — на стороне
+    # производительности их НЕТ в этом материале; есть обвал инвестиций (-91% YoY,
+    # AgFunder) и рост ЦЕНЫ консолидации (×~13, не performance). 2 реальных графика
+    # (matplotlib, gen_charts_s05c.py) + honest-contrast gold-strip (LaserWeeder ×1.6-3.9).
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s,
+        "Ретроспектива отрасли по годам — не прорыв в десятки раз, а обвал и консолидация",
+        size=19)
+    text_box(s, 0.6, 1.1, 12.13, 0.25,
+             "Космос показывает кратные улучшения производительности год к году. "
+             "Здесь другая многолетняя картина — и это тоже часть честного разбора отрасли",
+             size=11, italic=True, color=MID)
+
+    cw = (12.13 - 0.2) / 2
+    chart_y = 1.4
+    chart_box_h = 3.5
+    img_h = 2.7
+    img_w = img_h * 1.6  # исходный PNG 1600x1000
+    iw = min(img_w, cw - 0.3)
+    ih = iw / 1.6
+    img_bottom = chart_y + 0.1 + ih
+
+    # --- Левая панель: коллапс инвестиций ---
+    lx = 0.6
+    ocean_box(s, lx, chart_y, cw, chart_box_h)
+    c1 = ASSETS / "charts" / "c39-vf-investment-collapse.png"
+    if c1.exists():
+        add_image(s, c1, lx + (cw - iw) / 2, chart_y + 0.1, w=iw, h=ih)
+    text_box(s, lx + 0.12, img_bottom + 0.08, cw - 0.24, 0.6,
+             "Общий капитал категории вертикальных ферм за 2018-2024 — ≈$3 млрд. "
+             "Только в 2025 году — ≥14 банкротств на ≈$1,37 млрд.",
+             size=9.3, italic=True, color=DARK_GREY, line_spacing=1.14)
+
+    # --- Правая панель: цена сделок консолидации ---
+    rx = lx + cw + 0.2
+    ocean_box(s, rx, chart_y, cw, chart_box_h)
+    c2 = ASSETS / "charts" / "c40-consolidation-deals.png"
+    if c2.exists():
+        add_image(s, c2, rx + (cw - iw) / 2, chart_y + 0.1, w=iw, h=ih)
+    text_box(s, rx + 0.12, img_bottom + 0.08, cw - 0.24, 0.6,
+             "Также в 2024 году — GEA приобрела CattleEye; сумма сделки не "
+             "раскрыта публично.",
+             size=9.3, italic=True, color=DARK_GREY, line_spacing=1.14)
+
+    # --- Нижняя полоса: честный контраст — единственный реальный кратный выигрыш ---
+    strip_y = chart_y + chart_box_h + 0.12
+    strip_h = 1.9
+    ocean_box(s, 0.6, strip_y, 12.13, strip_h, fill=GOLD_TINT, stroke=GOLD)
+    text_runs(s, 0.82, strip_y + 0.14, 11.7, 0.32, [
+        {"text": "Единственный в этой главе измеренный многолетний кратный выигрыш — ",
+         "size": 13, "color": DEEP},
+        {"text": "LaserWeeder", "size": 13, "bold": True, "color": DEEP},
+        {"text": ":", "size": 13, "color": DEEP},
+    ], line_spacing=1.15)
+    # Фикс честности: $900 — общий baseline ДВУХ отдельных хозяйств (не цепочка
+    # 900→550→232 одного хозяйства). База повторена у каждой пары, чтобы это
+    # не читалось как последовательное падение.
+    text_runs(s, 0.82, strip_y + 0.5, 11.7, 0.4, [
+        {"text": "было $900/акр → $550/акр ", "size": 14.5, "bold": True, "color": DEEP},
+        {"text": "(Braga Fresh, −39%)", "size": 11, "italic": True, "color": MID},
+        {"text": "   ·   было $900/акр → $232/акр ", "size": 14.5, "bold": True, "color": DEEP},
+        {"text": "(Triangle Farms, −74%)", "size": 11, "italic": True, "color": MID},
+    ], line_spacing=1.15)
+    text_box(s, 0.82, strip_y + 0.92, 11.7, 0.24,
+             "Два разных хозяйства от одной и той же исходной цены — не цепочка одного "
+             "хозяйства; только органические листовые культуры.",
+             size=10.5, italic=True, color=DARK_GREY, line_spacing=1.1)
+    text_runs(s, 0.82, strip_y + 1.22, 11.7, 0.36, [
+        {"text": "Это ×1,6-3,9", "size": 14, "bold": True, "color": GOLD},
+        {"text": ", не ×10-20 космической индустрии — и он не переносится на товарные пропашные культуры.",
+         "size": 11.5, "italic": True, "color": DARK_GREY},
+    ], line_spacing=1.15)
+
+    add_footer(s, "Источники: AgFunder Year-in-Review 2025 · Deere press 2017/2021 (Blue River/Bear Flag) · "
+                  "MSD Animal Health press 2024-2025 (Antelliq) · Western Growers Case Study, март 2024")
+    add_speaker_notes(s, load_speaker_notes("s05c"))
 
     # ============ s06 section1 divider — Точное земледелие (L1 Поле) ============
     # N-8 fix: заголовок — термин отрасли («Точное земледелие»), ладдер-ярлык L1 «Поле»

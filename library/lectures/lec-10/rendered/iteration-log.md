@@ -505,3 +505,7 @@ Mass Balance нарушение («30%+ вертикальный whitespace = в
   предположением.
 
 **Issue #340 (p1 range) Status: COMPLETE.**
+
+---
+
+Продолжение — [`iteration-log-part4.md`](iteration-log-part4.md) (Iteration J, owner follow-up на ретроспективу отрасли).

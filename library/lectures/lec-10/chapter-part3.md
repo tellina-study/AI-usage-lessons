@@ -3,8 +3,8 @@ parent: "chapter.md"
 lecture: 10
 parts: 3
 part: 3
-version: v3.5
-date: 2026-11-14
+version: v3.6
+date: 2026-11-17
 issue: 340
 ---
 
@@ -13,6 +13,8 @@ issue: 340
 > Часть 3: **Раздел 5 «Инфраструктурные условия: связь, привязка к поставщику, регуляторика»** (сквозной раздел, не ступень лестницы) · **Раздел 6 «Управление спросом в розничной цепочке»** (ярлык лестницы: L5 полка) + пять критериев «когда не ИИ» + закрытие · Раздел 7 (Cornerstone concepts) · Раздел 8 (Misattribution warnings) · Раздел 9 (Q&A-бэкап) · Раздел 10 (Дальнейшее чтение) · Источники.
 >
 > Общая карта главы и changelog — в `chapter.md` (Часть 1).
+>
+> **v3.6 (эта часть, issue #340):** раздел «Источники» дополнен ссылками для нового §1.2a/§1.2b `chapter.md` (дрон-спутниковый мониторинг L1, Strict-in F12 Sentera-на-сое) и РФ-кейса Terra Tech/Pixel.AI в §1.7 — см. подробный changelog в `chapter.md` (Часть 1), v3.7. Сам текст Разделов 5-10 в этом круге не менялся.
 
 ## Оглавление (Часть 3)
 
@@ -431,6 +433,16 @@ issue: 340
 - **Prithvi-EO 2.0.** NASA Earth Observatory 2025; Hugging Face model card.
 - **ГК «Прогресс Агро».** Яков и Партнёры. «Digitalizing Russia's Agricultural Sector» (2024).
 - **ExactFarming, АгроСигнал.** Яков и Партнёры (2024).
+- **Sentera FieldAgent / Aerial WeedScout (§1.2a, §1.2b F12).** Sugar Producer, март 2019; SeedToday; Future Farming — FieldAgent 700 акров/час, заявленные 97%. Sentera press materials, сезон 2024 — WeedScout 13 000 акров сои, 99% предписаний за 24ч, среднее −64% гербицида. John Deere press release, 2025-05-23 — приобретение Sentera.
+- **OCEALIA + senseFly eBee Ag.** OCEALIA / senseFly case study — 300+ фермеров, 3900 га рапс + 3300 га зерновые, самоотчёт +10% без контрольной группы.
+- **XAG.** XAG company materials — 20 млн га под обслуживанием, рост 400% г/г к 2019 году, дрон M2000 до 533 га/вылет.
+- **Planet Labs (PlanetScope) + SatAgro.** Planet Labs pricing page, 2026 (Tier 1-3); SatAgro (Польша) case study — 160 000 га сахарной свёклы.
+- **Gro Intelligence — прогноз урожайности.** Gro Intelligence vendor materials — 98% от финального отчёта USDA за 8 лет; эпизод август 2022 (167,2 бу/акр vs консенсус 174-176); Pro Farmer Crop Tour 2022 (168,1 бу/акр, подтверждение через 2 недели).
+- **Gro Intelligence — задержка NDVI на дерешо.** DTN / Progressive Farmer, «Imperfect Predictions», 2020-10-01 — округ Jasper, Айова, 10 августа 2020.
+- **Descartes Labs.** Вендорские заявления 2014-2018 (99% точность); Shahhosseini et al., arXiv:2001.09055 (независимая оценка, RRMSE 7,8%).
+- **Iowa State University Farm Custom Rate Survey, 2026.** Ручной обход скаута — $6,65/акр (диапазон $3,82-9,50/акр).
+- **USDA NASS Objective Yield Surveys.** Государственный эталон точности прогноза урожайности — методология физического обмера.
+- **Terra Tech / Pixel.AI (§1.7 РФ-параллель).** comnews.ru, 2022-07-11; tadviser.ru — нейросетевая детекция по спутниковым снимкам, ошибка ≤3,5%, 2,59 млн га в Пантанале (Бразилия), >1 млн га совокупно, 30 ₽/км² базовый тариф.
 
 ### Working cases — L2 (Robotics)
 
@@ -483,6 +495,7 @@ issue: 340
 - **F9 РФ dairy uncertainty.** GEA Russia + Lely + DeLaval sanctions impact coverage 2022-2026.
 - **F10 USDA Climate-Smart cancellation.** USDA press release 2025-04-14: $3.1B / **135 проектов** (NOT 141) / 14 000 ферм / 3.2M акров; заменено программой **AMP (Advancing Markets for Producers — NOT Advanced Manufacturing Programme)** с требованием ≥65% federal funding фермерам. <https://www.usda.gov/about-usda/news/press-releases/2025/04/14>; Civil Eats coverage; DTNPF.
 - **F11 Verra phantom credits.** The Guardian January 2023. Die Zeit. SourceMaterial. Pachama coverage.
+- **F12 Sentera FieldAgent на сое (§1.2b) — один вендор, два результата.** Farm Progress, «High-tech or hula hoop for soybean stand counts?»; MSU CANR, двухлетнее исследование 2024-2025 (ручной подсчёт vs BeanCam r=0,3122 p=0,0003; все остальные методы, включая Sentera, r<0,30). Дополнительно в этом же блоке: **PrecisionHawk** Chapter 7 банкротство, декабрь 2023 ($136M привлечено, долги ~$17M vs активы ~$3,8M); **Gro Intelligence** закрытие май-июнь 2024 (>$115M привлечено, 60% штата сокращено март 2024, SEC-расследование) несмотря на приемлемую точность модели (см. working case выше) — business-model mismatch, не accuracy failure.
 
 ### Среда — связь, привязка к поставщику, регуляторика
 
@@ -515,7 +528,7 @@ issue: 340
 - McKinsey Agriculture 2025.
 - Яков и Партнёры — российский АПК (2024).
 
-> **Total references count:** ~59 (включая академические, отраслевые, корпоративные пресс-релизы, журналистские расследования; v2 добавил TechCrunch 2026-04-15 для Monarch×Caterpillar + Habr Магнит для F&R + разделил Cainthus/Connecterra refs + обновил Tract на Icos Capital + обновил Nature Food на Tzachor et al.; v3.1 обновил Habr Магнит link на full Forecasting+Replenishment модульный split + TechCrunch 2025-08-13 для Foxconn-Monarch разрыв в августе 2025).
+> **Total references count:** ~74 (включая академические, отраслевые, корпоративные пресс-релизы, журналистские расследования; v2 добавил TechCrunch 2026-04-15 для Monarch×Caterpillar + Habr Магнит для F&R + разделил Cainthus/Connecterra refs + обновил Tract на Icos Capital + обновил Nature Food на Tzachor et al.; v3.1 обновил Habr Магнит link на full Forecasting+Replenishment модульный split + TechCrunch 2025-08-13 для Foxconn-Monarch разрыв в августе 2025; v3.6/issue #340 добавил ~15 ссылок для §1.2a/§1.2b дрон-спутникового мониторинга + F12 Sentera-на-сое + Terra Tech/Pixel.AI РФ-кейс).
 >
 > **[VFY-day-of] маркеры** — на волатильных метриках: See & Spray 5M акров и +2 bu/A; ExactFarming user count 2026; LaserWeeder 250k акров 2025; Solinftec 243% YoY; Monarch shutdown финальное состояние; DeLaval VMS install growth 2026; РСХБ AI-сервисы статус 2026; Starlink статус РФ 2026; DailyRobotics actual deployment 2026; SenseHub subscription pricing 2026.
 >

@@ -1,34 +1,34 @@
 ---
 id: s09
 type: content
-duration_min: 1.5
-assertion: "Базовые модели меняют порог входа: команда из 3 человек дообучает TerraMind на тысячах изображений вместо миллионов. Риск — концентрация у вендоров: вся индустрия L1 строится на 2-3 моделях IBM / NASA / ESA."
-learning_goal: "Foundation model + RAG-pattern + vendor concentration risk"
+duration_min: 1.0
+assertion: "Базовые модели меняют порог входа: команда из 3 человек дообучает TerraMind на тысячах изображений вместо миллионов — не на миллионах, которые требовались раньше."
+learning_goal: "Foundation model + RAG-pattern (vendor concentration risk — одной строкой)"
 learning_outcomes: [LO1a]
 chapter_ref: "§1.3 Часть 1 — Foundation models 2026"
 references: [ibm-research-2025-terramind, nasa-earth-2025-prithvi, arxiv-2505-agrifm]
 visual:
   pattern: 2col_diagram
-  primary: "Слева — satellite imagery sample (Sentinel-2 multispectral) + diagram TerraMind multimodal transformer; справа — vendor concentration risk callout + Prithvi-EO 2.0 cite"
+  primary: "Слева — satellite imagery sample (Sentinel-2 multispectral) + diagram TerraMind multimodal transformer; справа — ОДИН callout: архитектура советника 2026 + 1-строчная оговорка про концентрацию вендоров"
 ---
 
 # Foundation models 2026 — TerraMind, Prithvi-EO 2.0
 
 ## Assertion
 
-Базовые модели меняют порог входа: команда из 3 человек дообучает TerraMind на тысячах изображений вместо миллионов. Риск — концентрация у вендоров: вся индустрия L1 строится на 2-3 моделях IBM / NASA / ESA.
+Базовые модели меняют порог входа: команда из 3 человек дообучает TerraMind на тысячах изображений вместо миллионов — не на миллионах, которые требовались раньше.
 
 ## Visual
 
-Упрощённый макет — 3 ключевые мысли, без перегрузки терминами. AgriFM-disambig и подробности архитектуры — в speaker notes.
+Упрощённый макет — 2 ключевые мысли, без перегрузки терминами. AgriFM-disambig, vendor-concentration детали и подробности архитектуры — в speaker notes (сокращено на кадре по сравнению с предыдущей версией, issue #340).
 
 **Левая колонка (55%) — что такое TerraMind:**
 - Сверху — сэмпл спутникового снимка Sentinel-2 (10-метровое разрешение) в Ocean rounded box. Подпись 12pt italic: «Sentinel-2 / ESA Copernicus — класс данных для TerraMind».
 - Под ним — короткая формула 14pt: «**TerraMind (IBM + ESA, 2025) = «GPT-3 для Earth observation»**. Команда из 3 человек дообучает на тысячах изображений вместо миллионов — порог входа упал на 2-3 порядка».
 
-**Правая колонка (45%) — два callout:**
-- Callout 1 (Ocean rounded box, GOLD accent): «**Риск концентрации у вендоров.** Вся индустрия L1 на 2-3 базовых моделях от IBM / NASA / ESA. Закрытие модели = команды теряют возможности одномоментно».
-- Callout 2 (Ocean rounded box): «**Архитектура советника 2026:** базовая модель + поиск (RAG) к локальному регулятору + LLM генерация + явный отказ при низкой уверенности».
+**Правая колонка (45%) — ОДИН callout (вместо прежних двух):**
+- Callout (Ocean rounded box): «**Архитектура советника 2026:** базовая модель + поиск (RAG) к локальному регулятору + LLM генерация + явный отказ при низкой уверенности».
+- Под callout — одна строка 10,5pt italic (риск концентрации у вендоров, сжато): «Вся индустрия L1 — на 2-3 моделях IBM/NASA/ESA; закрытие любой из них одномоментно останавливает всех, кто на ней построен».
 
 Footer 12pt italic: «Источники: IBM Research, апрель 2025; NASA Earth Observatory, 2025».
 

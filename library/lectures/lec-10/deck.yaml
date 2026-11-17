@@ -388,7 +388,7 @@ slides:
     section: "Р1"
     slide_type: "content"
     layout: "matrix-5x5"
-    timing_min: 2
+    timing_min: 1.7
     chapter_ref: "§1.2 Часть 1 — xarvio, FieldView, ГК «Прогресс Агро»"
     learning_goal: "Vendor matrix — anti-hype навыки маппинга «бренд → режим работы»"
     learning_outcomes: [LO1a, LO2]
@@ -398,15 +398,47 @@ slides:
       acquisition_tier: "Tier 1 (official app-store screenshot)"
       attribution_label: "xarvio FIELD MANAGER — карта поля (иллюстрация платформы). Источник: Apple App Store listing. BASF Japan rice yield guarantee текстом — источник: BASF press p-25-191, 2025-10"
 
+  - id: s08a
+    title: "Дистанционный мониторинг посевов — дрон и спутник наблюдают, агроном решает"
+    assertion: "Дрон и спутник не распыляют (как See & Spray) и не формулируют рекомендацию (как xarvio/FieldView) — они наблюдают поле; решение принимает агроном-скаут. Классика — ручной обход $6,65/акр; дрон и спутник — другой продукт, не замена, а ускорение наблюдения."
+    section: "Р1"
+    slide_type: "content"
+    layout: "2panel-with-plates"
+    timing_min: 2.5
+    chapter_ref: "§1.2a Часть 1 — Working case: дистанционный мониторинг посевов — дрон и спутник"
+    learning_goal: "Третий класс продуктов L1 — дистанционный мониторинг; разный продукт дрона и спутника; 5 границ применимости"
+    learning_outcomes: [LO1a, LO1b, LO2]
+    media:
+      kind: "реальная NDVI-карта с дрона (Wikimedia Commons CC BY-SA 4.0) + реальный NASA SVS 31341 Sentinel-2/Landsat-8 NDVI-композит дерешо Айовы 2020"
+      source_candidate: "Wikimedia Commons (UAS NDVI map) + NASA Scientific Visualization Studio 31341"
+      acquisition_tier: "Tier 1-2"
+      attribution_label: "NDVI-карта с дрона (иллюстрация), Wikimedia Commons CC BY-SA 4.0; NASA SVS 31341 — дерешо Айовы, NDVI 7/11 авг. 2020"
+
+  - id: s08b
+    title: "Sentera — 97% на кукурузе и хлопке, r<0,30 на сое"
+    assertion: "Тот же Sentera, что заявлял 97% на кукурузе и хлопке, в независимом двухлетнем исследовании MSU Extension даёт r<0,30 (R²≈0,10) на сое — точность оказалась свойством пары «культура + задача», не свойством бренда. Рядом — PrecisionHawk и Gro Intelligence закрылись не из-за точности модели."
+    section: "Р1"
+    slide_type: "failure_case"
+    layout: "headline-plate-plus-cards"
+    timing_min: 2.0
+    chapter_ref: "§1.2b Часть 1 — Strict-in F12 Sentera-на-сое + банкротства PrecisionHawk/Gro Intelligence"
+    learning_goal: "AP3 второй раз в разделе — точность не переносится между культурами; бизнес-провал отдельно от провала точности"
+    learning_outcomes: [LO2, LO5]
+    media:
+      kind: "плашка «было·стало» + мини-таблица 5 методов MSU + 2 карточки банкротств (без фото, data-only)"
+      source_candidate: "own table — Farm Progress / MSU CANR 2024-2025; PrecisionHawk bankruptcy filings; Gro Intelligence closure coverage"
+      acquisition_tier: "own"
+      attribution_label: "Источники: Farm Progress «High-tech or hula hoop…»; MSU CANR 2024-2025; банкротство PrecisionHawk дек. 2023; закрытие Gro Intelligence май-июнь 2024"
+
   - id: s09
     title: "Foundation models 2026 — TerraMind, Prithvi-EO 2.0"
-    assertion: "Foundation models меняют порог входа: команда из 3 человек дообучает TerraMind на тысячах изображений вместо миллионов. Риск — vendor concentration: вся индустрия L1 строится на 2-3 моделях IBM / NASA / ESA."
+    assertion: "Базовые модели меняют порог входа: команда из 3 человек дообучает TerraMind на тысячах изображений вместо миллионов — не на миллионах, которые требовались раньше."
     section: "Р1"
     slide_type: "content"
     layout: "2-col-diagram"
-    timing_min: 1.5
+    timing_min: 1.0
     chapter_ref: "§1.3 Часть 1 — Foundation models 2026"
-    learning_goal: "Foundation model + RAG-pattern + vendor concentration risk"
+    learning_goal: "Foundation model + RAG-pattern (vendor concentration risk — одной строкой)"
     learning_outcomes: [LO1a]
     media:
       kind: "satellite imagery (Sentinel-2) + foundation-model architecture diagram"
@@ -416,35 +448,19 @@ slides:
 
   - id: s10
     title: "Vertical farming — провал не из-за плохого ИИ"
-    assertion: "AppHarvest, Plenty, Bowery: $1,37 млрд+ потерь, 14 банкротств 2025. Контроллеры работали, CV распознавал, ML предсказывал. Не сработала арифметика энергии: LED ≈ 100× free sunlight."
+    assertion: "AppHarvest, Plenty, Bowery: $1,37 млрд+ потерь, 14 банкротств 2025. Контроллеры работали, CV распознавал, ML предсказывал — не сработала арифметика энергии: LED ≈ 100× free sunlight, и ИИ оптимизирует знаменатель, а разрыв сидит в числителе."
     section: "Р1"
-    slide_type: "content"
-    layout: "3x3-mini-table"
-    timing_min: 2.5
-    chapter_ref: "§1.4 Часть 1 — Strict-in F1 коллапс vertical farming"
-    learning_goal: "Vertical farming как класс — AP1 закон термодинамики важнее ML"
+    slide_type: "failure_case"
+    layout: "cards-plus-chain"
+    timing_min: 3.0
+    chapter_ref: "§1.4 Часть 1 — Strict-in F1 коллапс vertical farming + 5-Why физико-экономическая логика"
+    learning_goal: "Vertical farming как класс — AP1 закон термодинамики важнее ML (включая 5-Why механизм причины)"
     learning_outcomes: [LO5]
     media:
-      kind: "3-row mini-table (компания / капитал / главная причина) + Bowery interior photo"
-      source_candidate: "own table + Bowery press / TechCrunch 2024-11-04"
-      acquisition_tier: "Tier 1"
-      attribution_label: "Источники: TechCrunch 2025-03-24 (Plenty); 2024-11-04 (Bowery); Agriculture Dive 689039 (AppHarvest)"
-
-  - id: s11
-    title: "5-Why — почему ML не закрыл термодинамический gap"
-    assertion: "ML оптимизирует на знаменателе (efficiency 5-15%). Разрыв в числителе (LED energy vs free sunlight): 0,5 × 0,7 × 0,3 ≈ 10,5% end-to-end. Этот gap — на два порядка; никакая модель не закроет."
-    section: "Р1"
-    slide_type: "content"
-    layout: "5-step-chain"
-    timing_min: 2
-    chapter_ref: "§1.4 Часть 1 — 5-Why физико-экономическая логика"
-    learning_goal: "5-Why анализ как метод; AP1 операционально"
-    learning_outcomes: [LO5]
-    media:
-      kind: "5-step chain diagram (физика → экономика → инженерная архитектура)"
-      source_candidate: "own drawio (5 boxes горизонтально + связь arrows)"
+      kind: "3 горизонтальные карточки (компания / капитал / причина) + компактная 5-step chain «5 почему» + одна итоговая плашка AP1 с декомпозицией 0,5×0,7×0,3≈10,5%"
+      source_candidate: "own table + own diagram"
       acquisition_tier: "own"
-      attribution_label: "Анализ Hannah Ritchie на основе MDPI Sustainability journal 2024"
+      attribution_label: "Источники: TechCrunch 2025-03-24, 2024-11-04; Agriculture Dive 689039; AgFunder Year-in-Review 2025; анализ Hannah Ritchie на основе MDPI Sustainability 2024"
 
   - id: s12
     title: "ChatGPT как агроном — «уверенно ошибочный»"
@@ -479,20 +495,20 @@ slides:
       attribution_label: "Plantix — «Instant disease detection» screen. Источник: Google Play listing; данные Frontiers in Plant Science 2020 + Plantix self-report"
 
   - id: s14
-    title: "L1 РФ — ExactFarming, Прогресс Агро + политический риск"
-    assertion: "ExactFarming 12 700 хозяйств, 9,8M га. ГК «Прогресс Агро» +5% рентабельности (внутренний замер). Индекс цифровизации 27,2 vs 75,5 США. Главный урок политического риска L1 — Climate FieldView вышел из РФ в 2022."
+    title: "L1 РФ — ExactFarming, Прогресс Агро, Terra Tech + политический риск"
+    assertion: "ExactFarming 12 700 хозяйств, 9,8M га. Terra Tech/Pixel.AI — нейросеть по спутнику, ошибка ≤3,5%, 2,59 млн га в Пантанале. Индекс цифровизации 27,2 vs 75,5 США. Главный урок политического риска L1 — Climate FieldView вышел из РФ в 2022."
     section: "Р1"
-    slide_type: "content"
+    slide_type: "russia_parallel"
     layout: "2-col-data"
-    timing_min: 1.3
-    chapter_ref: "§1.7 Часть 1 — РФ-параллель Раздела 1"
-    learning_goal: "РФ-параллель L1 + AP6 inline (Climate FieldView выход)"
+    timing_min: 1.6
+    chapter_ref: "§1.7 Часть 1 — РФ-параллель Раздела 1 (включая Terra Tech/Pixel.AI)"
+    learning_goal: "РФ-параллель L1 (4 примера, включая прямой аналог Planet Labs) + AP6 inline (Climate FieldView выход)"
     learning_outcomes: [LO1b]
     media:
       kind: "ExactFarming dashboard + map of regions"
-      source_candidate: "Яков и Партнёры 2024 report figure + ExactFarming.com"
+      source_candidate: "Яков и Партнёры 2024 report figure + ExactFarming.com + comnews.ru 2022-07-11 (Terra Tech)"
       acquisition_tier: "Tier 1-2"
-      attribution_label: "Яков и Партнёры «Digitalizing Russia's Agricultural Sector», 2024"
+      attribution_label: "Яков и Партнёры «Digitalizing Russia's Agricultural Sector», 2024; Terra Tech/Pixel.AI — comnews.ru, 2022-07-11"
 
   # ---------------------------------------------------------------------------
   # Section divider Р2
@@ -604,7 +620,7 @@ slides:
     section: "Р2"
     slide_type: "content"
     layout: "timeline-2018-2026"
-    timing_min: 2.5
+    timing_min: 2.2
     chapter_ref: "§2.4 Часть 2 — Strict-in F4 Monarch Tractor"
     learning_goal: "AP — demo ≠ deployment; маркетинг «autonomous» = юридическая ловушка"
     learning_outcomes: [LO2, LO5]
@@ -772,7 +788,7 @@ slides:
     section: "Р3"
     slide_type: "content"
     layout: "3-row-anti-hype"
-    timing_min: 2.5
+    timing_min: 2.2
     chapter_ref: "§3.4 Часть 2 — Strict-in F8 Cainthus + tie-stall + Holstein-bias"
     learning_goal: "AP3 в L3 — applicability gap + architecture asymmetry для local breeds"
     learning_outcomes: [LO5]
@@ -932,7 +948,7 @@ slides:
     section: "Р4-bis"
     slide_type: "content"
     layout: "3-numbers + map"
-    timing_min: 2.5
+    timing_min: 2.2
     chapter_ref: "§5.1 Часть 3 — Связь"
     learning_goal: "AP5 + edge ML как реалистичная архитектура"
     learning_outcomes: [LO5]
@@ -948,7 +964,7 @@ slides:
     section: "Р4-bis"
     slide_type: "content"
     layout: "double-optic-comparison"
-    timing_min: 2.5
+    timing_min: 2.2
     chapter_ref: "§5.2 Часть 3 — Привязка к поставщику + Мелитополь + FTC + FCC"
     learning_goal: "AP6 + двойная оптика как stand-alone framework"
     learning_outcomes: [LO5]
@@ -1036,7 +1052,7 @@ slides:
     section: "Р5"
     slide_type: "content"
     layout: "checklist-5-blocks"
-    timing_min: 1.5
+    timing_min: 1.3
     chapter_ref: "§6.1a Часть 3 — Pre-purchase verification checklist"
     learning_goal: "LO2 операционно — application артефакт для due diligence"
     learning_outcomes: [LO2]
@@ -1052,7 +1068,7 @@ slides:
     section: "Р5"
     slide_type: "content"
     layout: "5-segment-landscape"
-    timing_min: 1.5
+    timing_min: 1.3
     chapter_ref: "§6.3 Часть 3 — Карьерные траектории"
     learning_goal: "Рыночный ландшафт без агитации; родовая форма"
     learning_outcomes: []

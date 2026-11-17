@@ -1,7 +1,7 @@
 ---
 id: s36c
 type: career_landscape
-duration_min: 1.5
+duration_min: 1.3
 assertion: "L1-L2 международные (John Deere, Bayer, BASF, Carbon Robotics, Saga, Aigen). L3 (DeLaval, GEA, Lely, Cargill Birdoo). L4-L5 (Cargill CMAX, ADM, Tract, Walmart Eden, Cropin). РФ: Cognitive Pilot, ИТЭЛМА, Геоскан, ЭФКО, Русагро Тех, РСХБ.цифра, Магнит digital, X5 Tech, ExactFarming, Connectome.ai."
 learning_goal: "Рыночный ландшафт без агитации; родовая форма"
 learning_outcomes: []
@@ -62,19 +62,19 @@ Footer 12pt italic: «Без агитации. Без named institutions. Ист
 
 ## Speaker notes
 
-Что делать студенту-инженеру, который прочитал материал и хочет работать в этой области? Ниже — рыночный ландшафт, информация о сегментации отрасли, не директивная карьерная рекомендация. Решения о карьере индивидуальны и зависят от конкретного навыкового профиля, склонностей и обстоятельств.
+Рыночный ландшафт отрасли — не директивная карьерная рекомендация; решения о карьере индивидуальны и зависят от навыкового профиля, склонностей и обстоятельств.
 
-Образовательные траектории. Профильные технические университеты предлагают магистерские программы по agro-IT, agro-engineering, digital agronomy. Профильные аграрные университеты — программы по цифровому земледелию и зоотехнии с цифровыми технологиями. Эти программы 2024-2026 годов начали интеграцию ML-курсов в учебные планы, что отличает их от программ десятилетней давности. На уровне дополнительного образования — онлайн-курсы по satellite analytics, computer vision, ML for time series — хорошее дополнение к базовой инженерной подготовке.
+Образовательные траектории: профильные технические университеты — магистратуры agro-IT, agro-engineering, digital agronomy; профильные аграрные университеты — цифровое земледелие и зоотехния с цифровыми технологиями. Программы 2024-2026 годов начали интеграцию ML-курсов, в отличие от программ десятилетней давности. Дополнительно — онлайн-курсы по satellite analytics, computer vision, ML for time series.
 
-Сегмент L1-L2 в международном контексте охватывает крупных AgTech-вендоров с инфраструктурой precision farming и autonomy. Примеры — John Deere в направлении See & Spray и autonomous, Bayer Crop Science Digital, BASF Digital Farming в направлении advisory xarvio. А также независимых стартапов в специализированных нишах — Carbon Robotics в robotic weed control, Saga Robotics в UV-C обработке клубники, Aigen в solar field robots. Навыковый профиль для входа — computer vision, edge ML, sensor fusion, ROS, автономная навигация.
+Сегмент L1-L2 международно — крупные AgTech-вендоры precision farming и autonomy: John Deere (See & Spray, autonomous), Bayer Crop Science Digital, BASF Digital Farming (xarvio); нишевые стартапы — Carbon Robotics (robotic weed control), Saga Robotics (UV-C клубники), Aigen (solar field robots). Навыки на входе — computer vision, edge ML, sensor fusion, ROS, автономная навигация.
 
-Сегмент L3 в международном контексте включает производителей dairy-equipment с AI-стеком — DeLaval, GEA, Lely; стартапы в CV для контроля здоровья и поведения животных — Cainthus как часть Cargill portfolio, Connecterra IDA, CattleEye в составе GEA; компании в poultry CV вроде Cargill Birdoo. Навыки — CV плюс классические ML-методы для биометрии животных, time-series анализ сенсорных данных.
+Сегмент L3 международно — производители dairy-equipment с AI-стеком (DeLaval, GEA, Lely), CV для здоровья и поведения животных (Cainthus в портфеле Cargill, Connecterra IDA, CattleEye в составе GEA), poultry CV (Cargill Birdoo). Навыки — CV плюс классический ML для биометрии животных, time-series анализ сенсорных данных.
 
-Сегмент L4-L5 в международном контексте охватывает крупных commodity traders с агентными AI-стеками — Cargill CMAX и CarVe, ADM, COFCO. Data infrastructure layer — Tract как пример shared infrastructure для конкурирующих компаний. Retail-supply ML — Walmart Eden, Tesco AI, Cropin. Навыки — LLM и agentic architectures, RAG, finance и commodity trading basics, supply chain economics.
+Сегмент L4-L5 международно — commodity traders с агентными AI-стеками (Cargill CMAX/CarVe, ADM, COFCO), data infrastructure (Tract — shared между конкурентами), retail-supply ML (Walmart Eden, Tesco AI, Cropin). Навыки — LLM и agentic architectures, RAG, finance и commodity trading basics, supply chain economics.
 
-Российский рынок имеет distributed по уровням сегментацию. На L2 представлены Cognitive Pilot, ИТЭЛМА и Геоскан — autonomous machinery, UAV. На R&D-уровне работают агрохолдинги: ЭФКО в FoodTech, Русагро Тех в digital agronomy. На L4-L5 — РСХБ.цифра, Магнит digital, X5 Tech — supply chain ML, demand forecasting. На L1 SaaS — ExactFarming. На L3 в узких нишах — Connectome.ai, резидент Сколково в области CV для контроля рождения телят. Дополнительные источники — экосистемы корпоративных R&D-юнитов крупных банков и tech-компаний.
+Российский рынок распределён по уровням: L2 — Cognitive Pilot, ИТЭЛМА, Геоскан (autonomous machinery, UAV); R&D агрохолдинги — ЭФКО (FoodTech), Русагро Тех (digital agronomy); L4-L5 — РСХБ.цифра, Магнит digital, X5 Tech (supply chain ML, demand forecasting); L1 SaaS — ExactFarming; L3 узкая ниша — Connectome.ai, резидент Сколково (CV для контроля рождения телят). Плюс корпоративные R&D-юниты крупных банков и tech-компаний.
 
-Это рыночный ландшафт, не предписание. Каждая из этих позиций требует конкретного навыкового профиля, который инженер получает из курса в целом плюс специфической отраслевой подготовки. Решения о карьере — индивидуальны.
+Это ландшафт, не предписание: каждая позиция требует своего навыкового профиля, который даёт курс в целом плюс отраслевая подготовка. Решения о карьере — индивидуальны.
 
 ## Источники
 

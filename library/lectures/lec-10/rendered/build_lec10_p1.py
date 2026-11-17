@@ -972,6 +972,210 @@ def build_part1_full(prs, H):
                   "скриншот — Apple App Store, xarvio FIELD MANAGER")
     add_speaker_notes(s, load_speaker_notes("s08"))
 
+    # ============ s08a — дистанционный мониторинг: дрон и спутник (issue #340) ============
+    # Новый working case между See & Spray (исполняет) и xarvio/FieldView (советует):
+    # дрон/спутник только наблюдают, решение принимает агроном-скаут. 2 реальных
+    # изображения: Wikimedia Commons CC BY-SA 4.0 (дрон-NDVI карта) + NASA SVS public
+    # domain (спутниковый композит дерешо Айовы 2020-08-07/11 — прямая иллюстрация
+    # 2-недельной задержки NDVI, разобранной в тексте).
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s,
+        "Дистанционный мониторинг посевов — дрон и спутник наблюдают, агроном решает",
+        size=19)
+    text_box(s, 0.6, 1.1, 12.13, 0.25,
+             "Третий класс продуктов первой ступени — между распылением (See & Spray) и "
+             "советом (xarvio/FieldView): наблюдает дрон или спутник, решает человек",
+             size=10.5, italic=True, color=MID)
+
+    # Ряд 1 — 3 классические плашки
+    plate_y = 1.42; plate_h = 0.78
+    plate_w = (12.13 - 0.3) / 3
+    plates = [
+        ("$6,65/акр", "Ручной обход скаута", "разброс $3,82-9,50; предел ≈15-20 тыс. акров/сезон"),
+        ("USDA NASS", "Objective Yield Surveys", "гос. эталон — физический обмер делянок"),
+        ("Базовый тариф", "Спутниковый снимок без модели", "агроном сам читает карту NDVI"),
+    ]
+    px = 0.6
+    for big, lbl, sub in plates:
+        ocean_box(s, px, plate_y, plate_w, plate_h, fill=LIGHT_TINT, stroke=LIGHT)
+        text_box(s, px + 0.12, plate_y + 0.06, plate_w - 0.24, 0.3, big, size=15, bold=True, color=MID)
+        text_box(s, px + 0.12, plate_y + 0.37, plate_w - 0.24, 0.24, lbl, size=10, bold=True, color=DEEP, line_spacing=1.0)
+        text_box(s, px + 0.12, plate_y + 0.58, plate_w - 0.24, 0.2, sub, size=8, italic=True, color=MID, line_spacing=1.0)
+        px += plate_w + 0.15
+
+    # Ряд 2 — 2 панели: Дрон / Спутник, каждая с реальным изображением
+    panel_y = plate_y + plate_h + 0.12
+    panel_h = 3.25
+    panel_w = (12.13 - 0.2) / 2
+
+    # Панель «Дрон» — iter2: bullets переведены на text_runs (ключевые цифры bold),
+    # иконка plane рядом с заголовком панели — семантический якорь дрона
+    ocean_box(s, 0.6, panel_y, panel_w, panel_h, fill=LIGHT_TINT, stroke=LIGHT)
+    ip_drone_hdr = ASSETS / "icons" / "plane-48.png"
+    if ip_drone_hdr.exists():
+        add_image(s, ip_drone_hdr, 0.78, panel_y + 0.06, w=0.26, h=0.26)
+    text_box(s, 1.1, panel_y + 0.08, panel_w - 0.7, 0.28, "Дрон", size=14, bold=True, color=MID)
+    img_w = 2.6; img_h = img_w * (450 / 854)
+    img_drone = ASSETS / "photos" / "p08a-drone-ndvi-map.png"
+    if img_drone.exists():
+        add_image(s, img_drone, 0.6 + panel_w - img_w - 0.15, panel_y + 0.08, w=img_w, h=img_h)
+    text_box(s, 0.6 + panel_w - img_w - 0.15, panel_y + 0.1 + img_h, img_w, 0.22,
+             "NDVI-карта с дрона (иллюстрация)", size=7, italic=True, color=LIGHT, line_spacing=1.0)
+    drone_lines = [
+        ("Sentera FieldAgent — ", "700 акров/час", ", заявлено ", "97%"),
+        ("WeedScout 2024: ", "13 000 акров сои", " · ", "99%", " предписаний за 24ч · ", "–64%", " гербицида (база в кг/акр не названа)"),
+        ("", "23 мая 2025", " — Deere купил Sentera целиком"),
+        ("OCEALIA/senseFly: ", "+10%", " — самоотчёт без контрольной группы"),
+        ("XAG: ", "20 млн га", ", ", "+400%", " г/г к 2019"),
+    ]
+    bullet_w = panel_w - img_w - 0.6
+    ly = panel_y + 0.44
+    bullet_h = [0.4, 0.62, 0.3, 0.4, 0.32]
+    bsize = 10.5
+    for parts, bh in zip(drone_lines, bullet_h):
+        runs = [{"text": "• ", "size": bsize, "italic": True, "color": DARK_GREY}]
+        for i, part in enumerate(parts):
+            is_num = (i % 2 == 1)
+            runs.append({"text": part, "size": bsize, "italic": True,
+                         "bold": is_num, "color": MID if is_num else DARK_GREY})
+        text_runs(s, 0.78, ly, bullet_w, bh, runs, line_spacing=1.25)
+        ly += bh + 0.12
+
+    # Панель «Спутник» — iter2: text_runs + satellite-иконка у заголовка
+    sat_x = 0.6 + panel_w + 0.2
+    ocean_box(s, sat_x, panel_y, panel_w, panel_h, fill=GOLD_TINT, stroke=GOLD)
+    ip_sat_hdr = ASSETS / "icons" / "satellite-48.png"
+    if ip_sat_hdr.exists():
+        add_image(s, ip_sat_hdr, sat_x + 0.18, panel_y + 0.06, w=0.26, h=0.26)
+    text_box(s, sat_x + 0.5, panel_y + 0.08, panel_w - 0.7, 0.28, "Спутник", size=14, bold=True, color=GOLD)
+    simg_w = 2.6; simg_h = simg_w * (1152 / 2048)
+    img_sat = ASSETS / "photos" / "p08a-satellite-iowa-derecho.png"
+    if img_sat.exists():
+        add_image(s, img_sat, sat_x + panel_w - simg_w - 0.15, panel_y + 0.08, w=simg_w, h=simg_h)
+    text_box(s, sat_x + panel_w - simg_w - 0.15, panel_y + 0.1 + simg_h, simg_w, 0.3,
+             "NASA SVS — дерешо Айовы, NDVI 7/11 авг. 2020", size=6.8, italic=True, color=DEEP, line_spacing=1.0)
+    sat_lines = [
+        ("Planet Labs PlanetScope — ", "3,7 м/px", " · ", "$0,14-0,73/акр/год", " (в 9-47× дешевле скаута — другой продукт)"),
+        ("SatAgro: ", "160 000 га", " сахарной свёклы"),
+        ("Gro Intelligence: ", "98%", " от отчёта USDA за 8 лет; в 2022 точнее консенсуса аналитиков"),
+        ("", "Дерешо 10 авг 2020", ": снимок обновился через ", "2 недели", " — оценка упала постфактум"),
+    ]
+    sat_bullet_w = panel_w - simg_w - 0.6
+    ly = panel_y + 0.44
+    sat_bullet_h = [0.7, 0.3, 0.5, 0.5]
+    for parts, bh in zip(sat_lines, sat_bullet_h):
+        runs = [{"text": "• ", "size": bsize, "italic": True, "color": DEEP}]
+        for i, part in enumerate(parts):
+            is_num = (i % 2 == 1)
+            runs.append({"text": part, "size": bsize, "italic": True,
+                         "bold": is_num, "color": GOLD if is_num else DEEP})
+        text_runs(s, sat_x + 0.18, ly, sat_bullet_w, bh, runs, line_spacing=1.25)
+        ly += bh + 0.12
+
+    # Полоса снизу — 5 границ применимости
+    lim_y = panel_y + panel_h + 0.12
+    lim_h = 0.85
+    limits = [
+        ("users", "Размер хозяйства", "затраты размываются только на большой площади"),
+        ("sprout", "Окно стадии роста", "точно только 14-20 дней после посева"),
+        ("map", "Разрешение vs поле", "пиксель Sentinel-2 = 100 м²; малое поле — мало пикселей"),
+        ("plane", "Регуляторика БПЛА", "FAA Part 107 — оператор в пределах VLOS"),
+        ("radar", "Облачность", "срезает 36 теор. снимков до 6-8 пригодных/сезон"),
+    ]
+    lw = (12.13 - 0.4) / 5
+    lx = 0.6
+    for icon, lbl, sub in limits:
+        ocean_box(s, lx, lim_y, lw, lim_h, fill=SURFACE)
+        ip = ASSETS / "icons" / f"{icon}-48.png"
+        if ip.exists():
+            add_image(s, ip, lx + 0.1, lim_y + 0.08, w=0.26, h=0.26)
+        text_box(s, lx + 0.1, lim_y + 0.38, lw - 0.2, 0.22, lbl, size=8.8, bold=True, color=MID, line_spacing=1.0)
+        text_box(s, lx + 0.1, lim_y + 0.58, lw - 0.2, 0.26, sub, size=7.3, italic=True, color=DARK_GREY, line_spacing=1.05)
+        lx += lw + 0.1
+
+    add_footer(s, "Источники: Iowa State Custom Rate Survey 2026 · Sugar Producer 2019 · Sentera press 2024 · "
+                  "Deere press 2025-05-23 · DTN/Progressive Farmer 2020-10-01")
+    add_speaker_notes(s, load_speaker_notes("s08a"))
+
+    # ============ s08b — Sentera: 97% кукуруза/хлопок, r<0,30 соя (issue #340) ============
+    # Iter2 fix: исходная вёрстка переполняла слайд (карточки банкротств наезжали на
+    # footer) — весь вертикальный бюджет пересчитан заново под 7.5" с запасом.
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s, "Sentera — 97% на кукурузе и хлопке, r<0,30 на сое", size=22)
+
+    # Плашка «было·стало»
+    hw = (12.13 - 0.2) / 2
+    ocean_box(s, 0.6, 1.3, hw, 0.8, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.8, 1.36, hw - 0.4, 0.38, "97%", size=26, bold=True, color=GOLD)
+    text_box(s, 0.8, 1.78, hw - 0.4, 0.28, "заявлено Sentera · кукуруза, хлопок (2019)",
+             size=9.5, italic=True, color=DEEP, line_spacing=1.05)
+    ocean_box(s, 0.6 + hw + 0.2, 1.3, hw, 0.8, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.8 + hw + 0.2, 1.36, hw - 0.4, 0.38, "r<0,30 (R²≈0,10)", size=21, bold=True, color=MID)
+    text_box(s, 0.8 + hw + 0.2, 1.78, hw - 0.4, 0.28, "независимо · MSU Extension · соя (2024-2025)",
+             size=9.5, italic=True, color=DEEP, line_spacing=1.05)
+    text_box(s, 0.6, 2.16, 12.13, 0.24, "Тот же вендор, та же камера, другая культура",
+             size=10.5, bold=True, italic=True, color=DARK_GREY, align=PP_ALIGN.CENTER)
+
+    # Мини-таблица 5 методов MSU
+    text_box(s, 0.6, 2.46, 12.13, 0.2,
+             "Пять методов, двухлетнее исследование MSU Extension 2024-2025", size=10.5, bold=True, color=MID)
+    methods = [
+        ("Ручной подсчёт", "эталон"),
+        ("BeanCam", "r=0,3122 (p=0,0003) — значимо, но слабо"),
+        ("Smart Stand", "r<0,30"),
+        ("Аэрофото + Agremo", "r<0,30"),
+        ("Аэрофото + Sentera", "r<0,30"),
+    ]
+    mt_y = 2.68; mt_h = 0.29; mt_gap = 0.03
+    for i, (name, res) in enumerate(methods):
+        fill = SURFACE if i % 2 == 0 else LIGHT_TINT
+        ocean_box(s, 0.6, mt_y, 12.13, mt_h, fill=fill, stroke=LIGHT, stroke_pt=0.4)
+        text_box(s, 0.78, mt_y, 4.2, mt_h, name, size=10, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+        text_box(s, 5.1, mt_y, 7.4, mt_h, res, size=10, italic=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
+        mt_y += mt_h + mt_gap
+    text_box(s, 0.6, mt_y + 0.02, 12.13, 0.22,
+             "Вывод MSU: «старомодный ручной метод остаётся самым точным»",
+             size=10, bold=True, italic=True, color=DARK_GREY)
+
+    # Вывод-плашка AP3
+    ap_y = mt_y + 0.3
+    ocean_box(s, 0.6, ap_y, 12.13, 0.5, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 0.8, ap_y + 0.05, 11.7, 0.4,
+             "Точность — свойство пары (культура, задача), не бренда. Второй раз в разделе (после Plantix) "
+             "— AP3: пороговая точность на одной задаче не гарантирует развёртывание на другой.",
+             size=10.5, bold=True, color=TEAL, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+
+    # 2 карточки банкротств
+    bc_y = ap_y + 0.58
+    bc_h = 1.72
+    bc_w = (12.13 - 0.2) / 2
+    ocean_box(s, 0.6, bc_y, bc_w, bc_h)
+    ip_bc1 = ASSETS / "icons" / "building-2-48.png"
+    if ip_bc1.exists():
+        add_image(s, ip_bc1, 0.8, bc_y + 0.1, w=0.24, h=0.24)
+    text_box(s, 1.12, bc_y + 0.08, bc_w - 0.72, 0.28, "PrecisionHawk", size=13, bold=True, color=DEEP)
+    text_box(s, 0.8, bc_y + 0.36, bc_w - 0.4, 0.24, "Chapter 7 · декабрь 2023", size=10.5, italic=True, color=MID)
+    text_box(s, 0.8, bc_y + 0.6, bc_w - 0.4, 0.32, ">$136M привлечено vs ≈$17M долга / ≈$3,8M активов",
+             size=9.5, bold=True, color=GOLD, line_spacing=1.1)
+    text_box(s, 0.8, bc_y + 0.94, bc_w - 0.4, 0.7,
+             "«Мы знали, что сделать PrecisionHawk прибыльной в короткий срок будет непросто» — "
+             "бизнес-провал, не провал точности", size=8.8, italic=True, color=DARK_GREY, line_spacing=1.15)
+    ocean_box(s, 0.6 + bc_w + 0.2, bc_y, bc_w, bc_h)
+    ip_bc2 = ASSETS / "icons" / "building-2-48.png"
+    if ip_bc2.exists():
+        add_image(s, ip_bc2, 0.8 + bc_w + 0.2, bc_y + 0.1, w=0.24, h=0.24)
+    text_box(s, 1.12 + bc_w + 0.2, bc_y + 0.08, bc_w - 0.72, 0.28, "Gro Intelligence", size=13, bold=True, color=DEEP)
+    text_box(s, 0.8 + bc_w + 0.2, bc_y + 0.36, bc_w - 0.4, 0.24, "закрытие · май-июнь 2024", size=10.5, italic=True, color=MID)
+    text_box(s, 0.8 + bc_w + 0.2, bc_y + 0.6, bc_w - 0.4, 0.32, ">$115M привлечено · –60% штата в марте · расследование SEC",
+             size=9.5, bold=True, color=GOLD, line_spacing=1.1)
+    text_box(s, 0.8 + bc_w + 0.2, bc_y + 0.94, bc_w - 0.4, 0.7,
+             "«Фундаментальное несовпадение продукта и рынка» — та же модель, что точнее консенсуса "
+             "аналитиков по урожайности, бизнес всё равно не выжил", size=8.8, italic=True, color=DARK_GREY, line_spacing=1.15)
+
+    add_footer(s, "Источники: Farm Progress «High-tech or hula hoop…»; MSU CANR 2024-2025; "
+                  "банкротство PrecisionHawk дек. 2023; закрытие Gro Intelligence май-июнь 2024")
+    add_speaker_notes(s, load_speaker_notes("s08b"))
+
     # ============ s09 foundation models — simplified, 3 key claims ============
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
@@ -997,121 +1201,106 @@ def build_part1_full(prs, H):
              "дообучает на тысячах изображений вместо миллионов.",
              size=12, color=DARK_GREY, italic=True, line_spacing=1.3)
 
-    # Right (45%): 2 callouts
-    # Callout 1 — vendor concentration risk (GOLD)
-    ocean_box(s, 7.3, 1.5, 5.45, 2.6, fill=GOLD_TINT, stroke=GOLD)
+    # Right (45%): ОДИН callout (issue #340 — трим 1.5→1.0 мин, вендор-риск сжат в 1 строку)
+    # Iter2: box высота подогнана под фактический контент (было много пустоты снизу)
+    ocean_box(s, 7.3, 1.5, 5.45, 2.95, fill=LIGHT_TINT, stroke=LIGHT)
     text_box(s, 7.5, 1.65, 5.05, 0.4,
-             "Риск концентрации у вендоров",
-             size=16, bold=True, color=GOLD)
-    text_box(s, 7.5, 2.15, 5.05, 1.9,
-             "Вся индустрия L1 — на 2-3 базовых моделях\n"
-             "(IBM / NASA / ESA).\n\n"
-             "Закрытие модели = команды теряют\n"
-             "возможности одномоментно.",
-             size=13, color=DEEP, italic=True, line_spacing=1.5)
-
-    # Callout 2 — advisor architecture
-    ocean_box(s, 7.3, 4.3, 5.45, 2.6, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 7.5, 4.45, 5.05, 0.4,
              "Архитектура советника 2026",
              size=16, bold=True, color=MID)
-    text_box(s, 7.5, 4.95, 5.05, 1.9,
+    text_box(s, 7.5, 2.15, 5.05, 1.25,
              "Базовая модель (TerraMind)\n"
              "+ поиск (RAG) к локальному регулятору\n"
              "+ LLM генерация\n"
              "+ явный отказ при низкой уверенности.",
-             size=13, color=DEEP, italic=True, line_spacing=1.5)
+             size=13, color=DEEP, italic=True, line_spacing=1.4)
+    hr_line(s, 7.5, 3.55, 5.05, color=LIGHT, weight=1.0)
+    text_box(s, 7.5, 3.68, 5.05, 0.65,
+             "Риск: вся отрасль — на 2-3 моделях IBM/NASA/ESA; закрытие любой из них "
+             "одномоментно останавливает всех, кто на ней построен.",
+             size=10.5, italic=True, color=GOLD, line_spacing=1.3)
 
     add_footer(s, "Источники: IBM Research, апрель 2025; NASA Earth Observatory 2025")
     add_speaker_notes(s, load_speaker_notes("s09"))
 
-    # ============ s10 vertical farming collapse ============
+    # ============ s10 vertical farming collapse — MERGED с прежним s11 (issue #340) ============
+    # Владелец одобрил: s10 (провал как класс) + s11 (5-Why) — одна причинная цепочка,
+    # искусственно разнесённая на 2 кадра. Собраны в один: ① 3 карточки, ② компактная
+    # 5-step chain, ③ одна итоговая GOLD-плашка с числовой декомпозицией. Бывший
+    # investment-collapse chart (c10-vf-losses.png) снят — дублировал c39/c40 на s05c
+    # (cross-slide redundancy), освободившееся место ушло под ②.
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "Вертикальные фермы — провал не из-за плохого ИИ. AppHarvest, Plenty, Bowery",
-        size=22)
+        size=19)
 
-    # Top: chart
-    ocean_box(s, 0.6, 1.5, 6.3, 4.0)
-    c = ASSETS / "charts" / "c10-vf-losses.png"
-    if c.exists():
-        add_image(s, c, 0.85, 1.7, w=5.8, h=3.7)
-
-    # Right: 3 cards — с baseline counterfactuals
+    # ① 3 горизонтальные карточки
+    text_box(s, 0.6, 1.1, 12.13, 0.2, "① Три кейса — капитал и причина", size=11, bold=True, color=MID)
     cards = [
-        ("AppHarvest", "Тепличный, нерентабельный 2023", "$475M SPAC + $341M долга ≈ $816M"),
-        ("Plenty", "Compton ИИ-фабрика 19 мес → банкротство", "$940M из $1B+ raised с 2014; –99% оценки"),
-        ("Bowery", "Коллапс перед IPO, ноябрь 2024", ">$700M raised; $32M never-used Locust Grove"),
+        ("AppHarvest", "$475M SPAC + $341M долга ≈ $816M", "Chapter 11 июль 2023",
+         "OPEX отопления Кентукки + ToBRFV вирус в Морхеде", LIGHT, LIGHT_TINT),
+        ("Plenty Unlimited", "$940M из $1B+ raised с 2014", "закрыт декабрь 2024",
+         "LED energy съел AI-оптимизацию; –99% оценки ($1,9 млрд→<$15M)", GOLD, GOLD_TINT),
+        ("Bowery Farming", ">$700M raised", "ABC ноябрь 2024",
+         "Capex first, AI после; $32M never-used в Locust Grove", LIGHT, LIGHT_TINT),
     ]
-    cy = 1.5
-    for name, ev, money in cards:
-        ocean_box(s, 7.2, cy, 5.55, 1.2)
-        text_box(s, 7.4, cy + 0.1, 5.15, 0.4, name,
-                 size=15, bold=True, color=DEEP)
-        text_box(s, 7.4, cy + 0.5, 5.15, 0.4, ev,
-                 size=11, color=MID, italic=True)
-        text_box(s, 7.4, cy + 0.85, 5.15, 0.3, money,
-                 size=13, bold=True, color=GOLD)
-        cy += 1.3
+    cw3 = (12.13 - 0.3) / 3
+    cx = 0.6
+    card_y = 1.32; card_h = 1.85
+    for name, money, date, cause, color, fill in cards:
+        ocean_box(s, cx, card_y, cw3, card_h, fill=fill, stroke=color)
+        text_box(s, cx + 0.14, card_y + 0.12, cw3 - 0.28, 0.32, name, size=14, bold=True, color=DEEP)
+        text_box(s, cx + 0.14, card_y + 0.48, cw3 - 0.28, 0.32, money, size=14, bold=True,
+                 color=color if color != GOLD else GOLD)
+        text_box(s, cx + 0.14, card_y + 0.84, cw3 - 0.28, 0.24, date, size=10.5, italic=True, color=MID)
+        text_box(s, cx + 0.14, card_y + 1.12, cw3 - 0.28, 0.68, cause,
+                 size=10, italic=True, color=DARK_GREY, line_spacing=1.2)
+        cx += cw3 + 0.15
 
-    # Bottom insight
-    ocean_box(s, 0.6, 5.7, 12.13, 1.0, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 5.8, 11.6, 0.4,
-             "$1,37 млрд+ потерь, 14 банкротств 2025. Не сработала арифметика энергии.",
-             size=14, bold=True, color=DEEP)
-    text_box(s, 0.85, 6.2, 11.6, 0.45,
-             "Контроллеры микроклимата работали. Компьютерное зрение распознавало. Модель предсказывала. LED ≈ 100× энергии солнца — AP1 термодинамика > ИИ.",
-             size=12, color=DARK_GREY, italic=True, line_spacing=1.3)
-
-    add_footer(s, "Источники: TechCrunch 2025-03-24, 2024-11-04 (Bowery); Agriculture Dive 689039 (AppHarvest)")
-    add_speaker_notes(s, load_speaker_notes("s10"))
-
-    # ============ s11 5-Why thermodynamics ============
-    s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s,
-        "Пять «почему» — почему ИИ не закрыл термодинамический разрыв",
-        size=24)
-
-    # Chain of 5 steps with arrows
+    # ② Компактная цепочка «5 почему»
+    chain_y = card_y + card_h + 0.16
+    text_box(s, 0.6, chain_y, 12.13, 0.2,
+             "② Пять «почему» — от банкротства до термодинамики", size=11, bold=True, color=MID)
     steps = [
-        ("1. Почему\nзакрылась?", "Капитал\nкончился", MID),
-        ("2. Почему\nкапитал?", "Юнит-эконом.\nне работает", MID),
-        ("3. Почему\nне работает?", "Стоимость\nLED-энергии\n100× солнца", GOLD),
-        ("4. Почему\n100×?", "Закон\nтермодинамики", DEEP),
-        ("5. Может\nИИ закрыть?", "Нет:\nэффект 5-15%\nпри разрыве 100×", GOLD),
+        ("Почему закрылась?", "Капитал кончился", MID),
+        ("Почему кончился?", "Юнит-экономика не сошлась", MID),
+        ("Почему не сошлась?", "60-80% OPEX = LED-энергия", GOLD),
+        ("Почему LED так дорог?", "~100× меньше энергии, чем солнце", DEEP),
+        ("Закрыл ли это ML?", "Нет: эффект 5-15% при разрыве 100×", GOLD),
     ]
-    step_w = 2.15; step_h = 2.6; gap = 0.2
+    step_w = 2.18; step_h = 1.75; gap = 0.15
     sx = 0.6
-    sy = 1.7
+    sy = chain_y + 0.22
     for i, (q, a, color) in enumerate(steps):
         ocean_box(s, sx, sy, step_w, step_h,
                   fill=GOLD_TINT if color == GOLD else LIGHT_TINT, stroke=color)
-        text_box(s, sx + 0.1, sy + 0.15, step_w - 0.2, 0.9, q,
-                 size=12, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.2)
-        hr_line(s, sx + 0.2, sy + 1.1, step_w - 0.4, color=color, weight=1.2)
-        text_box(s, sx + 0.1, sy + 1.2, step_w - 0.2, step_h - 1.3, a,
-                 size=13, bold=(color == GOLD), color=color, align=PP_ALIGN.CENTER, line_spacing=1.25,
+        text_box(s, sx + 0.1, sy + 0.12, step_w - 0.2, 0.55, q,
+                 size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.15,
                  anchor=MSO_ANCHOR.MIDDLE)
-
+        hr_line(s, sx + 0.18, sy + 0.72, step_w - 0.36, color=color, weight=1.0)
+        text_box(s, sx + 0.1, sy + 0.8, step_w - 0.2, step_h - 0.9, a,
+                 size=11.5, bold=(color != MID), color=color, align=PP_ALIGN.CENTER, line_spacing=1.2,
+                 anchor=MSO_ANCHOR.MIDDLE)
         if i < 4:
-            add_arrow(s, sx + step_w, sy + step_h/2 - 0.15, gap, 0.3, fill=LIGHT)
+            add_arrow(s, sx + step_w, sy + step_h/2 - 0.1, gap, 0.2, fill=LIGHT)
         sx += step_w + gap
 
-    # Bottom takeaway — увеличен gap от steps (P1-4 student-sim)
-    ocean_box(s, 0.6, 4.9, 12.13, 1.9, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 5.0, 11.6, 0.5,
-             "Корневая причина: разрыв в два порядка. Никакая модель не закроет.",
-             size=18, bold=True, color=DEEP)
-    text_box(s, 0.85, 5.55, 11.6, 0.45,
-             "0,5 (солнце→LED) × 0,7 (LED→растение) × 0,3 (растение→выход) ≈ 10,5% от начала до конца. "
-             "ИИ оптимизирует знаменатель (5-15%); разрыв в числителе.",
-             size=12, color=DARK_GREY, italic=True, line_spacing=1.3)
-    text_box(s, 0.85, 6.1, 11.6, 0.6,
-             "AP1 в строгой форме: «когда ИИ оптимизирует неверно сформулированную целевую функцию — лучше не ИИ».",
-             size=12, bold=True, italic=True, color=GOLD, line_spacing=1.3)
+    # ③ Итоговая GOLD-плашка — числовая декомпозиция + AP1
+    final_y = sy + step_h + 0.18
+    final_h = 1.1
+    ocean_box(s, 0.6, final_y, 12.13, final_h, fill=GOLD_TINT, stroke=GOLD)
+    text_runs(s, 0.82, final_y + 0.14, 11.7, 0.36, [
+        {"text": "0,5 × 0,7 × 0,3 ≈ 10,5% ", "size": 19, "bold": True, "color": GOLD},
+        {"text": "end-to-end (LED × сеть × рост) против 100% у бесплатного солнца",
+         "size": 12, "italic": True, "color": DEEP},
+    ], line_spacing=1.15)
+    text_box(s, 0.82, final_y + 0.58, 11.7, 0.46,
+             "AP1 — закон термодинамики важнее ML. ML работает на знаменателе; разрыв — в числителе. "
+             "Альтернатива: открытый грунт при энергии <$0,10/кВт·ч; vertical farming — только для high-value crops.",
+             size=11.5, bold=True, color=DEEP, line_spacing=1.2)
 
-    add_footer(s, "Анализ Hannah Ritchie · журнал MDPI Sustainability, 2024")
-    add_speaker_notes(s, load_speaker_notes("s11"))
+    add_footer(s, "Источники: TechCrunch 2025-03-24, 2024-11-04; Agriculture Dive 689039; "
+                  "AgFunder Year-in-Review 2025; анализ Hannah Ritchie на основе MDPI Sustainability 2024")
+    add_speaker_notes(s, load_speaker_notes("s10"))
 
     # ============ s12 ChatGPT hallucinations ============
     # K-3 fix: добавлена настоящая Figure 1 из Tzachor et al. 2024, Nature Food
@@ -1245,44 +1434,56 @@ def build_part1_full(prs, H):
     add_footer(s, "Скриншот — Google Play listing, Plantix; данные Frontiers in Plant Science 2020 + самоотчёт Plantix")
     add_speaker_notes(s, load_speaker_notes("s13"))
 
-    # ============ s14 РФ context L1 ============
+    # ============ s14 РФ context L1 — расширено 4-м примером Terra Tech/Pixel.AI (issue #340) ============
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "L1 в РФ — ExactFarming и Прогресс Агро при индексе цифровизации 27,2",
-        size=22)
+        "L1 в РФ — ExactFarming, Прогресс Агро, Terra Tech при индексе цифровизации 27,2",
+        size=19)
 
-    # Left: chart
-    ocean_box(s, 0.6, 1.5, 6.0, 4.5)
+    # Left: chart (height matched to new, taller right column)
+    ocean_box(s, 0.6, 1.5, 6.0, 4.85)
     c = ASSETS / "charts" / "c14-rus-digi.png"
     if c.exists():
         add_image(s, c, 0.85, 1.7, w=5.5, h=4.1)
 
-    # Right: 2 cards working + 1 caveat
+    # Right: 4 compact cards (3 прежних + Terra Tech/Pixel.AI — прямой аналог Planet Labs/Descartes Labs)
     cards = [
-        ("ExactFarming", "12 700 хозяйств · 9,8 млн га", "Управление полями + мониторинг", MID),
-        ("ГК «Прогресс Агро»", "+5% рентабельности", "Внутренний замер 2024", LIGHT),
+        ("ExactFarming", "12 700 хозяйств · 9,8 млн га", "Управление полями + мониторинг", MID, LIGHT_TINT),
+        ("АгроСигнал", "мониторинг ГСМ и техники", "Automation, не AI", LIGHT, SURFACE),
+        ("ГК «Прогресс Агро»", "+5% рентабельности", "Внутренний замер 2024, не peer-review", LIGHT, LIGHT_TINT),
+        ("Terra Tech / Pixel.AI (РКС)", "ошибка ≤3,5% · 2,59 млн га Пантанал · 30 ₽/км²",
+         "Нейросеть по спутнику — аналог Planet Labs/Descartes Labs", GOLD, GOLD_TINT),
     ]
-    cy = 1.5
-    for name, key, sub, color in cards:
-        ocean_box(s, 6.8, cy, 6.0, 1.4)
-        text_box(s, 7.0, cy + 0.1, 5.7, 0.4, name,
-                 size=15, bold=True, color=color)
-        text_box(s, 7.0, cy + 0.55, 5.7, 0.4, key,
-                 size=13, bold=True, color=GOLD)
-        text_box(s, 7.0, cy + 0.95, 5.7, 0.35, sub,
-                 size=10, italic=True, color=MID)
-        cy += 1.55
+    cy = 1.5; card_h = 0.78; card_gap = 0.08
+    for name, key, sub, color, fill in cards:
+        ocean_box(s, 6.8, cy, 6.0, card_h, fill=fill, stroke=color)
+        text_box(s, 7.0, cy + 0.05, 5.6, 0.26, name,
+                 size=12.5, bold=True, color=color if color != GOLD else GOLD)
+        text_box(s, 7.0, cy + 0.33, 5.6, 0.26, key,
+                 size=11, bold=True, color=DEEP, line_spacing=1.0)
+        text_box(s, 7.0, cy + 0.59, 5.6, 0.18, sub,
+                 size=9, italic=True, color=MID, line_spacing=1.0)
+        cy += card_h + card_gap
 
-    # Bottom: AP6 inline politicial risk
-    ocean_box(s, 0.6, 6.1, 12.13, 0.8, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 6.2, 11.6, 0.4,
+    # Caveat strip — ВЕГА-Science / ЕФИС ЗСН НЕ нейросети (честная оговорка, issue #340)
+    caveat_y = cy + 0.06
+    ocean_box(s, 6.8, caveat_y, 6.0, 0.42, fill=WHITE, stroke=SOFT_GREY, stroke_pt=1.0)
+    text_box(s, 6.98, caveat_y + 0.03, 5.65, 0.36,
+             "Рядом — ВЕГА-Science (индексный NDVI-метод) и Россельхознадзор/ЕФИС ЗСН "
+             "(пороговые правила) — это не нейросети, хотя часто попадают в одну категорию «цифровизация АПК».",
+             size=7.8, italic=True, color=DARK_GREY, line_spacing=1.1, anchor=MSO_ANCHOR.MIDDLE)
+
+    # Bottom: AP6 inline political risk (height compressed slightly to keep layout inside budget)
+    ap6_y = caveat_y + 0.42 + 0.1
+    ocean_box(s, 0.6, ap6_y, 12.13, 0.62, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, ap6_y + 0.06, 11.6, 0.26,
              "AP6 — Climate FieldView вышел из РФ в 2022",
-             size=13, bold=True, color=GOLD)
-    text_box(s, 0.85, 6.55, 11.6, 0.3,
+             size=12, bold=True, color=GOLD)
+    text_box(s, 0.85, ap6_y + 0.33, 11.6, 0.26,
              "Политический риск L1: облачные сервисы с зарубежной зависимостью могут отключиться по решению вендора или санкций.",
-             size=10, color=DARK_GREY, italic=True, line_spacing=1.3)
+             size=9, color=DARK_GREY, italic=True, line_spacing=1.15)
 
-    add_footer(s, "Источники: Яков и Партнёры 2024 · ExactFarming.com · TAdviser 2022")
+    add_footer(s, "Источники: Яков и Партнёры 2024 · ExactFarming.com · TAdviser 2022 · comnews.ru 2022-07-11 (Terra Tech)")
     add_speaker_notes(s, load_speaker_notes("s14"))
 
     return prs

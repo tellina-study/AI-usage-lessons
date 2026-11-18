@@ -890,7 +890,29 @@ def chart_lines_outcome_share_per_axis(rows):
 # (across всех 7 классов, все 4 исхода) — не 100%-суммирующийся набор, а
 # "какую долю целого среза занимает именно эта группа+исход". Честный разрыв
 # сохранён: у группы вообще нет кейсов на уровне -> точка пропущена, а не 0%.
+#
+# Раунд 6 (фикс владельца, 2026-11-18): "графики по долям слишком сжаты и
+# одноцветные не читаются". Причина — все 6 линий лежат в диапазоне ~0-15%
+# (кроме "Большой ИИ — провал" до ~50%) на фиксированной шкале 0-100%, плюс
+# Классика/МЛ были слишком похожи (серый/тил) в этой тесной зоне. Фикс:
+# (а) y-автомасштаб под фактический максимум именно этого графика вместо
+# жёстких 0-100; (б) отдельная, более контрастная палитра групп ТОЛЬКО для
+# этих 3 долевых графиков (GROUP_COLORS основной/count-версии не трогается);
+# (в) своя форма маркера на группу (круг/квадрат/треугольник) — различимость
+# не только по цвету; (г) чуть толще линии и крупнее маркеры.
 # ---------------------------------------------------------------------------
+GROUP_COLORS_SHARE = {
+    "classic": "#0D47A1",  # сильный синий
+    "ml": "#EF6C00",       # сильный оранжевый
+    "bigai": "#7B1FA2",    # сильный фиолетовый/маджента
+}
+GROUP_MARKERS_SHARE = {
+    "classic": "o",   # круг
+    "ml": "s",        # квадрат
+    "bigai": "^",     # треугольник
+}
+
+
 def chart_groups_per_axis_share(rows, axis_key, out_name, title, xlabel):
     order = AXIS_ORDERS[axis_key]
     labels = AXIS_TICK_LABELS[axis_key]
@@ -898,6 +920,7 @@ def chart_groups_per_axis_share(rows, axis_key, out_name, title, xlabel):
     x = np.arange(len(order))
 
     fig, ax = plt.subplots(figsize=(10, 6.5))
+    all_values = []
     for g in GROUP_ORDER:
         for outcome, ls, ru in (("success", "-", "успех"), ("failure", "--", "провал")):
             ys = []
@@ -911,9 +934,10 @@ def chart_groups_per_axis_share(rows, axis_key, out_name, title, xlabel):
                     ys.append(cnt / denom[lvl] * 100)
             xs_plot = [xi for xi, yi in zip(x, ys) if yi is not None]
             ys_plot = [yi for yi in ys if yi is not None]
+            all_values.extend(ys_plot)
             ax.plot(
-                xs_plot, ys_plot, marker="o", markersize=6, linewidth=2.2,
-                linestyle=ls, color=GROUP_COLORS[g],
+                xs_plot, ys_plot, marker=GROUP_MARKERS_SHARE[g], markersize=7.5,
+                linewidth=2.4, linestyle=ls, color=GROUP_COLORS_SHARE[g],
                 label=f"{GROUP_LABELS[g]} — {ru}",
             )
 
@@ -921,7 +945,8 @@ def chart_groups_per_axis_share(rows, axis_key, out_name, title, xlabel):
     ax.set_xticklabels(labels, fontsize=9)
     ax.set_xlabel(xlabel)
     ax.set_ylabel("доля от всех кейсов на этом уровне, %")
-    ax.set_ylim(0, 100)
+    y_max = max(all_values) if all_values else 1.0
+    ax.set_ylim(0, y_max * 1.15)
     ax.set_title(title, fontsize=12)
     ax.grid(True, linestyle=":", alpha=0.3)
     for spine in ("top", "right"):

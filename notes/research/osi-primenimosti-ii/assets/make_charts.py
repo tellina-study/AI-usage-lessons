@@ -44,6 +44,18 @@ extreme (n=10) просто по объёму, а не по составу ис�
 (включая unclear-кейсы по ДРУГИМ осям, все 4 исхода), не только успех+провал и не только три
 именованные группы метода. Исходные count-графики НЕ удалены и НЕ изменены — обе версии стоят
 рядом в 00-rezyume.md.
+
+Раунд 5 (chart_donut_*, заменяет chart1/chart2 — bubble/scatter "карты" 2D): владелец попросил
+"карты двумерные тоже из точечных диаграмм переделай в бублики, где размер бублика - агрегированная
+метрика успешности по точкам средняя по кейсам которые туда попали". Старые chart1/chart2 рисовали
+точку на кейс (джиттер, цвет=исход) — хорошо показывали объём, но не агрегированный исход ячейки.
+Новые chart_donut_axisA_axisB / chart_donut_class_vs_uncertainty рисуют одно кольцо на ЯЧЕЙКУ сетки:
+радиус кольца = |net_score/n| (та же метрика "чистый счёт", что и в _surface_pair выше — успех=+1,
+провал=-1, частичный/неопределённый нейтральны, но входят в n), цвет кольца — RdYlGn по ЗНАКУ
+net_score/n (не только модулю), а в полом центре кольца — текст "n=XX", чтобы объём остался читаем
+даже когда размер/цвет теперь кодируют не объём, а успешность. Числа для обеих сеток (net_score/n
+по ячейке) сверены дважды двумя независимыми агентами в этой исследовательской линии и взяты как
+авторитетные (см. также `net_score_grid` выше — та же формула, тот же знаменатель).
 """
 import csv
 import random
@@ -136,6 +148,26 @@ def jitter(value, spread):
     return value + random.uniform(-spread, spread)
 
 
+def _burn_random_draws(n):
+    """Сжигает n вызовов random.uniform(), не используя результат.
+
+    Раунд 5 удалил chart1/chart2 (scatter), которые раньше потребляли
+    2*327 + 2*356 = 1366 вызовов jitter() -> random.uniform() из ОБЩЕГО
+    глобального потока `random`, засеянного один раз (random.seed(349)) на
+    весь модуль. chart3 (3D) и chart_dist_points_per_axis тоже используют
+    jitter() и раньше стартовали из состояния потока ПОСЛЕ этих 1366
+    вызовов — без этого burn их джиттер сдвинулся бы на другие случайные
+    смещения и PNG изменились бы пиксель-в-пиксель, хотя владелец явно
+    попросил оставить "остальные 15 PNG нетронутыми" (chart-3d-three-axes.png
+    входит в их число буквально по тексту задачи). random.uniform(a, b)
+    в CPython делает ровно один вызов self.random() независимо от a/b —
+    поэтому для восстановления состояния потока важно только КОЛИЧЕСТВО
+    вызовов, не их аргументы.
+    """
+    for _ in range(n):
+        random.uniform(0, 1)
+
+
 def legend_handles():
     return [
         plt.Line2D(
@@ -148,97 +180,135 @@ def legend_handles():
 
 
 # ---------------------------------------------------------------------------
-# Chart 1: ось1 (неопределённость) x ось2 (обратная связь), цвет = исход
+# Раунд 5: общий донат-рисовальщик для 2D-карт (заменяет chart1/chart2 scatter).
+# Один кольцевой маркер на ЯЧЕЙКУ сетки (x_level, y_level):
+#   - радиус кольца кодирует |avg_score| (avg_score = net_score/n по ячейке,
+#     та же формула, что в net_score_grid/_surface_pair выше), с минимальным
+#     видимым радиусом даже у near-zero ячеек;
+#   - цвет кольца — RdYlGn по ЗНАКУ avg_score (не по модулю);
+#   - в полом центре кольца — "n=XX" (счётчик кейсов, иначе объём ячейки
+#     исчезает из графика вместе с переходом от scatter к агрегату).
+# Ячейка с n=0 — без маркера вовсе (не кольцо нулевого размера).
 # ---------------------------------------------------------------------------
-def chart1(rows):
-    filtered = [
-        r for r in rows
-        if r["axis1_level"] != "unclear" and r["axis2_bucket"] != "unclear"
-    ]
-    n = len(filtered)
+from matplotlib.patches import Wedge
 
-    fig, ax = plt.subplots(figsize=(9, 7))
-    for outcome in OUTCOME_ORDER:
-        xs, ys = [], []
-        for r in filtered:
-            if r["outcome"] != outcome:
+RADIUS_MIN = 0.17
+RADIUS_MAX = 0.46
+
+
+def _score_to_radius(abs_score):
+    return RADIUS_MIN + (RADIUS_MAX - RADIUS_MIN) * abs_score
+
+
+def _draw_donut_grid(
+    rows, x_key, x_order, x_labels, y_key, y_order, y_labels,
+    xlabel, ylabel, title, out_name, x_rotation=0,
+):
+    # net_score_grid(row_key=y, col_key=x) -> grid shape (len(y_order), len(x_order));
+    # читаем как net_grid[yi][xi].
+    net_grid, n_grid = net_score_grid(rows, y_key, y_order, x_key, x_order)
+    n_total = int(n_grid.sum())
+
+    fig, ax = plt.subplots(figsize=(10.5, 9.4))
+    norm = TwoSlopeNorm(vmin=-1, vcenter=0, vmax=1)
+    cmap = plt.cm.RdYlGn
+
+    for yi in range(len(y_order)):
+        for xi in range(len(x_order)):
+            n_cell = n_grid[yi, xi]
+            if n_cell <= 0:
                 continue
-            xs.append(jitter(AXIS1_ORDINAL[r["axis1_level"]], 0.18))
-            ys.append(jitter(AXIS2_ORDINAL[r["axis2_bucket"]], 0.18))
-        alpha = 0.35 if outcome == "undetermined" else 0.55
-        zorder = 2 if outcome == "undetermined" else 3
-        ax.scatter(
-            xs, ys, s=40, c=OUTCOME_COLORS[outcome], alpha=alpha,
-            edgecolors="none", zorder=zorder,
-        )
+            avg_score = net_grid[yi, xi] / n_cell
+            r = _score_to_radius(abs(avg_score))
+            width = max(0.4 * r, 0.065)
+            color = cmap(norm(avg_score))
+            wedge = Wedge(
+                (xi + 1, yi + 1), r, 0, 360, width=width,
+                facecolor=color, edgecolor="#333333", linewidth=0.6, zorder=3,
+            )
+            ax.add_patch(wedge)
+            ax.text(
+                xi + 1, yi + 1, f"n={int(n_cell)}",
+                ha="center", va="center", fontsize=7.3, color="#222222", zorder=4,
+            )
 
-    ax.set_xticks([1, 2, 3, 4])
-    ax.set_xticklabels(AXIS1_LABELS[1:])
-    ax.set_xlabel("Неопределённость задачи")
-    ax.set_yticks([1, 2, 3, 4])
-    ax.set_yticklabels(AXIS2_LABELS[1:])
-    ax.set_ylabel("Время обратной связи")
-    ax.set_xlim(0.5, 4.5)
-    ax.set_ylim(0.5, 4.5)
-    ax.set_title(f"Карта {n} кейсов по двум осям — цвет: исход")
-    ax.grid(True, linestyle=":", alpha=0.35, zorder=0)
-    ax.legend(handles=legend_handles(), loc="upper left", frameon=True, fontsize=9)
+    ax.set_xticks(range(1, len(x_order) + 1))
+    ax.set_xticklabels(x_labels, rotation=x_rotation, ha="right" if x_rotation else "center")
+    ax.set_xlabel(xlabel)
+    ax.set_yticks(range(1, len(y_order) + 1))
+    ax.set_yticklabels(y_labels)
+    ax.set_ylabel(ylabel)
+    ax.set_xlim(0.4, len(x_order) + 0.6)
+    ax.set_ylim(0.4, len(y_order) + 0.6)
+    ax.set_aspect("equal")
+    ax.grid(True, linestyle=":", alpha=0.3, zorder=0)
+    ax.set_title(title, fontsize=12)
+
+    mappable = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
+    mappable.set_array(net_grid)
+    cbar = fig.colorbar(mappable, ax=ax, shrink=0.75, pad=0.03)
+    cbar.set_label("средний балл по кейсам ячейки (−1 провал … +1 успех)", fontsize=8)
+
+    # Главная сетка данных отведена в верхние ~70% холста (bottom=0.30 ниже);
+    # нижняя полоса целиком свободна от данных (ось X + подпись оси там же,
+    # выше этой полосы) — туда ставим размерную легенду и подпись-сноску,
+    # без риска наложиться на кольца/colorbar/подпись оси X.
+    fig.subplots_adjust(left=0.14, right=0.98, top=0.93, bottom=0.30)
+
+    # Размерная легенда — 3 эталонных кольца (|avg_score| = 0.2 / 0.6 / 1.0),
+    # отдельная мини-ось в правом нижнем углу, вне области данных.
+    leg_ax = fig.add_axes([0.66, 0.02, 0.30, 0.14])
+    leg_ax.set_xlim(0, 3)
+    leg_ax.set_ylim(-0.6, 0.8)
+    leg_ax.axis("off")
+    leg_ax.set_title("размер кольца = |балл|", fontsize=7.5, pad=2)
+    for i, val in enumerate([0.2, 0.6, 1.0]):
+        r = _score_to_radius(val)
+        w = max(0.4 * r, 0.065)
+        leg_ax.add_patch(
+            Wedge((i * 1 + 0.5, 0.2), r, 0, 360, width=w,
+                  facecolor="#AAAAAA", edgecolor="#333333", linewidth=0.5)
+        )
+        leg_ax.text(i * 1 + 0.5, -0.5, f"{val:.1f}", ha="center", fontsize=7.5)
+
     fig.text(
-        0.5, 0.01,
-        f"n={n} из 421 (94 исключены — 'unclear' хотя бы на одной из осей)",
-        ha="center", fontsize=8, color="#555555",
+        0.5, 0.19,
+        f"n={n_total} из 421 ('unclear' хотя бы на одной из двух осей исключены). Балл = "
+        "(успех − провал)/n по ячейке; частичный/неопределённый — нейтральны, но входят в n.",
+        ha="center", fontsize=7.5, color="#555555",
     )
-    fig.tight_layout(rect=(0, 0.03, 1, 1))
-    fig.savefig(HERE / "chart-scatter-axisA-axisB.png", dpi=150)
+    fig.savefig(HERE / out_name, dpi=150)
     plt.close(fig)
-    print("chart1 n =", n)
+    print(out_name, "n_total =", n_total)
 
 
 # ---------------------------------------------------------------------------
-# Chart 2: класс метода (ось3) x неопределённость (ось1), цвет = исход
+# Chart 1 (раунд 5, донат): ось1 (неопределённость, x) x ось2 (обратная связь, y)
 # ---------------------------------------------------------------------------
-def chart2(rows):
-    filtered = [
-        r for r in rows
-        if r["axis1_level"] != "unclear" and r["axis3_class"] != "unclear"
-    ]
-    n = len(filtered)
-
-    fig, ax = plt.subplots(figsize=(9, 7))
-    for outcome in OUTCOME_ORDER:
-        xs, ys = [], []
-        for r in filtered:
-            if r["outcome"] != outcome:
-                continue
-            xs.append(jitter(AXIS3_ORDINAL[r["axis3_class"]], 0.22))
-            ys.append(jitter(AXIS1_ORDINAL[r["axis1_level"]], 0.18))
-        alpha = 0.35 if outcome == "undetermined" else 0.55
-        zorder = 2 if outcome == "undetermined" else 3
-        ax.scatter(
-            xs, ys, s=40, c=OUTCOME_COLORS[outcome], alpha=alpha,
-            edgecolors="none", zorder=zorder,
-        )
-
-    ax.set_xticks(range(1, 8))
-    ax.set_xticklabels(AXIS3_ORDER, rotation=35, ha="right")
-    ax.set_xlabel("Класс метода")
-    ax.set_yticks([1, 2, 3, 4])
-    ax.set_yticklabels(AXIS1_LABELS[1:])
-    ax.set_ylabel("Неопределённость задачи")
-    ax.set_xlim(0.4, 7.6)
-    ax.set_ylim(0.5, 4.5)
-    ax.set_title("Класс метода × неопределённость — где исчезает классика, где гуще красный")
-    ax.grid(True, linestyle=":", alpha=0.35, zorder=0)
-    ax.legend(handles=legend_handles(), loc="upper left", frameon=True, fontsize=9)
-    fig.text(
-        0.5, 0.01,
-        f"n={n} из 421 (65 исключены — 'unclear' хотя бы на одной из осей)",
-        ha="center", fontsize=8, color="#555555",
+def chart_donut_axisA_axisB(rows):
+    _draw_donut_grid(
+        rows,
+        x_key="axis1_level", x_order=AXIS_ORDERS["axis1_level"], x_labels=AXIS1_LABELS[1:],
+        y_key="axis2_bucket", y_order=AXIS_ORDERS["axis2_bucket"], y_labels=AXIS2_LABELS[1:],
+        xlabel="Неопределённость задачи", ylabel="Время обратной связи",
+        title="Средний балл по кейсам (+1 успех / −1 провал) — размер и цвет кольца",
+        out_name="chart-donut-axisA-axisB.png",
     )
-    fig.tight_layout(rect=(0, 0.05, 1, 1))
-    fig.savefig(HERE / "chart-scatter-class-vs-uncertainty.png", dpi=150)
-    plt.close(fig)
-    print("chart2 n =", n)
+
+
+# ---------------------------------------------------------------------------
+# Chart 2 (раунд 5, донат): класс метода (ось3, x) x неопределённость (ось1, y)
+# ---------------------------------------------------------------------------
+def chart_donut_class_vs_uncertainty(rows):
+    _draw_donut_grid(
+        rows,
+        x_key="axis3_class", x_order=AXIS3_ORDER, x_labels=AXIS3_ORDER,
+        y_key="axis1_level", y_order=AXIS_ORDERS["axis1_level"], y_labels=AXIS1_LABELS[1:],
+        xlabel="Класс метода", ylabel="Неопределённость задачи",
+        title="Класс метода × неопределённость — средний балл по кейсам, размер и цвет кольца",
+        out_name="chart-donut-class-vs-uncertainty.png",
+        x_rotation=35,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -996,8 +1066,9 @@ def chart_groups_axis4_blastradius_share(rows):
 
 if __name__ == "__main__":
     rows = load_rows()
-    chart1(rows)
-    chart2(rows)
+    chart_donut_axisA_axisB(rows)
+    chart_donut_class_vs_uncertainty(rows)
+    _burn_random_draws(1366)  # см. docstring _burn_random_draws — сохраняет chart3/dist нетронутыми
     chart3(rows)
     chart_surface_axisA_axisB(rows)
     chart_surface_axisA_axisC(rows)

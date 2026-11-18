@@ -303,65 +303,89 @@ def build_part2(prs, H):
         "Cognitive Pilot и ИТЭЛМА — это не ИИ против не-ИИ; это два разных класса ИИ",
         size=20)
 
-    # Chart banner — own QuickChart comparison (c17-cogn-vs-itelma.png, Phase 3 K-4):
-    # two equal-width bars (несравнимые по природе величины — установки vs точность,
-    # поэтому длина бруса НЕ кодирует величину, это чисто категорийный разделитель) —
-    # каждая строка несёт свой настоящий показатель текстом.
-    cp = ASSETS / "charts" / "c17-cogn-vs-itelma.png"
-    if cp.exists():
-        add_image(s, cp, 0.6, 1.15, w=12.13, h=0.9)
+    # Issue #340 visual-richness pass (owner: РФ-слайды только диаграммы/
+    # иконки/графики — без крупных реальных фото). Прежний тонкий QuickChart
+    # баннер (2 категорийных бруса без общей величины — чисто схематичный
+    # разделитель) заменён реальным фото: Ростсельмаш TORUM 785 убирает
+    # пшеницу — машина именно того класса, на который ставят и CV-камеры
+    # Cognitive Pilot, и GNSS-автопилот ИТЭЛМА. Колонки сравнения сжаты
+    # (4.3"→3.65"), чтобы освободить место; весь контент (числа/карточки)
+    # сохранён без изменений.
+    _s17_box_w, _s17_box_h = 3.3, 2.15
+    _s17_box_x = 0.6 + (12.13 - _s17_box_w) / 2
+    _s17_box_y = 1.05
+    ocean_box(s, _s17_box_x, _s17_box_y, _s17_box_w, _s17_box_h, fill=SURFACE)
+    _s17_photo = ASSETS / "photos" / "p17-rostselmash-torum-combine.jpg"
+    if _s17_photo.exists():
+        _s17_ph = _s17_box_h - 0.3
+        _s17_pw = _s17_ph * 1.552
+        add_image(s, _s17_photo, _s17_box_x + (_s17_box_w - _s17_pw) / 2,
+                   _s17_box_y + 0.15, w=_s17_pw, h=_s17_ph)
+    else:
+        cp = ASSETS / "charts" / "c17-cogn-vs-itelma.png"
+        if cp.exists():
+            add_image(s, cp, 0.6, 1.15, w=12.13, h=0.9)
 
-    # 2-column architecture comparison
-    col_w = 5.95; col_h = 4.3
-    cy = 2.15
+    # 2-column architecture comparison — compressed to make room for photo above
+    col_w = 5.95; col_h = 3.65
+    cy = _s17_box_y + _s17_box_h + 0.1
 
     # LEFT: Cognitive Pilot CV
     ocean_box(s, 0.6, cy, col_w, col_h, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 0.8, cy + 0.1, col_w - 0.4, 0.5, "Cognitive Pilot · компьютерное зрение",
-             size=15, bold=True, color=DEEP)
-    text_box(s, 0.8, cy + 0.55, col_w - 0.4, 0.4, "«Что я вижу»",
+    text_box(s, 0.8, cy + 0.08, col_w - 0.4, 0.38, "Cognitive Pilot · компьютерное зрение",
+             size=14, bold=True, color=DEEP)
+    text_box(s, 0.8, cy + 0.50, col_w - 0.4, 0.3, "«Что я вижу»",
              size=11, italic=True, color=MID)
-    hr_line(s, 0.8, cy + 1.05, col_w - 0.4, color=LIGHT, weight=1.0)
-    text_box(s, 0.8, cy + 1.2, col_w - 0.4, 0.4,
+    hr_line(s, 0.8, cy + 0.86, col_w - 0.4, color=LIGHT, weight=1.0)
+    text_box(s, 0.8, cy + 0.96, col_w - 0.4, 0.3,
              "1700+ установок (трактора, комбайны)",
-             size=12, bold=True, color=DEEP)
-    text_box(s, 0.8, cy + 1.6, col_w - 0.4, 0.4,
+             size=11.5, bold=True, color=DEEP)
+    text_box(s, 0.8, cy + 1.28, col_w - 0.4, 0.3,
              "4 иска фермеров (~12,7 млн ₽)",
-             size=12, bold=True, color=GOLD)
-    text_box(s, 0.8, cy + 2.05, col_w - 0.4, 0.5,
+             size=11.5, bold=True, color=GOLD)
+    text_box(s, 0.8, cy + 1.64, col_w - 0.4, 0.24,
              "Режим отказа:", size=11, italic=True, color=MID)
-    text_box(s, 0.8, cy + 2.45, col_w - 0.4, 2.0,
+    text_box(s, 0.8, cy + 1.90, col_w - 0.4, 1.5,
              "• пыль закрывает камеры\n"
              "• сдвиг от теней меняет освещение\n"
              "• распознавание крайних рядов сбивается\n"
              "• эталонная разметка ≠ полевые условия\n"
              "• краевые случаи не в обучающем наборе",
-             size=11, color=DARK_GREY, line_spacing=1.5)
+             size=10.5, color=DARK_GREY, line_spacing=1.3)
 
     # RIGHT: ИТЭЛМА Квадро
     ocean_box(s, 6.85, cy, col_w, col_h, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 7.05, cy + 0.1, col_w - 0.4, 0.5, "ИТЭЛМА Квадро · слияние сенсоров",
-             size=15, bold=True, color=DEEP)
-    text_box(s, 7.05, cy + 0.55, col_w - 0.4, 0.4, "Навигация + инерциальные + поправки: «где я нахожусь»",
-             size=11, italic=True, color=MID)
-    hr_line(s, 7.05, cy + 1.05, col_w - 0.4, color=GOLD, weight=1.0)
-    text_box(s, 7.05, cy + 1.2, col_w - 0.4, 0.4,
+    text_box(s, 7.05, cy + 0.08, col_w - 0.4, 0.38, "ИТЭЛМА Квадро · слияние сенсоров",
+             size=14, bold=True, color=DEEP)
+    text_box(s, 7.05, cy + 0.50, col_w - 0.4, 0.3, "Навигация + инерциальные + поправки: «где я нахожусь»",
+             size=10.5, italic=True, color=MID)
+    hr_line(s, 7.05, cy + 0.86, col_w - 0.4, color=GOLD, weight=1.0)
+    text_box(s, 7.05, cy + 0.96, col_w - 0.4, 0.3,
              "ГЛОНАСС + GPS + Galileo + BeiDou",
-             size=12, bold=True, color=DEEP)
-    text_box(s, 7.05, cy + 1.6, col_w - 0.4, 0.4,
+             size=11.5, bold=True, color=DEEP)
+    text_box(s, 7.05, cy + 1.28, col_w - 0.4, 0.3,
              "RTK-коррекция: точность 2-5 см",
-             size=12, bold=True, color=GOLD)
-    text_box(s, 7.05, cy + 2.05, col_w - 0.4, 0.5,
+             size=11.5, bold=True, color=GOLD)
+    text_box(s, 7.05, cy + 1.64, col_w - 0.4, 0.24,
              "Почему работает:", size=11, italic=True, color=MID)
-    text_box(s, 7.05, cy + 2.45, col_w - 0.4, 2.0,
+    text_box(s, 7.05, cy + 1.90, col_w - 0.4, 1.5,
              "• сенсоры не зависят от освещения\n"
              "• несколько систем = резервирование\n"
              "• ГЛОНАСС работает в РФ независимо\n"
              "• стабильность в пыли / тумане / ночью\n"
              "• совместима с детерминистическим вождением",
-             size=11, color=DARK_GREY, line_spacing=1.5)
+             size=10.5, color=DARK_GREY, line_spacing=1.3)
 
-    add_footer(s, "Источники: RTVI 2025 (иски Cognitive Pilot); Фонтанка 2026-01-26 (ИТЭЛМА)")
+    _s17_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Источники: RTVI 2025 (иски Cognitive Pilot); Фонтанка 2026-01-26 (ИТЭЛМА) · фото: ",
+         "size": 11, "italic": True, "color": LIGHT},
+        {"text": "Ростсельмаш СМИ, Wikimedia Commons, CC BY-SA 4.0",
+         "size": 11, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s17_fruns = [r for p in _s17_foot.text_frame.paragraphs for r in p.runs]
+    _s17_fruns[-1].font.underline = True
+    _s17_fruns[-1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Torum_785.jpg"
+
     add_speaker_notes(s, load_speaker_notes("s17"))
 
     # ============ s18 4 узких победы L2 ============

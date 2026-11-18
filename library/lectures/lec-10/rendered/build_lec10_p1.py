@@ -78,13 +78,23 @@ def build_part1(prs, H):
     add_speaker_notes(s, load_speaker_notes("s01"))
 
     # ============== s02 cover ==============
+    # Issue #340 visual-richness pass (owner: intro — только диаграммы/иконки,
+    # без крупных реальных фото). Hero photo заменяет абстрактную декоративную
+    # «10» (Lec-9 hero_cover precedent, deckkit cover(): фото + gold accent bar,
+    # БЕЗ decorative lecture-number, когда есть реальное фото) — 6-tier Tier 2
+    # (Wikimedia Commons), ~39% площади кадра.
     s = blank(prs); set_slide_bg(s, WHITE)
 
-    # Decorative «10» outline — huge, left
-    text_box(s, 0.0, 0.5, 6.5, 7.0, "10",
-             size=400, bold=True, color=COVER_OUTLINE,
-             align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.MIDDLE,
-             font=H["FONT_HEAD"], line_spacing=0.9)
+    hero_p = ASSETS / "photos" / "p02-cover-drone-strawberry-field.jpg"
+    if hero_p.exists():
+        add_image(s, hero_p, 0.5, 0.6, w=5.9, h=6.3)
+    else:
+        # Fallback — ТОЛЬКО если источник отсутствует (не mock, честный gap):
+        # прежняя декоративная «10» на случай отсутствия файла при сборке.
+        text_box(s, 0.0, 0.5, 6.5, 7.0, "10",
+                 size=400, bold=True, color=COVER_OUTLINE,
+                 align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.MIDDLE,
+                 font=H["FONT_HEAD"], line_spacing=0.9)
 
     # Meta top right
     text_box(s, 6.0, 1.5, 6.8, 0.5,
@@ -101,6 +111,9 @@ def build_part1(prs, H):
              "От поля к полке: пять уровней лестницы\nи пять анти-ИИ критериев",
              size=20, italic=True, color=LIGHT, line_spacing=1.3)
 
+    # Gold accent bar — repeated-element consistency with Lec-9 hero_cover
+    filled_rect(s, 6.0, 5.78, 1.6, 0.07, GOLD)
+
     # Duration
     text_box(s, 6.0, 6.0, 6.8, 0.5, "вопросы и ответы в конце",
              size=18, italic=True, color=LIGHT)
@@ -109,6 +122,20 @@ def build_part1(prs, H):
     icon_p = ASSETS / "icons" / "sprout-96.png"
     if icon_p.exists():
         add_image(s, icon_p, 11.7, 6.4, w=0.85, h=0.85)
+
+    # Photo provenance — real hyperlink, НЕ подпись под фото (О18, #229):
+    # нет footer на cover до этого фото, добавляем минимальную строку только
+    # под provenance (12pt italic, LIGHT), r.hyperlink.address проверяем в XML.
+    _prov = text_runs(s, 0.5, 6.95, 5.9, 0.3, [
+        {"text": "Фото: ", "size": 10.5, "italic": True, "color": LIGHT},
+        {"text": "UAV-IQ, Wikimedia Commons, CC BY-SA 4.0",
+         "size": 10.5, "italic": True, "color": LIGHT},
+    ])
+    _prov_runs = [r for p in _prov.text_frame.paragraphs for r in p.runs]
+    _prov_runs[-1].font.underline = True
+    _prov_runs[-1].hyperlink.address = (
+        "https://commons.wikimedia.org/wiki/File:UAV-IQ_Conducting_Drone_"
+        "Biological_Control_Operations_in_California.jpg")
 
     add_speaker_notes(s,
         "Это титульный слайд десятой лекции — седьмой отраслевой главы курса. "
@@ -163,32 +190,56 @@ def build_part1_full(prs, H):
     SECTIONS = H["SECTIONS"]
 
     # ============ s03 lecture-map ============
+    # Issue #340 visual-richness pass — owner: интро только диаграммы/иконки,
+    # без крупных реальных фото. 5 карточек L1-L5 получают превью-фото своего
+    # раздела (переиспользование уже акклиматизированных CC-фото этой же
+    # деки — divider hero для s06/s19/s22/s27/s36 — forward-teaser, разнесён
+    # на десятки слайдов от полноразмерного hero, честный повтор, не mock).
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s, "Карта лекции — лестница пяти уровней от поля к полке", size=26)
 
-    # 7 horizontal cards
+    # 7 horizontal cards; photo=(filename, aspect_w/h) для L1-L5, None для 0/4-bis
     cards = [
-        ("0. Открытие", "Зацепка + ось + глоссарий", ""),
-        ("1. L1 Поле", "Открытая биология", "5 кейсов · 3 провала"),
-        ("2. L2 Робот", "Специализация > универсальность", "4 кейса · 3 провала"),
-        ("3. L3 Животное", "Полузакрытая среда, особь", "4 кейса · 3 урока"),
-        ("4. L4 Цепочка", "Агентный ИИ лидер", "4 кейса · 2 провала"),
-        ("4-bis. Среда", "Связь · привязка · регуляторика", "3 sub-блока"),
-        ("5. L5 Полка", "+ 5 критериев + закрытие", "L5 + 5 AP + чек-лист"),
+        ("0. Открытие", "Зацепка + ось + глоссарий", "", None),
+        ("1. L1 Поле", "Открытая биология", "5 кейсов · 3 провала",
+         ("p06-crop-sprayer-field-16x9.jpg", 1.778)),
+        ("2. L2 Робот", "Специализация > универсальность", "4 кейса · 3 провала",
+         ("p16-laserweeder-g2-real.jpg", 1.777)),
+        ("3. L3 Животное", "Полузакрытая среда, особь", "4 кейса · 3 урока",
+         ("p22-cow-eartag-milking-robot.jpg", 1.333)),
+        ("4. L4 Цепочка", "Агентный ИИ лидер", "4 кейса · 2 провала",
+         ("p27-grain-terminal-halifax.jpg", 1.333)),
+        ("4-bis. Среда", "Связь · привязка · регуляторика", "3 sub-блока", None),
+        ("5. L5 Полка", "+ 5 критериев + закрытие", "L5 + 5 AP + чек-лист",
+         ("p36-supermarket-shelf-aisle.jpg", 1.333)),
     ]
     n = len(cards)
     col_w = 1.72; col_h = 2.7; gap = 0.06
     total_w = n * col_w + (n - 1) * gap
     start_x = (13.333 - total_w) / 2
     y = 1.8
-    for i, (title, desc, dur) in enumerate(cards):
+    for i, (title, desc, dur, photo) in enumerate(cards):
         x = start_x + i * (col_w + gap)
         ocean_box(s, x, y, col_w, col_h)
-        text_box(s, x + 0.1, y + 0.15, col_w - 0.2, 0.55, title,
-                 size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.1)
-        text_box(s, x + 0.1, y + 0.85, col_w - 0.2, 1.3, desc,
-                 size=10, color=MID, italic=True, line_spacing=1.2,
-                 align=PP_ALIGN.CENTER)
+        if photo:
+            fname, ar = photo
+            thumb_h = 0.78
+            thumb_w = min(col_w - 0.2, thumb_h * ar)
+            thumb_h2 = thumb_w / ar
+            p = ASSETS / "photos" / fname
+            if p.exists():
+                add_image(s, p, x + (col_w - thumb_w) / 2, y + 0.08, w=thumb_w, h=thumb_h2)
+            text_box(s, x + 0.1, y + 0.92, col_w - 0.2, 0.3, title,
+                     size=11.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.0)
+            text_box(s, x + 0.1, y + 1.24, col_w - 0.2, 1.05, desc,
+                     size=9.5, color=MID, italic=True, line_spacing=1.15,
+                     align=PP_ALIGN.CENTER)
+        else:
+            text_box(s, x + 0.1, y + 0.15, col_w - 0.2, 0.55, title,
+                     size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.1)
+            text_box(s, x + 0.1, y + 0.85, col_w - 0.2, 1.3, desc,
+                     size=10, color=MID, italic=True, line_spacing=1.2,
+                     align=PP_ALIGN.CENTER)
         if dur:
             text_box(s, x + 0.1, y + col_h - 0.45, col_w - 0.2, 0.3, dur,
                      size=10, italic=True, color=LIGHT, bold=True,
@@ -203,6 +254,27 @@ def build_part1_full(prs, H):
              "Где на лестнице L1→L5 ИИ работает, где ломается — и какой класс\n"
              "решения / альтернатива применимы на каждой ступени?",
              size=18, italic=True, color=DEEP, line_spacing=1.3)
+
+    # Photo provenance (5 превью-фото L1-L5) — real hyperlinks, не подписи
+    # под карточками (О18, #229); полные источники — на hero-слайдах своих
+    # разделов (s06/s19/s22/s27/s36) + assets/photos/*.url.
+    _s03_sources = [
+        ("L1: ", "Geograph/Wikimedia CC BY-SA 2.0", "https://commons.wikimedia.org/wiki/File:Crop_sprayer_-_geograph.org.uk_-_3038217.jpg"),
+        ("  ·  L2: ", "carbonrobotics.com", "https://www.carbonrobotics.com/laserweeder-g2"),
+        ("  ·  L3: ", "Wikimedia, CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Holstein_Friesian_cows_queuing_for_milking_in_an_automatic_milking_system_in_Bron%C3%B3w.jpg"),
+        ("  ·  L4: ", "Wikimedia, CC BY 4.0", "https://commons.wikimedia.org/wiki/File:Bulk_carrier_at_Halifax_Grain_Elevator.jpg"),
+        ("  ·  L5: ", "Wikimedia, CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Aisle_in_L_Intermarche_supermarket_in_Quebec_City.jpg"),
+    ]
+    _runs = []
+    for prefix, label, _url in _s03_sources:
+        _runs.append({"text": prefix, "size": 10, "italic": True, "color": LIGHT})
+        _runs.append({"text": label, "size": 10, "italic": True, "color": LIGHT})
+    _tb03 = text_runs(s, 0.6, 7.05, 12.13, 0.3, _runs)
+    _flat = [r for p in _tb03.text_frame.paragraphs for r in p.runs]
+    # Каждый второй run (нечётный индекс) — гиперссылка на источник
+    for idx, (_prefix, _label, _url) in enumerate(_s03_sources):
+        _flat[idx * 2 + 1].font.underline = True
+        _flat[idx * 2 + 1].hyperlink.address = _url
 
     add_speaker_notes(s, load_speaker_notes("s03"))
 
@@ -222,7 +294,11 @@ def build_part1_full(prs, H):
              "Промышленное применение зрелое.",
              size=12, color=DARK_GREY, italic=True, line_spacing=1.3)
 
-    ocean_box(s, 0.6, 4.1, 5.95, 2.0)
+    # Issue #340 visual-richness пass: box расширен вниз (прежде заканчивался
+    # на 6.1", ниже было ~1.3" свободного места до края кадра — footer на s04
+    # не стоит) — один реальный визуальный якорь (open-environment ключевая
+    # ось лекции) вместо чисто текстовой карточки.
+    ocean_box(s, 0.6, 4.1, 5.95, 2.8)
     text_box(s, 0.85, 4.25, 5.45, 0.4, "Открытая среда (open-environment)",
              size=18, bold=True, color=DEEP)
     text_box(s, 0.85, 4.65, 5.45, 1.4,
@@ -230,6 +306,11 @@ def build_part1_full(prs, H):
              "Погода, переменное освещение, пыль, тени. ИИ работает в узких задачах. "
              "Универсальная «автономная ферма» — банкротится.",
              size=12, color=DARK_GREY, italic=True, line_spacing=1.3)
+    _s04_photo = ASSETS / "photos" / "p14-wheat-combine-novosibirsk.jpg"
+    if _s04_photo.exists():
+        _s04_th = 0.68
+        _s04_tw = _s04_th * 1.501
+        add_image(s, _s04_photo, 0.85 + 5.45 - _s04_tw, 6.08, w=_s04_tw, h=_s04_th)
 
     # RIGHT: 5 L4 terms — gold accent on first item (AP1 P1-presentation)
     text_box(s, 6.85, 1.5, 5.95, 0.4, "5 терминов цепочки поставок",
@@ -251,6 +332,15 @@ def build_part1_full(prs, H):
         text_box(s, 9.2, term_y + 0.08, 3.5, 0.6, defn,
                  size=10, color=MID, italic=True, line_spacing=1.25)
         term_y += 0.85
+
+    _s04_prov = text_runs(s, 0.6, 7.05, 12.13, 0.3, [
+        {"text": "Фото (открытая среда): ", "size": 10, "italic": True, "color": LIGHT},
+        {"text": "Vladislav Nekrasov, Wikimedia Commons, CC BY 4.0",
+         "size": 10, "italic": True, "color": LIGHT},
+    ])
+    _s04_runs = [r for p in _s04_prov.text_frame.paragraphs for r in p.runs]
+    _s04_runs[-1].font.underline = True
+    _s04_runs[-1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Колос_и_комбайн.jpg"
 
     add_speaker_notes(s, load_speaker_notes("s04"))
 
@@ -291,22 +381,45 @@ def build_part1_full(prs, H):
 
     ladder_h = 5 * step_h + 4 * gap  # == 3.3
 
-    # Right-side axis indicator — matched height to ladder
+    # Right-side axis indicator — matched height to ladder.
+    # Issue #340 visual-richness pass: 4 раздельных hdr/desc пар сведены в
+    # один компактный список (тот же текст, плотнее раскладка), освобождая
+    # ~1.6" под единственное реальное фото этого кадра (owner: s05 — один из
+    # четырёх «ядро введения» слайдов, где иллюстрация обязательна даже при
+    # максимальной плотности keystone-кадра).
     ocean_box(s, 10.3, start_y, 2.4, ladder_h, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 10.45, start_y + 0.06, 2.1, 0.3, "↑ движение",
+    text_box(s, 10.45, start_y + 0.04, 2.1, 0.22, "↑ движение",
              size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.0)
+    _s05_photo = ASSETS / "photos" / "p33-john-deere-starfire-gps.jpg"
+    if _s05_photo.exists():
+        _s05_pw = 2.1
+        _s05_ph = _s05_pw / 1.333
+        add_image(s, _s05_photo, 10.3 + (2.4 - _s05_pw) / 2, start_y + 0.32,
+                   w=_s05_pw, h=_s05_ph)
+        _list_y = start_y + 0.32 + _s05_ph + 0.08
+    else:
+        _list_y = start_y + 0.46
     arrows_text = [
-        ("↑ контролируемость", "среды"),
-        ("↑ ROI", "растёт"),
-        ("↑ предсказуемость", "результата"),
-        ("↓ биология", "непредсказуемость падает"),
+        ("↑ контролируемость среды", GOLD),
+        ("↑ ROI растёт", GOLD),
+        ("↑ предсказуемость результата", GOLD),
+        ("↓ биология — непредсказуемость падает", DARK_GREY),
     ]
-    ay = start_y + 0.46
-    for hdr, dsc in arrows_text:
-        text_box(s, 10.4, ay, 2.2, 0.24, hdr, size=11, bold=True, color=GOLD)
-        text_box(s, 10.4, ay + 0.23, 2.2, 0.32, dsc,
-                 size=10, color=DARK_GREY, italic=True, line_spacing=1.0)
-        ay += 0.68
+    _arrow_runs = []
+    for i, (line, color) in enumerate(arrows_text):
+        _arrow_runs.append({"text": line, "size": 9.5, "bold": True, "color": color,
+                             "newpara": i > 0})
+    text_runs(s, 10.4, _list_y, 2.2, ladder_h - (_list_y - start_y), _arrow_runs,
+              line_spacing=1.3)
+    if _s05_photo.exists():
+        _s05_prov_panel = text_runs(s, 10.4, start_y + ladder_h - 0.22, 2.2, 0.2, [
+            {"text": "Фото: ", "size": 7.5, "italic": True, "color": DARK_GREY},
+            {"text": "John Deere / Wikimedia, CC BY-SA 3.0",
+             "size": 7.5, "italic": True, "color": DARK_GREY},
+        ])
+        _s05_pp_runs = [r for p in _s05_prov_panel.text_frame.paragraphs for r in p.runs]
+        _s05_pp_runs[-1].font.underline = True
+        _s05_pp_runs[-1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:John_Deere_8295_R_with_StarFire_receiver.jpg"
 
     # ---- РЯД 1 — измеренная тройка (3 плашки) ----
     row1_y = start_y + ladder_h + 0.12
@@ -360,25 +473,29 @@ def build_part1_full(prs, H):
              "Лестница уровней — наша линза. Стадии ниже — первичны и существовали до неё",
              size=11, italic=True, color=MID)
 
-    def stage_row(label, items, y, icon_w=0.34):
+    # Issue #340 visual-richness pass: icon-row высота слегка уплотнена
+    # (0.68"→0.58", текст по-прежнему 1-2 строки умещается свободно), чтобы
+    # высвободить место под реальное фото в ряду «Животноводство» ниже —
+    # owner-приоритет (s05a — «ядро введения», иллюстрация обязательна).
+    def stage_row(label, items, y, icon_w=0.34, box_h=0.58):
         text_box(s, 0.6, y, 12.13, 0.2, label, size=11, bold=True, color=MID)
         row_y = y + 0.22
         n = len(items)
         bw = (12.13 - (n - 1) * 0.32) / n
         bx = 0.6
         for i, (icon, name, gold) in enumerate(items):
-            ocean_box(s, bx, row_y, bw, 0.68,
+            ocean_box(s, bx, row_y, bw, box_h,
                       fill=GOLD_TINT if gold else LIGHT_TINT, stroke=GOLD if gold else LIGHT)
             ip = ASSETS / "icons" / f"{icon}-48.png"
             if ip.exists():
-                add_image(s, ip, bx + 0.1, row_y + 0.14, w=icon_w, h=icon_w)
-            text_box(s, bx + 0.1 + icon_w + 0.08, row_y + 0.06, bw - icon_w - 0.26, 0.56, name,
-                     size=10.5, bold=True, color=GOLD if gold else DEEP, line_spacing=1.08,
+                add_image(s, ip, bx + 0.1, row_y + 0.11, w=icon_w, h=icon_w)
+            text_box(s, bx + 0.1 + icon_w + 0.08, row_y + 0.04, bw - icon_w - 0.26, box_h - 0.08, name,
+                     size=10.5, bold=True, color=GOLD if gold else DEEP, line_spacing=1.05,
                      anchor=MSO_ANCHOR.MIDDLE)
             if i < n - 1:
-                add_arrow(s, bx + bw + 0.02, row_y + 0.24, 0.28, 0.2, fill=LIGHT)
+                add_arrow(s, bx + bw + 0.02, row_y + box_h / 2 - 0.1, 0.28, 0.2, fill=LIGHT)
             bx += bw + 0.32
-        return row_y + 0.68
+        return row_y + box_h
 
     row1_end = stage_row("Растениеводство — поле", [
         ("sprout", "Севооборот и подготовка почвы", False),
@@ -387,14 +504,26 @@ def build_part1_full(prs, H):
         ("tractor", "Полевые операции + автономная техника", False),
     ], 1.4)
 
-    row2_y = row1_end + 0.14
+    # «Животноводство» — ряд расширен под реальное фото (newborn calf + cows,
+    # переиспользовано с s26 L3 РФ — честный forward-teaser, 20 слайдов между
+    # использованиями, не mock) слева + описание справа.
+    row2_y = row1_end + 0.10
     text_box(s, 0.6, row2_y, 12.13, 0.2, "Животноводство — параллельная ветвь", size=11, bold=True, color=MID)
-    ocean_box(s, 0.6, row2_y + 0.22, 12.13, 0.5, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 0.8, row2_y + 0.22, 11.73, 0.5,
+    row2_box_y = row2_y + 0.22
+    row2_box_h = 1.05
+    ocean_box(s, 0.6, row2_box_y, 12.13, row2_box_h, fill=LIGHT_TINT, stroke=LIGHT)
+    _s05a_animal_photo = ASSETS / "photos" / "p26-newborn-calf-cows.jpg"
+    _desc_x = 0.8
+    if _s05a_animal_photo.exists():
+        _ph = row2_box_h - 0.2
+        _pw = _ph * 1.332
+        add_image(s, _s05a_animal_photo, 0.8, row2_box_y + 0.1, w=_pw, h=_ph)
+        _desc_x = 0.8 + _pw + 0.22
+    text_box(s, _desc_x, row2_box_y, 0.6 + 12.13 - 0.2 - _desc_x, row2_box_h,
              "Кормопроизводство · содержание поголовья · доение/откорм · ветеринарное "
              "сопровождение · воспроизводство стада",
-             size=10, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.1)
-    row2_end = row2_y + 0.22 + 0.5
+             size=10.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE, line_spacing=1.2)
+    row2_end = row2_box_y + row2_box_h
 
     conv_y = row2_end + 0.06
     text_box(s, 0.6, conv_y, 12.13, 0.22, "↓ сходятся", size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
@@ -406,15 +535,15 @@ def build_part1_full(prs, H):
         ("shopping-cart", "Распределительные центры и розница", False),
     ], conv_y + 0.26)
 
-    infra_y = row3_end + 0.1
-    ocean_box(s, 0.6, infra_y, 12.13, 0.42, fill=SURFACE)
-    text_box(s, 0.8, infra_y, 11.73, 0.42,
+    infra_y = row3_end + 0.06
+    ocean_box(s, 0.6, infra_y, 12.13, 0.36, fill=SURFACE)
+    text_box(s, 0.8, infra_y, 11.73, 0.36,
              "Сквозь все стадии — связь и спутниковое позиционирование · права на "
              "оборудование и данные · нормативное регулирование",
              size=10, italic=True, color=DARK_GREY, anchor=MSO_ANCHOR.MIDDLE)
 
-    models_y = infra_y + 0.54
-    text_box(s, 0.6, models_y, 12.13, 0.24, "Где в цикле появляется модель — шесть мест, не «везде, где написано AI»",
+    models_y = infra_y + 0.42
+    text_box(s, 0.6, models_y, 12.13, 0.2, "Где в цикле появляется модель — шесть мест, не «везде, где написано AI»",
              size=12, bold=True, color=DEEP)
     loci = [
         ("satellite", "Дистанционное зондирование", "спутник/БПЛА → карта индекса вегетации"),
@@ -425,23 +554,33 @@ def build_part1_full(prs, H):
         ("clipboard-check", "Документооборот и отчётность", "прослеживаемость партии, выбросы, нормативы"),
     ]
     mcol_w = (12.13 - 2 * 0.12) / 3
-    mcol_h = 0.64
-    my0 = models_y + 0.28
+    mcol_h = 0.56
+    my0 = models_y + 0.22
     for i, (icon, name, ex) in enumerate(loci):
         col = i % 3; row = i // 3
         mx = 0.6 + col * (mcol_w + 0.12)
-        my = my0 + row * (mcol_h + 0.08)
+        my = my0 + row * (mcol_h + 0.06)
         ocean_box(s, mx, my, mcol_w, mcol_h, fill=SURFACE)
         ip = ASSETS / "icons" / f"{icon}-48.png"
         if ip.exists():
-            add_image(s, ip, mx + 0.08, my + 0.1, w=0.42, h=0.42)
-        text_box(s, mx + 0.56, my + 0.05, mcol_w - 0.64, 0.28, name,
+            add_image(s, ip, mx + 0.08, my + 0.07, w=0.42, h=0.42)
+        text_box(s, mx + 0.56, my + 0.02, mcol_w - 0.64, 0.26, name,
                  size=10.5, bold=True, color=MID, line_spacing=1.0)
-        text_box(s, mx + 0.56, my + 0.33, mcol_w - 0.64, 0.28, ex,
-                 size=9.3, italic=True, color=DARK_GREY, line_spacing=1.0)
+        text_box(s, mx + 0.56, my + 0.29, mcol_w - 0.64, 0.25, ex,
+                 size=9, italic=True, color=DARK_GREY, line_spacing=1.0)
 
     add_footer(s, "На поле преобладают первые три места; в трейдинге и рознице — четвёртое, "
                   "пятое, шестое.")
+
+    _s05a_prov = text_runs(s, 0.6, 7.33, 12.13, 0.17, [
+        {"text": "Фото (животноводство): ", "size": 8, "italic": True, "color": LIGHT},
+        {"text": "Uberprutser, Wikimedia Commons, CC BY-SA 3.0",
+         "size": 8, "italic": True, "color": LIGHT},
+    ])
+    _s05a_pruns = [r for p in _s05a_prov.text_frame.paragraphs for r in p.runs]
+    _s05a_pruns[-1].font.underline = True
+    _s05a_pruns[-1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Newborn_calf.jpg"
+
     add_speaker_notes(s, load_speaker_notes("s05a"))
 
     # ============ s05b — Куда движется отрасль: четыре силы (issue #340 Задача 1) ============
@@ -1440,11 +1579,23 @@ def build_part1_full(prs, H):
         "L1 в РФ — ExactFarming, Прогресс Агро, Terra Tech при индексе цифровизации 27,2",
         size=19)
 
-    # Left: chart (height matched to new, taller right column)
+    # Left: chart (height matched to new, taller right column) + real photo
+    # below (issue #340 visual-richness pass — owner: РФ-слайды только
+    # диаграммы/иконки/логотипы, без крупных реальных фото). Chart уплотнён
+    # (4.1"→2.3", данные 27,2 vs 75,5 читаются без потери), освобождённое
+    # место — честное Tier-2 (Wikimedia Commons) фото пшеничного поля с
+    # комбайном, Новосибирская область РФ. Фото заканчивается ДО ap6_y
+    # (полноширинная полоса AP6 ниже рисуется поверх левой колонки —
+    # pre-existing layering этого слайда; фото обязано не доходить до неё).
     ocean_box(s, 0.6, 1.5, 6.0, 4.85)
     c = ASSETS / "charts" / "c14-rus-digi.png"
     if c.exists():
-        add_image(s, c, 0.85, 1.7, w=5.5, h=4.1)
+        add_image(s, c, 0.6 + (6.0 - 5.3) / 2, 1.65, w=5.3, h=2.3)
+    _s14_photo = ASSETS / "photos" / "p14-wheat-combine-novosibirsk.jpg"
+    if _s14_photo.exists():
+        _s14_ph = 1.35
+        _s14_pw = _s14_ph * 1.501
+        add_image(s, _s14_photo, 0.6 + (6.0 - _s14_pw) / 2, 4.05, w=_s14_pw, h=_s14_ph)
 
     # Right: 4 compact cards (3 прежних + Terra Tech/Pixel.AI — прямой аналог Planet Labs/Descartes Labs)
     cards = [
@@ -1483,7 +1634,16 @@ def build_part1_full(prs, H):
              "Политический риск L1: облачные сервисы с зарубежной зависимостью могут отключиться по решению вендора или санкций.",
              size=9, color=DARK_GREY, italic=True, line_spacing=1.15)
 
-    add_footer(s, "Источники: Яков и Партнёры 2024 · ExactFarming.com · TAdviser 2022 · comnews.ru 2022-07-11 (Terra Tech)")
+    _s14_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Источники: Яков и Партнёры 2024 · ExactFarming.com · TAdviser 2022 · "
+                  "comnews.ru 2022-07-11 (Terra Tech) · фото: ", "size": 11, "italic": True, "color": LIGHT},
+        {"text": "Vladislav Nekrasov, Wikimedia Commons, CC BY 4.0",
+         "size": 11, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s14_fruns = [r for p in _s14_foot.text_frame.paragraphs for r in p.runs]
+    _s14_fruns[-1].font.underline = True
+    _s14_fruns[-1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Колос_и_комбайн.jpg"
+
     add_speaker_notes(s, load_speaker_notes("s14"))
 
     return prs

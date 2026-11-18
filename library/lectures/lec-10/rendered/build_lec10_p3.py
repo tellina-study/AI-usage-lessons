@@ -512,19 +512,29 @@ def build_part3(prs, H):
         size=20)
 
     # Left: working case
+    # Issue #340 visual-richness pass (owner: РФ-слайды только иконки/схемы —
+    # без крупных реальных фото). Decorative icon заменён реальным фото
+    # новорождённого телёнка (Tier 2, Wikimedia Commons) — предмет именно
+    # того контроля, который детектирует CV-система Connectome.ai.
     ocean_box(s, 0.6, 1.5, 6.0, 5.0, fill=LIGHT_TINT, stroke=LIGHT)
     text_box(s, 0.85, 1.65, 5.5, 0.5, "Работает — Connectome.ai",
              size=15, bold=True, color=DEEP)
-    icon_p = ASSETS / "icons" / "scan-96.png"
-    if icon_p.exists():
-        add_image(s, icon_p, 0.85 + (5.5 - 0.9) / 2, 2.2, w=0.9, h=0.9)
-    text_box(s, 0.85, 3.3, 5.5, 0.4, "Резидент Сколково",
+    _s26_photo = ASSETS / "photos" / "p26-newborn-calf-cows.jpg"
+    if _s26_photo.exists():
+        _s26_ph = 1.5
+        _s26_pw = _s26_ph * 1.332
+        add_image(s, _s26_photo, 0.85 + (5.5 - _s26_pw) / 2, 2.20, w=_s26_pw, h=_s26_ph)
+    else:
+        icon_p = ASSETS / "icons" / "scan-96.png"
+        if icon_p.exists():
+            add_image(s, icon_p, 0.85 + (5.5 - 0.9) / 2, 2.2, w=0.9, h=0.9)
+    text_box(s, 0.85, 3.80, 5.5, 0.35, "Резидент Сколково",
              size=12, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
-    text_box(s, 0.85, 3.8, 5.5, 1.6,
+    text_box(s, 0.85, 4.20, 5.5, 1.0,
              "Узкая задача компьютерного зрения:\nконтроль отёлов телят\n+ ранний сигнал на помощь",
-             size=12, color=DEEP, italic=True, line_spacing=1.4,
+             size=12, color=DEEP, italic=True, line_spacing=1.3,
              align=PP_ALIGN.CENTER)
-    text_box(s, 0.85, 5.5, 5.5, 0.9,
+    text_box(s, 0.85, 5.30, 5.5, 1.0,
              "Паттерн: узкая ниша + CV +\nизмеримая безопасность животного",
              size=10, color=DARK_GREY, italic=True, line_spacing=1.4,
              align=PP_ALIGN.CENTER)
@@ -548,7 +558,16 @@ def build_part3(prs, H):
              "не уведомив пользователей заранее.",
              size=11, bold=True, italic=True, color=GOLD, line_spacing=1.4)
 
-    add_footer(s, "Источники: Connectome.ai (Сколково); BUSINESS-stat 2026 Лобня · TAdviser FieldView")
+    _s26_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Источники: Connectome.ai (Сколково); BUSINESS-stat 2026 Лобня · TAdviser FieldView · фото: ",
+         "size": 11, "italic": True, "color": LIGHT},
+        {"text": "Uberprutser, Wikimedia Commons, CC BY-SA 3.0",
+         "size": 11, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s26_fruns = [r for p in _s26_foot.text_frame.paragraphs for r in p.runs]
+    _s26_fruns[-1].font.underline = True
+    _s26_fruns[-1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Newborn_calf.jpg"
+
     add_speaker_notes(s, load_speaker_notes("s26"))
 
     # ============ s27 section4 divider ============
@@ -753,9 +772,23 @@ def build_part3(prs, H):
         "L4 в РФ — X5 паритет, Магнит гибрид, РСХБ — «пар»",
         size=22)
 
-    c = ASSETS / "charts" / "c32-rus-retail.png"
-    if c.exists():
-        add_image(s, c, 0.6, 1.5, w=6.4, h=4.5)
+    # Issue #340 visual-richness pass (owner: РФ-слайды только диаграммы —
+    # без крупных реальных фото). Прежний QuickChart bar chart нёс цифры
+    # «уровень внедрения, %» (95/55/15/30), не процитированные нигде на
+    # этом слайде (ни в карточках, ни в speaker notes) — непривязанная
+    # декоративная метрика. Заменён реальным фото супермаркета «Перекрёсток»
+    # (X5 Group), который карточка справа называет по имени.
+    ocean_box(s, 0.6, 1.5, 6.4, 4.5, fill=SURFACE)
+    _s32_photo = ASSETS / "photos" / "p32-perekrestok-supermarket-spb.jpg"
+    if _s32_photo.exists():
+        _s32_pw = 6.1
+        _s32_ph = _s32_pw / 1.499
+        add_image(s, _s32_photo, 0.6 + (6.4 - _s32_pw) / 2, 1.5 + (4.5 - _s32_ph) / 2,
+                   w=_s32_pw, h=_s32_ph)
+    else:
+        c = ASSETS / "charts" / "c32-rus-retail.png"
+        if c.exists():
+            add_image(s, c, 0.6, 1.5, w=6.4, h=4.5)
 
     # Right cards
     cards = [
@@ -781,7 +814,16 @@ def build_part3(prs, H):
              "Паттерн: паритет L4-L5 при отставании L1-L2. GigaChat — демо-эпизод, не внедрение.",
              size=12, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
 
-    add_footer(s, "Источники: Habr Магнит 2026-01; TAdviser X5 Tech 2024")
+    _s32_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Источники: Habr Магнит 2026-01; TAdviser X5 Tech 2024 · фото: ",
+         "size": 11, "italic": True, "color": LIGHT},
+        {"text": "Wikimedia Commons, CC BY-SA 2.0",
+         "size": 11, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s32_fruns = [r for p in _s32_foot.text_frame.paragraphs for r in p.runs]
+    _s32_fruns[-1].font.underline = True
+    _s32_fruns[-1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Large_experimental_supermarket_Perekrestok_in_St._Petersburg.jpg"
+
     add_speaker_notes(s, load_speaker_notes("s32"))
 
     # ============ s33 section4bis divider — Среда ============

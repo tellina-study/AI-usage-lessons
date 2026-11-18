@@ -29,7 +29,44 @@
     "elapsed_llm_s": 112.1,
     "sent_embed_cost_usd": 0.000424,
     "pool_embed_cost_usd": 0.002542,
-    "run_at": "2026-11-14T10:56:22"
+    "run_at": "2026-11-14T10:56:22",
+    "v4": {
+      "corpus": "SberQuAD validation, те же 60 документов/72 вопроса, что v1-v3 (case2_s11_measure.py), seed=7",
+      "algorithm": "RecursiveCharacterTextSplitter-логика (LangChain), реализована самостоятельно (библиотека недоступна в среде — pip install отказал как externally-managed-environment): уровни разделителей по убыванию размера абзац(\\n\\n) -> строка(\\n) -> предложение(SENT_SPLIT, та же регулярка, что v1/v2/v3) -> слово(' ') -> символ; переход на уровень мельче ТОЛЬКО если кусок этого уровня сам превысил target после разделения; соседние кусочки, уложившиеся в target, жадно упаковываются без overlap (тот же приём, что chunk_structural v1, обобщённый на все уровни)",
+      "target_chars": 180,
+      "corpus_caveat": "документы SberQuAD в этой выборке — однопараграфные (0/60 содержат '\\n\\n' или '\\n'), поэтому уровни «абзац» и «строка» на этом корпусе реально НЕ СРАБАТЫВАЮТ ни разу (hits=0) — рекурсия работает только на предложение->слово. Эффект «абзац -> предложения -> слова» в полном виде раскрывается на документах с реальной параграфной структурой, не на коротких энциклопедических абзацах (то же ограничение данных, что уже названо для v2 — 'родитель = документ целиком')",
+      "recursion_level_hits": {
+        "абзац": 0,
+        "строка": 0,
+        "предложение": 59,
+        "слово": 87,
+        "символ": 0
+      },
+      "recursion_level_used_for_oversized": {
+        "абзац": 0,
+        "строка": 0,
+        "предложение": 86,
+        "слово": 0,
+        "символ": 0
+      },
+      "n_chunks": 362,
+      "mean_chunk_chars": 123.3,
+      "max_chunk_chars": 180,
+      "n_span_find_fallback": 0,
+      "embed_model": "openai/text-embedding-3-small",
+      "llm_model": "openai/gpt-4o-mini",
+      "webhook": "s10-raw-openrouter",
+      "k": 1,
+      "correctness_criterion": "accuracy_strict — harness2.contains_answer, идентично v1-v3",
+      "intact_definition": "верный документ был top-1 И найденный кусок целиком содержит эталонный спан (версия 'direct', как v1/v3 — без подстановки родителя)",
+      "n_llm_calls": 72,
+      "n_embedding_calls": 6,
+      "n_embedding_texts": 434,
+      "elapsed_llm_s": 23.8,
+      "pool_embed_cost_usd": 0.000469,
+      "run_at": "2026-11-18T09:08:22",
+      "note": "v4 добавлен ОТДЕЛЬНЫМ прогоном (case2_s11_measure_v4.py) ПОСЛЕ v1-v3 (та же корпус-выборка, seed=7, 60 документов/72 вопроса, вебхук s10-raw-openrouter, реальные вызовы), чтобы не тратить бюджет на повтор уже измеренных версий — числа v1-v3 в этом файле НЕ пересчитаны, только добавлена четвёртая версия рядом."
+    }
   },
   "summary": [
     {
@@ -97,6 +134,17 @@
       "gold_doc_retrieved_rate": 0.9861,
       "avg_cost_usd": 2.629e-05,
       "avg_wall_s": 2.547
+    },
+    {
+      "version": "v4",
+      "label": "рекурсивная/самоподстраивающаяся резка по сепараторам (абзац->строка->предложение->слово, target=180, как у v1)",
+      "k": 1,
+      "n_questions": 72,
+      "accuracy_strict": 0.75,
+      "answer_intact_rate": 0.8333,
+      "gold_doc_retrieved_rate": 1.0,
+      "avg_cost_usd": 2.436e-05,
+      "avg_wall_s": 3.722
     }
   ],
   "details": [
@@ -8738,6 +8786,1446 @@
       "cost_usd": 3.375e-05,
       "wall_s": 2.45,
       "exec_id": "11095",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 0,
+      "question": "Какой сингл был самым продаваемым?",
+      "reference_answer": " White Christmas ",
+      "model_answer": "Самым продаваемым синглом является White Christmas Бинга Кросби 1947 года.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 0,
+        "start": 895,
+        "end": 1028
+      },
+      "cost_usd": 2.76e-05,
+      "wall_s": 5.31,
+      "exec_id": "11206",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 1,
+      "question": "В каком году Декартом был предложен координатный метод?",
+      "reference_answer": "в 1637 году",
+      "model_answer": "В 1637 году.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 1,
+        "start": 243,
+        "end": 421
+      },
+      "cost_usd": 2.1e-05,
+      "wall_s": 5.1,
+      "exec_id": "11203",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 2,
+      "question": "Какой процент в России среди малых электростанций?",
+      "reference_answer": "в России — примерно 96 %",
+      "model_answer": "нет информации.",
+      "correct_strict": false,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 2,
+        "start": 527,
+        "end": 701
+      },
+      "cost_usd": 1.875e-05,
+      "wall_s": 4.08,
+      "exec_id": "11205",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 3,
+      "question": "Из каких источников могут быть потоки информации в определении Гордона Паска?",
+      "reference_answer": "из любых источников",
+      "model_answer": "Потоки информации могут быть из любых источников, начиная со звёзд и заканчивая мозгом.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 3,
+        "start": 411,
+        "end": 587
+      },
+      "cost_usd": 3.12e-05,
+      "wall_s": 3.26,
+      "exec_id": "11201",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 4,
+      "question": "Сколько территориальных распределений граничат с Шотландией?",
+      "reference_answer": "два региона",
+      "model_answer": "Два региона.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 4,
+        "start": 459,
+        "end": 626
+      },
+      "cost_usd": 2.01e-05,
+      "wall_s": 5.16,
+      "exec_id": "11204",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 5,
+      "question": "Борис Глаголин актер чего?",
+      "reference_answer": "Суворинского театра",
+      "model_answer": "Борис Глаголин актёр Суворинского театра.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 5,
+        "start": 0,
+        "end": 179
+      },
+      "cost_usd": 2.805e-05,
+      "wall_s": 5.3,
+      "exec_id": "11207",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 6,
+      "question": "Кто вскоре стал председателем Комиссии Палаты по банковской деятельности и валюте?",
+      "reference_answer": "конгрессмен Картер Гласс, демократ от штата Виргиния",
+      "model_answer": "Конгрессмен Картер Гласс.",
+      "correct_strict": false,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 6,
+        "start": 460,
+        "end": 633
+      },
+      "cost_usd": 2.31e-05,
+      "wall_s": 5.89,
+      "exec_id": "11211",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 7,
+      "question": "Какое положение рассматривалось древними борцами как неблагоприятное?",
+      "reference_answer": "Касание земли коленом",
+      "model_answer": "Касание земли коленом.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 7,
+        "start": 724,
+        "end": 899
+      },
+      "cost_usd": 2.25e-05,
+      "wall_s": 5.88,
+      "exec_id": "11210",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 8,
+      "question": "Какую способность имеют некоторые товары?",
+      "reference_answer": "одинаковую способность к сбыту в руках любого человека",
+      "model_answer": "Некоторые товары имеют почти одинаковую способность к сбыту в руках любого человека.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 8,
+        "start": 0,
+        "end": 157
+      },
+      "cost_usd": 2.385e-05,
+      "wall_s": 5.52,
+      "exec_id": "11208",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 9,
+      "question": "Как еще могут возникать доломитовые залежи?",
+      "reference_answer": "при воздействии на известняки гидротермальных растворов,",
+      "model_answer": "Доломитовые залежи могут возникать при воздействии на известняки гидротермальных растворов, подземных или поверхностных вод.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 9,
+        "start": 378,
+        "end": 539
+      },
+      "cost_usd": 3.57e-05,
+      "wall_s": 5.84,
+      "exec_id": "11209",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 9,
+      "question": "Где образуется магнезит?",
+      "reference_answer": "преимущественно в гидротермальных условиях",
+      "model_answer": "Магнезит образуется преимущественно в гидротермальных условиях.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 9,
+        "start": 0,
+        "end": 178
+      },
+      "cost_usd": 2.7e-05,
+      "wall_s": 5.88,
+      "exec_id": "11212",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 10,
+      "question": "Как называется объединение распределительной и воспроизводственной составляющих денежных отношений?",
+      "reference_answer": "опосредствование производственного процесса",
+      "model_answer": "нет информации",
+      "correct_strict": false,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 10,
+        "start": 75,
+        "end": 237
+      },
+      "cost_usd": 1.605e-05,
+      "wall_s": 3.91,
+      "exec_id": "11202",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 11,
+      "question": "Когда термин инди-рок был синонимом альтернативного рока и применялся для разделения исполнителей по географическому признаку?",
+      "reference_answer": "В 1980-х",
+      "model_answer": "В 1980-х.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 11,
+        "start": 0,
+        "end": 178
+      },
+      "cost_usd": 2.28e-05,
+      "wall_s": 3.37,
+      "exec_id": "11214",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 12,
+      "question": "Кто стал новым министром финансов после отставки Симхи Эрлиха?",
+      "reference_answer": "Игаль Горовиц",
+      "model_answer": "Новым министром финансов стал Игаль.",
+      "correct_strict": false,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 12,
+        "start": 0,
+        "end": 176
+      },
+      "cost_usd": 2.31e-05,
+      "wall_s": 1.43,
+      "exec_id": "11215",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 13,
+      "question": "На какой структуре базируется система высшего образования в разных странах?",
+      "reference_answer": "на одно-, двух-, трёх- и четырёхуровневой",
+      "model_answer": "На одно-, двух-, трёх- и четырёхуровневой структуре.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 13,
+        "start": 0,
+        "end": 108
+      },
+      "cost_usd": 2.625e-05,
+      "wall_s": 3.98,
+      "exec_id": "11216",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 14,
+      "question": "Кто был выбран победителем отборочного марафона в Греции?",
+      "reference_answer": "Харилаос Василакос",
+      "model_answer": "Победителем отборочного марафона в Греции был Харилаос Василакос.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 14,
+        "start": 323,
+        "end": 450
+      },
+      "cost_usd": 2.91e-05,
+      "wall_s": 4.01,
+      "exec_id": "11217",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 15,
+      "question": "К созданию чего привел M-PESA продолжительный успех в Кении?",
+      "reference_answer": "популярного и доступного платёжного сервиса с незначительной вовлечённостью банков",
+      "model_answer": "К созданию популярного и доступного платёжного сервиса с незначительной вовлечённостью банков.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 15,
+        "start": 184,
+        "end": 330
+      },
+      "cost_usd": 2.925e-05,
+      "wall_s": 4.06,
+      "exec_id": "11219",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 16,
+      "question": "Какая сукновальня наиболее широко известна?",
+      "reference_answer": "помпейская",
+      "model_answer": "Наиболее широко известна помпейская сукновальня Стефания.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 16,
+        "start": 0,
+        "end": 98
+      },
+      "cost_usd": 2.52e-05,
+      "wall_s": 3.91,
+      "exec_id": "11218",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 16,
+      "question": "Что фуллоны валяли и отмывали от пота животного и грязи?",
+      "reference_answer": "шерсть",
+      "model_answer": "Шерсть.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 16,
+        "start": 99,
+        "end": 253
+      },
+      "cost_usd": 2.01e-05,
+      "wall_s": 5.07,
+      "exec_id": "11220",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 17,
+      "question": "Сколько приговоров было вынесено за принадлежность к преступному сообществу ?",
+      "reference_answer": "16 смертных приговоров",
+      "model_answer": "нет информации.",
+      "correct_strict": false,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 17,
+        "start": 227,
+        "end": 392
+      },
+      "cost_usd": 1.875e-05,
+      "wall_s": 3.97,
+      "exec_id": "11221",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 17,
+      "question": "Кем готовилось покушение на императора?",
+      "reference_answer": "А. К. Соловьевым",
+      "model_answer": "Некоторыми членами организации.",
+      "correct_strict": false,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 17,
+        "start": 426,
+        "end": 603
+      },
+      "cost_usd": 2.1e-05,
+      "wall_s": 5.06,
+      "exec_id": "11222",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 18,
+      "question": "Кто назвал произведения, включенные в сборник Тёмные аллеи , лучшими рассказами о любви-страсти в русской литературе ?",
+      "reference_answer": "поэт Глеб Струве",
+      "model_answer": "Поэт Глеб Струве.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 18,
+        "start": 154,
+        "end": 332
+      },
+      "cost_usd": 2.535e-05,
+      "wall_s": 5.39,
+      "exec_id": "11225",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 19,
+      "question": "Когда букву Й восстановили в алфавите?",
+      "reference_answer": "в 1735 году",
+      "model_answer": "Букву Й восстановили в алфавите в 1735 году.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 19,
+        "start": 432,
+        "end": 581
+      },
+      "cost_usd": 2.685e-05,
+      "wall_s": 5.37,
+      "exec_id": "11224",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 20,
+      "question": "Чему противопоставлял Герцен крестьянскую Россию?",
+      "reference_answer": "буржуазной Западной Европе",
+      "model_answer": "Герцен противопоставлял крестьянскую Россию буржуазной Западной Европе.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 20,
+        "start": 417,
+        "end": 543
+      },
+      "cost_usd": 2.85e-05,
+      "wall_s": 5.39,
+      "exec_id": "11226",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 21,
+      "question": "Сколько слуг максимум может иметь при себе кардинал, даже если болен?",
+      "reference_answer": "одного слугу",
+      "model_answer": "Один слуга.",
+      "correct_strict": false,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 21,
+        "start": 206,
+        "end": 326
+      },
+      "cost_usd": 1.815e-05,
+      "wall_s": 5.34,
+      "exec_id": "11223",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 21,
+      "question": "В каком году были установлены окончательно церемонии, выполняемые при выборах нового папы?",
+      "reference_answer": "в 1622 году",
+      "model_answer": "Нет информации.",
+      "correct_strict": false,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 21,
+        "start": 714,
+        "end": 892
+      },
+      "cost_usd": 2.1e-05,
+      "wall_s": 4.64,
+      "exec_id": "11227",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 22,
+      "question": "Какой город до недавнего времени являлся местом расположения правительства Германии?",
+      "reference_answer": "город Бонн",
+      "model_answer": "Бонн.",
+      "correct_strict": false,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 22,
+        "start": 0,
+        "end": 177
+      },
+      "cost_usd": 1.935e-05,
+      "wall_s": 3.25,
+      "exec_id": "11228",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 23,
+      "question": "Когда золотые монеты были принудительно изъяты из внутреннего денежного обращения?",
+      "reference_answer": "в 1930-е годы",
+      "model_answer": "В 1930-е годы.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 23,
+        "start": 0,
+        "end": 179
+      },
+      "cost_usd": 2.16e-05,
+      "wall_s": 1.54,
+      "exec_id": "11230",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 24,
+      "question": "Какую должность занимает лидер правящей партии в Манитоба?",
+      "reference_answer": "становится премьером Манитобы",
+      "model_answer": "Лидер правящей партии становится премьером Манитобы.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 24,
+        "start": 99,
+        "end": 230
+      },
+      "cost_usd": 2.115e-05,
+      "wall_s": 2.13,
+      "exec_id": "11232",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 25,
+      "question": "Чем фюзеляжи ферменной конструкции проигрывают балочным?",
+      "reference_answer": "по массе конструкции",
+      "model_answer": "Фюзеляжи ферменной конструкции проигрывают балочным по массе конструкции.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 25,
+        "start": 0,
+        "end": 177
+      },
+      "cost_usd": 2.91e-05,
+      "wall_s": 2.13,
+      "exec_id": "11233",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 26,
+      "question": "На какие музыкальные стили в 1960-х и 1970-х начинает влиять фанк, порождая переходные стили?",
+      "reference_answer": "на рок и джаз",
+      "model_answer": "Фанк начинает влиять на рок и джаз, порождая переходные стили.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 26,
+        "start": 192,
+        "end": 349
+      },
+      "cost_usd": 3.06e-05,
+      "wall_s": 1.97,
+      "exec_id": "11231",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 26,
+      "question": "Создателем и исполнителям какого стиля в 1970-х был Херби Хэнкок?",
+      "reference_answer": "электрофанк",
+      "model_answer": "Херби Хэнкок был создателем и исполнителем стиля электрофанк.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 26,
+        "start": 350,
+        "end": 527
+      },
+      "cost_usd": 3.09e-05,
+      "wall_s": 2.17,
+      "exec_id": "11234",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 27,
+      "question": "Кто эпоним горы Пелия?",
+      "reference_answer": "сын Эака",
+      "model_answer": "Эпоним горы Пелия — Пелей, сын Эака.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 27,
+        "start": 339,
+        "end": 496
+      },
+      "cost_usd": 2.715e-05,
+      "wall_s": 3.43,
+      "exec_id": "11235",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 27,
+      "question": "Кого изначально называли эпонимом?",
+      "reference_answer": "божество, реального или легендарного человека",
+      "model_answer": "Эпонимом изначально называли лицо, от имени которого образованы имена нарицательные или другие имена собственные.",
+      "correct_strict": false,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 27,
+        "start": 0,
+        "end": 159
+      },
+      "cost_usd": 3.54e-05,
+      "wall_s": 4.42,
+      "exec_id": "11236",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 28,
+      "question": "Какие народы видели разницу между собой и немцами?",
+      "reference_answer": "готы",
+      "model_answer": "Сарматы и готы.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 28,
+        "start": 180,
+        "end": 245
+      },
+      "cost_usd": 1.68e-05,
+      "wall_s": 3.89,
+      "exec_id": "11237",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 29,
+      "question": "В результате чего сложился английский народ?",
+      "reference_answer": "в результате смешения и длительной ассимиляции разнородных этнических элементов",
+      "model_answer": "Английский народ сложился в результате смешения и длительной ассимиляции разнородных этнических элементов.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 29,
+        "start": 0,
+        "end": 106
+      },
+      "cost_usd": 2.925e-05,
+      "wall_s": 2.89,
+      "exec_id": "11238",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 30,
+      "question": "Что такое саксофон?",
+      "reference_answer": "музыкальный инструмент",
+      "model_answer": "Саксофон — это тростевой духовой музыкальный инструмент, принадлежащий к семейству язычковых деревянных духовых инструментов.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 30,
+        "start": 0,
+        "end": 165
+      },
+      "cost_usd": 3.495e-05,
+      "wall_s": 4.7,
+      "exec_id": "11241",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 31,
+      "question": "Что такое метромост?",
+      "reference_answer": "мост, по которому проходит линия метрополитена.",
+      "model_answer": "нет информации.",
+      "correct_strict": false,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 31,
+        "start": 169,
+        "end": 221
+      },
+      "cost_usd": 1.23e-05,
+      "wall_s": 4.15,
+      "exec_id": "11239",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 32,
+      "question": "Где был одомашнен северный олень?",
+      "reference_answer": "В Сибири",
+      "model_answer": "В Сибири.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 32,
+        "start": 756,
+        "end": 900
+      },
+      "cost_usd": 1.92e-05,
+      "wall_s": 4.73,
+      "exec_id": "11242",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 33,
+      "question": "Несмотря на что, до выезда из России Прокофьев создал значительные произведения, продолжившие как европейскую, так и русскую классические традиции?",
+      "reference_answer": "на ореол славы авангардиста",
+      "model_answer": "Несмотря на ореол славы авангардиста.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 33,
+        "start": 236,
+        "end": 412
+      },
+      "cost_usd": 2.79e-05,
+      "wall_s": 3.36,
+      "exec_id": "11244",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 34,
+      "question": "Какой синоним до 1970-го года был у слова прокариот?",
+      "reference_answer": " бактерия ",
+      "model_answer": "Бактерия.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 34,
+        "start": 0,
+        "end": 172
+      },
+      "cost_usd": 2.085e-05,
+      "wall_s": 4.69,
+      "exec_id": "11243",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 34,
+      "question": "На какие домены в 1977 году были разделены прокариоты?",
+      "reference_answer": "на домены архебактерий и эубактерий",
+      "model_answer": "На домены архебактерий и эубактерий.",
+      "correct_strict": true,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 34,
+        "start": 0,
+        "end": 172
+      },
+      "cost_usd": 2.655e-05,
+      "wall_s": 4.25,
+      "exec_id": "11240",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 35,
+      "question": "Чем, начиная с ранних периодов христианства, служила базилика, в которой был похоронен Святой Иоанн?",
+      "reference_answer": "местом поклонения многих паломников",
+      "model_answer": "нет информации.",
+      "correct_strict": false,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 35,
+        "start": 0,
+        "end": 118
+      },
+      "cost_usd": 2.025e-05,
+      "wall_s": 4.7,
+      "exec_id": "11245",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 36,
+      "question": "Разделение какого капитала на постоянный и переменный осуществил Маркс?",
+      "reference_answer": "совокупного",
+      "model_answer": "Совокупного капитала.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 36,
+        "start": 0,
+        "end": 176
+      },
+      "cost_usd": 1.95e-05,
+      "wall_s": 3.51,
+      "exec_id": "11246",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 37,
+      "question": "Что является показателем наличия в воздухе токсичных тяжёлых металлов?",
+      "reference_answer": "Лишайники",
+      "model_answer": "Лишайники.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 37,
+        "start": 240,
+        "end": 398
+      },
+      "cost_usd": 1.95e-05,
+      "wall_s": 1.34,
+      "exec_id": "11248",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 38,
+      "question": "У каких организмов типовой экземпляр противоположный голотипу пола?",
+      "reference_answer": "раздельнополых",
+      "model_answer": "У раздельнополых организмов.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 38,
+        "start": 346,
+        "end": 516
+      },
+      "cost_usd": 2.19e-05,
+      "wall_s": 1.91,
+      "exec_id": "11249",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 38,
+      "question": "Что выделяют для специального случая с культурами простейших ?",
+      "reference_answer": "гапантотип",
+      "model_answer": "Выделяют гапантотип.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 38,
+        "start": 248,
+        "end": 345
+      },
+      "cost_usd": 1.815e-05,
+      "wall_s": 1.39,
+      "exec_id": "11250",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 39,
+      "question": "Чистая прибыль группы Тинькофф Банка во втором квартале?",
+      "reference_answer": "2,5 млрд рублей.",
+      "model_answer": "Чистая прибыль группы Тинькофф Банка во втором квартале составила 2,5 млрд рублей.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 39,
+        "start": 0,
+        "end": 120
+      },
+      "cost_usd": 3.135e-05,
+      "wall_s": 1.62,
+      "exec_id": "11251",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 40,
+      "question": "Куда нужно направить решения маслихатов трёх районов Южно-Казахстанской области и постановления районных акиматов, чтобы ключить эти районы в состав Шымкента?",
+      "reference_answer": "в областной маслихат и областной акимат",
+      "model_answer": "Необходимо направить в областной маслихат и областной акимат.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 40,
+        "start": 165,
+        "end": 339
+      },
+      "cost_usd": 3.135e-05,
+      "wall_s": 3.02,
+      "exec_id": "11252",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 40,
+      "question": "Когда будет осуществлен процесс согласования и утверждения новых границ Шымкента в связи с передачей территорий трёх районов Южно-Казахстанской области в состав города?",
+      "reference_answer": "до 1 июля 2013 года",
+      "model_answer": "нет информации.",
+      "correct_strict": false,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 40,
+        "start": 340,
+        "end": 447
+      },
+      "cost_usd": 1.875e-05,
+      "wall_s": 2.89,
+      "exec_id": "11253",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 41,
+      "question": "На сколько километров простирается Западная Сибирь от Северного Ледовитого океана до возвышенностей Казахского мелкосопочника7",
+      "reference_answer": "на две с половиной тысячи километров",
+      "model_answer": "Западная Сибирь простирается на две с половиной тысячи километров.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 41,
+        "start": 0,
+        "end": 178
+      },
+      "cost_usd": 3.255e-05,
+      "wall_s": 3.96,
+      "exec_id": "11254",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 42,
+      "question": "Какая статья определяет амнистию в отношении индивидуально не определенного круга лиц?",
+      "reference_answer": "ст. 84 УК РФ",
+      "model_answer": "Статья 84 УК РФ.",
+      "correct_strict": false,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 42,
+        "start": 0,
+        "end": 106
+      },
+      "cost_usd": 1.875e-05,
+      "wall_s": 3.98,
+      "exec_id": "11255",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 43,
+      "question": "Что должны делать фирмы, чтобы сохранять постоянную удовлетворенность потребителя?",
+      "reference_answer": "постоянно совершенствовать свою продукцию и свои процессы",
+      "model_answer": "Фирмы должны постоянно совершенствовать свою продукцию и свои процессы.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 43,
+        "start": 369,
+        "end": 503
+      },
+      "cost_usd": 2.145e-05,
+      "wall_s": 3.62,
+      "exec_id": "11256",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 44,
+      "question": "Куда мигрируют личинки речного окуня после появления на свет?",
+      "reference_answer": "более глубокую, пелагическую зону",
+      "model_answer": "Личинки речного окуня мигрируют в более глубокую, пелагическую зону.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 44,
+        "start": 110,
+        "end": 248
+      },
+      "cost_usd": 2.91e-05,
+      "wall_s": 3.11,
+      "exec_id": "11257",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 45,
+      "question": "что защищает корневой чехлик?",
+      "reference_answer": "нежные клетки меристемы",
+      "model_answer": "Корневой чехлик защищает нежные клетки меристемы.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 45,
+        "start": 0,
+        "end": 153
+      },
+      "cost_usd": 2.46e-05,
+      "wall_s": 3.12,
+      "exec_id": "11258",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 46,
+      "question": "Какие компание вошли в топ-15?",
+      "reference_answer": "Orbitz Worldwide и Omega World Travel",
+      "model_answer": "В топ-15 вошли компании Orbitz Worldwide и Omega World Travel.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 46,
+        "start": 487,
+        "end": 574
+      },
+      "cost_usd": 2.13e-05,
+      "wall_s": 4.54,
+      "exec_id": "11261",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 46,
+      "question": "Сеть FCm Travel Solutions охватывает сколько стран?",
+      "reference_answer": "более 90 стран",
+      "model_answer": "Сеть FCm Travel Solutions охватывает более 90 стран.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 46,
+        "start": 575,
+        "end": 676
+      },
+      "cost_usd": 2.19e-05,
+      "wall_s": 4.55,
+      "exec_id": "11262",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 47,
+      "question": "Сколько пар шпор несут на своей вершине средние голени?",
+      "reference_answer": "одну пару шпор",
+      "model_answer": "Средние голени несут одну пару шпор.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 47,
+        "start": 516,
+        "end": 695
+      },
+      "cost_usd": 2.37e-05,
+      "wall_s": 4.51,
+      "exec_id": "11260",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 48,
+      "question": "Для кого Углеметбанк предоставляет полный спектр банковских услуг?",
+      "reference_answer": "для корпоративных клиентов и частных лиц",
+      "model_answer": "Для корпоративных клиентов и частных лиц.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 48,
+        "start": 0,
+        "end": 98
+      },
+      "cost_usd": 1.845e-05,
+      "wall_s": 3.08,
+      "exec_id": "11259",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 49,
+      "question": "Кто построил деревянный замок Мемельбург в 1252 году?",
+      "reference_answer": "рыцари Ливонского ордена",
+      "model_answer": "Рыцари Ливонского ордена.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 49,
+        "start": 0,
+        "end": 122
+      },
+      "cost_usd": 2.31e-05,
+      "wall_s": 3.92,
+      "exec_id": "11263",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 50,
+      "question": "В каком веке Бюффон выдвигал подобную гипотезу?",
+      "reference_answer": "XVIII",
+      "model_answer": "В XVIII веке.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 50,
+        "start": 431,
+        "end": 575
+      },
+      "cost_usd": 2.22e-05,
+      "wall_s": 2.69,
+      "exec_id": "11264",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 50,
+      "question": "В каком году Дарвин написал книгу Об изменениях животных и растений в состоянии приручения ?",
+      "reference_answer": "1868",
+      "model_answer": "нет информации.",
+      "correct_strict": false,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 50,
+        "start": 0,
+        "end": 107
+      },
+      "cost_usd": 1.65e-05,
+      "wall_s": 2.83,
+      "exec_id": "11265",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 51,
+      "question": "Какое право было в 1980-х годах ограничено в Великобритании?",
+      "reference_answer": "Право на пожизненное занятие должности",
+      "model_answer": "Право на пожизненное занятие должности.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 51,
+        "start": 0,
+        "end": 150
+      },
+      "cost_usd": 2.265e-05,
+      "wall_s": 3.18,
+      "exec_id": "11266",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 52,
+      "question": "С чем не имеет ничего общего рок-музыка в доказательстве Макаревича?",
+      "reference_answer": "с бессмысленной пустой эстрадой",
+      "model_answer": "С бессмысленной пустой эстрадой.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 52,
+        "start": 135,
+        "end": 276
+      },
+      "cost_usd": 2.34e-05,
+      "wall_s": 3.28,
+      "exec_id": "11268",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 53,
+      "question": "Как различался объем кассетных и CD аудиокниг по максимальной длительности аудиозаписи?",
+      "reference_answer": "120 минут против 80",
+      "model_answer": "Кассетные аудиокниги имеют вместительность 120 минут, тогда как детали о максимальной длительности CD аудиокниг в тексте отсутствуют.",
+      "correct_strict": false,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 53,
+        "start": 364,
+        "end": 541
+      },
+      "cost_usd": 4.005e-05,
+      "wall_s": 3.28,
+      "exec_id": "11269",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 53,
+      "question": "Какую долю мирового рынка компакт-кассет 2000 года занимал рынок Северной Америки?",
+      "reference_answer": "менее 10 % мирового",
+      "model_answer": "Нет информации.",
+      "correct_strict": false,
+      "answer_intact": false,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 53,
+        "start": 0,
+        "end": 174
+      },
+      "cost_usd": 1.995e-05,
+      "wall_s": 3.23,
+      "exec_id": "11270",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 54,
+      "question": "Наблюдение каких объектов требовали практически все космологические программы?",
+      "reference_answer": "особо тусклых",
+      "model_answer": "Практически все космологические программы требовали наблюдений особо тусклых объектов.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 54,
+        "start": 475,
+        "end": 621
+      },
+      "cost_usd": 2.715e-05,
+      "wall_s": 3.06,
+      "exec_id": "11271",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 55,
+      "question": "Согласно Устава 1928 года во сколько раз увеличились расходы на содержания гимназий?",
+      "reference_answer": "в 5 раз",
+      "model_answer": "нет информации.",
+      "correct_strict": false,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 55,
+        "start": 504,
+        "end": 676
+      },
+      "cost_usd": 2.055e-05,
+      "wall_s": 1.87,
+      "exec_id": "11272",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 56,
+      "question": "Как функционирует частичное банковское резервирование в случае отсутствия кризисов?",
+      "reference_answer": "достаточно ровно",
+      "model_answer": "Частичное банковское резервирование функционирует достаточно ровно.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 56,
+        "start": 0,
+        "end": 180
+      },
+      "cost_usd": 2.55e-05,
+      "wall_s": 2.71,
+      "exec_id": "11273",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 57,
+      "question": "Кто появлялся на форуме сайта первые полгода?",
+      "reference_answer": "Макаревич и Державин",
+      "model_answer": "На форуме сайта первые полгода появлялись Макаревич и Державин.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 57,
+        "start": 482,
+        "end": 637
+      },
+      "cost_usd": 2.76e-05,
+      "wall_s": 2.04,
+      "exec_id": "11274",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 58,
+      "question": "Чему равна средняя цена аренды двухкомнатной квартиры?",
+      "reference_answer": "1126,37 CHF",
+      "model_answer": "Средняя цена аренды двухкомнатной квартиры равna примерно 1126,37 CHF.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 58,
+        "start": 161,
+        "end": 337
+      },
+      "cost_usd": 3.15e-05,
+      "wall_s": 2.09,
+      "exec_id": "11275",
+      "raw_error": null
+    },
+    {
+      "version": "v4",
+      "k": 1,
+      "doc_idx": 59,
+      "question": "Кто являлся главным конкурентом Шопена?",
+      "reference_answer": "Сигизмунд Тальберг",
+      "model_answer": "Главным конкурентом Шопена являлся Сигизмунд Тальберг.",
+      "correct_strict": true,
+      "answer_intact": true,
+      "gold_doc_retrieved": true,
+      "retrieved_chunk": {
+        "doc_idx": 59,
+        "start": 430,
+        "end": 604
+      },
+      "cost_usd": 2.79e-05,
+      "wall_s": 3.16,
+      "exec_id": "11276",
       "raw_error": null
     }
   ]

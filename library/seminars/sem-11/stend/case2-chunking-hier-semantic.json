@@ -207,19 +207,32 @@
       }
     },
     {
-      "id": "res_final",
-      "name": "Результат",
-      "type": "n8n-nodes-base.form",
-      "typeVersion": 1,
+      "id": "rec_split",
+      "name": "Нарезка рекурсивная: абзац/строка/предложение/слово",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
         1620,
         0
       ],
       "parameters": {
+        "jsCode": "const d = $input.first().json;\nconst payload = JSON.parse($('Документ + вопрос').first().json.payload);\nfunction splitLevel(text, level) {\n  let parts;\n  if (level === 0) parts = text.split(/\\n\\n+/);\n  else if (level === 1) parts = text.split('\\n');\n  else if (level === 2) parts = text.split(/(?<=[.!?])\\s+/);\n  else if (level === 3) parts = text.split(' ');\n  else parts = text.split('');\n  return parts.filter(p => p !== '');\n}\nconst LEVEL_NAME = ['абзац', 'строка', 'предложение', 'слово', 'символ'];\nconst LEVEL_JOINER = ['\\n\\n', '\\n', ' ', ' ', ''];\nfunction packGreedy(pieces, target, joiner) {\n  const chunks = []; let cur = []; let curLen = 0;\n  for (const p of pieces) {\n    const extra = p.length + (cur.length ? joiner.length : 0);\n    if (cur.length && curLen + extra > target) {\n      chunks.push(cur.join(joiner)); cur = [p]; curLen = p.length;\n    } else { cur.push(p); curLen += extra; }\n  }\n  if (cur.length) chunks.push(cur.join(joiner));\n  return chunks;\n}\nfunction recursiveSplit(text, target, level, trace) {\n  if (level >= 5) return [text];\n  const pieces = splitLevel(text, level);\n  if (pieces.length <= 1) return recursiveSplit(text, target, level + 1, trace);\n  trace.hits[level] = (trace.hits[level] || 0) + 1;\n  const joiner = LEVEL_JOINER[level];\n  let good = []; const out = [];\n  for (const p of pieces) {\n    if (p.length <= target) { good.push(p); }\n    else {\n      trace.oversized[level] = (trace.oversized[level] || 0) + 1;\n      if (good.length) { out.push(...packGreedy(good, target, joiner)); good = []; }\n      out.push(...recursiveSplit(p, target, level + 1, trace));\n    }\n  }\n  if (good.length) out.push(...packGreedy(good, target, joiner));\n  return out;\n}\nconst target = payload.chunk_size_v1 || 180;\nconst trace = {hits: {}, oversized: {}};\nconst chunks = recursiveSplit(payload.document, target, 0, trace);\nconst traceNamed = {};\nfor (const k in trace.hits) traceNamed[LEVEL_NAME[k] + '_hits'] = trace.hits[k];\nfor (const k in trace.oversized) traceNamed[LEVEL_NAME[k] + '_oversized'] = trace.oversized[k];\nreturn [{json: {\n  question: d.question,\n  found_child_text: d.found_child_text,\n  model_answer: d.model_answer,\n  gap_threshold: d.gap_threshold,\n  n_sentences: d.n_sentences,\n  gaps: d.gaps,\n  n_chunks_semantic: d.n_chunks,\n  recursive_target: target,\n  recursive_n_chunks: chunks.length,\n  recursive_chunk_lengths: chunks.map(c => c.length),\n  recursive_trace: traceNamed,\n  recursive_chunks_preview: chunks.map(c => c.length > 60 ? c.slice(0, 57) + '...' : c)\n}}];"
+      }
+    },
+    {
+      "id": "res_final",
+      "name": "Результат",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        1900,
+        0
+      ],
+      "parameters": {
         "operation": "completion",
         "respondWith": "text",
-        "completionTitle": "Иерархическая резка + семантическая резка — один прогон",
-        "completionMessage": "={{ 'Иерархическая резка — найденный ребёнок: ' + $json.found_child_text + '\\n' + 'Ответ модели (контекст — весь родительский документ): ' + $json.model_answer + '\\n\\n' + 'Семантическая резка — порог gap_threshold=' + $json.gap_threshold + ': ' + $json.n_sentences + ' предложений -> ' + $json.n_chunks + ' куска(ов)\\n' + 'Разрывы между предложениями: ' + JSON.stringify($json.gaps) }}",
+        "completionTitle": "Иерархическая + семантическая + рекурсивная резка — один прогон",
+        "completionMessage": "={{ 'Иерархическая резка — найденный ребёнок: ' + $json.found_child_text + '\\n' + 'Ответ модели (контекст — весь родительский документ): ' + $json.model_answer + '\\n\\n' + 'Семантическая резка — порог gap_threshold=' + $json.gap_threshold + ': ' + $json.n_sentences + ' предложений -> ' + $json.n_chunks_semantic + ' куска(ов)\\n' + 'Разрывы между предложениями: ' + JSON.stringify($json.gaps) + '\\n\\n' + 'Рекурсивная резка (v4) — target=' + $json.recursive_target + ': ' + $json.recursive_n_chunks + ' куска(ов), длины=' + JSON.stringify($json.recursive_chunk_lengths) + '\\n' + 'Уровни, реально сработавшие (hits/oversized): ' + JSON.stringify($json.recursive_trace) + '\\n' + 'Превью кусков: ' + JSON.stringify($json.recursive_chunks_preview) }}",
         "options": {
           "appendAttribution": false
         }
@@ -327,6 +340,17 @@
       ]
     },
     "Разрыв смысла и порог (gap_threshold)": {
+      "main": [
+        [
+          {
+            "node": "Нарезка рекурсивная: абзац/строка/предложение/слово",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Нарезка рекурсивная: абзац/строка/предложение/слово": {
       "main": [
         [
           {

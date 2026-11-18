@@ -45,12 +45,22 @@ SBERQUAD_VAL = "/tmp/sem10-data/sberquad_val.parquet"
 CASE1_CORPUS = ("/home/harness/harness-projects/256/.worktrees/folder-288/"
                 "session-b2efe723-e1e67a60/library/seminars/sem-10/stend/corpus/corpus_case1.json")
 
-N_GROWTH_PER_TRACK = 300  # максимальный размер пула роста Track H (случайный, своя тема)
-N_D_CANDIDATES = 1600     # кандидатный пул Track D (чужая тема) — больше, чтобы из него
-                          # можно было и взять случайный срез (D_random), и отобрать
-                          # ближайших по косинусу "ложных похожих" (D_adversarial) —
-                          # см. embed_and_measure_case4.py, который делает этот отбор
-                          # уже ПОСЛЕ эмбеддинга (отбор по смыслу, не по ключевым словам)
+# 2026-11-18 (issue #345, владелец: «масштаб надо расширить... от десятков до полного
+# набора») — оба потолка поднимаются до РЕАЛЬНОГО размера доступного пула, не до
+# произвольного числа. Пулы роста ниже больше не берутся из good_qa_rows() (который
+# требует валидной Q&A-пары — answer_start, длина 350-1100): это требование нужно
+# ТОЛЬКО якорям (их буквально спрашивают и проверяют ответ), документы роста — просто
+# тексты-дистракторы, их Q&A-валидность не используется. Снятие этого фильтра для пулов
+# роста — единственный способ приблизиться к «полному набору» на этом источнике: честный
+# максимум без него — 686 биологических (Track H) и 7838 нехимических-прочих (Track D)
+# документов из 9078 уникальных параграфов train+val (см. ниже, после построения пулов,
+# числа печатаются и фиксируются в meta). Это НЕ «десятки тысяч» — это и есть реальный
+# потолок данного локального кэша SberQuAD, см. честную оговорку в README/главе.
+N_GROWTH_PER_TRACK = 10_000  # верхняя граница-заглушка, фактический размер пула Track H
+                              # меньше (ограничен реальным числом биологических документов
+                              # корпуса) — см. meta.n_track_h в итоговом corpus_case4.json
+N_D_CANDIDATES = 10_000       # то же для Track D — фактический размер ограничен реальным
+                              # числом «не биологии» в корпусе, см. meta.n_track_d_candidates
 
 BIO_KW = re.compile(
     r"клетк|орган[иы]зм|кровен|кровоснаб|\bкровь|\bкрови\b|живот[нм]|растени|биолог|фермент|белк|белок|"
@@ -176,9 +186,21 @@ def main():
 
     anchor_contexts = {a["context"] for a in anchors}
 
-    # --- Пулы роста, исключая якорные контексты ---
-    bio_pool_src = [g for g in bio_good if g["context"] not in anchor_contexts]
-    nonbio_pool_src = [g for g in nonbio_good if g["context"] not in anchor_contexts]
+    # --- Пулы роста: 2026-11-18, расширено на ВЕСЬ корпус (rows), не на good_qa_rows().
+    # Документы роста — чистые тексты-дистракторы, их Q&A (answer_start/длина 350-1100)
+    # никогда не читается ни одним шагом замера (только якоря реально спрашиваются) —
+    # поэтому ограничивать пул роста той же меркой, что нужна для надёжного Q&A, означало
+    # отбрасывать 9078-6551=2527 настоящих документов корпуса без причины, которая к этому
+    # пулу применима. Классификация bio/not-bio — тот же BIO_KW/MIN_BIO_HITS, что и раньше,
+    # просто применённый к полному rows, а не к его урезанной "good" подвыборке.
+    bio_rows_all = [r for r in rows if BIO_KW.search(r["context"])]
+    bio_rows = [r for r in bio_rows_all if n_distinct_hits_top(r["context"]) >= MIN_BIO_HITS]
+    nonbio_rows = [r for r in rows if not BIO_KW.search(r["context"])]
+    print(f"[full corpus, не только good_qa_rows] bio_rows_all: {len(bio_rows_all)}  "
+          f"bio_rows (>={MIN_BIO_HITS} hits): {len(bio_rows)}  nonbio_rows: {len(nonbio_rows)}")
+
+    bio_pool_src = [{"context": r["context"]} for r in bio_rows if r["context"] not in anchor_contexts]
+    nonbio_pool_src = [{"context": r["context"]} for r in nonbio_rows if r["context"] not in anchor_contexts]
     random.shuffle(bio_pool_src)
     random.shuffle(nonbio_pool_src)
 

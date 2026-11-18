@@ -34,6 +34,16 @@ chart-wow-gate-dumbbell (dumbbell, эффект гейта по группам �
   Классика    = axis3_class == "rule-based"
   МЛ          = axis3_class == "classical-ml"
   Большой ИИ  = axis3_class in ("foundation-model", "agentic-llm")
+
+Раунд 4 (chart_lines_outcome_share_per_axis, chart_groups_*_share): владелец попросил долевые
+версии двух семейств графиков раунда 3 — "распределение исходов и другие графики с разбивкой
+по типам по количеству сделай еще не по количеству, а по доле от тотала в этом срезе". Смысл:
+уровень оси с большим n (axis1_level=moderate, n=152) визуально "выигрывает" у axis1_level=
+extreme (n=10) просто по объёму, а не по составу исходов — доля убирает этот эффект объёма и
+показывает именно состав. Знаменатель для осей 1/2/4 — ПОЛНОЕ число кейсов на уровне оси
+(включая unclear-кейсы по ДРУГИМ осям, все 4 исхода), не только успех+провал и не только три
+именованные группы метода. Исходные count-графики НЕ удалены и НЕ изменены — обе версии стоят
+рядом в 00-rezyume.md.
 """
 import csv
 import random
@@ -791,6 +801,174 @@ def chart_wow_gate_dumbbell(rows):
     print("chart_wow_gate_dumbbell saved")
 
 
+# ---------------------------------------------------------------------------
+# Раунд 4: долевые (share-of-total) знаменатели по уровню оси — зафиксированы
+# владельцем/оркестратором напрямую по CSV в этой сессии (issue #349), здесь
+# НЕ пересчитываются, чтобы не держать два разных способа их получить.
+# Для axis1/axis2/axis4 — полное n на уровне оси (все 4 исхода, независимо от
+# того, unclear ли у строки какая-то ДРУГАЯ ось). Для axis3_class — собственное
+# n класса (у оси 3 нет отдельного понятия "итог по всей оси" помимо суммы
+# классов — каждый класс сам себе срез).
+# ---------------------------------------------------------------------------
+AXIS_LEVEL_TOTALS = {
+    "axis1_level": {"low": 125, "moderate": 152, "high": 85, "extreme": 10},
+    "axis2_bucket": {
+        "seconds-minutes": 114, "hours-days": 73,
+        "weeks-months": 53, "season-years": 105,
+    },
+    "axis4_blast_radius": {"low": 113, "medium": 85, "high": 83, "catastrophic": 59},
+    "axis3_class": {
+        "foundation-model": 101, "deep-learning": 69, "hybrid": 57,
+        "classical-ml": 51, "rule-based": 36, "sensor-fusion": 34,
+        "agentic-llm": 31,
+    },
+}
+
+
+# ---------------------------------------------------------------------------
+# Chart 14 (раунд 4, долевая пара к chart_lines_outcome_per_axis): та же 2x2
+# раскладка, те же 4 линии-исхода на панель, но Y = доля от ВСЕГО n на этом
+# уровне оси (%), а не количество кейсов. По запросу владельца ("по доле от
+# тотала в этом срезе"), чтобы уровень с большим n не "выигрывал" визуально
+# просто объёмом.
+# ---------------------------------------------------------------------------
+def chart_lines_outcome_share_per_axis(rows):
+    axis_keys = ["axis1_level", "axis2_bucket", "axis3_class", "axis4_blast_radius"]
+    outcomes = ["success", "partial", "failure", "undetermined"]
+
+    fig, axes = plt.subplots(2, 2, figsize=(11, 9))
+    for ax, axis_key in zip(axes.flat, axis_keys):
+        order = AXIS_ORDERS[axis_key]
+        labels = AXIS_TICK_LABELS[axis_key]
+        denom = AXIS_LEVEL_TOTALS[axis_key]
+        counts = {o: [0] * len(order) for o in outcomes}
+        for r in rows:
+            v = r[axis_key]
+            if v not in order:
+                continue
+            idx = order.index(v)
+            counts[r["outcome"]][idx] += 1
+
+        x = np.arange(len(order))
+        for o in outcomes:
+            shares = [
+                counts[o][i] / denom[lvl] * 100 for i, lvl in enumerate(order)
+            ]
+            ax.plot(
+                x, shares, marker="o", markersize=5, linewidth=1.9,
+                color=OUTCOME_COLORS[o], label=OUTCOME_LABELS[o],
+            )
+        ax.set_xticks(x)
+        rot = 30 if axis_key == "axis3_class" else 0
+        ha = "right" if axis_key == "axis3_class" else "center"
+        ax.set_xticklabels(labels, rotation=rot, ha=ha, fontsize=8)
+        ax.set_title(AXIS_HUMAN_NAMES[axis_key], fontsize=10)
+        ax.set_ylabel("доля от кейсов на этом уровне, %", fontsize=8)
+        ax.set_ylim(0, 100)
+        ax.grid(True, linestyle=":", alpha=0.35)
+
+    axes.flat[0].legend(fontsize=8, loc="upper right")
+    fig.suptitle(
+        "Распределение исходов по каждой оси — доля от общего n на уровне (не количество)",
+        fontsize=13,
+    )
+    fig.text(
+        0.5, 0.005,
+        "знаменатель — всё n на уровне (все 4 исхода), не только успех+провал; для класса"
+        " метода — собственное n класса. Версия по количеству: chart-lines-outcome-per-axis.png",
+        ha="center", fontsize=7.5, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.02, 1, 0.96))
+    fig.savefig(HERE / "chart-lines-outcome-share-per-axis.png", dpi=150)
+    plt.close(fig)
+    print("chart_lines_outcome_share_per_axis saved")
+
+
+# ---------------------------------------------------------------------------
+# Chart 15-17 (раунд 4, долевая пара к chart_groups_per_axis): те же 6 линий
+# (3 группы × успех/провал), но Y = доля от ВСЕХ кейсов на этом уровне оси
+# (across всех 7 классов, все 4 исхода) — не 100%-суммирующийся набор, а
+# "какую долю целого среза занимает именно эта группа+исход". Честный разрыв
+# сохранён: у группы вообще нет кейсов на уровне -> точка пропущена, а не 0%.
+# ---------------------------------------------------------------------------
+def chart_groups_per_axis_share(rows, axis_key, out_name, title, xlabel):
+    order = AXIS_ORDERS[axis_key]
+    labels = AXIS_TICK_LABELS[axis_key]
+    denom = AXIS_LEVEL_TOTALS[axis_key]
+    x = np.arange(len(order))
+
+    fig, ax = plt.subplots(figsize=(10, 6.5))
+    for g in GROUP_ORDER:
+        for outcome, ls, ru in (("success", "-", "успех"), ("failure", "--", "провал")):
+            ys = []
+            for lvl in order:
+                cell = [r for r in rows if group_of(r) == g and r[axis_key] == lvl]
+                if not cell:
+                    # честный разрыв: у группы вообще нет кейсов на этом уровне
+                    ys.append(None)
+                else:
+                    cnt = sum(1 for r in cell if r["outcome"] == outcome)
+                    ys.append(cnt / denom[lvl] * 100)
+            xs_plot = [xi for xi, yi in zip(x, ys) if yi is not None]
+            ys_plot = [yi for yi in ys if yi is not None]
+            ax.plot(
+                xs_plot, ys_plot, marker="o", markersize=6, linewidth=2.2,
+                linestyle=ls, color=GROUP_COLORS[g],
+                label=f"{GROUP_LABELS[g]} — {ru}",
+            )
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, fontsize=9)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel("доля от всех кейсов на этом уровне, %")
+    ax.set_ylim(0, 100)
+    ax.set_title(title, fontsize=12)
+    ax.grid(True, linestyle=":", alpha=0.3)
+    for spine in ("top", "right"):
+        ax.spines[spine].set_visible(False)
+    ax.legend(fontsize=8.5, loc="best")
+    fig.text(
+        0.5, 0.035,
+        "сплошная — успех, пунктир — провал; знаменатель — ВСЕ кейсы на этом уровне оси"
+        " (все 7 классов, все 4 исхода), не только 3 группы/успех+провал",
+        ha="center", fontsize=7, color="#555555",
+    )
+    fig.text(
+        0.5, 0.01,
+        "6 линий НЕ обязаны суммироваться в 100%; разрыв линии = у группы вообще нет"
+        " кейсов на этом уровне (не 0%)",
+        ha="center", fontsize=7, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.09, 1, 1))
+    fig.savefig(HERE / out_name, dpi=150)
+    plt.close(fig)
+    print(out_name, "saved")
+
+
+def chart_groups_axis1_uncertainty_share(rows):
+    chart_groups_per_axis_share(
+        rows, "axis1_level", "chart-groups-axis1-uncertainty-share.png",
+        "Классика vs МЛ vs большой ИИ: доля от кейсов на уровне неопределённости",
+        "Неопределённость задачи",
+    )
+
+
+def chart_groups_axis2_feedback_share(rows):
+    chart_groups_per_axis_share(
+        rows, "axis2_bucket", "chart-groups-axis2-feedback-share.png",
+        "Классика vs МЛ vs большой ИИ: доля от кейсов на уровне времени обратной связи",
+        "Время обратной связи",
+    )
+
+
+def chart_groups_axis4_blastradius_share(rows):
+    chart_groups_per_axis_share(
+        rows, "axis4_blast_radius", "chart-groups-axis4-blastradius-share.png",
+        "Классика vs МЛ vs большой ИИ: доля от кейсов на уровне цены ошибки",
+        "Цена ошибки (blast radius)",
+    )
+
+
 if __name__ == "__main__":
     rows = load_rows()
     chart1(rows)
@@ -806,3 +984,7 @@ if __name__ == "__main__":
     chart_wow_slope_successrate(rows)
     chart_wow_radar(rows)
     chart_wow_gate_dumbbell(rows)
+    chart_lines_outcome_share_per_axis(rows)
+    chart_groups_axis1_uncertainty_share(rows)
+    chart_groups_axis2_feedback_share(rows)
+    chart_groups_axis4_blastradius_share(rows)

@@ -56,10 +56,29 @@ net_score/n (не только модулю), а в полом центре ко
 даже когда размер/цвет теперь кодируют не объём, а успешность. Числа для обеих сеток (net_score/n
 по ячейке) сверены дважды двумя независимыми агентами в этой исследовательской линии и взяты как
 авторитетные (см. также `net_score_grid` выше — та же формула, тот же знаменатель).
+
+Раунд 7 (chart_headline_*, chart_industry_*, chart_tornado_*, chart_mechanism_detail; файл
+10-industriya-i-rejting-faktorov.md, issue #349): владелец — "как-то все еще не интересно 1 сделай
+оси более детальными 2 подумай какие еще графики и выводы можно показать, пока не видно прям бомбы".
+Четыре новых графика, все числа пересчитаны этой сессией НАПРЯМУЮ из reestr-reshenij.csv (не
+переданы вербатим, в отличие от файлов 08-09) по формуле (B) = success/(success+failure) ровно,
+partial/undetermined исключены из числителя И знаменателя — единственная формула успеха, используемая
+в этом раунде (см. 10-industriya-i-rejting-faktorov.md §0 про расхождение с 75,4%/18,2% файла 07,
+который использует другую, partial-взвешенную формулу (C) — это разница формул, не противоречие
+данных, n по статусу гейта совпадает между файлами буквально 143/112/120/46):
+  - chart-headline-gate-failure-attribution — две бублик-диаграммы (137 провалов / 108 успехов) по
+    статусу гейта, с crIMMсон callout "96,4% провалов без гейта" / "только 4 (2,9%) несмотря на гейт".
+  - chart-industry-success-rate — горизонтальный бар-чарт, 12 отраслей по ставке успеха, тонкие
+    ячейки (n<20) помечены штриховкой и звёздочкой.
+  - chart-tornado-axis-ranking — tornado-чарт, разброс (max−min) по 6 измерениям (гейт/отрасль/
+    blast radius/неопределённость/класс метода/время обратной связи), время обратной связи —
+    исходная гипотеза курса — внизу как самое слабое.
+  - chart-mechanism-detail — 2 панели, ставка успеха по механизму оси1 (U1-U4) и оси2 (F-A/F-B/F-C),
+    базовая линия "none" серым штрихом, U4 (n=1) помечен как не показательный.
 """
 import csv
 import random
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 import matplotlib
@@ -1064,6 +1083,432 @@ def chart_groups_axis4_blastradius_share(rows):
     )
 
 
+# ---------------------------------------------------------------------------
+# Раунд 7 (issue #349, файл 10-industriya-i-rejting-faktorov.md): владелец
+# попросил детальнее оси + "бомбу". Все числа здесь считаются НАПРЯМУЮ из rows
+# внутри каждой функции (не хардкод) по формуле (B) = success/(success+failure),
+# тем же способом, что _succ_rate выше (не путать с формулой (C) файла 07).
+# ---------------------------------------------------------------------------
+def _rate_and_n(sub):
+    """(ставка_в_%_или_None, success+failure, success, failure) — формула (B), чистая."""
+    s = sum(1 for r in sub if r["outcome"] == "success")
+    f = sum(1 for r in sub if r["outcome"] == "failure")
+    denom = s + f
+    rate = (s / denom * 100) if denom > 0 else None
+    return rate, denom, s, f
+
+
+INDUSTRY_LABELS_RU = {
+    "frontier-space": "Космос / фронтир",
+    "digital-twins": "Цифровые двойники",
+    "scientific-research": "Научные исследования",
+    "manufacturing": "Производство",
+    "trust-recognition": "Доверие / распознавание",
+    "agriculture": "Сельское хозяйство",
+    "logistics": "Логистика",
+    "cad-cam": "CAD/CAM",
+    "product-lifecycle": "Жизненный цикл продукта",
+    "telecom-cybersecurity": "Телеком / кибербезопасность",
+    "sdlc": "Разработка ПО (SDLC)",
+    "medical-decision": "Медицинские решения",
+}
+
+THIN_N = 20  # n(успех+провал) < этого порога -> ячейка помечается как тонкая
+
+
+# ---------------------------------------------------------------------------
+# Chart 18 ("бомба" 1/4): гейт x исход, два бублика рядом — 137 провалов и
+# 108 успехов, каждый разбит по статусу гейта. Самый чистый, immune-to-formula
+# результат всего раунда (Finding 1) — чистые счётчики, без ставок и делений.
+# ---------------------------------------------------------------------------
+GATE_STATUS_ORDER = ["no", "not-applicable", "yes", "unclear"]
+GATE_STATUS_LABELS = {
+    "no": "гейта нет",
+    "not-applicable": "гейт неприменим",
+    "yes": "гейт есть",
+    "unclear": "не указано",
+}
+GATE_STATUS_COLORS = {
+    "no": "#B23A48",
+    "not-applicable": "#D98C44",
+    "yes": "#2E7D32",
+    "unclear": "#B0B0B0",
+}
+
+
+def chart_headline_gate_failure_attribution(rows):
+    failures = [r for r in rows if r["outcome"] == "failure"]
+    successes = [r for r in rows if r["outcome"] == "success"]
+    print(
+        "chart_headline_gate_failure_attribution: n_failures =", len(failures),
+        "n_successes =", len(successes),
+    )
+
+    def counts_by_gate(sub):
+        c = Counter(r["axis4_gate"] for r in sub)
+        return [c.get(g, 0) for g in GATE_STATUS_ORDER]
+
+    fail_counts = counts_by_gate(failures)
+    succ_counts = counts_by_gate(successes)
+    no_gate_n = fail_counts[GATE_STATUS_ORDER.index("no")] + fail_counts[GATE_STATUS_ORDER.index("not-applicable")]
+    despite_gate_n = fail_counts[GATE_STATUS_ORDER.index("yes")]
+
+    fig, axes = plt.subplots(1, 2, figsize=(15.5, 9))
+
+    for ax, counts, n_total, title in (
+        (axes[0], fail_counts, len(failures), f"{len(failures)} провалов — по статусу гейта"),
+        (axes[1], succ_counts, len(successes), f"{len(successes)} успехов — по статусу гейта"),
+    ):
+        colors = [GATE_STATUS_COLORS[g] for g in GATE_STATUS_ORDER]
+        wedges, _texts, _autotexts = ax.pie(
+            counts, colors=colors, startangle=90, counterclock=False,
+            wedgeprops=dict(width=0.42, edgecolor="white", linewidth=1.8),
+            autopct=lambda pct: f"{pct:.1f}%" if pct >= 4 else "",
+            pctdistance=0.78,
+            textprops=dict(fontsize=10.5, fontweight="bold", color="#222222"),
+        )
+        small_idx = 0
+        for w, g, cnt in zip(wedges, GATE_STATUS_ORDER, counts):
+            if cnt == 0:
+                continue
+            ang = np.radians((w.theta2 + w.theta1) / 2)
+            x, y = np.cos(ang), np.sin(ang)
+            frac = cnt / n_total
+            if frac < 0.05:
+                # маленький клин (<5%) — отодвигаем дальше и разводим по перпендикуляру,
+                # иначе соседние маленькие клинья (здесь: "гейт есть" n=4 и "не указано"
+                # n=1 на диаграмме провалов) ложатся подписями друг на друга.
+                perp_x, perp_y = -y, x
+                sign = 1 if small_idx % 2 == 0 else -1
+                small_idx += 1
+                tx, ty = x * 1.75 + perp_x * 0.3 * sign, y * 1.75 + perp_y * 0.3 * sign
+            else:
+                tx, ty = x * 1.3, y * 1.3
+            ax.annotate(
+                f"{GATE_STATUS_LABELS[g]}\nn={cnt}",
+                xy=(x * 0.79, y * 0.79), xytext=(tx, ty),
+                ha="center", fontsize=9.5, color=GATE_STATUS_COLORS[g], fontweight="bold",
+                arrowprops=dict(arrowstyle="-", color=GATE_STATUS_COLORS[g], lw=1.0),
+            )
+        ax.set_title(title, fontsize=14, fontweight="bold", pad=22)
+        ax.text(0, 0, f"n={n_total}", ha="center", va="center", fontsize=16,
+                 fontweight="bold", color="#333333")
+
+    fig.suptitle(
+        "Где случились провалы и успехи — по статусу действующего гейта",
+        fontsize=17, fontweight="bold", y=0.985,
+    )
+    fig.text(
+        0.5, 0.065,
+        f"96,4% провалов ({no_gate_n} из {len(failures)}) — без действующего гейта\n"
+        f"Только {despite_gate_n} ({despite_gate_n/len(failures)*100:.1f}%) — несмотря на активный гейт",
+        ha="center", fontsize=15, fontweight="bold", color="#8C1C27",
+        bbox=dict(boxstyle="round,pad=0.6", facecolor="#FCE8E8", edgecolor="#8C1C27", linewidth=1.8),
+    )
+    fig.text(
+        0.5, 0.012,
+        "Формула — чистые счётчики (Finding 1), без деления и без выбора ставки успешности;"
+        " immune к проблеме несогласованности формул (см. файл 10 §0).",
+        ha="center", fontsize=7.8, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.14, 1, 0.94))
+    fig.savefig(HERE / "chart-headline-gate-failure-attribution.png", dpi=150)
+    plt.close(fig)
+    print("chart_headline_gate_failure_attribution saved")
+
+
+# ---------------------------------------------------------------------------
+# Chart 19 ("бомба" 2/4): отрасль как ось — 12 отраслей по ставке успеха
+# (формула B), сортировка по убыванию, тонкие ячейки (n<20) — штрихом+звёздочкой.
+# ---------------------------------------------------------------------------
+def chart_industry_success_rate(rows):
+    industries = sorted(set(r["industry"] for r in rows))
+    data = []
+    for ind in industries:
+        sub = [r for r in rows if r["industry"] == ind]
+        rate, denom, s, f = _rate_and_n(sub)
+        if rate is None:
+            continue
+        data.append((ind, round(rate, 1), denom))
+    data.sort(key=lambda t: -t[1])  # по убыванию ставки
+    order = list(reversed(data))  # по возрастанию -> позиция 0 (низ) .. n-1 (верх)
+
+    y = np.arange(len(order))
+    cmap = plt.cm.RdYlGn
+    norm = plt.Normalize(vmin=0, vmax=100)
+
+    fig, ax = plt.subplots(figsize=(11.5, 8.3))
+    bars = ax.barh(
+        y, [d[1] for d in order], color=[cmap(norm(d[1])) for d in order],
+        edgecolor="#333333", linewidth=0.8, height=0.62, zorder=3,
+    )
+    for bar, (ind, rate, denom) in zip(bars, order):
+        thin = denom < THIN_N
+        if thin:
+            bar.set_hatch("//")
+            bar.set_edgecolor("#555555")
+        ax.text(
+            rate + 1.8, bar.get_y() + bar.get_height() / 2,
+            f"n={denom}" + (" *" if thin else ""),
+            va="center", fontsize=8.8, color="#333333",
+        )
+
+    ax.set_yticks(y)
+    ax.set_yticklabels([
+        INDUSTRY_LABELS_RU.get(ind, ind) + (" *" if denom < THIN_N else "")
+        for ind, rate, denom in order
+    ], fontsize=9.8)
+    ax.set_xlim(0, 118)
+    ax.set_xlabel("доля успеха среди (успех+провал), % — формула (B)")
+    ax.set_title(
+        "Доля успеха по отрасли: разброс шире, чем у любой из 4 осей курса", fontsize=13.5,
+    )
+    ax.grid(True, axis="x", linestyle=":", alpha=0.3)
+    for spine in ("top", "right"):
+        ax.spines[spine].set_visible(False)
+
+    lo_ind, lo_rate, lo_n = order[0]
+    hi_ind, hi_rate, hi_n = order[-1]
+    # Обе подписи ставятся в пустое пространство справа/снизу от коротких баров
+    # того же ряда (не поверх соседних баров), ha="left" от точки привязки.
+    ax.annotate(
+        f"крайнее значение диапазона,\nn={hi_n} — тонкая ячейка",
+        xy=(hi_rate, len(order) - 1), xytext=(103, len(order) - 2.7),
+        ha="left", fontsize=8.3, color="#8C1C27", fontweight="bold",
+        arrowprops=dict(arrowstyle="->", color="#8C1C27"),
+    )
+    ax.annotate(
+        f"самая тонкая ячейка раунда,\nn={lo_n}",
+        xy=(lo_rate, 0), xytext=(48, 0.4),
+        ha="left", fontsize=8.3, color="#8C1C27", fontweight="bold",
+        arrowprops=dict(arrowstyle="->", color="#8C1C27"),
+    )
+
+    fig.text(
+        0.5, 0.012,
+        f"* n(успех+провал) < {THIN_N} — тонкая ячейка: несколько иначе размеченных кейсов могли бы"
+        " заметно сдвинуть эту ставку. Формула — чистая success/(success+failure) (B), см. файл 10 §0.",
+        ha="center", fontsize=7.6, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.045, 1, 1))
+    fig.savefig(HERE / "chart-industry-success-rate.png", dpi=150)
+    plt.close(fig)
+    print("chart_industry_success_rate saved")
+    for ind, rate, denom in data:
+        print(f"  {ind}: {rate}% n={denom}")
+
+
+# ---------------------------------------------------------------------------
+# Chart 20 ("бомба" 3/4): tornado — разброс (max-min) ставки успеха (формула B)
+# по 6 измерениям; время обратной связи (исходная гипотеза курса) подсвечено
+# отдельным цветом и поставлено внизу как самое слабое из проверенных.
+# ---------------------------------------------------------------------------
+def _industry_extremes(rows):
+    industries = sorted(set(r["industry"] for r in rows))
+    rates = []
+    for ind in industries:
+        sub = [r for r in rows if r["industry"] == ind]
+        rate, denom, s, f = _rate_and_n(sub)
+        if rate is not None:
+            rates.append((ind, round(rate, 1), denom))
+    rates.sort(key=lambda t: t[1])
+    return rates[0], rates[-1]
+
+
+def chart_tornado_axis_ranking(rows):
+    dims = []
+
+    def rate_n(sub):
+        rate, denom, s, f = _rate_and_n(sub)
+        return round(rate, 1), denom
+
+    rate_yes, n_yes = rate_n([r for r in rows if r["axis4_gate"] == "yes"])
+    rate_no, n_no = rate_n([r for r in rows if r["axis4_gate"] == "no"])
+    dims.append(dict(
+        name="Гейт/обратимость", rng=round(rate_yes - rate_no, 1),
+        lo_label=f"нет гейта\n{rate_no}% (n={n_no})",
+        hi_label=f"гейт есть\n{rate_yes}% (n={n_yes})",
+        highlight=False,
+    ))
+
+    (ind_lo, rate_lo, n_lo), (ind_hi, rate_hi, n_hi) = _industry_extremes(rows)
+    dims.append(dict(
+        name="Отрасль", rng=round(rate_hi - rate_lo, 1),
+        lo_label=f"{INDUSTRY_LABELS_RU.get(ind_lo, ind_lo)}\n{rate_lo}% (n={n_lo})",
+        hi_label=f"{INDUSTRY_LABELS_RU.get(ind_hi, ind_hi)}\n{rate_hi}% (n={n_hi})",
+        highlight=False,
+    ))
+
+    rate_low, n_low = rate_n([r for r in rows if r["axis4_blast_radius"] == "low"])
+    rate_high, n_high = rate_n([r for r in rows if r["axis4_blast_radius"] == "high"])
+    dims.append(dict(
+        name="Цена ошибки\n(blast radius)", rng=round(rate_low - rate_high, 1),
+        lo_label=f"высокая\n{rate_high}% (n={n_high})",
+        hi_label=f"низкая\n{rate_low}% (n={n_low})",
+        highlight=False,
+    ))
+
+    rate_a1low, n_a1low = rate_n([r for r in rows if r["axis1_level"] == "low"])
+    rate_a1ext, n_a1ext = rate_n([r for r in rows if r["axis1_level"] == "extreme"])
+    dims.append(dict(
+        name="Неопределённость", rng=round(rate_a1low - rate_a1ext, 1),
+        lo_label=f"экстремальная\n{rate_a1ext}% (n={n_a1ext})",
+        hi_label=f"низкая\n{rate_a1low}% (n={n_a1low})",
+        highlight=False,
+    ))
+
+    rate_ml, n_ml = rate_n([r for r in rows if group_of(r) == "ml"])
+    rate_bigai, n_bigai = rate_n([r for r in rows if group_of(r) == "bigai"])
+    dims.append(dict(
+        name="Класс метода\n(3 группы)", rng=round(rate_ml - rate_bigai, 1),
+        lo_label=f"большой ИИ\n{rate_bigai}% (n={n_bigai})",
+        hi_label=f"МЛ\n{rate_ml}% (n={n_ml})",
+        highlight=False,
+    ))
+
+    rate_fast, n_fast = rate_n([r for r in rows if r["axis2_bucket"] == "seconds-minutes"])
+    rate_slow, n_slow = rate_n([r for r in rows if r["axis2_bucket"] == "season-years"])
+    dims.append(dict(
+        name="Время обратной связи\n(исходная гипотеза курса)",
+        rng=round(rate_fast - rate_slow, 1),
+        lo_label=f"сезон-годы\n{rate_slow}% (n={n_slow})",
+        hi_label=f"секунды-минуты\n{rate_fast}% (n={n_fast})",
+        highlight=True,
+    ))
+
+    for d in dims:
+        print("chart_tornado_axis_ranking:", d["name"].replace("\n", " "), "rng=", d["rng"])
+
+    dims.sort(key=lambda d: d["rng"])  # самый маленький внизу (y=0) -> самый большой наверху
+
+    y = np.arange(len(dims))
+    fig, ax = plt.subplots(figsize=(12, 7.8))
+    for yi, d in zip(y, dims):
+        color = "#C1272D" if d["highlight"] else "#1C7293"
+        ax.barh(yi, d["rng"], color=color, edgecolor="#333333", linewidth=0.8,
+                height=0.56, zorder=3)
+        ax.text(-2, yi, d["lo_label"], ha="right", va="center", fontsize=8.0, color="#444444")
+        ax.text(d["rng"] + 2, yi, d["hi_label"], ha="left", va="center", fontsize=8.0,
+                color="#444444", fontweight="bold" if d["highlight"] else "normal")
+        ax.text(d["rng"] / 2, yi, f"{d['rng']:.1f} п.п.", ha="center", va="center",
+                fontsize=9.8, color="white", fontweight="bold", zorder=4)
+
+    ax.set_yticks(y)
+    ax.set_yticklabels([d["name"] for d in dims], fontsize=9.8)
+    ax.set_xlim(-42, 128)
+    ax.set_xlabel("разброс доли успеха (max − min), п.п. — формула (B)")
+    ax.set_title(
+        "Какое измерение больше всего разделяет успех и провал — разброс по 6 измерениям",
+        fontsize=12.8,
+    )
+    ax.grid(True, axis="x", linestyle=":", alpha=0.25)
+    for spine in ("top", "right", "left"):
+        ax.spines[spine].set_visible(False)
+
+    fig.text(
+        0.5, 0.06,
+        "↓ Время обратной связи — исходная гипотеза этой исследовательской линии — внизу специально:\n"
+        "из всех 6 проверенных измерений у неё самый маленький разброс ставки успеха.",
+        ha="center", fontsize=8.5, color="#C1272D", fontweight="bold",
+    )
+    fig.text(
+        0.5, 0.012,
+        "Разброс = round(ставка_max,1) − round(ставка_min,1); «отрасль» и «класс метода» считаются"
+        " по тем же n, что в файле 10 §2/§3.",
+        ha="center", fontsize=7.3, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.13, 1, 1))
+    fig.savefig(HERE / "chart-tornado-axis-ranking.png", dpi=150)
+    plt.close(fig)
+    print("chart_tornado_axis_ranking saved")
+
+
+# ---------------------------------------------------------------------------
+# Chart 21 ("бомба" 4/4): детализация механизмов — ставка успеха (формула B)
+# по axis1_mechanism (U1-U4 vs none) и axis2_mechanism (F-A/F-B/F-C vs none),
+# "none" — серая базовая линия, U4 (n=1) помечен как не показательный.
+# ---------------------------------------------------------------------------
+MECH1_ORDER = ["none", "U1", "U2", "U3", "U4"]
+MECH1_LABELS = {
+    "none": "нет именованного\nмеханизма",
+    "U1": "U1 — алеаторный\nпотолок",
+    "U2": "U2 — нестационар-\nность",
+    "U3": "U3 — инженерное\nузкое место",
+    "U4": "U4 — доверие/\nаверсия",
+}
+MECH2_ORDER = ["none", "F-A", "F-B", "F-C"]
+MECH2_LABELS = {
+    "none": "нет именованного\nмеханизма",
+    "F-A": "F-A — чистая\nзадержка",
+    "F-B": "F-B — разрежен-\nность/конфаундинг",
+    "F-C": "F-C — жёсткое\nреальное время",
+}
+
+
+def chart_mechanism_detail(rows):
+    fig, axes = plt.subplots(1, 2, figsize=(13.5, 6.8))
+    norm = plt.Normalize(vmin=0, vmax=100)
+
+    for ax, key, order, labels, title in (
+        (axes[0], "axis1_mechanism", MECH1_ORDER, MECH1_LABELS,
+         "Механизм неопределённости (ось 1)"),
+        (axes[1], "axis2_mechanism", MECH2_ORDER, MECH2_LABELS,
+         "Механизм обратной связи (ось 2)"),
+    ):
+        rates, denoms = [], []
+        for lvl in order:
+            sub = [r for r in rows if r[key] == lvl]
+            rate, denom, s, f = _rate_and_n(sub)
+            rates.append(round(rate, 1) if rate is not None else 0.0)
+            denoms.append(denom)
+            print(f"chart_mechanism_detail: {key}={lvl} rate={rate} n={denom}")
+
+        x = np.arange(len(order))
+        colors, hatches = [], []
+        for lvl, rate in zip(order, rates):
+            if lvl == "none":
+                colors.append("#B0B0B0")
+                hatches.append("//")
+            else:
+                colors.append(plt.cm.RdYlGn(norm(rate)))
+                hatches.append(None)
+
+        bars = ax.bar(x, rates, color=colors, edgecolor="#333333", linewidth=0.8)
+        for bar, hatch in zip(bars, hatches):
+            if hatch:
+                bar.set_hatch(hatch)
+
+        for xi, rate, denom, lvl in zip(x, rates, denoms, order):
+            label = f"{rate:.1f}%\nn={denom}"
+            if lvl == "U4":
+                label += "\n(n=1, не\nпоказательно)"
+            ax.text(xi, rate + 2.5, label, ha="center", fontsize=7.6, color="#333333")
+
+        ax.set_xticks(x)
+        ax.set_xticklabels([labels[lvl] for lvl in order], fontsize=8.2)
+        ax.set_ylim(0, 80)
+        ax.set_ylabel("доля успеха среди (успех+провал), % — формула (B)", fontsize=8.5)
+        ax.set_title(title, fontsize=11.8)
+        ax.grid(True, axis="y", linestyle=":", alpha=0.3)
+        for spine in ("top", "right"):
+            ax.spines[spine].set_visible(False)
+
+    fig.suptitle(
+        "Детализация осей: именованный механизм снижает успех резче, чем просто уровень оси",
+        fontsize=13,
+    )
+    fig.text(
+        0.5, 0.012,
+        "серый/штрих — базовая линия «механизм не назван»; U4 помечен отдельно: при n=1 это один"
+        " кейс, не оценка доли.",
+        ha="center", fontsize=7.6, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.04, 1, 0.92))
+    fig.savefig(HERE / "chart-mechanism-detail.png", dpi=150)
+    plt.close(fig)
+    print("chart_mechanism_detail saved")
+
+
 if __name__ == "__main__":
     rows = load_rows()
     chart_donut_axisA_axisB(rows)
@@ -1084,3 +1529,7 @@ if __name__ == "__main__":
     chart_groups_axis1_uncertainty_share(rows)
     chart_groups_axis2_feedback_share(rows)
     chart_groups_axis4_blastradius_share(rows)
+    chart_headline_gate_failure_attribution(rows)
+    chart_industry_success_rate(rows)
+    chart_tornado_axis_ranking(rows)
+    chart_mechanism_detail(rows)

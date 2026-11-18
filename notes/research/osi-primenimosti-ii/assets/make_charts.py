@@ -15,6 +15,25 @@ reestr-reshenij.csv для issue #349.
 - за неуспех и просто количество проектов)... + давай покрутим распределения успешных и
 неуспешных проектов по разным осям - точками, график количества по каждой оси, поверхность
 по двум осям".
+
+Раунд 3 (chart_lines_*, chart_groups_*, chart_wow_*): владелец попросил "а где графики
+отдельно по количеству успехов/провалов? барчарты переделай на графики и сделай в таких же
+(по каждой оси) график успеха и провала классики, МЛ, большого ИИ, ну и пофантазируй ещё
+графиков пока нет вау". Три части: (а) chart_dist_counts_per_axis (сгруппированные столбцы)
+заменён на chart_lines_outcome_per_axis (линии — читается тренд роста/падения); (б) три
+новых chart_groups_axis{1,2,4}_* — по 6 линий (3 группы метода × успех/провал) на каждую из
+трёх осей (ось 3 пропущена — она и определяет группы); (в) два "wow"-графика:
+chart-wow-slope-successrate (bump/slope-chart, успех-доля по 4 уровням неопределённости) и
+chart-wow-radar (radar/spider на 5 нормированных метриках) + один опциональный третий —
+chart-wow-gate-dumbbell (dumbbell, эффект гейта по группам — проверяет, держится ли самый
+сильный предиктор исследования (гейт/обратимость, файл 07 §1) одинаково во всех трёх классах
+методов).
+
+Определение групп метода для раунда 3 (ровно так, как попросил владелец — классика / МЛ /
+большой ИИ; deep-learning/sensor-fusion/hybrid сознательно не входят в это сравнение):
+  Классика    = axis3_class == "rule-based"
+  МЛ          = axis3_class == "classical-ml"
+  Большой ИИ  = axis3_class in ("foundation-model", "agentic-llm")
 """
 import csv
 import random
@@ -71,6 +90,31 @@ AXIS3_ORDER = [
     "foundation-model",
 ]
 AXIS3_ORDINAL = {name: i + 1 for i, name in enumerate(AXIS3_ORDER)}
+
+# --- Раунд 3: группы метода (владелец назвал ровно эти три) ---------------
+GROUP_ORDER = ["classic", "ml", "bigai"]
+GROUP_LABELS = {"classic": "Классика", "ml": "МЛ", "bigai": "Большой ИИ"}
+GROUP_COLORS = {
+    "classic": "#5B6472",  # серо-сланцевый
+    "ml": "#1C7293",       # тил/синий (вторичный цвет палитры курса)
+    "bigai": "#8C1C27",    # тёмно-бордовый
+}
+
+
+def group_of(row):
+    """classic = rule-based; ml = classical-ml; bigai = foundation-model | agentic-llm.
+
+    deep-learning / sensor-fusion / hybrid / unclear -> None (не входят в это
+    3-стороннее сравнение — владелец назвал ровно эти три группы).
+    """
+    c = row["axis3_class"]
+    if c == "rule-based":
+        return "classic"
+    if c == "classical-ml":
+        return "ml"
+    if c in ("foundation-model", "agentic-llm"):
+        return "bigai"
+    return None
 
 
 def load_rows():
@@ -389,9 +433,10 @@ def chart_surface_axisA_axisC(rows):
 
 
 # ---------------------------------------------------------------------------
-# Chart 6: 2x2 — количество кейсов по исходу, по каждой оси (столбцы)
+# Chart 6 (раунд 3, заменяет старый bar-график): 2x2 — количество кейсов по
+# исходу, по каждой оси, ЛИНИЯМИ (а не столбцами) — тренд виден напрямую.
 # ---------------------------------------------------------------------------
-def chart_dist_counts_per_axis(rows):
+def chart_lines_outcome_per_axis(rows):
     axis_keys = ["axis1_level", "axis2_bucket", "axis3_class", "axis4_blast_radius"]
     outcomes = ["success", "partial", "failure", "undetermined"]
 
@@ -408,10 +453,9 @@ def chart_dist_counts_per_axis(rows):
             counts[r["outcome"]][idx] += 1
 
         x = np.arange(len(order))
-        width = 0.2
-        for i, o in enumerate(outcomes):
-            ax.bar(
-                x + (i - 1.5) * width, counts[o], width,
+        for o in outcomes:
+            ax.plot(
+                x, counts[o], marker="o", markersize=5, linewidth=1.9,
                 color=OUTCOME_COLORS[o], label=OUTCOME_LABELS[o],
             )
         ax.set_xticks(x)
@@ -420,14 +464,14 @@ def chart_dist_counts_per_axis(rows):
         ax.set_xticklabels(labels, rotation=rot, ha=ha, fontsize=8)
         ax.set_title(AXIS_HUMAN_NAMES[axis_key], fontsize=10)
         ax.set_ylabel("количество кейсов", fontsize=8)
-        ax.grid(True, axis="y", linestyle=":", alpha=0.35)
+        ax.grid(True, linestyle=":", alpha=0.35)
 
     axes.flat[0].legend(fontsize=8, loc="upper right")
-    fig.suptitle("Распределение исходов по каждой оси — количество проектов", fontsize=13)
+    fig.suptitle("Распределение исходов по каждой оси — количество проектов (линии)", fontsize=13)
     fig.tight_layout(rect=(0, 0, 1, 0.96))
-    fig.savefig(HERE / "chart-dist-counts-per-axis.png", dpi=150)
+    fig.savefig(HERE / "chart-lines-outcome-per-axis.png", dpi=150)
     plt.close(fig)
-    print("chart_dist_counts_per_axis saved")
+    print("chart_lines_outcome_per_axis saved")
 
 
 # ---------------------------------------------------------------------------
@@ -474,6 +518,279 @@ def chart_dist_points_per_axis(rows):
     print("chart_dist_points_per_axis saved")
 
 
+def _succ_rate(sub):
+    """success/(success+failure)*100, или None если знаменатель 0. Partial/undetermined
+    игнорируются по запросу владельца — "формула простая", без спора о весах."""
+    s = sum(1 for r in sub if r["outcome"] == "success")
+    f = sum(1 for r in sub if r["outcome"] == "failure")
+    return (s / (s + f) * 100) if (s + f) > 0 else None
+
+
+# ---------------------------------------------------------------------------
+# Chart 8-10 (раунд 3): 3 группы метода (классика/МЛ/большой ИИ) × успех/провал
+# по каждой из осей 1/2/4 (ось 3 пропущена — она же определяет группы).
+# ---------------------------------------------------------------------------
+def chart_groups_per_axis(rows, axis_key, out_name, title, xlabel):
+    order = AXIS_ORDERS[axis_key]
+    labels = AXIS_TICK_LABELS[axis_key]
+    x = np.arange(len(order))
+
+    fig, ax = plt.subplots(figsize=(10, 6.5))
+    for g in GROUP_ORDER:
+        for outcome, ls, ru in (("success", "-", "успех"), ("failure", "--", "провал")):
+            ys = []
+            for lvl in order:
+                cell = [r for r in rows if group_of(r) == g and r[axis_key] == lvl]
+                # честный разрыв: группы вообще нет на этом уровне (n=0) -> None
+                # (а не "0 успехов при наличии кейсов" — это настоящий 0, рисуется).
+                ys.append(
+                    sum(1 for r in cell if r["outcome"] == outcome) if cell else None
+                )
+            xs_plot = [xi for xi, yi in zip(x, ys) if yi is not None]
+            ys_plot = [yi for yi in ys if yi is not None]
+            ax.plot(
+                xs_plot, ys_plot, marker="o", markersize=6, linewidth=2.2,
+                linestyle=ls, color=GROUP_COLORS[g],
+                label=f"{GROUP_LABELS[g]} — {ru}",
+            )
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, fontsize=9)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel("количество кейсов")
+    ax.set_title(title, fontsize=12)
+    ax.grid(True, linestyle=":", alpha=0.3)
+    for spine in ("top", "right"):
+        ax.spines[spine].set_visible(False)
+    ax.legend(fontsize=8.5, loc="best")
+    fig.text(
+        0.5, 0.01,
+        "сплошная — успех, пунктир — провал; цвет — группа метода; разрыв линии = у группы"
+        " вообще нет кейсов на этом уровне (не 0 успехов/провалов)",
+        ha="center", fontsize=7.5, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.04, 1, 1))
+    fig.savefig(HERE / out_name, dpi=150)
+    plt.close(fig)
+    print(out_name, "saved")
+
+
+def chart_groups_axis1_uncertainty(rows):
+    chart_groups_per_axis(
+        rows, "axis1_level", "chart-groups-axis1-uncertainty.png",
+        "Классика vs МЛ vs большой ИИ: успех и провал по неопределённости",
+        "Неопределённость задачи",
+    )
+
+
+def chart_groups_axis2_feedback(rows):
+    chart_groups_per_axis(
+        rows, "axis2_bucket", "chart-groups-axis2-feedback.png",
+        "Классика vs МЛ vs большой ИИ: успех и провал по времени обратной связи",
+        "Время обратной связи",
+    )
+
+
+def chart_groups_axis4_blastradius(rows):
+    chart_groups_per_axis(
+        rows, "axis4_blast_radius", "chart-groups-axis4-blastradius.png",
+        "Классика vs МЛ vs большой ИИ: успех и провал по цене ошибки",
+        "Цена ошибки (blast radius)",
+    )
+
+
+# ---------------------------------------------------------------------------
+# Chart 11 ("wow" 3a): bump/slope-chart — доля успеха по неопределённости,
+# один скос-график на все три группы, подписи прямо у концов линий.
+# ---------------------------------------------------------------------------
+def chart_wow_slope_successrate(rows):
+    order = AXIS_ORDERS["axis1_level"]
+    labels = AXIS1_LABELS[1:]
+    x = np.arange(len(order))
+
+    fig, ax = plt.subplots(figsize=(9, 7))
+
+    # у классики и МЛ конец линии (high, x=2) совпадает в точности на 0% —
+    # смещаем подписи вручную, чтобы не легли друг на друга.
+    end_label_offset = {"classic": (10, -16), "ml": (10, 14), "bigai": (10, 0)}
+    start_label_offset = {"classic": (-10, 10), "ml": (-10, -4), "bigai": (-10, -14)}
+
+    for g in GROUP_ORDER:
+        rows_g = [r for r in rows if group_of(r) == g]
+        ys = []
+        for lvl in order:
+            cell = [r for r in rows_g if r["axis1_level"] == lvl]
+            ys.append(_succ_rate(cell) if cell else None)
+        xs_plot = [xi for xi, yi in zip(x, ys) if yi is not None]
+        ys_plot = [yi for yi in ys if yi is not None]
+
+        ax.plot(
+            xs_plot, ys_plot, marker="o", markersize=8, linewidth=2.6,
+            color=GROUP_COLORS[g], zorder=3,
+        )
+        ax.annotate(
+            f"{GROUP_LABELS[g]} — {ys_plot[0]:.0f}%",
+            (xs_plot[0], ys_plot[0]), textcoords="offset points",
+            xytext=start_label_offset[g], ha="right", fontsize=9.5,
+            color=GROUP_COLORS[g], fontweight="bold",
+        )
+        ax.annotate(
+            f"{ys_plot[-1]:.0f}%",
+            (xs_plot[-1], ys_plot[-1]), textcoords="offset points",
+            xytext=end_label_offset[g], ha="left", fontsize=9.5,
+            color=GROUP_COLORS[g], fontweight="bold",
+        )
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, fontsize=10)
+    ax.set_xlim(-0.35, len(order) - 0.4)
+    ax.set_ylim(-5, 100)
+    ax.set_ylabel("доля успеха среди (успех+провал), %")
+    ax.set_title(
+        "Доля успеха по неопределённости: классика vs МЛ vs большой ИИ", fontsize=12
+    )
+    for spine in ("top", "right"):
+        ax.spines[spine].set_visible(False)
+    ax.grid(True, axis="y", linestyle=":", alpha=0.25)
+    fig.text(
+        0.5, 0.01,
+        "доля = успех / (успех+провал), частичный/неопределённый не учтены; точка"
+        " пропущена там, где у группы вообще нет кейсов на этом уровне (не 0%)",
+        ha="center", fontsize=7.5, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    fig.savefig(HERE / "chart-wow-slope-successrate.png", dpi=150)
+    plt.close(fig)
+    print("chart_wow_slope_successrate saved")
+
+
+# ---------------------------------------------------------------------------
+# Chart 12 ("wow" 3b): radar/spider — 3 группы × 5 нормированных метрик 0-100.
+# ---------------------------------------------------------------------------
+def chart_wow_radar(rows):
+    axis1_order = AXIS_ORDERS["axis1_level"]
+    radar_vals = {}
+    debug_rows = []
+
+    for g in GROUP_ORDER:
+        rows_g = [r for r in rows if group_of(r) == g]
+
+        low_sub = [r for r in rows_g if r["axis1_level"] == "low"]
+        mod_sub = [r for r in rows_g if r["axis1_level"] == "moderate"]
+        m1 = _succ_rate(low_sub) or 0.0
+        m2 = _succ_rate(mod_sub) or 0.0
+
+        ceiling = None
+        for lvl in axis1_order:
+            if any(r["axis1_level"] == lvl for r in rows_g):
+                ceiling = lvl
+        low_rate = _succ_rate(low_sub)
+        if not low_rate:
+            m3 = 0.0  # низкая база 0/None -> метрика 0, без деления на ноль
+        else:
+            ceiling_sub = [r for r in rows_g if r["axis1_level"] == ceiling]
+            ceiling_rate = _succ_rate(ceiling_sub) or 0.0
+            decline = (low_rate - ceiling_rate) / low_rate
+            m3 = max(0.0, 100.0 - 100.0 * decline)
+
+        highext_n = sum(1 for r in rows_g if r["axis1_level"] in ("high", "extreme"))
+        total_n = sum(1 for r in rows_g if r["axis1_level"] in axis1_order)
+        m4 = (highext_n / total_n * 100) if total_n > 0 else 0.0
+
+        gate_yes = sum(1 for r in rows_g if r["axis4_gate"] == "yes")
+        gate_no = sum(1 for r in rows_g if r["axis4_gate"] == "no")
+        m5 = (gate_yes / (gate_yes + gate_no) * 100) if (gate_yes + gate_no) > 0 else 0.0
+
+        radar_vals[g] = [m1, m2, m3, m4, m5]
+        debug_rows.append((g, ceiling, m1, m2, m3, m4, m5))
+
+    for row in debug_rows:
+        print("chart_wow_radar", row)
+
+    metric_labels = [
+        "Успех\n(низкая неопр.)",
+        "Успех\n(умеренная неопр.)",
+        "Устойчивость\nк росту неопр.",
+        "Доля попыток\nпри выс. неопр.",
+        "Доля кейсов\nс гейтом",
+    ]
+    n = len(metric_labels)
+    angles = np.linspace(0, 2 * np.pi, n, endpoint=False).tolist()
+    angles += angles[:1]
+
+    fig, ax = plt.subplots(figsize=(8.5, 8.5), subplot_kw=dict(polar=True))
+    for g in GROUP_ORDER:
+        data = radar_vals[g] + radar_vals[g][:1]
+        ax.plot(
+            angles, data, linewidth=2.3, marker="o", markersize=5,
+            color=GROUP_COLORS[g], label=GROUP_LABELS[g],
+        )
+        ax.fill(angles, data, color=GROUP_COLORS[g], alpha=0.1)
+
+    ax.set_xticks(angles[:-1])
+    ax.set_xticklabels(metric_labels, fontsize=9)
+    ax.set_ylim(0, 100)
+    ax.set_yticks([20, 40, 60, 80, 100])
+    ax.set_yticklabels(["20", "40", "60", "80", "100"], fontsize=7, color="#777777")
+    ax.set_title(
+        "Классика vs МЛ vs большой ИИ — 5 метрик применимости (0-100)",
+        fontsize=12, pad=24,
+    )
+    ax.legend(loc="upper right", bbox_to_anchor=(1.3, 1.12), fontsize=9.5)
+    fig.tight_layout()
+    fig.savefig(HERE / "chart-wow-radar.png", dpi=150)
+    plt.close(fig)
+    print("chart_wow_radar saved")
+
+
+# ---------------------------------------------------------------------------
+# Chart 13 ("wow" 3c, опциональный): dumbbell — эффект гейта (самый сильный
+# предиктор исхода во всём исследовании, файл 07 §1) по трём группам метода.
+# Проверяет: держится ли этот эффект одинаково у классики/МЛ/большого ИИ,
+# или он — артефакт того, что именно большой ИИ чаще работает без гейта.
+# ---------------------------------------------------------------------------
+def chart_wow_gate_dumbbell(rows):
+    fig, ax = plt.subplots(figsize=(9, 5.2))
+    y_positions = np.arange(len(GROUP_ORDER))
+
+    for yi, g in zip(y_positions, GROUP_ORDER):
+        rows_g = [r for r in rows if group_of(r) == g]
+        r_no = _succ_rate([r for r in rows_g if r["axis4_gate"] == "no"])
+        r_yes = _succ_rate([r for r in rows_g if r["axis4_gate"] == "yes"])
+        ax.plot([r_no, r_yes], [yi, yi], color=GROUP_COLORS[g], linewidth=2.6, zorder=2)
+        ax.scatter([r_no], [yi], color=GROUP_COLORS[g], s=150, marker="o",
+                   alpha=0.55, zorder=3, edgecolors="none")
+        ax.scatter([r_yes], [yi], color=GROUP_COLORS[g], s=150, marker="D", zorder=3)
+        ax.annotate(f"{r_no:.0f}%", (r_no, yi), textcoords="offset points",
+                    xytext=(0, -16), ha="center", fontsize=9.5)
+        ax.annotate(f"{r_yes:.0f}%", (r_yes, yi), textcoords="offset points",
+                    xytext=(0, 10), ha="center", fontsize=9.5)
+
+    ax.set_yticks(y_positions)
+    ax.set_yticklabels([GROUP_LABELS[g] for g in GROUP_ORDER], fontsize=11)
+    ax.set_ylim(-0.6, len(GROUP_ORDER) - 0.4)
+    ax.set_xlim(-5, 105)
+    ax.set_xlabel("доля успеха среди (успех+провал), %")
+    ax.set_title(
+        "Эффект гейта держится во всех трёх группах метода: ○ без гейта → ◆ с гейтом",
+        fontsize=11,
+    )
+    ax.grid(True, axis="x", linestyle=":", alpha=0.3)
+    for spine in ("top", "right"):
+        ax.spines[spine].set_visible(False)
+    legend_elems = [
+        plt.Line2D([0], [0], marker="o", color="none", markerfacecolor="#888888",
+                   markersize=10, label="без гейта"),
+        plt.Line2D([0], [0], marker="D", color="none", markerfacecolor="#888888",
+                   markersize=9, label="с гейтом"),
+    ]
+    ax.legend(handles=legend_elems, loc="lower right", fontsize=9)
+    fig.tight_layout()
+    fig.savefig(HERE / "chart-wow-gate-dumbbell.png", dpi=150)
+    plt.close(fig)
+    print("chart_wow_gate_dumbbell saved")
+
+
 if __name__ == "__main__":
     rows = load_rows()
     chart1(rows)
@@ -481,5 +798,11 @@ if __name__ == "__main__":
     chart3(rows)
     chart_surface_axisA_axisB(rows)
     chart_surface_axisA_axisC(rows)
-    chart_dist_counts_per_axis(rows)
+    chart_lines_outcome_per_axis(rows)
     chart_dist_points_per_axis(rows)
+    chart_groups_axis1_uncertainty(rows)
+    chart_groups_axis2_feedback(rows)
+    chart_groups_axis4_blastradius(rows)
+    chart_wow_slope_successrate(rows)
+    chart_wow_radar(rows)
+    chart_wow_gate_dumbbell(rows)

@@ -1,7 +1,8 @@
 """
-Part 3: s22-s38 — L3 Животное + L4 Цепочка + Р4-bis Среда + L5 Полка + closing + Q&A.
-18 слайдов (issue #340: +s23c SenseHub engineering/AI split; 4 дивайдера s22/s27/
-s33/s36 получили hero-фото через divider_hero()).
+Part 3: s22-s38 — L3 Животное + Р4 Среда + L4 Полка + closing + Q&A.
+12 слайдов (issue #340 v3.9: старый Раздел 4 «Агрологистика и товарный
+трейдинг» — s27 divider + s28-s32 — удалён целиком по указанию владельца;
+3 дивайдера s22/s33/s36 получили hero-фото через divider_hero()).
 """
 
 def build_part3(prs, H):
@@ -23,7 +24,8 @@ def build_part3(prs, H):
     def divider_hero(number, title, frame_phrase, current_section, caption,
                       image_filename, image_caption, title_size=22):
         """Section divider с hero-фото справа (issue #340, owner note: добавить
-        иллюстрации на 4 дивайдера — s22/s27/s33/s36). Левая колонка — компактный
+        иллюстрации на дивайдеры — s22/s33/s36, было 4 с s27, удалён v3.9).
+        Левая колонка — компактный
         decorative number + title + frame_phrase; правая — real photo (6-tier
         acquisition, Wikimedia CC) в ocean box, ≥40% площади слайда, с caption-
         источником. Caption-строка статистики раздела и progress bar — тот же
@@ -516,53 +518,92 @@ def build_part3(prs, H):
     # без крупных реальных фото). Decorative icon заменён реальным фото
     # новорождённого телёнка (Tier 2, Wikimedia Commons) — предмет именно
     # того контроля, который детектирует CV-система Connectome.ai.
-    ocean_box(s, 0.6, 1.5, 6.0, 5.0, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 0.85, 1.65, 5.5, 0.5, "Работает — Connectome.ai",
-             size=15, bold=True, color=DEEP)
+    # Row1 (works/under-question) compressed h 5.0→3.3 to make room for a
+    # bottom band (хромота КРС: РГАУ-МСХА+АгроЭко + ЦПС «Объектив»,
+    # chapter-part2.md §3.6 [for-slide-s26x-ru]).
+    ocean_box(s, 0.6, 1.5, 6.0, 3.3, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.85, 1.65, 5.5, 0.35, "Работает — Connectome.ai",
+             size=14, bold=True, color=DEEP)
     _s26_photo = ASSETS / "photos" / "p26-newborn-calf-cows.jpg"
     if _s26_photo.exists():
-        _s26_ph = 1.5
+        _s26_ph = 1.0
         _s26_pw = _s26_ph * 1.332
-        add_image(s, _s26_photo, 0.85 + (5.5 - _s26_pw) / 2, 2.20, w=_s26_pw, h=_s26_ph)
+        add_image(s, _s26_photo, 0.85 + (5.5 - _s26_pw) / 2, 2.05, w=_s26_pw, h=_s26_ph)
     else:
         icon_p = ASSETS / "icons" / "scan-96.png"
         if icon_p.exists():
-            add_image(s, icon_p, 0.85 + (5.5 - 0.9) / 2, 2.2, w=0.9, h=0.9)
-    text_box(s, 0.85, 3.80, 5.5, 0.35, "Резидент Сколково",
-             size=12, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
-    text_box(s, 0.85, 4.20, 5.5, 1.0,
-             "Узкая задача компьютерного зрения:\nконтроль отёлов телят\n+ ранний сигнал на помощь",
-             size=12, color=DEEP, italic=True, line_spacing=1.3,
-             align=PP_ALIGN.CENTER)
-    text_box(s, 0.85, 5.30, 5.5, 1.0,
-             "Паттерн: узкая ниша + CV +\nизмеримая безопасность животного",
-             size=10, color=DARK_GREY, italic=True, line_spacing=1.4,
+            add_image(s, icon_p, 0.85 + (5.5 - 0.9) / 2, 2.05, w=0.9, h=0.9)
+    text_box(s, 0.85, 3.10, 5.5, 0.26, "Резидент Сколково",
+             size=11, bold=True, color=GOLD, align=PP_ALIGN.CENTER)
+    text_box(s, 0.85, 3.40, 5.5, 1.15,
+             "Узкая задача компьютерного зрения: контроль отёлов телят + ранний сигнал на помощь.\n"
+             "Паттерн: узкая ниша + CV + измеримая безопасность животного.",
+             size=10, color=DEEP, italic=True, line_spacing=1.25,
              align=PP_ALIGN.CENTER)
 
     # Right: vapor risk
-    ocean_box(s, 6.8, 1.5, 6.0, 5.0, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 7.05, 1.65, 5.5, 0.5, "Под вопросом — DeLaval / GEA / Lely",
-             size=15, bold=True, color=DEEP)
-    text_box(s, 7.05, 2.15, 5.5, 0.4, "Серый статус облачной аналитики",
-             size=11, italic=True, color=MID)
-    text_box(s, 7.05, 2.65, 5.5, 2.4,
+    ocean_box(s, 6.8, 1.5, 6.0, 3.3, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 7.05, 1.65, 5.5, 0.35, "Под вопросом — DeLaval / GEA / Lely",
+             size=14, bold=True, color=DEEP)
+    text_box(s, 7.05, 2.02, 5.5, 0.24, "Серый статус облачной аналитики",
+             size=10.5, italic=True, color=MID)
+    text_box(s, 7.05, 2.30, 5.5, 1.35,
              "• Оборудование физически у фермеров\n"
              "• Облачная аналитика зависит от Европы\n"
              "• Прецедент: Climate FieldView 2022 →\n"
              "  Microsoft Azure 2024 (для оборонки)\n"
              "• Лобня 2026 — замещение оборудования\n"
              "  начато (4 млрд ₽), ИИ-стек — отд. трек",
-             size=11, color=DEEP, line_spacing=1.5)
-    text_box(s, 7.05, 5.15, 5.5, 1.3,
+             size=10, color=DEEP, line_spacing=1.3)
+    text_box(s, 7.05, 3.70, 5.5, 1.00,
              "F9 — риск «пара»: вендор может отключить ИИ-функционал по решению санкций или лицензий, "
              "не уведомив пользователей заранее.",
-             size=11, bold=True, italic=True, color=GOLD, line_spacing=1.4)
+             size=10, bold=True, italic=True, color=GOLD, line_spacing=1.25)
+
+    # BOTTOM BAND — хромота КРС: РГАУ-МСХА+АгроЭко (primary) + ЦПС «Объектив»
+    # (secondary) + явная дизамбигуация 38 vs 42 точек (chapter-part2.md §3.6).
+    _s26b_y = 4.95; _s26b_h = 1.95
+    ocean_box(s, 0.6, _s26b_y, 12.18, _s26b_h, fill=SURFACE, stroke=TEAL, stroke_pt=1.3)
+    text_box(s, 0.75, _s26b_y + 0.08, 11.9, 0.24,
+             "Хромота КРС — две российские CV-системы, разной надёжности",
+             size=11, bold=True, color=DEEP)
+
+    ocean_box(s, 0.75, _s26b_y + 0.35, 7.15, 1.10, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 0.90, _s26b_y + 0.42, 6.85, 0.20,
+             "РГАУ-МСХА им. Тимирязева + «АгроЭко» — апробация, Нижний Мамон",
+             size=10, bold=True, color=DEEP)
+    text_box(s, 0.90, _s26b_y + 0.63, 6.85, 0.18,
+             "99% идентификация · 97% точки тела · >96% локомоция",
+             size=9.5, color=DARK_GREY)
+    text_box(s, 0.90, _s26b_y + 0.82, 6.85, 0.18,
+             "42 точки тела vs ≤17 у зарубежных аналогов · 12 000 фото / 449 коров",
+             size=9.5, color=DARK_GREY)
+    text_box(s, 0.90, _s26b_y + 1.01, 6.85, 0.18,
+             "Статус: апробация — не серийное внедрение по хозяйствам",
+             size=8.5, italic=True, color=LIGHT)
+
+    ocean_box(s, 8.05, _s26b_y + 0.35, 4.73, 1.10, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 8.20, _s26b_y + 0.42, 4.45, 0.20,
+             "ЦПС «Объектив» — вторично, менее надёжно",
+             size=9.5, bold=True, color=DEEP)
+    text_box(s, 8.20, _s26b_y + 0.63, 4.45, 0.18,
+             "Каштановка, 3900 голов",
+             size=9, color=DARK_GREY)
+    text_box(s, 8.20, _s26b_y + 0.82, 4.45, 0.18,
+             "Хромота ×2 за 90 дней; 98% — 1 источник",
+             size=9, color=DARK_GREY)
+
+    ocean_box(s, 0.75, _s26b_y + 1.51, 11.95, 0.38, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.90, _s26b_y + 1.51, 11.65, 0.38,
+             "Не путать: ЦПС «Объектив» заявляет 38 точек — ДРУГОЕ решение, а не опечатка цифры «42» у Тимирязевки",
+             size=9.5, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
 
     _s26_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
-        {"text": "Источники: Connectome.ai (Сколково); BUSINESS-stat 2026 Лобня · TAdviser FieldView · фото: ",
-         "size": 11, "italic": True, "color": LIGHT},
+        {"text": "Источники: Connectome.ai (Сколково); BUSINESS-stat 2026 Лобня · TAdviser FieldView · "
+                  "ТАСС + АгроЭко + Техкульт (Тимирязевка); meatinfo.ru (ЦПС «Объектив») · фото: ",
+         "size": 10, "italic": True, "color": LIGHT},
         {"text": "Uberprutser, Wikimedia Commons, CC BY-SA 3.0",
-         "size": 11, "italic": True, "color": LIGHT},
+         "size": 10, "italic": True, "color": LIGHT},
     ], anchor=MSO_ANCHOR.MIDDLE)
     _s26_fruns = [r for p in _s26_foot.text_frame.paragraphs for r in p.runs]
     _s26_fruns[-1].font.underline = True
@@ -570,269 +611,20 @@ def build_part3(prs, H):
 
     add_speaker_notes(s, load_speaker_notes("s26"))
 
-    # ============ s27 section4 divider ============
-    divider_hero(4, "Агрологистика и товарный трейдинг",
-        "L4 — уровень «цепочка». Агентный ИИ лидирует. Результат измеряется в долях процента за минуты, не в сезонах.",
-        current_section=4,
-        caption="4 working cases (Cargill CMAX, Tract, Olam, Walmart×Cropin) · 2 провала (USDA, Verra) · РФ-параллель (X5/Магнит/РСХБ)",
-        image_filename="p27-grain-terminal-halifax.jpg",
-        image_caption="Балкер у зернового терминала порта Галифакс · Wikimedia, CC BY 4.0")
-    add_speaker_notes(prs.slides[-1], load_speaker_notes("s27"))
-
-    # ============ s28 Cargill CMAX ============
-    s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s, "Cargill CMAX — премия BIG AI Excellence Award 2026", size=24)
-
-    # Photo left
-    ocean_box(s, 0.6, 1.5, 7.0, 5.1)
-    p = ASSETS / "photos" / "p28-grain-port.jpg"
-    if p.exists():
-        add_image(s, p, 0.85, 1.75, w=6.5, h=4.0)
-    text_box(s, 0.85, 5.85, 6.5, 0.3,
-             "Зерновой порт и силосы · Tilbury (Wikimedia, CC-BY-SA)",
-             size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
-    text_box(s, 0.85, 6.2, 6.5, 0.3,
-             "ИИ оптимизирует прогноз для порта и судоходную логистику",
-             size=10, italic=True, color=MID, align=PP_ALIGN.CENTER)
-
-    # Right: KPIs — с baseline counterfactuals
-    kpis = [
-        ("70+ стран", "из 195 (≈36% мира) · ~155k штат", LIGHT),
-        ("1000+ объектов", "склады / порты / силосы Cargill", MID),
-        ("BIG AI 2026", "Excellence Award на уровне L4", GOLD),
-    ]
-    cy = 1.5
-    for big, lbl, color in kpis:
-        ocean_box(s, 7.8, cy, 4.95, 1.25, fill=LIGHT_TINT if color != GOLD else GOLD_TINT)
-        text_box(s, 8.0, cy + 0.12, 4.6, 0.55, big,
-                 size=26, bold=True, color=color)
-        text_box(s, 8.0, cy + 0.72, 4.6, 0.4, lbl,
-                 size=14, color=DEEP, italic=True)
-        cy += 1.35
-
-    ocean_box(s, 7.8, 5.55, 4.95, 1.15, fill=SURFACE)
-    text_box(s, 8.0, 5.6, 4.55, 0.4, "Принцип успеха: узость агента",
-             size=14, bold=True, color=DEEP)
-    text_box(s, 8.0, 6.0, 4.55, 0.7,
-             "Одно действие на агента (хеджирование / маршрут) + человек в петле для сделок >$10 млн номинала.",
-             size=11, color=DARK_GREY, italic=True, line_spacing=1.4)
-
-    add_footer(s, "Источник: пресс-релиз Cargill, апрель 2026 (BIG AI Excellence Award)")
-    add_speaker_notes(s, load_speaker_notes("s28"))
-
-    # ============ s29 hedge pseudo-flow ============
-    s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s,
-        "Как агент хеджирует — упрощённая схема в 4 шага",
-        size=24)
-
-    steps = [
-        ("1. Сенсор", "Вектор состояния:\nцена + погода + валюта",
-         "входные данные", "database"),
-        ("2. Расчёт", "Распределение цен\n5/30/90 дней + неопределённость",
-         "ML-модель", "brain"),
-        ("3. Решение", "4 действия:\nкупить / продать /\nдержать / хеджировать\n+ человек при >$10 млн номинала",
-         "Слой действий", "settings"),
-        ("4. Обратная связь", "bp (базисный пункт) за минуты,\nонлайн-обучение",
-         "Цикл замыкается", "trending-up"),
-    ]
-    step_w = 2.85; step_h = 3.7; gap = 0.2
-    sx = 0.6
-    sy = 1.5
-    for i, (hdr, body, sub, icon_name) in enumerate(steps):
-        x = sx + i * (step_w + gap)
-        is_gold = (i == 2)  # decision is the gold-highlighted critical step
-        ocean_box(s, x, sy, step_w, step_h,
-                  fill=GOLD_TINT if is_gold else LIGHT_TINT,
-                  stroke=GOLD if is_gold else LIGHT)
-        icon_p = ASSETS / "icons" / f"{icon_name}-96.png"
-        if icon_p.exists():
-            add_image(s, icon_p, x + (step_w - 0.9) / 2, sy + 0.25, w=0.9, h=0.9)
-        text_box(s, x + 0.15, sy + 1.3, step_w - 0.3, 0.45, hdr,
-                 size=15, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-        text_box(s, x + 0.15, sy + 1.8, step_w - 0.3, 1.4, body,
-                 size=11, color=DARK_GREY, italic=True,
-                 align=PP_ALIGN.CENTER, line_spacing=1.4)
-        text_box(s, x + 0.15, sy + step_h - 0.45, step_w - 0.3, 0.35, sub,
-                 size=11, bold=True, color=GOLD if is_gold else MID,
-                 align=PP_ALIGN.CENTER, italic=True)
-        # Arrow to next
-        if i < len(steps) - 1:
-            add_arrow(s, x + step_w, sy + step_h/2 - 0.15, gap, 0.3, fill=LIGHT)
-
-    # Bottom: worked example
-    ocean_box(s, 0.6, 5.4, 12.13, 1.5, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 5.55, 11.6, 0.4,
-             "Пример: проскальзывание сократилось с 45 bp до 8 bp",
-             size=15, bold=True, color=DEEP)
-    text_box(s, 0.85, 6.0, 11.6, 0.8,
-             "Сделка $8M notional (<$10M, автономно). Дифференциал 37 bp ≈ 0,37% × $8M ≈ $29 600 ≈ ~$32 000. "
-             "На тысячах сделок Cargill в год — миллионы $ annual savings.\n"
-             "Это работает, потому что задача узкая (тайминг хеджирования), обратная связь быстрая, человек — только для крупных сделок.",
-             size=11, color=DARK_GREY, italic=True, line_spacing=1.4)
-
-    add_footer(s, "Источник: McKinsey 2025 hedging report — типичное ручное проскальзывание ≈45 bp")
-    add_speaker_notes(s, load_speaker_notes("s29"))
-
-    # ============ s30 Tract + Olam + Walmart + Tesco ============
-    s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s,
-        "Tract + Olam Mindsprint + Walmart × Cropin + Tesco",
-        size=24)
-
-    cards = [
-        ("Tract", "€18,6 млн раунд A",
-         "Icos Capital · 4 якорных инвестора:\nCargill + ADM + Olam + LDC.\nХранилище данных, НЕ агент.",
-         "database"),
-        ("Olam Procuresprint", "Агентная закупка",
-         "Узкая закупочная задача:\nцена + поставщики + контракты\nкак агент.",
-         "package"),
-        ("Walmart × Cropin", "США + ЮАР",
-         "(не Индия) — аналитика\nцепочки поставок и ESG-отчёт.",
-         "globe"),
-        ("Tesco AI", "−30% пищевых отходов",
-         "С 2017 — Tesco AI для\nпрогноза скоропортящихся.",
-         "trending-down"),
-    ]
-    card_w = 2.85; card_h = 4.2; gap = 0.18
-    sx = 0.6; sy = 1.6
-    for i, (name, kpi, desc, icon_name) in enumerate(cards):
-        x = sx + i * (card_w + gap)
-        ocean_box(s, x, sy, card_w, card_h)
-        icon_p = ASSETS / "icons" / f"{icon_name}-96.png"
-        if icon_p.exists():
-            add_image(s, icon_p, x + (card_w - 0.9) / 2, sy + 0.25, w=0.9, h=0.9)
-        text_box(s, x + 0.15, sy + 1.3, card_w - 0.3, 0.45, name,
-                 size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER)
-        text_box(s, x + 0.15, sy + 1.8, card_w - 0.3, 0.5, kpi,
-                 size=13, bold=True, color=GOLD, align=PP_ALIGN.CENTER, line_spacing=1.2)
-        text_box(s, x + 0.2, sy + 2.5, card_w - 0.4, 1.6, desc,
-                 size=10, color=DARK_GREY, italic=True,
-                 align=PP_ALIGN.CENTER, line_spacing=1.4)
-
-    # Bottom warning
-    ocean_box(s, 0.6, 6.0, 12.13, 0.85, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 6.1, 11.6, 0.4,
-             "⚠ Не путать: Tract = хранилище данных (инфраструктура соответствия), не агентный ИИ.",
-             size=12, bold=True, color=GOLD)
-    text_box(s, 0.85, 6.5, 11.6, 0.3,
-             "Конкуренты совместно строят инфраструктуру соответствия — редкий прецедент коллаборации Cargill+ADM+Olam+LDC.",
-             size=10, italic=True, color=DARK_GREY)
-
-    add_footer(s, "Источники: пресс-релиз Tract 2024-08; FreshPlaza; пресс-релиз Wipro 2026 (Mindsprint)")
-    add_speaker_notes(s, load_speaker_notes("s30"))
-
-    # ============ s31 USDA + Verra ============
-    s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s,
-        "USDA Climate-Smart отменён + 94% призрачных кредитов Verra",
-        size=22)
-
-    # Left: USDA cancellation
-    ocean_box(s, 0.6, 1.5, 6.0, 5.0, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 1.65, 5.5, 0.5, "Апрель 2025 — USDA отменил",
-             size=14, bold=True, color=GOLD)
-    text_box(s, 0.85, 2.15, 5.5, 0.4, "программу Climate-Smart Commodities",
-             size=11, italic=True, color=MID)
-    nums = [
-        ("$3,1 млрд", "финансирование · ≈$23M / проект ср."),
-        ("135 проектов", "отменены"),
-        ("14 000 ферм", "потеряли поддержку"),
-        ("3,2 млн акров", "≈0,36% от 900M акров US ag"),
-    ]
-    ny = 2.65
-    for big, lbl in nums:
-        text_box(s, 1.05, ny, 1.8, 0.4, big, size=16, bold=True, color=DEEP)
-        text_box(s, 2.95, ny, 3.3, 0.4, lbl, size=12, italic=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-        ny += 0.55
-    text_box(s, 0.85, 5.45, 5.5, 1.0,
-             "Федеральная политика = хвостовой риск\nдля бизнес-моделей, зависящих от субсидий",
-             size=11, bold=True, italic=True, color=DEEP, line_spacing=1.4, align=PP_ALIGN.CENTER)
-
-    # Right: Verra
-    ocean_box(s, 6.8, 1.5, 6.0, 5.0)
-    text_box(s, 7.05, 1.65, 5.5, 0.5, "Январь 2023 — 94% призрачных у Verra",
-             size=14, bold=True, color=DEEP)
-    text_box(s, 7.05, 2.15, 5.5, 0.4, "The Guardian + Die Zeit + SourceMaterial",
-             size=11, italic=True, color=MID)
-    c = ASSETS / "charts" / "c31-verra-phantom.png"
-    if c.exists():
-        add_image(s, c, 7.0, 2.6, w=5.7, h=3.0)
-    text_box(s, 7.05, 5.8, 5.7, 0.7,
-             "94% лесных кредитов Verra → нет реального снижения CO₂.\n"
-             "AP7: AI-MRV без прямых измерений = масштабное «зелёное мошенничество».",
-             size=11, bold=True, italic=True, color=GOLD, line_spacing=1.4)
-
-    add_footer(s, "Источники: USDA press 2025-04-14; The Guardian 2023-01; SourceMaterial 2023")
-    add_speaker_notes(s, load_speaker_notes("s31"))
-
-    # ============ s32 РФ L4 ============
-    s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s,
-        "L4 в РФ — X5 паритет, Магнит гибрид, РСХБ — «пар»",
-        size=22)
-
-    # Issue #340 visual-richness pass (owner: РФ-слайды только диаграммы —
-    # без крупных реальных фото). Прежний QuickChart bar chart нёс цифры
-    # «уровень внедрения, %» (95/55/15/30), не процитированные нигде на
-    # этом слайде (ни в карточках, ни в speaker notes) — непривязанная
-    # декоративная метрика. Заменён реальным фото супермаркета «Перекрёсток»
-    # (X5 Group), который карточка справа называет по имени.
-    ocean_box(s, 0.6, 1.5, 6.4, 4.5, fill=SURFACE)
-    _s32_photo = ASSETS / "photos" / "p32-perekrestok-supermarket-spb.jpg"
-    if _s32_photo.exists():
-        _s32_pw = 6.1
-        _s32_ph = _s32_pw / 1.499
-        add_image(s, _s32_photo, 0.6 + (6.4 - _s32_pw) / 2, 1.5 + (4.5 - _s32_ph) / 2,
-                   w=_s32_pw, h=_s32_ph)
-    else:
-        c = ASSETS / "charts" / "c32-rus-retail.png"
-        if c.exists():
-            add_image(s, c, 0.6, 1.5, w=6.4, h=4.5)
-
-    # Right cards
-    cards = [
-        ("X5 «Перекрёсток»", "ML с 2020 · 200+ факторов", "Мировой уровень. Работает.", LIGHT),
-        ("Магнит F&R", "Гибрид: прогноз ✓, пополнение — пилот",
-         "Прогнозирование на 46 РЦ янв 2026 — в эксплуатации.\nПополнение на 3 РЦ — пилот.", MID),
-        ("РСХБ ИИ-сервисы", "Заявлены, метрик нет",
-         "Риск «пара»: декларации без производственных метрик.", GOLD),
-    ]
-    cy = 1.5
-    for name, kpi, desc, color in cards:
-        ocean_box(s, 7.3, cy, 5.5, 1.6, fill=GOLD_TINT if color == GOLD else LIGHT_TINT, stroke=color)
-        text_box(s, 7.5, cy + 0.1, 5.1, 0.4, name,
-                 size=14, bold=True, color=DEEP)
-        text_box(s, 7.5, cy + 0.5, 5.1, 0.4, kpi,
-                 size=12, bold=True, color=color, italic=True)
-        text_box(s, 7.5, cy + 0.95, 5.1, 0.6, desc,
-                 size=10, color=DARK_GREY, italic=True, line_spacing=1.4)
-        cy += 1.7
-
-    ocean_box(s, 0.6, 6.2, 12.13, 0.7, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 6.3, 11.6, 0.5,
-             "Паттерн: паритет L4-L5 при отставании L1-L2. GigaChat — демо-эпизод, не внедрение.",
-             size=12, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-
-    _s32_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
-        {"text": "Источники: Habr Магнит 2026-01; TAdviser X5 Tech 2024 · фото: ",
-         "size": 11, "italic": True, "color": LIGHT},
-        {"text": "Wikimedia Commons, CC BY-SA 2.0",
-         "size": 11, "italic": True, "color": LIGHT},
-    ], anchor=MSO_ANCHOR.MIDDLE)
-    _s32_fruns = [r for p in _s32_foot.text_frame.paragraphs for r in p.runs]
-    _s32_fruns[-1].font.underline = True
-    _s32_fruns[-1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Large_experimental_supermarket_Perekrestok_in_St._Petersburg.jpg"
-
-    add_speaker_notes(s, load_speaker_notes("s32"))
-
-    # ============ s33 section4bis divider — Среда ============
+    # ============ s33 section4 divider — Среда ============
+    # issue #340 v3.9: старый Раздел 4 «Агрологистика и товарный трейдинг»
+    # (s27 divider + s28 Cargill CMAX + s29 hedge pseudo-flow + s30 Tract/
+    # Olam/Walmart×Cropin/Tesco + s31 USDA+Verra + s32 РФ L4) удалён целиком
+    # по прямому указанию владельца — трейдинг убран из лекции совсем.
+    # Walmart×Cropin перенесён в s08a; USDA Climate-Smart cancellation —
+    # в новый s08c (оба теперь в Р1). Старый Р4-bis «Среда» стал Р4;
+    # current_section сдвинут 5→4 (один card progress-бара убран).
     # Decorative digit stays plain "4" — "4-bis" as a literal string overflows at 130pt.
     # Title shortened for divider-card legibility (full assertion — в slides/s33-*.md);
     # перечень трёх подтем сохранён («связь / вендор / регуляторика»).
     divider_hero(4, "Инфраструктурные условия: связь, вендор, регуляторика",
         "Сквозной meta-уровень: всё, без чего ни одна ступень не работает.",
-        current_section=5,
+        current_section=4,
         caption="3 sub-блока (связь / vendor lock-in двойная оптика / регуляторика) · 3 анти-ИИ критерия (AP5, AP6, AP7)",
         image_filename="p33-john-deere-starfire-gps.jpg",
         image_caption="John Deere 8295R со спутниковым приёмником StarFire на крыше кабины · Wikimedia, CC BY-SA 3.0",
@@ -1000,30 +792,35 @@ def build_part3(prs, H):
 
     # ============ s36 section5 divider — Полка ============
     divider_hero(5, "Управление спросом в розничной цепочке",
-        "L5 — уровень «полка». Розничный ИИ зрел + пять анти-ИИ критериев + чек-лист + карьерный ландшафт + замыкание к Plenty.",
-        current_section=6,
-        caption="L5 кратко (Walmart, Tesco, X5, Магнит F&R) + 5 критериев + чек-лист + карьера + closing callback",
+        "L4 — уровень «полка». Розничный ИИ зрел + пять анти-ИИ критериев + чек-лист + карьерный ландшафт + замыкание к Plenty.",
+        current_section=5,
+        caption="L4 кратко (Walmart, Tesco, X5, Магнит F&R) + 5 критериев + чек-лист + карьера + closing callback",
         image_filename="p36-supermarket-shelf-aisle.jpg",
         image_caption="Ряд полок супермаркета Intermarché, Квебек-Сити · Wikimedia, CC BY-SA 4.0")
     add_speaker_notes(prs.slides[-1], load_speaker_notes("s36"))
 
-    # ============ s37s L5 retail — hero photo + 2×2 grid (D1 Магнит F&R as 4th card) ============
+    # ============ s37s L4 retail — hero photo + 2×2 grid (D1 Магнит F&R as 4th card) ============
+    # issue #340 v3.9: ladder-ярлык поднялся с L5 на L4 (cargo-ступень убрана).
+    # Hero photo relocated from deleted s32 (РФ L4 трейдинг-слайд) — тот же
+    # реальный Wikimedia снимок «Перекрёсток» (X5 Group), который эта карточка
+    # называет по имени ниже; перекрывает прежний generic unattributed
+    # p37s-supermarket-aisle.jpg (без .url-источника).
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "L5 — Walmart Eden + Tesco AI + X5 «Перекрёсток» + Магнит F&R (гибрид)",
+        "L4 — Walmart Eden + Tesco AI + X5 «Перекрёсток» + Магнит F&R (гибрид)",
         size=20, y=0.25)
 
-    # Hero context photo — real supermarket aisle (fully digitised retail environment)
-    ocean_box(s, 0.6, 1.1, 12.13, 0.92, fill=SURFACE, stroke=LIGHT)
-    hero_p = ASSETS / "photos" / "p37s-supermarket-aisle.jpg"
+    # Hero context photo — real "Перекрёсток" (X5 Group) supermarket, СПб
+    ocean_box(s, 0.6, 1.1, 12.13, 0.75, fill=SURFACE, stroke=LIGHT)
+    hero_p = ASSETS / "photos" / "p32-perekrestok-supermarket-spb.jpg"
     if hero_p.exists():
-        add_image(s, hero_p, 0.68, 1.16, w=0.70, h=0.80)
-    text_box(s, 1.55, 1.2, 10.9, 0.3,
-             "L5 — полностью оцифрованная среда: у каждого товара (SKU) есть цифровой след",
-             size=12, bold=True, color=DEEP)
-    text_box(s, 1.55, 1.55, 10.9, 0.4,
-             "Проход супермаркета с напольной навигацией — среда, где каждое действие фиксируется в реальном времени",
-             size=10, italic=True, color=MID, line_spacing=1.2)
+        add_image(s, hero_p, 0.68, 1.15, w=0.62, h=0.60)
+    text_box(s, 1.45, 1.17, 11.0, 0.28,
+             "L4 — полностью оцифрованная среда: у каждого товара (SKU) есть цифровой след",
+             size=11.5, bold=True, color=DEEP)
+    text_box(s, 1.45, 1.48, 11.0, 0.34,
+             "«Перекрёсток» (X5 Group), Санкт-Петербург — среда, где каждое действие фиксируется в реальном времени",
+             size=9.5, italic=True, color=MID, line_spacing=1.15)
 
     cards = [
         ("Walmart Eden", "ML с 2017",
@@ -1033,15 +830,16 @@ def build_part3(prs, H):
          "С 2017 — ежедневный прогноз\nна ~3500 супермаркетов Великобритании",
          MID),
         ("X5 «Перекрёсток»", "ML с 2020 · 200+ факторов",
-         "Российский флагман L5.\nМировой уровень.",
+         "Российский флагман L4.\nМировой уровень.",
          LIGHT),
         ("Магнит F&R (гибрид)", "Прогноз ✓ · Пополнение — пилот",
          "Прогнозирование на 46 РЦ январь 2026 — в эксплуатации.\nПополнение — пилот на 3 РЦ.",
          TEAL),
     ]
-    # 2×2 grid
-    card_w = 6.0; card_h = 2.18; gap_x = 0.18; gap_y = 0.13
-    sx = 0.6; sy = 2.2
+    # 2×2 grid — card_h 2.18→1.90, gap_y 0.13→0.10 (issue #340 Задача 2bis:
+    # освобождает ≈0.65" для 5-й плашки «Лента»+КОРУС ниже грида)
+    card_w = 6.0; card_h = 1.90; gap_x = 0.18; gap_y = 0.10
+    sx = 0.6; sy = 1.95
     for i, (name, kpi, desc, color) in enumerate(cards):
         col = i % 2
         row = i // 2
@@ -1053,21 +851,50 @@ def build_part3(prs, H):
                   stroke=color)
         icon_p = ASSETS / "icons" / "shopping-cart-96.png"
         if icon_p.exists():
-            add_image(s, icon_p, x + 0.2, y + 0.2, w=0.6, h=0.6)
-        text_box(s, x + 0.95, y + 0.18, card_w - 1.1, 0.4, name,
-                 size=14, bold=True, color=DEEP)
-        text_box(s, x + 0.95, y + 0.58, card_w - 1.1, 0.35, kpi,
-                 size=12, bold=True, color=color, line_spacing=1.2)
-        text_box(s, x + 0.2, y + 1.0, card_w - 0.4, 1.1, desc,
-                 size=10.5, color=DARK_GREY, italic=True, line_spacing=1.3)
+            add_image(s, icon_p, x + 0.2, y + 0.18, w=0.55, h=0.55)
+        text_box(s, x + 0.92, y + 0.14, card_w - 1.1, 0.36, name,
+                 size=13, bold=True, color=DEEP)
+        text_box(s, x + 0.92, y + 0.52, card_w - 1.1, 0.32, kpi,
+                 size=11, bold=True, color=color, line_spacing=1.15)
+        text_box(s, x + 0.2, y + 0.90, card_w - 0.4, 0.90, desc,
+                 size=10, color=DARK_GREY, italic=True, line_spacing=1.25)
+
+    # 5TH PLATE — «Лента» + КОРУС Консалтинг (прогноз спроса, 254 гипермаркета),
+    # full-width под 2×2 гридом. chapter-part3.md §6.1 [for-slide-s37x-ru].
+    _s37b_y = sy + 2 * card_h + gap_y + 0.08
+    _s37b_h = 0.62
+    ocean_box(s, 0.6, _s37b_y, 12.13, _s37b_h, fill=TEAL_TINT, stroke=TEAL)
+    icon_p = ASSETS / "icons" / "shopping-cart-96.png"
+    if icon_p.exists():
+        add_image(s, icon_p, 0.72, _s37b_y + 0.09, w=0.44, h=0.44)
+    text_box(s, 1.28, _s37b_y + 0.06, 10.6, 0.22,
+             "«Лента» + КОРУС Консалтинг — прогноз спроса, 254 гипермаркета, 10 итераций за год",
+             size=10.5, bold=True, color=DEEP)
+    text_box(s, 1.28, _s37b_y + 0.27, 10.6, 0.20,
+             "−4% списаний «гастроном» от базы 2020 · +40% точность к прежней системе · +5% доступность акций · >100 факторов",
+             size=9, color=DARK_GREY)
+    text_box(s, 1.28, _s37b_y + 0.45, 10.6, 0.16,
+             "На Microsoft Azure (запуск до 2022); миграция на отечественное облако не подтверждена ни в одном источнике",
+             size=8, italic=True, color=TEAL)
 
     # Bottom caveat row (compact)
-    ocean_box(s, 0.6, 6.57, 12.13, 0.42, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 6.60, 11.6, 0.35,
-             "⚠ Оговорка: L5 — розничный ИИ, не агро. Магнит F&R — нюанс «гибрид»: прогноз в промышленной эксплуатации, пополнение — пилот.",
-             size=10.5, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    _s37c_y = _s37b_y + _s37b_h + 0.06
+    ocean_box(s, 0.6, _s37c_y, 12.13, 0.40, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, _s37c_y + 0.02, 11.6, 0.35,
+             "Оговорка: L4 — розничный ИИ, не агро. Магнит F&R — нюанс «гибрид»: прогноз в промышленной эксплуатации, пополнение — пилот.",
+             size=10, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
 
-    add_footer(s, "Walmart corporate 2025 · Tesco AI annual report · X5 Tech 2024 · Habr Магнит 2026-01")
+    _s37s_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Walmart corporate 2025 · Tesco AI annual report · X5 Tech 2024 · Habr Магнит 2026-01 · "
+                 "КОРУС Консалтинг + retail-loyalty.org + iot.ru («Лента») · фото: ",
+         "size": 11, "italic": True, "color": LIGHT},
+        {"text": "Wikimedia Commons, CC BY-SA 2.0",
+         "size": 11, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s37s_fruns = [r for p in _s37s_foot.text_frame.paragraphs for r in p.runs]
+    _s37s_fruns[-1].font.underline = True
+    _s37s_fruns[-1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Large_experimental_supermarket_Perekrestok_in_St._Petersburg.jpg"
+
     add_speaker_notes(s, load_speaker_notes("s37s"))
 
     # ============ s38s 5 criteria matrix ============
@@ -1086,7 +913,7 @@ def build_part3(prs, H):
          "ИИ с проверкой источников +\nчеловек в петле"),
         ("AP6", "ИИ-техника = привязка к вендору", "Deere $5 млн + FTC + запрет DJI",
          "Открытые стандарты / мульти-вендор"),
-        ("AP7", "AI-MRV без прямых измерений", "Verra: 94% призрачных кредитов",
+        ("AP7", "AI-MRV без прямых измерений", "USDA Climate-Smart отменён: $3,1 млрд",
          "Отбор почвы + спутниковая физика"),
     ]
 
@@ -1188,9 +1015,12 @@ def build_part3(prs, H):
     add_speaker_notes(s, load_speaker_notes("s35c"))
 
     # ============ s36c career landscape ============
+    # issue #340 v3.9: прежняя 5-колоночная раскладка (L1/L2/L3/L4-cargo/
+    # L5-полка) слила трейдинг-колонку (Cargill CMAX/Tract/Olam/ADM) с
+    # retail-колонкой — теперь 4 колонки, L4 = полка (ladder relabel).
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Карьерный ландшафт — L1-L5 сегменты + российский рынок",
+        "Карьерный ландшафт — L1-L4 сегменты + российский рынок",
         size=24)
 
     segments = [
@@ -1198,10 +1028,9 @@ def build_part3(prs, H):
          "Cognitive Pilot · ИТЭЛМА\nЭФКО · Геоскан · ExactFarming", LIGHT),
         ("L2 Робот", "Carbon Robotics · Saga · Tevel\nAGCO · Aigen", "(точечные RU стартапы)", MID),
         ("L3 Животное", "DeLaval · GEA · Lely\nCargill Birdoo · Allflex", "Connectome.ai · Сколково", LIGHT),
-        ("L4 Цепочка", "Cargill CMAX · Tract · Olam\nADM · Walmart×Cropin", "X5 Tech · Магнит digital\nРусагро Тех · РСХБ.цифра", GOLD),
-        ("L5 Полка", "Walmart Eden · Tesco AI\nWooliesX · Carrefour AI", "X5 «Перекрёсток»\n(мировой уровень)", MID),
+        ("L4 Полка", "Walmart Eden · Tesco AI\nWooliesX · Carrefour AI", "X5 Tech · Магнит digital\n«Лента»+КОРУС (мировой уровень)", GOLD),
     ]
-    seg_w = 2.42; seg_h = 4.7; gap = 0.1
+    seg_w = 3.0; seg_h = 4.7; gap = 0.14
     sx = 0.6; sy = 1.5
     for i, (name, intl, ru, color) in enumerate(segments):
         x = sx + i * (seg_w + gap)
@@ -1259,10 +1088,15 @@ def build_part3(prs, H):
              "Дальше — Лекция 11: кибер-физическое производство (L11).",
              size=12, italic=True, color=MID, align=PP_ALIGN.CENTER)
 
-    # Number-refrain (сквозная линия лекции)
+    # Number-refrain (сквозная линия лекции) — issue #340 v3.9: прежний точный
+    # счёт "18 из 45" включал как минимум один кейс из удалённого Раздела 4
+    # (Verra); пересчёт по всей деке не делался в этом круге (CLAUDE.md:
+    # "структурный разрез без сплошного прохода по счётчикам" — отдельный
+    # проход, не угадывание), поэтому плашка заменена на качественное
+    # наблюдение без сконструированного числа.
     ocean_box(s, 0.6, 6.30, 12.13, 0.32, fill=GOLD_TINT, stroke=GOLD)
     text_box(s, 0.6, 6.30, 12.13, 0.32,
-             "18 из 45 случаев этой лекции — исход приписывают ИИ, а причина другая (40%)",
+             "Не каждый случай этой лекции, где называли «ИИ», решающим оказался именно ИИ",
              size=11.5, bold=True, color=GOLD, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
     add_footer(s, "Спасибо. Дальше — вопросы и ответы")
@@ -1286,7 +1120,7 @@ def build_part3(prs, H):
 
     prompts = [
         ("Plenty и Bowery", "Почему именно вертикальные фермы в США?\nВ закрытой среде США vs Япония vs ОАЭ?"),
-        ("Агентный ИИ", "Где ещё агентный ИИ работает\nв инженерных задачах — кроме хеджирования?"),
+        ("Агентный ИИ", "Где ещё агентный ИИ работает\nв инженерных задачах с быстрой обратной связью?"),
         ("Cognitive и ИТЭЛМА", "Можно ли построить гибридное решение\nCV + слияние сенсоров или это разные парадигмы?"),
     ]
     pw = 3.95; ph = 1.8; gap = 0.15

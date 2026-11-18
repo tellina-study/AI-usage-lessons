@@ -108,7 +108,7 @@ def build_part1(prs, H):
 
     # Subtitle / scope
     text_box(s, 6.0, 4.5, 6.8, 1.2,
-             "От поля к полке: пять уровней лестницы\nи пять анти-ИИ критериев",
+             "От поля к полке: четыре уровня лестницы\nи пять анти-ИИ критериев",
              size=20, italic=True, color=LIGHT, line_spacing=1.3)
 
     # Gold accent bar — repeated-element consistency with Lec-9 hero_cover
@@ -144,7 +144,7 @@ def build_part1(prs, H):
         "точно получится. К две тысячи двадцать шестому году мы накопили "
         "достаточно успехов и достаточно провалов, чтобы построить чёткий "
         "инженерный аппарат различения. Тон лекции — trust-but-verify: ни "
-        "евангелизм, ни диссидентство. Мы разберём пять уровней лестницы AI в "
+        "евангелизм, ни диссидентство. Мы разберём четыре уровня лестницы AI в "
         "АПК — от открытого поля до supermarket-полки — назовём по имени "
         "каждое работающее решение и каждый провал, и в финале сформулируем "
         "пять анти-ИИ критериев, которые операционно отвечают на вопрос «когда "
@@ -191,26 +191,27 @@ def build_part1_full(prs, H):
 
     # ============ s03 lecture-map ============
     # Issue #340 visual-richness pass — owner: интро только диаграммы/иконки,
-    # без крупных реальных фото. 5 карточек L1-L5 получают превью-фото своего
-    # раздела (переиспользование уже акклиматизированных CC-фото этой же
-    # деки — divider hero для s06/s19/s22/s27/s36 — forward-teaser, разнесён
-    # на десятки слайдов от полноразмерного hero, честный повтор, не mock).
+    # без крупных реальных фото. Карточки L1-L3 + L4-полка получают превью-
+    # фото своего раздела (переиспользование уже акклиматизированных CC-фото
+    # этой же деки — divider hero для s06/s19/s22/s36 — forward-teaser,
+    # разнесён на десятки слайдов от полноразмерного hero, честный повтор,
+    # не mock). v3.9: карточка "4. L4 Цепочка" (трейдинг) удалена целиком;
+    # "4-bis. Среда" стала просто "4."; "5. L5 Полка" стала "5. L4 Полка"
+    # (ladder-ярлык розницы поднялся с L5 на L4) — всего 6 карточек вместо 7.
     s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s, "Карта лекции — лестница пяти уровней от поля к полке", size=26)
+    add_assertion_title(s, "Карта лекции — лестница четырёх уровней от поля к полке", size=26)
 
-    # 7 horizontal cards; photo=(filename, aspect_w/h) для L1-L5, None для 0/4-bis
+    # 6 horizontal cards; photo=(filename, aspect_w/h) для L1-L3 + L4-полка, None для 0/Среда
     cards = [
         ("0. Открытие", "Зацепка + ось + глоссарий", "", None),
-        ("1. L1 Поле", "Открытая биология", "5 кейсов · 3 провала",
+        ("1. L1 Поле", "Открытая биология", "5 кейсов · 5 провалов",
          ("p06-crop-sprayer-field-16x9.jpg", 1.778)),
         ("2. L2 Робот", "Специализация > универсальность", "4 кейса · 3 провала",
          ("p16-laserweeder-g2-real.jpg", 1.777)),
         ("3. L3 Животное", "Полузакрытая среда, особь", "4 кейса · 3 урока",
          ("p22-cow-eartag-milking-robot.jpg", 1.333)),
-        ("4. L4 Цепочка", "Агентный ИИ лидер", "4 кейса · 2 провала",
-         ("p27-grain-terminal-halifax.jpg", 1.333)),
-        ("4-bis. Среда", "Связь · привязка · регуляторика", "3 sub-блока", None),
-        ("5. L5 Полка", "+ 5 критериев + закрытие", "L5 + 5 AP + чек-лист",
+        ("4. Среда", "Связь · привязка · регуляторика", "3 sub-блока", None),
+        ("5. L4 Полка", "+ 5 критериев + закрытие", "L4 + 5 AP + чек-лист",
          ("p36-supermarket-shelf-aisle.jpg", 1.333)),
     ]
     n = len(cards)
@@ -251,19 +252,20 @@ def build_part1_full(prs, H):
              "Центральный вопрос лекции:",
              size=14, italic=True, color=DARK_GREY, bold=True)
     text_box(s, 0.85, 5.5, 11.63, 1.0,
-             "Где на лестнице L1→L5 ИИ работает, где ломается — и какой класс\n"
+             "Где на лестнице L1→L4 ИИ работает, где ломается — и какой класс\n"
              "решения / альтернатива применимы на каждой ступени?",
              size=18, italic=True, color=DEEP, line_spacing=1.3)
 
-    # Photo provenance (5 превью-фото L1-L5) — real hyperlinks, не подписи
-    # под карточками (О18, #229); полные источники — на hero-слайдах своих
-    # разделов (s06/s19/s22/s27/s36) + assets/photos/*.url.
+    # Photo provenance (превью-фото L1-L3 + L4-полка) — real hyperlinks, не
+    # подписи под карточками (О18, #229); полные источники — на hero-слайдах
+    # своих разделов (s06/s19/s22/s36) + assets/photos/*.url. v3.9: L4-cargo
+    # (grain terminal) убран вместе с удалённой карточкой; старый L5-слот
+    # (supermarket aisle) переномерован в L4 (ladder relabel).
     _s03_sources = [
         ("L1: ", "Geograph/Wikimedia CC BY-SA 2.0", "https://commons.wikimedia.org/wiki/File:Crop_sprayer_-_geograph.org.uk_-_3038217.jpg"),
         ("  ·  L2: ", "carbonrobotics.com", "https://www.carbonrobotics.com/laserweeder-g2"),
         ("  ·  L3: ", "Wikimedia, CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Holstein_Friesian_cows_queuing_for_milking_in_an_automatic_milking_system_in_Bron%C3%B3w.jpg"),
-        ("  ·  L4: ", "Wikimedia, CC BY 4.0", "https://commons.wikimedia.org/wiki/File:Bulk_carrier_at_Halifax_Grain_Elevator.jpg"),
-        ("  ·  L5: ", "Wikimedia, CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Aisle_in_L_Intermarche_supermarket_in_Quebec_City.jpg"),
+        ("  ·  L4: ", "Wikimedia, CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Aisle_in_L_Intermarche_supermarket_in_Quebec_City.jpg"),
     ]
     _runs = []
     for prefix, label, _url in _s03_sources:
@@ -279,8 +281,14 @@ def build_part1_full(prs, H):
     add_speaker_notes(s, load_speaker_notes("s03"))
 
     # ============ s04 glossary mini ============
+    # issue #340 v3.9: правая колонка была "5 L4-терминов цепочки поставок"
+    # (агентный ИИ / bp / hedge slippage / scope-3 / AI-MRV) — после удаления
+    # Раздела 4 (трейдинг) три из пяти терминов не имеют антецедента в деке.
+    # Заменено на 3 термина, которые чапter §0.5 называет явно: scope-3
+    # (§1.2a Walmart×Cropin), AI-MRV (§1.2c USDA Climate-Smart), edge ML/
+    # TinyML (§4.1 Часть 3 Связь).
     s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s, "Два режима ИИ и пять L4-терминов — единый язык лекции", size=24)
+    add_assertion_title(s, "Два режима ИИ и три отраслевых термина — единый язык лекции", size=24)
 
     # LEFT: closed-loop vs open-environment
     text_box(s, 0.6, 1.5, 5.95, 0.4, "Среда применения ИИ",
@@ -312,26 +320,26 @@ def build_part1_full(prs, H):
         _s04_tw = _s04_th * 1.501
         add_image(s, _s04_photo, 0.85 + 5.45 - _s04_tw, 6.08, w=_s04_tw, h=_s04_th)
 
-    # RIGHT: 5 L4 terms — gold accent on first item (AP1 P1-presentation)
-    text_box(s, 6.85, 1.5, 5.95, 0.4, "5 терминов цепочки поставок",
+    # RIGHT: 3 отраслевых термина — gold accent на AI-MRV (главный для s08c)
+    text_box(s, 6.85, 1.5, 5.95, 0.4, "3 отраслевых термина",
              size=16, bold=True, color=MID)
     terms = [
-        ("Агентный ИИ", "ML + поиск (RAG) + конвейер действий + человек в петле", True),
-        ("bp (базисный пункт)", "1 bp = 0,01%. Метрика проскальзывания сделок", False),
-        ("Проскальзывание", "Разрыв между планом сделки и фактом исполнения", False),
-        ("Выбросы Scope-3", "Косвенные выбросы по цепочке поставок", False),
-        ("ИИ-MRV", "ИИ-мониторинг, отчёт, верификация — климат-учёт", False),
+        ("Scope-3", "Выбросы по всей цепочке поставок, не от своих операций компании", False),
+        ("AI-MRV", "Измерение/отчётность/верификация climate-практик по спутнику, а не прямым отбором проб", True),
+        ("Edge ML / TinyML", "Машинное обучение на устройстве без облачного канала — архитектура для off-grid", False),
     ]
     term_y = 2.0
+    term_h = 1.3
+    term_gap = 0.15
     for term, defn, is_gold in terms:
         fill = GOLD_TINT if is_gold else LIGHT_TINT
         stroke = GOLD if is_gold else LIGHT
-        ocean_box(s, 6.85, term_y, 5.95, 0.8, fill=fill, stroke=stroke)
-        text_box(s, 7.05, term_y + 0.08, 2.15, 0.4, term,
-                 size=12, bold=True, color=GOLD if is_gold else DEEP)
-        text_box(s, 9.2, term_y + 0.08, 3.5, 0.6, defn,
-                 size=10, color=MID, italic=True, line_spacing=1.25)
-        term_y += 0.85
+        ocean_box(s, 6.85, term_y, 5.95, term_h, fill=fill, stroke=stroke)
+        text_box(s, 7.05, term_y + 0.1, 5.55, 0.4, term,
+                 size=15, bold=True, color=GOLD if is_gold else DEEP)
+        text_box(s, 7.05, term_y + 0.55, 5.55, 0.65, defn,
+                 size=11.5, color=MID, italic=True, line_spacing=1.3)
+        term_y += term_h + term_gap
 
     _s04_prov = text_runs(s, 0.6, 7.05, 12.13, 0.3, [
         {"text": "Фото (открытая среда): ", "size": 10, "italic": True, "color": LIGHT},
@@ -345,16 +353,17 @@ def build_part1_full(prs, H):
     add_speaker_notes(s, load_speaker_notes("s04"))
 
     # ============ s05 keystone ladder (two rows + вывод-вопрос) ============
+    # issue #340 v3.9: лестница сокращена с 5 до 4 уровней — ступень "L4
+    # Цепочка поставок" (трейдинг) убрана целиком, розница поднялась с L5
+    # на L4 как верхняя ступень.
     s = blank(prs); set_slide_bg(s, WHITE)
-    add_assertion_title(s, "Лестница ИИ — пять уровней. На каждой ступени работает по-разному", size=20, y=0.3)
+    add_assertion_title(s, "Лестница ИИ — четыре уровня. На каждой ступени работает по-разному", size=20, y=0.3)
 
-    # 5 ladder steps stacked vertically — compacted (shortened labels, not shrunk below
+    # 4 ladder steps stacked vertically — compacted (shortened labels, not shrunk below
     # readability floor) to leave room for Row1/Row2/вывод below
     levels = [
-        ("L5", "Полка / магазин", "Полностью оцифрованная среда. ИИ зрел.",
+        ("L4", "Полка / магазин", "Полностью оцифрованная среда. ИИ зрел.",
          "Walmart Eden 2017+, Tesco 2017+, X5 2020+", GOLD),
-        ("L4", "Цепочка поставок", "Контролируемые потоки, быстрая связь",
-         "Cargill CMAX, Tract, Olam, Walmart×Cropin", TEAL),
         ("L3", "Животное", "Полузакрытая среда, уровень особи",
          "SenseHub 2M коров, CattleEye, DeLaval V310", LIGHT),
         ("L2", "Робот", "Специализация жива; обобщённый — нет",
@@ -379,7 +388,7 @@ def build_part1_full(prs, H):
         text_box(s, start_x + 3.95, y + 0.16, step_w - 4.1, 0.34,
                  examples, size=10.5, italic=True, color=DARK_GREY, line_spacing=1.05)
 
-    ladder_h = 5 * step_h + 4 * gap  # == 3.3
+    ladder_h = len(levels) * step_h + (len(levels) - 1) * gap  # 4 steps now (v3.9)
 
     # Right-side axis indicator — matched height to ladder.
     # Issue #340 visual-richness pass: 4 раздельных hdr/desc пар сведены в
@@ -390,24 +399,28 @@ def build_part1_full(prs, H):
     ocean_box(s, 10.3, start_y, 2.4, ladder_h, fill=GOLD_TINT, stroke=GOLD)
     text_box(s, 10.45, start_y + 0.04, 2.1, 0.22, "↑ движение",
              size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.0)
+    # v3.9: ladder_h сократился на один rung (4 вместо 5 ступеней) — фото
+    # уменьшено (2.1→1.5"), а строки arrows_text укорочены, чтобы колонка
+    # axis-indicator не переполнялась (iter2: 1.7" ещё переполнял — провенанс
+    # наезжал на последнюю строку списка).
     _s05_photo = ASSETS / "photos" / "p33-john-deere-starfire-gps.jpg"
     if _s05_photo.exists():
-        _s05_pw = 2.1
+        _s05_pw = 1.5
         _s05_ph = _s05_pw / 1.333
-        add_image(s, _s05_photo, 10.3 + (2.4 - _s05_pw) / 2, start_y + 0.32,
+        add_image(s, _s05_photo, 10.3 + (2.4 - _s05_pw) / 2, start_y + 0.28,
                    w=_s05_pw, h=_s05_ph)
-        _list_y = start_y + 0.32 + _s05_ph + 0.08
+        _list_y = start_y + 0.28 + _s05_ph + 0.05
     else:
         _list_y = start_y + 0.46
     arrows_text = [
         ("↑ контролируемость среды", GOLD),
         ("↑ ROI растёт", GOLD),
-        ("↑ предсказуемость результата", GOLD),
-        ("↓ биология — непредсказуемость падает", DARK_GREY),
+        ("↑ предсказуемость", GOLD),
+        ("↓ биология падает", DARK_GREY),
     ]
     _arrow_runs = []
     for i, (line, color) in enumerate(arrows_text):
-        _arrow_runs.append({"text": line, "size": 9.5, "bold": True, "color": color,
+        _arrow_runs.append({"text": line, "size": 9, "bold": True, "color": color,
                              "newpara": i > 0})
     text_runs(s, 10.4, _list_y, 2.2, ladder_h - (_list_y - start_y), _arrow_runs,
               line_spacing=1.3)
@@ -431,14 +444,14 @@ def build_part1_full(prs, H):
          "$1,9 млрд → <$15 млн (−99% за 19 мес) — закрылась не из-за ИИ"),
         ("5 млн акров", "See & Spray Ultimate — рабочий ИИ",
          "= 0,55% от ≈900М акров пашни США"),
-        ("45 bp → 8 bp", "ручное хеджирование vs агент",
-         "сконструированный пример для иллюстрации механизма, не измеренный кейс"),
+        ("r=0,31 → R²≈0,10", "Sentera: кукуруза 97% vs соя (MSU Extension)",
+         "тот же вендор, та же технология — точность — свойство пары (культура, задача), не бренда"),
     ]
     rx = 0.6
     for big, lbl, sub in triple:
         ocean_box(s, rx, row1_y, row1_w, row1_h, fill=LIGHT_TINT, stroke=LIGHT)
         text_box(s, rx + 0.12, row1_y + 0.06, row1_w - 0.24, 0.36, big,
-                 size=22, bold=True, color=GOLD)
+                 size=18, bold=True, color=GOLD)
         text_box(s, rx + 0.12, row1_y + 0.44, row1_w - 0.24, 0.26, lbl,
                  size=11, bold=True, color=DEEP, line_spacing=1.0)
         text_box(s, rx + 0.12, row1_y + 0.71, row1_w - 0.24, 0.42, sub,
@@ -1198,18 +1211,20 @@ def build_part1_full(prs, H):
         ("SatAgro: ", "160 000 га", " сахарной свёклы"),
         ("Gro Intelligence: ", "98%", " от отчёта USDA за 8 лет; в 2022 точнее консенсуса аналитиков"),
         ("", "Дерешо 10 авг 2020", ": снимок обновился через ", "2 недели", " — оценка упала постфактум"),
+        ("Walmart × Cropin — ", "тот же прогноз", ", но заказчик ритейлер: видимость по полям поставщиков (scope-3)"),
     ]
     sat_bullet_w = panel_w - simg_w - 0.6
-    ly = panel_y + 0.44
-    sat_bullet_h = [0.7, 0.3, 0.5, 0.5]
+    ly = panel_y + 0.40
+    sat_bullet_h = [0.44, 0.24, 0.48, 0.58, 0.46]
+    sat_bsize = 9.5
     for parts, bh in zip(sat_lines, sat_bullet_h):
-        runs = [{"text": "• ", "size": bsize, "italic": True, "color": DEEP}]
+        runs = [{"text": "• ", "size": sat_bsize, "italic": True, "color": DEEP}]
         for i, part in enumerate(parts):
             is_num = (i % 2 == 1)
-            runs.append({"text": part, "size": bsize, "italic": True,
+            runs.append({"text": part, "size": sat_bsize, "italic": True,
                          "bold": is_num, "color": GOLD if is_num else DEEP})
-        text_runs(s, sat_x + 0.18, ly, sat_bullet_w, bh, runs, line_spacing=1.25)
-        ly += bh + 0.12
+        text_runs(s, sat_x + 0.18, ly, sat_bullet_w, bh, runs, line_spacing=1.15)
+        ly += bh + 0.07
 
     # Полоса снизу — 5 границ применимости
     lim_y = panel_y + panel_h + 0.12
@@ -1314,6 +1329,108 @@ def build_part1_full(prs, H):
     add_footer(s, "Источники: Farm Progress «High-tech or hula hoop…»; MSU CANR 2024-2025; "
                   "банкротство PrecisionHawk дек. 2023; закрытие Gro Intelligence май-июнь 2024")
     add_speaker_notes(s, load_speaker_notes("s08b"))
+
+    # ============ s08c — USDA Climate-Smart Commodities отменена (issue #340 v3.9) ============
+    # Strict-in F10, перенесён из удалённого старого Раздела 4 (трейдинг) с
+    # переформулировкой: там это был провал трейдинг-финансирования, здесь —
+    # провал спутниковой AI-MRV верификации практик на поле, той же
+    # технологической семьи, что s08a/s08b. Реальное фото: USDA NRCS South
+    # Dakota, no-till кукуруза в покровной культуре ржи (Wikimedia CC BY-SA 2.0).
+    s = blank(prs); set_slide_bg(s, WHITE)
+    add_assertion_title(s,
+        "USDA Climate-Smart Commodities — отменена программа, верифицировавшая практики через AI-MRV",
+        size=18)
+    text_box(s, 0.6, 1.05, 12.13, 0.25,
+             "Не каждая попытка верифицировать происходящее на поле через спутник и ИИ устойчива — "
+             "здесь верифицируется не урожайность (как выше), а сама практика",
+             size=10.5, italic=True, color=MID)
+
+    # Ряд 1 — 4-numbers plate
+    nums = [
+        ("$3,1 млрд", "бюджет программы", GOLD),
+        ("135", "проектов", MID),
+        ("14 000", "ферм", MID),
+        ("3,2 млн акров", "≈0,36% от ≈900М акров пашни США", LIGHT),
+    ]
+    plate_y = 1.38; plate_h = 0.85
+    plate_w = (12.13 - 0.3) / 4
+    px = 0.6
+    for big, lbl, color in nums:
+        ocean_box(s, px, plate_y, plate_w, plate_h,
+                  fill=GOLD_TINT if color == GOLD else LIGHT_TINT, stroke=color)
+        text_box(s, px + 0.1, plate_y + 0.08, plate_w - 0.2, 0.42, big,
+                 size=18, bold=True, color=color, align=PP_ALIGN.CENTER)
+        text_box(s, px + 0.1, plate_y + 0.52, plate_w - 0.2, 0.3, lbl,
+                 size=9, italic=True, color=DARK_GREY, align=PP_ALIGN.CENTER, line_spacing=1.0)
+        px += plate_w + 0.1
+
+    # Ряд 2 — AI-MRV inline-определение
+    def_y = plate_y + plate_h + 0.14
+    ocean_box(s, 0.6, def_y, 12.13, 0.95, fill=TEAL_TINT, stroke=TEAL)
+    text_runs(s, 0.8, def_y + 0.08, 11.7, 0.82, [
+        {"text": "AI-MRV ", "size": 12, "bold": True, "color": TEAL},
+        {"text": "(Measurement, Reporting, Verification) — AI-системы, которые оценивают запас углерода "
+                 "в почве и эффект climate-smart практик (no-till, покровные культуры, точное внесение азота) "
+                 "по спутниковым снимкам и ML-моделям, а не по прямому отбору проб. Это inference с большой "
+                 "неопределённостью, которая в маркетинге нередко подаётся как «precise measurement».",
+         "size": 11, "italic": True, "color": DARK_GREY},
+    ], line_spacing=1.3)
+
+    # Ряд 3 — timeline
+    tl_y = def_y + 0.95 + 0.16
+    tl_h = 0.62
+    timeline = [
+        ("2022", "Запуск программы (администрация Байдена)"),
+        ("Апрель 2025", "Отмена (новая администрация), USDA press 2025-04-14"),
+        ("AMP", "Advancing Markets for Producers — ≥65% funding напрямую фермерам, без MRV"),
+    ]
+    tl_w = (12.13 - 0.2) / 3
+    tx = 0.6
+    for yr, desc in timeline:
+        ocean_box(s, tx, tl_y, tl_w, tl_h, fill=SURFACE, stroke=LIGHT)
+        text_box(s, tx + 0.1, tl_y + 0.04, tl_w - 0.2, 0.26, yr, size=13, bold=True, color=MID)
+        text_box(s, tx + 0.1, tl_y + 0.3, tl_w - 0.2, 0.3, desc,
+                 size=8.3, italic=True, color=DARK_GREY, line_spacing=1.05)
+        tx += tl_w + 0.1
+
+    # Вывод-плашка + РФ-зеркало
+    cc_y = tl_y + tl_h + 0.14
+    cc_h = 0.85
+    cc_w = (12.13 - 0.2) / 2
+    ocean_box(s, 0.6, cc_y, cc_w, cc_h, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.78, cc_y + 0.06, cc_w - 0.36, cc_h - 0.12,
+             "Federal policy = хвостовой риск для AgTech бизнес-модели. Технология не ломалась — "
+             "ломалась модель финансирования. Альтернатива: unit economics over policy-tailwind plays.",
+             size=9.5, bold=True, color=DEEP, line_spacing=1.15)
+    ocean_box(s, 0.6 + cc_w + 0.2, cc_y, cc_w, cc_h, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 0.78 + cc_w + 0.2, cc_y + 0.06, cc_w - 0.36, cc_h - 0.12,
+             "РФ-зеркало: «Цифровое сельское хозяйство» 2019-2024 цель не достигла (АПК 2024 −3,2%). "
+             "«АПК будущего» 2026-2030 — следующая попытка с риском того же класса.",
+             size=9.5, italic=True, color=TEAL, line_spacing=1.15)
+
+    # Реальное фото — компактная карточка слева под callout-рядом
+    photo_y = cc_y + cc_h + 0.12
+    img_p = ASSETS / "photos" / "p08c-no-till-cover-crop-usda-nrcs.jpg"
+    if img_p.exists():
+        img_w = 2.0; img_h = img_w * (640 / 960)
+        ocean_box(s, 0.6, photo_y, img_w + 0.1, img_h + 0.1, fill=SURFACE, stroke=LIGHT)
+        add_image(s, img_p, 0.65, photo_y + 0.05, w=img_w, h=img_h)
+        text_box(s, 0.6 + img_w + 0.25, photo_y + 0.12, 9.3, img_h - 0.1,
+                 "No-till кукуруза в покровной культуре ржи — именно такую практику финансировала и "
+                 "верифицировала отменённая программа (USDA NRCS, Южная Дакота)",
+                 size=8.8, italic=True, color=DARK_GREY, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+
+    _s08c_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Источник: USDA press release 2025-04-14 (Climate-Smart cancellation + AMP) · фото: USDA NRCS South Dakota, ",
+         "size": 11, "italic": True, "color": LIGHT},
+        {"text": "Wikimedia Commons, CC BY-SA 2.0",
+         "size": 11, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s08c_fruns = [r for p in _s08c_foot.text_frame.paragraphs for r in p.runs]
+    _s08c_fruns[-1].font.underline = True
+    _s08c_fruns[-1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:2018_Vermillion_Corn_and_Cover_Crop_-_No_Till_-_46756260004.jpg"
+
+    add_speaker_notes(s, load_speaker_notes("s08c"))
 
     # ============ s09 foundation models — simplified, 3 key claims ============
     s = blank(prs); set_slide_bg(s, WHITE)

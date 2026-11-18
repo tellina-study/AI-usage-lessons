@@ -3,13 +3,13 @@ id: s33
 type: section_divider
 duration_min: 0.2
 assertion: "Инфраструктурные условия: связь, привязка к вендору, регуляторика. Сквозной meta-уровень: все три — failure-перспектива. Без них ни одна ступень лестницы не работает."
-learning_goal: "Visual divider — переход в Р4-bis + 7-card progress bar с gold-подсветкой Р4-bis"
+learning_goal: "Visual divider — переход в Р4 + 6-card progress bar с gold-подсветкой Р4"
 learning_outcomes: [LO5]
 chapter_ref: "frontmatter"
 references: []
 visual:
   pattern: section_divider_with_progress
-  primary: "Большое «4-bis» + title + 1-фраза-фрейм + 7-card progress bar с gold-подсветкой Р4-bis"
+  primary: "Большое «4» + title + 1-фраза-фрейм + 6-card progress bar с gold-подсветкой Р4"
 ---
 
 # Инфраструктурные условия: связь, привязка к вендору, регуляторика
@@ -20,9 +20,9 @@ visual:
 
 ## Visual
 
-Слева — декоративная цифра «4-bis» outline-стилем (~280pt, Primary light очень светлый, рендерится как «4» — техническое ограничение ширины при 400pt кегле). Справа — large title 34pt bold «Инфраструктурные условия: связь, привязка к вендору, регуляторика» + 1 фраза-фрейм 18pt italic Primary mid: «Сквозной meta-уровень: всё, без чего ни одна ступень не работает».
+Слева — декоративная цифра «4» outline-стилем (~280pt, Primary light очень светлый). Справа — large title 34pt bold «Инфраструктурные условия: связь, привязка к вендору, регуляторика» + 1 фраза-фрейм 18pt italic Primary mid: «Сквозной meta-уровень: всё, без чего ни одна ступень не работает».
 
-Внизу — progress bar: 7 horizontal cards, текущая (Р4-bis) выделена gold. Caption 12pt italic: «3 sub-блока (связь / vendor lock-in двойная оптика / регуляторика) · 3 анти-ИИ критерия (AP5, AP6, AP7)».
+Внизу — progress bar: 6 horizontal cards, текущая (Р4) выделена gold. Caption 12pt italic: «3 sub-блока (связь / vendor lock-in двойная оптика / регуляторика) · 3 анти-ИИ критерия (AP5, AP6, AP7)».
 
 ## Speaker notes
 
@@ -34,8 +34,8 @@ visual:
 
 Регуляторика. EU AI Act high-risk classification для autonomous agricultural machinery с февраля 2025-го, плюс AI literacy для операторов, плюс liability cascade. USDA AI Strategy формальна. РФ программа «АПК будущего» 2026-2030 декларативна — наследница «Цифрового сельского хозяйства», которое цели удвоения производительности не достигла.
 
-И это три анти-ИИ критерия, которые завершают пятёрку для consolidation: AP-пять про связь, AP-шесть про vendor lock-in, AP-семь про AI-MRV без direct measurement — последний уже введён в разделе про Verra.
+И это три анти-ИИ критерия, которые завершают пятёрку для consolidation: AP-пять про связь, AP-шесть про vendor lock-in, AP-семь про AI-MRV без direct measurement — последний уже введён в первом разделе, в эпизоде про отмену USDA Climate-Smart Commodities.
 
 ## Источники
 
-- Chapter v3.1 §5 Часть 3.
+- Chapter v3.9 §4 Часть 3.

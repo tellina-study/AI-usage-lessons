@@ -311,7 +311,7 @@ def build_part2(prs, H):
     # Cognitive Pilot, и GNSS-автопилот ИТЭЛМА. Колонки сравнения сжаты
     # (4.3"→3.65"), чтобы освободить место; весь контент (числа/карточки)
     # сохранён без изменений.
-    _s17_box_w, _s17_box_h = 3.3, 2.15
+    _s17_box_w, _s17_box_h = 3.3, 1.55
     _s17_box_x = 0.6 + (12.13 - _s17_box_w) / 2
     _s17_box_y = 1.05
     ocean_box(s, _s17_box_x, _s17_box_y, _s17_box_w, _s17_box_h, fill=SURFACE)
@@ -324,63 +324,100 @@ def build_part2(prs, H):
     else:
         cp = ASSETS / "charts" / "c17-cogn-vs-itelma.png"
         if cp.exists():
-            add_image(s, cp, 0.6, 1.15, w=12.13, h=0.9)
+            add_image(s, cp, 0.6, 1.15, w=12.13, h=0.6)
 
-    # 2-column architecture comparison — compressed to make room for photo above
-    col_w = 5.95; col_h = 3.65
-    cy = _s17_box_y + _s17_box_h + 0.1
+    # 2-column architecture comparison — compressed (col_h 3.65→3.00) to make
+    # room for a 3rd band below (issue #340 Задача 2bis: АссистАгро/Русагро +
+    # Ростсельмаш Агротроник Пилот 2.0, from chapter-part2.md §2.7 [for-slide-s17x-ru]).
+    col_w = 5.95; col_h = 3.00
+    cy = _s17_box_y + _s17_box_h + 0.08
 
     # LEFT: Cognitive Pilot CV
     ocean_box(s, 0.6, cy, col_w, col_h, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 0.8, cy + 0.08, col_w - 0.4, 0.38, "Cognitive Pilot · компьютерное зрение",
-             size=14, bold=True, color=DEEP)
-    text_box(s, 0.8, cy + 0.50, col_w - 0.4, 0.3, "«Что я вижу»",
-             size=11, italic=True, color=MID)
-    hr_line(s, 0.8, cy + 0.86, col_w - 0.4, color=LIGHT, weight=1.0)
-    text_box(s, 0.8, cy + 0.96, col_w - 0.4, 0.3,
+    text_box(s, 0.8, cy + 0.06, col_w - 0.4, 0.30, "Cognitive Pilot · компьютерное зрение",
+             size=13, bold=True, color=DEEP)
+    text_box(s, 0.8, cy + 0.38, col_w - 0.4, 0.24, "«Что я вижу»",
+             size=10.5, italic=True, color=MID)
+    hr_line(s, 0.8, cy + 0.66, col_w - 0.4, color=LIGHT, weight=1.0)
+    text_box(s, 0.8, cy + 0.74, col_w - 0.4, 0.26,
              "1700+ установок (трактора, комбайны)",
-             size=11.5, bold=True, color=DEEP)
-    text_box(s, 0.8, cy + 1.28, col_w - 0.4, 0.3,
+             size=11, bold=True, color=DEEP)
+    text_box(s, 0.8, cy + 1.02, col_w - 0.4, 0.26,
              "4 иска фермеров (~12,7 млн ₽)",
-             size=11.5, bold=True, color=GOLD)
-    text_box(s, 0.8, cy + 1.64, col_w - 0.4, 0.24,
-             "Режим отказа:", size=11, italic=True, color=MID)
-    text_box(s, 0.8, cy + 1.90, col_w - 0.4, 1.5,
+             size=11, bold=True, color=GOLD)
+    text_box(s, 0.8, cy + 1.32, col_w - 0.4, 0.20,
+             "Режим отказа:", size=10.5, italic=True, color=MID)
+    text_box(s, 0.8, cy + 1.54, col_w - 0.4, 1.30,
              "• пыль закрывает камеры\n"
              "• сдвиг от теней меняет освещение\n"
              "• распознавание крайних рядов сбивается\n"
              "• эталонная разметка ≠ полевые условия\n"
              "• краевые случаи не в обучающем наборе",
-             size=10.5, color=DARK_GREY, line_spacing=1.3)
+             size=10, color=DARK_GREY, line_spacing=1.25)
 
     # RIGHT: ИТЭЛМА Квадро
     ocean_box(s, 6.85, cy, col_w, col_h, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 7.05, cy + 0.08, col_w - 0.4, 0.38, "ИТЭЛМА Квадро · слияние сенсоров",
-             size=14, bold=True, color=DEEP)
-    text_box(s, 7.05, cy + 0.50, col_w - 0.4, 0.3, "Навигация + инерциальные + поправки: «где я нахожусь»",
-             size=10.5, italic=True, color=MID)
-    hr_line(s, 7.05, cy + 0.86, col_w - 0.4, color=GOLD, weight=1.0)
-    text_box(s, 7.05, cy + 0.96, col_w - 0.4, 0.3,
+    text_box(s, 7.05, cy + 0.06, col_w - 0.4, 0.30, "ИТЭЛМА Квадро · слияние сенсоров",
+             size=13, bold=True, color=DEEP)
+    text_box(s, 7.05, cy + 0.38, col_w - 0.4, 0.24, "Навигация + инерциальные + поправки: «где я нахожусь»",
+             size=10, italic=True, color=MID)
+    hr_line(s, 7.05, cy + 0.66, col_w - 0.4, color=GOLD, weight=1.0)
+    text_box(s, 7.05, cy + 0.74, col_w - 0.4, 0.26,
              "ГЛОНАСС + GPS + Galileo + BeiDou",
-             size=11.5, bold=True, color=DEEP)
-    text_box(s, 7.05, cy + 1.28, col_w - 0.4, 0.3,
+             size=11, bold=True, color=DEEP)
+    text_box(s, 7.05, cy + 1.02, col_w - 0.4, 0.26,
              "RTK-коррекция: точность 2-5 см",
-             size=11.5, bold=True, color=GOLD)
-    text_box(s, 7.05, cy + 1.64, col_w - 0.4, 0.24,
-             "Почему работает:", size=11, italic=True, color=MID)
-    text_box(s, 7.05, cy + 1.90, col_w - 0.4, 1.5,
+             size=11, bold=True, color=GOLD)
+    text_box(s, 7.05, cy + 1.32, col_w - 0.4, 0.20,
+             "Почему работает:", size=10.5, italic=True, color=MID)
+    text_box(s, 7.05, cy + 1.54, col_w - 0.4, 1.30,
              "• сенсоры не зависят от освещения\n"
              "• несколько систем = резервирование\n"
              "• ГЛОНАСС работает в РФ независимо\n"
              "• стабильность в пыли / тумане / ночью\n"
              "• совместима с детерминистическим вождением",
-             size=10.5, color=DARK_GREY, line_spacing=1.3)
+             size=10, color=DARK_GREY, line_spacing=1.25)
+
+    # BOTTOM BAND — 2 compact plates: АссистАгро+Русагро (детекция сорняков) +
+    # Ростсельмаш Агротроник Пилот 2.0 (anti-hype: RTK=автоматизация НЕ ИИ,
+    # CV-детекция препятствий=настоящий ИИ). chapter-part2.md §2.7 [for-slide-s17x-ru].
+    _s17b_y = cy + col_h + 0.08
+    _s17b_h = 1.05
+
+    ocean_box(s, 0.6, _s17b_y, col_w, _s17b_h, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 0.8, _s17b_y + 0.08, col_w - 0.4, 0.24,
+             "АссистАгро + «Русагро» — детекция сорняков с БПЛА",
+             size=10.5, bold=True, color=DEEP)
+    text_box(s, 0.8, _s17b_y + 0.34, col_w - 0.4, 0.20,
+             "90% виды · 97% густота · >250 000 га",
+             size=9.5, color=DARK_GREY)
+    text_box(s, 0.8, _s17b_y + 0.56, col_w - 0.4, 0.20,
+             "159 млн ₽ (72,5 млн — грант Сколково)",
+             size=9.5, color=DARK_GREY)
+    text_box(s, 0.8, _s17b_y + 0.78, col_w - 0.4, 0.24,
+             "Экономия 880 ₽/га — база расходов до внедрения не названа",
+             size=8.5, italic=True, color=LIGHT, line_spacing=1.1)
+
+    ocean_box(s, 6.85, _s17b_y, col_w, _s17b_h, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 7.05, _s17b_y + 0.08, col_w - 0.4, 0.24,
+             "Ростсельмаш «Агротроник Пилот 2.0»",
+             size=10.5, bold=True, color=DEEP)
+    text_box(s, 7.05, _s17b_y + 0.34, col_w - 0.4, 0.20,
+             "RTK-навигация 2,5 см — автоматизация, НЕ ИИ",
+             size=9.5, color=DARK_GREY)
+    text_box(s, 7.05, _s17b_y + 0.56, col_w - 0.4, 0.20,
+             "Детекция препятствий (CV) — настоящий ИИ-компонент",
+             size=9.5, color=DARK_GREY)
+    text_box(s, 7.05, _s17b_y + 0.78, col_w - 0.4, 0.24,
+             "Эксплуатация 2026: только 5 комплектов; выпуск — пока план",
+             size=8.5, italic=True, color=LIGHT, line_spacing=1.1)
 
     _s17_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
-        {"text": "Источники: RTVI 2025 (иски Cognitive Pilot); Фонтанка 2026-01-26 (ИТЭЛМА) · фото: ",
-         "size": 11, "italic": True, "color": LIGHT},
+        {"text": "Источники: RTVI 2025 (иски Cognitive Pilot); Фонтанка 2026-01-26 (ИТЭЛМА); "
+                  "sk.ru + Интерфакс (АссистАгро/Русагро); Ростсельмаш «Решение года» (Агротроник) · фото: ",
+         "size": 10, "italic": True, "color": LIGHT},
         {"text": "Ростсельмаш СМИ, Wikimedia Commons, CC BY-SA 4.0",
-         "size": 11, "italic": True, "color": LIGHT},
+         "size": 10, "italic": True, "color": LIGHT},
     ], anchor=MSO_ANCHOR.MIDDLE)
     _s17_fruns = [r for p in _s17_foot.text_frame.paragraphs for r in p.runs]
     _s17_fruns[-1].font.underline = True

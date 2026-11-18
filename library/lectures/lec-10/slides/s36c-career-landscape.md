@@ -2,25 +2,25 @@
 id: s36c
 type: career_landscape
 duration_min: 1.3
-assertion: "L1-L2 международные (John Deere, Bayer, BASF, Carbon Robotics, Saga, Aigen). L3 (DeLaval, GEA, Lely, Cargill Birdoo). L4-L5 (Cargill CMAX, ADM, Tract, Walmart Eden, Cropin). РФ: Cognitive Pilot, ИТЭЛМА, Геоскан, ЭФКО, Русагро Тех, РСХБ.цифра, Магнит digital, X5 Tech, ExactFarming, Connectome.ai."
+assertion: "L1-L2 международные (John Deere, Bayer, BASF, Carbon Robotics, Saga, Aigen). L3 (DeLaval, GEA, Lely, Cargill Birdoo). L4 retail (Walmart Eden, Tesco AI, Cropin). РФ: Cognitive Pilot, ИТЭЛМА, Геоскан, ЭФКО, Русагро Тех, X5 Tech, Магнит digital, ExactFarming, Connectome.ai."
 learning_goal: "Рыночный ландшафт без агитации; родовая форма"
 learning_outcomes: []
-chapter_ref: "§6.3 Часть 3 — Карьерные траектории"
+chapter_ref: "§5.3 Часть 3 — Карьерные траектории"
 references: []
 visual:
-  pattern: 5segment_landscape
-  primary: "5-segment landscape: международные L1-L2 / L3 / L4-L5 + российский рынок distributed + образовательные траектории"
+  pattern: 4segment_landscape
+  primary: "4-segment landscape: международные L1-L2 / L3 / L4-полка + российский рынок distributed + образовательные траектории"
 ---
 
-# Карьерный ландшафт — L1-L5 сегменты + российский рынок
+# Карьерный ландшафт — L1-L4 сегменты + российский рынок
 
 ## Assertion
 
-L1-L2 международные (John Deere, Bayer, BASF, Carbon Robotics, Saga, Aigen). L3 (DeLaval, GEA, Lely, Cargill Birdoo). L4-L5 (Cargill CMAX, ADM, Tract, Walmart Eden, Cropin). РФ: Cognitive Pilot, ИТЭЛМА, Геоскан, ЭФКО, Русагро Тех, РСХБ.цифра, Магнит digital, X5 Tech, ExactFarming, Connectome.ai.
+L1-L2 международные (John Deere, Bayer, BASF, Carbon Robotics, Saga, Aigen). L3 (DeLaval, GEA, Lely, Cargill Birdoo). L4 retail (Walmart Eden, Tesco AI, Cropin). РФ: Cognitive Pilot, ИТЭЛМА, Геоскан, ЭФКО, Русагро Тех, X5 Tech, Магнит digital, ExactFarming, Connectome.ai.
 
 ## Visual
 
-Под assertion 28pt bold — landscape layout с 5 cards-сегментами.
+Под assertion 28pt bold — landscape layout с 4 cards-сегментами.
 
 **Верхний ряд — Международные сегменты:**
 
@@ -35,18 +35,16 @@ L1-L2 международные (John Deere, Bayer, BASF, Carbon Robotics, Saga
 - Poultry: **Cargill Birdoo**
 - Навыки: CV + classical ML для биометрии, time-series анализ сенсорных данных
 
-**Сегмент 3 — L4-L5 (международный)** (Primary mid bg):
-- Commodity traders с агентными AI: **Cargill CMAX/CarVe, ADM, COFCO**
-- Data infrastructure: **Tract** (shared между конкурентами)
-- Retail-supply ML: **Walmart Eden, Tesco AI, Cropin**
-- Навыки: LLM/agentic architectures, RAG, finance/commodity trading basics
+**Сегмент 3 — L4 Полка (международный)** (Primary mid bg):
+- Retail-supply ML: **Walmart Eden, Tesco AI, WooliesX, Carrefour AI, Cropin**
+- Навыки: ML demand forecasting, computer vision для входящих партий, supply-chain data engineering
 
 **Нижний ряд — Российский рынок (distributed по уровням):**
 
 **Сегмент 4 — Российский рынок (по уровням лестницы)** (Teal bg, white):
 - L2: **Cognitive Pilot, ИТЭЛМА, Геоскан** (autonomous machinery, UAV)
 - R&D агрохолдинги: **ЭФКО, Русагро Тех**
-- L4-L5: **РСХБ.цифра, Магнит digital, X5 Tech**
+- L4 Полка: **X5 Tech, Магнит digital, «Лента»+КОРУС Консалтинг**
 - L1 SaaS: **ExactFarming**
 - L3 узкие ниши: **Connectome.ai** (Сколково)
 - Дополнительно — корпоративные R&D-юниты крупных банков и tech-компаний
@@ -58,7 +56,7 @@ L1-L2 международные (John Deere, Bayer, BASF, Carbon Robotics, Saga
 
 Bottom callout 14pt italic в Teal-tint box: «**Это рыночный ландшафт, не предписание.** Каждая позиция требует конкретного навыкового профиля. Решения о карьере — индивидуальны».
 
-Footer 12pt italic: «Без агитации. Без named institutions. Источник: Chapter v3.1 §6.3 Часть 3».
+Footer 12pt italic: «Без агитации. Без named institutions. Источник: Chapter v3.9 §5.3 Часть 3».
 
 ## Speaker notes
 
@@ -70,12 +68,12 @@ Footer 12pt italic: «Без агитации. Без named institutions. Ист
 
 Сегмент L3 международно — производители dairy-equipment с AI-стеком (DeLaval, GEA, Lely), CV для здоровья и поведения животных (Cainthus в портфеле Cargill, Connecterra IDA, CattleEye в составе GEA), poultry CV (Cargill Birdoo). Навыки — CV плюс классический ML для биометрии животных, time-series анализ сенсорных данных.
 
-Сегмент L4-L5 международно — commodity traders с агентными AI-стеками (Cargill CMAX/CarVe, ADM, COFCO), data infrastructure (Tract — shared между конкурентами), retail-supply ML (Walmart Eden, Tesco AI, Cropin). Навыки — LLM и agentic architectures, RAG, finance и commodity trading basics, supply chain economics.
+Сегмент L4 — самая высокая ступень лестницы, полка — международно представлен retail-supply ML: Walmart Eden, Tesco AI, аналогичные WooliesX и Carrefour AI, плюс Cropin как платформа спутникового прогноза урожайности, которую используют и фермеры, и ритейлеры. Навыки — ML demand forecasting, computer vision для оценки качества входящих партий, supply-chain data engineering.
 
-Российский рынок распределён по уровням: L2 — Cognitive Pilot, ИТЭЛМА, Геоскан (autonomous machinery, UAV); R&D агрохолдинги — ЭФКО (FoodTech), Русагро Тех (digital agronomy); L4-L5 — РСХБ.цифра, Магнит digital, X5 Tech (supply chain ML, demand forecasting); L1 SaaS — ExactFarming; L3 узкая ниша — Connectome.ai, резидент Сколково (CV для контроля рождения телят). Плюс корпоративные R&D-юниты крупных банков и tech-компаний.
+Российский рынок распределён по уровням: L2 — Cognitive Pilot, ИТЭЛМА, Геоскан (autonomous machinery, UAV); R&D агрохолдинги — ЭФКО (FoodTech), Русагро Тех (digital agronomy); L4 Полка — X5 Tech, Магнит digital, «Лента»+КОРУС Консалтинг (demand forecasting); L1 SaaS — ExactFarming; L3 узкая ниша — Connectome.ai, резидент Сколково (CV для контроля рождения телят). Плюс корпоративные R&D-юниты крупных банков и tech-компаний.
 
 Это ландшафт, не предписание: каждая позиция требует своего навыкового профиля, который даёт курс в целом плюс отраслевая подготовка. Решения о карьере — индивидуальны.
 
 ## Источники
 
-- Chapter v3.1 §6.3 Часть 3.
+- Chapter v3.9 §5.3 Часть 3.

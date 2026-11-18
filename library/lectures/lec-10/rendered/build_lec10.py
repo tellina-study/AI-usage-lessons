@@ -190,12 +190,15 @@ def add_speaker_notes(slide, notes_text):
 
 # ========== Slide-level helpers ==========
 
-# 7 sections: 0 Открытие, 1 Поле, 2 Робот, 3 Животное, 4 Цепочка, 4-bis Среда, 5 Полка
-SECTIONS = ["Открытие", "L1 Поле", "L2 Робот", "L3 Животное", "L4 Цепочка", "Среда", "L5 Полка"]
+# 6 sections: 0 Открытие, 1 Поле, 2 Робот, 3 Животное, 4 Среда, 5 Полка
+# (issue #340 v3.9: старый "4 Цепочка" (Раздел 4 трейдинг, s27-s32) удалён
+# целиком по указанию владельца; старое "4-bis Среда" стало просто "4";
+# ладдер-ярлык розницы поднялся с L5 на L4, см. deck.yaml central_question).
+SECTIONS = ["Открытие", "L1 Поле", "L2 Робот", "L3 Животное", "Среда", "L4 Полка"]
 
 
 def add_progress_bar(slide, current_section, *, y=6.95):
-    """7-card progress bar для section dividers и cover.
+    """6-card progress bar для section dividers и cover.
     current_section=-1 → no card highlighted (e.g., cover slide)."""
     sections = SECTIONS
     n = len(sections)

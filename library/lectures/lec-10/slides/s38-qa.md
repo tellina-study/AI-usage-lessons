@@ -5,7 +5,7 @@ duration_min: 1
 assertion: "Q&A. Backup-вопросы про термодинамику vertical farming, agentic AI scope, ИТЭЛМА vs Cognitive Pilot, foundation models к 2030."
 learning_goal: "Dedicated Q&A slide с 3 backup-prompts"
 learning_outcomes: []
-chapter_ref: "Q&A backup + §9 Часть 3"
+chapter_ref: "Q&A backup + §8 Часть 3"
 references: []
 visual:
   pattern: cover_distinct_qa

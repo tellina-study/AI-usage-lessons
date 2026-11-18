@@ -5,7 +5,7 @@ duration_min: 1.5
 assertion: "AP1 термодинамика > ML / AP3 порог точности ≠ внедрение / AP4 generic LLM как советник = антипаттерн / AP6 AI-equipment = vendor lock-in / AP7 AI-MRV без direct measurement = greenwashing. + AP2a/AP2b/AP5 inline."
 learning_goal: "Главный consolidation takeaway лекции (LO5)"
 learning_outcomes: [LO5]
-chapter_ref: "§6.2 Часть 3 — Пять явных «когда не ИИ» — consolidation"
+chapter_ref: "§5.2 Часть 3 — Пять явных «когда не ИИ» — consolidation"
 references: []
 visual:
   pattern: schema_matrix
@@ -28,7 +28,7 @@ AP1 термодинамика > ML / AP3 порог точности ≠ вне
 | **AP3** | **Пороговая точность ≠ готовность к внедрению** | Plantix 10-15% misdiagnosis × 10M+ = ~100k неправильных рекомендаций/год | Calibrated confidence + abstention; «не уверен → спроси эксперта» |
 | **AP4** | **Обобщённый LLM в advisory mode** для high-stakes = категорический антипаттерн | ChatGPT рекомендация неправильного окна гербицида (Tzachor 2024) | RAG-grounded в local regulator + abstention + человек в цикле |
 | **AP6** | **«AI-driven equipment» = ловушка vendor lock-in** | FTC v. Deere; Мелитополь remote-brick; FieldView выход из РФ; FCC ban DJI | Open-source hardware (Farm Hack); right-to-repair; multi-vendor; mechanical fallback |
-| **AP7** | **AI-MRV для carbon claims без direct measurement** = scaled greenwashing | Verra 94% phantom credits; Pachama 8×; Bowery $32M never-used | Direct soil sampling + transparent uncertainty bands; AI как hypothesis, не fact |
+| **AP7** | **AI-MRV для carbon claims без direct measurement** = scaled greenwashing | Отмена USDA Climate-Smart Commodities — $3,1 млрд, спутниковая AI-MRV верификация climate-практик, inference поданный как точное измерение | Direct soil sampling + transparent uncertainty bands; AI как hypothesis, не fact |
 
 **Gold accent** на критериях AP1 + AP6 (две самые «structural» — закон термодинамики + vendor lock-in trap).
 
@@ -54,7 +54,7 @@ Bottom callout 16pt italic в gold-tint box: «**Это рабочая матр�
 
 Критерий четвёртый — AP-шесть. AI-driven equipment — это ловушка привязки к поставщику. Чем больше AI и телематики в технике, тем сильнее vendor control surface. Примеры: FTC против Deere в 2025-м, Мелитопольский remote-brick в 2022-м, Climate FieldView выход из РФ, FCC ban DJI ag-drones. Альтернатива — open-source hardware Farm Hack, право на ремонт, multi-vendor стратегия, mechanical fallback.
 
-Критерий пятый — AP-семь. AI-MRV для carbon claims без direct measurement — это inference с большой uncertainty, marketed как precise measurement — то есть scaled greenwashing. Пример: Verra девяносто четыре процента phantom credits, Pachama overestimation в восемь раз. Альтернатива — direct soil sampling значимой доли проектов плюс transparent uncertainty bands; AI как hypothesis, а не как fact.
+Критерий пятый — AP-семь. AI-MRV для carbon claims без direct measurement — это inference с большой uncertainty, marketed как precise measurement — то есть scaled greenwashing. Пример: отмена программы USDA Climate-Smart Commodities — три и одна десятая миллиарда долларов, спутниковая AI-MRV верификация climate-smart практик, поданная как точное измерение. Альтернатива — direct soil sampling значимой доли проектов плюс transparent uncertainty bands; AI как hypothesis, а не как fact.
 
 Плюс три inline критерия, которые мы ввели в Разделах 2 и 5 и активно используем. AP-два-а — архитектурный выбор внутри ИИ-домена: когда CV не работает в open-environment, другой класс ИИ — sensor-fusion-AI — может быть более робастным; пример Cognitive Pilot против ИТЭЛМА. AP-два-б — genuine не-ИИ альтернатива: когда AI как класс не применим, mechanical работает; пример vertical farming → открытый грунт; FarmWise → Lemken Steketee. AP-пять — cloud-first для off-grid — архитектурная ошибка; альтернатива edge ML / TinyML.
 
@@ -64,5 +64,5 @@ Bottom callout 16pt italic в gold-tint box: «**Это рабочая матр�
 
 ## Источники
 
-- Chapter v3.1 §6.2 Часть 3.
+- Chapter v3.9 §5.2 Часть 3.
 - Lecture-wide synthesis всех failure-блоков.

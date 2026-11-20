@@ -52,7 +52,7 @@ AlphaCode, CodeCompose, GitClear-2023, инциденты Antigravity/Claude Cod
   принадлежит самому вендору без третьей стороны, confidence не выше medium, независимо от того,
   насколько впечатляюще число.
 
-## Кейсы с успешным исходом (10)
+## Кейсы с успешным исходом (11)
 
 | # | case_name | year | source_url | Описание (1 строка) | axis1_level | axis1_mechanism | axis2_bucket | axis2_mechanism | axis3_class | axis4_gate | axis4_blast_radius | external_driver | outcome | confidence |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -66,6 +66,7 @@ AlphaCode, CodeCompose, GitClear-2023, инциденты Antigravity/Claude Cod
 | S8 | DARPA AIxCC Finals — автономные Cyber Reasoning Systems | 2025 | https://www.darpa.mil/news/2025/aixcc-results | 7 финалистских команд (победитель Team Atlanta, $4M); системы нашли 54 синтетические уязвимости из 70 задач и запатчили 43; отдельно выдали 11 патчей для реальных уязвимостей и обнаружили 18 неизвестных ранее реальных дефектов в открытом коде | high | none | hours-days | none | hybrid | yes | low | not-applicable | success | high |
 | S9 | JPMorgan — внутренний AI-ассистент для разработчиков | 2025 | https://www.cnbc.com/2024/08/09/jpmorgan-chase-ai-artificial-intelligence-assistant-chatgpt-openai.html | Собственный coding assistant + GitHub Copilot + Claude Code; к маю 2025 доступ у >40 000 инженеров, заявленный прирост продуктивности 10–20% | moderate | none | weeks-months | none | foundation-model | yes | medium | not-applicable | success | medium |
 | S10 | Meta RADAR — риск-калиброванное автоматическое код-ревью | 2026 | https://arxiv.org/pdf/2605.30208 | Гибридный пайплайн (ML-скоринг риска + LLM-ревью + детерминированная валидация) автоматически ревьюирует и «лендит» низко/средне-рисковые диффы; из >535 000 проревьюированных >331 000 (~62%) залендено автоматически, revert rate — треть от человеческого базлайна, частота продакшн-инцидентов — 1/50 от базлайна | low | none | seconds-minutes | none | hybrid | yes | low | not-applicable | success | medium |
+| S11 | Tencent WeData SiriusDeliver — автономная доставка data-warehouse задач, 87,2% success без людей | 2026 | https://arxiv.org/abs/2608.09185 | Агентная система автономно принимает и выполняет задачи инженерии данных конвейера WeData; заявленный success rate 87,2% без вмешательства человека на реальных production-задачах | moderate | unclear | seconds-minutes | none | hybrid | yes | low | not-applicable | success | medium |
 
 ## Кейсы с провальным/неуспешным исходом (10)
 

@@ -75,7 +75,7 @@ WebSearch; (2) после этого — WebFetch напрямую по пред
   оговоркой в описании; IM-1 размечен как `partial` и не входит ни в счёт 10 успехов, ни в счёт
   10 провалов — отдельная одиннадцатая категория для прозрачности.
 
-## Кейсы с успешным исходом (12)
+## Кейсы с успешным исходом (15)
 
 | # | case_name | year | source_url | Описание (1 строка) | axis1_level | axis1_mechanism | axis2_bucket | axis2_mechanism | axis3_class | axis4_gate | axis4_blast_radius | external_driver | outcome | confidence |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -91,8 +91,11 @@ WebSearch; (2) после этого — WebFetch напрямую по пред
 | S10 | Astroscale ADRAS-J — автономное сближение с некооперативным обломком | 2024 | https://en.wikipedia.org/wiki/Astroscale | Запуск февраль 2024; к ноябрю 2024 — сближение на 15 м и облёт на 360° вокруг верхней ступени ракеты H-IIA без заранее известной точной модели её вращения/траектории — впервые для коммерческой компании | high | none | hours-days | F-A | unclear | yes | medium | not-applicable | success | medium |
 | S11 | Firefly Aerospace Blue Ghost Mission 1 — Terrain Relative Navigation | 2025 | https://en.wikipedia.org/wiki/Blue_Ghost_Mission_1 | 02.03.2025: первая полностью успешная коммерческая мягкая посадка на Луну; визуальная TRN распознала кратеры/склоны/камни на неизвестной местности и вычислила 2 манёвра уклонения в последний час спуска, попадание в 100-метровую зону | moderate | none | seconds-minutes | F-C | sensor-fusion | no | high | not-applicable | success | high |
 | S12 | Varda Space Industries W-6 — автономная навигация по звёздам при входе в атмосферу | 2026 | https://www.theregister.com/science/2026/05/20/space-factories-edge-closer-after-experimental-capsule-survives-hypersonic-landing/5243140 | Капсула W-6 использует систему, определяющую позицию по изображениям звёзд и объектов на НОО во время гиперзвукового входа; штатная посадка на Koonibba Test Range (Австралия), май 2026 | moderate | none | seconds-minutes | F-C | sensor-fusion | no | medium | not-applicable | success | medium |
+| S13 | ESA Hera — автономная навигация и прибытие к Дидиму | 2026 | https://www.esa.int/Space_Safety/Hera/ESA_s_Hera_targets_early_arrival_at_Didymos_asteroids | 8 июля 2026 ESA загрузила финальное ПО автономной «self-driving»-навигации; прибытие к Дидиму — ноябрь 2026, на месяц раньше плана | high | none | seconds-minutes | F-C | sensor-fusion | yes | medium | not-applicable | success | high |
+| S14 | SpaceX Starlink — автономные манёвры уклонения от столкновений (полугодовой отчёт FCC) | 2026 | https://api-prod.fcc.gov/icfs-attachment/exp/api/v1/a81df57a93db4f10ac9c39bfa8373c08 | Филинг FCC от 1 июля 2026: 207 152 автономных манёвра уклонения дек.2025–май 2026 (65 137 Gen1 + 142 015 Gen2); порог срабатывания — вероятность столкновения ≥3/10 000 000, без участия человека на каждый манёвр | moderate | none | seconds-minutes | F-C | rule-based | no | high | yes | success | high |
+| S15 | Rocket Lab / Space Force VICTUS HAZE — автономный орбитальный перехват Pioneer | 2026 | https://www.globenewswire.com/news-release/2026/06/22/3315647/0/en/Rocket-Lab-Shatters-Responsive-Space-Record-Launches-U-S-Space-Force-VICTUS-HAZE-Mission-in-16-Hours-42-Minutes.html | Запуск 19.06.2026; Pioneer выполнил RPO против манёврирующего JACKAL-0004 (True Anomaly), опередив 84-часовой дедлайн на >25 часов — заявлено как «первый коммерческий автономный орбитальный перехват» | high | unclear | hours-days | F-A | unclear | yes | medium | not-applicable | success | medium |
 
-## Кейсы с провальным/неуспешным исходом (10)
+## Кейсы с провальным/неуспешным исходом (11)
 
 | # | case_name | year | source_url | Описание (1 строка) | axis1_level | axis1_mechanism | axis2_bucket | axis2_mechanism | axis3_class | axis4_gate | axis4_blast_radius | external_driver | outcome | confidence |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -105,14 +108,24 @@ WebSearch; (2) после этого — WebFetch напрямую по пред
 | F7 | NASA/JPL Ingenuity — навигационный отказ над однородным песком, Flight 72 | 2024 | https://www.flightglobal.com/ops-safety/2024/12/nasa-completes-first-ever-aircraft-accident-investigation-on-another-planet/ | 18.01.2024: система визуальной навигации не нашла достаточно текстурных признаков на однородных песчаных рябях уже через ~20 с после взлёта, что привело к высокой горизонтальной скорости при посадке и обломку всех 4 лопастей — первое в истории расследование авиационной аварии на другой планете | high | U2 | seconds-minutes | F-C | sensor-fusion | no | high | no | failure | high |
 | F8 | Intuitive Machines IM-2 (Athena) — лазерный альтиметр ослеплён собственным пылевым шлейфом | 2025 | https://en.wikipedia.org/wiki/IM-2 | 06.03.2025: за 3 минуты до посадки пылевой шлейф от двигателей забил лазерный альтиметр и нарушил радиосвязь, аппарат ударился о плато и опрокинулся на 1-2 оборота; при ~100 Вт вместо требуемых выработки миссия завершилась через <13 часов (к 07.03.2025 06:15 UTC) | high | U2 | seconds-minutes | F-C | sensor-fusion | no | high | no | failure | high |
 | F9 | ispace Hakuto-R Mission 2 (RESILIENCE) — аппаратная аномалия лазерного дальномера | 2025 | https://spacenews.com/laser-rangefinder-problems-blamed-for-second-ispace-lunar-lander-crash/ | 05.06.2025: связь потеряна за ~90 с до посадки на высоте 193 м при скорости 42 м/с из-за аномалии в новом лазерном дальномере (поставщик оригинальной детали прекратил производство между миссиями) — второй подряд полный провал посадки ispace, потеряны ровер TENACIOUS и все payload | unclear | unclear | seconds-minutes | F-C | sensor-fusion | no | high | mixed | failure | high |
+| F10 | SpaceX Starship Flight Test 12 — отказ автономной посадки Super Heavy | 2026 | https://spaceflightnow.com/2026/05/27/faa-requires-spacex-led-mishap-investigation-before-resumption-of-starship-launches/ | Запуск 22.05.2026: после разделения ступеней Super Heavy «ненормально быстро перевернулся», большинство двигателей отказали, посадка в Гольфо-де-Мехико на скорости 1450 км/ч; FAA 27.05.2026 признала mishap и приостановила полёты | moderate | none | seconds-minutes | F-C | rule-based | no | high | no | failure | high |
 
 ## Отдельная категория — partial (не входит в счёт 10/10)
 
 | # | case_name | year | source_url | Описание (1 строка) | axis1_level | axis1_mechanism | axis2_bucket | axis2_mechanism | axis3_class | axis4_gate | axis4_blast_radius | external_driver | outcome | confidence |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | P1 | Intuitive Machines IM-1 (Odysseus) — лазерный альтиметр не включён перед стартом, спасён программным переключением на NASA NDL | 2024 | https://www.washingtonpost.com/technology/2024/02/23/intuitive-machines-odysseus-moon-landing-drama/ | 22.02.2024: лазерный альтиметр не был активирован из-за защитного выключателя (человеческая ошибка конфигурации перед стартом); инженеры на лету переписали навигационное ПО на резервный датчик NASA Navigation Doppler Lidar — мягкая, но неустойчивая посадка, аппарат завалился на бок; NASA и IM назвали миссию в целом успехом | unclear | unclear | seconds-minutes | F-C | sensor-fusion | unclear | high | yes | partial | high |
+| P2 | NASA/JPL Perseverance — автономная защита от сбоя (переключение на резервную радиосистему) | 2026 | https://science.nasa.gov/blogs/mars/2026/11/19/nasas-perseverance-odyssey-teams-investigate-technical-issues/ | 30.10.2026: основное UHF-радио не передало ~25 «heartbeat»-сигналов (~100 с) → борт автономно отключил радио, переключился на резервное, вошёл в safe mode; резервное радио работает на половинной мощности, расследование не закрыто на дату источника | high | none | seconds-minutes | F-C | rule-based | no | medium | not-applicable | partial | high |
+| P3 | ESA PROBA-3 — месячный блэкаут и восстановление формейшн-флайта | 2026 | https://blogs.esa.int/proba-3/2026/06/04/back-to-formation-flying-and-a-peek-at-earth/ | Февраль 2026: аномалия в ПО не дала аппарату корректно войти в safe mode → месячный блэкаут без энергии; связь восстановлена, причина устранена патчем, формейшн-флайт полностью восстановлен к началу июня 2026 | extreme | U2 | weeks-months | unclear | rule-based | no | catastrophic | mixed | partial | high |
 
 ## Итог: что это даёт гипотезе «космос = 100% успеха»
+
+**Дополнение 2026-11-20 (issue #349): после добора 6 новых 2026-кейсов** (3 успеха, 1 провал,
+2 partial — ESA Hera, Starlink, VICTUS HAZE / Starship FT-12 / Perseverance, PROBA-3) счёт —
+**15 успехов / 11 провалов / 3 partial на 29 строках**. PROBA-3 (месячный блэкаут формейшн-флайта)
+— первая `axis1_level=extreme` строка в этом файле; исход `partial`, не success, поэтому
+headline-тезис ниже (сформулированный на исходных 23 строках) не меняется по счёту, только по
+знаменателю.
 
 12 успехов против 10 чётких провалов на 23 внешне верифицированных, датированных кейсах — это
 прямое, количественное опровержение тезиса «космос как отрасль почти не знает провалов автономии»

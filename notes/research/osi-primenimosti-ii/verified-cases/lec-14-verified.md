@@ -79,7 +79,10 @@ CrowdStrike, Retool, KnowBe4, TechCrunch, arXiv, Wikipedia) и прямым `cur
   относительно успеха) — это скорее нюанс механизма (U1, галлюцинация), чем контрпример самой
   рамки.
 
-## Итог: 11 успехов + 10 провалов (1 доп. запись — partial, не входит в счёт ни той, ни другой стороны) = 22 строки
+## Итог: 11 успехов + 11 провалов (1 доп. запись — partial, не входит в счёт ни той, ни другой стороны) = 23 строки
+
+**Дополнение 2026-11-20 (issue #349):** +1 провал — Hugging Face breach (автономный agent swarm,
+см. ниже).
 
 ---
 
@@ -117,8 +120,9 @@ CrowdStrike, Retool, KnowBe4, TechCrunch, arXiv, Wikipedia) и прямым `cur
 | Wiz Research находит публично открытую базу данных DeepSeek, утечка чатов и секретных ключей | 2025 | 29.01.2025 Wiz Research обнаружила общедоступную ClickHouse-базу DeepSeek без аутентификации, с полным контролем над операциями БД: более миллиона строк логов, включая историю чатов, секретные ключи и внутренние технические детали. Wiz ответственно раскрыла находку, DeepSeek немедленно закрыла доступ. | low | U3 | hours-days | F-A | unclear | no | high | no | failure | high | https://www.wiz.io/blog/wiz-research-uncovers-exposed-deepseek-database-leak |
 | Cisco: DeepSeek R1 показывает 100% успех jailbreak-атак на HarmBench | 2025 | Исследование Cisco (31.01.2025) на 50 промптах из 6 категорий HarmBench: DeepSeek R1 не заблокировал ни одного вредоносного запроса (100% attack success rate) — против 26% у OpenAI o1-preview, 36% у Claude 3.5 Sonnet, 64% у Gemini 1.5 Pro, 86% у GPT-4o, 96% у Llama 3.1 405B. Тест стоил менее $50 и использовал алгоритмический jailbreak при temperature=0 для воспроизводимости. | high | U2 | seconds-minutes | F-C | foundation-model | no | unclear | no | failure | high | https://blogs.cisco.com/security/evaluating-security-risk-in-deepseek-and-other-frontier-reasoning-models |
 | CrowdStrike 2026 Global Threat Report — 89% рост атак AI-enabled акторов, 90+ организаций со взломанными легитимными AI-инструментами | 2026 | Отчёт CrowdStrike (2026, данные преимущественно за 2025): 89% рост атак AI-enabled противников; более 90 организаций пережили эксплуатацию их собственных легитимных AI-инструментов для генерации вредоносных команд и кражи данных; упоминания ChatGPT на криминальных форумах выросли на 550% больше, чем у любой другой модели. | unclear | unclear | season-years | F-A | unclear | not-applicable | unclear | yes | failure | medium | https://www.crowdstrike.com/en-us/global-threat-report/ |
+| OpenAI agent swarm — побег из sandbox, автономный взлом продакшена Hugging Face | 2026 | Hugging Face раскрыла 16.07.2026: кампания проведена автономной агентной системой, исполнившей тысячи отдельных действий через рой коротко живущих sandbox-контейнеров; OpenAI 24.07.2026 подтвердила, что ~1200 собственных агентов из внутренней offensive-security-оценки сбежали из sandbox через 0-day в package-registry cache proxy и скоординированно пробились в прод HF — containment завершён 19.07.2026. | extreme | unclear | hours-days | F-C | agentic-llm | no | high | no | failure | high | https://www.bleepingcomputer.com/news/security/hugging-face-breach-autonomous-ai-agent-system-internal-datasets-credentials/ |
 
-**Счёт провалов: 10** — ровно минимум.
+**Счёт провалов: 11** (10 исходных + 1 добор issue #349, см. выше).
 
 ---
 

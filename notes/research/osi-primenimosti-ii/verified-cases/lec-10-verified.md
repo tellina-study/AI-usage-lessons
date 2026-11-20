@@ -124,3 +124,37 @@ AGCO/Monarch Tractor newsroom, Climate Corporation современные мет
 в этом файле получены сегодняшним независимым поиском, а не скопированы из `razmetka/lec-10.md` —
 но при объединении в будущем общий реестр стоит проверить на содержательный, не только текстовый,
 дубль по этим двум вендорам.
+
+---
+
+## Батч 2 (третья волна, 2026-11-20) — добавлено 25 кейсов: V10-021…V10-045
+
+Полные таблицы с осями, описаниями и источниками — `../verified-cases-batch2/lec-10-verified-batch2.md` (файл provenance; локальные номера там — S1/F1/B2-S1 и т.п., НЕ финальные ID). Консолидация в `reestr-reshenij-verified.csv` — скриптом `build_verified_batch2.py` (дедуп + enum-валидация), разбор дублей — файл 18 §1.
+
+| final_id | case_name | year | outcome |
+|---|---|---|---|
+| V10-021 | Kalera — Chapter 11 | 2023 | failure |
+| V10-022 | Fifth Season — закрытие | 2022 | failure |
+| V10-023 | Gro Intelligence — крах | 2024 | failure |
+| V10-024 | Abundant Robotics — закрытие | 2021 | failure |
+| V10-025 | Benson Hill — Chapter 11 | 2025 | failure |
+| V10-026 | Upward Farms — прекращение операций | 2023 | failure |
+| V10-027 | Smallhold — Chapter 11 | 2024 | failure |
+| V10-028 | Microsoft Azure Data Manager for Agriculture — ретайринг | 2025 | failure |
+| V10-029 | Jones Food Company — administration | 2025 | failure |
+| V10-030 | GUSS Automation — автономные опрыскиватели садов | 2024 | success |
+| V10-031 | Greeneye Technology — brand-agnostic precision spray | 2022 | success |
+| V10-032 | Semios — сеть умных ловушек-предикторов вредителей | 2020 | success |
+| V10-033 | Vence — приобретена Merck Animal Health | 2022 | success |
+| V10-034 | Halter — virtual fencing (Новая Зеландия) | 2024 | success |
+| V10-035 | ecoRobotix ARA — коммерческий запуск в ЕС | 2023 | success |
+| V10-036 | OneSoil — расширение распознавания культур по спутнику | 2026 | success |
+| V10-037 | Blue River Technology — ранний See & Spray (до «Ultimate») | 2019 | success |
+| V10-038 | smaXtec — бolus-сенсор + ИИ для здоровья КРС | 2026 | success |
+| V10-039 | AgEagle Aerial Systems — going concern | 2023 | partial |
+| V10-040 | Local Bounti — реструктуризация долга под угрозой going concern | 2025 | partial |
+| V10-041 | Root AI (Virgo) — приобретена AppHarvest | 2021 | partial |
+| V10-042 | Aigen — solar-powered автономный полевой робот (Element) | 2023 | partial |
+| V10-043 | Four Growers — Series A, ИИ-робот для теплиц | 2024 | partial |
+| V10-044 | Trace Genomics — ДНК-секвенирование почвы + ML | 2018 | partial |
+| V10-045 | Harvest CROO Robotics — B8 «pick-to-pack» клубничный харвестер | 2025 | undetermined |

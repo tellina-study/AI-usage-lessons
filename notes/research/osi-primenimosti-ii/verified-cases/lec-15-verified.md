@@ -185,3 +185,39 @@ SLAC round-robin) + 1 переквалифицированный из добор
   точности привязки к индустрии scientific-research** конкретно (а не medical-decision, который
   уже покрыт в реестре Лекции 6 Watson for Oncology) — явно помечено `axis1_level=unclear` именно
   поэтому, а не потому что сам провал Watson Health сомнителен.
+
+---
+
+## Батч 2 (третья волна, 2026-11-20) — добавлено 25 кейсов: V15-035…V15-059
+
+Полные таблицы с осями, описаниями и источниками — `../verified-cases-batch2/lec-15-verified-batch2.md` (файл provenance; локальные номера там — S1/F1/B2-S1 и т.п., НЕ финальные ID). Консолидация в `reestr-reshenij-verified.csv` — скриптом `build_verified_batch2.py` (дедуп + enum-валидация), разбор дублей — файл 18 §1.
+
+Исключены при консолидации как дубли: GNoME (дубль L15-011); Pangu-Weather (дубль L09-032); AlphaFold2 и AlphaFold3 (части дуги L15-001).
+
+| final_id | case_name | year | outcome |
+|---|---|---|---|
+| V15-035 | DeepVariant (Google) | 2018 | success |
+| V15-036 | AlphaFold / CASP13 (DeepMind) | 2020 | success |
+| V15-037 | Insilico Medicine — DDR1-инхибитор (GENTRL) | 2019 | success |
+| V15-038 | Deep Learning for Symbolic Mathematics (Facebook AI, Lample & Charton) | 2019 | success |
+| V15-039 | Halicin (MIT/Broad Institute) | 2020 | success |
+| V15-040 | DGMR — нокастинг осадков (DeepMind) | 2021 | success |
+| V15-041 | AlphaFold Protein Structure Database (DeepMind/EMBL-EBI) | 2022 | success |
+| V15-042 | ProteinMPNN (Baker Lab/UW) | 2022 | success |
+| V15-043 | Chemical-space докинг ROCK1-инхибиторов (Genentech, Beroza et al.) | 2022 | success |
+| V15-044 | A-Lab (Berkeley/LBNL) | 2023 | success |
+| V15-045 | ESMFold (Meta AI) | 2023 | success |
+| V15-046 | AlphaMissense (DeepMind) | 2023 | success |
+| V15-047 | AlphaGeometry (DeepMind) | 2024 | success |
+| V15-048 | Atomwise AIMS — 318-целевое исследование | 2024 | success |
+| V15-049 | Imagetwin — пилот ASM Journals | 2025 | success |
+| V15-050 | CORONA-снимки — обнаружение археологических памятников в Месопотамии | 2025 | success |
+| V15-051 | Tortured phrases — алгоритмическая перефразировка для обхода антиплагиата (Cabanac, Labbé, Ikhlef) | 2021 | failure |
+| V15-052 | CAS Insights — патентный анализ AI-дизайна лекарств Exscientia (Willis, 2022) | 2022 | failure |
+| V15-053 | ChatGPT-сгенерированные фиктивные научные абстракты (Gao et al., Northwestern) | 2023 | failure |
+| V15-054 | PoseBusters — независимый аудит докинг-методов на глубоком обучении (Buttenschoen, Morris, Deane) | 2024 | failure |
+| V15-055 | Monitoring AI-Modified Content — LLM-правки рецензий на AI-конференциях (Liang et al., Stanford) | 2024 | failure |
+| V15-056 | ChatGPT-4o проводит систематический обзор с метаанализом (валидационное исследование, RAPM) | 2026 | partial |
+| V15-057 | The AI Scientist — инциденты самомодификации кода (Sakana AI) | 2024 | partial |
+| V15-058 | Bits to Binders — конкурс AI-дизайна CAR-T минибиндеров | 2026 | partial |
+| V15-059 | Независимый бенчмарк диффузионных моделей для материалов (MatterGen, DiffCSP) | 2026 | partial |

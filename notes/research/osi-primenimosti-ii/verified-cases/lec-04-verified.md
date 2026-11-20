@@ -115,3 +115,37 @@ AlphaCode, CodeCompose, GitClear-2023, инциденты Antigravity/Claude Cod
   как у институциональных/геополитических кейсов других лекций (см. предупреждение README о
   высокой доле `unclear`/`not-applicable` у таких кейсов) — не ошибка разметки, а честный сигнал,
   что ось 4 создавалась для технических деплойментов, а не для судебных процессов.
+
+---
+
+## Батч 2 (третья волна, 2026-11-20) — добавлено 23 кейсов: V04-022…V04-044
+
+Полные таблицы с осями, описаниями и источниками — `../verified-cases-batch2/lec-04-verified-batch2.md` (файл provenance; локальные номера там — S1/F1/B2-S1 и т.п., НЕ финальные ID). Консолидация в `reestr-reshenij-verified.csv` — скриптом `build_verified_batch2.py` (дедуп + enum-валидация), разбор дублей — файл 18 §1.
+
+Исключены при консолидации как дубли: DeepMind AlphaTensor (дубль V15-001); DeepMind FunSearch (дубль V15-003).
+
+| final_id | case_name | year | outcome |
+|---|---|---|---|
+| V04-022 | Facebook SapFix — автоматический end-to-end repair | 2018 | success |
+| V04-023 | Facebook Getafix — автопатчинг null-dereference багов | 2018 | success |
+| V04-024 | Amazon CodeGuru — ML код-ревью + профилировщик | 2019 | success |
+| V04-025 | Tabnine (ex-Codota) — переход на GPT-2 и выживание бизнеса | 2019 | success |
+| V04-026 | DeepCode → приобретение Snyk | 2020 | success |
+| V04-027 | OpenAI Codex — первая формальная оценка на HumanEval | 2021 | success |
+| V04-028 | Google — ML-enhanced code completion, внутреннее RCT | 2022 | success |
+| V04-029 | DeepMind AlphaDev — алгоритмы сортировки, влитые в LLVM libc++ | 2023 | success |
+| V04-030 | DeepMind AlphaCode 2 | 2023 | success |
+| V04-031 | Meta TestGen-LLM — автоулучшение unit-тестов на test-a-thon Instagram/Facebook | 2024 | success |
+| V04-032 | Airbnb — LLM-миграция 3500 тестов Enzyme → React Testing Library | 2024 | success |
+| V04-033 | Ubisoft Commit Assistant (CLEVER) — предсказание баг-коммитов | 2018 | partial |
+| V04-034 | Microsoft IntelliCode — AI-ранжирование подсказок IntelliSense, GA | 2019 | undetermined |
+| V04-035 | GitHub Copilot — исследование «recitation» (точное совпадение с обучающими данными) | 2021 | partial |
+| V04-036 | Sandoval et al. — «Lost at C», USENIX Security | 2023 | partial |
+| V04-037 | «Security Weaknesses of Copilot-Generated Code» — анализ реальных GitHub-проектов | 2023 | partial |
+| V04-038 | OpenAI SWE-Lancer — бенчмарк реальных Upwork-задач на $1M выплат | 2025 | partial |
+| V04-039 | Armin Ronacher — Copilot воспроизводит код игры Quake | 2021 | failure |
+| V04-040 | Kite — закрытие AI-автодополнения кода | 2022 | failure |
+| V04-041 | Tim Davis — Copilot воспроизводит код SuiteSparse/CSparse | 2022 | failure |
+| V04-042 | Software Freedom Conservancy — «Give Up GitHub» | 2022 | failure |
+| V04-043 | Figma Make — AI-генератор интерфейсов воспроизвёл дизайн Apple Weather | 2024 | failure |
+| V04-044 | Builder.ai — коллапс платформы с «AI»-ассистентом Natasha | 2025 | failure |

@@ -134,3 +134,39 @@ AI/twin-компоненту не называется источником яв
 - **PMI-DT (100% точность)** — помечен `confidence: low` намеренно: «100% accuracy» на
   лабораторном эксперименте с болтами — классический сигнал малой выборки/переобучения, а не
   готовой к продакшену метрики; включён как академический кейс, не как промышленный деплоймент.
+
+---
+
+## Батч 2 (третья волна, 2026-11-20) — добавлено 25 кейсов: V12-020…V12-044
+
+Полные таблицы с осями, описаниями и источниками — `../verified-cases-batch2/lec-12-verified-batch2.md` (файл provenance; локальные номера там — S1/F1/B2-S1 и т.п., НЕ финальные ID). Консолидация в `reestr-reshenij-verified.csv` — скриптом `build_verified_batch2.py` (дедуп + enum-валидация), разбор дублей — файл 18 §1.
+
+Исключены при консолидации как дубли: Rolls-Royce IntelligentEngine digital twin (та же программа, что V11-004).
+
+| final_id | case_name | year | outcome |
+|---|---|---|---|
+| V12-020 | Pfizer — Simcenter M-Star Digital Twin (Ambr 15 микробиореактор) | 2021 | success |
+| V12-021 | Hitachi Rail — HMAX digital twin (поезда, сигнализация, инфраструктура) | 2024 | success |
+| V12-022 | Schneider Electric — Le Vaudreuil smart factory (WEF Sustainability Lighthouse) | 2022 | success |
+| V12-023 | Siemens Energy + NVIDIA — индустриальный digital twin электростанции в Omniverse | 2021 | partial |
+| V12-024 | Siemens Energy + NVIDIA PhysicsNeMo — ускорение симуляции энергосетевых активов в 10 000 раз | 2024 | success |
+| V12-025 | Hamburg Port Authority — smartPORT Digital Port Twin | 2026 | partial |
+| V12-026 | Anglian Water — крупномасштабный digital twin сети водоснабжения (Великобритания) | 2024 | partial |
+| V12-027 | HS2 (Великобритания) — digital twin для надёжности и предотвращения отказов | 2022 | partial |
+| V12-028 | Boeing T-7A Red Hawk — провал «первого цифро-инженерного» самолёта | 2023 | failure |
+| V12-029 | Walmart — Intelligent Retail Lab / Store No.8 (AI computer-vision digital twin магазина) | 2024 | failure |
+| V12-030 | Peace Bridge — гибридный digital twin моста (трафик-камеры + погода, YOLOv8+LWR+Random Forest) | 2026 | success |
+| V12-031 | Multi-Condition Digital Twin Calibration — аксиально-поршневые насосы (аэрокосмос/морской/тяжёлая техника) | 2026 | success |
+| V12-032 | Data-Driven Supervision of a Thermal-Hydraulic Process — физический digital twin для диагностики отказов | 2026 | success |
+| V12-033 | Bayesian Nonparametric Process Mixtures — прогностика при неизвестных/неразмеченных режимах отказа | 2026 | partial |
+| V12-034 | AI-Enhanced IoT для предиктивного обслуживания умных микрогридов (Digital Twin Approach) | 2025 | success |
+| V12-035 | Digital Twin-Driven Pavement Health Monitoring (Graph Neural Network) | 2025 | partial |
+| V12-036 | 6G-Enabled Digital Twin для обнаружения дефектов подшипников (экспериментальная проверка) | 2025 | success |
+| V12-037 | Интервью инженеров ветростанций — пределы предиктивного обслуживания/digital twin | 2025 | partial |
+| V12-038 | Predictive Digital Twins for Thermal Management — автомобильный радиатор фары (ML+ROM) | 2025 | success |
+| V12-039 | Smart Water Security — AI+blockchain-enhanced Digital Twin (сельское водоснабжение) | 2025 | success |
+| V12-040 | Bridging Battery Design and Health Assessment — физически-информированный digital twin (EV/V2G быстрая зарядка) | 2026 | success |
+| V12-041 | Экспериментально проверенный digital twin осушительного кондиционирования для «сухих комнат» производства батарей | 2026 | success |
+| V12-042 | AI-driven Adaptive Water Network Management — борьба с потерями воды в Иордании (PoC) | 2026 | partial |
+| V12-043 | IoT-Enhanced CNN-Based Crack Detection для аддитивного производства + Digital Twin интеграция | 2026 | success |
+| V12-044 | Систематический обзор: Multi-Agent-System-driven Digital Twins для предиктивного обслуживания | 2026 | partial |

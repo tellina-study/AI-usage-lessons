@@ -155,3 +155,38 @@ anti-bias-инструкция задания просит делать чест
   а не процитирован по памяти без источника), Peloton (провал прогнозирования спроса был основан
   на «прямолинейной экстраполяции роста» людьми, не на названном AI/ML-инструменте — не подходит
   под критерий «именованный инструмент»).
+
+---
+
+## Батч 2 (третья волна, 2026-11-20) — добавлено 24 кейсов: V05-020…V05-043
+
+Полные таблицы с осями, описаниями и источниками — `../verified-cases-batch2/lec-05-verified-batch2.md` (файл provenance; локальные номера там — S1/F1/B2-S1 и т.п., НЕ финальные ID). Консолидация в `reestr-reshenij-verified.csv` — скриптом `build_verified_batch2.py` (дедуп + enum-валидация), разбор дублей — файл 18 §1.
+
+Исключены при консолидации как дубли: GM × Autodesk кронштейн сиденья (тот же кейс, что L06-001).
+
+| final_id | case_name | year | outcome |
+|---|---|---|---|
+| V05-020 | Carbon × Riddell — Diamond, вычислительно оптимизированный латтис-вкладыш шлема | 2018 | success |
+| V05-021 | Il Makiage — PowerMatch, AI-подбор оттенка тона кожи | 2018 | success |
+| V05-022 | McCormick × IBM — AI-платформа «ONE» | 2019 | success |
+| V05-023 | IBM Research × Symrise × O Boticário — Philyra, AI-парфюм | 2019 | success |
+| V05-024 | Climax Foods — Deep Plant Intelligence, растительные сыры | 2020 | success |
+| V05-025 | Firmenich — Scentmate, AI-платформа создания аромата | 2021 | success |
+| V05-026 | Carbon × Adidas — 4DFWD, data-driven генеративный латтис-мидсоль | 2021 | success |
+| V05-027 | NotCo (Giuseppe AI) × Kraft Heinz — совместное предприятие | 2022 | success |
+| V05-028 | Fetcherr × Azul Airlines — первое масштабированное generative AI-ценообразование | 2024 | success |
+| V05-029 | Meati Foods × PIPA — AI-оптимизация мицелиевой альтернативы мясу | 2024 | success |
+| V05-030 | Analytical Flavor Systems (Gastrograph AI) — приобретение NielsenIQ | 2025 | success |
+| V05-031 | Mondelez — ML-ассистированная разработка рецепта Oreo | 2019 | success |
+| V05-032 | PepsiCo — AI-анализ соцсетей → линейка Propel | 2021 | success |
+| V05-033 | FlavorMind — AI-платформа реформуляции (сахар/отходы) | 2022 | success |
+| V05-034 | Danone × Brightseed — Forager AI, расширенное партнёрство | 2021 | partial |
+| V05-035 | FIFA Club World Cup 2025 — динамическое ценообразование билетов | 2025 | partial |
+| V05-036 | Cendyn/Rainmaker — алгоритмическое ценообразование отелей-казино, антитраст circuit split | 2023 | partial |
+| V05-037 | Cadence Cerebrus — agentic AI для дизайна чипов | 2025 | undetermined |
+| V05-038 | FTC — исследование surveillance pricing (6(b) study) | 2025 | undetermined |
+| V05-039 | Shake Shack × NotCo — безъяичная заварная основа | 2022 | undetermined |
+| V05-040 | Yardi (RENTmaximizer/Revenue IQ) — nationwide антитраст иск о фиксации арендной платы | 2023 | failure |
+| V05-041 | Алгоритмическое ценообразование на немецком рынке автозаправок — эмпирически подтверждённый tacit collusion | 2023 | failure |
+| V05-042 | Kroger — электронные ценники и обвинения в «surge pricing», расследование сенаторов | 2024 | failure |
+| V05-043 | L'Oréal Perso / YSL Rouge Sur Mesure — AI-устройство для подбора косметики, прекращение поддержки | 2020 | failure |

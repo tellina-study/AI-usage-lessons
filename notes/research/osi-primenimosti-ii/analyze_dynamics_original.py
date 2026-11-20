@@ -20,13 +20,13 @@ ASSETS = os.path.join(HERE, "assets")
 with open(os.path.join(HERE, "reestr-reshenij-combined.csv"), newline="",
           encoding="utf-8") as f:
     ALL = list(csv.DictReader(f))
-assert len(ALL) == 669
+assert len(ALL) >= 669  # корпус растёт волнами; original заморожен (421)
 
 OY = [r for r in ALL if r["dataset"] == "original" and r["year"]]
 VER = [r for r in ALL if r["dataset"] == "verified"]
 print(f"original-с-годом: {len(OY)}; verified: {len(VER)}")
 
-YEARS = [2022, 2023, 2024, 2025, 2026]
+YEARS = list(range(2018, 2027))  # verified с волны 3 покрывает 2018+; original-с-годом в ранних годах тонок (⚠)
 BIG_AI = ("foundation-model", "agentic-llm")
 
 
@@ -125,8 +125,8 @@ plt.rcParams["grid.alpha"] = 0.25
 fig, axes = plt.subplots(1, 2, figsize=(12.8, 5.8))
 ax = axes[0]
 series = [
-    ("verified (248)", VER, "#F0AB00", "o", (0, 10)),
-    ("original-с-годом (213)", OY, "#21295C", "s", (0, -16)),
+    (f"verified ({len(VER)})", VER, "#F0AB00", "o", (0, 10)),
+    (f"original-с-годом ({len(OY)})", OY, "#21295C", "s", (0, -16)),
 ]
 for label, ds, color, marker, off in series:
     xs, ys, ns = [], [], []

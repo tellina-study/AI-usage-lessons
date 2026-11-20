@@ -152,3 +152,37 @@ CrowdStrike, Retool, KnowBe4, TechCrunch, arXiv, Wikipedia) и прямым `cur
 случае прямой `WebFetch`/`curl` по известным первичным доменам (блоги вендоров, arXiv, Wikipedia
 как указатель на первичные документы) остаётся рабочим обходом, хотя и более трудоёмким и менее
 «открытым» для случайных находок.
+
+---
+
+## Батч 2 (третья волна, 2026-11-20) — добавлено 23 кейсов: V14-024…V14-046
+
+Полные таблицы с осями, описаниями и источниками — `../verified-cases-batch2/lec-14-verified-batch2.md` (файл provenance; локальные номера там — S1/F1/B2-S1 и т.п., НЕ финальные ID). Консолидация в `reestr-reshenij-verified.csv` — скриптом `build_verified_batch2.py` (дедуп + enum-валидация), разбор дублей — файл 18 §1.
+
+Исключены при консолидации как дубли: Британская энергокомпания voice-deepfake (то же событие, что кейс лекции 8 этого же батча); NYC MyCity чат-бот (тот же кейс, что L05-028).
+
+| final_id | case_name | year | outcome |
+|---|---|---|---|
+| V14-024 | Zelenskyy deepfake-видео «о сдаче» — атака провалилась за часы | 2022 | success |
+| V14-025 | Meta Q1 2023 Adversarial Threat Report — AI не увеличил охват гос. ИО-кампаний | 2023 | success |
+| V14-026 | Jennifer DeStefano — AI voice-clone «похищение дочери», вымогатели не получили денег | 2023 | success |
+| V14-027 | CSET/Georgetown + OpenAI — GPT-3 человеко-машинная команда удваивает согласие в опросе (research, dual-use) | 2021 | success |
+| V14-028 | OpenAI disrupts 5 covert influence operations (Doppelganger, Spamouflage, IUVM, Zero Zeno, Bad Grammar) | 2024 | success |
+| V14-029 | Microsoft Digital Defense Report 2024 — агрегат: AI threat landscape (résumé swarming, AI-фишинг, AI-defense) | 2024 | success |
+| V14-030 | Google CodeMender — автономный AI-агент патчит 72 уязвимости за 6 месяцев | 2025 | success |
+| V14-031 | Android AI-защита от скам-звонков/SMS — $400B глобальных потерь как фон, 10B+ блокировок/мес | 2025 | success |
+| V14-032 | Google PageBreak — внутренний AI-агент нашёл 500+ XSS с почти нулевым false-positive | 2026 | success |
+| V14-033 | Anthropic — защита от distillation-атак снизила объём похищаемых данных на 90–99% | 2026 | success |
+| V14-034 | FTC vs DoNotPay — «робот-юрист» штраф $193 000 за непроверенные AI-claims | 2024 | failure |
+| V14-035 | FBI IC3 PSA — мошенники систематически используют генеративный AI для финансовых афер | 2024 | failure |
+| V14-036 | IBM X-Force Threat Intelligence Index 2026 — 300 000 учётных данных AI-чатботов на продаже в дарквебе | 2026 | failure |
+| V14-037 | Google Threat Intelligence — «Agentic Threat Activity Crosses a Significant Threshold» | 2026 | failure |
+| V14-038 | Anthropic GTG-15001 — сеть из 20+ фейковых dating-apps на Claude-персонах, 25 000+ жертв | 2026 | failure |
+| V14-039 | Anthropic GTG-50014 — AI-ускоренная ShinyHunters-кампания: 1,8М Android APK в одном пайплайне | 2026 | failure |
+| V14-040 | Anthropic — один консультант построил платформу слежки за всеми мобильными операторами Мали | 2026 | failure |
+| V14-041 | Anthropic «Detecting and countering malicious uses of Claude» (апрель 2025) — смешанный результат по случаям | 2025 | partial |
+| V14-042 | Google Messages — AI Scam Detection запущена, независимая метрика эффективности не опубликована | 2025 | partial |
+| V14-043 | Chrome 137 — Gemini Nano on-device детектирует tech-support-скамы, метрика не раскрыта | 2025 | partial |
+| V14-044 | Google — многослойная защита Gemini от indirect prompt injection, без измеренного снижения ASR | 2025 | partial |
+| V14-045 | Google Alphabet VRP — AI-агенты дали ×15 дублирующихся багрепортов за 3 года | 2026 | partial |
+| V14-046 | Anthropic Cyber Mission — запуск CIDP + OSS Scanner, результатов пока нет | 2026 | undetermined |

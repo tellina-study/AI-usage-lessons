@@ -27,11 +27,12 @@ COMBINED = os.path.join(HERE, "reestr-reshenij-combined.csv")
 
 with open(COMBINED, newline="", encoding="utf-8") as f:
     ALL = list(csv.DictReader(f))
-assert len(ALL) == 669, len(ALL)
+# объём корпуса растёт между волнами — фиксируем только структуру
+assert len(ALL) > 0
 
 ORIG = [r for r in ALL if r["dataset"] == "original"]
 VER = [r for r in ALL if r["dataset"] == "verified"]
-assert len(ORIG) == 421 and len(VER) == 248
+assert len(ORIG) == 421  # original заморожен; verified растёт волнами
 
 OUTCOME_COLORS = {
     "success": "#2E7D32",
@@ -40,7 +41,7 @@ OUTCOME_COLORS = {
     "undetermined": "#B0B0B0",
 }
 
-YEARS_WINDOW = [2022, 2023, 2024, 2025, 2026]  # 2018-2021: n=1-2/год, вне трендов
+YEARS_WINDOW = list(range(2018, 2027))  # с волны 3 годы 2018-2021 наполнены (23-41 строк/год)
 BIG_AI = ("foundation-model", "agentic-llm")
 CLASSIC = ("rule-based", "classical-ml")
 
@@ -224,9 +225,11 @@ for label, ds in [("original", ORIG), ("verified", VER)]:
     table(["механизм", "B"], mech_rows)
 
 # ===========================================================================
-section("B1. Динамика: формула B по годам (только verified; 2018-21 вне тренда)")
-pre = [r for r in VER if int(r["year"]) < 2022]
-print(f"2018-2021: n={len(pre)} строк всего — вне любого тренда ниже.")
+section("B1. Динамика: формула B по годам (только verified; окно 2018-2026)")
+pre = [r for r in VER if r["year"] and int(r["year"]) < 2018]
+noyear = [r for r in VER if not r["year"]]
+print(f"до 2018: n={len(pre)} строк — вне окна; без года: {len(noyear)} "
+      f"({[r['id'] for r in noyear]})")
 rows_out = []
 year_B = {}
 for y in YEARS_WINDOW:
@@ -333,7 +336,7 @@ for label, yrs in [("2022-2023", ("2022", "2023")), ("2024-2026", ("2024", "2025
 # ---------------------------------------------------------------------------
 section("C3. Отрасль: величина расхождения original vs verified + состав-объяснение")
 ind_rows = []
-IND = sorted({r["industry"] for r in ALL})
+IND = sorted({r["industry"] for r in ALL} - {"unclear"})  # 13 строк V00-* вне 12-отраслевого словаря
 for ind in IND:
     o = [r for r in ORIG if r["industry"] == ind]
     v = [r for r in VER if r["industry"] == ind]
@@ -450,8 +453,8 @@ ax.text(2026, ax.get_ylim()[0] + 3, "2026\nнеполный", ha="center", fonts
         color="#555555")
 ax.set_xticks(YEARS_WINDOW)
 ax.set_ylabel("Доля успеха, формула B = S/(S+F), %")
-ax.set_title("Verified-реестр (248): доля успеха по годам, 2022–2026\n"
-             "n у точки = знаменатель формулы B (S+F); 2018–2021 (5 строк) вне тренда")
+ax.set_title(f"Verified-реестр ({len(VER)}): доля успеха по годам, 2018–2026\n"
+             "n у точки = знаменатель формулы B (S+F)")
 ax.legend(loc="lower left", fontsize=9)
 fig.tight_layout()
 fig.savefig(os.path.join(ASSETS, "chart-dyn-success-by-year.png"), dpi=150)

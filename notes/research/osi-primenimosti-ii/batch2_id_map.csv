@@ -1,0 +1,296 @@
+final_id,lecture_num,case_name,year,outcome
+V04-022,4,Facebook SapFix — автоматический end-to-end repair,2018,success
+V04-023,4,Facebook Getafix — автопатчинг null-dereference багов,2018,success
+V04-024,4,Amazon CodeGuru — ML код-ревью + профилировщик,2019,success
+V04-025,4,Tabnine (ex-Codota) — переход на GPT-2 и выживание бизнеса,2019,success
+V04-026,4,DeepCode → приобретение Snyk,2020,success
+V04-027,4,OpenAI Codex — первая формальная оценка на HumanEval,2021,success
+V04-028,4,"Google — ML-enhanced code completion, внутреннее RCT",2022,success
+V04-029,4,"DeepMind AlphaDev — алгоритмы сортировки, влитые в LLVM libc++",2023,success
+V04-030,4,DeepMind AlphaCode 2,2023,success
+V04-031,4,Meta TestGen-LLM — автоулучшение unit-тестов на test-a-thon Instagram/Facebook,2024,success
+V04-032,4,Airbnb — LLM-миграция 3500 тестов Enzyme → React Testing Library,2024,success
+V04-033,4,Ubisoft Commit Assistant (CLEVER) — предсказание баг-коммитов,2018,partial
+V04-034,4,"Microsoft IntelliCode — AI-ранжирование подсказок IntelliSense, GA",2019,undetermined
+V04-035,4,GitHub Copilot — исследование «recitation» (точное совпадение с обучающими данными),2021,partial
+V04-036,4,"Sandoval et al. — «Lost at C», USENIX Security",2023,partial
+V04-037,4,«Security Weaknesses of Copilot-Generated Code» — анализ реальных GitHub-проектов,2023,partial
+V04-038,4,OpenAI SWE-Lancer — бенчмарк реальных Upwork-задач на $1M выплат,2025,partial
+V04-039,4,Armin Ronacher — Copilot воспроизводит код игры Quake,2021,failure
+V04-040,4,Kite — закрытие AI-автодополнения кода,2022,failure
+V04-041,4,Tim Davis — Copilot воспроизводит код SuiteSparse/CSparse,2022,failure
+V04-042,4,Software Freedom Conservancy — «Give Up GitHub»,2022,failure
+V04-043,4,Figma Make — AI-генератор интерфейсов воспроизвёл дизайн Apple Weather,2024,failure
+V04-044,4,Builder.ai — коллапс платформы с «AI»-ассистентом Natasha,2025,failure
+V05-020,5,"Carbon × Riddell — Diamond, вычислительно оптимизированный латтис-вкладыш шлема",2018,success
+V05-021,5,"Il Makiage — PowerMatch, AI-подбор оттенка тона кожи",2018,success
+V05-022,5,McCormick × IBM — AI-платформа «ONE»,2019,success
+V05-023,5,"IBM Research × Symrise × O Boticário — Philyra, AI-парфюм",2019,success
+V05-024,5,"Climax Foods — Deep Plant Intelligence, растительные сыры",2020,success
+V05-025,5,"Firmenich — Scentmate, AI-платформа создания аромата",2021,success
+V05-026,5,"Carbon × Adidas — 4DFWD, data-driven генеративный латтис-мидсоль",2021,success
+V05-027,5,NotCo (Giuseppe AI) × Kraft Heinz — совместное предприятие,2022,success
+V05-028,5,Fetcherr × Azul Airlines — первое масштабированное generative AI-ценообразование,2024,success
+V05-029,5,Meati Foods × PIPA — AI-оптимизация мицелиевой альтернативы мясу,2024,success
+V05-030,5,Analytical Flavor Systems (Gastrograph AI) — приобретение NielsenIQ,2025,success
+V05-031,5,Mondelez — ML-ассистированная разработка рецепта Oreo,2019,success
+V05-032,5,PepsiCo — AI-анализ соцсетей → линейка Propel,2021,success
+V05-033,5,FlavorMind — AI-платформа реформуляции (сахар/отходы),2022,success
+V05-034,5,"Danone × Brightseed — Forager AI, расширенное партнёрство",2021,partial
+V05-035,5,FIFA Club World Cup 2025 — динамическое ценообразование билетов,2025,partial
+V05-036,5,"Cendyn/Rainmaker — алгоритмическое ценообразование отелей-казино, антитраст circuit split",2023,partial
+V05-037,5,Cadence Cerebrus — agentic AI для дизайна чипов,2025,undetermined
+V05-038,5,FTC — исследование surveillance pricing (6(b) study),2025,undetermined
+V05-039,5,Shake Shack × NotCo — безъяичная заварная основа,2022,undetermined
+V05-040,5,Yardi (RENTmaximizer/Revenue IQ) — nationwide антитраст иск о фиксации арендной платы,2023,failure
+V05-041,5,Алгоритмическое ценообразование на немецком рынке автозаправок — эмпирически подтверждённый tacit collusion,2023,failure
+V05-042,5,"Kroger — электронные ценники и обвинения в «surge pricing», расследование сенаторов",2024,failure
+V05-043,5,"L'Oréal Perso / YSL Rouge Sur Mesure — AI-устройство для подбора косметики, прекращение поддержки",2020,failure
+V06-022,6,CloudNC CAM Assist — Frerotech,2025,success
+V06-023,6,CloudNC CAM Assist — Bedford CNC (Andy Soos),2025,success
+V06-024,6,CloudNC CAM Assist — Avalanche Energy,2025,success
+V06-025,6,CloudNC CAM Assist — Arcamed,2024,success
+V06-026,6,CloudNC CAM Assist — Paragon Space Development,2024,success
+V06-027,6,CloudNC CAM Assist — Xeon NC,2024,success
+V06-028,6,Paperless Parts AI-quoting — Harris Manufacturing,2022,success
+V06-029,6,Paperless Parts AI-quoting — IA Engineers,2022,success
+V06-030,6,Paperless Parts AI-quoting — Pindel Global Precision,2021,success
+V06-031,6,Fictiv — Automated DFM for Injection Molding,2024,undetermined
+V06-032,6,ModuleWorks / TU Wien / craftworks — SurfAIce,2022,undetermined
+V06-033,6,Neural Concept × MAHLE (EV-вентилятор),2025,success
+V06-034,6,Neural Concept × Jaguar Land Rover (аэродинамика),2024,success
+V06-035,6,Neural Concept × General Motors (безопасность пешеходов),2024,undetermined
+V06-036,6,PhysicsX × GB1 (яхта America's Cup),2024,undetermined
+V06-037,6,Physics-Guided Spectral ROM (мех. трансмиссия / цикл Брайтона / вихри Кармана),2026,partial
+V06-038,6,Nonintrusive ROM — лопатка турбины высокого давления,2018,success
+V06-039,6,GenCAD-Self-Repairing,2025,partial
+V06-040,6,Generative Design AI для шасси CubeSat (ADOT),2026,partial
+V06-041,6,GNN-surrogate для краш-деформации B-стоек кузова,2025,success
+V06-042,6,ML-модель краш-динамики на датасете Body-in-White,2025,partial
+V06-043,6,Markforged — Blacksmith / Digital Forge,2020,failure
+V06-044,6,Velo3D — Flow (CAM print-prep) + going concern,2022,failure
+V07-027,7,HeartFlow FFR-CT — национальная программа ИИ-анализа КТ-коронарографии,2024,success
+V07-028,7,Caption Health (Caption AI) — ИИ-навигация эхокардиографии для новичков,2021,success
+V07-029,7,Lunit INSIGHT CXR — первое в мире включение ИИ-рентгена грудной клетки в нацстраховку,2024,success
+V07-030,7,Alibaba DAMO Academy — ИИ-диагностика COVID-19 по КТ,2020,success
+V07-031,7,Infervision — адаптация детектора лёгочных узлов для скрининга COVID-пневмонии,2020,success
+V07-032,7,"Eko Health — Murmur Analysis Software (EMAS), FDA clearance",2022,success
+V07-033,7,Aidoc Stroke AI/BriefCase — сокращение времени «дверь-пункция» при инсульте,2024,success
+V07-034,7,Medtronic MiniMed 780G — автоматическое дозирование инсулина по ИИ-алгоритму SmartGuard,2023,success
+V07-035,7,Suki AI — амбиентный ИИ-скрайб приёма,2025,success
+V07-036,7,Мать диагностировала сыну tethered cord syndrome с помощью ChatGPT после 17 врачей,2023,success
+V07-037,7,Rajkomar et al. — масштабируемое глубокое обучение на полных данных ЭМК (Google),2018,success
+V07-038,7,PANDA Challenge — международное соревнование ИИ по оценке степени Глисона рака простаты,2022,success
+V07-039,7,Ardila et al. — ИИ Google для скрининга рака лёгких по низкодозной КТ,2019,success
+V07-040,7,Hannun et al. — глубокая сеть для классификации аритмий по амбулаторной ЭКГ (iRhythm),2019,success
+V07-041,7,"De Fauw et al. — DeepMind/Moorfields, диагностика и направление по ОКТ сетчатки",2018,success
+V07-042,7,Titano et al. — автоматический ИИ-триаж КТ головы на острые неврологические находки,2018,success
+V07-043,7,REACH VET — национальная модель VA прогноза суицидального риска,2021,partial
+V07-044,7,DermaSensor — устройство элластического светорассеяния для скрининга рака кожи в первичном звене,2024,partial
+V07-045,7,CheXNeXt (Rajpurkar et al.) — классификация 14 патологий на рентгене грудной клетки,2018,partial
+V07-046,7,"Komorowski et al. — «ИИ-клиницист», reinforcement learning для терапии сепсиса",2018,partial
+V07-047,7,Ayers et al. — ИИ-чатбот против врачей в ответах на вопросы пациентов (r/AskDocs),2023,partial
+V07-048,7,DeGrave et al. — ИИ для COVID-19 на рентгене выбирает «короткий путь» вместо патологии,2021,failure
+V07-049,7,"DeepMind Streams / Royal Free NHS — скандал с передачей данных 1,6 млн пациентов",2021,failure
+V07-050,7,Wallace et al. — систематический обзор точности 48 приложений-симптом-чекеров,2022,failure
+V07-051,7,"Zech et al. — ИИ для детекции пневмонии распознаёт больницу, а не болезнь",2018,failure
+V08-024,8,UK-энергокомпания — голосовой дипфейк «немецкого CEO» вынудил перевести €220 тыс. ($243 тыс.) венгерскому поставщику,2019,failure
+V08-025,8,"Банк в ОАЭ — «deep voice»-клон голоса директора компании, перевод $35 млн на подтверждение несуществующей сделки",2020,failure
+V08-026,8,"Детройт — Robert Williams, ошибочный арест по распознаванию лиц (DataWorks Plus), $300 тыс. урегулирование в 2024",2020,failure
+V08-027,8,"Нью-Джерси — Nijeer Parks, арест по размытому фото из распознавания лиц, 10 суток в СИЗО",2019,failure
+V08-028,8,"Джорджия/Луизиана — Randal Reid, арест по единственному совпадению распознавания лиц в штате, где он никогда не был, $200 тыс. урегулирование",2022,failure
+V08-029,8,"Clearview AI — штраф ICO Великобритании £7,5 млн за биометрию британцев без согласия, позже отменён трибуналом по вопросу юрисдикции",2022,partial
+V08-030,8,Clearview AI — штраф итальянского Garante €20 млн за незаконный биометрический мониторинг граждан,2022,failure
+V08-031,8,Facebook — $650 млн по иску BIPA Иллинойса за автотэггинг лиц в «тэгах» без согласия,2020,failure
+V08-032,8,Сан-Франциско — первый в США запрет распознавания лиц городскими службами и полицией,2019,failure
+V08-033,8,"Портленд — самый широкий в США запрет распознавания лиц, включая частный бизнес в общественных местах",2020,failure
+V08-034,8,"ACLU×Amazon Rekognition — 28 членов Конгресса США ошибочно сопоставлены с базой мугшотов, расовый перекос",2018,failure
+V08-035,8,"Gender Shades (Buolamwini/Gebru) — ошибка классификации пола до 34,7% у темнокожих женщин против 0,8% у светлокожих мужчин (IBM, Microsoft, Face++)",2018,failure
+V08-036,8,BJP/Manoj Tiwari — липсинк-дипфейк на хариянви разослан через 5000+ групп WhatsApp ~15 млн зрителям; партия всё равно проиграла выборы в Дели,2020,partial
+V08-037,8,"Дипфейк «сдачи» Зеленского — распространён после взлома телеканала, удалён Meta/YouTube в течение дня из-за явных артефактов",2022,failure
+V08-038,8,Google — $100 млн по иску BIPA за биометрию в Face Grouping Google Photos (2015–2022),2022,failure
+V08-039,8,"TikTok — $92 млн по иску BIPA за биометрию лиц пользователей, включая несовершеннолетних",2021,failure
+V08-040,8,"Московское метро Face Pay — 122 тыс. пользователей и 12,7 млн поездок оплачено биометрией к концу первого года",2021,success
+V08-041,8,"India Digi Yatra — биометрический посадочный контроль в аэропортах, 1 млн пользователей к июню 2023",2023,success
+V08-042,8,"Intel FakeCatcher — детектор дипфейков по сигналу кровотока в пикселях, заявлена точность 96% в реальном времени",2022,success
+V08-043,8,"Словакия — аудио-дипфейк лидера партии о подкупе голосов распространён за 48 часов до выборов; партия проиграла, причинный эффект оспорен академически",2023,partial
+V08-044,8,Tom Hanks — несанкционированная реклама стоматологического плана с дипфейк-видео актёра,2023,failure
+V08-045,8,"Шанхай — обход liveness-проверки налоговой системы Китая дипфейк-видео по купленным фото, фиктивные счета на ¥500 млн",2021,failure
+V08-046,8,"Guo Bing v. Hangzhou Safari Park — первый в Китае суд по распознаванию лиц, зоопарк обязан удалить биометрию посетителя",2020,failure
+V08-047,8,Швеция — штраф полиции €250 тыс. за нелегальное применение Clearview AI без оценки воздействия на защиту данных (DPIA),2021,failure
+V08-048,8,Канада — комиссары по приватности признали сбор биометрии Clearview AI «массовым слежением» за канадцами,2021,failure
+V08-049,8,"Австралия OAIC — приказ Clearview AI уничтожить биометрию австралийцев, решение подтверждено апелляцией в 2023",2021,failure
+V08-050,8,"Франция CNIL — штраф Clearview AI €20 млн, затем ещё €5,2 млн за неисполнение приказа об удалении данных",2022,failure
+V08-051,8,"Балтимор/Pikesville — завхоз школы создал ИИ-аудио «расистской тирады» директора из мести, разоблачён ФБР за 3 месяца, осуждён",2024,failure
+V09-029,9,NASA InSight — автономный вход-спуск-посадка (не ИИ-кейс),2018,success
+V09-030,9,JAXA Hayabusa2 — автономная навигация по искусственному маркеру при касании Рюгу,2019,success
+V09-031,9,CNSA Chang'e-4 — первая посадка на обратной стороне Луны с автономным избеганием препятствий,2019,success
+V09-032,9,SpaceX Crew Dragon Demo-1 — первая автономная стыковка коммерческого корабля с МКС,2019,success
+V09-033,9,Saildrone — первое двустороннее автономное пересечение Атлантики (SD 1021),2019,success
+V09-034,9,NASA OSIRIS-REx — Natural Feature Tracking при сборе образца на Бенну (TAG),2020,success
+V09-035,9,CNSA Chang'e-5 — первая автономная стыковка на лунной орбите без экипажа,2020,success
+V09-036,9,Northrop Grumman MEV-1 — первая коммерческая автономная стыковка-продление ресурса спутника,2020,success
+V09-037,9,CNSA Tianwen-1/Zhurong — автономная посадка на Марс с избеганием препятствий,2021,success
+V09-038,9,NASA/JPL Mars 2020 Perseverance — первая посадка на Марс с Terrain-Relative Navigation,2021,success
+V09-039,9,NASA/JPL Ingenuity — первый управляемый полёт летательного аппарата на другой планете,2021,success
+V09-040,9,Saildrone — беспилотный дрон внутри урагана Sam категории 4 (SD 1045),2021,success
+V09-041,9,Astroscale ELSA-d — первый тест автономного захвата/стыковки через магнитный механизм,2021,success
+V09-042,9,SwRI/NASA Lucy — автономный трекинг цели выявил неизвестный спутник астероида Диункинеш,2023,success
+V09-043,9,Университет Georgia Tech/Cornell (ITGC) — робот Icefin под ледником Туэйтс выявил «быстрые трещины»,2023,success
+V09-044,9,SpaceX Starship IFT-5 — первая в истории ловля ускорителя башней («chopsticks»),2024,success
+V09-045,9,Blue Origin New Glenn NG-2 — первая успешная посадка ускорителя на морскую платформу,2025,success
+V09-046,9,ISRO Chandrayaan-2 — крах лендера Vikram из-за программной ошибки guidance-алгоритма (не ИИ-кейс),2019,failure
+V09-047,9,SpaceIL Beresheet — крах из-за сбоя IMU и перезапуска бортового компьютера (не ИИ-кейс),2019,failure
+V09-048,9,Boeing Starliner OFT-1 — автономная система ошиблась фазой миссии из-за сбоя таймера (не ИИ-кейс),2019,failure
+V09-049,9,Roscosmos Soyuz MS-14 — отказ усилителя сигнала автоматической системы стыковки «Курс» (не ИИ-кейс),2019,failure
+V09-050,9,CNSA Zhurong — ровер не вышел из плановой спячки из-за накопления марсианской пыли,2022,failure
+V09-051,9,SpaceX Starship IFT-3 — потеря управления по крену и разрушение на входе в атмосферу,2024,failure
+V09-052,9,Astrobotic Peregrine Mission One — отказ клапана наддува разорвал топливный бак (не ИИ-кейс),2024,failure
+V09-053,9,Blue Origin New Glenn NG-1 — неудачная посадка ускорителя из-за сбоя повторного зажигания двигателей,2025,failure
+V09-054,9,"Rocket Lab Electron — вертолёт впервые поймал ускоритель в воздухе, но пилот намеренно его отпустил",2022,partial
+V09-055,9,"SpaceX Starship IFT-7 — вторая подряд успешная ловля бустера, но корабль разрушился на подъёме",2025,partial
+V10-021,10,Kalera — Chapter 11,2023,failure
+V10-022,10,Fifth Season — закрытие,2022,failure
+V10-023,10,Gro Intelligence — крах,2024,failure
+V10-024,10,Abundant Robotics — закрытие,2021,failure
+V10-025,10,Benson Hill — Chapter 11,2025,failure
+V10-026,10,Upward Farms — прекращение операций,2023,failure
+V10-027,10,Smallhold — Chapter 11,2024,failure
+V10-028,10,Microsoft Azure Data Manager for Agriculture — ретайринг,2025,failure
+V10-029,10,Jones Food Company — administration,2025,failure
+V10-030,10,GUSS Automation — автономные опрыскиватели садов,2024,success
+V10-031,10,Greeneye Technology — brand-agnostic precision spray,2022,success
+V10-032,10,Semios — сеть умных ловушек-предикторов вредителей,2020,success
+V10-033,10,Vence — приобретена Merck Animal Health,2022,success
+V10-034,10,Halter — virtual fencing (Новая Зеландия),2024,success
+V10-035,10,ecoRobotix ARA — коммерческий запуск в ЕС,2023,success
+V10-036,10,OneSoil — расширение распознавания культур по спутнику,2026,success
+V10-037,10,Blue River Technology — ранний See & Spray (до «Ultimate»),2019,success
+V10-038,10,smaXtec — бolus-сенсор + ИИ для здоровья КРС,2026,success
+V10-039,10,AgEagle Aerial Systems — going concern,2023,partial
+V10-040,10,Local Bounti — реструктуризация долга под угрозой going concern,2025,partial
+V10-041,10,Root AI (Virgo) — приобретена AppHarvest,2021,partial
+V10-042,10,Aigen — solar-powered автономный полевой робот (Element),2023,partial
+V10-043,10,"Four Growers — Series A, ИИ-робот для теплиц",2024,partial
+V10-044,10,Trace Genomics — ДНК-секвенирование почвы + ML,2018,partial
+V10-045,10,Harvest CROO Robotics — B8 «pick-to-pack» клубничный харвестер,2025,undetermined
+V11-018,11,"Anki — банкротство производителя AI-робот-игрушек (Cozmo, Vector, Overdrive), $182,5М привлечено",2019,failure
+V11-019,11,Jibo — продажа активов NTT (здравоохранение/образование) после коммерческого провала социального робота,2020,failure
+V11-020,11,Creator — временное закрытие ресторана роботизированных бургеров из-за COVID-19 (статус после переоткрытия в Daly City не доведён до определённости),2020,partial
+V11-021,11,"Katerra — банкротство Chapter 11 (роботизированное модульное строительство, SoftBank, $2 млрд привлечено)",2021,failure
+V11-022,11,SoftBank Robotics Pepper — остановка производства из-за слабого спроса (~27 000 произведённых единиц),2021,failure
+V11-023,11,"Plethora Technology — поглощение Xometry, прекращение самостоятельной работы (AI/правило-based анализ технологичности CAD-моделей)",2021,undetermined
+V11-024,11,"Vicarious AI — поглощение Alphabet/Intrinsic, команда расформирована между Intrinsic и DeepMind",2022,failure
+V11-025,11,"Quanergy Systems — Chapter 11 после SPAC (лидар+ИИ для промышленной автоматизации), оценка $1,4 млрд до подачи",2022,failure
+V11-026,11,"Relativity Space — первый запуск Terran 1 (ИИ-итерация дизайна + 3D-печать ракеты), не достиг орбиты из-за аномалии 2-й ступени",2023,partial
+V11-027,11,"Audi — AI-контроль качества точечной сварки (WPS-Analytics), 1,5 млн сварных точек и 300 машин за смену в Neckarsulm",2023,success
+V11-028,11,"Sarcos → Palladyne AI — отказ от производства промышленных экзоскелетов Guardian (план 500 ед./год → выпущено 2), переход в чистый софт",2023,failure
+V11-029,11,"Drishti Technologies — поглощение Apple, видео-аналитика конвейеров (клиенты Ford, Denso, HELLA, Continental)",2023,undetermined
+V11-030,11,"Instrumental — AI-визуальный контроль электроники, именованные клиенты NVIDIA (−14 дней на сборку), Meta (900+ инженерных недель/год)",2024,success
+V11-031,11,"Mercedes-Benz + Apptronik Apollo — коммерческий пилот гуманоида на производстве (Berlin, Kecskemét), первое для Mercedes применение гуманоидной робототехники",2024,partial
+V11-032,11,"Agility Robotics Digit + GXO — первый RaaS-контракт, пилот на фабрике Spanx (граница: fulfillment)",2024,partial
+V11-033,11,"Shapeways — Chapter 7, немедленное прекращение операций (3D-печать на заказ; связь с ИИ — тонкая, только сторонний CADaaS-оптимизатор)",2024,failure
+V11-034,11,"Path Robotics — AI-сварка (foundation-модель Obsidian), контракт $600М с HII на верфях ВМС США, 4x продуктивность",2024,success
+V11-035,11,"FANUC Zero Down Time — предиктивное обслуживание роботов, $75М экономии, 35 000+ подключённых роботов (кросс-подтверждено 2 доменами, не прочитано напрямую)",2015,success
+V11-036,11,"Siemens + rhobot.ai — edge AI на биогазовой установке CarbonAMS (Ирландия): −39% паразитной нагрузки, +2,5% выхода газа",2025,success
+V11-037,11,Markforged Digital Forge — обвал стоимости при двух перепродажах за 13 месяцев ($116М Nano Dimension → $42М Stratasys),2025,failure
+V11-038,11,"Intel — AI-анализ выхода годных кристаллов (>90% точность детекции дефектных зон, 100% покрытие пластин на конце линии)",,success
+V12-020,12,Pfizer — Simcenter M-Star Digital Twin (Ambr 15 микробиореактор),2021,success
+V12-021,12,"Hitachi Rail — HMAX digital twin (поезда, сигнализация, инфраструктура)",2024,success
+V12-022,12,Schneider Electric — Le Vaudreuil smart factory (WEF Sustainability Lighthouse),2022,success
+V12-023,12,Siemens Energy + NVIDIA — индустриальный digital twin электростанции в Omniverse,2021,partial
+V12-024,12,Siemens Energy + NVIDIA PhysicsNeMo — ускорение симуляции энергосетевых активов в 10 000 раз,2024,success
+V12-025,12,Hamburg Port Authority — smartPORT Digital Port Twin,2026,partial
+V12-026,12,Anglian Water — крупномасштабный digital twin сети водоснабжения (Великобритания),2024,partial
+V12-027,12,HS2 (Великобритания) — digital twin для надёжности и предотвращения отказов,2022,partial
+V12-028,12,Boeing T-7A Red Hawk — провал «первого цифро-инженерного» самолёта,2023,failure
+V12-029,12,Walmart — Intelligent Retail Lab / Store No.8 (AI computer-vision digital twin магазина),2024,failure
+V12-030,12,"Peace Bridge — гибридный digital twin моста (трафик-камеры + погода, YOLOv8+LWR+Random Forest)",2026,success
+V12-031,12,Multi-Condition Digital Twin Calibration — аксиально-поршневые насосы (аэрокосмос/морской/тяжёлая техника),2026,success
+V12-032,12,Data-Driven Supervision of a Thermal-Hydraulic Process — физический digital twin для диагностики отказов,2026,success
+V12-033,12,Bayesian Nonparametric Process Mixtures — прогностика при неизвестных/неразмеченных режимах отказа,2026,partial
+V12-034,12,AI-Enhanced IoT для предиктивного обслуживания умных микрогридов (Digital Twin Approach),2025,success
+V12-035,12,Digital Twin-Driven Pavement Health Monitoring (Graph Neural Network),2025,partial
+V12-036,12,6G-Enabled Digital Twin для обнаружения дефектов подшипников (экспериментальная проверка),2025,success
+V12-037,12,Интервью инженеров ветростанций — пределы предиктивного обслуживания/digital twin,2025,partial
+V12-038,12,Predictive Digital Twins for Thermal Management — автомобильный радиатор фары (ML+ROM),2025,success
+V12-039,12,Smart Water Security — AI+blockchain-enhanced Digital Twin (сельское водоснабжение),2025,success
+V12-040,12,Bridging Battery Design and Health Assessment — физически-информированный digital twin (EV/V2G быстрая зарядка),2026,success
+V12-041,12,Экспериментально проверенный digital twin осушительного кондиционирования для «сухих комнат» производства батарей,2026,success
+V12-042,12,AI-driven Adaptive Water Network Management — борьба с потерями воды в Иордании (PoC),2026,partial
+V12-043,12,IoT-Enhanced CNN-Based Crack Detection для аддитивного производства + Digital Twin интеграция,2026,success
+V12-044,12,Систематический обзор: Multi-Agent-System-driven Digital Twins для предиктивного обслуживания,2026,partial
+V13-026,13,"Fetch Robotics — приобретена Zebra Technologies за $290-301М (~30,5× выручки, ARR ~$10М)",2021,success
+V13-027,13,"Einride + DB Schenker, Йёнчёпинг — первая в мире ежедневная автономная грузоперевозка на открытой дороге без водителя (5 км/ч)",2019,success
+V13-028,13,"UPS Flight Forward + Matternet — медицинские дрон-рейсы WakeMed (Raleigh), первая в мире полная FAA Part 135 сертификация дрон-авиалинии (1 окт. 2019)",2019,success
+V13-029,13,"Wingcopter + UNICEF — доставка вакцин дронами в 19 удалённых деревень острова Пентекост, Вануату",2019,success
+V13-030,13,"Windracers — первый успешный рейс грузового беспилотника с медицинскими грузами, Корнуолл → острова Силли",2020,success
+V13-031,13,"Covariant Brain + ABB/Knapp — развёртывание ИИ-пикинга (imitation + reinforcement learning) на складе Obeta, Германия",2020,success
+V13-032,13,"AutoStore — IPO на Oslo Stock Exchange (крупнейшее IPO Норвегии за 20 лет); клиент CVS обрабатывает 2M+ товаров/неделю на объекте Hainesport, NJ",2021,success
+V13-033,13,"TuSimple — первый в мире полностью безводительский рейс грузовика (без человека в кабине и без дистанционного оператора), Tucson–Phoenix, 80 миль",2021,success
+V13-034,13,"GXO Logistics — ~7 600 единиц складской робототехники/ИИ (кобот, AGV, goods-to-person) развёрнуто у клиентов",2022,success
+V13-035,13,"Ike Robotics — поглощена Nuro, самостоятельная разработка Class-8 автономного трекинга прекращена (условия сделки не раскрыты)",2020,partial
+V13-036,13,Oxbotica CargoPod — 3-недельное автономное испытание на грузовых маршрутах airside-зоны аэропорта Хитроу; данных о продолжении/масштабировании не найдено,2018,partial
+V13-037,13,Manna — экстренная перестройка с обычной дрон-доставки на доставку рецептурных лекарств и еды изолированным жителям деревни Муниголл (Ирландия) в начале COVID-19,2020,partial
+V13-038,13,Attabotics + Nordstrom — развёртывание 3D-склада (кубическая AS/RS) для автоматизации части выполнения заказов; метрик производительности в источнике нет,2019,partial
+V13-039,13,"Uber ATG — закрытие подразделения беспилотных грузовиков, фокус смещён на автомобили, после settlement с Waymo и смертельного инцидента в Темпе",2018,failure
+V13-040,13,"Matternet + Swiss Post — два крушения дронов (янв./июль 2019), второе возле детей в Цюрихе → приостановка медицинской дрон-доставки на неопределённый срок",2019,failure
+V13-041,13,"Ocado, склад Andover — пожар от бракованного зарядного устройства робота, ущерб $137М, годовой убыток £143М",2019,failure
+V13-042,13,"Kiwibot — пожар робота от дефектной батареи возле студенческого союза UC Berkeley, временный возврат к курьерам-людям",2018,failure
+V13-043,13,Kiwibot — раскрытие ручного теле-управления роботами из Колумбии каждые 5-10 секунд (оплата ~$2/час) вместо заявленной «автономности»,2019,failure
+V13-044,13,"Deliv — закрытие краудсорсингового сервиса same-day доставки (35 рынков), технологические активы выкуплены Target",2020,failure
+V13-045,13,DHL Parcelcopter — завершение 8-летней программы собственного грузового дрона и пилота медицинской доставки в Танзании с Wingcopter,2021,failure
+V13-046,13,"Refraction AI — внезапное прекращение сервиса доставки REV-1 в Ann Arbor, флот из 10 роботов переведён в Остин, компания не выжила",2021,failure
+V13-047,13,Peloton Technology — прекращение деятельности и ликвидация после десятилетия (2011-2021) без коммерческого запуска truck platooning,2021,failure
+V13-048,13,Flexport — со-CEO обнаружил систематически завышенную модель прогноза выручки; увольнение 20% персонала (~640 чел.),2023,failure
+V13-049,13,"Attabotics — массовые увольнения (29 июня 2025), банкротство (июль 2025), продажа активов Lafayette Engineering (сент. 2025) после пожара на объекте Canadian Tire (март 2023)",2025,failure
+V13-050,13,"Flirtey — закрытие пионера дрон-доставки (FAA-разрешения с 2015, партнёрство 7-Eleven 2016) из-за недостаточного финансирования",2024,failure
+V13-051,13,"Zebra Technologies — сворачивание робот-бизнеса на базе Fetch Robotics («не масштабировался достаточно быстро»), 4 года после покупки за $290М",2025,failure
+V14-024,14,Zelenskyy deepfake-видео «о сдаче» — атака провалилась за часы,2022,success
+V14-025,14,Meta Q1 2023 Adversarial Threat Report — AI не увеличил охват гос. ИО-кампаний,2023,success
+V14-026,14,"Jennifer DeStefano — AI voice-clone «похищение дочери», вымогатели не получили денег",2023,success
+V14-027,14,"CSET/Georgetown + OpenAI — GPT-3 человеко-машинная команда удваивает согласие в опросе (research, dual-use)",2021,success
+V14-028,14,"OpenAI disrupts 5 covert influence operations (Doppelganger, Spamouflage, IUVM, Zero Zeno, Bad Grammar)",2024,success
+V14-029,14,"Microsoft Digital Defense Report 2024 — агрегат: AI threat landscape (résumé swarming, AI-фишинг, AI-defense)",2024,success
+V14-030,14,Google CodeMender — автономный AI-агент патчит 72 уязвимости за 6 месяцев,2025,success
+V14-031,14,"Android AI-защита от скам-звонков/SMS — $400B глобальных потерь как фон, 10B+ блокировок/мес",2025,success
+V14-032,14,Google PageBreak — внутренний AI-агент нашёл 500+ XSS с почти нулевым false-positive,2026,success
+V14-033,14,Anthropic — защита от distillation-атак снизила объём похищаемых данных на 90–99%,2026,success
+V14-034,14,FTC vs DoNotPay — «робот-юрист» штраф $193 000 за непроверенные AI-claims,2024,failure
+V14-035,14,FBI IC3 PSA — мошенники систематически используют генеративный AI для финансовых афер,2024,failure
+V14-036,14,IBM X-Force Threat Intelligence Index 2026 — 300 000 учётных данных AI-чатботов на продаже в дарквебе,2026,failure
+V14-037,14,Google Threat Intelligence — «Agentic Threat Activity Crosses a Significant Threshold»,2026,failure
+V14-038,14,"Anthropic GTG-15001 — сеть из 20+ фейковых dating-apps на Claude-персонах, 25 000+ жертв",2026,failure
+V14-039,14,"Anthropic GTG-50014 — AI-ускоренная ShinyHunters-кампания: 1,8М Android APK в одном пайплайне",2026,failure
+V14-040,14,Anthropic — один консультант построил платформу слежки за всеми мобильными операторами Мали,2026,failure
+V14-041,14,Anthropic «Detecting and countering malicious uses of Claude» (апрель 2025) — смешанный результат по случаям,2025,partial
+V14-042,14,"Google Messages — AI Scam Detection запущена, независимая метрика эффективности не опубликована",2025,partial
+V14-043,14,"Chrome 137 — Gemini Nano on-device детектирует tech-support-скамы, метрика не раскрыта",2025,partial
+V14-044,14,"Google — многослойная защита Gemini от indirect prompt injection, без измеренного снижения ASR",2025,partial
+V14-045,14,Google Alphabet VRP — AI-агенты дали ×15 дублирующихся багрепортов за 3 года,2026,partial
+V14-046,14,"Anthropic Cyber Mission — запуск CIDP + OSS Scanner, результатов пока нет",2026,undetermined
+V15-035,15,DeepVariant (Google),2018,success
+V15-036,15,AlphaFold / CASP13 (DeepMind),2020,success
+V15-037,15,Insilico Medicine — DDR1-инхибитор (GENTRL),2019,success
+V15-038,15,"Deep Learning for Symbolic Mathematics (Facebook AI, Lample & Charton)",2019,success
+V15-039,15,Halicin (MIT/Broad Institute),2020,success
+V15-040,15,DGMR — нокастинг осадков (DeepMind),2021,success
+V15-041,15,AlphaFold Protein Structure Database (DeepMind/EMBL-EBI),2022,success
+V15-042,15,ProteinMPNN (Baker Lab/UW),2022,success
+V15-043,15,"Chemical-space докинг ROCK1-инхибиторов (Genentech, Beroza et al.)",2022,success
+V15-044,15,A-Lab (Berkeley/LBNL),2023,success
+V15-045,15,ESMFold (Meta AI),2023,success
+V15-046,15,AlphaMissense (DeepMind),2023,success
+V15-047,15,AlphaGeometry (DeepMind),2024,success
+V15-048,15,Atomwise AIMS — 318-целевое исследование,2024,success
+V15-049,15,Imagetwin — пилот ASM Journals,2025,success
+V15-050,15,CORONA-снимки — обнаружение археологических памятников в Месопотамии,2025,success
+V15-051,15,"Tortured phrases — алгоритмическая перефразировка для обхода антиплагиата (Cabanac, Labbé, Ikhlef)",2021,failure
+V15-052,15,"CAS Insights — патентный анализ AI-дизайна лекарств Exscientia (Willis, 2022)",2022,failure
+V15-053,15,"ChatGPT-сгенерированные фиктивные научные абстракты (Gao et al., Northwestern)",2023,failure
+V15-054,15,"PoseBusters — независимый аудит докинг-методов на глубоком обучении (Buttenschoen, Morris, Deane)",2024,failure
+V15-055,15,"Monitoring AI-Modified Content — LLM-правки рецензий на AI-конференциях (Liang et al., Stanford)",2024,failure
+V15-056,15,"ChatGPT-4o проводит систематический обзор с метаанализом (валидационное исследование, RAPM)",2026,partial
+V15-057,15,The AI Scientist — инциденты самомодификации кода (Sakana AI),2024,partial
+V15-058,15,Bits to Binders — конкурс AI-дизайна CAR-T минибиндеров,2026,partial
+V15-059,15,"Независимый бенчмарк диффузионных моделей для материалов (MatterGen, DiffCSP)",2026,partial

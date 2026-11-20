@@ -40,7 +40,7 @@ def main():
     ver_rows = load(VERIFIED)
 
     assert len(orig_rows) == 421, f"original row count = {len(orig_rows)}, expected 421"
-    assert len(ver_rows) == 248, f"verified row count = {len(ver_rows)}, expected 248"
+    assert len(ver_rows) >= 248, f"verified row count = {len(ver_rows)}"
 
     # id prefix sanity check
     assert all(r["id"].startswith("L") for r in orig_rows), "non-L id in original"
@@ -72,7 +72,7 @@ def main():
         row["source_url"] = r["source_url"]
         out_rows.append(row)
 
-    assert len(out_rows) == 421 + 248 == 669, f"pre-write total = {len(out_rows)}"
+    assert len(out_rows) == len(orig_rows) + len(ver_rows), f"pre-write total = {len(out_rows)}"
 
     with open(COMBINED, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=OUT_COLS)
@@ -84,11 +84,11 @@ def main():
     with open(COMBINED, newline="", encoding="utf-8") as f:
         reread = list(csv.DictReader(f))
 
-    assert len(reread) == 669, f"post-write reread total = {len(reread)}"
+    assert len(reread) == len(out_rows), f"post-write reread total = {len(reread)}"
     n_orig = sum(1 for r in reread if r["dataset"] == "original")
     n_ver = sum(1 for r in reread if r["dataset"] == "verified")
     assert n_orig == 421, f"reread original count = {n_orig}"
-    assert n_ver == 248, f"reread verified count = {n_ver}"
+    assert n_ver == len(ver_rows), f"reread verified count = {n_ver}"
 
     n_orig_year = sum(1 for r in reread if r["dataset"] == "original" and r["year"])
     assert n_orig_year == len(orig_years), (

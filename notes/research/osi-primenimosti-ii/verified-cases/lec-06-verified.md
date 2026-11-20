@@ -127,3 +127,35 @@ nTop-кейсы) либо не подтвердились по дате, либ�
    foundation-model/agentic-llm».** 0% строго проходящих артефактов на первой попытке без
    FEA-петли — один из самых резких зафиксированных чисел во всём корпусе этого исследования,
    согласуется с «agentic-llm/foundation-model хуже по надёжности» выводом из `00-rezyume.md`.
+
+---
+
+## Батч 2 (третья волна, 2026-11-20) — добавлено 23 кейсов: V06-022…V06-044
+
+Полные таблицы с осями, описаниями и источниками — `../verified-cases-batch2/lec-06-verified-batch2.md` (файл provenance; локальные номера там — S1/F1/B2-S1 и т.п., НЕ финальные ID). Консолидация в `reestr-reshenij-verified.csv` — скриптом `build_verified_batch2.py` (дедуп + enum-валидация), разбор дублей — файл 18 §1.
+
+| final_id | case_name | year | outcome |
+|---|---|---|---|
+| V06-022 | CloudNC CAM Assist — Frerotech | 2025 | success |
+| V06-023 | CloudNC CAM Assist — Bedford CNC (Andy Soos) | 2025 | success |
+| V06-024 | CloudNC CAM Assist — Avalanche Energy | 2025 | success |
+| V06-025 | CloudNC CAM Assist — Arcamed | 2024 | success |
+| V06-026 | CloudNC CAM Assist — Paragon Space Development | 2024 | success |
+| V06-027 | CloudNC CAM Assist — Xeon NC | 2024 | success |
+| V06-028 | Paperless Parts AI-quoting — Harris Manufacturing | 2022 | success |
+| V06-029 | Paperless Parts AI-quoting — IA Engineers | 2022 | success |
+| V06-030 | Paperless Parts AI-quoting — Pindel Global Precision | 2021 | success |
+| V06-031 | Fictiv — Automated DFM for Injection Molding | 2024 | undetermined |
+| V06-032 | ModuleWorks / TU Wien / craftworks — SurfAIce | 2022 | undetermined |
+| V06-033 | Neural Concept × MAHLE (EV-вентилятор) | 2025 | success |
+| V06-034 | Neural Concept × Jaguar Land Rover (аэродинамика) | 2024 | success |
+| V06-035 | Neural Concept × General Motors (безопасность пешеходов) | 2024 | undetermined |
+| V06-036 | PhysicsX × GB1 (яхта America's Cup) | 2024 | undetermined |
+| V06-037 | Physics-Guided Spectral ROM (мех. трансмиссия / цикл Брайтона / вихри Кармана) | 2026 | partial |
+| V06-038 | Nonintrusive ROM — лопатка турбины высокого давления | 2018 | success |
+| V06-039 | GenCAD-Self-Repairing | 2025 | partial |
+| V06-040 | Generative Design AI для шасси CubeSat (ADOT) | 2026 | partial |
+| V06-041 | GNN-surrogate для краш-деформации B-стоек кузова | 2025 | success |
+| V06-042 | ML-модель краш-динамики на датасете Body-in-White | 2025 | partial |
+| V06-043 | Markforged — Blacksmith / Digital Forge | 2020 | failure |
+| V06-044 | Velo3D — Flow (CAM print-prep) + going concern | 2022 | failure |

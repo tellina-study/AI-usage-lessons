@@ -9,7 +9,7 @@ chapter_ref: "§2.2 Часть 2 — LaserWeeder G2 deep dive (техничес�
 references: [carbon-robotics-2025-businesswire, geekwire-2025]
 visual:
   pattern: two_col_architecture_comparison
-  primary: "2-колоночное сравнение (паттерн s17): слева механика лазерной штанги (Teal-tint), справа модель зрения (Gold-tint); внизу — узкая gold-плашка во всю ширину с pipeline-строкой, связывающей обе половины"
+  primary: "2-колоночное сравнение (паттерн s17): слева механика лазерной штанги (Teal-tint), справа модель зрения (Gold-tint); внизу — gold-плашка с реальным close-up фото модуля штанги изнутри (official render, carbonrobotics.com — owner follow-up #340 2026-11-20 «как устроен и работает laser weed», не дублирует hero-фото всей машины на s16) + pipeline-строкой, связывающей обе половины"
 ---
 
 # LaserWeeder G2 — механика лазерной штанги и модель распознавания сорняков

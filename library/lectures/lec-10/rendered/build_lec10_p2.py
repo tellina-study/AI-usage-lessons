@@ -112,7 +112,7 @@ def build_part2(prs, H):
         "LaserWeeder G2 — механика лазерной штанги и модель распознавания сорняков",
         size=21)
 
-    col_w = 5.95; col_h = 4.55
+    col_w = 5.95; col_h = 3.85
     cy = 1.5
 
     # LEFT: Engineering / mechanics — Teal-tint (паттерн s17)
@@ -136,16 +136,13 @@ def build_part2(prs, H):
             [{"text": big + " — ", "size": 13, "bold": True, "color": TEAL},
              {"text": lbl, "size": 11.5, "color": DARK_GREY}],
             line_spacing=1.1)
-        ey += 0.45
-    text_box(s, 0.8, ey + 0.03, col_w - 0.4, 0.4,
+        ey += 0.42
+    text_box(s, 0.8, ey + 0.08, col_w - 0.4, 0.4,
              "≈5 тонн без буксировщика · эксплуатация (без капекса) ≈$200-400 тыс/год",
              size=10.5, italic=True, color=DARK_GREY, line_spacing=1.1)
-    ey += 0.52
-    ocean_box(s, 0.8, ey, col_w - 0.8, 0.62, fill=SOFT_GREY, stroke=DARK_GREY, stroke_pt=1.0)
-    text_box(s, 0.93, ey + 0.06, col_w - 1.06, 0.5,
-             "Типичный отказ: пыль на объективе или разряженный источник питания — "
-             "машина простаивает, чинит инженер на поле",
-             size=10.5, italic=True, color=DEEP, line_spacing=1.1)
+    # (типичный механический отказ — пыль на объективе / разряженный источник питания —
+    # сведён в одну строку нижней gold-полосы ниже + полный текст в speaker notes;
+    # собственный SOFT_GREY-бокс снят, место ушло под фото модуля в той же полосе)
 
     # RIGHT: AI / vision model — Gold-tint
     rx = 6.85
@@ -166,34 +163,56 @@ def build_part2(prs, H):
             [{"text": big + " — ", "size": 13, "bold": True, "color": MID},
              {"text": lbl, "size": 11.5, "color": DARK_GREY}],
             line_spacing=1.1)
-        ay += 0.45
-    text_box(s, rx + 0.2, ay + 0.02, col_w - 0.4, 0.58,
+        ay += 0.42
+    # Оба известных сбоя распознавания (velvetleaf в сое + pigweed в шпинате) сведены в один
+    # абзац — экономит отдельный SOFT_GREY-бокс, освобождая место под фото модуля в нижней полосе.
+    text_box(s, rx + 0.2, ay + 0.03, col_w - 0.4, 0.92,
              "~80% точность на visually-похожей паре (velvetleaf в сое) — ниже, чем >95% у "
-             "See & Spray на Palmer amaranth в хлопке: другая система, другой сорняк",
-             size=11, color=DARK_GREY, line_spacing=1.1)
-    ay += 0.68
-    ocean_box(s, rx + 0.2, ay, col_w - 0.8, 0.62, fill=SOFT_GREY, stroke=DARK_GREY, stroke_pt=1.0)
-    text_box(s, rx + 0.33, ay + 0.06, col_w - 1.06, 0.5,
-             "Известный сбой: pigweed в шпинате — оба amaranthus, листва в фазе 2-3 "
-             "листьев почти неразличима",
-             size=10.5, italic=True, color=DEEP, line_spacing=1.1)
-    ay += 0.74
+             "See & Spray на Palmer amaranth в хлопке: другая система, другой сорняк. Известный сбой — "
+             "pigweed в шпинате: оба amaranthus, листва в фазе 2-3 листьев почти неразличима.",
+             size=10.8, color=DARK_GREY, line_spacing=1.15)
+    ay += 1.00
     text_box(s, rx + 0.2, ay, col_w - 0.4, 0.55,
              "Камера видит в реальном времени; лазер должен навестись, пока машина не "
              "проехала точку — вендор не публикует задержку сверх длительности импульса",
              size=10, italic=True, color=DARK_GREY, line_spacing=1.1)
 
-    # Bottom gold strip — pipeline connecting both halves
+    # Bottom gold strip — pipeline connecting both halves + фото модуля изнутри (issue #340,
+    # owner follow-up 2026-11-20: «как устроен и работает laser weed»). Официальный render
+    # carbonrobotics.com (underside of weeding module) — НЕ дублирует hero-фото всей машины
+    # на s16 (та съёмка — сумеречный общий план в поле).
     pipe_y = cy + col_h + 0.1
-    ocean_box(s, 0.6, pipe_y, 12.13, 0.72, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-    text_box(s, 0.85, pipe_y + 0.08, 11.6, 0.56,
+    pipe_h = 1.42
+    ocean_box(s, 0.6, pipe_y, 12.13, pipe_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
+    img_pad = 0.14
+    img_h = 0.95
+    img_w = img_h * 2.20  # matches p16b-laserweeder-module-crop.jpg AR exactly
+    p = ASSETS / "photos" / "p16b-laserweeder-module-crop.jpg"
+    if p.exists():
+        add_image(s, p, 0.6 + img_pad, pipe_y + img_pad, w=img_w, h=img_h)
+    text_box(s, 0.6 + img_pad, pipe_y + img_pad + img_h + 0.03, img_w, 0.18,
+             "Модуль штанги изнутри (рендер, carbonrobotics.com)",
+             size=8.0, italic=True, color=DEEP, align=PP_ALIGN.CENTER)
+    txt_x = 0.6 + img_pad + img_w + 0.22
+    txt_w = 12.13 - img_pad - img_w - 0.22 - 0.25
+    text_box(s, txt_x, pipe_y + 0.10, txt_w, pipe_h - 0.20,
              "Один проход: камера видит точку → модель классифицирует «культура / сорняк» → "
              "если сорняк — координаты на лазер → импульс 25 мс выжигает меристему. Отказ бывает "
-             "двух разных типов: механический (пыль, нет питания) и модельный (спутала культуру с сорняком).",
-             size=11, bold=True, italic=True, color=DEEP, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+             "двух разных типов: механический (пыль на объективе, нет питания — чинит инженер на поле) "
+             "и модельный (спутала культуру с сорняком — лечится дообучением, не гаечным ключом).",
+             size=10.8, bold=True, italic=True, color=DEEP, line_spacing=1.18, anchor=MSO_ANCHOR.MIDDLE)
 
-    add_footer(s, "Источники: Carbon Robotics businesswire 2025-02-10 · carbonrobotics.com/laserweeder-g2 · "
-                  "GeekWire 2025 · See & Spray / Palmer amaranth — GrowIWM deep-dive 2024 (другая система, для масштаба)")
+    _s16b_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Источники: Carbon Robotics businesswire 2025-02-10 · фото модуля: ",
+         "size": 9.5, "italic": True, "color": LIGHT},
+        {"text": "carbonrobotics.com/laserweeder-g2", "size": 9.5, "italic": True, "color": LIGHT},
+        {"text": " (официальный рендер) · GeekWire 2025 · See & Spray / Palmer amaranth — GrowIWM "
+                  "deep-dive 2024 (другая система, для масштаба)",
+         "size": 9.5, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s16b_fr = [r for p in _s16b_foot.text_frame.paragraphs for r in p.runs]
+    _s16b_fr[1].font.underline = True
+    _s16b_fr[1].hyperlink.address = "https://www.carbonrobotics.com/laserweeder-g2"
     add_speaker_notes(s, load_speaker_notes("s16b"))
 
     # ============ s16a LaserWeeder — форма разбора: цена ошибок + 2 режима ============

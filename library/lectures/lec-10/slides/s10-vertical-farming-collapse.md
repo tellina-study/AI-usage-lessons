@@ -9,7 +9,7 @@ chapter_ref: "§1.4 Часть 1 — Strict-in F1 коллапс vertical farmin
 references: [techcrunch-2025-plenty-ch11, agriculture-dive-2023-appharvest, techcrunch-2024-bowery, agfunder-2025-indoor, hannah-ritchie-2024-vertical, mdpi-sustainability-2024]
 visual:
   pattern: cards_plus_chain
-  primary: "3 горизонтальные карточки (компания / капитал / причина) → компактная 5-step chain «5 почему» → одна итоговая плашка AP1 с числовой декомпозицией 0,5×0,7×0,3≈10,5%"
+  primary: "⓪ Фото-полоса (owner follow-up #340, 2026-11-20 — «внешний вид, устройство, иллюстрацию кейса с вирусом»): здание vertical farm снаружи (AeroFarms, Danville — типовое, т.к. фото зданий AppHarvest/Plenty/Bowery в открытых источниках не найдены, честно подписано) · LED-стеллажи изнутри (Kalera Farms, USDA public domain) · ToBRFV мозаичная пятнистость плодов (Luria et al. 2017, CC BY-SA 4.0 — иллюстративно, не фото самой вспышки в Морхеде). Далее — ① 3 горизонтальные карточки (компания / капитал / причина) → ② компактная 5-step chain «5 почему» → ③ одна итоговая плашка AP1 с числовой декомпозицией 0,5×0,7×0,3≈10,5%"
 ---
 
 # Vertical farming — провал не из-за плохого ИИ
@@ -19,6 +19,8 @@ visual:
 AppHarvest, Plenty, Bowery: $1,37 млрд+ потерь, 14 банкротств 2025. Контроллеры работали, CV распознавал, ML предсказывал — не сработала арифметика энергии: LED ≈ 100× free sunlight, и ИИ оптимизирует знаменатель, а разрыв сидит в числителе.
 
 ## Visual
+
+**⓪ Фото-полоса** (owner follow-up #340, 2026-11-20): 3 фото в ряд, центрировано — здание vertical farm снаружи (AeroFarms, Danville, CC0 — честно подписано как типовое, не AppHarvest/Plenty/Bowery) · LED-стеллажи изнутри (Kalera Farms, USDA public domain фото визита секретаря Пердью — ряды гидропонных лотков под розовым LED-спектром) · ToBRFV мозаичная пятнистость плодов (один панель из составного фото Luria et al. 2017, CC BY-SA 4.0 — иллюстративно, честная оговорка «не фото вспышки в Морхеде»). Каждое фото под своей короткой подписью.
 
 **① Три карточки** (горизонтально, полная ширина, GOLD accent на Plenty):
 

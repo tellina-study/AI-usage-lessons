@@ -266,11 +266,20 @@ def build_part3(prs, H):
     lx = 0.6
     rx = lx + col_w + 0.3
 
-    # Left column — «Железо»
+    # Left column — «Железо» (issue #340 owner follow-up 2026-11-20: реальное фото устройства
+    # вместо родового иконки «radar» — официальный product cutout из брошюры Allflex/MSD
+    # SenseHub, та самая «ошейник-сенсор», которую описывает текст справа).
     ocean_box(s, lx, col_y, col_w, col_h, fill=LIGHT_TINT, stroke=LIGHT)
-    ip = ASSETS / "icons" / "radar-96.png"
+    ip = ASSETS / "photos" / "p23c-sensehub-collar-device.jpg"
+    _dev_h = 0.75
+    _dev_w = _dev_h * (324 / 445)  # native AR of product cutout — no crop needed, no stretch
     if ip.exists():
-        add_image(s, ip, lx + 0.25, col_y + 0.22, w=0.6, h=0.6)
+        # Source photo has a solid black studio backdrop (not transparency) — a thin white
+        # mat behind it reads as a deliberate framed product shot, not a stray black square
+        # against the card's light-tint fill.
+        ocean_box(s, lx + 0.25 - 0.06, col_y + 0.20 - 0.06, _dev_w + 0.12, _dev_h + 0.12,
+                  fill=WHITE, stroke=LIGHT, stroke_pt=1.0, radius_pt=4.0)
+        add_image(s, ip, lx + 0.25, col_y + 0.20, w=_dev_w, h=_dev_h)
     text_box(s, lx + 1.0, col_y + 0.28, col_w - 1.2, 0.5, "Железо — ошейник-сенсор",
              size=16, bold=True, color=DEEP)
     text_box(s, lx + 0.3, col_y + 1.0, col_w - 0.6, 0.6,
@@ -341,8 +350,16 @@ def build_part3(prs, H):
              "свойство модели, а не датчика. Тот же ошейник с другим алгоритмом даёт другую экономику.",
              size=12, bold=True, italic=True, color=DEEP, line_spacing=1.2, anchor=MSO_ANCHOR.MIDDLE)
 
-    add_footer(s, "Источники: Merck Animal Health 2025; SenseHub product info (Allflex/Merck) — "
-                  "транспортный протокол передачи данных не раскрыт в открытых источниках")
+    _s23c_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Источники: Merck Animal Health 2025; ", "size": 9.5, "italic": True, "color": LIGHT},
+        {"text": "SenseHub product info (Allflex/MSD brochure)",
+         "size": 9.5, "italic": True, "color": LIGHT},
+        {"text": " — транспортный протокол передачи данных не раскрыт в открытых источниках",
+         "size": 9.5, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s23c_fr = [r for p in _s23c_foot.text_frame.paragraphs for r in p.runs]
+    _s23c_fr[1].font.underline = True
+    _s23c_fr[1].hyperlink.address = "https://www.allflex.global/wp-content/uploads/2021/06/SH_Allflex_MSD_8_A4_Eng_May_21.pdf"
     add_speaker_notes(s, load_speaker_notes("s23c"))
 
     # ============ s23a SenseHub — three regimes + threshold (mandatory form triple) ============

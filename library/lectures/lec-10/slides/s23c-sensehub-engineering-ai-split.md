@@ -9,7 +9,7 @@ chapter_ref: "§3.2 Часть 2 — Allflex SenseHub, инженерный ст
 references: [merck-2025-sensehub-2m]
 visual:
   pattern: two_column_split_engineering_ai
-  primary: "2 колонки: «Железо» (ошейник, акселерометр, батарея, передача данных) vs «Модель» (облачный ML, per-cow baseline, классификация в 5 алертов) + нижняя полоса синтеза"
+  primary: "2 колонки: «Железо» (реальное фото устройства SenseHub — official product cutout из брошюры Allflex/MSD, owner follow-up #340 2026-11-20, заменяет родовую иконку «radar» — + акселерометр, батарея, передача данных) vs «Модель» (облачный ML, per-cow baseline, классификация в 5 алертов) + нижняя полоса синтеза"
 ---
 
 # SenseHub — ошейник и модель по отдельности

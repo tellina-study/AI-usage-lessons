@@ -967,30 +967,51 @@ def build_part1_full(prs, H):
         tx += trio_w + 0.15
 
     # ④ Инженерный аппарат (issue #340 Задача 3 — ИИ-модель вынесена отдельно на s07c,
-    # здесь только физическое устройство: штанга, камеры, форсунки, механика срабатывания)
-    text_box(s, 0.6, 4.28, 12.13, 0.22, "④ Инженерный аппарат", size=11, bold=True, color=MID)
-    ocean_box(s, 0.6, 4.5, 12.13, 0.58, fill=SURFACE)
-    text_box(s, 0.78, 4.56, 11.8, 0.46,
-             "36 камер по штанге (≈2500 кв. футов/сек каждая) → соленоидный клапан форсунки срабатывает "
-             "за <50 мс на скорости движения 25 км/ч. Продукт: John Deere See & Spray Ultimate "
-             "(ExactApply, R-серия, dual-tank). Как устроена сама модель внутри — на следующем кадре.",
-             size=10, color=DARK_GREY, italic=True, line_spacing=1.2)
+    # здесь только физическое устройство: штанга, камеры, форсунки, механика срабатывания).
+    # v2 (owner follow-up 2026-11-20, «добавь иллюстраций... как работает see and spray»):
+    # добавлена 3-шаговая icon+arrow схема хода операции (камера видит → CNN решает →
+    # форсунка срабатывает) — порядок работы схемой не длиннее 4 шагов (CLAUDE.md).
+    # Не дублирует фото штанги на s07 (там — статичный hero-снимок техники в поле).
+    text_box(s, 0.6, 4.20, 12.13, 0.18, "④ Инженерный аппарат — порядок срабатывания", size=10.5, bold=True, color=MID)
+    diagram_y = 4.40
+    diagram_h = 1.05
+    ocean_box(s, 0.6, diagram_y, 12.13, diagram_h, fill=SURFACE)
+    flow3 = [
+        ("camera-48.png", "36 камер видят", "≈2500 кв.футов/сек каждая"),
+        ("cpu-48.png", "CNN решает", "сорняк / не сорняк, <50 мс"),
+        ("target-48.png", "Форсунка бьёт", "соленоидный клапан, точка"),
+    ]
+    fw = (12.13 - 0.5) / 3  # 3 columns + 2 gaps for arrows
+    fx = 0.6 + 0.1
+    for i, (icon_name, lbl, sub) in enumerate(flow3):
+        ip = ASSETS / "icons" / icon_name
+        if ip.exists():
+            add_image(s, ip, fx + (fw - 0.42) / 2, diagram_y + 0.12, w=0.42, h=0.42)
+        text_box(s, fx, diagram_y + 0.58, fw, 0.22, lbl, size=10.5, bold=True, color=DEEP,
+                 align=PP_ALIGN.CENTER)
+        text_box(s, fx, diagram_y + 0.80, fw, 0.22, sub, size=8.3, italic=True, color=MID,
+                 align=PP_ALIGN.CENTER)
+        if i < 2:
+            add_arrow(s, fx + fw, diagram_y + 0.28, 0.2, 0.2, fill=LIGHT)
+        fx += fw + 0.2
 
-    # ⑤ Что переехало
-    text_box(s, 0.6, 5.2, 12.13, 0.22, "⑤ Что переехало", size=11, bold=True, color=MID)
+    # ⑤ Что переехало (сжато: box 1.5→1.15, текст уже не занимал полную высоту)
+    text_box(s, 0.6, diagram_y + diagram_h + 0.10, 12.13, 0.20, "⑤ Что переехало", size=10.5, bold=True, color=MID)
+    verdict_y = diagram_y + diagram_h + 0.32
+    verdict_h = 1.15
     half_w = (12.13 - 0.2) / 2
-    ocean_box(s, 0.6, 5.42, half_w, 1.5, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 0.78, 5.5, half_w - 0.3, 0.3, "Подтверждено независимо", size=12, bold=True, color=MID)
-    text_box(s, 0.78, 5.82, half_w - 0.3, 1.05,
+    ocean_box(s, 0.6, verdict_y, half_w, verdict_h, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.78, verdict_y + 0.08, half_w - 0.3, 0.26, "Подтверждено независимо", size=11.5, bold=True, color=MID)
+    text_box(s, 0.78, verdict_y + 0.36, half_w - 0.3, 0.76,
              "Экономия гербицида: 62,4% PRE · 28,4% EPOST · 36,5% MPOST (Avent et al. 2024). "
              "Crop injury ниже на до 5 п.п. у targeted.",
-             size=10, italic=True, color=DARK_GREY, line_spacing=1.25)
-    ocean_box(s, 0.6 + half_w + 0.2, 5.42, half_w, 1.5, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.78 + half_w + 0.2, 5.5, half_w - 0.3, 0.3, "Не подтверждено независимо", size=12, bold=True, color=GOLD)
-    text_box(s, 0.78 + half_w + 0.2, 5.82, half_w - 0.3, 1.05,
+             size=9.8, italic=True, color=DARK_GREY, line_spacing=1.2)
+    ocean_box(s, 0.6 + half_w + 0.2, verdict_y, half_w, verdict_h, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.78 + half_w + 0.2, verdict_y + 0.08, half_w - 0.3, 0.26, "Не подтверждено независимо", size=11.5, bold=True, color=GOLD)
+    text_box(s, 0.78 + half_w + 0.2, verdict_y + 0.36, half_w - 0.3, 0.76,
              "Прирост урожайности +2,0 бу/акр (до 4,8 в лучших случаях) — цифра вендора (Deere, AgTechNavigator). "
              "Avent et al. 2024: P>0,05 — различий в урожайности нет.",
-             size=10, italic=True, color=DEEP, line_spacing=1.25)
+             size=9.8, italic=True, color=DEEP, line_spacing=1.2)
 
     add_footer(s, "Источники: Avent et al. 2024, Weed Technology; Iowa State Extension 2026; "
                   "Ohio Extension 2026; Deere press ноябрь 2025")
@@ -1490,38 +1511,75 @@ def build_part1_full(prs, H):
     # 5-step chain, ③ одна итоговая GOLD-плашка с числовой декомпозицией. Бывший
     # investment-collapse chart (c10-vf-losses.png) снят — дублировал c39/c40 на s05c
     # (cross-slide redundancy), освободившееся место ушло под ②.
+    # v2 (owner follow-up 2026-11-20, «добавь иллюстраций ... по вертикальным
+    # фермам — внешний вид, устройство, иллюстрацию кейса с вирусом»): добавлена
+    # фото-полоса ⓪ — здание снаружи (AeroFarms Danville, CC0; AppHarvest/Plenty/
+    # Bowery сами зданий в открытых источниках не нашлось, честно подписано как
+    # типовое) · LED-стеллажи изнутри (Kalera Farms, USDA public domain) · симптомы
+    # ToBRFV на плодах (Luria et al., CC BY-SA 4.0, иллюстративно — не фото самой
+    # вспышки в Морхеде). 3 карточки/chain/итог сжаты по высоте, чтобы фото не
+    # теснили контент — полный текст причин остаётся в speaker notes дословно.
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "Вертикальные фермы — провал не из-за плохого ИИ. AppHarvest, Plenty, Bowery",
-        size=19)
+        "Вертикальные фермы — провал не из-за плохого ИИ",
+        size=19, y=0.26)
 
-    # ① 3 горизонтальные карточки
-    text_box(s, 0.6, 1.1, 12.13, 0.2, "① Три кейса — капитал и причина", size=11, bold=True, color=MID)
+    # ⓪ Фото-полоса: снаружи / внутри (LED) / кейс с вирусом
+    photo_label_y = 0.75
+    text_box(s, 0.6, photo_label_y, 12.13, 0.18,
+             "⓪ Как это выглядело — здание, LED-стеллажи изнутри, вирус на плодах",
+             size=10.5, bold=True, color=MID)
+    PH = 2.05
+    PGAP = 0.17
+    pw_ext, pw_int, pw_vir = PH * 1.85, PH * 2.00, PH * 1.20  # box AR matches re-cropped file AR exactly
+    row_content_w = pw_ext + pw_int + pw_vir + 2 * PGAP
+    px0 = 0.6 + (12.13 - row_content_w) / 2  # centre the row — 3 photo ARs don't sum to full width
+    px1 = px0 + pw_ext + PGAP
+    px2 = px1 + pw_int + PGAP
+    py = photo_label_y + 0.24
+    photos10 = [
+        (px0, pw_ext, "p10b-aerofarms-exterior-crop.jpg",
+         "Типовое здание вертикальной фермы (AeroFarms, Danville) —\nAppHarvest/Plenty/Bowery фото зданий в открытых источниках не найдены"),
+        (px1, pw_int, "p10b-kalera-led-interior-crop.jpg",
+         "LED-стеллажи изнутри (Kalera Farms, USDA) — тот самый «LED вместо солнца» контур"),
+        (px2, pw_vir, "p10b-tobrfv-virus-crop.jpg",
+         "ToBRFV — мозаичная пятнистость плодов (иллюстративно, не фото вспышки в Морхеде)"),
+    ]
+    for x, w, fname, cap in photos10:
+        p = ASSETS / "photos" / fname
+        if p.exists():
+            add_image(s, p, x, py, w=w, h=PH)
+        text_box(s, x, py + PH + 0.03, w, 0.34, cap,
+                 size=9.0, italic=True, color=DARK_GREY, line_spacing=1.05, align=PP_ALIGN.CENTER)
+
+    # ① 3 горизонтальные карточки (сжато: card_h 1.85→1.10, "cause" — короче)
+    card_label_y = py + PH + 0.42
+    text_box(s, 0.6, card_label_y, 12.13, 0.17, "① Три кейса — капитал и причина", size=10.5, bold=True, color=MID)
     cards = [
         ("AppHarvest", "$475M SPAC + $341M долга ≈ $816M", "Chapter 11 июль 2023",
          "OPEX отопления Кентукки + ToBRFV вирус в Морхеде", LIGHT, LIGHT_TINT),
         ("Plenty Unlimited", "$940M из $1B+ raised с 2014", "закрыт декабрь 2024",
-         "LED energy съел AI-оптимизацию; –99% оценки ($1,9 млрд→<$15M)", GOLD, GOLD_TINT),
+         "LED energy съел AI-оптимизацию; –99% оценки", GOLD, GOLD_TINT),
         ("Bowery Farming", ">$700M raised", "ABC ноябрь 2024",
-         "Capex first, AI после; $32M never-used в Locust Grove", LIGHT, LIGHT_TINT),
+         "Capex first, AI после; $32M never-used", LIGHT, LIGHT_TINT),
     ]
     cw3 = (12.13 - 0.3) / 3
     cx = 0.6
-    card_y = 1.32; card_h = 1.85
+    card_y = card_label_y + 0.21; card_h = 1.10
     for name, money, date, cause, color, fill in cards:
         ocean_box(s, cx, card_y, cw3, card_h, fill=fill, stroke=color)
-        text_box(s, cx + 0.14, card_y + 0.12, cw3 - 0.28, 0.32, name, size=14, bold=True, color=DEEP)
-        text_box(s, cx + 0.14, card_y + 0.48, cw3 - 0.28, 0.32, money, size=14, bold=True,
+        text_box(s, cx + 0.13, card_y + 0.06, cw3 - 0.26, 0.24, name, size=11, bold=True, color=DEEP)
+        text_box(s, cx + 0.13, card_y + 0.30, cw3 - 0.26, 0.22, money, size=10.2, bold=True,
                  color=color if color != GOLD else GOLD)
-        text_box(s, cx + 0.14, card_y + 0.84, cw3 - 0.28, 0.24, date, size=10.5, italic=True, color=MID)
-        text_box(s, cx + 0.14, card_y + 1.12, cw3 - 0.28, 0.68, cause,
-                 size=10, italic=True, color=DARK_GREY, line_spacing=1.2)
+        text_box(s, cx + 0.13, card_y + 0.53, cw3 - 0.26, 0.18, date, size=9.5, italic=True, color=MID)
+        text_box(s, cx + 0.13, card_y + 0.72, cw3 - 0.26, 0.34, cause,
+                 size=9.0, italic=True, color=DARK_GREY, line_spacing=1.1)
         cx += cw3 + 0.15
 
-    # ② Компактная цепочка «5 почему»
-    chain_y = card_y + card_h + 0.16
-    text_box(s, 0.6, chain_y, 12.13, 0.2,
-             "② Пять «почему» — от банкротства до термодинамики", size=11, bold=True, color=MID)
+    # ② Компактная цепочка «5 почему» (сжато: step_h 1.75→1.06)
+    chain_y = card_y + card_h + 0.10
+    text_box(s, 0.6, chain_y, 12.13, 0.17,
+             "② Пять «почему» — от банкротства до термодинамики", size=10.5, bold=True, color=MID)
     steps = [
         ("Почему закрылась?", "Капитал кончился", MID),
         ("Почему кончился?", "Юнит-экономика не сошлась", MID),
@@ -1529,39 +1587,55 @@ def build_part1_full(prs, H):
         ("Почему LED так дорог?", "~100× меньше энергии, чем солнце", DEEP),
         ("Закрыл ли это ML?", "Нет: эффект 5-15% при разрыве 100×", GOLD),
     ]
-    step_w = 2.18; step_h = 1.75; gap = 0.15
+    step_w = 2.18; step_h = 1.06; gap = 0.15
     sx = 0.6
-    sy = chain_y + 0.22
+    sy = chain_y + 0.19
     for i, (q, a, color) in enumerate(steps):
         ocean_box(s, sx, sy, step_w, step_h,
                   fill=GOLD_TINT if color == GOLD else LIGHT_TINT, stroke=color)
-        text_box(s, sx + 0.1, sy + 0.12, step_w - 0.2, 0.55, q,
-                 size=11, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.15,
+        text_box(s, sx + 0.09, sy + 0.06, step_w - 0.18, 0.37, q,
+                 size=9.5, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.08,
                  anchor=MSO_ANCHOR.MIDDLE)
-        hr_line(s, sx + 0.18, sy + 0.72, step_w - 0.36, color=color, weight=1.0)
-        text_box(s, sx + 0.1, sy + 0.8, step_w - 0.2, step_h - 0.9, a,
-                 size=11.5, bold=(color != MID), color=color, align=PP_ALIGN.CENTER, line_spacing=1.2,
+        hr_line(s, sx + 0.15, sy + 0.45, step_w - 0.30, color=color, weight=1.0)
+        text_box(s, sx + 0.09, sy + 0.49, step_w - 0.18, step_h - 0.54, a,
+                 size=9.8, bold=(color != MID), color=color, align=PP_ALIGN.CENTER, line_spacing=1.08,
                  anchor=MSO_ANCHOR.MIDDLE)
         if i < 4:
             add_arrow(s, sx + step_w, sy + step_h/2 - 0.1, gap, 0.2, fill=LIGHT)
         sx += step_w + gap
 
-    # ③ Итоговая GOLD-плашка — числовая декомпозиция + AP1
-    final_y = sy + step_h + 0.18
-    final_h = 1.1
+    # ③ Итоговая GOLD-плашка — числовая декомпозиция + AP1 (сжато: final_h 1.1→0.70)
+    final_y = sy + step_h + 0.10
+    final_h = 0.70
     ocean_box(s, 0.6, final_y, 12.13, final_h, fill=GOLD_TINT, stroke=GOLD)
-    text_runs(s, 0.82, final_y + 0.14, 11.7, 0.36, [
-        {"text": "0,5 × 0,7 × 0,3 ≈ 10,5% ", "size": 19, "bold": True, "color": GOLD},
+    text_runs(s, 0.82, final_y + 0.07, 11.7, 0.28, [
+        {"text": "0,5 × 0,7 × 0,3 ≈ 10,5% ", "size": 14.5, "bold": True, "color": GOLD},
         {"text": "end-to-end (LED × сеть × рост) против 100% у бесплатного солнца",
-         "size": 12, "italic": True, "color": DEEP},
-    ], line_spacing=1.15)
-    text_box(s, 0.82, final_y + 0.58, 11.7, 0.46,
-             "AP1 — закон термодинамики важнее ML. ML работает на знаменателе; разрыв — в числителе. "
-             "Альтернатива: открытый грунт при энергии <$0,10/кВт·ч; vertical farming — только для high-value crops.",
-             size=11.5, bold=True, color=DEEP, line_spacing=1.2)
+         "size": 10, "italic": True, "color": DEEP},
+    ], line_spacing=1.05)
+    text_box(s, 0.82, final_y + 0.37, 11.7, 0.30,
+             "AP1 — закон термодинамики важнее ML. Альтернатива: открытый грунт при энергии "
+             "<$0,10/кВт·ч; vertical farming — только для high-value crops.",
+             size=9.8, bold=True, color=DEEP, line_spacing=1.08)
 
-    add_footer(s, "Источники: TechCrunch 2025-03-24, 2024-11-04; Agriculture Dive 689039; "
-                  "AgFunder Year-in-Review 2025; анализ Hannah Ritchie на основе MDPI Sustainability 2024")
+    _s10_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Источники: TechCrunch 2025-03-24, 2024-11-04; Agriculture Dive 689039; AgFunder 2025; "
+                  "Hannah Ritchie/MDPI 2024 · фото: ",
+         "size": 9.5, "italic": True, "color": LIGHT},
+        {"text": "AeroFarms (CC0)", "size": 9.5, "italic": True, "color": LIGHT},
+        {"text": " · ", "size": 9.5, "italic": True, "color": LIGHT},
+        {"text": "USDA/Kalera (public domain)", "size": 9.5, "italic": True, "color": LIGHT},
+        {"text": " · ", "size": 9.5, "italic": True, "color": LIGHT},
+        {"text": "Luria et al. 2017, CC BY-SA 4.0", "size": 9.5, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s10_fr = [r for p in _s10_foot.text_frame.paragraphs for r in p.runs]
+    _s10_fr[1].font.underline = True
+    _s10_fr[1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:AeroFarms_Danville_Location.jpg"
+    _s10_fr[3].font.underline = True
+    _s10_fr[3].hyperlink.address = ("https://commons.wikimedia.org/wiki/File:Agriculture_Secretary_Perdue_at_"
+                                     "Kalera_Farms_(20200608-OSEC-UNC-0003).jpg")
+    _s10_fr[5].font.underline = True
+    _s10_fr[5].hyperlink.address = "https://commons.wikimedia.org/wiki/File:ToBRFV_Tomato_Symptoms01.jpg"
     add_speaker_notes(s, load_speaker_notes("s10"))
 
     # ============ s12 ChatGPT hallucinations ============

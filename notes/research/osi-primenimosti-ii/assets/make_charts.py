@@ -1509,6 +1509,672 @@ def chart_mechanism_detail(rows):
     print("chart_mechanism_detail saved")
 
 
+# ===========================================================================
+# Раунд 8 (issue #349, файл 11-pyat-razryvayushchih-illyustraciy.md): владелец —
+# «все равно что-то не цепляет». Пять новых иллюстраций, каждая несёт >=2 (до 4)
+# самостоятельных находки в одном кадре. Углы выбраны ЭТОЙ сессией самостоятельно
+# по свободному проходу по reestr-reshenij.csv (владелец явно запретил кормить
+# исполнителя готовыми темами). Все числа считаются из rows внутри функций,
+# ключевые заголовочные значения дополнительно закреплены assert'ами — при любом
+# будущем изменении реестра скрипт упадёт, а не молча нарисует устаревшую цифру.
+# Формула успеха там, где она есть, — только (B) = success/(success+failure)
+# (конвенция раундов 3-7, файл 10 §0); графики 2 и 4 — чистые счётчики/карточки
+# без формулы вообще; график 5 дополнительно показывает РЯДОМ уже документированную
+# формулу (C) файла 07 — это сравнение двух существующих формул линии, НЕ введение
+# четвёртой (файл 10 §0 называет ровно три: A, B, C).
+# Randomness: ни одна из пяти функций не трогает глобальный поток random —
+# джиттера нет, существующие графики не сдвигаются.
+# ===========================================================================
+
+WOW2_GREEN = "#2E7D32"
+WOW2_RED = "#B23A48"
+WOW2_ACCENT = "#1C7293"
+
+
+def _has_named_mechanism(r):
+    """Назван ли у строки хоть один структурный механизм (U1-U4 или F-A/F-B/F-C)."""
+    return r["axis1_mechanism"] in ("U1", "U2", "U3", "U4") or r[
+        "axis2_mechanism"
+    ] in ("F-A", "F-B", "F-C")
+
+
+def _row_by_id(rows, rid):
+    for r in rows:
+        if r["id"] == rid:
+            return r
+    raise KeyError(rid)
+
+
+# ---------------------------------------------------------------------------
+# WOW2-1: «Два мира» — при действующем гейте ВСЕ оси курса перестают работать.
+# Внутри gate=yes (n=143) ставка успеха (B) почти не зависит ни от
+# неопределённости, ни от времени обратной связи, ни от цены ошибки (разброс
+# 7-16 п.п., всё в коридоре 84-100%); внутри gate=no (n=112) те же оси дают
+# разброс до 80 п.п. Вся предсказательная сила осей курса живёт в мире без гейта.
+# ---------------------------------------------------------------------------
+def chart_wow2_dva_mira(rows):
+    dims = [
+        ("axis1_level", ["low", "moderate", "high", "extreme"],
+         ["низк.", "умер.", "выс.", "экстр."], "Неопределённость"),
+        ("axis2_bucket", ["seconds-minutes", "hours-days", "weeks-months", "season-years"],
+         ["сек-мин", "час-дни", "нед-мес", "сез-годы"], "Время обратной связи"),
+        ("axis4_blast_radius", ["low", "medium", "high", "catastrophic"],
+         ["низк.", "средн.", "выс.", "катастр."], "Цена ошибки"),
+    ]
+
+    def panel_data(gate_value):
+        out = []
+        for key, levels, lvl_labels, title in dims:
+            pts = []
+            for lv, lab in zip(levels, lvl_labels):
+                sub = [r for r in rows if r["axis4_gate"] == gate_value and r[key] == lv]
+                rate, denom, s, f = _rate_and_n(sub)
+                pts.append((lab, rate, denom, s, f))
+            out.append((title, key, pts))
+        return out
+
+    yes_data = panel_data("yes")
+    no_data = panel_data("no")
+    rate_yes, n_yes, s_yes, f_yes = _rate_and_n([r for r in rows if r["axis4_gate"] == "yes"])
+    rate_no, n_no, s_no, f_no = _rate_and_n([r for r in rows if r["axis4_gate"] == "no"])
+    # Заголовочные числа закреплены (см. docstring раунда 8):
+    assert (s_yes, f_yes) == (74, 4) and round(rate_yes, 1) == 94.9
+    assert (s_no, f_no) == (10, 79) and round(rate_no, 1) == 11.2
+
+    fig, axes = plt.subplots(1, 2, figsize=(16.5, 8.6), sharey=True)
+    panel_specs = [
+        (axes[0], yes_data, rate_yes,
+         f"МИР С ДЕЙСТВУЮЩИМ ГЕЙТОМ — {s_yes + f_yes} кейсов с исходом",
+         "#F2F8F2", WOW2_GREEN),
+        (axes[1], no_data, rate_no,
+         f"МИР БЕЗ ГЕЙТА — {s_no + f_no} кейсов с исходом",
+         "#FBF2F3", WOW2_RED),
+    ]
+    offsets = [-0.27, -0.09, 0.09, 0.27]
+    for ax, data, overall, title, facecolor, edge in panel_specs:
+        ax.set_facecolor(facecolor)
+        ax.axhline(overall, color=edge, lw=1.4, ls="--", zorder=1)
+        overall_txt = "общий успех " + f"{overall:.1f}%".replace(".", ",")
+        if overall > 50:
+            ax.annotate(overall_txt, xy=(0.62, overall - 0.8), xytext=(0.5, 54),
+                        fontsize=10, fontweight="bold", color=edge, ha="left",
+                        arrowprops=dict(arrowstyle="->", color=edge, lw=1.2))
+        else:
+            ax.text(0.5, overall + 2.3, overall_txt,
+                    color=edge, fontsize=10, fontweight="bold", ha="left")
+        for gi, (gtitle, key, pts) in enumerate(data):
+            xc = gi + 1
+            accent = WOW2_ACCENT if key == "axis2_bucket" else "#444444"
+            rates = [p[1] for p in pts if p[1] is not None]
+            if rates:
+                ax.vlines(xc, min(rates), max(rates), color=accent, lw=2.4,
+                          alpha=0.55, zorder=2)
+            for off, (lab, rate, denom, s, f) in zip(offsets, pts):
+                if rate is None:
+                    continue
+                thin = denom < 10
+                ax.plot(xc + off, rate, "o", ms=9,
+                        mfc="white" if thin else accent, mec=accent, mew=1.8, zorder=3)
+                ax.annotate(f"{rate:.0f}", (xc + off, rate),
+                            textcoords="offset points", xytext=(0, 8),
+                            ha="center", fontsize=8.2, color=accent)
+                ax.annotate(lab, (xc + off, rate),
+                            textcoords="offset points", xytext=(0, -14),
+                            ha="center", fontsize=7.0, color="#666666")
+            spread = (max(rates) - min(rates)) if rates else 0.0
+            ax.text(xc, -13.5,
+                    f"{gtitle}\nразброс " + f"{spread:.1f}".replace(".", ",") + " п.п.",
+                    ha="center", fontsize=9.3, color=accent,
+                    fontweight="bold" if key == "axis2_bucket" else "normal")
+        ax.set_xlim(0.45, 3.55)
+        ax.set_ylim(-19, 108)
+        ax.set_xticks([])
+        ax.set_title(title, fontsize=12.5, fontweight="bold", color=edge, pad=10)
+        ax.grid(axis="y", alpha=0.25)
+        ax.set_yticks([0, 20, 40, 60, 80, 100])
+    axes[0].set_ylabel("ставка успеха, % (формула B)", fontsize=10)
+
+    # Каллауты про катастрофическую цену ошибки в обоих мирах
+    cat_yes = _rate_and_n([r for r in rows if r["axis4_gate"] == "yes"
+                           and r["axis4_blast_radius"] == "catastrophic"])
+    cat_no = _rate_and_n([r for r in rows if r["axis4_gate"] == "no"
+                          and r["axis4_blast_radius"] == "catastrophic"])
+    assert (cat_yes[2], cat_yes[3]) == (8, 0) and (cat_no[2], cat_no[3]) == (1, 28)
+    axes[0].annotate(
+        f"катастрофическая цена ошибки,\nно гейт есть: {cat_yes[2]}/{cat_yes[1]} = 100%",
+        xy=(3.27, 100), xytext=(2.25, 72), fontsize=9.5, color=WOW2_GREEN,
+        fontweight="bold", ha="center",
+        arrowprops=dict(arrowstyle="->", color=WOW2_GREEN, lw=1.3),
+    )
+    axes[1].annotate(
+        f"та же катастрофическая цена,\nгейта нет: {cat_no[2]}/{cat_no[1]} = "
+        + f"{cat_no[0]:.1f}%".replace(".", ","),
+        xy=(3.27, cat_no[0]), xytext=(2.4, 55), fontsize=9.5, color=WOW2_RED,
+        fontweight="bold", ha="center",
+        arrowprops=dict(arrowstyle="->", color=WOW2_RED, lw=1.3),
+    )
+    axes[1].annotate(
+        "исходная гипотеза курса (ось 2):\nвесь её сигнал — только в этом мире",
+        xy=(2, 26.7), xytext=(1.25, 88), fontsize=9.0, color=WOW2_ACCENT, ha="center",
+        arrowprops=dict(arrowstyle="->", color=WOW2_ACCENT, lw=1.2),
+    )
+    axes[0].annotate(
+        "ось 2 при гейте: разброс 7,1 п.п.\n(93,9-100% — предсказывать нечего)",
+        xy=(2, 93.9), xytext=(1.3, 62), fontsize=9.0, color=WOW2_ACCENT, ha="center",
+        arrowprops=dict(arrowstyle="->", color=WOW2_ACCENT, lw=1.2),
+    )
+
+    fig.suptitle(
+        "Два мира одного корпуса: при действующем гейте оси курса перестают предсказывать",
+        fontsize=15, fontweight="bold",
+    )
+    fig.text(
+        0.5, 0.012,
+        "Формула (B) = успех/(успех+провал); полый маркер — тонкая ячейка (успех+провал < 10), её"
+        " цифру не читать буквально. Гейт=есть × экстремальная неопределённость: 0 кейсов с"
+        " исходом — точки нет честно. n по статусу гейта: есть=143, нет=112 строк корпуса.",
+        ha="center", fontsize=7.6, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.035, 1, 0.94))
+    fig.savefig(HERE / "chart-wow2-dva-mira.png", dpi=150)
+    plt.close(fig)
+    print("chart_wow2_dva_mira saved")
+
+
+# ---------------------------------------------------------------------------
+# WOW2-2: «Тот же инструмент — герой и виновник». Шесть вендоров, у каждого в
+# корпусе есть и документированный успех, и документированный провал. Бренд не
+# разделяет исходы; статус гейта — разделяет (во всех 12 карточках исход
+# совпадает со статусом гейта либо гейт не указан). Чистые карточки, без формулы.
+# ---------------------------------------------------------------------------
+def chart_wow2_geroy_i_vinovnik(rows):
+    # (бренд, id успеха, короткая подпись успеха, id провала, короткая подпись провала, доп.строка)
+    pairs = [
+        ("Claude / Anthropic",
+         "L09-009", "На Марсе: планирование маршрута ровера",
+         "L14-048", "На ноутбуке: удаление БД за 9 секунд\n(Cursor + Claude Opus 4.6 + PocketOS)",
+         "+ ещё 2 провала Claude Code без гейта (L04-006, L14-034)"),
+        ("AWS Kiro",
+         "L04-002", "Target identification (life sciences)",
+         "L04-023", "Инцидент простоя (декабрь 2025)",
+         "+ второй провал без гейта: FT-репорт (L14-043)"),
+        ("Amazon",
+         "L13-003", "Склад: робот Proteus (AMR)",
+         "L05-032", "Магазин: Just Walk Out — свёрнут",
+         None),
+        ("Google",
+         "L04-017", "Big Sleep: предотвращённый SQLite zero-day",
+         "L04-004", "Gemini CLI: удаление файлов пользователя",
+         None),
+        ("IBM Watson",
+         "L04-028", "ContextQA: покрытие тестами 20%→80%",
+         "L05-004", "Watson for Oncology (MSK) — свёрнут",
+         "+ Watson Health закрыт (L11-021, гейт неприменим)"),
+        ("John Deere",
+         "L10-001", "See & Spray: селективный гербицид",
+         "L10-049", "FTC v. Deere (право на ремонт)",
+         None),
+    ]
+    gate_badge = {
+        "yes": ("ГЕЙТ ЕСТЬ", WOW2_GREEN),
+        "no": ("ГЕЙТА НЕТ", WOW2_RED),
+        "not-applicable": ("ГЕЙТ НЕПРИМЕНИМ", "#D98C44"),
+        "unclear": ("ГЕЙТ НЕ УКАЗАН", "#888888"),
+    }
+
+    fig, ax = plt.subplots(figsize=(15, 10.2))
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, len(pairs) * 1.5 + 1.9)
+    ax.axis("off")
+
+    n_rows = len(pairs)
+    gate_yes_succ = 0
+    gate_absent_fail = 0
+    for i, (brand, sid, s_label, fid, f_label, extra) in enumerate(pairs):
+        y = (n_rows - 1 - i) * 1.5 + 1.6
+        srow, frow = _row_by_id(rows, sid), _row_by_id(rows, fid)
+        assert srow["outcome"] == "success", sid
+        assert frow["outcome"] == "failure", fid
+        if srow["axis4_gate"] == "yes":
+            gate_yes_succ += 1
+        if frow["axis4_gate"] in ("no", "not-applicable"):
+            gate_absent_fail += 1
+        ax.text(5.0, y + 0.52, brand, ha="center", fontsize=12.5, fontweight="bold",
+                color="#21295C")
+        for x0, row, label, rid, color, bg in [
+            (0.25, srow, s_label, sid, WOW2_GREEN, "#F2F8F2"),
+            (5.35, frow, f_label, fid, WOW2_RED, "#FBF2F3"),
+        ]:
+            ax.add_patch(plt.Rectangle((x0, y - 0.62), 4.4, 1.08, facecolor=bg,
+                                       edgecolor=color, lw=1.6,
+                                       zorder=2, joinstyle="round"))
+            ax.text(x0 + 0.18, y + 0.18, label, fontsize=9.6, va="top",
+                    color="#222222", zorder=3)
+            btext, bcolor = gate_badge[row["axis4_gate"]]
+            ax.text(x0 + 0.18, y - 0.49, btext, fontsize=8.3, fontweight="bold",
+                    color="white", zorder=4,
+                    bbox=dict(boxstyle="round,pad=0.25", facecolor=bcolor,
+                              edgecolor="none"))
+            ax.text(x0 + 4.22, y - 0.49, rid, fontsize=7.0, color="#999999",
+                    ha="right", zorder=4)
+        if extra:
+            ax.text(9.73, y + 0.52, extra, fontsize=7.4, color="#8A5050", ha="right")
+
+    ax.text(2.45, n_rows * 1.5 + 1.62, "УСПЕХ", ha="center", fontsize=13,
+            fontweight="bold", color=WOW2_GREEN)
+    ax.text(7.55, n_rows * 1.5 + 1.62, "ПРОВАЛ", ha="center", fontsize=13,
+            fontweight="bold", color=WOW2_RED)
+
+    assert gate_yes_succ == 5 and gate_absent_fail == 6
+    ax.text(
+        5.0, 0.42,
+        f"Счёт по 12 карточкам: {gate_yes_succ} из 6 успехов — при действующем гейте"
+        f" (шестой — гейт не указан); {gate_absent_fail} из 6 провалов — без действующего гейта.\n"
+        "Ни одной карточки, где исход разошёлся со статусом гейта. Бренд не делит кейсы"
+        " на успех и провал — делит гейт.",
+        ha="center", fontsize=10.5, fontweight="bold", color="#21295C",
+        bbox=dict(boxstyle="round,pad=0.55", facecolor="#EFF3F8", edgecolor="#21295C"),
+    )
+    ax.set_title(
+        "Тот же инструмент — герой и виновник: вопрос не «какой ИИ», а «что стоит между ним и бедой»",
+        fontsize=14.5, fontweight="bold", pad=14,
+    )
+    fig.text(
+        0.5, 0.008,
+        "Карточки — реальные строки реестра (id в углу), исход и статус гейта читаются из"
+        " reestr-reshenij.csv на каждом запуске.\nПары подобраны по вендору: вендоры, у которых в"
+        " корпусе есть и успех, и провал одновременно; это иллюстрация распределения, не"
+        " причинная выборка.",
+        ha="center", fontsize=7.4, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.02, 1, 1))
+    fig.savefig(HERE / "chart-wow2-geroy-i-vinovnik.png", dpi=150)
+    plt.close(fig)
+    print("chart_wow2_geroy_i_vinovnik saved")
+
+
+# ---------------------------------------------------------------------------
+# WOW2-3: «Мёртвая зона» — воронка из трёх вопросов, на дне которой в корпусе
+# нет ни одного успеха: нет гейта -> назван структурный механизм -> высокая/
+# катастрофическая цена ошибки = 78 кейсов, 0 успехов, 68 провалов. Выжившие
+# предыдущей ступени (4 из 138) поимённо — все при дешёвой/средней цене ошибки.
+# ---------------------------------------------------------------------------
+def chart_wow2_mertvaya_zona(rows):
+    stage0 = rows
+    stage1 = [r for r in stage0 if r["axis4_gate"] in ("no", "not-applicable")]
+    stage2 = [r for r in stage1 if _has_named_mechanism(r)]
+    stage3 = [r for r in stage2 if r["axis4_blast_radius"] in ("high", "catastrophic")]
+    stages = [
+        ("Весь корпус", stage0),
+        ("нет действующего гейта\n(«нет» или «структурно неприменим»)", stage1),
+        ("+ назван структурный механизм\n(любой из U1-U4 / F-A / F-B / F-C)", stage2),
+        ("+ высокая или катастрофическая\nцена ошибки", stage3),
+    ]
+    stats = [(_rate_and_n(sub), len(sub)) for _, sub in stages]
+    ((r0, d0, s0, f0), n0), ((r1, d1, s1, f1), n1), ((r2, d2, s2, f2), n2), (
+        (r3, d3, s3, f3), n3) = stats
+    assert (n0, n1, n2, n3) == (421, 232, 138, 78)
+    assert (s0, f0) == (108, 137) and (s1, f1) == (20, 132)
+    assert (s2, f2) == (4, 96) and (s3, f3) == (0, 68)
+
+    survivors = [r for r in stage2 if r["outcome"] == "success"]
+    assert len(survivors) == 4
+    surv_labels = {
+        "L10-018": "Carbon Robotics LaserWeeder\n(лазерная прополка)",
+        "L13-025": "Starship Technologies\n(роботы-курьеры)",
+        "L15-021": "NotebookLM (Google)",
+        "L15-022": "Elicit (обзор литературы)",
+    }
+    br_ru = {"low": "цена ошибки: низкая", "medium": "цена ошибки: средняя"}
+
+    fig, ax = plt.subplots(figsize=(15.5, 9.6))
+    ax.set_xlim(0, 12.2)
+    ax.set_ylim(-0.4, 9.6)
+    ax.axis("off")
+
+    cx = 3.3
+    max_w = 5.4
+    ys = [9.0, 6.8, 4.6, 2.4]
+    heights = 1.5
+    colors = ["#9FB4C7", "#D98C44", "#C96A5A", WOW2_RED]
+    widths = [max_w * n / 421 for n in (n0, n1, n2, n3)]
+    for i, ((label, _sub), ((rate, denom, s, f), n), w, col, y) in enumerate(
+            zip(stages, stats, widths, colors, ys)):
+        ax.add_patch(plt.Rectangle((cx - w / 2, y - heights), w, heights,
+                                   facecolor=col, edgecolor="white", lw=2, zorder=2))
+        if i < 3:
+            w2 = widths[i + 1]
+            ax.fill([cx - w / 2, cx + w / 2, cx + w2 / 2, cx - w2 / 2],
+                    [y - heights, y - heights, ys[i + 1], ys[i + 1]],
+                    color=col, alpha=0.25, zorder=1)
+        ax.text(cx, y - heights / 2, f"n = {n}", ha="center", va="center",
+                fontsize=13, fontweight="bold", color="white", zorder=3)
+        ax.text(cx - max_w / 2 - 0.15, y - heights / 2, label, ha="right",
+                va="center", fontsize=9.8, color="#333333")
+        rate_txt = ("успех " + f"{rate:.1f}%".replace(".", ",")
+                    + f"  ({s} из {denom} с исходом)")
+        if i == 3:
+            rate_txt = f"успехов: 0 из {denom} с исходом\n({f} провалов, {n - denom} частичных/неопр.)"
+        ax.text(cx + max_w / 2 + 0.15, y - heights / 2, rate_txt, ha="left",
+                va="center", fontsize=10.5,
+                fontweight="bold" if i == 3 else "normal",
+                color=WOW2_RED if i == 3 else "#333333")
+
+    ax.annotate(
+        "44,1% → 13,2% → 4,0% → 0%:\nкаждый из трёх вопросов\nрежет ставку успеха в 3-4 раза",
+        xy=(cx + 0.4, 1.6), xytext=(1.25, 0.25), fontsize=10.5, fontweight="bold",
+        color="#21295C", ha="center",
+        arrowprops=dict(arrowstyle="->", color="#21295C", lw=1.3),
+    )
+
+    # Выжившие ступени 3 (4 из 138) — поимённо, с их ценой ошибки
+    bx = 9.55
+    ax.text(bx + 1.2, 6.85, "4 выживших ступени «механизм назван»\n— все при дешёвой ошибке:",
+            fontsize=9.8, fontweight="bold", color=WOW2_GREEN, ha="center")
+    for j, r in enumerate(sorted(survivors, key=lambda x: x["id"])):
+        yy = 6.05 - j * 1.12
+        ax.add_patch(plt.Rectangle((bx, yy - 0.86), 2.4, 0.96, facecolor="#F2F8F2",
+                                   edgecolor=WOW2_GREEN, lw=1.2, zorder=2))
+        ax.text(bx + 0.1, yy - 0.06, surv_labels[r["id"]], fontsize=8.0,
+                va="top", color="#222222", zorder=3)
+        ax.text(bx + 0.1, yy - 0.74, br_ru[r["axis4_blast_radius"]], fontsize=7.4,
+                color=WOW2_GREEN, fontweight="bold", zorder=3)
+        ax.text(bx + 2.32, yy - 0.74, r["id"], fontsize=6.6, color="#999999",
+                ha="right", zorder=3)
+    ax.annotate("", xy=(bx - 0.08, 4.4), xytext=(cx + widths[2] / 2 + 0.1, 3.8),
+                arrowprops=dict(arrowstyle="->", color=WOW2_GREEN, lw=1.2, ls="--"))
+
+    ax.set_title(
+        "Мёртвая зона корпуса: три вопроса — и из 78 кейсов не выжил ни один",
+        fontsize=15, fontweight="bold", pad=12,
+    )
+    fig.text(
+        0.5, 0.012,
+        "Ставки — формула (B) = успех/(успех+провал); n ступени — все строки, включая частичные/"
+        "неопределённые. Ступень 2 объединяет «гейта нет» (112) и «гейт структурно неприменим»"
+        " (120)\n— у 78 кейсов дна это не непоставленный чекпойнт, а часто решение, к которому"
+        " чекпойнт не прикрутить. Распределение, не причинность: корпус смещён правилом >=30%"
+        " провального контента (файл 10 §6).",
+        ha="center", fontsize=7.4, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    fig.savefig(HERE / "chart-wow2-mertvaya-zona.png", dpi=150)
+    plt.close(fig)
+    print("chart_wow2_mertvaya_zona saved")
+
+
+# ---------------------------------------------------------------------------
+# WOW2-4: «Закон старше ИИ» — хроника катастрофических провалов без гейта,
+# 1981-2026. Самая смертельная клетка реестра (нет гейта × катастрофическая
+# цена) не ИИ-клетка: в ней Hyatt Regency (1981), Mars Climate Orbiter (1999),
+# Knight Capital (2012), Facebook BGP (2021) — реестр сознательно держит их как
+# структурные контрпримеры (README реестра, ограничение 5). ИИ не создал закон —
+# он ускорил и участил его нарушение (сгущение точек в 2024-2026).
+# ---------------------------------------------------------------------------
+def chart_wow2_zakon_starshe_ii(rows):
+    import re as _re
+
+    cell = [r for r in rows if r["outcome"] == "failure"
+            and r["axis4_blast_radius"] == "catastrophic"
+            and r["axis4_gate"] in ("no", "not-applicable")]
+    assert len(cell) == 37
+    # Дубли одного инцидента между лекциями (Replit и PocketOS/Cursor размечены
+    # и в L04, и в L14) — на шкалу идёт одна точка, дубль честно назван в сноске.
+    dup_ids = {"L14-047", "L14-048"}
+    non_ai_ids = {"L06-023", "L06-021", "L14-045", "L14-046"}  # README реестра, огранич. 5
+    short = {
+        "L04-004": "Gemini CLI: удаление файлов",
+        "L04-022": "Replit: прод-БД в code-freeze",
+        "L04-024": "Cursor+Claude: БД за 9 секунд",
+        "L06-021": "Mars Climate Orbiter",
+        "L06-023": "Hyatt Regency: обрушение переходов",
+        "L11-004": "Boeing 737 MAX 9: door plug",
+        "L11-020": "GE Predix: закрыт",
+        "L11-021": "IBM Watson Health: закрыт",
+        "L11-022": "Foxconn Wisconsin",
+        "L13-013": "Starsky Robotics: закрыта",
+        "L13-014": "Argo AI: закрыта",
+        "L13-015": "Embark Trucks: закрыта",
+        "L13-017": "TuSimple: делистинг",
+        "L13-030": "Uber Tempe: гибель пешехода",
+        "L14-001": "CrowdStrike: глобальный сбой",
+        "L14-002": "AT&T: обвал сети США",
+        "L14-003": "Rogers: обвал сети Канады",
+        "L14-041": "Cloudflare: сбой",
+        "L14-042": "AWS DynamoDB: DNS-сбой",
+        "L14-045": "Knight Capital",
+        "L14-046": "Facebook BGP: глобальный сбой",
+        "L14-069": "Arup: deepfake-CFO, $25,6M",
+    }
+    dated, undated = [], []
+    for r in cell:
+        if r["id"] in dup_ids:
+            continue
+        years = _re.findall(r"(?:19[5-9]\d|20[0-2]\d)", r["case_name"])
+        if years:
+            dated.append((int(years[-1]), r))  # конец диапазона = год исхода
+        else:
+            undated.append(r)
+    assert len(dated) == 22 and len(dated) + len(undated) + len(dup_ids) == 37
+    dated.sort(key=lambda t: (t[0], t[1]["id"]))
+    recent = sum(1 for y, _ in dated if y >= 2024)
+
+    # Разорванная ось времени: слева сжатые 1978-2017, справа растянутые 2017.5-2028 —
+    # иначе 19 современных точек нечитаемы; разрыв показан явно (косые штрихи + свои тики).
+    fig, (ax1, ax2) = plt.subplots(
+        1, 2, figsize=(16.5, 9.2), sharey=True,
+        gridspec_kw={"width_ratios": [1, 2.1], "wspace": 0.015},
+    )
+    panels = [(ax1, 1978.0, 2017.5), (ax2, 2017.5, 2028.2)]
+
+    def draw_point(ax, y, r, lane):
+        is_ai = r["id"] not in non_ai_ids
+        color = WOW2_RED if is_ai else "#5B6472"
+        marker = "o" if is_ai else "s"
+        ax.plot([y, y], [0, lane - 0.13], color=color, lw=0.7, alpha=0.35, zorder=1)
+        ax.plot(y, lane, marker, ms=8.5, color=color, zorder=3)
+        ha = "center"
+        dx = 0
+        if y >= 2025.7:
+            ha, dx = "right", 5
+        elif y <= 1982:
+            ha, dx = "left", -5
+        ax.annotate(short[r["id"]], (y, lane), textcoords="offset points",
+                    xytext=(dx, 8), ha=ha, fontsize=7.9, color=color,
+                    fontweight="bold" if not is_ai else "normal")
+
+    # Полосы (lane) подбираются жадно: в полосу нельзя ставить подпись ближе
+    # min_gap лет к предыдущей в той же полосе; расстояния — в годах ЭТОЙ панели.
+    for ax, x0, x1 , in [(p[0], p[1], p[2]) for p in panels]:
+        pts = [(y, r) for y, r in dated if x0 <= y < x1]
+        lanes = [0.7 + 0.52 * k for k in range(12)] if ax is ax2 else [1.4, 2.9, 4.4]
+        min_gap = 2.4 if ax is ax2 else 10.0
+        last_in_lane = {}
+        for y, r in pts:
+            best = max(lanes, key=lambda ln: min(
+                (abs(y - prev) for prev in last_in_lane.get(ln, [])), default=1e9))
+            gap = min((abs(y - prev) for prev in last_in_lane.get(best, [])), default=1e9)
+            if gap < min_gap:
+                # все полосы заняты рядом — берём наименее конфликтную (уже выбрана)
+                pass
+            last_in_lane.setdefault(best, []).append(y)
+            draw_point(ax, y, r, best)
+        ax.axhline(0, color="#333333", lw=1.2)
+        ax.set_xlim(x0, x1)
+        ax.set_ylim(-1.9, 7.6)
+        ax.set_yticks([])
+        ax.grid(axis="x", alpha=0.18)
+    ax1.set_xticks([1981, 1990, 1999, 2012])
+    ax2.set_xticks([2018, 2020, 2022, 2024, 2026])
+    for ax in (ax1, ax2):
+        ax.tick_params(axis="x", labelsize=10)
+    # Явный разрыв оси
+    ax1.spines["right"].set_visible(False)
+    ax2.spines["left"].set_visible(False)
+    for ax, x in [(ax1, 1), (ax2, 0)]:
+        ax.plot([x, x], [-0.013, 0.013], transform=ax.transAxes, color="#333333",
+                lw=1.2, clip_on=False)
+        ax.plot([x - 0.006, x + 0.006], [-0.02, 0.02], transform=ax.transAxes,
+                color="#333333", lw=1.2, clip_on=False)
+
+    # Сгущение: счёт точек по эпохам под осью (границы эпох — целые годы, не
+    # координаты плашек, чтобы счёт не зависел от отрисовки)
+    era_counts = []
+    for ax, bx0, bx1, yr0, yr1, lab in [
+            (ax1, 1978.6, 2016.9, 1981, 2017, "1981-2017"),
+            (ax2, 2017.8, 2023.4, 2018, 2023, "2018-2023"),
+            (ax2, 2023.6, 2027.6, 2024, 2026, "2024-2026")]:
+        cnt = sum(1 for y, _ in dated if yr0 <= y <= yr1)
+        era_counts.append(cnt)
+        ax.add_patch(plt.Rectangle((bx0, -1.62), bx1 - bx0, 1.12,
+                                   facecolor="#F4E9EA", edgecolor=WOW2_RED, lw=1.0))
+        ax.text((bx0 + bx1) / 2, -1.06, f"{lab}:\n{cnt} катастроф", ha="center",
+                va="center", fontsize=9.3, fontweight="bold", color=WOW2_RED)
+    assert sum(era_counts) == len(dated) and era_counts[2] == recent == 11
+
+    ax1.plot([], [], "o", color=WOW2_RED, label="с ИИ-компонентом")
+    ax1.plot([], [], "s", color="#5B6472", label="без ИИ / до ИИ (контрпримеры реестра)")
+    ax1.legend(loc="upper right", fontsize=9.3, framealpha=0.9)
+
+    ax1.text(
+        1994.0, 6.4,
+        "одна и та же клетка реестра:\nобрушение переходов 1981 года\nи удаление БД за 9 секунд"
+        " в 2026-м.\nЗакон не про ИИ — про отсутствие гейта;\nИИ ускорил и участил нарушение"
+        f"\n({recent} из {len(dated)} датированных — в 2024-2026)",
+        fontsize=10.3, fontweight="bold", color="#21295C", ha="center", va="top",
+        bbox=dict(boxstyle="round,pad=0.5", facecolor="#EFF3F8", edgecolor="#21295C"),
+    )
+
+    fig.suptitle(
+        "Закон старше ИИ: 45 лет катастроф в одной клетке «гейта нет × цена катастрофическая»",
+        fontsize=15, fontweight="bold",
+    )
+    fig.text(
+        0.5, 0.012,
+        f"Клетка: провал × катастрофический blast radius × гейта нет/неприменим — 37 строк"
+        f" реестра; на шкале {len(dated)} с годом в названии кейса (для диапазонов — год исхода),"
+        f" 2 дубля одного инцидента между лекциями сняты (L14-047≡L04-022, L14-048≡L04-024);\n"
+        f"{len(undated)} без даты в названии — не на шкале (Tesla 54 fatalities NHTSA, Babylon,"
+        " Zillow Offers, Character.AI, Getty и др.). Не-ИИ кейсы — сознательные структурные"
+        " контрпримеры реестра (README, ограничение 5), не шум. Ось времени разорвана на 2017/2018.",
+        ha="center", fontsize=7.3, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.035, 1, 0.945))
+    fig.savefig(HERE / "chart-wow2-zakon-starshe-ii.png", dpi=150)
+    plt.close(fig)
+    print("chart_wow2_zakon_starshe_ii saved")
+
+
+# ---------------------------------------------------------------------------
+# WOW2-5: «Серая зона» — 41,8% корпуса (176 из 421: 86 частичных + 90
+# неопределённых) не входит ни в один «процент успеха» этой линии (формула B
+# выбрасывает их из числителя И знаменателя). Серость распределена неравномерно:
+# 12% (SDLC) — 58% (медицина), т.е. рейтинг отраслей по формуле B — отчасти
+# рейтинг того, кого вообще удаётся измерить. Обе полюсные отрасли заголовка
+# файла 10 («космос 100%» и «медицина 18,2%») — наполовину серые.
+# ---------------------------------------------------------------------------
+def chart_wow2_seraya_zona(rows):
+    total = len(rows)
+    oc_all = Counter(r["outcome"] for r in rows)
+    gray_total = oc_all["partial"] + oc_all["undetermined"]
+    assert total == 421 and gray_total == 176 and oc_all["partial"] == 86
+
+    industries = sorted(set(r["industry"] for r in rows))
+    data = []
+    for ind in industries:
+        sub = [r for r in rows if r["industry"] == ind]
+        oc = Counter(r["outcome"] for r in sub)
+        gray = oc["partial"] + oc["undetermined"]
+        data.append((ind, oc, len(sub), gray / len(sub)))
+    data.sort(key=lambda t: t[3])  # серые сверху при отрисовке снизу вверх
+
+    seg_order = ["partial", "undetermined", "failure", "success"]
+    seg_colors = {"partial": "#F0AB00", "undetermined": "#B0B0B0",
+                  "failure": "#D8A3AA", "success": "#A8CBA9"}
+
+    fig, ax = plt.subplots(figsize=(15.5, 9.4))
+    ypos = list(range(len(data)))
+    for yi, (ind, oc, n, gshare) in zip(ypos, data):
+        left = 0.0
+        for seg in seg_order:
+            w = 100.0 * oc[seg] / n
+            ax.barh(yi, w, left=left, color=seg_colors[seg], edgecolor="white",
+                    height=0.72, lw=0.8)
+            if w > 5.5:
+                ax.text(left + w / 2, yi, str(oc[seg]), ha="center", va="center",
+                        fontsize=8.2,
+                        color="#333333" if seg != "undetermined" else "#444444")
+            left += w
+        ax.text(101.2, yi, f"{gshare * 100:.0f}% серого (n={n})", va="center",
+                fontsize=9.0, fontweight="bold",
+                color="#8A6A00" if gshare >= 0.5 else "#666666")
+    # Корпус целиком — отдельной полосой сверху
+    yc = len(data) + 1.0
+    left = 0.0
+    for seg in seg_order:
+        w = 100.0 * oc_all[seg] / total
+        ax.barh(yc, w, left=left, color=seg_colors[seg], edgecolor="white",
+                height=0.72, lw=0.8)
+        ax.text(left + w / 2, yc, f"{OUTCOME_LABELS[seg]}: {oc_all[seg]}",
+                ha="center", va="center", fontsize=8.6, fontweight="bold")
+        left += w
+    ax.text(101.2, yc, f"41,8% серого (n={total})", va="center", fontsize=9.6,
+            fontweight="bold", color="#8A6A00")
+    ax.set_yticks(ypos + [yc])
+    ax.set_yticklabels([INDUSTRY_LABELS_RU[d[0]] for d in data] + ["ВЕСЬ КОРПУС"],
+                       fontsize=9.6)
+    ax.get_yticklabels()[-1].set_fontweight("bold")
+    ax.set_xlim(0, 126)
+    ax.set_ylim(-5.6, yc + 0.9)
+    ax.set_xticks([0, 25, 50, 75, 100])
+    ax.text(50, -1.25, "доля строк отрасли, % (все 4 исхода, сумма = 100%)",
+            ha="center", fontsize=9.3, color="#444444")
+    ax.grid(axis="x", alpha=0.2)
+
+    med = next(d for d in data if d[0] == "medical-decision")
+    assert (med[1]["success"], med[1]["partial"], med[1]["failure"]) == (2, 10, 9)
+    # Медицина по двум уже существующим формулам линии (не новая формула!):
+    med_b = 100 * 2 / (2 + 9)
+    med_c = 100 * (2 + 0.5 * 10) / (2 + 10 + 9)
+    boxes = [
+        ("Медицина — «худшая отрасль» (18,2%)?",
+         "На деле не проваливается, а наполовину\nработает: частичных (10) больше, чем\n"
+         "провалов (9); успехов — 2 из 26 строк.\nПо формуле (C) файла 07 та же медицина —\n"
+         + f"{med_c:.1f}%".replace(".", ",") + " — вдвое выше её же "
+         + f"{med_b:.1f}%".replace(".", ",") + " по (B)",
+         "#8A6A00", 2.5),
+        ("Космос — «лучшая отрасль» (100%)?",
+         "Тоже наполовину серая: заголовок\n«100% успеха» держится на 17 строках\nиз 32"
+         " (6 частичных + 9 неопределённых\nне входят в формулу вообще)",
+         "#555555", 44.5),
+        ("SDLC — самая «честная» цифра корпуса",
+         "Измерено 88% строк отрасли (серых\nвсего 12%) — его низкие 24,1% успеха\n"
+         "заработаны на почти полном корпусе,\nа не на половине",
+         "#555555", 86.5),
+    ]
+    for title_t, body, color, x0 in boxes:
+        ax.text(x0, -2.1, title_t, fontsize=9.4, fontweight="bold", color=color,
+                va="top", ha="left")
+        ax.text(x0, -2.85, body, fontsize=8.6, color=color, va="top", ha="left")
+
+    ax.set_title(
+        "Серая зона: 176 из 421 кейсов (41,8%) не входят ни в один «процент успеха» этой линии",
+        fontsize=14.5, fontweight="bold", pad=12,
+    )
+    fig.text(
+        0.5, 0.012,
+        "Формула (B) = успех/(успех+провал) выбрасывает частичные и неопределённые исходы из"
+        " числителя И знаменателя — все ставки раундов 3-7 посчитаны по 245 строкам из 421.\n"
+        "Сравнение (B) и (C) для медицины — две УЖЕ документированные формулы линии (файл 10 §0),"
+        " не новая четвёртая. Сортировка отраслей — по доле серого.",
+        ha="center", fontsize=7.4, color="#555555",
+    )
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    fig.savefig(HERE / "chart-wow2-seraya-zona.png", dpi=150)
+    plt.close(fig)
+    print("chart_wow2_seraya_zona saved")
+
+
 if __name__ == "__main__":
     rows = load_rows()
     chart_donut_axisA_axisB(rows)
@@ -1533,3 +2199,8 @@ if __name__ == "__main__":
     chart_industry_success_rate(rows)
     chart_tornado_axis_ranking(rows)
     chart_mechanism_detail(rows)
+    chart_wow2_dva_mira(rows)
+    chart_wow2_geroy_i_vinovnik(rows)
+    chart_wow2_mertvaya_zona(rows)
+    chart_wow2_zakon_starshe_ii(rows)
+    chart_wow2_seraya_zona(rows)

@@ -23,6 +23,19 @@ hybrid 0.84/0.94) — если не совпадает, воспроизведе
 ВАЖНО про k. RRF С10 использует k=60. Хочет же: веса w/(1-w) применяются
 МУЛЬТИПЛИКАТИВНО к каждому терму RRF-суммы (стандартная форма weighted RRF —
 `w * 1/(k+rank_kw) + (1-w) * 1/(k+rank_vec)`), без изменения самого k.
+
+Шаг 4 (issue #345, находка владельца 2026-11-20): третье действие с n42/n46 — «решение
+без модели» — было анонсировано залу в голосовании, но никогда не измерено и не
+попало в свод n47. Эвристика выбрана буквально по тексту слайда n42/n46: «простой
+признак в самом тексте вопроса (например, есть ли в нём число или код)» —
+`re.search(r"\d", question)`, а не поле `lexical_class` (оно про лексическое
+перекрытие вопроса с золотым документом, не про сам текст вопроса — другое
+измерение, использовать его напрямую было бы нечестной заменой того, что описано
+на слайде). На этих 50 вопросах `has_digit(question)` даёт тот же бинарный разрез,
+что и `lexical_class_heuristic == "exact_match"` (16/16 совпадение, 0 расходящихся) —
+совпадение данных этого корпуса, а не эквивалентность эвристик по определению.
+Та же симметричная пара весов 0.75/0.25, что и у jev — меняется только то, ЧТО
+выбирает между двумя весами.
 """
 import json
 import re
@@ -93,8 +106,17 @@ def rank_of(ranked_ids, gold_id):
     return ranked_ids.index(gold_id) + 1 if gold_id in ranked_ids else None
 
 
+def has_number_or_code(question):
+    """Буквальная эвристика «без модели» с n42/n46: число или код в самом тексте
+    вопроса, без единого вызова какой-либо модели."""
+    return bool(re.search(r"\d", question))
+
+
 def main():
-    data = json.load(open(HERE.parent / "raw" / "case3-embedded-reproduced.json", encoding="utf-8"))
+    # Файл лежит рядом со скриптом, в measure/ (не в raw/ — путь ниже исправлен
+    # относительно исходной версии скрипта, которая на эту релокацию не была
+    # обновлена и падала с FileNotFoundError при реальном запуске).
+    data = json.load(open(HERE / "case3-embedded-reproduced.json", encoding="utf-8"))
     corpus = data["corpus_500"]
     questions = data["questions"]
 
@@ -126,6 +148,13 @@ def main():
         jev_confidence = jev_call["confidence"] if jev_call else None
         w_kw = W_EXACT if jev_choice == "exact_fact" else (W_SEMANTIC if jev_choice == "semantic" else 0.5)
         dynamic_hybrid = rrf_fuse_weighted(kw_rank, vec_rank, w_kw)
+
+        # Действие 2 с n42/n46 — «решение без модели»: правило по тексту вопроса,
+        # без единого обращения к модели.
+        heuristic_has_number = has_number_or_code(q["question"])
+        heuristic_choice = "exact_fact" if heuristic_has_number else "semantic"
+        w_kw_heuristic = W_EXACT if heuristic_has_number else W_SEMANTIC
+        heuristic_hybrid = rrf_fuse_weighted(kw_rank, vec_rank, w_kw_heuristic)
 
         # "кто реально выиграл" на этом вопросе (операционально, по recall@1 фиксированных keyword/vector)
         kw_win = recall_at_k(kw_rank, gold, 1) == 1
@@ -176,6 +205,13 @@ def main():
                 "recall@1": recall_at_k(dynamic_hybrid, gold, 1),
                 "recall@3": recall_at_k(dynamic_hybrid, gold, 3),
             },
+            "dynamic_heuristic_weighted": {
+                "heuristic_choice": heuristic_choice,
+                "w_keyword_used": w_kw_heuristic,
+                "rank_of_gold": rank_of(heuristic_hybrid, gold),
+                "recall@1": recall_at_k(heuristic_hybrid, gold, 1),
+                "recall@3": recall_at_k(heuristic_hybrid, gold, 3),
+            },
         })
 
     n = len(results)
@@ -200,6 +236,22 @@ def main():
         "dynamic_jev_weighted": {
             "recall@1": round(sum(r["dynamic_jev_weighted"]["recall@1"] for r in results) / n, 3),
             "recall@3": round(sum(r["dynamic_jev_weighted"]["recall@3"] for r in results) / n, 3),
+        },
+        "dynamic_heuristic_weighted": {
+            "recall@1": round(sum(r["dynamic_heuristic_weighted"]["recall@1"] for r in results) / n, 3),
+            "recall@3": round(sum(r["dynamic_heuristic_weighted"]["recall@3"] for r in results) / n, 3),
+            "note": "Действие 2 с n42/n46 — «решение без модели»: w_keyword=0.75 если в тексте "
+                    "вопроса есть цифра (re.search(r'\\d', question)), иначе 0.25. Без единого "
+                    "вызова модели.",
+        },
+        "heuristic_choice_vs_lexical_class_heuristic": {
+            "agree": sum(1 for r in results if
+                         (r["dynamic_heuristic_weighted"]["heuristic_choice"] == "exact_fact" and r["lexical_class_heuristic"] == "exact_match") or
+                         (r["dynamic_heuristic_weighted"]["heuristic_choice"] == "semantic" and r["lexical_class_heuristic"] != "exact_match")),
+            "n_total": n,
+            "note": "Насколько буквальная эвристика «цифра в тексте вопроса» совпадает с "
+                    "lexical_class (exact_match vs остальное) на этом корпусе — не определение, "
+                    "совпадение данных.",
         },
         "jev_classification_vs_lexical_class_heuristic": {
             "agree": sum(1 for r in results if

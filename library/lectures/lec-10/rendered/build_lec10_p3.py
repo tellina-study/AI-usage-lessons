@@ -282,34 +282,46 @@ def build_part3(prs, H):
     # Left column — «Железо» (issue #340 owner follow-up 2026-11-20: реальное фото устройства
     # вместо родового иконки «radar» — официальный product cutout из брошюры Allflex/MSD
     # SenseHub, та самая «ошейник-сенсор», которую описывает текст справа).
+    # v2 (owner follow-up 2026-11-20, round 2 — «увеличь фото, сейчас пятно размером с
+    # иконку»): фото было 0.75×0.55in — на готовом рендере неразличимо. Увеличено ×2.1
+    # по высоте (0.75→1.6in) и колонка перекомпонована вокруг него как hero-элемента:
+    # заголовок — отдельной строкой сверху, фото — крупно, текст про три сигнала — сбоку
+    # от фото (а не над мелкой картинкой, как раньше), батарея и канал передачи — ниже.
     ocean_box(s, lx, col_y, col_w, col_h, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, lx + 0.3, col_y + 0.15, col_w - 0.6, 0.38, "Железо — ошейник-сенсор",
+             size=16, bold=True, color=DEEP)
+
     ip = ASSETS / "photos" / "p23c-sensehub-collar-device.jpg"
-    _dev_h = 0.75
+    _dev_h = 1.60
     _dev_w = _dev_h * (324 / 445)  # native AR of product cutout — no crop needed, no stretch
+    _dev_x = lx + 0.3
+    _dev_y = col_y + 0.58
     if ip.exists():
         # Source photo has a solid black studio backdrop (not transparency) — a thin white
         # mat behind it reads as a deliberate framed product shot, not a stray black square
         # against the card's light-tint fill.
-        ocean_box(s, lx + 0.25 - 0.06, col_y + 0.20 - 0.06, _dev_w + 0.12, _dev_h + 0.12,
+        ocean_box(s, _dev_x - 0.07, _dev_y - 0.07, _dev_w + 0.14, _dev_h + 0.14,
                   fill=WHITE, stroke=LIGHT, stroke_pt=1.0, radius_pt=4.0)
-        add_image(s, ip, lx + 0.25, col_y + 0.20, w=_dev_w, h=_dev_h)
-    text_box(s, lx + 1.0, col_y + 0.28, col_w - 1.2, 0.5, "Железо — ошейник-сенсор",
-             size=16, bold=True, color=DEEP)
-    text_box(s, lx + 0.3, col_y + 1.0, col_w - 0.6, 0.6,
-             "Акселерометр + температурный датчик + position-tracking — три измеряемых сигнала",
-             size=11.5, color=DEEP, italic=True, line_spacing=1.25)
+        add_image(s, ip, _dev_x, _dev_y, w=_dev_w, h=_dev_h)
+    _txt_x = _dev_x + _dev_w + 0.16 + 0.20
+    text_box(s, _txt_x, _dev_y, col_w - (_txt_x - lx) - 0.2, _dev_h,
+             "Акселерометр + температурный датчик + position-tracking — "
+             "три измеряемых сигнала",
+             size=12.5, color=DEEP, italic=True, line_spacing=1.3,
+             anchor=MSO_ANCHOR.MIDDLE)
 
+    _after_photo_y = _dev_y + _dev_h + 0.15
     ip2 = ASSETS / "icons" / "zap-48.png"
     if ip2.exists():
-        add_image(s, ip2, lx + 0.3, col_y + 1.72, w=0.4, h=0.4)
-    text_box(s, lx + 0.82, col_y + 1.68, col_w - 1.1, 0.55,
+        add_image(s, ip2, lx + 0.3, _after_photo_y, w=0.38, h=0.38)
+    text_box(s, lx + 0.80, _after_photo_y - 0.04, col_w - 1.1, 0.5,
              "Батарея — 5-7 лет работы без замены",
-             size=12.5, bold=True, color=GOLD, line_spacing=1.2)
+             size=12.5, bold=True, color=GOLD, line_spacing=1.15)
 
-    text_box(s, lx + 0.3, col_y + 2.35, col_w - 0.6, 0.85,
+    text_box(s, lx + 0.3, _after_photo_y + 0.48, col_w - 0.6, 0.48,
              "Канал передачи данных с фермы в облако — в открытых источниках "
              "Merck/Allflex не детализирован (честно названный пробел)",
-             size=10.5, color=DARK_GREY, italic=True, line_spacing=1.25)
+             size=10, color=DARK_GREY, italic=True, line_spacing=1.2)
 
     ocean_box(s, lx + 0.2, col_y + col_h - 0.95, col_w - 0.4, 0.78, fill=SURFACE, stroke=LIGHT, stroke_pt=1.0)
     text_box(s, lx + 0.35, col_y + col_h - 0.86, col_w - 0.7, 0.6,

@@ -953,29 +953,39 @@ def build_part1_full(prs, H):
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s, "See & Spray — цена ошибок, классика, модель, что переехало", size=20)
 
-    # ① Цена двух ошибок
+    # ① Цена двух ошибок (issue #340 round 3 — высота сжата с 1.1 до 1.0, чтобы
+    # освободить место под реальное фото в шаге ④ ниже, см. тот же канон).
+    # err_y держим на исходных 1.52 (не 1.40!) — round-3-попытка сдвинуть box выше
+    # дала наезд верхней обводки box'а на нижние засечки текста строки «①» (поймано
+    # на PNG-инспекции: засечки/верх букв обрезались линией обводки).
     text_box(s, 0.6, 1.25, 12.13, 0.25,
              "① Цена двух ошибок — в бушелях с акра на базе ≈50,7 bu/А и в п.п. crop injury",
              size=11, bold=True, color=MID)
     err_w = (12.13 - 0.2) / 2
-    ocean_box(s, 0.6, 1.52, err_w, 1.1, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 0.78, 1.6, err_w - 0.3, 0.35, "≈10-14 → 40 бу/акр", size=18, bold=True, color=GOLD)
-    text_box(s, 0.78, 1.97, err_w - 0.3, 0.28, "Пропущенный сорняк (FN)", size=11, bold=True, color=DEEP)
-    text_box(s, 0.78, 2.24, err_w - 0.3, 0.35,
+    err_y = 1.52
+    err_h = 1.00
+    ocean_box(s, 0.6, err_y, err_w, err_h, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.78, err_y + 0.06, err_w - 0.3, 0.32, "≈10-14 → 40 бу/акр", size=17, bold=True, color=GOLD)
+    text_box(s, 0.78, err_y + 0.38, err_w - 0.3, 0.26, "Пропущенный сорняк (FN)", size=10.5, bold=True, color=DEEP)
+    text_box(s, 0.78, err_y + 0.62, err_w - 0.3, 0.35,
              "от базы ≈50,7 бу/акр, умеренная→тяжёлая засорённость; альт. — контроль +10 бу/акр при цене >$70/акр (Миссисипи)",
-             size=8.5, italic=True, color=MID, line_spacing=1.1)
-    ocean_box(s, 0.6 + err_w + 0.2, 1.52, err_w, 1.1, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 0.78 + err_w + 0.2, 1.6, err_w - 0.3, 0.35, "≤5 п.п.", size=18, bold=True, color=GOLD)
-    text_box(s, 0.78 + err_w + 0.2, 1.97, err_w - 0.3, 0.28, "Повреждение культуры (FP, crop injury)", size=11, bold=True, color=DEEP)
-    text_box(s, 0.78 + err_w + 0.2, 2.24, err_w - 0.3, 0.35,
+             size=8.2, italic=True, color=MID, line_spacing=1.08)
+    ocean_box(s, 0.6 + err_w + 0.2, err_y, err_w, err_h, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.78 + err_w + 0.2, err_y + 0.06, err_w - 0.3, 0.32, "≤5 п.п.", size=17, bold=True, color=GOLD)
+    text_box(s, 0.78 + err_w + 0.2, err_y + 0.38, err_w - 0.3, 0.26, "Повреждение культуры (FP, crop injury)", size=10.5, bold=True, color=DEEP)
+    text_box(s, 0.78 + err_w + 0.2, err_y + 0.62, err_w - 0.3, 0.35,
              "targeted ниже broadcast; перевод в бу/$ источники не дают — пробел, не домысел (Avent et al. 2024)",
-             size=8.5, italic=True, color=MID, line_spacing=1.1)
+             size=8.2, italic=True, color=MID, line_spacing=1.08)
 
-    # ② Классика + ③ Модель
-    text_box(s, 0.6, 2.78, 12.13, 0.25,
+    # ② Классика + ③ Модель (высота сжата 1.05→0.90, label-строка сдвинута выше
+    # вплотную к низу блока ① — с тем же запасом в 0.06in, что и у «①» выше, чтобы не
+    # повторить наезд обводки на текст)
+    text_box(s, 0.6, 2.58, 12.13, 0.22,
              "② Классические режимы + ③ Модель против них — все в $/акр",
              size=11, bold=True, color=MID)
     trio_w = (12.13 - 0.3) / 3
+    trio_y = 2.85
+    trio_h = 0.90
     trio = [
         ("$65-67/акр", "Сплошной спрей — кукуруза", "соя — $94/акр (2 прохода)", LIGHT, LIGHT_TINT),
         ("$21,23/акр", "Механическая культивация", "разброс $12-35/акр, без химии", LIGHT, LIGHT_TINT),
@@ -983,61 +993,104 @@ def build_part1_full(prs, H):
     ]
     tx = 0.6
     for big, lbl, sub, color, fill in trio:
-        ocean_box(s, tx, 3.05, trio_w, 1.05, fill=fill, stroke=color)
-        text_box(s, tx + 0.12, 3.12, trio_w - 0.24, 0.32, big, size=15, bold=True, color=color if color != GOLD else GOLD)
-        text_box(s, tx + 0.12, 3.46, trio_w - 0.24, 0.28, lbl, size=10, bold=True, color=DEEP, line_spacing=1.05)
-        text_box(s, tx + 0.12, 3.74, trio_w - 0.24, 0.32, sub, size=9, italic=True, color=MID, line_spacing=1.05)
+        ocean_box(s, tx, trio_y, trio_w, trio_h, fill=fill, stroke=color)
+        text_box(s, tx + 0.12, trio_y + 0.06, trio_w - 0.24, 0.30, big, size=14, bold=True, color=color if color != GOLD else GOLD)
+        text_box(s, tx + 0.12, trio_y + 0.37, trio_w - 0.24, 0.24, lbl, size=9.5, bold=True, color=DEEP, line_spacing=1.0)
+        text_box(s, tx + 0.12, trio_y + 0.61, trio_w - 0.24, 0.26, sub, size=8.5, italic=True, color=MID, line_spacing=1.0)
         tx += trio_w + 0.15
 
     # ④ Инженерный аппарат (issue #340 Задача 3 — ИИ-модель вынесена отдельно на s07c,
     # здесь только физическое устройство: штанга, камеры, форсунки, механика срабатывания).
     # v2 (owner follow-up 2026-11-20, «добавь иллюстраций... как работает see and spray»):
     # добавлена 3-шаговая icon+arrow схема хода операции (камера видит → CNN решает →
-    # форсунка срабатывает) — порядок работы схемой не длиннее 4 шагов (CLAUDE.md).
-    # Не дублирует фото штанги на s07 (там — статичный hero-снимок техники в поле).
-    text_box(s, 0.6, 4.20, 12.13, 0.18, "④ Инженерный аппарат — порядок срабатывания", size=10.5, bold=True, color=MID)
-    diagram_y = 4.40
-    diagram_h = 1.05
+    # форсунка срабатывает).
+    # v3 (owner follow-up 2026-11-20, round 2 — «надо показать как они выглядят и работают
+    # (фото или рендер) не схема»): 3-icon-схема сама по себе была generic clip-art, не
+    # показывала реальное устройство. Добавлено официальное фото John Deere — крупный план
+    # одной из 36 камер на боковой штанге See & Spray Ultimate (camera-feature press asset,
+    # deere.com, см. p07a-*.jpg.url) — рядом с тем же 3-шаговым текстовым описанием хода
+    # операции (теперь компактнее, без своих иконок, т.к. иконки были decorative дубликатом
+    # фото). Не дублирует общий hero-снимок техники в поле на s07 — там цельная картина,
+    # здесь — то, что реально нельзя разглядеть на том общем плане.
+    text_box(s, 0.6, 3.82, 12.13, 0.18, "④ Инженерный аппарат — как выглядит и срабатывает",
+             size=10.5, bold=True, color=MID)
+    diagram_y = 4.05
+    diagram_h = 1.55
     ocean_box(s, 0.6, diagram_y, 12.13, diagram_h, fill=SURFACE)
+
+    # Левая часть — реальное фото (официальный John Deere press asset, не мок/иконка)
+    photo_h = 1.30
+    photo_w = photo_h * (655 / 758)  # native AR of p07a crop — no stretch
+    photo_x = 0.75
+    photo_y = diagram_y + (diagram_h - photo_h) / 2
+    ocean_box(s, photo_x - 0.05, photo_y - 0.05, photo_w + 0.10, photo_h + 0.10,
+              fill=WHITE, stroke=LIGHT, stroke_pt=1.0, radius_pt=4.0)
+    pp = ASSETS / "photos" / "p07a-see-spray-camera-boom-crop.jpg"
+    if pp.exists():
+        add_image(s, pp, photo_x, photo_y, w=photo_w, h=photo_h)
+
+    # Правая часть — тот же 3-шаговый ход операции, компактным текстом (без decorative
+    # иконок-дублей: фото слева уже показывает реальную камеру на штанге)
     flow3 = [
-        ("camera-48.png", "36 камер видят", "≈2500 кв.футов/сек каждая"),
-        ("cpu-48.png", "CNN решает", "сорняк / не сорняк, <50 мс"),
-        ("target-48.png", "Форсунка бьёт", "соленоидный клапан, точка"),
+        ("36 камер видят", "≈2500 кв.футов/сек каждая"),
+        ("CNN решает", "сорняк / не сорняк, <50 мс"),
+        ("Форсунка бьёт", "соленоидный клапан, точка"),
     ]
-    fw = (12.13 - 0.5) / 3  # 3 columns + 2 gaps for arrows
-    fx = 0.6 + 0.1
-    for i, (icon_name, lbl, sub) in enumerate(flow3):
-        ip = ASSETS / "icons" / icon_name
+    flow_x0 = photo_x + photo_w + 0.30
+    fw = (0.6 + 12.13 - 0.15 - flow_x0 - 0.4) / 3  # 3 columns + 2 gaps for arrows
+    content_h = 0.42 + 0.08 + 0.22 + 0.05 + 0.22
+    top_pad = (diagram_h - content_h) / 2
+    icon_y = diagram_y + top_pad
+    label_y = icon_y + 0.42 + 0.08
+    sub_y = label_y + 0.22 + 0.05
+    fx = flow_x0
+    step_icons = ["camera-48.png", "cpu-48.png", "target-48.png"]
+    for i, (lbl, sub) in enumerate(flow3):
+        ip = ASSETS / "icons" / step_icons[i]
         if ip.exists():
-            add_image(s, ip, fx + (fw - 0.42) / 2, diagram_y + 0.12, w=0.42, h=0.42)
-        text_box(s, fx, diagram_y + 0.58, fw, 0.22, lbl, size=10.5, bold=True, color=DEEP,
+            add_image(s, ip, fx + (fw - 0.42) / 2, icon_y, w=0.42, h=0.42)
+        text_box(s, fx, label_y, fw, 0.22, lbl, size=10.5, bold=True, color=DEEP,
                  align=PP_ALIGN.CENTER)
-        text_box(s, fx, diagram_y + 0.80, fw, 0.22, sub, size=8.3, italic=True, color=MID,
+        text_box(s, fx, sub_y, fw, 0.22, sub, size=8.3, italic=True, color=MID,
                  align=PP_ALIGN.CENTER)
         if i < 2:
-            add_arrow(s, fx + fw, diagram_y + 0.28, 0.2, 0.2, fill=LIGHT)
+            add_arrow(s, fx + fw, icon_y + 0.10, 0.2, 0.2, fill=LIGHT)
         fx += fw + 0.2
 
-    # ⑤ Что переехало (сжато: box 1.5→1.15, текст уже не занимал полную высоту)
-    text_box(s, 0.6, diagram_y + diagram_h + 0.10, 12.13, 0.20, "⑤ Что переехало", size=10.5, bold=True, color=MID)
-    verdict_y = diagram_y + diagram_h + 0.32
-    verdict_h = 1.15
+    # ⑤ Что переехало (сжато дальше: 1.15→1.00, см. тот же повод освободить место под ④).
+    # verdict_y считается явно через низ заголовка «⑤» + 0.05in зазор — тот же баг с
+    # обводкой box'а, наезжающей на текст выше, был пойман здесь же на PNG-инспекции при
+    # формуле «+0.30» (дающей зазор всего 0.02in); явная arithmetic ниже держит зазор ≥0.05.
+    title5_y = diagram_y + diagram_h + 0.10
+    title5_h = 0.18
+    text_box(s, 0.6, title5_y, 12.13, title5_h, "⑤ Что переехало", size=10.5, bold=True, color=MID)
+    verdict_y = title5_y + title5_h + 0.05
+    verdict_h = 1.00
     half_w = (12.13 - 0.2) / 2
     ocean_box(s, 0.6, verdict_y, half_w, verdict_h, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 0.78, verdict_y + 0.08, half_w - 0.3, 0.26, "Подтверждено независимо", size=11.5, bold=True, color=MID)
-    text_box(s, 0.78, verdict_y + 0.36, half_w - 0.3, 0.76,
+    text_box(s, 0.78, verdict_y + 0.07, half_w - 0.3, 0.24, "Подтверждено независимо", size=11, bold=True, color=MID)
+    text_box(s, 0.78, verdict_y + 0.32, half_w - 0.3, 0.68,
              "Экономия гербицида: 62,4% PRE · 28,4% EPOST · 36,5% MPOST (Avent et al. 2024). "
              "Crop injury ниже на до 5 п.п. у targeted.",
-             size=9.8, italic=True, color=DARK_GREY, line_spacing=1.2)
+             size=9.3, italic=True, color=DARK_GREY, line_spacing=1.15)
     ocean_box(s, 0.6 + half_w + 0.2, verdict_y, half_w, verdict_h, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.78 + half_w + 0.2, verdict_y + 0.08, half_w - 0.3, 0.26, "Не подтверждено независимо", size=11.5, bold=True, color=GOLD)
-    text_box(s, 0.78 + half_w + 0.2, verdict_y + 0.36, half_w - 0.3, 0.76,
+    text_box(s, 0.78 + half_w + 0.2, verdict_y + 0.07, half_w - 0.3, 0.24, "Не подтверждено независимо", size=11, bold=True, color=GOLD)
+    text_box(s, 0.78 + half_w + 0.2, verdict_y + 0.32, half_w - 0.3, 0.68,
              "Прирост урожайности +2,0 бу/акр (до 4,8 в лучших случаях) — цифра вендора (Deere, AgTechNavigator). "
              "Avent et al. 2024: P>0,05 — различий в урожайности нет.",
-             size=9.8, italic=True, color=DEEP, line_spacing=1.2)
+             size=9.3, italic=True, color=DEEP, line_spacing=1.15)
 
-    add_footer(s, "Источники: Avent et al. 2024, Weed Technology; Iowa State Extension 2026; "
-                  "Ohio Extension 2026; Deere press ноябрь 2025")
+    # Footer как настоящая гиперссылка на источник фото (не просто текст "deere.com") —
+    # тот же паттерн, что в s16b/s17 footer, см. CLAUDE.md «Форма подачи слайда» §URL.
+    _s07a_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Источники: Avent et al. 2024, Weed Technology; Iowa State Extension 2026; "
+                  "Ohio Extension 2026; Deere press ноябрь 2025 · фото камеры на штанге: ",
+         "size": 11, "italic": True, "color": LIGHT},
+        {"text": "John Deere (deere.com)", "size": 11, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s07a_fr = [r for p in _s07a_foot.text_frame.paragraphs for r in p.runs]
+    _s07a_fr[1].font.underline = True
+    _s07a_fr[1].hyperlink.address = "https://www.deere.com/en-us/products-solutions/sprayers-and-applicators/see-spray-ultimate"
     add_speaker_notes(s, load_speaker_notes("s07a"))
 
     # ============ s07c — See & Spray, как устроена модель (issue #340 Задача 3) ============

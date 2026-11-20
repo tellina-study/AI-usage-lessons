@@ -181,26 +181,30 @@ def build_part2(prs, H):
     # owner follow-up 2026-11-20: «как устроен и работает laser weed»). Официальный render
     # carbonrobotics.com (underside of weeding module) — НЕ дублирует hero-фото всей машины
     # на s16 (та съёмка — сумеречный общий план в поле).
+    # v2 (owner follow-up 2026-11-20, round 2 — «увеличь фото заметно»): pipe_h подрос
+    # 1.42→1.50 (slide bottom всё ещё с запасом до footer на y=7.05), фото выросло по
+    # площади в ≈1.6× (0.95×2.09in → 1.20×2.64in) за счёт более плотной внутренней вёрстки
+    # полосы, не за счёт текста pipeline справа (та же ширина колонки с небольшим сужением).
     pipe_y = cy + col_h + 0.1
-    pipe_h = 1.42
+    pipe_h = 1.50
     ocean_box(s, 0.6, pipe_y, 12.13, pipe_h, fill=GOLD_TINT, stroke=GOLD, stroke_pt=2.0)
-    img_pad = 0.14
-    img_h = 0.95
-    img_w = img_h * 2.20  # matches p16b-laserweeder-module-crop.jpg AR exactly
+    img_pad = 0.08
+    img_h = 1.20
+    img_w = img_h * (1113 / 506)  # native px AR of p16b-laserweeder-module-crop.jpg — no stretch
     p = ASSETS / "photos" / "p16b-laserweeder-module-crop.jpg"
     if p.exists():
         add_image(s, p, 0.6 + img_pad, pipe_y + img_pad, w=img_w, h=img_h)
-    text_box(s, 0.6 + img_pad, pipe_y + img_pad + img_h + 0.03, img_w, 0.18,
+    text_box(s, 0.6 + img_pad, pipe_y + img_pad + img_h + 0.02, img_w, 0.16,
              "Модуль штанги изнутри (рендер, carbonrobotics.com)",
-             size=8.0, italic=True, color=DEEP, align=PP_ALIGN.CENTER)
+             size=7.5, italic=True, color=DEEP, align=PP_ALIGN.CENTER)
     txt_x = 0.6 + img_pad + img_w + 0.22
     txt_w = 12.13 - img_pad - img_w - 0.22 - 0.25
-    text_box(s, txt_x, pipe_y + 0.10, txt_w, pipe_h - 0.20,
+    text_box(s, txt_x, pipe_y + 0.08, txt_w, pipe_h - 0.16,
              "Один проход: камера видит точку → модель классифицирует «культура / сорняк» → "
              "если сорняк — координаты на лазер → импульс 25 мс выжигает меристему. Отказ бывает "
              "двух разных типов: механический (пыль на объективе, нет питания — чинит инженер на поле) "
              "и модельный (спутала культуру с сорняком — лечится дообучением, не гаечным ключом).",
-             size=10.8, bold=True, italic=True, color=DEEP, line_spacing=1.18, anchor=MSO_ANCHOR.MIDDLE)
+             size=10.5, bold=True, italic=True, color=DEEP, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
 
     _s16b_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
         {"text": "Источники: Carbon Robotics businesswire 2025-02-10 · фото модуля: ",
@@ -433,35 +437,56 @@ def build_part2(prs, H):
         "Узкие победы L2 — Solinftec, Saga UV-C, Tevel, AGCO Outrun",
         size=22)
 
+    # issue #340 round 3 (owner: «ни одного реального фото named-продукта») — каждая
+    # карточка получила реальное официальное фото вместо родовой clip-art иконки
+    # (6-tier acquisition, все 4 найдены — og:image/press, честные источники в .jpg.url
+    # рядом с файлами). Saga-фото — тот же робот Thorvald UV-C, но кадр из виноградника,
+    # не из клубничного тоннеля — честно подписано под карточкой.
     cases = [
         ("Solinftec Solix", "+243% год к году в 2025",
          "Самоотчёт вендора: ≤98%\nсокращения контактных гербицидов",
-         "tractor"),
+         "p18-solinftec-solix-crop.jpg", None),
         ("Saga UV-C", "20% клубники в Великобритании",
          "Ультрафиолетовая ночная обработка.\nНе сбор — контроль болезней",
-         "leaf"),
+         "p18-saga-thorvald-uvc-crop.jpg", "тот же робот Thorvald, фото — виноградник"),
         ("Tevel", "Дроны-сборщики яблок",
          "Узкая ниша — летающие\nдроны для сбора яблок",
-         "package"),
+         "p18-tevel-drone-crop.jpg", None),
         ("AGCO PTx Outrun", "Дооснащение смешанного парка",
          "AGCO-модуль для смешанного\nпарка тракторов (не только AGCO)",
-         "tractor"),
+         "p18-agco-ptx-outrun-crop.jpg", None),
     ]
     card_w = 2.85; card_h = 4.2; gap = 0.18
     sx = 0.6
     sy = 1.6
-    for i, (name, kpi, desc, icon_name) in enumerate(cases):
+    photo_h = 1.85
+    photo_w = photo_h * 4 / 3  # все 4 фото честно обрезаны в 4:3, без растяжения
+    for i, (name, kpi, desc, photo_name, caveat) in enumerate(cases):
         x = sx + i * (card_w + gap)
         ocean_box(s, x, sy, card_w, card_h)
-        icon_p = ASSETS / "icons" / f"{icon_name}-96.png"
-        if icon_p.exists():
-            add_image(s, icon_p, x + (card_w - 0.85) / 2, sy + 0.25, w=0.85, h=0.85)
-        text_box(s, x + 0.15, sy + 1.3, card_w - 0.3, 0.5, name,
-                 size=14, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.2)
-        text_box(s, x + 0.15, sy + 1.85, card_w - 0.3, 0.6, kpi,
-                 size=13, bold=True, color=GOLD, align=PP_ALIGN.CENTER, line_spacing=1.2)
-        text_box(s, x + 0.15, sy + 2.5, card_w - 0.3, 1.5, desc,
-                 size=10, color=DARK_GREY, italic=True, line_spacing=1.4,
+        photo_x = x + (card_w - photo_w) / 2
+        photo_y = sy + 0.15
+        pp = ASSETS / "photos" / photo_name
+        if pp.exists():
+            add_image(s, pp, photo_x, photo_y, w=photo_w, h=photo_h)
+        if caveat:
+            # Honest caveat overlaid as a strip on the photo's own bottom edge (not an
+            # extra line below it) — keeps all 4 cards' title/kpi/desc rows aligned on the
+            # same baseline instead of the Saga card sitting 0.2in lower than its siblings
+            # (caught on PNG inspection: row looked uneven at iter-1 of this round).
+            filled_rect(s, photo_x, photo_y + photo_h - 0.20, photo_w, 0.20, DEEP)
+            text_box(s, photo_x + 0.04, photo_y + photo_h - 0.195, photo_w - 0.08, 0.17, caveat,
+                     size=6.8, italic=True, color=WHITE, align=PP_ALIGN.CENTER,
+                     anchor=MSO_ANCHOR.MIDDLE, line_spacing=0.95)
+        name_y = sy + 0.15 + photo_h + 0.08
+        text_box(s, x + 0.1, name_y, card_w - 0.2, 0.36, name,
+                 size=13, bold=True, color=DEEP, align=PP_ALIGN.CENTER, line_spacing=1.1)
+        kpi_y = name_y + 0.36 + 0.02
+        text_box(s, x + 0.1, kpi_y, card_w - 0.2, 0.42, kpi,
+                 size=12, bold=True, color=GOLD, align=PP_ALIGN.CENTER, line_spacing=1.1)
+        desc_y = kpi_y + 0.42 + 0.04
+        text_box(s, x + 0.12, desc_y, card_w - 0.24, card_h - (desc_y - sy) - 0.12, desc,
+                 size=9.3, color=DARK_GREY, italic=True, line_spacing=1.3,
                  align=PP_ALIGN.CENTER)
 
     # Bottom note about specialization

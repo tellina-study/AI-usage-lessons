@@ -526,15 +526,29 @@ def build_part2(prs, H):
 
     # Photo + headline row (K-4: оба файла — реальный Monarch MK-V и настоящий
     # заголовок TechCrunch — ранее не подключались, кадр собирался без изображений).
+    # issue #340 round 2 ("фото сплющены — трактор"): the embedded file was
+    # ALREADY an extreme 1200x332 (AR 3.61) banner crop of the real press photo,
+    # further squashed by a mismatched 4.10-AR frame, and the tractor read as a
+    # tiny sliver. Re-cropped tighter + off-center from the full, un-cropped
+    # source (both axes, see fix_aspect_ratios.py make_hero_crop_monarch()) and
+    # grew the frame from h=1.45 to h=1.905 (AR 3.12 — still widescreen, but the
+    # whole machine is now clearly recognizable) — the caption/gap/takeaway
+    # below were compacted to absorb the extra height without touching the
+    # footer.
     photo_row_y = tline_y + 0.3 + card_h + 0.25  # = 3.85
     pcol_w = 5.95
-    mp = ASSETS / "photos" / "p19-monarch-mkv-real.jpg"
-    photo_h = 1.45
+    mp = ASSETS / "photos" / "p19-monarch-mkv-hero-crop.jpg"
+    photo_h = 1.905
     if mp.exists():
         add_image(s, mp, 0.6, photo_row_y, w=pcol_w, h=photo_h)
-    text_box(s, 0.6, photo_row_y + photo_h + 0.04, pcol_w, 0.2,
-             "Monarch MK-V. Источник: Monarch press, публикация TechCrunch, 2025-11-18",
-             size=9.5, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    _s19_cap = text_runs(s, 0.6, photo_row_y + photo_h + 0.02, pcol_w, 0.16, [
+        {"text": "Monarch MK-V · ", "size": 8.5, "italic": True, "color": LIGHT},
+        {"text": "Monarch press, публикация TechCrunch, 2025-11-18",
+         "size": 8.5, "italic": True, "color": LIGHT},
+    ], align=PP_ALIGN.CENTER)
+    _s19_cruns = [r for p in _s19_cap.text_frame.paragraphs for r in p.runs]
+    _s19_cruns[-1].font.underline = True
+    _s19_cruns[-1].hyperlink.address = "https://techcrunch.com/2025/11/18/monarch-tractor-sued-over-tractors-that-were-unable-to-operate-autonomously/"
 
     # Right: real TechCrunch headline, quoted verbatim (not a screenshot —
     # no headless-browser capture available; honestly presented as a text quote).
@@ -545,21 +559,23 @@ def build_part2(prs, H):
     text_box(s, hx + 0.2, photo_row_y + 0.45, pcol_w - 0.4, photo_h - 0.6,
              "«Monarch Tractor sued over tractors that were "
              "‘unable to operate autonomously’»",
-             size=14, bold=True, italic=True, color=DEEP, line_spacing=1.2)
+             size=14, bold=True, italic=True, color=DEEP, line_spacing=1.2,
+             anchor=MSO_ANCHOR.MIDDLE)
     text_box(s, hx + 0.2, photo_row_y + photo_h - 0.28, pcol_w - 0.4, 0.22,
              "Дословный заголовок статьи об иске Burks Tractor",
              size=9.5, italic=True, color=LIGHT)
 
-    # Bottom takeaway
-    takeaway_y = photo_row_y + photo_h + 0.35  # ≈ 5.70
-    ocean_box(s, 0.6, takeaway_y, 12.13, 1.05, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, takeaway_y + 0.1, 11.6, 0.35,
+    # Bottom takeaway (height trimmed 1.05→1.0, gap 0.35→0.06 — issue #340
+    # round 2, absorbs the taller photo row above without touching the footer)
+    takeaway_y = photo_row_y + photo_h + 0.02 + 0.16 + 0.06  # ≈ 6.01
+    ocean_box(s, 0.6, takeaway_y, 12.13, 1.0, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.85, takeaway_y + 0.08, 11.6, 0.35,
              "Анти-паттерн: демо ≠ промышленное внедрение",
              size=15, bold=True, color=DEEP)
-    text_box(s, 0.85, takeaway_y + 0.46, 11.6, 0.55,
+    text_box(s, 0.85, takeaway_y + 0.42, 11.6, 0.55,
              "«Автономный» в маркетинге = юридическая ловушка, если фактическое поведение зависит от оператора.\n"
              "Каждое обещание автономии проверяется независимым тестом оператора → если нужен оператор, автономия частичная.",
-             size=10.5, color=DARK_GREY, italic=True, line_spacing=1.25)
+             size=10.5, color=DARK_GREY, italic=True, line_spacing=1.2)
 
     add_footer(s, "Источники: TechCrunch 2025-11-18, 2025-11-19, 2026-04-15")
     add_speaker_notes(s, load_speaker_notes("s19"))
@@ -646,8 +662,10 @@ def build_part2(prs, H):
         size=22)
 
     # Left photo + chart
+    # issue #340 round 2 ("фото сплющены"): frame AR 1.375 vs source AR 1.50
+    # was a minor (~8%) horizontal stretch. Re-cropped to match exactly.
     ocean_box(s, 0.6, 1.5, 6.0, 5.1)
-    p = ASSETS / "photos" / "p21-strawberry-picker.jpg"
+    p = ASSETS / "photos" / "p21-strawberry-picker-crop.jpg"
     if p.exists():
         add_image(s, p, 0.85, 1.75, w=5.5, h=4.0)
     text_box(s, 0.85, 5.8, 5.5, 0.3,

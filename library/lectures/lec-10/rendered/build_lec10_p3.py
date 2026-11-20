@@ -183,13 +183,26 @@ def build_part3(prs, H):
     add_assertion_title(s, "Allflex SenseHub — 2 млн коров с сенсорами (≈0,75% из 265 млн молочных коров в мире)", size=22)
 
     # Left: photo
+    # issue #340 round 2 ("фото сплющены — корова"): p23-cow-ear-tag.jpg was a
+    # TALL PORTRAIT (1280x1927, AR 0.66) forced into a w=6.0 h=4.0 (AR 1.5)
+    # landscape frame — stretching it ~2.3x wider than tall. A straight crop to
+    # AR 1.5 would have cut off the cow's legs or head (the animal fills the
+    # portrait frame edge-to-edge), so this was re-sourced entirely: a
+    # genuinely landscape (AR 1.5, matches the frame exactly, zero crop needed)
+    # public-domain USDA photo showing ear tags just as clearly. See
+    # p23-cow-eartag-landscape.jpg.url.
     ocean_box(s, 0.6, 1.5, 6.5, 5.1)
-    p = ASSETS / "photos" / "p23-cow-ear-tag.jpg"
+    p = ASSETS / "photos" / "p23-cow-eartag-landscape.jpg"
     if p.exists():
         add_image(s, p, 0.85, 1.75, w=6.0, h=4.0)
-    text_box(s, 0.85, 5.85, 6.0, 0.3,
-             "Сенсор-бирка · Wikimedia (Cow with ear tag, CC-BY-SA)",
-             size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
+    _s23_cap = text_runs(s, 0.85, 5.85, 6.0, 0.3, [
+        {"text": "Holstein с ушными бирками · ", "size": 10, "italic": True, "color": LIGHT},
+        {"text": "USDA, Preston Keres, public domain",
+         "size": 10, "italic": True, "color": LIGHT},
+    ], align=PP_ALIGN.CENTER)
+    _s23_cruns = [r for para in _s23_cap.text_frame.paragraphs for r in para.runs]
+    _s23_cruns[-1].font.underline = True
+    _s23_cruns[-1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:20180124-OSEC-PJK-0944_TONED_(39891699741).jpg"
     text_box(s, 0.85, 6.2, 6.0, 0.3,
              "+ ошейник-акселерометр + облачная аналитика",
              size=10, italic=True, color=MID, align=PP_ALIGN.CENTER)
@@ -704,14 +717,17 @@ def build_part3(prs, H):
         nx += nw + 0.15
 
     # Map/photo + alternative
+    # issue #340 round 2 ("фото сплющены"): p34-gps-block.jpg is a square
+    # (1280x1280, AR 1.0) GPS-satellite render forced into a w=5.5 h=2.6
+    # (AR 2.12) frame, stretching it ~2x wider. Re-cropped (see
+    # fix_aspect_ratios.py, bias_y=0.35 to keep the full satellite body/panels
+    # and trim mostly from the black space above) to the frame's own AR —
+    # no code size change needed, p34-gnss-satellites.png never existed on
+    # disk so that branch was always dead code and is removed here.
     ocean_box(s, 0.6, 3.3, 6.0, 3.0)
-    p = ASSETS / "photos" / "p34-gnss-satellites.png"
+    p = ASSETS / "photos" / "p34-gps-block-crop.jpg"
     if p.exists():
         add_image(s, p, 0.85, 3.5, w=5.5, h=2.6)
-    else:
-        p = ASSETS / "photos" / "p34-gps-block.jpg"
-        if p.exists():
-            add_image(s, p, 0.85, 3.5, w=5.5, h=2.6)
 
     ocean_box(s, 6.8, 3.3, 6.0, 3.0, fill=GOLD_TINT, stroke=GOLD)
     text_box(s, 7.05, 3.5, 5.5, 0.5, "AP5 + альтернатива",
@@ -739,7 +755,14 @@ def build_part3(prs, H):
         size=24)
 
     # Left: anti-theft success — real news photo (CNN, Melitopol story, May 2022)
-    ocean_box(s, 0.6, 1.5, 6.0, 5.0, fill=LIGHT_TINT, stroke=LIGHT)
+    # issue #340 round 2 ("фото сплющены"): p30b-melitopol-tractor.jpg is AR
+    # 1.78 forced into a w=5.5 h=1.55 (AR 3.55) frame — stretching it ~2x
+    # wider than tall. Re-cropped to a gentler AR 2.75 (full tractor + both
+    # people stay visible, see fix_aspect_ratios.py) and grew the box height
+    # 5.0→5.1 / photo height 1.55→2.0 to match — the other 2 images on this
+    # slide (p30b-ftc-deere-tractors.jpg, p30b-dji-agras.png) already matched
+    # their own small frames exactly and were left untouched.
+    ocean_box(s, 0.6, 1.5, 6.0, 5.1, fill=LIGHT_TINT, stroke=LIGHT)
     text_box(s, 0.85, 1.65, 5.5, 0.5, "Май 2022 — успех против кражи",
              size=15, bold=True, color=LIGHT)
     text_box(s, 0.85, 2.15, 5.5, 0.4, "Мелитополь, оккупированная территория",
@@ -750,15 +773,15 @@ def build_part3(prs, H):
              "на $5 млн стали\n"
              "кирпичом по решению производителя.",
              size=12, color=DEEP, italic=True, line_spacing=1.4)
-    p = ASSETS / "photos" / "p30b-melitopol-tractor.jpg"
+    p = ASSETS / "photos" / "p30b-melitopol-tractor-crop.jpg"
     if p.exists():
-        add_image(s, p, 0.85, 4.5, w=5.5, h=1.55)
-    text_box(s, 0.85, 6.1, 5.5, 0.3,
+        add_image(s, p, 0.85, 4.25, w=5.5, h=2.0)
+    text_box(s, 0.85, 6.3, 5.5, 0.25,
              "John Deere в Украине · CNN, 2022-05-01 — ИИ-функция безопасности, успех в этой петле",
              size=9, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
     # Right: control surface optic — real photos (The Register / DJI.com official)
-    ocean_box(s, 6.8, 1.5, 6.0, 5.0, fill=GOLD_TINT, stroke=GOLD)
+    ocean_box(s, 6.8, 1.5, 6.0, 5.1, fill=GOLD_TINT, stroke=GOLD)
     text_box(s, 7.05, 1.65, 4.2, 0.5, "Янв. 2025 — FTC против Deere",
              size=14, bold=True, color=GOLD)
     text_box(s, 7.05, 2.15, 4.2, 0.4, "Десятилетние ограничения ремонта",
@@ -861,8 +884,17 @@ def build_part3(prs, H):
         size=20, y=0.25)
 
     # Hero context photo — real "Перекрёсток" (X5 Group) supermarket, СПб
+    # issue #340 round 2: this thumbnail frame (w=0.62 h=0.60, AR 1.03) was
+    # stretching the AR-1.5 source photo. Re-cropped left-biased (keeps the
+    # full "Перекрёсток" signage, which sits on the left two-thirds of the
+    # source frame — see fix_aspect_ratios.py) instead of a plain center crop
+    # that would have pushed the branding partly out of frame. The 3 other
+    # candidate files from earlier rounds (p37s-grocery.jpg,
+    # p37s-shopping-cart.jpg, p37s-supermarket-aisle.jpg) are unused by this
+    # slide (and unreferenced anywhere else in the deck) — left on disk per
+    # brief, not deleted.
     ocean_box(s, 0.6, 1.1, 12.13, 0.75, fill=SURFACE, stroke=LIGHT)
-    hero_p = ASSETS / "photos" / "p32-perekrestok-supermarket-spb.jpg"
+    hero_p = ASSETS / "photos" / "p32-perekrestok-supermarket-spb-crop.jpg"
     if hero_p.exists():
         add_image(s, hero_p, 0.68, 1.15, w=0.62, h=0.60)
     text_box(s, 1.45, 1.17, 11.0, 0.28,

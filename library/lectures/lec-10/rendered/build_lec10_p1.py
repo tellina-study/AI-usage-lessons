@@ -670,17 +670,36 @@ def build_part1_full(prs, H):
     chart_y = 1.4
     chart_box_h = 3.5
     img_h = 2.7
-    img_w = img_h * 1.6  # исходный PNG 1600x1000
-    iw = min(img_w, cw - 0.3)
-    ih = iw / 1.6
+    # issue #340 round 2 ("фото сплющены"): this hardcoded img_w = img_h * 1.6
+    # assumed the source PNGs were 1600x1000 (AR 1.6) — they are actually
+    # 1587x906 / 1568x899 (AR ≈1.75 each), so the frame was ~9% narrower than
+    # the real images and both charts were being stretched vertically. Compute
+    # each chart's own native AR via PIL instead of hardcoding one — fixes the
+    # root cause (stale assumption) rather than re-cropping images that are
+    # already fine.
+    from PIL import Image as _PILImage
+
+    def _img_ar(path, fallback=1.6):
+        try:
+            with _PILImage.open(path) as _im:
+                return _im.size[0] / _im.size[1]
+        except Exception:
+            return fallback
+
+    c1 = ASSETS / "charts" / "c39-vf-investment-collapse.png"
+    c2 = ASSETS / "charts" / "c40-consolidation-deals.png"
+    ar1 = _img_ar(c1)
+    ar2 = _img_ar(c2)
+    iw1 = min(img_h * ar1, cw - 0.3); ih1 = iw1 / ar1
+    iw2 = min(img_h * ar2, cw - 0.3); ih2 = iw2 / ar2
+    ih = max(ih1, ih2)  # keep both panels' captions aligned to the same baseline
     img_bottom = chart_y + 0.1 + ih
 
     # --- Левая панель: коллапс инвестиций ---
     lx = 0.6
     ocean_box(s, lx, chart_y, cw, chart_box_h)
-    c1 = ASSETS / "charts" / "c39-vf-investment-collapse.png"
     if c1.exists():
-        add_image(s, c1, lx + (cw - iw) / 2, chart_y + 0.1, w=iw, h=ih)
+        add_image(s, c1, lx + (cw - iw1) / 2, chart_y + 0.1, w=iw1, h=ih1)
     text_box(s, lx + 0.12, img_bottom + 0.08, cw - 0.24, 0.6,
              "Общий капитал категории вертикальных ферм за 2018-2024 — ≈$3 млрд. "
              "Только в 2025 году — ≥14 банкротств на ≈$1,37 млрд.",
@@ -689,9 +708,8 @@ def build_part1_full(prs, H):
     # --- Правая панель: цена сделок консолидации ---
     rx = lx + cw + 0.2
     ocean_box(s, rx, chart_y, cw, chart_box_h)
-    c2 = ASSETS / "charts" / "c40-consolidation-deals.png"
     if c2.exists():
-        add_image(s, c2, rx + (cw - iw) / 2, chart_y + 0.1, w=iw, h=ih)
+        add_image(s, c2, rx + (cw - iw2) / 2, chart_y + 0.1, w=iw2, h=ih2)
     text_box(s, rx + 0.12, img_bottom + 0.08, cw - 0.24, 0.6,
              "Также в 2024 году — GEA приобрела CattleEye; сумма сделки не "
              "раскрыта публично.",
@@ -866,10 +884,15 @@ def build_part1_full(prs, H):
     add_assertion_title(s, "See & Spray Ultimate — каноничный успех L1", size=22)
 
     # Left column (55%) — photo + anti-hype callout below
+    # issue #340 round 2 ("фото сплющены"): box was w=6.5 h=2.55 (AR 2.55, an
+    # extreme banner) while the source photo is AR 1.33 — python-pptx stretched
+    # it non-uniformly. Re-cropped to a sane AR 1.8 hero shot (whole sprayer
+    # clearly visible, see fix_aspect_ratios.py) and the frame narrowed/centred
+    # to match exactly, instead of forcing the image into the old banner shape.
     ocean_box(s, 0.6, 1.3, 6.9, 3.05)
-    p = ASSETS / "photos" / "p07-john-deere-sprayer.jpg"
+    p = ASSETS / "photos" / "p07-john-deere-sprayer-hero-crop.jpg"
     if p.exists():
-        add_image(s, p, 0.8, 1.45, w=6.5, h=2.55)
+        add_image(s, p, 0.6 + (6.9 - 4.59) / 2, 1.45, w=4.59, h=2.55)
     text_box(s, 0.8, 4.05, 6.5, 0.25, "John Deere ExactApply + See & Spray Ultimate · ноябрь 2025",
              size=10, italic=True, color=LIGHT, align=PP_ALIGN.CENTER)
 
@@ -1466,8 +1489,12 @@ def build_part1_full(prs, H):
         size=22)
 
     # Left (55%): Sentinel-2 imagery + short formula
+    # issue #340 round 2: frame AR 2.0 vs source AR 1.04 (near-square satellite
+    # tile) was stretching the image ~2x vertically. Pre-cropped to exactly AR
+    # 2.0 (see fix_aspect_ratios.py) — a texture image like a satellite tile has
+    # no "subject" that gets disoriented by losing some top/bottom extent.
     ocean_box(s, 0.6, 1.5, 6.5, 4.0)
-    p = ASSETS / "photos" / "p09-sentinel-brazil.jpg"
+    p = ASSETS / "photos" / "p09-sentinel-brazil-crop.jpg"
     if p.exists():
         add_image(s, p, 0.85, 1.7, w=6.0, h=3.0)
     text_box(s, 0.85, 4.75, 6.0, 0.4,
@@ -1784,6 +1811,13 @@ def build_part1_full(prs, H):
     # комбайном, Новосибирская область РФ. Фото заканчивается ДО ap6_y
     # (полноширинная полоса AP6 ниже рисуется поверх левой колонки —
     # pre-existing layering этого слайда; фото обязано не доходить до неё).
+    # issue #340 round 2 ("фото сплющены"): c14-rus-digi.png was a 1600x1000
+    # (AR 1.6) QuickChart PNG embedded into a w=5.3 h=2.3 (AR 2.30) frame,
+    # stretching the bars ~44% wider than tall. Root cause here wasn't the
+    # photo below (already correctly AR-matched) — it was this chart.
+    # Regenerated via QuickChart at native AR 2.305 (matches the frame almost
+    # exactly) with the same data/colors/y-axis range; overwritten in place so
+    # no code change below is needed.
     ocean_box(s, 0.6, 1.5, 6.0, 4.85)
     c = ASSETS / "charts" / "c14-rus-digi.png"
     if c.exists():

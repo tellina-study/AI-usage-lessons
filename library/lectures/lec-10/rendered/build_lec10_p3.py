@@ -456,55 +456,88 @@ def build_part3(prs, H):
     add_speaker_notes(s, load_speaker_notes("s24"))
 
     # ============ s25 Cainthus + tie-stall + Holstein-bias ============
+    # v2 (owner follow-up 2026-11-20): переверстано вокруг пары «на чём учили /
+    # хорошие метрики» (свободное содержание, голштинская порода — CV работает)
+    # vs «на чём сломалось» (привязное содержание — освещение слабое, силуэты
+    # перекрыты). Прежняя версия имела только маленькое (1.25"x1.0") превью
+    # tie-stall-сарая и НИ ОДНОГО фото Holstein, хотя footer утверждал обратное
+    # ("Источники: Wikimedia Commons (Holstein)") — несоответствие исправлено:
+    # обе стороны теперь настоящие большие фото со своими источниками. 3 анти-
+    # хайп урока сведены в компактную 3-колоночную полосу снизу (полный текст —
+    # в speaker notes дословно).
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
         "Cainthus, привязное содержание, голштинский уклон — 3 анти-хайп урока L3",
-        size=20)
+        size=19)
 
-    lessons = [
-        ("Cainthus (Cargill 2018)", "Анонс ≠ внедрение",
-         "Публичных производственных метрик нет. Брендированный пресс-релиз, но 0 измеримых данных по развёртыванию к 2026 году.",
-         "alert-circle"),
-        ("Привязное содержание", "Архитектура ломает компьютерное зрение",
-         "Алгоритм работает на беспривязном (свободном) содержании, не на привязном.\n"
-         "Большая часть РФ-коров содержится привязно.",
-         "lock"),
-        ("Голштинский уклон", "Обучающие данные ≠ местные породы",
-         "ИИ обучен на голштинской / фризской породе. Ярославская, Якутская, Холмогорская — другая морфология.\n"
-         "Способности ИИ ≠ применимость ИИ.",
-         "x"),
+    PANEL_Y, PANEL_H, PANEL_W = 1.15, 3.35, 5.95
+    LX, RX = 0.6, 6.8
+    ocean_box(s, LX, PANEL_Y, PANEL_W, PANEL_H, fill=SURFACE)
+    ocean_box(s, RX, PANEL_Y, PANEL_W, PANEL_H, fill=SURFACE)
+    _p_free = ASSETS / "photos" / "p22-cow-eartag-milking-robot-crop.jpg"
+    _p_tie = ASSETS / "photos" / "p25-tiestall-anbindehaltung-crop.jpg"
+    _pad = 0.07
+    if _p_free.exists():
+        add_image(s, _p_free, LX + _pad, PANEL_Y + _pad, w=PANEL_W - 2 * _pad, h=PANEL_H - 2 * _pad)
+    if _p_tie.exists():
+        add_image(s, _p_tie, RX + _pad, PANEL_Y + _pad, w=PANEL_W - 2 * _pad, h=PANEL_H - 2 * _pad)
+
+    cap_y = PANEL_Y + PANEL_H + 0.06
+    text_runs(s, LX, cap_y, PANEL_W, 0.52, [
+        {"text": "Свободное содержание, голштинская порода — ", "size": 10.5, "italic": True, "color": DEEP},
+        {"text": "CV работает", "size": 11.5, "bold": True, "color": GOLD},
+        {"text": " (SenseHub, CattleEye)", "size": 10.5, "italic": True, "color": DEEP},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.1)
+    text_runs(s, RX, cap_y, PANEL_W, 0.52, [
+        {"text": "Привязное содержание — освещение слабое, силуэты перекрыты — ",
+         "size": 10.5, "italic": True, "color": DEEP},
+        {"text": "CV не работает", "size": 11.5, "bold": True, "color": MID},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.1)
+
+    # Вывод-плашка
+    ap_y = cap_y + 0.56
+    ocean_box(s, 0.6, ap_y, 12.13, 0.56, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 0.8, ap_y + 0.05, 11.7, 0.46,
+             "AI capability ≠ AI applicability: та же модель, рабочая на free-stall в Висконсине, "
+             "не работает на tie-stall в Калужской области — причина архитектура хозяйства, не «российский контекст».",
+             size=10.5, bold=True, color=TEAL, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+
+    # 3 анти-хайп урока — компактная строка (полный текст — в speaker notes)
+    row_y = ap_y + 0.64
+    row_h = 0.78
+    rw = (12.13 - 0.4) / 3
+    lessons3 = [
+        ("Cainthus (Cargill 2018)", "Анонс ≠ внедрение: публичных production-метрик нет",
+         LIGHT_TINT, LIGHT),
+        ("Привязное содержание", "Архитектура ломает CV — см. фото справа",
+         GOLD_TINT, GOLD),
+        ("Голштинский уклон", "Обучен на Holstein; Ярославская/Якутская — другая морфология",
+         TEAL_TINT, TEAL),
     ]
-    sy = 1.5
-    for name, key, desc, icon_name in lessons:
-        ocean_box(s, 0.6, sy, 12.13, 1.5)
-        if icon_name == "lock":
-            # Привязное содержание — real tie-stall barn photo, not a generic icon.
-            photo_p = ASSETS / "photos" / "p25-tiestall-barn.jpg"
-            if photo_p.exists():
-                add_image(s, photo_p, 0.7, sy + 0.25, w=1.25, h=1.0)
-            else:
-                icon_p = ASSETS / "icons" / f"{icon_name}-96.png"
-                if icon_p.exists():
-                    add_image(s, icon_p, 0.85, sy + 0.3, w=0.9, h=0.9)
-        else:
-            icon_p = ASSETS / "icons" / f"{icon_name}-96.png"
-            if icon_p.exists():
-                add_image(s, icon_p, 0.85, sy + 0.3, w=0.9, h=0.9)
-        text_box(s, 2.1, sy + 0.15, 3.95, 0.4, name,
-                 size=14, bold=True, color=DEEP)
-        text_box(s, 2.1, sy + 0.55, 3.95, 0.4, key,
-                 size=13, bold=True, color=GOLD, italic=True)
-        text_box(s, 6.5, sy + 0.15, 6.0, 1.25, desc,
-                 size=11, color=DARK_GREY, italic=True, line_spacing=1.4,
-                 anchor=MSO_ANCHOR.MIDDLE)
-        sy += 1.6
+    rx = 0.6
+    for name, desc, fill, stroke in lessons3:
+        ocean_box(s, rx, row_y, rw, row_h, fill=fill, stroke=stroke)
+        text_box(s, rx + 0.15, row_y + 0.06, rw - 0.3, 0.26, name,
+                 size=10.5, bold=True, color=DEEP, line_spacing=1.0)
+        text_box(s, rx + 0.15, row_y + 0.33, rw - 0.3, 0.42, desc,
+                 size=8.6, italic=True, color=DARK_GREY, line_spacing=1.1)
+        rx += rw + 0.2
 
-    ocean_box(s, 0.6, 6.45, 12.13, 0.4, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.85, 6.5, 11.6, 0.3,
-             "Главный урок: способности ИИ ≠ применимость ИИ. Архитектура хозяйства + порода — переменные применимости.",
-             size=11, bold=True, italic=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    _s25_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Источники: Chapter v3.1 §3.4; Cargill 2018 (Cainthus); Connecterra independent disambig · фото: ",
+         "size": 9, "italic": True, "color": LIGHT},
+        {"text": "Holstein free-stall — Wikimedia CC BY-SA 4.0",
+         "size": 9, "italic": True, "color": LIGHT},
+        {"text": " · ", "size": 9, "italic": True, "color": LIGHT},
+        {"text": "tie-stall — Wikimedia CC BY-SA 2.0",
+         "size": 9, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s25_fr = [r for p in _s25_foot.text_frame.paragraphs for r in p.runs]
+    _s25_fr[1].font.underline = True
+    _s25_fr[1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Holstein_Friesian_cows_queuing_for_milking_in_an_automatic_milking_system_in_Bron%C3%B3w.jpg"
+    _s25_fr[3].font.underline = True
+    _s25_fr[3].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Milchvieh_in_Anbindehaltung.jpg"
 
-    add_footer(s, "Источники: Wikimedia Commons (Holstein); пресс-релиз Cargill 2018")
     add_speaker_notes(s, load_speaker_notes("s25"))
 
     # ============ s26 РФ L3 ============

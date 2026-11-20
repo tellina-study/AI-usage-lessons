@@ -8,8 +8,8 @@ learning_outcomes: [LO5]
 chapter_ref: "§2.5 Часть 2 — Strict-in F5 FarmWise + Naïo"
 references: [farm-progress-2025, arxiv-2508-shadow-bias, mdpi-agri-2024]
 visual:
-  pattern: cause_alternative_2col
-  primary: "Слева — failure causes (CV в пыли + shadow bias + переменное освещение); справа — AP2b альтернатива mechanical weeders (Lemken, Kverneland)"
+  pattern: two_large_images_train_vs_break
+  primary: "Два больших фото рядом (owner follow-up #340, 2026-11-20): слева — FarmWise Titan FT-35, чистое освещённое поле ночной съёмки (на чём работало, ~90% в тестах); справа — реальное поле с пыльным шлейфом от культивации (на чём сломалось, 50-60%). Подписи + общая вывод-плашка ниже. AP2b (mechanical weeders) сведён в компактную строку снизу (полный текст — в speaker notes)."
 ---
 
 # FarmWise wind-down + Naïo recovery — open-environment ломает CV
@@ -20,38 +20,17 @@ FarmWise wind-down 2025; Naïo €4M → €2,4M (–40%) judicial recovery 2025
 
 ## Visual
 
-Двухколоночный layout.
+**Два больших фото рядом** (owner follow-up #340 — «покажи то, на чём учили и были хорошие метрики, и на чём сломалось»):
 
-**Левая колонка (50%) — Failure causes:**
+- **Слева** — FarmWise Titan FT-35 в чистом, хорошо освещённом поле (ночная съёмка, Wikimedia CC BY-SA 4.0). Подпись: «Чистое, хорошо освещённое поле (FarmWise Titan, ночная съёмка) — ~90% в тестах».
+- **Справа** — реальное поле с пыльным шлейфом от культивации (Geograph/Wikimedia CC BY-SA 2.0). Подпись: «Реальное поле при культивации: пыль + сдвиг теней — 50-60%».
+- Под обеими фото — вывод-плашка (Teal-tint): FarmWise wind-down 2025; Naïo €4М→€2,4М (–40%); CV, обученный в тепличных/контролируемых условиях, структурно ломается в открытом поле (пыль / тени / shadow bias, arXiv 2508.19511).
 
-Сверху — photo FarmWise робота (или Naïo Orio) в поле с visual occlusion от пыли. Caption 12pt italic: «FarmWise / Naïo — структурная причина wind-down».
+**Компактная строка снизу** (Gold-tint, полный текст альтернативы — в speaker notes):
+- **AP2b. Genuine не-ИИ альтернатива:** механические культиваторы (Lemken Steketee EC-Weeder, Kverneland Onyx) — deterministic robust, без ИИ-стека, устойчивы к пыли/теням.
+- **Критическое различение:** AP2a (другой класс ИИ — см. следующий слайд Cognitive Pilot/ИТЭЛМА) ≠ AP2b (не-ИИ) — не путать.
 
-Под фото — 3-mini-cards в Ocean rounded box:
-
-1. **Пыль (visual occlusion)** — деградация качества изображения с CV-камер
-2. **Переменное освещение** — тени от облаков меняют контраст за минуты
-3. **Shadow bias** — модель классифицирует тени как растительность (arXiv 2508.19511)
-
-Под mini-cards — финансовая динамика:
-- **FarmWise** — wind-down 2025; машины в полях без сервиса
-- **Naïo Technologies** (Toulouse) — judicial recovery июнь 2025
-- Revenue: €4M (2021) → €2,4M (2024), **–40%** ★ gold accent
-
-**Правая колонка (50%) — AP2b альтернатива:**
-
-Photo механического weeder (Lemken Steketee EC-Weeder или Kverneland Onyx) обрамлённое Ocean rounded box. Caption: «Mechanical weeder · deterministic robust».
-
-Под фото — callout в Teal-tint box:
-- **AP2b. Genuine не-ИИ альтернатива.** Когда CV-стек структурно не выдерживает open-environment условий — mechanical weeders дают deterministic robust решение **без ИИ-стека**.
-- Lemken Steketee EC-Weeder; Kverneland Onyx
-- Менее «smart», но: устойчивы к пыли / дождю / теням; без firmware updates; без cloud dependency; без CV-failure modes
-
-Под callout — **критическое различение AP2a vs AP2b**:
-- **AP2a** = другой класс AI (sensor-fusion вместо CV)
-- **AP2b** = НЕ-AI (механика вместо AI)
-- Не путать!
-
-Footer 12pt italic: «Источники: Farm Progress 2025; arXiv 2508.19511 (shadow bias); MDPI Agriculture systematic review 2024».
+Footer 9pt italic: «Источники: Farm Progress 2025; arXiv 2508.19511 (shadow bias); Lemken / Kverneland press · фото: FarmWise, Wikimedia CC BY-SA 4.0 · Geograph/Wikimedia CC BY-SA 2.0» (оба фото-сегмента — настоящие гиперссылки).
 
 ## Speaker notes
 

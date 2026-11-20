@@ -1252,82 +1252,88 @@ def build_part1_full(prs, H):
     add_speaker_notes(s, load_speaker_notes("s08a"))
 
     # ============ s08b — Sentera: 97% кукуруза/хлопок, r<0,30 соя (issue #340) ============
-    # Iter2 fix: исходная вёрстка переполняла слайд (карточки банкротств наезжали на
-    # footer) — весь вертикальный бюджет пересчитан заново под 7.5" с запасом.
+    # v2 (owner follow-up 2026-11-20): переверстано вокруг двух больших фото
+    # «на чём учили / хорошие метрики» (кукуруза, ряды всходов) vs «на чём
+    # сломалось» (соя, редкие всходы без выраженного рядного контраста) —
+    # владелец явно попросил эту пару для каждого провала распознавания.
+    # 5-метод-таблица и 2 карточки банкротств сжаты в один компактный ряд
+    # снизу (полный текст обеих тем остаётся в speaker notes дословно).
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s, "Sentera — 97% на кукурузе и хлопке, r<0,30 на сое", size=22)
 
-    # Плашка «было·стало»
-    hw = (12.13 - 0.2) / 2
-    ocean_box(s, 0.6, 1.3, hw, 0.8, fill=GOLD_TINT, stroke=GOLD)
-    text_box(s, 0.8, 1.36, hw - 0.4, 0.38, "97%", size=26, bold=True, color=GOLD)
-    text_box(s, 0.8, 1.78, hw - 0.4, 0.28, "заявлено Sentera · кукуруза, хлопок (2019)",
-             size=9.5, italic=True, color=DEEP, line_spacing=1.05)
-    ocean_box(s, 0.6 + hw + 0.2, 1.3, hw, 0.8, fill=LIGHT_TINT, stroke=LIGHT)
-    text_box(s, 0.8 + hw + 0.2, 1.36, hw - 0.4, 0.38, "r<0,30 (R²≈0,10)", size=21, bold=True, color=MID)
-    text_box(s, 0.8 + hw + 0.2, 1.78, hw - 0.4, 0.28, "независимо · MSU Extension · соя (2024-2025)",
-             size=9.5, italic=True, color=DEEP, line_spacing=1.05)
-    text_box(s, 0.6, 2.16, 12.13, 0.24, "Тот же вендор, та же камера, другая культура",
-             size=10.5, bold=True, italic=True, color=DARK_GREY, align=PP_ALIGN.CENTER)
+    PANEL_Y, PANEL_H, PANEL_W = 1.28, 3.5, 5.95
+    LX, RX = 0.6, 6.8
+    ocean_box(s, LX, PANEL_Y, PANEL_W, PANEL_H, fill=SURFACE)
+    ocean_box(s, RX, PANEL_Y, PANEL_W, PANEL_H, fill=SURFACE)
+    _p_corn = ASSETS / "photos" / "p08b-corn-seedlings-rows-crop.jpg"
+    _p_soy = ASSETS / "photos" / "p08b-soy-seedling-crop.jpg"
+    _pad = 0.07
+    if _p_corn.exists():
+        add_image(s, _p_corn, LX + _pad, PANEL_Y + _pad, w=PANEL_W - 2 * _pad, h=PANEL_H - 2 * _pad)
+    if _p_soy.exists():
+        add_image(s, _p_soy, RX + _pad, PANEL_Y + _pad, w=PANEL_W - 2 * _pad, h=PANEL_H - 2 * _pad)
 
-    # Мини-таблица 5 методов MSU
-    text_box(s, 0.6, 2.46, 12.13, 0.2,
-             "Пять методов, двухлетнее исследование MSU Extension 2024-2025", size=10.5, bold=True, color=MID)
-    methods = [
-        ("Ручной подсчёт", "эталон"),
-        ("BeanCam", "r=0,3122 (p=0,0003) — значимо, но слабо"),
-        ("Smart Stand", "r<0,30"),
-        ("Аэрофото + Agremo", "r<0,30"),
-        ("Аэрофото + Sentera", "r<0,30"),
-    ]
-    mt_y = 2.68; mt_h = 0.29; mt_gap = 0.03
-    for i, (name, res) in enumerate(methods):
-        fill = SURFACE if i % 2 == 0 else LIGHT_TINT
-        ocean_box(s, 0.6, mt_y, 12.13, mt_h, fill=fill, stroke=LIGHT, stroke_pt=0.4)
-        text_box(s, 0.78, mt_y, 4.2, mt_h, name, size=10, bold=True, color=DEEP, anchor=MSO_ANCHOR.MIDDLE)
-        text_box(s, 5.1, mt_y, 7.4, mt_h, res, size=10, italic=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-        mt_y += mt_h + mt_gap
-    text_box(s, 0.6, mt_y + 0.02, 12.13, 0.22,
+    cap_y = PANEL_Y + PANEL_H + 0.06
+    text_runs(s, LX, cap_y, PANEL_W, 0.52, [
+        {"text": "Кукуруза / хлопок — ", "size": 11, "italic": True, "color": DEEP},
+        {"text": "97%", "size": 13, "bold": True, "color": GOLD},
+        {"text": " заявлено (Sentera, 2019) — на этом училась и валидировалась модель",
+         "size": 11, "italic": True, "color": DEEP},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.1)
+    text_runs(s, RX, cap_y, PANEL_W, 0.52, [
+        {"text": "Соя — ", "size": 11, "italic": True, "color": DEEP},
+        {"text": "r<0,30 (R²≈0,10)", "size": 13, "bold": True, "color": MID},
+        {"text": " независимо, MSU Extension 2024-2025 — здесь модель сломалась",
+         "size": 11, "italic": True, "color": DEEP},
+    ], align=PP_ALIGN.CENTER, line_spacing=1.1)
+
+    # Вывод-плашка AP3 (слитый «тот же вендор» + анти-ИИ критерий)
+    ap_y = cap_y + 0.56
+    ocean_box(s, 0.6, ap_y, 12.13, 0.56, fill=TEAL_TINT, stroke=TEAL)
+    text_box(s, 0.8, ap_y + 0.05, 11.7, 0.46,
+             "Тот же вендор, та же камера, другая культура. Точность — свойство пары (культура, задача), "
+             "не бренда — AP3 (второй раз в разделе, после Plantix): пороговая точность на одной задаче "
+             "не гарантирует развёртывание на другой.",
+             size=11, bold=True, color=TEAL, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+
+    # Компактный ряд снизу — 5 методов MSU (слева) + 2 банкротства (справа),
+    # полные версии обеих тем — в speaker notes.
+    bot_y = ap_y + 0.64
+    bot_h = 0.72
+    bw = (12.13 - 0.2) / 2
+    ocean_box(s, 0.6, bot_y, bw, bot_h, fill=LIGHT_TINT, stroke=LIGHT)
+    text_box(s, 0.78, bot_y + 0.06, bw - 0.36, 0.22,
+             "5 методов MSU Extension (2024-2025): ручной счёт — эталон; BeanCam r=0,31; "
+             "Smart Stand / Agremo / Sentera — все r<0,30.",
+             size=8.8, color=DARK_GREY, line_spacing=1.1)
+    text_box(s, 0.78, bot_y + 0.42, bw - 0.36, 0.26,
              "Вывод MSU: «старомодный ручной метод остаётся самым точным»",
-             size=10, bold=True, italic=True, color=DARK_GREY)
+             size=8.8, bold=True, italic=True, color=MID, line_spacing=1.1)
+    ocean_box(s, 0.6 + bw + 0.2, bot_y, bw, bot_h, fill=GOLD_TINT, stroke=GOLD)
+    text_box(s, 0.78 + bw + 0.2, bot_y + 0.06, bw - 0.36, 0.3,
+             "PrecisionHawk (Chapter 7, дек. 2023, >$136M / ≈$17M долга) и Gro Intelligence "
+             "(закрытие май-июнь 2024, >$115M, SEC) —",
+             size=8.8, color=DARK_GREY, line_spacing=1.1)
+    text_box(s, 0.78 + bw + 0.2, bot_y + 0.42, bw - 0.36, 0.26,
+             "бизнес-провал, НЕ провал точности модели",
+             size=8.8, bold=True, italic=True, color=GOLD, line_spacing=1.1)
 
-    # Вывод-плашка AP3
-    ap_y = mt_y + 0.3
-    ocean_box(s, 0.6, ap_y, 12.13, 0.5, fill=TEAL_TINT, stroke=TEAL)
-    text_box(s, 0.8, ap_y + 0.05, 11.7, 0.4,
-             "Точность — свойство пары (культура, задача), не бренда. Второй раз в разделе (после Plantix) "
-             "— AP3: пороговая точность на одной задаче не гарантирует развёртывание на другой.",
-             size=10.5, bold=True, color=TEAL, line_spacing=1.15, anchor=MSO_ANCHOR.MIDDLE)
+    _s08b_foot = text_runs(s, 0.5, 7.05, 12.33, 0.30, [
+        {"text": "Источники: Farm Progress «High-tech or hula hoop…»; MSU CANR 2024-2025; банкротство "
+                  "PrecisionHawk дек. 2023; закрытие Gro Intelligence май-июнь 2024 · фото: ",
+         "size": 9, "italic": True, "color": LIGHT},
+        {"text": "кукуруза — Geograph/Wikimedia CC BY-SA 2.0",
+         "size": 9, "italic": True, "color": LIGHT},
+        {"text": " · ", "size": 9, "italic": True, "color": LIGHT},
+        {"text": "соя — Wikimedia CC BY-SA 4.0",
+         "size": 9, "italic": True, "color": LIGHT},
+    ], anchor=MSO_ANCHOR.MIDDLE)
+    _s08b_fr = [r for p in _s08b_foot.text_frame.paragraphs for r in p.runs]
+    _s08b_fr[1].font.underline = True
+    _s08b_fr[1].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Field_of_maize_seedlings_-_geograph.org.uk_-_442573.jpg"
+    _s08b_fr[3].font.underline = True
+    _s08b_fr[3].hyperlink.address = "https://commons.wikimedia.org/wiki/File:Soybean_seedling.jpg"
 
-    # 2 карточки банкротств
-    bc_y = ap_y + 0.58
-    bc_h = 1.72
-    bc_w = (12.13 - 0.2) / 2
-    ocean_box(s, 0.6, bc_y, bc_w, bc_h)
-    ip_bc1 = ASSETS / "icons" / "building-2-48.png"
-    if ip_bc1.exists():
-        add_image(s, ip_bc1, 0.8, bc_y + 0.1, w=0.24, h=0.24)
-    text_box(s, 1.12, bc_y + 0.08, bc_w - 0.72, 0.28, "PrecisionHawk", size=13, bold=True, color=DEEP)
-    text_box(s, 0.8, bc_y + 0.36, bc_w - 0.4, 0.24, "Chapter 7 · декабрь 2023", size=10.5, italic=True, color=MID)
-    text_box(s, 0.8, bc_y + 0.6, bc_w - 0.4, 0.32, ">$136M привлечено vs ≈$17M долга / ≈$3,8M активов",
-             size=9.5, bold=True, color=GOLD, line_spacing=1.1)
-    text_box(s, 0.8, bc_y + 0.94, bc_w - 0.4, 0.7,
-             "«Мы знали, что сделать PrecisionHawk прибыльной в короткий срок будет непросто» — "
-             "бизнес-провал, не провал точности", size=8.8, italic=True, color=DARK_GREY, line_spacing=1.15)
-    ocean_box(s, 0.6 + bc_w + 0.2, bc_y, bc_w, bc_h)
-    ip_bc2 = ASSETS / "icons" / "building-2-48.png"
-    if ip_bc2.exists():
-        add_image(s, ip_bc2, 0.8 + bc_w + 0.2, bc_y + 0.1, w=0.24, h=0.24)
-    text_box(s, 1.12 + bc_w + 0.2, bc_y + 0.08, bc_w - 0.72, 0.28, "Gro Intelligence", size=13, bold=True, color=DEEP)
-    text_box(s, 0.8 + bc_w + 0.2, bc_y + 0.36, bc_w - 0.4, 0.24, "закрытие · май-июнь 2024", size=10.5, italic=True, color=MID)
-    text_box(s, 0.8 + bc_w + 0.2, bc_y + 0.6, bc_w - 0.4, 0.32, ">$115M привлечено · –60% штата в марте · расследование SEC",
-             size=9.5, bold=True, color=GOLD, line_spacing=1.1)
-    text_box(s, 0.8 + bc_w + 0.2, bc_y + 0.94, bc_w - 0.4, 0.7,
-             "«Фундаментальное несовпадение продукта и рынка» — та же модель, что точнее консенсуса "
-             "аналитиков по урожайности, бизнес всё равно не выжил", size=8.8, italic=True, color=DARK_GREY, line_spacing=1.15)
-
-    add_footer(s, "Источники: Farm Progress «High-tech or hula hoop…»; MSU CANR 2024-2025; "
-                  "банкротство PrecisionHawk дек. 2023; закрытие Gro Intelligence май-июнь 2024")
     add_speaker_notes(s, load_speaker_notes("s08b"))
 
     # ============ s08c — USDA Climate-Smart Commodities отменена (issue #340 v3.9) ============

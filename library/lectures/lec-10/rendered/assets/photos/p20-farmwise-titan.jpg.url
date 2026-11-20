@@ -1,0 +1,13 @@
+https://commons.wikimedia.org/wiki/File:Titan_FT35_FarmWise3.jpg
+Source: Wikimedia Commons
+Photo credit: Eric Brown, Head of Hardware, FarmWise Labs, Inc. (uploaded by PaulineCant)
+License: CC BY-SA 4.0
+Uploaded: 2021-01-18
+Acquisition tier: Tier 2 (Wikimedia Commons)
+Description: FarmWise Titan FT-35 autonomous weeding robot operating at night in a lettuce
+field — clean, well-lit, dust-free rows (the "controlled / good-metrics" operating condition
+this vendor's CV stack was demonstrated and tested under).
+Used on: s20 (FarmWise + Naïo) — LEFT panel "trained on / good metrics" condition, paired with
+p20-dusty-field-tillage.jpg (real open-field dust) as the "broke on" condition — issue #340
+owner follow-up (2026-11-20, train-vs-break illustration pass). Previously embedded without a
+.url sidecar (pre-dates this course's sidecar discipline); sidecar backfilled now, file unchanged.

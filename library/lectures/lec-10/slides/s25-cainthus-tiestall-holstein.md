@@ -8,9 +8,8 @@ learning_outcomes: [LO5]
 chapter_ref: "§3.4 Часть 2 — Strict-in F8 Cainthus + tie-stall + Holstein-bias"
 references: [chapter-v3-3-4-misattribution]
 visual:
-  pattern: 3row_anti_hype
-  primary: "3-row schema (Cainthus — анонс ≠ внедрение / Tie-stall — физика ломает CV / Holstein-bias — архитектурная асимметрия) + tie-stall vs free-stall diagram"
----
+  pattern: two_large_images_train_vs_break_plus_3row
+  primary: "Два больших фото рядом (owner follow-up #340, 2026-11-20): слева — Holstein-коровы в free-stall барне у автоматической доильной системы (CV работает); справа — коровы в привязном (tie-stall) содержании (CV не работает). Вывод-плашка AI capability ≠ AI applicability ниже. 3 анти-хайп урока (Cainthus / tie-stall / Holstein-bias) сведены в компактную 3-колоночную строку снизу."
 
 # Cainthus, tie-stall barns, Holstein-bias — 3 anti-hype урока
 
@@ -20,30 +19,19 @@ Cainthus (Cargill 2018) — публичных production-метрик нет (�
 
 ## Visual
 
-Под assertion 28pt bold — 3-row schema, каждая строка — отдельный anti-hype урок в Ocean rounded box. Гибридный layout с photo / diagram где уместно.
+**Два больших фото рядом** (owner follow-up #340, 2026-11-20 — «покажи то, на чём учили и были хорошие метрики, и на чём сломалось»; заменяет прежнюю версию, где было только маленькое 1.25"×1.0" превью tie-stall-сарая и НИ ОДНОГО фото Holstein, хотя footer ошибочно утверждал «Источники: Wikimedia Commons (Holstein)» — несоответствие исправлено):
 
-**Row 1 — Cainthus: анонс ≠ внедрение.**
-- Icon `megaphone` 32px Primary mid + label
-- Cainthus (Дублин, IE) — приобретена **Cargill в 2018**; camera-based CV для feeding/drinking/lying/social behaviour коров
-- **Публично опубликованных production-метрик нет**
-- Misattribution warning: **Cainthus ≠ Connecterra IDA** (две независимые компании, разные архитектуры — neck-collar vs camera-based)
-- Урок: пресс-релиз о партнёрстве ≠ промышленное внедрение
+- **Слева** — Holstein-Friesian коровы у автоматической доильной системы в Бронуве, свободное (free-stall) содержание (Wikimedia CC BY-SA 4.0, уже используется как hero divider s22). Подпись: «Свободное содержание, голштинская порода — CV работает (SenseHub, CattleEye)».
+- **Справа** — коровы в привязном (tie-stall) содержании, вид сзади, доильная линия сверху (Wikimedia CC BY-SA 2.0; коричнево-пёстрая окраска — НЕ чёрно-белый Holstein-паттерн, хотя порода не названа в метаданных файла). Подпись: «Привязное содержание — освещение слабое, силуэты перекрыты — CV не работает».
+- Под фото — вывод-плашка (Teal-tint): «AI capability ≠ AI applicability: та же модель, рабочая на free-stall в Висконсине, не работает на tie-stall в Калужской области — причина архитектура хозяйства, не «российский контекст»».
 
-**Row 2 — Tie-stall: физика ломает CV.**
-- Слева — mini-diagram tie-stall vs free-stall barn (Ocean palette schematic)
-- Tie-stall barns (Восточная Европа, РФ, Канада, Висконсин) — корова привязана к стойлу
-- CV-решения L3 (CattleEye, SenseHub) **плохо работают**: слабое освещение, силуэты перекрыты, нет «корова идёт по коридору»
-- Урок: **AI capability ≠ AI applicability** — та же модель работает на free-stall в Висконсине, не работает на tie-stall в Калужской области
+**3 анти-хайп урока** — компактная 3-колоночная строка снизу (полный текст каждого — в speaker notes дословно):
 
-**Row 3 — Holstein-bias: архитектурная асимметрия.**
-- Слева — mini-comparison Holstein (чёрно-белая) vs Ярославская / Якутская / Бестужевская (рыжие, разной формы)
-- CV-модели L3 обучены на доминирующих породах (преимущественно Holstein)
-- Для местных пород РФ — калибровка слабая (непривычная окраска, форма, походка)
-- **Решение:** transfer learning + 5-10k локально размеченных изображений **до** внедрения, не после первого иска
+1. **Cainthus (Cargill 2018)** — анонс ≠ внедрение: публичных production-метрик нет. Misattribution warning: Cainthus ≠ Connecterra IDA (две независимые компании, разные архитектуры — neck-collar vs camera-based).
+2. **Привязное содержание** — архитектура ломает CV (см. фото справа): слабое освещение, силуэты перекрыты, нет «корова идёт по коридору».
+3. **Голштинский уклон** — CV-модели L3 обучены преимущественно на Holstein; Ярославская/Якутская/Бестужевская — другая морфология. Решение: transfer learning + 5-10k локально размеченных изображений до внедрения.
 
-Bottom callout 14pt italic в Teal-tint box: «**AP3 в L3 — пороговая точность ≠ готовность к внедрению.** Две формы: Plantix-форма (общая точность не говорит о краевых случаях) + applicability gap (физическая конфигурация / порода / сорт, для которых модель не обучена)».
-
-Footer 12pt italic: «Источники: Chapter v3.1 §3.4; Cargill 2018 acquisition; Connecterra independent disambig».
+Footer 9pt italic: «Источники: Chapter v3.1 §3.4; Cargill 2018 acquisition; Connecterra independent disambig · фото: Holstein free-stall — Wikimedia CC BY-SA 4.0 · tie-stall — Wikimedia CC BY-SA 2.0» (оба фото-сегмента — настоящие гиперссылки).
 
 ## Speaker notes
 

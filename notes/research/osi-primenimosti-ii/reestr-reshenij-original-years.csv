@@ -1,0 +1,422 @@
+id,year,year_confidence,year_quote,source_file,source_locator
+L04-001,2025,explicit,METR 2025 RCT (разрыв восприятия),lec-04.md,METR 2025 RCT (разрыв восприятия)
+L04-002,,absent,,lec-04.md,AWS Kiro — target identification (life sciences)
+L04-003,,absent,,lec-04.md,"«847 AI-agent deployments, 76% failed in 90 дней»"
+L04-004,2025,explicit,Google Gemini CLI — удаление файлов (июль 2025),lec-04.md,Google Gemini CLI — удаление файлов (июль 2025)
+L04-005,2026,explicit,Uber — внедрение AI-кодинга (2026),lec-04.md,Uber — внедрение AI-кодинга (2026)
+L04-006,2026,explicit,Claude Code читает .env вопреки .gitignore/.claudeignore (28.01.2026),lec-04.md,The Register — Claude Code читает .env вопреки .gitignore/.claudeignore
+L04-007,,absent,,lec-04.md,GitHub MCP server — эксфильтрация через issues
+L04-008,2025,explicit,"патч 08.2025, публичное раскрытие 10.2025",lec-04.md,"CamoLeak (CVE-2025-59145, CVSS 9.6)"
+L04-009,2025,explicit,"Slopsquatting (Seth Larson/PSF, апрель 2025)",lec-04.md,"Slopsquatting (Seth Larson/PSF, апрель 2025)"
+L04-010,,absent,,lec-04.md,Devin (Cognition) — overclaim на SWE-bench
+L04-011,,absent,,lec-04.md,OpenAI — «80% SWE-bench» vs собственное признание 59% дефектов теста
+L04-012,,absent,,lec-04.md,Cursor — «frontier-модель Composer»
+L04-013,2026,explicit,"GitClear 2026 «The Maintainability Gap» (623M изменений, 2023–2026)",lec-04.md,"GitClear 2026 «The Maintainability Gap» (623M изменений, 2023–2026)"
+L04-014,2024,range,curl bug bounty — AI-slop кризис (2024–2026) … вернулась в марте 2026,lec-04.md,curl bug bounty — AI-slop кризис (2024–2026)
+L04-015,2026,explicit,AI-агент опубликовал эссе против мейнтейнера (10.02.2026),lec-04.md,matplotlib — AI-агент опубликовал эссе против мейнтейнера (10.02.2026)
+L04-016,2025,explicit,"«Rubber-Stamp Collapse» (CodeRabbit, 470 PR, дек. 2025)",lec-04.md,"«Rubber-Stamp Collapse» (CodeRabbit, 470 PR, дек. 2025) + телеметрия 22k разработчиков"
+L04-017,,absent,,lec-04.md,Google Big Sleep — предотвращённая эксплуатация SQLite zero-day
+L04-018,2024,explicit,~20-летний баг в OpenSSL (CVE-2024-9143),lec-04.md,OSS-Fuzz + LLM — ~20-летний баг в OpenSSL (CVE-2024-9143)
+L04-019,2022,explicit,NYU «Asleep at the Keyboard?» (IEEE S&P 2022),lec-04.md,NYU «Asleep at the Keyboard?» (IEEE S&P 2022)
+L04-020,2022,explicit,"foundation model/LLM (ассистент, pre-agentic эра, ~2022)",lec-04.md,Stanford (Perry et al.) — уязвимее и увереннее
+L04-021,2025,explicit,Amazon Q Developer (VS Code) — промпт «wiper» (июль 2025),lec-04.md,Amazon Q Developer (VS Code) — промпт «wiper» (июль 2025)
+L04-022,2025,explicit,Replit — удаление прод-БД в code-freeze (июль 2025),lec-04.md,Replit — удаление прод-БД в code-freeze (июль 2025)
+L04-023,2025,explicit,AWS Kiro — инцидент простоя (декабрь 2025),lec-04.md,AWS Kiro — инцидент простоя (декабрь 2025)
+L04-024,2026,explicit,PocketOS/Cursor — удаление БД за 9 секунд (апрель 2026),lec-04.md,PocketOS/Cursor — удаление БД за 9 секунд (апрель 2026)
+L04-025,,absent,,lec-04.md,BT Group — AI-копайлот снизил MTTR с 2ч до 85 сек (~97%)
+L04-026,,absent,,lec-04.md,"Microsoft Azure «Triangle» — time-to-engage −91%, точность триажа 97%"
+L04-027,2026,explicit,"8,4% в 2026 security-filtered бенчмарке",lec-04.md,"IaC-генерация — безопасность по умолчанию (~55% стагнация 2 года; 8,4% в 2026 security-filtered бенчмарке)"
+L04-028,,absent,,lec-04.md,IBM ContextQA (watsonx.ai) — покрытие тестами 20%→80%
+L04-029,,absent,,lec-04.md,"Анонимизированный кейс «Autonoma AI» — 70%+ покрытия, зелёный CI, баги всё равно доходили до staging"
+L04-030,2026,explicit,Sonar 2026 State of Code survey — доверие 43%→29%,lec-04.md,Sonar 2026 State of Code survey — доверие 43%→29% при adoption→84%
+L04-031,2026,explicit,"Anthropic (Shen & Tamkin, 2026) — RCT n=52",lec-04.md,"Anthropic (Shen & Tamkin, 2026) — RCT n=52, усвоение навыка −17пп"
+L04-032,2023,explicit,"GitHub Copilot RCT (Peng et al. 2023, GitHub)",lec-04.md,"GitHub Copilot RCT (Peng et al. 2023, GitHub) — лабораторные +55%"
+L04-033,,absent,,lec-04.md,"MIT GenAI field study (~1974 разработчика, Microsoft/Accenture) — +7–22% PR/неделю"
+L05-001,,absent,,lec-05.md,NN/g синтетическая панель
+L05-002,,absent,,lec-05.md,Twin-2K-500 (Toubia и др.)
+L05-003,,absent,,lec-05.md,"Deloitte Australia, фабрикованный отчёт"
+L05-004,,absent,,lec-05.md,IBM Watson for Oncology (MSK)
+L05-005,,absent,,lec-05.md,IBM Oncology Expert Advisor (MD Anderson)
+L05-006,,absent,,lec-05.md,Humane AI Pin
+L05-007,,absent,,lec-05.md,Google Glass Enterprise Edition
+L05-008,,absent,,lec-05.md,Character.AI (версия главы)
+L05-009,2023,explicit,расследование 08.2021 → отзыв 12.2023 (2 г. 4 мес.),lec-05.md,"Tesla Autopilot, отзыв 23V-838"
+L05-010,,absent,,lec-05.md,Therabot (Дартмутский колледж)
+L05-011,,absent,,lec-05.md,iTutorGroup
+L05-012,,absent,,lec-05.md,Google AI Overviews
+L05-013,,absent,,lec-05.md,Google AI Mode
+L05-014,,absent,,lec-05.md,McDonald's × IBM drive-thru
+L05-015,2026,explicit,"Taco Bell ≈890 ресторанов к июлю 2026, Wendy's 500+ точек",lec-05.md,Taco Bell / Wendy's FreshAI
+L05-016,,absent,,lec-05.md,Anthropic: ревью PR / инструмент Code Review
+L05-017,2018,explicit,Facebook MSI (2018),lec-05.md,Facebook MSI (2018)
+L05-018,2019,explicit,С января 2019 — 30+ изменений; к декабрю 2019 время просмотра … упало на ~70%,lec-05.md,YouTube: снижение рекомендаций пограничного контента
+L05-019,,absent,,lec-05.md,Med-PaLM 2
+L05-020,,absent,,lec-05.md,"Legal AI-галлюцинации (ChatGPT/Mata v. Avianca; Lexis+ 17%, Westlaw 33%)"
+L05-021,2025,explicit,VLAIR — независимый слепой бенчмарк юридического ИИ (2025),lec-05.md,VLAIR — независимый слепой бенчмарк юридического ИИ (2025)
+L05-022,2020,range,ступенчатый rollout на месяцы (ноя 2020 – май 2021),lec-05.md,"Brynjolfsson и др., помощник оператора поддержки"
+L05-023,2025,explicit,Бот поддержки Cursor (апрель 2025),lec-05.md,Бот поддержки Cursor (апрель 2025)
+L05-024,2021,explicit,"$304,4 млн списания за 3кв2021, $407,9 млн за год",lec-05.md,Zillow Offers / Zestimate (iBuying)
+L05-025,,absent,,lec-05.md,Air Canada / Moffatt v. Air Canada
+L05-026,,absent,,lec-05.md,GOV.UK Chat
+L05-027,2025,explicit,T_outcome ~14 месяцев до публичного признания проблемы (февр. 2024 → май 2025),lec-05.md,Klarna: разворот политики «только ИИ»
+L05-028,,absent,,lec-05.md,NYC MyCity
+L05-029,,absent,,lec-05.md,Chevrolet «$1 Tahoe» (prompt injection)
+L05-030,,absent,,lec-05.md,"Sber «AI-Disrupt PDLC» (intent-loop, maturity 0–5)"
+L05-031,,absent,,lec-05.md,MIT NANDA «GenAI Divide» / макро-статистика
+L05-032,,absent,,lec-05.md,Amazon Just Walk Out
+L06-001,2018,explicit,"GM seat bracket (Autodesk, 2018)",lec-06.md,"GM seat bracket (Autodesk, 2018)"
+L06-002,,absent,,lec-06.md,Airbus «bionic partition» (A320)
+L06-003,,absent,,lec-06.md,ОКБ Сухого — кронштейн Су-57
+L06-004,,absent,,lec-06.md,МС-21-300 — прототип кронштейна навески двери
+L06-005,,absent,,lec-06.md,APM FEM (КОМПАС-3D / АСКОН)
+L06-006,2006,explicit,штатная работа после запуска (22 марта 2006),lec-06.md,NASA ST5 — эволюционная антенна (2006)
+L06-007,2026,explicit,Ansys SimAI (релиз 2026 R1),lec-06.md,Ansys SimAI (релиз 2026 R1)
+L06-008,2026,explicit,Altair PhysicsAI (HyperWorks 2026),lec-06.md,Altair PhysicsAI (HyperWorks 2026)
+L06-009,,absent,,lec-06.md,NVIDIA PhysicsNeMo (бывший Modulus)
+L06-010,,absent,,lec-06.md,SimScale + NVIDIA — суррогат турбомашин
+L06-011,2025,explicit,задокументировано рецензируемыми обзорами 2025 как свойство класса,lec-06.md,"PINN — как метод (спектральный сдвиг, плохая обусловленность)"
+L06-012,,absent,,lec-06.md,"CML-Bench (СПбПУ, А. И. Боровков)"
+L06-013,,absent,,lec-06.md,"«Логос» (РФЯЦ-ВНИИЭФ, Росатом)"
+L06-014,,absent,,lec-06.md,Autodesk Assistant (Fusion)
+L06-015,2026,explicit,Siemens Design Copilot (NX/Solid Edge 2026),lec-06.md,Siemens Design Copilot (NX/Solid Edge 2026)
+L06-016,,absent,,lec-06.md,Mastercam Copilot
+L06-017,,absent,,lec-06.md,Zoo.dev (text-to-CAD)
+L06-018,,absent,,lec-06.md,Autodesk Project Bernini
+L06-019,2025,explicit,Autodesk Neural CAD (анонс 2025),lec-06.md,Autodesk Neural CAD (анонс 2025)
+L06-020,2025,explicit,BrepGen / CAD-Recode (ICCV 2025 и др.),lec-06.md,BrepGen / CAD-Recode (ICCV 2025 и др.)
+L06-021,1999,explicit,Mars Climate Orbiter (1999),lec-06.md,Mars Climate Orbiter (1999)
+L06-022,1983,explicit,Gimli Glider (1983),lec-06.md,Gimli Glider (1983)
+L06-023,1981,explicit,Hyatt Regency walkway collapse (1981),lec-06.md,Hyatt Regency walkway collapse (1981)
+L06-024,2025,explicit,ORCA Benchmark (2025),lec-06.md,ORCA Benchmark (2025)
+L06-025,2025,explicit,EngiBench (2025),lec-06.md,EngiBench (2025)
+L06-026,2025,explicit,Исследование по статике (2025) — растяжение/сжатие,lec-06.md,Исследование по статике (2025) — растяжение/сжатие
+L06-027,,absent,,lec-06.md,Аэрокосмический LLM-кейс (arXiv 2501.17183)
+L07-001,2023,explicit,"Провал. Банкротство 2023, задокументированный пропуск инфарктоподобных симптомов",lec-07.md,"Babylon / GP at Hand (Англия, чат-бот первой линии сортировки обращений)"
+L07-002,2026,explicit,итоговая публикация Lancet 2026,lec-07.md,"MASAI — Швеция, модель как второй читатель маммограмм"
+L07-003,2018,explicit,"ответственность за решение формально перешла к устройству по документу регулятора, 2018",lec-07.md,"Диабетическая ретинопатия, автономное чтение глазного дна (IDx-DR/LumineticsCore, EyeArt)"
+L07-004,2021,explicit,"Регистрация (Росздравнадзор + CE) получена в 2021 при чувствительности 0,62",lec-07.md,Москва — модель «Цельс Маммография» как первый читатель
+L07-005,,absent,,lec-07.md,Москва — автономная сортировка профилактических снимков грудной клетки
+L07-006,,absent,,lec-07.md,"Москва — детекция внутричерепного кровоизлияния на КТ (тот же круг изделий, автономию не дали)"
+L07-007,,absent,,lec-07.md,Таиланд — полевое развёртывание автономного чтения глазного дна
+L07-008,,absent,,lec-07.md,"Дерматологическая классификация кожных образований (3 модели, набор DDI)"
+L07-009,2019,explicit,"seminal paper, Science 2019, широко верифицированные числа",lec-07.md,Obermeyer — алгоритм отбора в программу повышенного внимания (целевая переменная = расходы)
+L07-010,2021,explicit,"подтверждено регулятором США — предупреждение 2021, проект требования 2025",lec-07.md,Пульсоксиметр — систематическое смещение по тону кожи (контр-пример: модели нет вовсе)
+L07-011,,absent,,lec-07.md,Маммографический hint — замер взгляда при ложной/верной подсказке (две работы)
+L07-012,,absent,,lec-07.md,"Патологи, читающие срезы печени с подсказкой (Kiani et al.)"
+L07-013,,absent,,lec-07.md,"Обзор 106 опытов «человек+ИИ» (Vaccaro et al., мета-анализ)"
+L07-014,,absent,,lec-07.md,Автопсия ЭКГ-расшифровки — якорение по специализации (Bond/Yu)
+L07-015,,absent,,lec-07.md,Хирурги + калькулятор POTTER (риск до операции)
+L07-016,,absent,,lec-07.md,Модель раннего предупреждения о сепсисе (Epic)
+L07-017,,absent,,lec-07.md,"Москва — AIDA, предложение заключительного диагноза по медкарте"
+L07-018,,absent,,lec-07.md,"Ambient AI scribe (США, РКИ на 238 врачах, 2 коммерческих инструмента)"
+L07-019,,absent,,lec-07.md,Москва — голосовой помощник для протокола приёма
+L07-020,,absent,,lec-07.md,"Выписной эпикриз, генерация моделью (слепое сравнение 100 госпитализаций)"
+L07-021,,absent,,lec-07.md,Россия — голосовой ввод протокола лучевого исследования (Voice2Med)
+L07-022,,absent,,lec-07.md,"Glass Health / Corti и класс «речь → клиническое предложение» (регуляторный разбор, не измеренный кейс)"
+L07-023,,absent,,lec-07.md,"Разработчики на незнакомой библиотеке (РКИ, 52 инженера)"
+L07-024,,absent,,lec-07.md,"Польша — деквалификация эндоскопистов (колоноскопия, наблюдательное)"
+L07-025,,absent,,lec-07.md,"ArtInCol — Россия, колоноскопия (многоцентровое РКИ)"
+L07-026,,absent,,lec-07.md,"Великобритания — цитология шейки матки, сокращение потока (контр-пример без ИИ)"
+L08-001,,absent,,lec-08.md,section1: Midjourney V8.2 / Adobe Firefly Image 5 — обвал цены изображения
+L08-002,,absent,,lec-08.md,"section1: Suno v6 / ElevenLabs — обвал цены трека и озвучки, voice cloning как dual-use"
+L08-003,2026,explicit,"веб закрыт 26.04.2026, API — 24.09.2026",lec-08.md,"section1: Sora + партнёрство Disney — технический успех, бизнес-провал"
+L08-004,2022,range,"Nadimpalli & Rattani, CVPRW 2022 … Corvi et al., ICASSP 2023",lec-08.md,section1: Детекторы дипфейков — провал обобщения на новый генератор (XceptionNet/FaceForensics++→Celeb-DF; GAN-детекторы против диффузии)
+L08-005,,absent,,lec-08.md,section1: CLIP/LAION safety-filter внутри конвейера Stable Diffusion — расовые/гендерные дисбалансы
+L08-006,2023,explicit,"Запущен январь 2023, закрыт 20.07.2023 «из-за низкой точности»",lec-08.md,section1: OpenAI «AI Text Classifier» — запущен и закрыт из-за низкой точности
+L08-007,,absent,,lec-08.md,hiring: KnowBe4 — поддельный найм под чужой личностью
+L08-008,,absent,,lec-08.md,hiring: «Famous Chollima» — промышленная схема (Christina Chapman + ячейка Nisos + федеральные кейсы)
+L08-009,,absent,,lec-08.md,hiring: Тренд фрода при найме и разрыв внедрения защиты (Checkr / ФБР / межгосударственное предупреждение 11 стран)
+L08-010,,absent,,lec-08.md,editorial: CNET — AI-статьи под коллективной подписью без раскрытия
+L08-011,2023,range,праздничная кампания Coca-Cola 2023/24 — обвал тональности (CARMA),lec-08.md,release: Toys «R» Us (ролик на Sora) + праздничная кампания Coca-Cola 2023/24 — обвал тональности (CARMA)
+L08-012,2025,explicit,"Coca-Cola 2025 — расхождение System1 … и CARMA (53,4% негатива)",lec-08.md,"release: Coca-Cola 2025 — расхождение System1 (5,9 из 5,9) и CARMA (53,4% негатива) на одном ролике"
+L08-013,2026,explicit,апелляция разрешена январь 2026,lec-08.md,rights: Getty Images против Stability AI — вердикт Высокого суда Великобритании
+L08-014,2026,explicit,слияние расторгнуто (07.2026) → банкротство Chapter 11 (10–13.10.2026),lec-08.md,"rights: Getty Images — банкротство (слияние с Shutterstock провалилось, Chapter 11)"
+L08-015,2023,range,Подан декабрь 2023; на октябрь 2026 — стадия упрощённого производства,lec-08.md,rights: NYT против OpenAI — иск без решения
+L08-016,,absent,,lec-08.md,rights: News Corp — лицензионная сделка с OpenAI (контраст к судебному пути NYT)
+L08-017,,absent,,lec-08.md,rights: RIAA-кластер (Suno/Udio против трёх мейджор-лейблов) — три разных ответа
+L08-018,2024,range,≈$400 млн выручки (2024–2025) при 22 млрд+ сгенерированных материалов,lec-08.md,rights: Adobe Firefly — обучена только на лицензированном материале
+L08-019,2025,explicit,"Мера введена проактивно, ДО массового обнуления цены (начало 2025)",lec-08.md,rights: SAG-AFTRA — контракт на синтез голоса/внешности (институциональный price floor)
+L08-020,2022,range,Карьера с весны 2022; конец 2024 — резкий регресс дохода … 2025 — адаптация,lec-08.md,rights: Лада Чижова — вытеснение иллюстратора и частичная адаптация
+L08-021,2025,range,текущие данные год к году (2025–2026),lec-08.md,"rights: Upwork/Fiverr — рост ИИ-навыков измерен точно, падение традиционных — честный пробел"
+L08-022,2023,range,Leica M11-P (10.2023); OpenAI с 02.2024; TikTok … (07.2026),lec-08.md,rights: C2PA / Content Credentials — провенанс как более правильный альтернативный инструмент вместо детектора
+L09-001,2016,explicit,рутинная эксплуатация с 2016 г. (Opportunity — с 2010 г.),lec-09.md,AEGIS (Curiosity/Perseverance)
+L09-002,,absent,,lec-09.md,SPOC (разметка марсианского грунта)
+L09-003,2023,explicit,"отработал на земном полигоне (Лансароте, 02.2023); к Луне не летал",lec-09.md,COROB-X (три робота в лунной лавовой трубке)
+L09-004,,absent,,lec-09.md,LeoLabs (радар + приоритизация сближений)
+L09-005,2020,explicit,Рутинная эксплуатация с 2020 г. (Demo-2),lec-09.md,Dragon (автономная стыковка к МКС)
+L09-006,,absent,,lec-09.md,"Предсказательная компенсация задержки (LSTM/TCN, лунный аналог)"
+L09-007,2025,explicit,"TRL5, испытано на борту МКС (не в лаборатории), декабрь 2025",lec-09.md,"Astrobee («тёплый старт», МКС)"
+L09-008,,absent,,lec-09.md,Суррогатная модель Raptor (SpaceX)
+L09-009,2025,explicit,456 м за 2 сола (8 и 10 декабря 2025),lec-09.md,Claude/Anthropic на Марсе (планирование маршрута ровера)
+L09-010,2025,explicit,операционный статус с 2025 г. у двух независимых метеослужб,lec-09.md,"AIFS / AIGEFS (ИИ-прогноз погоды, ECMWF/NOAA)"
+L09-011,,absent,,lec-09.md,Генеративный дизайн (NASA Goddard)
+L09-012,,absent,,lec-09.md,Starcloud (первый датацентровый GPU в космосе)
+L09-013,,absent,,lec-09.md,"Suncatcher — инференс (Google, TPU на орбите)"
+L09-014,,absent,,lec-09.md,"Suncatcher — управление строем (второй, отдельный случай ИИ)"
+L09-015,,absent,,lec-09.md,AutoNav/GESTALT (навигация Perseverance/Curiosity)
+L09-016,,absent,,lec-09.md,NASA IPEx (лунный экскаватор)
+L09-017,,absent,,lec-09.md,ICON Project Olympus (3D-печать на Луне из реголита)
+L09-018,,absent,,lec-09.md,Starlink — автономные манёвры уклонения
+L09-019,,absent,,lec-09.md,JPL GIMLI / Moon Diver
+L09-020,,absent,,lec-09.md,ISRU-автономия (добыча кислорода/воды)
+L09-021,,absent,,lec-09.md,Экзоскелет с «искусственными мышцами» (University of Bristol)
+L09-022,,absent,,lec-09.md,ESA-экзоскелет (силовая обратная связь)
+L09-023,,absent,,lec-09.md,Телехирургия через Starlink
+L09-024,,absent,,lec-09.md,NVIDIA FourCastNet3 (коммерческий прогноз ветровой энергии)
+L09-025,2025,range,операционно работает у коммерческих платформ 2025–2026 гг.,lec-09.md,Спутник + ИИ в агростраховании
+L09-026,,absent,,lec-09.md,Sentry-II (мониторинг риска столкновения с астероидами)
+L09-027,,absent,,lec-09.md,"ATLAS (сеть телескопов, снижение ложных срабатываний)"
+L09-028,,absent,,lec-09.md,NEO Surveyor
+L09-029,,absent,,lec-09.md,3 короткие упоминания раздела 3 (анализ снимков Земли; ML-поиск экзопланет TESS/RAVEN; диагностика аномалий на борту)
+L09-030,,absent,,lec-09.md,G-FOLD (посадка первой ступени Falcon 9)
+L09-031,2021,range,Соревнование по автономной разведке шахт и разрушенных зданий (2018–2021),lec-09.md,DARPA Subterranean Challenge / архитектура NeBula-LAMP
+L09-032,,absent,,lec-09.md,"Pangu-Weather (китайская модель прогноза, упомянута как потолок)"
+L10-001,2025,explicit,"селективный спрей гербицида, 5M акров 2025",lec-10.md,See & Spray Ultimate (John Deere)
+L10-002,2025,explicit,outcome-based rice yield guarantee Япония 2025,lec-10.md,xarvio FIELD MANAGER (BASF)
+L10-003,2022,explicit,отдельно — политический провал (выход из РФ 2022),lec-10.md,Climate FieldView (Bayer)
+L10-004,2025,explicit,"open-platform с developer API, анонс 2025",lec-10.md,Cropwise (Syngenta)
+L10-005,,absent,,lec-10.md,Granular Insights (Corteva)
+L10-006,,absent,,lec-10.md,Taranis
+L10-007,,absent,,lec-10.md,TerraMind (IBM+ESA)
+L10-008,,absent,,lec-10.md,Prithvi-EO 2.0 (IBM+NASA)
+L10-009,2023,explicit,SPAC $475M+$341M долг; Chapter 11 июль 2023,lec-10.md,AppHarvest
+L10-010,,absent,,lec-10.md,Plenty Unlimited
+L10-011,2024,explicit,">$700M капитала; ABC ноябрь 2024, $32M never-used equipment",lec-10.md,Bowery Farming
+L10-012,2023,range,ChatGPT/Bard как агроном (Tzachor et al. 2023/2024),lec-10.md,ChatGPT/Bard как агроном (Tzachor et al. 2023/2024)
+L10-013,,absent,,lec-10.md,Plantix
+L10-014,,absent,,lec-10.md,"ExactFarming (РФ, SaaS)"
+L10-015,,absent,,lec-10.md,АгроСигнал (РФ)
+L10-016,,absent,,lec-10.md,ГК «Прогресс Агро» (РФ)
+L10-017,2026,explicit,"премиум-клубника, Series C $150M 2026",lec-10.md,Oishii / Tortuga AgTech (Q&A backup)
+L10-018,,absent,,lec-10.md,Carbon Robotics LaserWeeder G2
+L10-019,,absent,,lec-10.md,"Cognitive Pilot (РФ, CV автопилот комбайна)"
+L10-020,2025,explicit,"точность 2-5 см, на «Кировцах» с конца 2025",lec-10.md,"ИТЭЛМА Квадро (РФ, sensor-fusion)"
+L10-021,,absent,,lec-10.md,Solinftec Solix
+L10-022,,absent,,lec-10.md,Saga Robotics Thorvald (UV-C)
+L10-023,,absent,,lec-10.md,Tevel Aerobotics
+L10-024,,absent,,lec-10.md,AGCO PTx Trimble Outrun
+L10-025,2026,explicit,"иск Burks $773k, 102 сокращения (38%), Caterpillar acqui-hire 2026",lec-10.md,Monarch Tractor
+L10-026,2025,explicit,"wind-down 2025, машины без сервиса",lec-10.md,FarmWise
+L10-027,2025,explicit,"€4M→€2,4M revenue (–40%), judicial recovery июнь 2025",lec-10.md,Naïo Technologies
+L10-028,,absent,,lec-10.md,"Робот-сборщик клубники (категория, DailyRobotics и др.)"
+L10-029,,absent,,lec-10.md,Allflex SenseHub (Merck)
+L10-030,2024,explicit,"приобретена GEA 2024, явный сигнал зрелости",lec-10.md,CattleEye (GEA)
+L10-031,2025,explicit,"99,8% attachment rate, +15% North America installs 2025",lec-10.md,DeLaval VMS V310
+L10-032,,absent,,lec-10.md,Cargill Birdoo
+L10-033,2018,explicit,"camera-based CV для behaviour коров, приобретена 2018",lec-10.md,Cainthus (Cargill)
+L10-034,,absent,,lec-10.md,Tie-stall barns ломают CV (структурный класс)
+L10-035,,absent,,lec-10.md,Holstein-bias (структурный класс)
+L10-036,,absent,,lec-10.md,"Connectome.ai (РФ, Сколково)"
+L10-037,2026,explicit,"CV для protein supply chain, 2026 BIG AI Award",lec-10.md,Cargill CMAX / CarVe
+L10-038,,absent,,lec-10.md,Tract
+L10-039,2026,explicit,"агентная закупка, Wipro-партнёрство 2026",lec-10.md,Olam Mindsprint (Procuresprint/Farmsprint/Tradesprint)
+L10-040,,absent,,lec-10.md,Walmart × Cropin
+L10-041,2025,explicit,"$3,1B / 135 проектов / 14k ферм отменены апрель 2025",lec-10.md,USDA Climate-Smart Commodities (отменена)
+L10-042,,absent,,lec-10.md,Verra phantom credits (вкл. Pachama)
+L10-043,,absent,,lec-10.md,Indigo Ag (контраст к Verra)
+L10-044,2020,explicit,"ML с 2020, 200+ факторов спроса",lec-10.md,X5 «Перекрёсток»
+L10-045,,absent,,lec-10.md,Магнит F&R
+L10-046,,absent,,lec-10.md,РСХБ «Своё Фермерство»
+L10-047,2025,explicit,"демо-эпизод 2025, «сдал экзамен»",lec-10.md,Sber GigaChat (экзамен по агрономии)
+L10-048,2022,explicit,"geo-locking+VIN-locking, 27 единиц, $5M, май 2022",lec-10.md,"Мелитополь remote-brick (John Deere, двойная оптика)"
+L10-049,2026,explicit,"десятилетние ограничения ремонта, trial 2026",lec-10.md,FTC v. Deere
+L10-050,2025,explicit,немедленный политический эффект (22 дек 2025),lec-10.md,FCC ban DJI (ag-drones)
+L10-051,2025,explicit,"123k авиарейсов Q1 2025, поля «unfarmable»",lec-10.md,GNSS-jamming Финляндия
+L10-052,2026,explicit,запрет с апреля 2026 на 6 месяцев,lec-10.md,Starlink ban РФ
+L10-053,2017,explicit,"промышленная эксплуатация с 2017, заявленное снижение food waste",lec-10.md,Walmart Eden ML
+L10-054,2017,explicit,"ML с 2017, –30% food waste",lec-10.md,Tesco AI demand forecast
+L11-001,2018,explicit,Tesla 2018 (конвейер + «fluffer» + сборка батарей),lec-11.md,discrete: Tesla 2018 (конвейер + «fluffer» + сборка батарей)
+L11-002,2024,explicit,"Tesla GigaCast retreat (май 2024, Model 2)",lec-11.md,"discrete: Tesla GigaCast retreat (май 2024, Model 2)"
+L11-003,1990,explicit,"признание провала к концу 1980-х, отставка CEO 1990",lec-11.md,discrete: GM Hamtramck (1985–1990)
+L11-004,2024,explicit,установка сентябрь 2023 → отказ в полёте январь 2024,lec-11.md,discrete: Boeing 737 MAX 9 door plug — CV-инспекция не поймала (янв. 2024)
+L11-005,,absent,,lec-11.md,discrete: TSMC — CV-детекция дефектов пластин
+L11-006,2024,explicit,Завод — «Factory of the Year 2024»,lec-11.md,discrete: BMW GenAI4Q
+L11-007,,absent,,lec-11.md,discrete: Volkswagen DPP
+L11-008,,absent,,lec-11.md,discrete: Tata Steel Smart Factory (550+ моделей PdM)
+L11-009,,absent,,lec-11.md,discrete: BMW AIQX
+L11-010,,absent,,lec-11.md,"discrete: Augury (Halo Top Creamery −70%, AB InBev −80%)"
+L11-011,,absent,,lec-11.md,discrete: Siemens Senseye
+L11-012,2026,explicit,Atlas — первое коммерческое внедрение (анонс янв. 2026),lec-11.md,discrete: Hyundai + Boston Dynamics (Spot QC + Atlas humanoid)
+L11-013,,absent,,lec-11.md,discrete: Foxconn FoxBrain («80% работы по настройке»)
+L11-014,,absent,,lec-11.md,discrete: Toyota GAIA
+L11-015,2018,explicit,Rethink Robotics Baxter/Sawyer — закрытие (2018),lec-11.md,discrete: Rethink Robotics Baxter/Sawyer — закрытие (2018)
+L11-016,2026,explicit,тысячи клиентов к 2026,lec-11.md,discrete: Universal Robots URVision
+L11-017,,absent,,lec-11.md,discrete: FANUC AI Servo / AI Vision
+L11-018,,absent,,lec-11.md,discrete: Siemens Industrial Foundation Model (IFM)
+L11-019,,absent,,lec-11.md,discrete: Microsoft Factory Operations Agent
+L11-020,2020,range,"GE Predix (2011–2020) … >4 млрд $ сожжено, продана по частям",lec-11.md,discrete: GE Predix (2011–2020)
+L11-021,2022,range,IBM Watson Health/Manufacturing (2018–2022),lec-11.md,discrete: IBM Watson Health/Manufacturing (2018–2022)
+L11-022,2024,range,"Foxconn Wisconsin (2018–2024) … T_outcome очень долгий (7 лет, 2017–2024)",lec-11.md,discrete: Foxconn Wisconsin (2018–2024)
+L11-023,2026,range,Tesla Optimus (2021–2026) … с 2021 до 2026 без промышленного масштаба,lec-11.md,discrete: Tesla Optimus (2021–2026)
+L11-024,2025,explicit,Нет промышленного внедрения к концу 2025 — только дорожная карта,lec-11.md,"discrete: Aviation MRO copilot roadmap (Honeywell, GE Aerospace, Rockwell)"
+L11-025,,absent,,lec-11.md,process: BASF Geismar — мягкие сенсоры
+L11-026,,absent,,lec-11.md,"process: BASF знаниевая модель (150-летняя химлитература, R&D)"
+L11-027,,absent,,lec-11.md,process: Pfizer Vox
+L11-028,,absent,,lec-11.md,"process: Aspen Mtell (Saudi Aramco, Shell)"
+L11-029,2025,explicit,"200+ развёртываний к концу 2025 (Equinor, Vale Mining)",lec-11.md,process: AVEVA Industrial AI
+L11-030,2022,explicit,Yokogawa + JSR FKDPP (2022) … 35 дней (840 часов) автономного RL-контроля,lec-11.md,process: Yokogawa + JSR FKDPP (2022)
+L11-031,2026,range,"исследовательская стадия (2024–2026), без заявленного промышленного развёртывания",lec-11.md,"process: CIRL (BASF + Royal Academy, Calvin Tsay)"
+L11-032,,absent,,lec-11.md,process: POSCO edge PdM (180 узлов)
+L11-033,,absent,,lec-11.md,"process: Holcim (цемент, 45→100+ заводов)"
+L11-034,,absent,,lec-11.md,process: CEMEX + Optimitive
+L11-035,,absent,,lec-11.md,"process: ExxonMobil (Сингапур PdM, Baytown blending)"
+L11-036,2020,range,"T_outcome долгий (2006–2020, годы до признания системного провала)",lec-11.md,process: F-35 ALIS (callback из Лекции 9)
+L11-037,,absent,,lec-11.md,process: Норникель — флотация и измельчение
+L11-038,,absent,,lec-11.md,process: СИБУР — маркетплейс технологического моделирования
+L11-039,,absent,,lec-11.md,process: ММК / НЛМК / Северсталь
+L11-040,,absent,,lec-11.md,process: AB InBev + Google Cloud (+60% объём пива/цикл фильтрации)
+L11-041,,absent,,lec-11.md,process: КАМАЗ «Маяк-2.5» (автономные грузовики)
+L12-001,2018,explicit,"цель на конец 2017, провал виден к началу 2018",lec-12.md,Tesla Fremont 2018 (over-automation)
+L12-002,2024,explicit,"$12M инвестиций, 18 мес. пилот, списан 2024",lec-12.md,"Southeast Asian Port — digital twin ($12M, 2024)"
+L12-003,2026,explicit,Vision QC — кейс производителя электроники (Indus Vision 2026),lec-12.md,Vision QC — кейс производителя электроники (Indus Vision 2026)
+L12-004,,absent,,lec-12.md,Vision QC — агрегированный паттерн индустрии (tuned-системы)
+L12-005,2026,explicit,Прогностическое обслуживание — агрегат (Deloitte 2026),lec-12.md,Прогностическое обслуживание — агрегат (Deloitte 2026)
+L12-006,,absent,,lec-12.md,PdM — cement plant case (57× ROI / 6 мес.)
+L12-007,,absent,,lec-12.md,PdM — chemical plant case ($2M/год экономии)
+L12-008,2025,range,все три ведущих MES-стека добавили advisory-функции к 2025–2026,lec-12.md,MES советующий режим (Siemens Opcenter / Rockwell FactoryTalk / SAP MII)
+L12-009,,absent,,lec-12.md,Предсказание каскада тревог (ML на SCADA-логах)
+L12-010,,absent,,lec-12.md,Generic LLM (ChatGPT) на PLC — провал
+L12-011,,absent,,lec-12.md,PLC Copilot / PLCAutoPilot / Wipro PARI (purpose-built)
+L12-012,2022,explicit,"Yokogawa FKDPP @ JSR (2022, 35 дней RL)",lec-12.md,"Yokogawa FKDPP @ JSR (2022, 35 дней RL)"
+L12-013,2025,explicit,документированный паттерн из MDPI Processes 2025,lec-12.md,Sim-to-real gap — дистилляционная колонна (T=300°C → 315°C)
+L12-014,2016,explicit,"Google DeepMind — охлаждение датацентра (2016, ~40% экономии)",lec-12.md,"Google DeepMind — охлаждение датацентра (2016, ~40% экономии)"
+L12-015,,absent,,lec-12.md,"Adaptive welding control (автомобильное производство, A2)"
+L12-016,2024,explicit,гуманоиды Digit выполняют внутрицеховую логистику на линии RAV4 с 2024 г.,lec-12.md,"Toyota Digit @ RAV4 (Agility Robotics, A3)"
+L12-017,2026,explicit,"BMW Plant Leipzig — humanoid pilot (2026, A3)",lec-12.md,"BMW Plant Leipzig — humanoid pilot (2026, A3)"
+L12-018,2026,explicit,"220+ заводов, 35 стран, 23 новых 2026",lec-12.md,McKinsey/WEF Global Lighthouse Network
+L12-019,,absent,,lec-12.md,Фарма: дозировка AI vs FDA (worked example)
+L12-020,2020,range,КАМА-1 (2020) … twin конвейера с 2022; PdM литейного производства с 2023,lec-12.md,"КАМАЗ — цифровой двойник (КАМА-1, К5, конвейер)"
+L12-021,,absent,,lec-12.md,Росатом — АтомМайнд / T-FLEX PLM
+L12-022,,absent,,lec-12.md,Норникель — AI на флотации (A2)
+L13-001,,absent,,lec-13.md,Symbotic + Walmart
+L13-002,2022,range,"Sparrow (2022, vision+depth) … → Vulcan (2024-25) добавляет тактильный сенсор",lec-13.md,Amazon Sparrow → Vulcan
+L13-003,,absent,,lec-13.md,Amazon Proteus (AMR)
+L13-004,,absent,,lec-13.md,AMR-стек: Locus Robotics / GreyOrange / Geek+
+L13-005,2024,explicit,ILA-страйк окт. 2024 против дальнейшей автоматизации,lec-13.md,Порт: Maasvlakte II / Long Beach LBCT / Yangshan + ABB/Konecranes/ZPMC; ILA-страйки 2024
+L13-006,,absent,,lec-13.md,KONUX + Deutsche Bahn
+L13-007,2026,explicit,"на сер. 2026 — research/pilot stage, не production",lec-13.md,"Humanoid-хайп: Tesla Optimus, Figure 02 (BMW Spartanburg), UBTech Walker S1"
+L13-008,2025,explicit,"Первая коммерческая driverless Class-8 перевозка в США, 1 мая 2025",lec-13.md,Aurora Innovation (Даллас-Хьюстон)
+L13-009,2025,explicit,SuperVision ~300K машин (2025),lec-13.md,Mobileye Chauffeur / SuperVision
+L13-010,2024,explicit,"67 машин (2024), 10 в commercial cargo, план 100 (2025)",lec-13.md,КамАЗ-54901 + Cognitive Pilot (М-11)
+L13-011,,absent,,lec-13.md,Cognitive Pilot Agro (автономные комбайны)
+L13-012,2015,explicit,"$320M cumulative к дек. 2015, флот ~125K машин",lec-13.md,"UPS ORION (операционные исследования, НЕ ИИ)"
+L13-013,2020,explicit,Starsky Robotics (закрыта март 2020),lec-13.md,Starsky Robotics (закрыта март 2020)
+L13-014,2022,explicit,"Argo AI (Ford+VW, закрыта окт. 2022)",lec-13.md,"Argo AI (Ford+VW, закрыта окт. 2022)"
+L13-015,2023,explicit,Embark Trucks (закрыта март 2023),lec-13.md,Embark Trucks (закрыта март 2023)
+L13-016,2023,explicit,Waymo Via (закрыта 2023),lec-13.md,Waymo Via (закрыта 2023)
+L13-017,2024,explicit,TuSimple (делистинг янв. 2024),lec-13.md,TuSimple (делистинг янв. 2024)
+L13-018,2020,range,Zoox куплена Amazon 2020 …; Locomation закрыта 2024,lec-13.md,Zoox / Locomation / Plus.ai
+L13-019,2022,range,"ATA: 78K дефицит (2022) → ~60K (2023, «for all wrong reasons»)",lec-13.md,«AV решит дефицит водителей» — false framing
+L13-020,2026,explicit,"Март 2026: 500K платных поездок/нед, 3067 машин",lec-13.md,"Waymo (urban robotaxi, survivor)"
+L13-021,2025,explicit,"240M автономных км, 17M+ заказов, 22 города (окт. 2025)",lec-13.md,Apollo Go (Baidu)
+L13-022,2025,explicit,Гуанчжоу (нояб. 2025) — первый город с положительной operating profit,lec-13.md,Pony.ai (unit economics milestone)
+L13-023,2025,explicit,"Q3 2025 robotaxi revenue 35,3M юаней (+761% YoY)",lec-13.md,WeRide
+L13-024,2025,range,Запуск 22 июня 2025 … февр. 2026: 14 ДТП за 8 мес,lec-13.md,Tesla Robotaxi Austin
+L13-025,,absent,,lec-13.md,Starship Technologies
+L13-026,,absent,,lec-13.md,Coco Robotics
+L13-027,2025,range,"100M+ автономных миль (март 2025), 2M коммерческих доставок (янв. 2026)",lec-13.md,"Zipline (медицинские дроны, Африка)"
+L13-028,2024,explicit,"Вышла из B2C delivery в 2024, pivot на лицензирование стека OEM",lec-13.md,"Nuro (pivot/exit из B2C, 2024)"
+L13-029,2024,explicit,конец 2023 mass layoffs; дек. 2024 полный exit GM,lec-13.md,Cruise GM exit
+L13-030,2018,explicit,"18 марта 2018, пешеход вне crosswalk с велосипедом",lec-13.md,Uber Tempe 2018 (Элейн Хёрцберг)
+L13-031,2025,explicit,"65 сообщений NHTSA SGO, 54 подтверждённых смертей (окт. 2025)",lec-13.md,Tesla Autopilot/FSD — 54 verified fatalities (NHTSA)
+L13-032,2023,range,Атаки с дек. 2023; к февр. 2024 трафик через Красное море −90%,lec-13.md,"Хуситы, Красное море (2023-2024)"
+L13-033,2021,explicit,23-29 марта 2021 — Ever Given заблокировал Суэцкий канал 6 дней,lec-13.md,Suez Ever Given (2021)
+L13-034,2020,explicit,Март-апр. 2020 шок (спайк спроса на потреб. товары),lec-13.md,"COVID-19, обвал цепочек поставок (2020)"
+L14-001,2024,explicit,CrowdStrike Falcon Channel File 291 (19.07.2024),lec-14.md,telecom: CrowdStrike Falcon Channel File 291 (19.07.2024)
+L14-002,2024,explicit,AT&T US network outage (22.02.2024),lec-14.md,telecom: AT&T US network outage (22.02.2024)
+L14-003,2022,explicit,Rogers Canada outage (08.07.2022),lec-14.md,telecom: Rogers Canada outage (08.07.2022)
+L14-004,,absent,,lec-14.md,telecom: AI-RAN: NVIDIA-SoftBank AITRAS
+L14-005,,absent,,lec-14.md,telecom: AI-RAN: Rakuten Symphony / Rakuten Mobile (RIC nationwide)
+L14-006,,absent,,lec-14.md,telecom: AI-RAN: Nokia AVA + KDDI
+L14-007,2026,explicit,MWC 2026 — custom AI-ASIC анонс,lec-14.md,telecom: AI-RAN: Ericsson EIAP + MasOrange
+L14-008,,absent,,lec-14.md,telecom: AI-RAN: Samsung + KT полевая валидация
+L14-009,,absent,,lec-14.md,telecom: AI-RAN: Nokia + Orange Extreme Deep Sleep
+L14-010,,absent,,lec-14.md,telecom: Open RAN / RIC / rApps / xApps (архитектурный класс)
+L14-011,,absent,,lec-14.md,telecom: Tietoevry drone tower inspection (CV)
+L14-012,,absent,,lec-14.md,"telecom: Vodafone + Mavenir, Allianz Stadium (event-driven xApps)"
+L14-013,,absent,,lec-14.md,telecom: Vodafone TOBi / SuperTOBi
+L14-014,,absent,,lec-14.md,telecom: Telefónica AURA
+L14-015,,absent,,lec-14.md,telecom: Verizon Assistant + Gemini
+L14-016,2025,explicit,«Заменил 700 агентов» (фев 2024) → откат к гибриду (май 2025),lec-14.md,telecom: Klarna AI-ассистент — business reversal (2024→2025)
+L14-017,2024,explicit,Air Canada chatbot — Moffatt v. Air Canada (02.2024),lec-14.md,telecom: Air Canada chatbot — Moffatt v. Air Canada (02.2024)
+L14-018,,absent,,lec-14.md,telecom: Vodafone Italy SuperTOBi — UX degradation
+L14-019,2025,explicit,Cursor «Sam» customer-support bot (2025),lec-14.md,telecom: Cursor «Sam» customer-support bot (2025)
+L14-020,2023,explicit,"Chevrolet dealership chatbot ($1 Tahoe, 2023)",lec-14.md,"telecom: Chevrolet dealership chatbot ($1 Tahoe, 2023)"
+L14-021,,absent,,lec-14.md,telecom: Subex Risk Assurance / FraudZap (IRSF detection)
+L14-022,,absent,,lec-14.md,telecom: AT&T fraud detection / SIM-swap + MFA
+L14-023,2024,range,Голосовая биометрия (Pindrop и др.) + deepfake voice clone (2024-2025),lec-14.md,telecom: Голосовая биометрия (Pindrop и др.) + deepfake voice clone (2024-2025)
+L14-024,,absent,,lec-14.md,"telecom: 5G network slicing AI orchestration (Juniper Open-RAN demo, HCLTech GenAI slicing)"
+L14-025,,absent,,lec-14.md,aiops: Dynatrace Davis AI (ADT)
+L14-026,,absent,,lec-14.md,aiops: Datadog Bits AI SRE
+L14-027,,absent,,lec-14.md,aiops: Cisco ThousandEyes + Kamstrup
+L14-028,,absent,,lec-14.md,aiops: Kentik AI Advisor + Equinix
+L14-029,,absent,,lec-14.md,"aiops: Splunk Mission Control (T-Mobile, Walmart Element)"
+L14-030,,absent,,lec-14.md,aiops: T-Mobile + IBM Watson AIOps
+L14-031,,absent,,lec-14.md,aiops: Apptio (IBM) FinOps
+L14-032,,absent,,lec-14.md,aiops: NeuBird agentic SRE
+L14-033,,absent,,lec-14.md,aiops: incident.io AI SRE
+L14-034,2026,explicit,Anthropic Claude Code postmortem (23.04.2026),lec-14.md,aiops: Anthropic Claude Code postmortem (23.04.2026)
+L14-035,2026,explicit,"Alex Palcuie (Anthropic), QCon talk (19.03.2026)",lec-14.md,"aiops: Alex Palcuie (Anthropic), QCon talk (19.03.2026)"
+L14-036,2025,explicit,DORA 2025 paradox,lec-14.md,aiops: DORA 2025 paradox
+L14-037,,absent,,lec-14.md,aiops: Cisco DNA Center / Catalyst Center AI
+L14-038,,absent,,lec-14.md,aiops: Juniper Mist Marvis Actions (self-driving WLAN)
+L14-039,,absent,,lec-14.md,aiops: ServiceNow proactive network test/repair agents
+L14-040,,absent,,lec-14.md,aiops: Netflix auto-remediation (memory configs)
+L14-041,2025,explicit,Cloudflare outage (18.11.2025),lec-14.md,aiops: Cloudflare outage (18.11.2025)
+L14-042,2025,explicit,AWS DynamoDB DNS outage (20.10.2025),lec-14.md,aiops: AWS DynamoDB DNS outage (20.10.2025)
+L14-043,2025,explicit,"Amazon Kiro (~декабрь 2025, FT-репорт)",lec-14.md,"aiops: Amazon Kiro (~декабрь 2025, FT-репорт)"
+L14-044,2025,explicit,Azure Front Door outage (29.10.2025),lec-14.md,aiops: Azure Front Door outage (29.10.2025)
+L14-045,2012,explicit,"Knight Capital (август 2012, pre-AI)",lec-14.md,"aiops: Knight Capital (август 2012, pre-AI)"
+L14-046,2021,explicit,"Facebook BGP outage (04.10.2021, pre-AI)",lec-14.md,"aiops: Facebook BGP outage (04.10.2021, pre-AI)"
+L14-047,2025,explicit,Replit AI agent + SaaStr DB deletion (июль 2025),lec-14.md,aiops: Replit AI agent + SaaStr DB deletion (июль 2025)
+L14-048,2026,explicit,Cursor + Claude Opus 4.6 + PocketOS (апрель 2026),lec-14.md,aiops: Cursor + Claude Opus 4.6 + PocketOS (апрель 2026)
+L14-049,,absent,,lec-14.md,aiops: Tenable ExposureAI («только 3% CVE»)
+L14-050,,absent,,lec-14.md,"aiops: Bayes alert-fatigue (общая математика, 99,9% accuracy → 91% PPV)"
+L14-051,,absent,,lec-14.md,cybersecurity: Microsoft Security Copilot
+L14-052,,absent,,lec-14.md,cybersecurity: CrowdStrike Charlotte AI
+L14-053,2025,explicit,"Behavioral AI, Gartner MQ Leader 2025; массовые жалобы на false-positive overload",lec-14.md,cybersecurity: Darktrace / Antigena (NDR)
+L14-054,2025,explicit,"Gartner MQ Leader 2025, GigaOm Radar Leader",lec-14.md,cybersecurity: Vectra AI Platform (NDR)
+L14-055,2025,explicit,"Gartner Leader 2025, 99% «Would Recommend»",lec-14.md,cybersecurity: Abnormal AI (email security)
+L14-056,,absent,,lec-14.md,cybersecurity: Okta Identity Threat Protection (UEBA)
+L14-057,2025,explicit,EchoLeak / Microsoft 365 Copilot (CVE-2025-32711),lec-14.md,cybersecurity: EchoLeak / Microsoft 365 Copilot (CVE-2025-32711)
+L14-058,2025,explicit,Anthropic GTG-1002 (ноябрь 2025) … disclosed 14 ноября 2025,lec-14.md,cybersecurity: Anthropic GTG-1002 (ноябрь 2025)
+L14-059,,absent,,lec-14.md,"cybersecurity: WormGPT 2.0 (jailbreak wrapper, $100/мес)"
+L14-060,2023,explicit,ChaosGPT (апрель 2023),lec-14.md,cybersecurity: ChaosGPT (апрель 2023)
+L14-061,,absent,,lec-14.md,cybersecurity: BlackMamba PoC (HYAS Labs)
+L14-062,2024,explicit,"HuggingFace malicious pickled models (JFrog, март 2024)",lec-14.md,"cybersecurity: HuggingFace malicious pickled models (JFrog, март 2024)"
+L14-063,2024,explicit,Anthropic Sleeper Agents (январь 2024),lec-14.md,cybersecurity: Anthropic Sleeper Agents (январь 2024)
+L14-064,,absent,,lec-14.md,cybersecurity: GitHub Copilot RoguePilot
+L14-065,,absent,,lec-14.md,cybersecurity: ChatGPT Search / Bing chatbot indirect prompt injection
+L14-066,2025,explicit,Nx build system compromise (август 2025),lec-14.md,cybersecurity: Nx build system compromise (август 2025)
+L14-067,2025,explicit,Copilot нарушил 24 «устойчивых факта» за 4 дня (дек 2025),lec-14.md,cybersecurity: Microsoft Copilot for Windows — 24 durable facts violation (дек 2025)
+L14-068,2025,range,Hoxhunt AI-phishing longitudinal (2023→2025) … ×14 за зиму 2025,lec-14.md,cybersecurity: Hoxhunt AI-phishing longitudinal (2023→2025)
+L14-069,2024,explicit,"Arup Hong Kong — deepfake CFO fraud ($25,6M, 15.01.2024)",lec-14.md,"cybersecurity: Arup Hong Kong — deepfake CFO fraud ($25,6M, 15.01.2024)"
+L14-070,2024,explicit,"Ferrari deepfake attempt (июль 2024, $0 ущерба)",lec-14.md,"cybersecurity: Ferrari deepfake attempt (июль 2024, $0 ущерба)"
+L14-071,2024,explicit,"WPP CEO Mark Read deepfake attempt (май 2024, $0 ущерба)",lec-14.md,"cybersecurity: WPP CEO Mark Read deepfake attempt (май 2024, $0 ущерба)"
+L15-001,2018,range,"CASP13 (2018, +25-30%), CASP14 (дек. 2020 …); AF3 (май 2024); Нобель по химии 9.10.2024",lec-15.md,"AlphaFold (AF1→AF3, Нобель 2024)"
+L15-002,2022,range,"~22% остатков в IDP-регионах систематически галлюцинированы (Akdel 2022, Gopalan 2025)",lec-15.md,"AlphaFold — провал на IDP (α-синуклеин, Паркинсон)"
+L15-003,2022,explicit,"Galactica (Meta, нояб. 2022) … запущена 15.11, отозвана 17.11 (3 дня)",lec-15.md,"Galactica (Meta, нояб. 2022)"
+L15-004,2025,explicit,Sakana AI Scientist v2 (апр. 2025),lec-15.md,Sakana AI Scientist v2 (апр. 2025)
+L15-005,2023,explicit,"Coscientist (CMU, дек. 2023, Boiko et al., Nature)",lec-15.md,"Coscientist (CMU, дек. 2023, Boiko et al., Nature)"
+L15-006,2026,explicit,"DeepMind Co-Scientist (Nature, май 2026)",lec-15.md,"DeepMind Co-Scientist (Nature, май 2026)"
+L15-007,2026,explicit,"Gemini for Science (Google, 2026)",lec-15.md,"Gemini for Science (Google, 2026)"
+L15-008,,absent,,lec-15.md,Байесовская оптимизация + Гауссовский процесс
+L15-009,2024,range,AF3 (май 2024) закрыт → … академический доступ (нояб. 2024) → публичный некоммерческий (февр. 2025),lec-15.md,AlphaFold DB + open-source debate (AF3 закрыт при запуске)
+L15-010,2025,explicit,к концу 2025 обогнал AF3 по академическому внедрению (>50% vs <40%),lec-15.md,"Boltz-1 / Boltz-2 (MIT, дек. 2024 / 2025)"
+L15-011,2023,explicit,"GNoME (DeepMind, нояб. 2023, Nature)",lec-15.md,"GNoME (DeepMind, нояб. 2023, Nature)"
+L15-012,2024,explicit,A-Lab Berkeley (нояб. 2023) + критика Палгрейва-Шупа (янв. 2024),lec-15.md,A-Lab Berkeley (нояб. 2023) + критика Палгрейва-Шупа (янв. 2024)
+L15-013,2024,explicit,"Aurora (Microsoft Research, июнь 2024, Nature)",lec-15.md,"Aurora (Microsoft Research, июнь 2024, Nature)"
+L15-014,2025,explicit,ECMWF AIFS (операционна с 25.02.2025),lec-15.md,ECMWF AIFS (операционна с 25.02.2025)
+L15-015,2024,explicit,"AlphaProof + AlphaGeometry 2 (IMO 2024, DeepMind)",lec-15.md,"AlphaProof + AlphaGeometry 2 (IMO 2024, DeepMind)"
+L15-016,2024,range,"FrontierMath benchmark (Epoch AI, 2024-2026): <2% (нояб. 2024) → 52,4% (май 2026)",lec-15.md,"FrontierMath benchmark (Epoch AI, 2024-2026)"
+L15-017,2018,range,CNN (Shallue&Vanderburg 2018+; производственный конвейер Huang&Jiang 2025); 2026: 1595 кандидатов,lec-15.md,TESS/Kepler CNN-поиск экзопланет
+L15-018,2018,range,"Обнаружение гравитационного линзирования (CNN, ~2018+)",lec-15.md,"Обнаружение гравитационного линзирования (CNN, ~2018+)"
+L15-019,2025,explicit,"Allen Institute MICrONS (апр. 2025, Nature 640)",lec-15.md,"Allen Institute MICrONS (апр. 2025, Nature 640)"
+L15-020,2025,explicit,"LIGO ML-конвейер (CNN + конформное предсказание; Ashton, Malz, Colombo 2025)",lec-15.md,"LIGO ML-конвейер (CNN + конформное предсказание; Ashton, Malz, Colombo 2025)"
+L15-021,2023,range,"NotebookLM (Google, 2023-2026) … 17M+ MAU к концу 2025",lec-15.md,"NotebookLM (Google, 2023-2026)"
+L15-022,2021,range,"Elicit (Ought.io, 2021+)",lec-15.md,"Elicit (Ought.io, 2021+)"
+L15-023,2022,range,"Consensus (Consensus.app, 2022+)",lec-15.md,"Consensus (Consensus.app, 2022+)"
+L15-024,2024,explicit,Frontiers «крыса» — отзыв (февр. 2024) … опубликовал 13.02.2024 … отозвана 16.02.2024,lec-15.md,Frontiers «крыса» — отзыв (февр. 2024)
+L15-025,2025,explicit,NeurIPS 2025 фейковые цитаты (GPTZero Research 2026),lec-15.md,"NeurIPS 2025 фейковые цитаты (GPTZero Research 2026, arxiv:2602.05930)"
+L15-026,,absent,,lec-15.md,AIRI / Sber AI Lab / Yandex Research (российский AI4Science потенциал)
+L15-027,2021,range,Recursion-Roche/Genentech (дек. 2021 …); Isomorphic Labs ~$3B (начало 2024); Insitro $400M (2021),lec-15.md,"Recursion-Roche/Genentech, Isomorphic Labs, Insitro (коммерческий каскад доверия к AlphaFold)"

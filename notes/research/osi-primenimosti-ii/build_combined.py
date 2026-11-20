@@ -2,6 +2,13 @@
 """Build reestr-reshenij-combined.csv from the original (421) and verified (248)
 registries. Additive-only script; does not modify either source CSV.
 
+Расширение (#349, файл 16): если рядом лежит reestr-reshenij-original-years.csv
+(явные годы, извлечённые из razmetka/lec-NN.md ревью build_original_years.py /
+year_decisions.py), его непустые года подставляются в колонку `year` строк
+dataset=original. Строки без извлечённого года остаются с пустым `year`, как
+раньше (обратная совместимость); verified не затрагивается. Если файла годов
+нет — поведение прежнее (все original с пустым year).
+
 Usage: python3 build_combined.py
 Run from repo root or any cwd — paths are relative to this file's directory.
 """
@@ -11,6 +18,7 @@ import os
 HERE = os.path.dirname(os.path.abspath(__file__))
 ORIGINAL = os.path.join(HERE, "reestr-reshenij.csv")
 VERIFIED = os.path.join(HERE, "reestr-reshenij-verified.csv")
+ORIGINAL_YEARS = os.path.join(HERE, "reestr-reshenij-original-years.csv")
 COMBINED = os.path.join(HERE, "reestr-reshenij-combined.csv")
 
 COMMON_COLS = [
@@ -38,12 +46,21 @@ def main():
     assert all(r["id"].startswith("L") for r in orig_rows), "non-L id in original"
     assert all(r["id"].startswith("V") for r in ver_rows), "non-V id in verified"
 
+    orig_years = {}
+    if os.path.exists(ORIGINAL_YEARS):
+        yrows = load(ORIGINAL_YEARS)
+        assert len(yrows) == 421, f"original-years row count = {len(yrows)}"
+        orig_years = {r["id"]: r["year"] for r in yrows if r["year"]}
+        print(f"original-years найден: непустой year у {len(orig_years)} из 421 строк")
+    else:
+        print("original-years не найден — все original с пустым year (прежнее поведение)")
+
     out_rows = []
     for r in orig_rows:
         row = {"dataset": "original"}
         for c in COMMON_COLS:
             row[c] = r[c]
-        row["year"] = ""
+        row["year"] = orig_years.get(r["id"], "")
         row["source_url"] = ""
         out_rows.append(row)
 
@@ -73,9 +90,13 @@ def main():
     assert n_orig == 421, f"reread original count = {n_orig}"
     assert n_ver == 248, f"reread verified count = {n_ver}"
 
+    n_orig_year = sum(1 for r in reread if r["dataset"] == "original" and r["year"])
+    assert n_orig_year == len(orig_years), (
+        f"reread original-with-year = {n_orig_year}, ожидалось {len(orig_years)}")
+
     print(f"OK: wrote {COMBINED}")
     print(f"  total rows (reread) = {len(reread)}")
-    print(f"  dataset=original    = {n_orig}")
+    print(f"  dataset=original    = {n_orig} (с непустым year: {n_orig_year})")
     print(f"  dataset=verified     = {n_ver}")
 
 

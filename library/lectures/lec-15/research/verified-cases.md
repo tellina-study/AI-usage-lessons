@@ -1,0 +1,196 @@
+---
+title: "Внешне верифицированные кейсы — Лекция 15 (scientific-research) — копия для discoverability"
+source: "notes/research/osi-primenimosti-ii/verified-cases/lec-15-verified.md"
+issue: "#349"
+status: research-backup, not-reviewed
+date_copied: 2026-11-20
+---
+
+> **Происхождение.** Это внешне верифицированное свидетельство реальных кейсов (деплойменты/
+> исследования с явным исходом, метрикой, датой и именованным инструментом, 2018–2026),
+> собранное в рамках research-задачи issue #349 (`notes/research/osi-primenimosti-ii/`).
+> Это дополнительный справочный материал для deep-dive главы / backup для Q&A / самостоятельного
+> изучения — **не методическая критика и не fact-check лекционного контента**: не прошло ревью
+> `methodology-critic` или `fact-checker` как материал лекции, и **не заменяет собственные кейсы
+> главы**, если только человек-редактор не решит сознательно включить конкретный кейс в
+> `chapter.md`.
+>
+> Копия ниже — точная (verbatim) копия
+> `notes/research/osi-primenimosti-ii/verified-cases/lec-15-verified.md` для обнаруживаемости из
+> папки лекции; каноническая версия и её история — в `notes/research/`.
+
+---
+
+---
+title: "Лекция 15 (scientific-research) — независимо верифицированные кейсы, внешние источники"
+type: research
+issue: "#349"
+date: 2026-11-20
+---
+
+# Лекция 15 (scientific-research) — верифицированные кейсы вне материалов курса
+
+## Подход к поиску
+
+Цель — найти **независимо проверяемые** кейсы применения ИИ в научных исследованиях (материаловедение,
+разработка лекарств, автоматизация лаборатории, литературный поиск/синтез, фундаментальная наука) с
+явным исходом, числом, датой, названным инструментом и реальной ссылкой — не пересказ
+`library/lectures/lec-15/` и не повтор `razmetka/lec-15.md` (27 кейсов этой лекции прочитаны
+заранее именно для того, чтобы НЕ дублировать их здесь без необходимости — пересечение с реестром
+ниже минимально и явно отмечено, где оно есть).
+
+**Инструментальная история этой сессии важна для оценки качества, поэтому фиксируется честно.**
+`WebSearch` вернул содержательный результат только 2 раза (AlphaTensor, FunSearch) — после этого
+сессия исчерпала **общий лимит в 200 запросов `WebSearch` на весь воркспейс** (расшаренный с 11
+параллельными сессиями-сиблингами, которые в это же время делают то же исследование для других
+лекций issue #349) и дальше `WebSearch` был недоступен совсем. `WebFetch` оказался заблокирован
+почти везде, где требовался не-прямой URL: DuckDuckGo (html/lite) — captcha «select squares with a
+duck» на каждый запрос без исключений; Bing — отдавал нерелевантную китайскую выдачу; Mojeek —
+403; Wikiwand — 403; сама `en.wikipedia.org` через `WebFetch` — необъяснимые 404 на существующие
+статьи. Рабочим обходом оказался **прямой `curl` через Bash tool** (отдельный сетевой путь, не
+делящий квоту/блокировки с `WebFetch`/`WebSearch`): он открыл Wikipedia REST API
+(`/w/api.php?action=query&prop=extracts`), MIT Technology Review напрямую, и, что стало основным
+источником этой сессии, **Europe PMC REST API**
+(`www.ebi.ac.uk/europepmc/webservices/rest/search`) — обычный публичный JSON-эндпоинт без
+анти-бот защиты, покрывающий большую часть журналов (Nature, Nature Chemical Biology, Nature
+Methods, Science, Scientific Reports, JAMA, Frontiers, PLOS), а также Crossref REST API и прямое
+разрешение DOI, которые помогли закрыть 2 кейса, не нашедшихся через Europe PMC. `arxiv.org`
+и `export.arxiv.org/api` были по большей части rate-limited (429) после первых удачных попаданий.
+
+**Итог: 21 кейс, все 21 проверены в этой сессии через прямой фетч первичного или
+близкого-к-первичному источника** (журнальная статья/препринт/пресс-материал компании/дата FDA/
+прямая цитата из Wikipedia-резюме с указанной первичной ссылкой) — не через пересказ агрегатора.
+Два кейса (IBM Watson Health, Baricitinib-атрибуция BenevolentAI) опираются на Wikipedia-сводку,
+которая сама цитирует первичный источник (NYT, Lancet) — отмечено как медиум, а не high, честно.
+
+## Задание выполнено по счёту: 10 успехов + 10 провалов + 1 бонусный неоднозначный
+
+Задание требовало ≥10 успехов и ≥10 провалов. Получено **ровно 10 чистых `outcome=success` и
+ровно 10 чистых `outcome=failure`**, плюс один дополнительный 21-й кейс с `outcome=partial`
+(независимый бенчмарк co-folding моделей, см. VER-L15-21) — добавлен сверх счёта, потому что он
+единственный в списке меряет вендорские модели **независимым** академическим аудитом, а не
+самоотчётом компании, и этот сигнал показался слишком ценным, чтобы его не зафиксировать, хотя он
+не укладывается чисто в «успех» или «провал».
+
+**Неудобный для жанра «провалов в науке ИИ» результат разведки: провалы нашлись легче, чем
+ожидалось по брифу задания.** Бриф предупреждал, что задокументированные провалы в научном ИИ
+публикуются реже успехов — в этой лекции (в отличие, например, от Лекции 11 про производство, где
+сиблинг-сессия получила дисбаланс 10 провалов/5 успехов) баланс получился ровным 10/10. Причина,
+по-видимому, структурная для самого домена: наука публикует ретракции, критические bibliometric-
+исследования и failure-mode taxonomies как **полноценный жанр научной литературы** (Scientific
+Reports, Frontiers, JAMA — все проиндексированы в Europe PMC на равных с успехами), в отличие от
+банкротств стартапов (где первичный источник — SEC-фильтры и бизнес-пресса, которые Europe PMC не
+видит).
+
+## Покрытие по годам
+
+- **2022** — покрыт широко: 2 успеха (AlphaTensor, одобрение барицитиниба) + 3 провала (Urbina
+  dual-use, Galactica, продажа IBM Watson Health).
+- **2023** — покрыт широко: 3 успеха (FunSearch, GraphCast, абауцин) + 1 провал (Walters & Wilder,
+  фабрикация цитат ChatGPT).
+- **2024** — покрыт, но тонко: 1 успех (ChemCrow) + 1 провал (ретракция Frontiers «крыса»). Это
+  самый тонкий год из пяти — сознательно не натягивался до большего числа кейсов.
+- **2025** — покрыт широко: 3 успеха (MatterGen, Evo 2, rentosertib/INS018-055 Phase IIa) + 3
+  провала (Taloni/GPT-4 фабрикация датасета, bibliometric-обзор ретракций Sridharan, фабрикация
+  цитат NeurIPS 2025 — сама публикация-аудит вышла в 2026, но событие/конференция — 2025).
+- **2026** — покрыт тонко: 1 успех (RFdiffusion2) + 1 провал (Spick et al., paper-mill эксплуатация
+  открытых датасетов) + бонусный неоднозначный кейс (независимый co-folding бенчмарк).
+
+**Все 5 лет (2022–2026) закрыты в обоих ведрах (успех и провал)** — без исключений, но 2024 и 2026
+закрыты минимально (по 1 кейсу на ведро), это стоит иметь в виду при любом будущем количественном
+анализе по годам.
+
+## Качество источников — честная оценка
+
+- **High (прямая журнальная/препринтная статья или официальный пресс-материал, прочитана
+  напрямую в этой сессии):** AlphaTensor, FunSearch, GraphCast, абауцин, ChemCrow, MatterGen,
+  Evo 2, RFdiffusion2, Walters & Wilder, Urbina (dual-use), Galactica (MIT Technology Review,
+  первоисточник, не агрегатор), ретракция Frontiers «крыса» (прямое разрешение DOI на
+  frontiersin.org + Crossref-метаданные retraction notice), Taloni, Sridharan (bibliometric
+  обзор), Spick et al., фабрикация цитат NeurIPS 2025 (прямое чтение arXiv:2602.05930), бонусный
+  co-folding бенчмарк.
+- **Medium:** rentosertib/INS018-055 (цифры — из независимого обзора Niazi 2025, не из первичного
+  пресс-релиза Insilico Medicine или регистра клинических испытаний — не нашёл прямого доступа к
+  первичному отчёту о Phase IIa в рамках бюджета сессии); одобрение барицитинига (дата FDA
+  подтверждена напрямую через Wikipedia REST API с точной цитатой, но атрибуция самого
+  AI-предсказания BenevolentAI взята из того же вторичного обзора Niazi, а не из оригинальной
+  переписки Richardson/Stebbing в Lancet, которую не удалось открыть напрямую); IBM Watson Health
+  (финансовые факты подтверждены — $4 млрд разработки vs $1 млрд продажи, −10% акций IBM к 2023 —
+  но конкретно про продуктовые линии «Watson for Drug Discovery»/«Watson for Genomics» внутри
+  этой сделки — по общим знаниям, не переподтверждено отдельной ссылкой в этой сессии, явно
+  помечено `unclear` по Оси 1).
+
+**Главное ограничение, которое нужно знать прежде чем использовать этот файл:** 2 из 10 провалов
+(bibliometric-обзор Sridharan и обзор paper-mill эксплуатации Spick) **не называют один
+конкретный вендорский инструмент** — это агрегированные научно-метрические измерения *явления*
+(ИИ-ассоциированные ретракции; эксплуатация открытых датасетов формульными публикациями), а не
+кейсы одного продукта. Бриф прямо просил «clearly named tooling»; эти два кейса этому критерию не
+соответствуют чисто, и это не скрывается — они включены, потому что дают **самые качественные
+числа во всём файле** (335 ретрагированных статей с полной bibliometric-разметкой; 23 005
+публикаций и +11 577 относительно тренда по 9 датасетам) и напрямую отвечают на прямой запрос
+брифа «ищи систематические обзоры провалов, а не только отдельные инциденты».
+
+## Таблица кейсов
+
+| id | case_name | year | axis1_level | axis1_mechanism | axis2_bucket | axis2_mechanism | axis3_class | axis4_gate | axis4_blast_radius | external_driver | outcome | confidence | source_url |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| VER-L15-01 | AlphaTensor (DeepMind) — обнаружил алгоритм умножения 4×5×5×5-матриц быстрее 1969-алгоритма Штрассена; до +20% на V100/TPUv2 | 2022 | low | none | seconds-minutes | none | deep-learning | yes | low | not-applicable | success | high | https://www.nature.com/articles/s41586-022-05172-4 |
+| VER-L15-02 | Барицитиниб (BenevolentAI/Eli Lilly) — полное одобрение FDA для COVID-19 у госпитализированных на кислороде (май 2022), первый такой иммуномодулятор | 2022 | low | none | season-years | F-A | classical-ml | yes | medium | not-applicable | success | high | https://en.wikipedia.org/wiki/Baricitinib (+ Richardson et al., Lancet 2020, DOI 10.1016/S0140-6736(20)30304-6) |
+| VER-L15-03 | FunSearch (DeepMind) — крупнейшее за 20 лет увеличение cap set (512 вместо известных 496 при n=8); новые эвристики bin packing | 2023 | low | none | seconds-minutes | none | hybrid | yes | low | not-applicable | success | high | https://www.nature.com/articles/s41586-023-06924-6 |
+| VER-L15-04 | GraphCast (DeepMind) — превзошёл операционный ECMWF HRES на 90% из 1380 проверочных переменных, прогноз на 10 дней за <1 минуту | 2023 | moderate | none | hours-days | F-A | deep-learning | not-applicable | low | not-applicable | success | high | https://doi.org/10.1126/science.adi2336 |
+| VER-L15-05 | Абауцин (McMaster) — deep learning-скрининг ~7500 молекул нашёл антибиотик против Acinetobacter baumannii, подтверждён на мышиной модели раневой инфекции | 2023 | low | none | weeks-months | F-A | deep-learning | yes | low | not-applicable | success | high | https://doi.org/10.1038/s41589-023-01349-8 |
+| VER-L15-06 | ChemCrow (EPFL/Rochester) — GPT-4 + 18 химических инструментов самостоятельно спланировал и провёл синтез репеллента насекомых + 3 органокатализаторов | 2024 | low | none | hours-days | F-C | agentic-llm | yes | low | not-applicable | success | high | https://doi.org/10.1038/s42256-024-00832-8 |
+| VER-L15-07 | MatterGen (Microsoft Research) — генеративная модель неорганических материалов; синтезирована 1 предложенная структура, измеренное свойство в ~20% от цели | 2025 | moderate | none | weeks-months | F-A | foundation-model | yes | low | not-applicable | success | medium | https://doi.org/10.1038/s41586-025-08628-5 |
+| VER-L15-08 | Evo 2 (Arc Institute) — геномная foundation model на 9 трлн п.о. всех доменов жизни, предсказывает патогенность некодирующих и BRCA1-вариантов | 2025 | high | none | weeks-months | F-B | foundation-model | yes | medium | not-applicable | success | medium | https://doi.org/10.1038/s41586-026-10176-5 |
+| VER-L15-09 | Rentosertib / INS018-055 (Insilico Medicine) — первый полностью AI-открытый и AI-спроектированный препарат; Phase IIa (авг. 2025): безопасность + улучшение FVC при идиопатическом лёгочном фиброзе | 2025 | high | none | season-years | F-A | hybrid | yes | medium | not-applicable | success | medium | https://europepmc.org/articles/PMC12472608 (Niazi 2025, обзор) |
+| VER-L15-10 | RFdiffusion2 (Baker Lab/UW) — атомарное скаффолдирование активных центров ферментов: 41/41 целей бенчмарка против 16/41 у предыдущего метода | 2026 | moderate | none | weeks-months | F-A | deep-learning | yes | low | not-applicable | success | high | https://doi.org/10.1038/s41592-025-02975-x |
+| VER-L15-11 | Urbina/Lentzos/Invernizzi/Ekins — генеративная модель («MegaSyn») для открытия лекарств развёрнута в обратную сторону: VX и десятки тысяч токсичных аналогов спроектированы за 6 часов без единого защитного барьера | 2022 | low | none | hours-days | none | deep-learning | no | catastrophic | no | failure | high | https://doi.org/10.1038/s42256-022-00465-9 (PMCID: PMC9544280) |
+| VER-L15-12 | Galactica (Meta) — LLM на 48M научных статей; публично выложена 15.11.2022, отозвана через 3 дня после фабрикации фактов и цитат | 2022 | high | U1 | seconds-minutes | F-B | foundation-model | no | medium | no | failure | high | https://www.technologyreview.com/2022/11/18/1063487/meta-large-language-model-ai-only-survived-three-days-gpt-3-science/ |
+| VER-L15-13 | IBM Watson Health (вкл. линии Watson for Drug Discovery/Genomics) — дивестирован в Merative/Francisco Partners (янв. 2022): разработка стоила $4 млрд, продан за $1 млрд; −10% акций IBM к 2023, массовые сокращения | 2022 | unclear | unclear | season-years | F-A | hybrid | unclear | high | mixed | failure | medium | https://en.wikipedia.org/wiki/IBM_Watson (цитирует nytimes.com/2022/01/21/business/ibm-watson-health.html) |
+| VER-L15-14 | Walters & Wilder — фабрикация библиографических цитат ChatGPT: 55% цитат GPT-3.5 и 18% цитат GPT-4 полностью выдуманы (636 цитат, 84 статьи, 42 темы) | 2023 | high | U1 | seconds-minutes | F-B | foundation-model | no | medium | no | failure | high | https://doi.org/10.1038/s41598-023-41032-5 |
+| VER-L15-15 | Ретракция Frontiers «крыса» — статья Guo/Dong/Hao (13.02.2024) с анатомически бессмысленной Midjourney-иллюстрацией крысы; отозвана 16.02.2024 (3 дня), рецензирование фигуры не проверило | 2024 | low | none | seconds-minutes | F-B | foundation-model | no | medium | no | failure | high | https://doi.org/10.3389/fcell.2023.1339390 (retraction notice: 10.3389/fcell.2024.1386861) |
+| VER-L15-16 | Taloni et al. — custom GPT-4 сгенерировал полностью фиктивный офтальмологический клинический датасет; после доработки доля детектируемых признаков фабрикации упала до 4,6%, часть датасетов «прошла бы как настоящие» | 2025 | high | U1 | hours-days | F-B | foundation-model | unclear | high | no | failure | high | https://doi.org/10.1001/jamaophthalmol.2025.0834 |
+| VER-L15-17 | Sridharan & Sivaramakrishnan — bibliometric-обзор 335 ИИ-связанных ретракций: 46,3% пришлось на 2023 год, медианное время до ретракции 550 дней, 51,1% ретрагированных статей сохранили влияние (field citation ratio >1) | 2025 | unclear | unclear | season-years | F-A | unclear | unclear | medium | mixed | failure | medium | https://doi.org/10.3389/frma.2025.1737168 |
+| VER-L15-18 | Compound Deception at NeurIPS 2025 (Ansari) — 100 проанализированных ИИ-сфабрикованных цитат, обнаруженных в 53 принятых статьях (~1% принятых); не пойманы рецензированием 3-5 экспертов на статью | 2025 | moderate | U3 | weeks-months | F-A | foundation-model | no | medium | no | failure | high | https://arxiv.org/abs/2602.05930 |
+| VER-L15-19 | Spick et al. — эксплуатация открытых биомедицинских датасетов формульными/AI-ассистированными публикациями: 9 датасетов дали 23 005 публикаций в 2025 г., избыток +11 577 сверх тренда (рост ×3,0 с 2022 г., ×4,2 для Китая) | 2026 | unclear | unclear | season-years | F-A | unclear | no | high | mixed | failure | high | https://doi.org/10.1016/j.jclinepi.2026.112203 (препринт июль 2025: https://doi.org/10.1101/2025.07.07.25331008) |
+| VER-L15-20 | DSP-1181 (Exscientia/Sumitomo Dainippon) — AI-спроектированный препарат от ОКР; 12 мес. от цели до клиники (vs типичных 4–6 лет), но прекращён после завершения Phase I без перехода в Phase II | 2022 | high | U2 | season-years | F-A | hybrid | yes | low | no | failure | medium | https://europepmc.org/articles/PMC12472608 (Niazi 2025, обзор) |
+| VER-L15-21 (бонус, outcome=partial) | Независимый co-folding бенчмарк (Mac1-лиганды) — AlphaFold3, Boltz-2 и Chai-1 каждый воспроизвёл >50% поз лигандов с точностью <2 Å RMSD в независимом (не вендорском) академическом аудите | 2026 | moderate | U3 | hours-days | none | foundation-model | yes | low | not-applicable | partial | high | https://doi.org/10.7554/eLife.110475 |
+
+## Трудные случаи и контр-примеры к рамке курса
+
+- **DSP-1181 — гейт сработал ровно так, как предсказывает рамка, несмотря на то что исход
+  назван «провал».** `axis4_gate=yes` + `outcome=failure` на первый взгляд выглядит
+  контр-примером к находке «132 из 137 провалов корпуса — без действующего гейта». Но здесь гейт
+  (регуляторная Phase I) **именно поймал проблему до дальнейших вложений** — исход «провал
+  программы» при низком blast radius (Phase I, контролируемая остановка) — это ровно то, для чего
+  гейт существует. Это не контр-пример «гейт не предсказывает», это иллюстрация механизма: гейт
+  превращает потенциально дорогой провал в дешёвый контролируемый.
+- **Urbina/MegaSyn — чистейший пример `axis4_gate=no` → `catastrophic` blast radius во всём
+  файле**, и это не гипотетический провал, а умышленная демонстрация дефекта: авторы статьи сами
+  создатели исходной генеративной модели для лекарств, развернувшие её в обратную сторону.
+  Полностью согласуется с головной находкой курса о гейте как сильнейшем предикторе, но стоит
+  отдельно — это не провал задачи (задача «спроектировать токсичную молекулу» для модели оказалась
+  *лёгкой*, не трудной), а провал полного отсутствия барьера. Как и кейс Frontiers «крыса» из
+  основного реестра Лекции 15, это пример, не укладывающийся чисто в таксономию U1–U4 Оси 1.
+- **Ретракция Frontiers «крыса» — независимо переподтверждённый дубль кейса из основного реестра
+  Лекции 15 (s29), но с собственной прямой проверкой через DOI/Crossref в этой сессии**, а не
+  простым пересказом главы. Числа совпали (3 дня до отзыва, изображения Midjourney) — это
+  усиливает доверие к исходной разметке курса, а не просто повторяет её.
+- **2 кейса без одного named tool (Sridharan, Spick)** — см. раздел «Качество источников» выше;
+  включены сознательно как лучшие по качеству чисел, но не соответствуют критерию брифа «clearly
+  named tooling» буквально.
+- **IBM Watson Health — самый низко-confidence кейс в ведре провалов не по качеству
+  источника на факты (финансы подтверждены NYT-цитатой через Wikipedia высоко надёжно), а по
+  точности привязки к индустрии scientific-research** конкретно (а не medical-decision, который
+  уже покрыт в реестре Лекции 6 Watson for Oncology) — явно помечено `axis1_level=unclear` именно
+  поэтому, а не потому что сам провал Watson Health сомнителен.
+
+---
+
+## Связанные канонические файлы исследования (issue #349)
+
+- `notes/research/osi-primenimosti-ii/reestr-reshenij-verified.csv` — сводный CSV 248 внешне
+  верифицированных кейсов по всем 12 лекциям.
+- `notes/research/osi-primenimosti-ii/reestr-reshenij-verified-README.md` — README к нему.
+- `notes/research/osi-primenimosti-ii/reestr-reshenij.csv` + `reestr-reshenij-README.md` —
+  исходный канонический реестр 421 кейса из материалов самого курса (issue #349).

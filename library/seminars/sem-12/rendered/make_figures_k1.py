@@ -276,7 +276,7 @@ def k1_degradation_grid():
     d.text((pad, 60), "1/1 — полное разрешение · 1/16 и 1/32 — доля стороны кадра",
            font=f(16), fill=LIGHT)
 
-    row_labels = [["лёгкая", "раскладка"], ["трудная:", "поворот 12°,", "обрезка 4%"]]
+    row_labels = [["лёгкий", "случай"], ["трудный случай:", "поворот 12°,", "обрезка 4%"]]
     for ri, maker in enumerate((easy, hard)):
         y0 = 90 + ri * (cell_h + label_h + pad)
         lbl = row_labels[ri]
@@ -287,7 +287,7 @@ def k1_degradation_grid():
             thumb = maker(scale)
             # масштабируем превью под клетку, сохраняя пропорции, крупно —
             # мелкие разрешения увеличены для показа деградации, а не чтобы
-            # соврать про реальный размер файла (подпись называет реальные px)
+            # соврать про реальный размер файла (подпись называет реальные точки)
             disp = thumb.copy()
             ratio = min(cell_w / disp.width, cell_h / disp.height)
             disp = disp.resize((max(1, round(disp.width * ratio)),
@@ -298,7 +298,7 @@ def k1_degradation_grid():
             cy = y0 + (cell_h - disp.height) // 2
             d.rectangle([x0, y0, x0 + cell_w, y0 + cell_h], outline=LIGHT, width=2)
             im.paste(disp, (cx, cy))
-            cap = f"{name} · {thumb.width}×{thumb.height}px"
+            cap = f"{name} · {thumb.width}×{thumb.height} точек"
             clabel(d, x0 + cell_w / 2, y0 + cell_h + 8, cap, 14, MUTE,
                    where=f"подпись {name}/{ri}")
     save(im, "k1-degradation-grid.png")

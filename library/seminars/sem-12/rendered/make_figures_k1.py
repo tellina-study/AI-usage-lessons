@@ -120,7 +120,7 @@ def k1_scan_grid():
         ["Чем выше разрешение,", "тем больше патчей — и дороже вызов"],
         SURF, tc=DEEP, sz=20, outline=LIGHT, where="подпись цены")
     clabel(d, rx + rw / 2, pad_top + target_h - 60,
-           "receipt_28, корпус CORD", 15, MUTE, where="подпись корпуса")
+           "настоящий чек, корпус CORD", 15, MUTE, where="подпись корпуса")
 
     save(im, "k1-scan-grid.png")
 
@@ -136,84 +136,94 @@ def _fmt_recall(x):
 def k1_recall_chart():
     im = Image.new("RGB", (W_PX, 560), W)
     d = ImageDraw.Draw(im)
-    head(d, "recall@1 по 16 лёгким и 3 трудным запросам", sz=28)
+    head(d, "Доля запросов, где нужный документ оказался первым", sz=27)
+    d.text((40, 56), "16 лёгких запросов (синяя полоса) и 3 трудных (бирюзовая)",
+           font=f(18), fill=LIGHT)
 
     rows = [
         ("Поля", 0.8125, 0.0),
         ("Подпись", 0.0625, 0.0),
         ("Гибрид", 0.0, 0.0),
     ]
-    chart_x, chart_w = 360, 1140
+    chart_x, max_w = 360, 950
     bar_h, gap = 90, 46
-    y = 120
-    max_w = chart_w
+    y = 150
     for name, light, hard in rows:
         clabel(d, chart_x - 170, y + bar_h / 2 - 12, name, 24, DEEP, b=True,
                where=f"метка {name}")
+        # Синяя (MID) полоса — ЛЁГКИЕ запросы (16 штук), бирюзовая (TEAL) —
+        # ТРУДНЫЕ (3 штуки). Цвет и подпись обязаны совпадать буквально —
+        # P0-находка прошлого круга: подпись называла цвета наоборот тому,
+        # что на самом деле нарисовано. `fit()` проверяет, что подпись не
+        # вылезет за правый край холста (прошлый круг этого не проверял —
+        # «0,8125 — лёгкие запросы» у «Поля» вышло за холст и обрезалось).
         lw = max(6, int(max_w * light))
         d.rounded_rectangle([chart_x, y, chart_x + lw, y + bar_h * 0.55], radius=8,
                              fill=MID)
-        d.text((chart_x + lw + 14, y + 4), _fmt_recall(light),
-               font=f(22, True), fill=MID)
+        clabel(d, chart_x + lw + 90, y + 16, _fmt_recall(light), 22, MID, b=True,
+               where=f"число (лёгкие) {name}")
         hw = max(4, int(max_w * hard)) if hard > 0 else 4
         yy = y + bar_h * 0.62
         d.rounded_rectangle([chart_x, yy, chart_x + hw, yy + bar_h * 0.3], radius=6,
                              fill=TEAL)
-        d.text((chart_x + hw + 14, yy - 2), f"{hard:.1f}".replace(".", ",") + " (трудные)",
-               font=f(17), fill=TEAL)
+        clabel(d, chart_x + hw + 90, yy - 2, f"{hard:.1f}".replace(".", ","), 17, TEAL,
+               where=f"число (трудные) {name}")
         y += bar_h + gap
 
-    d.text((chart_x, y + 10), "светлая полоса — 16 лёгких запросов · тёмная — 3 трудных",
-           font=f(16), fill=MUTE)
     save(im, "k1-recall-chart.png")
 
 
 # ── n15 — каскад одной ошибки извлечения на три вопроса ─────────────────────
+# Никаких системных id на кадре (receipt_NN, кодов запросов Л4/Л6/Л13) — зал
+# узнаёт чек и вопрос по тому, что на них написано человеческим языком, не по
+# нашим внутренним меткам. Формулировки — rework/section-1-keys-1.md.
 def k1_cascade_diagram():
     im = Image.new("RGB", (W_PX, 520), W)
     d = ImageDraw.Draw(im)
-    head(d, "Одна ошибка извлечения на receipt_09 — три сломанных вопроса", sz=25)
+    head(d, "Одна ошибка извлечения — три сломанных вопроса", sz=25)
 
     bx, by, bw, bh = 120, 110, 560, 150
     box(d, bx, by, bw, bh,
-        ["receipt_09: «поля» предсказали 14 000", "настоящая сумма — 36 000"],
+        ["Чек на 36 000: «поля» предсказали 14 000", "модель взяла сдачу вместо суммы покупки"],
         W, tc=RED, sz=19, outline=RED, where="узел ошибки")
     d.text((bx, by + bh + 14),
            "причина: в тексте чека рядом «сдача 14 000» и «итог 36 000» —",
            font=f(16), fill=MUTE)
     d.text((bx, by + bh + 38),
-           "модель взяла сдачу вместо суммы покупки",
+           "модель прочитала не ту строку",
            font=f(16), fill=MUTE)
 
     targets = [
-        ("Л4", "вторая по малости сумма", "чужое место в ранжировании"),
-        ("Л6", "третья по малости сумма", "сдвиг рангов той же ошибкой"),
-        ("Л13", "ближе всего к 35 000", "14 000 слишком далеко — не попало в топ"),
+        ("вопрос про вторую по малости сумму", "чужое место в ранжировании"),
+        ("вопрос про третью по малости сумму", "сдвиг рангов той же ошибкой"),
+        ("вопрос «ближе всего к 35 000»", "14 000 слишком далеко — не попало в первую тройку"),
     ]
     tx = bx + bw + 120
     tw = W_PX - tx - 40
     ty, th, tgap = 70, 120, 28
     cy0 = by + bh / 2
-    for i, (tag, q, why) in enumerate(targets):
+    for i, (q, why) in enumerate(targets):
         ty_i = ty + i * (th + tgap)
-        box(d, tx, ty_i, tw, th, [f"{tag} · {q}", why], SURF, tc=DEEP, sz=17,
-            outline=LIGHT, where=f"цель {tag}")
+        box(d, tx, ty_i, tw, th, [q, why], SURF, tc=DEEP, sz=17,
+            outline=LIGHT, where=f"цель {i + 1}")
         arrow(d, bx + bw, cy0, tx, ty_i + th / 2, col=RED, wd=3)
     save(im, "k1-cascade-diagram.png")
 
 
 # ── n16 — вырожденный отказ: один документ отвечает почти на любой запрос ──
+# Никаких system-id на кадре (было «receipt_08», «top-1») — документ назван
+# тем, что в нём написано, «топ» — по-русски.
 def k1_attractor_diagram():
-    im = Image.new("RGB", (W_PX, 560), W)
+    im = Image.new("RGB", (W_PX, 610), W)
     d = ImageDraw.Draw(im)
     head(d, "Один документ архива отвечает почти на любой запрос", sz=25)
 
-    doc_w, doc_h = 420, 170
-    doc_x = W_PX - doc_w - 120
+    doc_w, doc_h = 460, 170
+    doc_x = W_PX - doc_w - 90
     doc_y = 190
     box(d, doc_x, doc_y, doc_w, doc_h,
-        ["receipt_08 (гибрид)", "«чек с итоговой суммой 50,000»", "16 из 16 запросов"],
-        W, tc=DEEP, sz=19, outline=GOLD, where="документ-получатель")
+        ["чек с фразой «итоговая сумма 50,000»", "(гибрид)", "16 из 16 запросов"],
+        W, tc=DEEP, sz=17, outline=GOLD, where="документ-получатель")
 
     queries = ["наибольшая сумма", "наименьшая сумма", "диапазон 150–160 тыс",
                "ближе всего к 45 000", "третья по величине", "вторая по малости"]
@@ -226,7 +236,7 @@ def k1_attractor_diagram():
         arrow(d, qx + 420, qy + qh / 2, doc_x, doc_y + doc_h / 2, col=TEAL, wd=2)
 
     d.text((90, qy0 + len(queries) * (qh + qgap) + 20),
-           "разные вопросы, разные формулировки — top-1 почти всегда один и тот же чек",
+           "разные вопросы, разные формулировки — первым почти всегда выходит один и тот же чек",
            font=f(17), fill=MUTE)
     save(im, "k1-attractor-diagram.png")
 
@@ -251,7 +261,7 @@ def k1_degradation_grid():
         im2 = im2.crop((int(ww * 0.04), int(hh * 0.04), int(ww * 0.96), int(hh * 0.96)))
         return im2.resize((tw, th), Image.LANCZOS)
 
-    steps = [("full", 1.0), ("sixteenth", 1 / 16), ("thirtysecond", 1 / 32)]
+    steps = [("1/1", 1.0), ("1/16", 1 / 16), ("1/32", 1 / 32)]
     cell_h = 300
     cell_w = 230
     pad = 30
@@ -263,6 +273,8 @@ def k1_degradation_grid():
     im = Image.new("RGB", (canvas_w, canvas_h), W)
     d = ImageDraw.Draw(im)
     head(d, "Один скан, два способа снять, три разрешения", sz=26)
+    d.text((pad, 60), "1/1 — полное разрешение · 1/16 и 1/32 — доля стороны кадра",
+           font=f(16), fill=LIGHT)
 
     row_labels = [["лёгкая", "раскладка"], ["трудная:", "поворот 12°,", "обрезка 4%"]]
     for ri, maker in enumerate((easy, hard)):
@@ -296,12 +308,16 @@ def k1_degradation_grid():
 def k1_fp_miss_chart():
     im = Image.new("RGB", (W_PX, 560), W)
     d = ImageDraw.Draw(im)
-    head(d, "Пропуски против ложных тревог — лёгкая раскладка", sz=26)
+    head(d, "Пропуски против ложных тревог — лёгкий случай", sz=26)
 
+    # Имена шагов — по-русски, с реальным разрешением той же стороны, что
+    # на k1-degradation-grid.png (receipt_00, 432 px по длинной стороне на
+    # полном разрешении, 432/16≈27 px, 432/32≈14 px) — не ключи JSON
+    # (`full`/`sixteenth`/`thirtysecond`), которые были нарисованы раньше.
     data = [
-        ("full", 0.000, 0.556),
-        ("sixteenth", 0.167, 0.778),
-        ("thirtysecond", 0.333, 0.667),
+        ("полное (432 px)", 0.000, 0.556),
+        ("1/16 (27 px)", 0.167, 0.778),
+        ("1/32 (14 px)", 0.333, 0.667),
     ]
     chart_x, chart_w = 420, 1080
     bar_h, gap = 110, 50

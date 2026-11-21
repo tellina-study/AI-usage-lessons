@@ -1,0 +1,513 @@
+{
+  "purpose": "Пересборка band_analysis.json по ИСТИННЫМ меткам корпуса (issue #351, находка этой сессии при подхвате после предшественника) — не по выдаче top-1, которая была источником разметки в analyze_band.py. См. docstring этого файла и README.md «Порок первой версии разметки».",
+  "model": "nvidia/nemotron-3.5-embed-1b:free",
+  "source_measurement_date": "2026-11-04",
+  "source_raw_file": "sem-10/stend/raw/case4_mm_full_retrieval.json",
+  "new_stand_calls": 0,
+  "new_stand_calls_note": "Попытка нового вызова для восстановления значения receipt_02 не предпринималась — доступ к credentials n8n в этой сессии заблокирован классификатором auto-mode; см. same_hard_unmeasured.",
+  "n_corpus_scans": 30,
+  "easy_case": {
+    "case": "лёгкий случай (soft-dup: пересжатие+resize)",
+    "n_total_pairs_with_known_cosine": 60,
+    "n_total_true_pairs_including_unmeasured": 60,
+    "n_same_unmeasured_excluded_from_numbers_above": 0,
+    "share_in_band_of_known": 0.0,
+    "band_exists": false,
+    "t_low": 0.8202,
+    "t_high": 0.737,
+    "n_same_in_band": 0,
+    "n_diff_in_band": 0
+  },
+  "hard_case": {
+    "case": "трудный случай (hard-dup: поворот 12°+обрезка 4%)",
+    "n_total_pairs_with_known_cosine": 60,
+    "n_total_true_pairs_including_unmeasured": 61,
+    "n_same_unmeasured_excluded_from_numbers_above": 1,
+    "share_in_band_of_known": 0.1167,
+    "band_exists": true,
+    "t_low": 0.7049,
+    "t_high": 0.7547,
+    "n_same_in_band": 1,
+    "n_diff_in_band": 6,
+    "same_values_in_band": [
+      0.7049
+    ],
+    "diff_values_in_band": [
+      0.7092,
+      0.7153,
+      0.7153,
+      0.737,
+      0.737,
+      0.7547
+    ]
+  },
+  "same_hard_unmeasured": [
+    {
+      "id": "receipt_02",
+      "cosine": null,
+      "bounded_above": 0.7547,
+      "note": "истинная SAME-пара (receipt_i=receipt_02, его hard-dup) существует по построению корпуса, но её cosine не сохранён исходным замером (near-dup retrieval сохраняет только argmax); известно лишь, что она МЕНЬШЕ 0.7547 — иначе поиск выбрал бы её, а не чужой документ receipt_04. Новый вызов стенда для восстановления точного числа недоступен в этой сессии (нет доступа к credentials n8n) — значение не домысливается."
+    }
+  ],
+  "diff_misfire_case_read_by_eye": [
+    {
+      "dup_of": "receipt_02",
+      "matched_instead": "receipt_04",
+      "cosine": 0.7547,
+      "note": "hard-dup документа receipt_02 (поворот 12°+обрезка 4%) оказался по cosine ближе к ЧУЖОМУ документу receipt_04, чем к своему оригиналу — настоящая DIFF-пара независимо от разметки SAME."
+    }
+  ],
+  "threshold_tradeoff_hard_case": [
+    {
+      "threshold": 0.7049,
+      "false_non_match_FN": 0,
+      "false_match_FP": 6,
+      "fn_plus_fp": 6
+    },
+    {
+      "threshold": 0.7149,
+      "false_non_match_FN": 1,
+      "false_match_FP": 5,
+      "fn_plus_fp": 6
+    },
+    {
+      "threshold": 0.7249,
+      "false_non_match_FN": 1,
+      "false_match_FP": 3,
+      "fn_plus_fp": 4
+    },
+    {
+      "threshold": 0.7349,
+      "false_non_match_FN": 1,
+      "false_match_FP": 3,
+      "fn_plus_fp": 4
+    },
+    {
+      "threshold": 0.7449,
+      "false_non_match_FN": 1,
+      "false_match_FP": 1,
+      "fn_plus_fp": 2
+    },
+    {
+      "threshold": 0.7547,
+      "false_non_match_FN": 1,
+      "false_match_FP": 1,
+      "fn_plus_fp": 2
+    }
+  ],
+  "raw_pairs": {
+    "same_soft": [
+      {
+        "id": "receipt_00",
+        "cosine": 0.9936
+      },
+      {
+        "id": "receipt_01",
+        "cosine": 0.9769
+      },
+      {
+        "id": "receipt_02",
+        "cosine": 0.8745
+      },
+      {
+        "id": "receipt_03",
+        "cosine": 0.9434
+      },
+      {
+        "id": "receipt_04",
+        "cosine": 0.8202
+      },
+      {
+        "id": "receipt_05",
+        "cosine": 0.9963
+      },
+      {
+        "id": "receipt_06",
+        "cosine": 0.9876
+      },
+      {
+        "id": "receipt_07",
+        "cosine": 0.9463
+      },
+      {
+        "id": "receipt_08",
+        "cosine": 0.9963
+      },
+      {
+        "id": "receipt_09",
+        "cosine": 0.98
+      },
+      {
+        "id": "receipt_10",
+        "cosine": 0.9953
+      },
+      {
+        "id": "receipt_11",
+        "cosine": 0.9276
+      },
+      {
+        "id": "receipt_12",
+        "cosine": 0.9315
+      },
+      {
+        "id": "receipt_13",
+        "cosine": 0.9464
+      },
+      {
+        "id": "receipt_14",
+        "cosine": 0.9033
+      },
+      {
+        "id": "receipt_15",
+        "cosine": 0.9949
+      },
+      {
+        "id": "receipt_16",
+        "cosine": 0.9856
+      },
+      {
+        "id": "receipt_17",
+        "cosine": 0.9376
+      },
+      {
+        "id": "receipt_18",
+        "cosine": 0.9878
+      },
+      {
+        "id": "receipt_19",
+        "cosine": 0.8857
+      },
+      {
+        "id": "receipt_20",
+        "cosine": 0.9361
+      },
+      {
+        "id": "receipt_21",
+        "cosine": 0.9772
+      },
+      {
+        "id": "receipt_22",
+        "cosine": 0.962
+      },
+      {
+        "id": "receipt_23",
+        "cosine": 0.8386
+      },
+      {
+        "id": "receipt_24",
+        "cosine": 0.98
+      },
+      {
+        "id": "receipt_25",
+        "cosine": 0.9819
+      },
+      {
+        "id": "receipt_26",
+        "cosine": 0.9718
+      },
+      {
+        "id": "receipt_27",
+        "cosine": 0.9862
+      },
+      {
+        "id": "receipt_28",
+        "cosine": 0.9941
+      },
+      {
+        "id": "receipt_29",
+        "cosine": 0.9915
+      }
+    ],
+    "same_hard_known": [
+      {
+        "id": "receipt_00",
+        "cosine": 0.8456
+      },
+      {
+        "id": "receipt_01",
+        "cosine": 0.9346
+      },
+      {
+        "id": "receipt_03",
+        "cosine": 0.863
+      },
+      {
+        "id": "receipt_04",
+        "cosine": 0.7049
+      },
+      {
+        "id": "receipt_05",
+        "cosine": 0.9213
+      },
+      {
+        "id": "receipt_06",
+        "cosine": 0.8756
+      },
+      {
+        "id": "receipt_07",
+        "cosine": 0.9287
+      },
+      {
+        "id": "receipt_08",
+        "cosine": 0.9694
+      },
+      {
+        "id": "receipt_09",
+        "cosine": 0.8907
+      },
+      {
+        "id": "receipt_10",
+        "cosine": 0.9581
+      },
+      {
+        "id": "receipt_11",
+        "cosine": 0.919
+      },
+      {
+        "id": "receipt_12",
+        "cosine": 0.7956
+      },
+      {
+        "id": "receipt_13",
+        "cosine": 0.8465
+      },
+      {
+        "id": "receipt_14",
+        "cosine": 0.824
+      },
+      {
+        "id": "receipt_15",
+        "cosine": 0.9708
+      },
+      {
+        "id": "receipt_16",
+        "cosine": 0.8853
+      },
+      {
+        "id": "receipt_17",
+        "cosine": 0.8165
+      },
+      {
+        "id": "receipt_18",
+        "cosine": 0.9579
+      },
+      {
+        "id": "receipt_19",
+        "cosine": 0.9038
+      },
+      {
+        "id": "receipt_20",
+        "cosine": 0.8178
+      },
+      {
+        "id": "receipt_21",
+        "cosine": 0.9316
+      },
+      {
+        "id": "receipt_22",
+        "cosine": 0.9233
+      },
+      {
+        "id": "receipt_23",
+        "cosine": 0.8777
+      },
+      {
+        "id": "receipt_24",
+        "cosine": 0.9476
+      },
+      {
+        "id": "receipt_25",
+        "cosine": 0.9344
+      },
+      {
+        "id": "receipt_26",
+        "cosine": 0.9231
+      },
+      {
+        "id": "receipt_27",
+        "cosine": 0.9559
+      },
+      {
+        "id": "receipt_28",
+        "cosine": 0.9327
+      },
+      {
+        "id": "receipt_29",
+        "cosine": 0.9464
+      }
+    ],
+    "same_hard_unmeasured": [
+      {
+        "id": "receipt_02",
+        "cosine": null,
+        "bounded_above": 0.7547,
+        "note": "истинная SAME-пара (receipt_i=receipt_02, его hard-dup) существует по построению корпуса, но её cosine не сохранён исходным замером (near-dup retrieval сохраняет только argmax); известно лишь, что она МЕНЬШЕ 0.7547 — иначе поиск выбрал бы её, а не чужой документ receipt_04. Новый вызов стенда для восстановления точного числа недоступен в этой сессии (нет доступа к credentials n8n) — значение не домысливается."
+      }
+    ],
+    "diff_nearest_other": [
+      {
+        "id": "receipt_00",
+        "nearest_other": "receipt_04",
+        "cosine": 0.5878
+      },
+      {
+        "id": "receipt_01",
+        "nearest_other": "receipt_17",
+        "cosine": 0.5791
+      },
+      {
+        "id": "receipt_02",
+        "nearest_other": "receipt_04",
+        "cosine": 0.7153
+      },
+      {
+        "id": "receipt_03",
+        "nearest_other": "receipt_02",
+        "cosine": 0.5924
+      },
+      {
+        "id": "receipt_04",
+        "nearest_other": "receipt_02",
+        "cosine": 0.7153
+      },
+      {
+        "id": "receipt_05",
+        "nearest_other": "receipt_02",
+        "cosine": 0.6549
+      },
+      {
+        "id": "receipt_06",
+        "nearest_other": "receipt_25",
+        "cosine": 0.6261
+      },
+      {
+        "id": "receipt_07",
+        "nearest_other": "receipt_02",
+        "cosine": 0.6055
+      },
+      {
+        "id": "receipt_08",
+        "nearest_other": "receipt_16",
+        "cosine": 0.6827
+      },
+      {
+        "id": "receipt_09",
+        "nearest_other": "receipt_18",
+        "cosine": 0.6732
+      },
+      {
+        "id": "receipt_10",
+        "nearest_other": "receipt_04",
+        "cosine": 0.5939
+      },
+      {
+        "id": "receipt_11",
+        "nearest_other": "receipt_14",
+        "cosine": 0.5826
+      },
+      {
+        "id": "receipt_12",
+        "nearest_other": "receipt_04",
+        "cosine": 0.59
+      },
+      {
+        "id": "receipt_13",
+        "nearest_other": "receipt_17",
+        "cosine": 0.5544
+      },
+      {
+        "id": "receipt_14",
+        "nearest_other": "receipt_02",
+        "cosine": 0.672
+      },
+      {
+        "id": "receipt_15",
+        "nearest_other": "receipt_14",
+        "cosine": 0.5822
+      },
+      {
+        "id": "receipt_16",
+        "nearest_other": "receipt_08",
+        "cosine": 0.6827
+      },
+      {
+        "id": "receipt_17",
+        "nearest_other": "receipt_04",
+        "cosine": 0.6782
+      },
+      {
+        "id": "receipt_18",
+        "nearest_other": "receipt_09",
+        "cosine": 0.6732
+      },
+      {
+        "id": "receipt_19",
+        "nearest_other": "receipt_04",
+        "cosine": 0.5392
+      },
+      {
+        "id": "receipt_20",
+        "nearest_other": "receipt_14",
+        "cosine": 0.6522
+      },
+      {
+        "id": "receipt_21",
+        "nearest_other": "receipt_14",
+        "cosine": 0.6513
+      },
+      {
+        "id": "receipt_22",
+        "nearest_other": "receipt_25",
+        "cosine": 0.7092
+      },
+      {
+        "id": "receipt_23",
+        "nearest_other": "receipt_25",
+        "cosine": 0.737
+      },
+      {
+        "id": "receipt_24",
+        "nearest_other": "receipt_17",
+        "cosine": 0.5955
+      },
+      {
+        "id": "receipt_25",
+        "nearest_other": "receipt_23",
+        "cosine": 0.737
+      },
+      {
+        "id": "receipt_26",
+        "nearest_other": "receipt_21",
+        "cosine": 0.6234
+      },
+      {
+        "id": "receipt_27",
+        "nearest_other": "receipt_28",
+        "cosine": 0.5726
+      },
+      {
+        "id": "receipt_28",
+        "nearest_other": "receipt_04",
+        "cosine": 0.6159
+      },
+      {
+        "id": "receipt_29",
+        "nearest_other": "receipt_20",
+        "cosine": 0.5192
+      }
+    ],
+    "diff_misfire": [
+      {
+        "dup_of": "receipt_02",
+        "matched_instead": "receipt_04",
+        "cosine": 0.7547,
+        "note": "hard-dup документа receipt_02 (поворот 12°+обрезка 4%) оказался по cosine ближе к ЧУЖОМУ документу receipt_04, чем к своему оригиналу — настоящая DIFF-пара независимо от разметки SAME."
+      }
+    ]
+  },
+  "comparison_with_top1_biased_version": {
+    "old_file": "raw/band_analysis.json (analyze_band.py)",
+    "what_changed": "SAME-hard теперь ЯВНО 30 истинных пар (29 известных числом + 1 помеченная «не замерено, <0,7547»), а не 29 без следа пропавшей. Числа t_low/t_high/торговли порогом совпадают с прежними — пропавшее значение и раньше не входило в расчёт, менялась только видимость пропуска, не сами числа.",
+    "why_old_version_understated_the_band": "Знаменатель доли «пар в полосе» у старой версии — 60 известных (29+31), у истинной разметки — 61 истинная пара (30+31), и ЕСЛИ пропавшее значение окажется внутри полосы [0,7049; 0,7547] или ниже t_low, доля пар в полосе вырастет, а не останется 11,7%. Старая версия не содержала ложного числа, но создавала ложное ощущение полноты — ровно та находка, которую просил задокументировать не выбрасывая."
+  }
+}

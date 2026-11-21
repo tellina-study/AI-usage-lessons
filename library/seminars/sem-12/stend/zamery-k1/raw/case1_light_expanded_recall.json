@@ -1,0 +1,579 @@
+{
+  "note": "Дополнение 2026-11-21 к Замеру №1 — расширенный набор лёгких запросов (2 -> 16), переиспользует 90 vision-вызовов из descriptions_results.json, 0 новых vision-вызовов, только переэмбеддинг (3 батч-вызова).",
+  "queries_light": {
+    "light_1_max_total": {
+      "text": "Какой чек (документ) имеет наибольшую итоговую сумму (TOTAL)?",
+      "gold": "receipt_28"
+    },
+    "light_2_min_total": {
+      "text": "Какой чек (документ) имеет наименьшую итоговую сумму (TOTAL)?",
+      "gold": "receipt_03"
+    },
+    "light_3_2nd_max_total": {
+      "text": "Какой чек имеет ВТОРУЮ по величине итоговую сумму (не самую большую, а следующую за ней)?",
+      "gold": "receipt_20"
+    },
+    "light_4_2nd_min_total": {
+      "text": "Какой чек имеет ВТОРУЮ по малости итоговую сумму (не самую маленькую, а следующую за ней)?",
+      "gold": "receipt_10"
+    },
+    "light_5_3rd_max_total": {
+      "text": "Какой чек имеет ТРЕТЬЮ по величине итоговую сумму?",
+      "gold": "receipt_14"
+    },
+    "light_6_3rd_min_total": {
+      "text": "Какой чек имеет ТРЕТЬЮ по малости итоговую сумму?",
+      "gold": "receipt_02"
+    },
+    "light_7_range_175500_180000": {
+      "text": "В каком чеке итоговая сумма — от 175 500 до 180 000?",
+      "gold": "receipt_19"
+    },
+    "light_8_range_150000_160000": {
+      "text": "В каком чеке итоговая сумма — от 150 000 до 160 000?",
+      "gold": "receipt_18"
+    },
+    "light_9_range_135000_140000": {
+      "text": "В каком чеке итоговая сумма — от 135 000 до 140 000?",
+      "gold": "receipt_26"
+    },
+    "light_10_range_119500_121000": {
+      "text": "В каком чеке итоговая сумма — от 119 500 до 121 000?",
+      "gold": "receipt_12"
+    },
+    "light_11_closest_58000": {
+      "text": "У какого чека итоговая сумма БЛИЖЕ ВСЕГО к 58 000 (не обязательно равна)?",
+      "gold": "receipt_00"
+    },
+    "light_12_closest_45000": {
+      "text": "У какого чека итоговая сумма БЛИЖЕ ВСЕГО к 45 000?",
+      "gold": "receipt_06"
+    },
+    "light_13_closest_35000": {
+      "text": "У какого чека итоговая сумма БЛИЖЕ ВСЕГО к 35 000?",
+      "gold": "receipt_09"
+    },
+    "light_14_closest_62000": {
+      "text": "У какого чека итоговая сумма БЛИЖЕ ВСЕГО к 62 000?",
+      "gold": "receipt_27"
+    },
+    "light_15_closest_147000": {
+      "text": "У какого чека итоговая сумма БЛИЖЕ ВСЕГО к 147 000?",
+      "gold": "receipt_29"
+    },
+    "light_16_closest_71000": {
+      "text": "У какого чека итоговая сумма БЛИЖЕ ВСЕГО к 71 000?",
+      "gold": "receipt_16"
+    }
+  },
+  "queries_hard": {
+    "hard_1_item_count_5": {
+      "text": "В каком чеке ровно 5 позиций товара (строк меню)?",
+      "gold": "receipt_20",
+      "field": "item_count",
+      "mode": "equals",
+      "value": 5
+    },
+    "hard_2_tax_range": {
+      "text": "В каком чеке сумма налога (отдельная строка TAX/PB1, НЕ итоговая сумма чека) — от 12 500 до 14 000?",
+      "gold": "receipt_29",
+      "field": null
+    },
+    "hard_3_negative_discount": {
+      "text": "В каком чеке была применена скидка (отрицательное значение в строке скидки/discount)?",
+      "gold": "receipt_00",
+      "field": null
+    }
+  },
+  "summary": {
+    "fields": {
+      "n_light": 16,
+      "light_correct": 13,
+      "recall_light_avg": 0.8125,
+      "n_hard": 3,
+      "hard_correct": 0,
+      "recall_hard_avg": 0.0,
+      "light_per_query": {
+        "light_1_max_total": 1,
+        "light_2_min_total": 1,
+        "light_3_2nd_max_total": 1,
+        "light_4_2nd_min_total": 0,
+        "light_5_3rd_max_total": 1,
+        "light_6_3rd_min_total": 0,
+        "light_7_range_175500_180000": 1,
+        "light_8_range_150000_160000": 1,
+        "light_9_range_135000_140000": 1,
+        "light_10_range_119500_121000": 1,
+        "light_11_closest_58000": 1,
+        "light_12_closest_45000": 1,
+        "light_13_closest_35000": 0,
+        "light_14_closest_62000": 1,
+        "light_15_closest_147000": 1,
+        "light_16_closest_71000": 1
+      },
+      "hard_per_query": {
+        "hard_1_item_count_5": 0,
+        "hard_2_tax_range": 0,
+        "hard_3_negative_discount": 0
+      }
+    },
+    "caption": {
+      "n_light": 16,
+      "light_correct": 1,
+      "recall_light_avg": 0.0625,
+      "n_hard": 3,
+      "hard_correct": 0,
+      "recall_hard_avg": 0.0,
+      "light_per_query": {
+        "light_1_max_total": 0,
+        "light_2_min_total": 0,
+        "light_3_2nd_max_total": 0,
+        "light_4_2nd_min_total": 0,
+        "light_5_3rd_max_total": 0,
+        "light_6_3rd_min_total": 0,
+        "light_7_range_175500_180000": 0,
+        "light_8_range_150000_160000": 0,
+        "light_9_range_135000_140000": 0,
+        "light_10_range_119500_121000": 0,
+        "light_11_closest_58000": 0,
+        "light_12_closest_45000": 0,
+        "light_13_closest_35000": 0,
+        "light_14_closest_62000": 0,
+        "light_15_closest_147000": 0,
+        "light_16_closest_71000": 1
+      },
+      "hard_per_query": {
+        "hard_1_item_count_5": 0,
+        "hard_2_tax_range": 0,
+        "hard_3_negative_discount": 0
+      }
+    },
+    "hybrid": {
+      "n_light": 16,
+      "light_correct": 0,
+      "recall_light_avg": 0.0,
+      "n_hard": 3,
+      "hard_correct": 0,
+      "recall_hard_avg": 0.0,
+      "light_per_query": {
+        "light_1_max_total": 0,
+        "light_2_min_total": 0,
+        "light_3_2nd_max_total": 0,
+        "light_4_2nd_min_total": 0,
+        "light_5_3rd_max_total": 0,
+        "light_6_3rd_min_total": 0,
+        "light_7_range_175500_180000": 0,
+        "light_8_range_150000_160000": 0,
+        "light_9_range_135000_140000": 0,
+        "light_10_range_119500_121000": 0,
+        "light_11_closest_58000": 0,
+        "light_12_closest_45000": 0,
+        "light_13_closest_35000": 0,
+        "light_14_closest_62000": 0,
+        "light_15_closest_147000": 0,
+        "light_16_closest_71000": 0
+      },
+      "hard_per_query": {
+        "hard_1_item_count_5": 0,
+        "hard_2_tax_range": 0,
+        "hard_3_negative_discount": 0
+      }
+    }
+  },
+  "detail": {
+    "fields": {
+      "light_1_max_total": {
+        "top1": "receipt_28",
+        "gold": "receipt_28"
+      },
+      "light_2_min_total": {
+        "top1": "receipt_03",
+        "gold": "receipt_03"
+      },
+      "light_3_2nd_max_total": {
+        "top1": "receipt_20",
+        "gold": "receipt_20"
+      },
+      "light_4_2nd_min_total": {
+        "top1": "receipt_09",
+        "gold": "receipt_10"
+      },
+      "light_5_3rd_max_total": {
+        "top1": "receipt_14",
+        "gold": "receipt_14"
+      },
+      "light_6_3rd_min_total": {
+        "top1": "receipt_10",
+        "gold": "receipt_02"
+      },
+      "light_7_range_175500_180000": {
+        "top1": "receipt_19",
+        "gold": "receipt_19"
+      },
+      "light_8_range_150000_160000": {
+        "top1": "receipt_18",
+        "gold": "receipt_18"
+      },
+      "light_9_range_135000_140000": {
+        "top1": "receipt_26",
+        "gold": "receipt_26"
+      },
+      "light_10_range_119500_121000": {
+        "top1": "receipt_12",
+        "gold": "receipt_12"
+      },
+      "light_11_closest_58000": {
+        "top1": "receipt_00",
+        "gold": "receipt_00"
+      },
+      "light_12_closest_45000": {
+        "top1": "receipt_06",
+        "gold": "receipt_06"
+      },
+      "light_13_closest_35000": {
+        "top1": "receipt_21",
+        "gold": "receipt_09"
+      },
+      "light_14_closest_62000": {
+        "top1": "receipt_27",
+        "gold": "receipt_27"
+      },
+      "light_15_closest_147000": {
+        "top1": "receipt_29",
+        "gold": "receipt_29"
+      },
+      "light_16_closest_71000": {
+        "top1": "receipt_16",
+        "gold": "receipt_16"
+      },
+      "hard_1_item_count_5": {
+        "top1": "receipt_14",
+        "gold": "receipt_20",
+        "note": null
+      },
+      "hard_2_tax_range": {
+        "top1": null,
+        "gold": "receipt_29",
+        "note": "в схеме «поля» нет поля под этот факт — структурно не отвечаем (0), не ошибка модели"
+      },
+      "hard_3_negative_discount": {
+        "top1": null,
+        "gold": "receipt_00",
+        "note": "в схеме «поля» нет поля под этот факт — структурно не отвечаем (0), не ошибка модели"
+      }
+    },
+    "caption": {
+      "light_1_max_total": {
+        "top1": "receipt_16",
+        "gold": "receipt_28",
+        "cos_top1": 0.5382620489428173,
+        "cos_gold": 0.41773070118127226
+      },
+      "light_2_min_total": {
+        "top1": "receipt_16",
+        "gold": "receipt_03",
+        "cos_top1": 0.5491647784226652,
+        "cos_gold": 0.37752661614405303
+      },
+      "light_3_2nd_max_total": {
+        "top1": "receipt_16",
+        "gold": "receipt_20",
+        "cos_top1": 0.44375514713267034,
+        "cos_gold": 0.29588898134531727
+      },
+      "light_4_2nd_min_total": {
+        "top1": "receipt_16",
+        "gold": "receipt_10",
+        "cos_top1": 0.4399691818361945,
+        "cos_gold": 0.2430080489824439
+      },
+      "light_5_3rd_max_total": {
+        "top1": "receipt_16",
+        "gold": "receipt_14",
+        "cos_top1": 0.458041906691379,
+        "cos_gold": 0.3694324912187445
+      },
+      "light_6_3rd_min_total": {
+        "top1": "receipt_16",
+        "gold": "receipt_02",
+        "cos_top1": 0.39643624468747823,
+        "cos_gold": 0.33266824193006
+      },
+      "light_7_range_175500_180000": {
+        "top1": "receipt_16",
+        "gold": "receipt_19",
+        "cos_top1": 0.5098151100956125,
+        "cos_gold": 0.4936317932855882
+      },
+      "light_8_range_150000_160000": {
+        "top1": "receipt_19",
+        "gold": "receipt_18",
+        "cos_top1": 0.5081720895188309,
+        "cos_gold": 0.32774800496228396
+      },
+      "light_9_range_135000_140000": {
+        "top1": "receipt_16",
+        "gold": "receipt_26",
+        "cos_top1": 0.5164893870711393,
+        "cos_gold": 0.3441830809150158
+      },
+      "light_10_range_119500_121000": {
+        "top1": "receipt_16",
+        "gold": "receipt_12",
+        "cos_top1": 0.52400707693815,
+        "cos_gold": 0.4866182680411589
+      },
+      "light_11_closest_58000": {
+        "top1": "receipt_16",
+        "gold": "receipt_00",
+        "cos_top1": 0.48327332345439833,
+        "cos_gold": 0.4353278917278297
+      },
+      "light_12_closest_45000": {
+        "top1": "receipt_16",
+        "gold": "receipt_06",
+        "cos_top1": 0.4701600759884331,
+        "cos_gold": 0.4689372198100024
+      },
+      "light_13_closest_35000": {
+        "top1": "receipt_12",
+        "gold": "receipt_09",
+        "cos_top1": 0.46552664369957497,
+        "cos_gold": 0.3904992817826478
+      },
+      "light_14_closest_62000": {
+        "top1": "receipt_16",
+        "gold": "receipt_27",
+        "cos_top1": 0.4742664942107809,
+        "cos_gold": 0.41851679179924933
+      },
+      "light_15_closest_147000": {
+        "top1": "receipt_16",
+        "gold": "receipt_29",
+        "cos_top1": 0.4815609569790789,
+        "cos_gold": 0.3734217421201085
+      },
+      "light_16_closest_71000": {
+        "top1": "receipt_16",
+        "gold": "receipt_16",
+        "cos_top1": 0.48712010394353195,
+        "cos_gold": 0.48712010394353195
+      },
+      "hard_1_item_count_5": {
+        "top1": "receipt_14",
+        "gold": "receipt_20",
+        "cos_top1": 0.4956845724583287,
+        "cos_gold": 0.46368073065133597
+      },
+      "hard_2_tax_range": {
+        "top1": "receipt_07",
+        "gold": "receipt_29",
+        "cos_top1": 0.554021631404652,
+        "cos_gold": 0.41180529118093384
+      },
+      "hard_3_negative_discount": {
+        "top1": "receipt_07",
+        "gold": "receipt_00",
+        "cos_top1": 0.45104778100053117,
+        "cos_gold": 0.4266677007354574
+      }
+    },
+    "hybrid": {
+      "light_1_max_total": {
+        "top1": "receipt_08",
+        "gold": "receipt_28",
+        "cos_top1": 0.6314725244638272,
+        "cos_gold": 0.5167458138334129
+      },
+      "light_2_min_total": {
+        "top1": "receipt_08",
+        "gold": "receipt_03",
+        "cos_top1": 0.6351610782252916,
+        "cos_gold": 0.4674925680183301
+      },
+      "light_3_2nd_max_total": {
+        "top1": "receipt_08",
+        "gold": "receipt_20",
+        "cos_top1": 0.45523024182476884,
+        "cos_gold": 0.24653238407035052
+      },
+      "light_4_2nd_min_total": {
+        "top1": "receipt_08",
+        "gold": "receipt_10",
+        "cos_top1": 0.4727518251125953,
+        "cos_gold": 0.37077762528373837
+      },
+      "light_5_3rd_max_total": {
+        "top1": "receipt_08",
+        "gold": "receipt_14",
+        "cos_top1": 0.5541872470099886,
+        "cos_gold": 0.4567412162490821
+      },
+      "light_6_3rd_min_total": {
+        "top1": "receipt_08",
+        "gold": "receipt_02",
+        "cos_top1": 0.5155342543755593,
+        "cos_gold": 0.34856892368440484
+      },
+      "light_7_range_175500_180000": {
+        "top1": "receipt_08",
+        "gold": "receipt_19",
+        "cos_top1": 0.6726972442284554,
+        "cos_gold": 0.6703936293877183
+      },
+      "light_8_range_150000_160000": {
+        "top1": "receipt_08",
+        "gold": "receipt_18",
+        "cos_top1": 0.6816467031547362,
+        "cos_gold": 0.33592422574136693
+      },
+      "light_9_range_135000_140000": {
+        "top1": "receipt_08",
+        "gold": "receipt_26",
+        "cos_top1": 0.6702900324700947,
+        "cos_gold": 0.5526822081670855
+      },
+      "light_10_range_119500_121000": {
+        "top1": "receipt_08",
+        "gold": "receipt_12",
+        "cos_top1": 0.6474617326599371,
+        "cos_gold": 0.45252917962441463
+      },
+      "light_11_closest_58000": {
+        "top1": "receipt_08",
+        "gold": "receipt_00",
+        "cos_top1": 0.6425421017491854,
+        "cos_gold": 0.4917214302580206
+      },
+      "light_12_closest_45000": {
+        "top1": "receipt_08",
+        "gold": "receipt_06",
+        "cos_top1": 0.6562198847963372,
+        "cos_gold": 0.45404320635668316
+      },
+      "light_13_closest_35000": {
+        "top1": "receipt_08",
+        "gold": "receipt_09",
+        "cos_top1": 0.6455536099085624,
+        "cos_gold": 0.40365694529425533
+      },
+      "light_14_closest_62000": {
+        "top1": "receipt_08",
+        "gold": "receipt_27",
+        "cos_top1": 0.6297636030759589,
+        "cos_gold": 0.5793176433989337
+      },
+      "light_15_closest_147000": {
+        "top1": "receipt_08",
+        "gold": "receipt_29",
+        "cos_top1": 0.6319801076985209,
+        "cos_gold": 0.31718920040581655
+      },
+      "light_16_closest_71000": {
+        "top1": "receipt_08",
+        "gold": "receipt_16",
+        "cos_top1": 0.6264412230744061,
+        "cos_gold": 0.3586444238481465
+      },
+      "hard_1_item_count_5": {
+        "top1": "receipt_28",
+        "gold": "receipt_20",
+        "cos_top1": 0.525741231905895,
+        "cos_gold": 0.45412763864824995
+      },
+      "hard_2_tax_range": {
+        "top1": "receipt_05",
+        "gold": "receipt_29",
+        "cos_top1": 0.5632508893231961,
+        "cos_gold": 0.30998079902882136
+      },
+      "hard_3_negative_discount": {
+        "top1": "receipt_16",
+        "gold": "receipt_00",
+        "cos_top1": 0.4036649691672338,
+        "cos_gold": 0.346421749148075
+      }
+    }
+  },
+  "embed_usage": {
+    "caption": {
+      "wall_s": 1.45,
+      "cost": 0.00011448,
+      "prompt_tokens": 5724
+    },
+    "hybrid": {
+      "wall_s": 1.4,
+      "cost": 1.134e-05,
+      "prompt_tokens": 567
+    },
+    "queries": {
+      "wall_s": 1.26,
+      "cost": 1.24e-05,
+      "prompt_tokens": 620
+    }
+  },
+  "key_amount_predicted": {
+    "receipt_00": 60000,
+    "receipt_01": 91000,
+    "receipt_02": 28000,
+    "receipt_03": 11000,
+    "receipt_04": 174600,
+    "receipt_05": 31000,
+    "receipt_06": 46000,
+    "receipt_07": 111000,
+    "receipt_08": 50000,
+    "receipt_09": 14000,
+    "receipt_10": 17000,
+    "receipt_11": 230000,
+    "receipt_12": 120000,
+    "receipt_13": 52000,
+    "receipt_14": 281435,
+    "receipt_15": 63000,
+    "receipt_16": 70000,
+    "receipt_17": 91000,
+    "receipt_18": 156000,
+    "receipt_19": 176000,
+    "receipt_20": 377859,
+    "receipt_21": 38000,
+    "receipt_22": 40000,
+    "receipt_23": 63000,
+    "receipt_24": 118000,
+    "receipt_25": 43000,
+    "receipt_26": 138000,
+    "receipt_27": 61600,
+    "receipt_28": 426195,
+    "receipt_29": 145900
+  },
+  "item_count_predicted": {
+    "receipt_00": 2,
+    "receipt_01": 3,
+    "receipt_02": 2,
+    "receipt_03": 1,
+    "receipt_04": 3,
+    "receipt_05": 1,
+    "receipt_06": 3,
+    "receipt_07": 2,
+    "receipt_08": 3,
+    "receipt_09": 1,
+    "receipt_10": 1,
+    "receipt_11": 1,
+    "receipt_12": 2,
+    "receipt_13": 2,
+    "receipt_14": 5,
+    "receipt_15": 2,
+    "receipt_16": 5,
+    "receipt_17": 5,
+    "receipt_18": 1,
+    "receipt_19": 2,
+    "receipt_20": 5,
+    "receipt_21": 2,
+    "receipt_22": 2,
+    "receipt_23": 2,
+    "receipt_24": 3,
+    "receipt_25": 3,
+    "receipt_26": 3,
+    "receipt_27": 2,
+    "receipt_28": 3,
+    "receipt_29": 8
+  }
+}

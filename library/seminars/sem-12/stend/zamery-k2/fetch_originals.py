@@ -18,12 +18,16 @@ import time
 from common_k2 import load_or_fetch_originals_concurrent, load_corpus
 
 MODELS = [
-    "nvidia/nemotron-3.5-embed-1b:free",
-    "nvidia/llama-nemotron-embed-vl-1b-v2:free",
+    # Здоровые модели — первыми, чтобы продвигать замер №4 независимо от статуса
+    # проблемных моделей ниже (2026-11-21: nemotron-3.5-embed-1b в затяжном отказе
+    # 503/504, llama-nemotron-embed-vl-1b-v2 404 "No endpoints found" — снята/переименована
+    # у провайдера, подтверждено прямым curl живого каталога, см. доклад оркестратору).
     "nvidia/nemotron-3.5-embed-8b:free",
     "google/gemini-embedding-2",
     "cohere/embed-5-fast",
     "mongodb/voyage-multimodal-3.5",
+    "nvidia/nemotron-3.5-embed-1b:free",
+    "nvidia/llama-nemotron-embed-vl-1b-v2:free",
 ]
 
 

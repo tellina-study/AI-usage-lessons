@@ -130,6 +130,13 @@ def embed_mm(model, data_url, retries=8, timeout=90):
             cost = (resp.get("usage", {}) or {}).get("cost")
             return vec, cost, None
         last_err = json.dumps(resp, ensure_ascii=False)[:300]
+        # код 404 "No endpoints found" — модель снята/переименована у провайдера, это
+        # НЕ перегрузка и ретраями не лечится (измерено: 3/3 одинаковый 404 без улучшения
+        # на nvidia/llama-nemotron-embed-vl-1b-v2:free, 2026-11-21). Не жжём бюджет ретраев
+        # на заведомо постоянную ошибку.
+        err_code = (resp.get("error") or {}).get("code")
+        if err_code == 404:
+            return None, None, last_err
         time.sleep(min(25.0, 4.0 * (1.8 ** attempt)))
     return None, None, last_err
 

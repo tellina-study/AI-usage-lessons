@@ -5,12 +5,17 @@
 ДРУГОЙ скан (не дубль, часть (C) case4_full_retrieval_30.py) модель считает ближайшим,
 и в какой доле случаев две модели называют разного первого соседа.
 
-Лёгкий случай: nvidia/nemotron-3.5-embed-1b:free vs nvidia/nemotron-3.5-embed-8b:free —
-та же архитектурная линия ("nemotron-3.5-embed"), разный размер. 8b нестабильна на
-free-tier (C10: 2 случая HTTP 500) — отказы считаются отдельно, не смешиваются с
-содержательным несогласием.
+ПЕРЕСМОТР 2026-11-21 (решение оркестратора после находок №2/№3 Замера №3): исходный
+план лёгкого случая (nvidia/nemotron-3.5-embed-1b vs nvidia/nemotron-3.5-embed-8b, «одна
+архитектурная линия») снят — nemotron-3.5-embed-1b:free дал только 12/30 оригиналов после
+затяжного отказа free-tier (HTTP 503/504, задокументировано в README как отдельная
+находка) и explicitly ИСКЛЮЧЁН из сравнения моделей обоих замеров по решению оркестратора.
+Новый лёгкий случай — та же идея (одна архитектурная линия, разный размер/тир), другая
+пара: cohere/embed-5-fast vs cohere/embed-5-pro (один поставщик Cohere, линия embed-5,
+fast против pro — оба живы и дали 30/30 без единого отказа).
 
-Трудный случай: nvidia/nemotron-3.5-embed-1b:free, google/gemini-embedding-2,
+Трудный случай: nvidia/nemotron-3.5-embed-8b:free (единственная живая модель линии
+nvidia, 30/30 — nemotron-3.5-embed-1b НЕ участвует), google/gemini-embedding-2,
 cohere/embed-5-fast, mongodb/voyage-multimodal-3.5 — четыре поставщика, разная длина
 вектора, попарная таблица несогласия по ВСЕМ C(4,2)=6 парам. Три из четырёх
 (gemini/cohere-fast/voyage) имели margin≈0 на C10 (case4_working_mm_results.json) —
@@ -18,7 +23,8 @@ cohere/embed-5-fast, mongodb/voyage-multimodal-3.5 — четыре постав
 МЕЖДУ СОБОЙ тоже.
 
 Не делает новых вызовов эмбеддинга — использует кэш raw/originals_<model>.json,
-который пишет fetch_originals.py (те же 6 моделей там уже посчитаны для всех 30 сканов).
+который пишет fetch_originals.py (модели уже посчитаны для всех 30 сканов, кроме
+nemotron-3.5-embed-1b — тот кэш существует, но НЕ читается этим скриптом).
 """
 import itertools
 import json
@@ -26,9 +32,9 @@ import time
 
 from common_k2 import cosine, load_corpus, load_or_fetch_originals
 
-EASY_PAIR = ["nvidia/nemotron-3.5-embed-1b:free", "nvidia/nemotron-3.5-embed-8b:free"]
+EASY_PAIR = ["cohere/embed-5-fast", "cohere/embed-5-pro"]
 HARD_SET = [
-    "nvidia/nemotron-3.5-embed-1b:free",
+    "nvidia/nemotron-3.5-embed-8b:free",
     "google/gemini-embedding-2",
     "cohere/embed-5-fast",
     "mongodb/voyage-multimodal-3.5",

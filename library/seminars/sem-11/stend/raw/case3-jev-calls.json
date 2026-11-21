@@ -1,0 +1,2014 @@
+{
+  "model": "typesafe/jev-1.13",
+  "endpoint": "https://openrouter.ai/api/alpha/decisions",
+  "n_calls": 50,
+  "total_wall_s": 79.3,
+  "total_cost_usd": 0.001284822,
+  "instructions": "Классифицируй вопрос по типу.",
+  "criteria": {
+    "exact_fact": "Вопрос про точный факт — конкретное число, имя, дата, код, термин, который либо буквально встречается в тексте документа, либо однозначно идентифицирует искомую сущность по точному названию/идентификатору.",
+    "semantic": "Смысловой вопрос — требует понимания смысла или пересказа своими словами, не содержит точного термина/числа/имени из искомого документа, которое можно было бы просто найти совпадением слов."
+  },
+  "calls": [
+    {
+      "qid": "c3q1",
+      "question": "Какое имя у супруги Шекспира?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9787",
+      "wall_s": 2.4,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 594,
+          "output_tokens": 33,
+          "cost": 2.4948e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.4948e-05,
+            "upstream_inference_prompt_cost": 2.4948e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653097-NNGHqwqMLayhTDiOSyCn",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q2",
+      "question": "Какое название до 2011 года было у GBTA?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9793",
+      "wall_s": 1.23,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 589,
+          "output_tokens": 33,
+          "cost": 2.4738e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.4738e-05,
+            "upstream_inference_prompt_cost": 2.4738e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653098-UdihU6nIUlo0cddcR5CA",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q3",
+      "question": "На сколько километров простирается Западная Сибирь от Северного Ледовитого океана до возвышенностей Казахского мелкосопочника7",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9797",
+      "wall_s": 1.18,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 675,
+          "output_tokens": 33,
+          "cost": 2.835e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.835e-05,
+            "upstream_inference_prompt_cost": 2.835e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653099-1pF6ERrRBl8BR9plChkq",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q4",
+      "question": "Кто в 1395 году принял титул герцога Миланского?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9802",
+      "wall_s": 1.27,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 610,
+          "output_tokens": 33,
+          "cost": 2.562e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.562e-05,
+            "upstream_inference_prompt_cost": 2.562e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653100-4AEfAggBtafAWVKxrnNm",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q5",
+      "question": "Какое бытует мнение насчёт рациона дьявола?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9806",
+      "wall_s": 1.16,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.13,
+              "semantic": 0.87
+            },
+            "confidence": 0.74
+          }
+        },
+        "usage": {
+          "input_tokens": 604,
+          "output_tokens": 32,
+          "cost": 2.5368e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5368e-05,
+            "upstream_inference_prompt_cost": 2.5368e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653102-ySmg8GWrlG5DhKSbiFPN",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.13,
+        "semantic": 0.87
+      },
+      "confidence": 0.74
+    },
+    {
+      "qid": "c3q6",
+      "question": "Назовите дату гибели Гинтараса Паулёниса?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9810",
+      "wall_s": 1.23,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 605,
+          "output_tokens": 33,
+          "cost": 2.541e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.541e-05,
+            "upstream_inference_prompt_cost": 2.541e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653103-LHVnWmRPw5NGj6oMmJj4",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q7",
+      "question": "Пример водных приград?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9815",
+      "wall_s": 1.29,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.4,
+              "semantic": 0.6
+            },
+            "confidence": 0.2
+          }
+        },
+        "usage": {
+          "input_tokens": 591,
+          "output_tokens": 32,
+          "cost": 2.4822e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.4822e-05,
+            "upstream_inference_prompt_cost": 2.4822e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653104-AAbPuDv6h52dSEXB7TN4",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.4,
+        "semantic": 0.6
+      },
+      "confidence": 0.2
+    },
+    {
+      "qid": "c3q8",
+      "question": "Что такое простой вопрос, который сводится к предложению предоставления соответствующих денежных вознаграждений в обмен на усилие?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9818",
+      "wall_s": 1.41,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.18,
+              "semantic": 0.82
+            },
+            "confidence": 0.64
+          }
+        },
+        "usage": {
+          "input_tokens": 651,
+          "output_tokens": 32,
+          "cost": 2.7342e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.7342e-05,
+            "upstream_inference_prompt_cost": 2.7342e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653106-TqFY8UOeVuIQH8fKJdyH",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.18,
+        "semantic": 0.82
+      },
+      "confidence": 0.64
+    },
+    {
+      "qid": "c3q9",
+      "question": "В каком году опубликована статья об анализе митохондриальной ДНК?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9825",
+      "wall_s": 1.43,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.99,
+              "semantic": 0.01
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 615,
+          "output_tokens": 33,
+          "cost": 2.583e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.583e-05,
+            "upstream_inference_prompt_cost": 2.583e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653107-7cVkZs1sp2pMNeKwMOqv",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.99,
+        "semantic": 0.01
+      },
+      "confidence": 0.98
+    },
+    {
+      "qid": "c3q10",
+      "question": "Какие наиболее популярные произведения были созданы на протяжении 1984-1986 гг",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9830",
+      "wall_s": 1.7,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.45,
+              "semantic": 0.55
+            },
+            "confidence": 0.1
+          }
+        },
+        "usage": {
+          "input_tokens": 620,
+          "output_tokens": 32,
+          "cost": 2.604e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.604e-05,
+            "upstream_inference_prompt_cost": 2.604e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653109-yqdhbwiS7f0ZrpW65hgT",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.45,
+        "semantic": 0.55
+      },
+      "confidence": 0.1
+    },
+    {
+      "qid": "c3q11",
+      "question": "В каком положении большую часть времени находилась подводная лодка?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9835",
+      "wall_s": 1.44,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.47,
+              "semantic": 0.53
+            },
+            "confidence": 0.06
+          }
+        },
+        "usage": {
+          "input_tokens": 602,
+          "output_tokens": 32,
+          "cost": 2.5284e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5284e-05,
+            "upstream_inference_prompt_cost": 2.5284e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653110-vIbm0G6tNm0GlFOSfEiA",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.47,
+        "semantic": 0.53
+      },
+      "confidence": 0.06
+    },
+    {
+      "qid": "c3q12",
+      "question": "О чем книга The 4-Hour Workweek ?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9837",
+      "wall_s": 1.17,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.02,
+              "semantic": 0.98
+            },
+            "confidence": 0.96
+          }
+        },
+        "usage": {
+          "input_tokens": 584,
+          "output_tokens": 32,
+          "cost": 2.4528e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.4528e-05,
+            "upstream_inference_prompt_cost": 2.4528e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653111-EUj9qxy32jp4tQnV5RaL",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.02,
+        "semantic": 0.98
+      },
+      "confidence": 0.96
+    },
+    {
+      "qid": "c3q13",
+      "question": "Каков перевод термина Рабочая сила на английский язык?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9839",
+      "wall_s": 1.17,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.95,
+              "semantic": 0.05
+            },
+            "confidence": 0.9
+          }
+        },
+        "usage": {
+          "input_tokens": 605,
+          "output_tokens": 33,
+          "cost": 2.541e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.541e-05,
+            "upstream_inference_prompt_cost": 2.541e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653113-Qg2JUbS8CdklZwcFhRzR",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.95,
+        "semantic": 0.05
+      },
+      "confidence": 0.9
+    },
+    {
+      "qid": "c3q14",
+      "question": "Что пользуется большой популярностью помимо специализированных школ гостиничного бизнеса?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9842",
+      "wall_s": 1.11,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.54,
+              "semantic": 0.46
+            },
+            "confidence": 0.08
+          }
+        },
+        "usage": {
+          "input_tokens": 635,
+          "output_tokens": 33,
+          "cost": 2.667e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.667e-05,
+            "upstream_inference_prompt_cost": 2.667e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653114-AjQJ8ypzuV1JTPV5lR4o",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.54,
+        "semantic": 0.46
+      },
+      "confidence": 0.08
+    },
+    {
+      "qid": "c3q15",
+      "question": "Что не имеет первичной перетяжки, они имеют так называемый диффузный кинетохор, поэтому во время митоза микротрубочки веретена деления прикрепляются по всей длине хромосомы?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9843",
+      "wall_s": 1.16,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.82,
+              "semantic": 0.18
+            },
+            "confidence": 0.64
+          }
+        },
+        "usage": {
+          "input_tokens": 692,
+          "output_tokens": 33,
+          "cost": 2.9064e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.9064e-05,
+            "upstream_inference_prompt_cost": 2.9064e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653115-qtj4Afyd0hcI2kqsP0pV",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.82,
+        "semantic": 0.18
+      },
+      "confidence": 0.64
+    },
+    {
+      "qid": "c3q16",
+      "question": "Какие еще существуют способы управления гостиничными сетями?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9844",
+      "wall_s": 1.23,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.06,
+              "semantic": 0.94
+            },
+            "confidence": 0.88
+          }
+        },
+        "usage": {
+          "input_tokens": 599,
+          "output_tokens": 32,
+          "cost": 2.5158e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5158e-05,
+            "upstream_inference_prompt_cost": 2.5158e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653116-RXnLNMaeqwuBfzdjQ1qy",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.06,
+        "semantic": 0.94
+      },
+      "confidence": 0.88
+    },
+    {
+      "qid": "c3q17",
+      "question": "К какому сроку прирост в промышленности Германии сравнялся со странами-противниками?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9845",
+      "wall_s": 1.1,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.96,
+              "semantic": 0.04
+            },
+            "confidence": 0.92
+          }
+        },
+        "usage": {
+          "input_tokens": 638,
+          "output_tokens": 33,
+          "cost": 2.6796e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.6796e-05,
+            "upstream_inference_prompt_cost": 2.6796e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653117-5ZltBlmhhfdk4KHd9vcz",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.96,
+        "semantic": 0.04
+      },
+      "confidence": 0.92
+    },
+    {
+      "qid": "c3q18",
+      "question": "С какого периода на Уимблдоне введена система уайлд-кард ?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9847",
+      "wall_s": 1.26,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 603,
+          "output_tokens": 33,
+          "cost": 2.5326e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5326e-05,
+            "upstream_inference_prompt_cost": 2.5326e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653118-8aBc5o65REx0oeels8e1",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q19",
+      "question": "Какова скорость порыва ветра, признанного самым быстрым на Земле?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9853",
+      "wall_s": 1.53,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 616,
+          "output_tokens": 33,
+          "cost": 2.5872e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5872e-05,
+            "upstream_inference_prompt_cost": 2.5872e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653120-cN1BqNek5NEu9VghOYYI",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q20",
+      "question": "Какова главная заслуга Лейбница в физике?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9855",
+      "wall_s": 1.39,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.26,
+              "semantic": 0.74
+            },
+            "confidence": 0.48
+          }
+        },
+        "usage": {
+          "input_tokens": 607,
+          "output_tokens": 32,
+          "cost": 2.5494e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5494e-05,
+            "upstream_inference_prompt_cost": 2.5494e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653121-pAipbl9KpX5bIAXsxAJG",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.26,
+        "semantic": 0.74
+      },
+      "confidence": 0.48
+    },
+    {
+      "qid": "c3q21",
+      "question": "Что по словам Т. С. Элиота делает шекспировские произведения современными?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9856",
+      "wall_s": 2.41,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.23,
+              "semantic": 0.77
+            },
+            "confidence": 0.54
+          }
+        },
+        "usage": {
+          "input_tokens": 623,
+          "output_tokens": 32,
+          "cost": 2.6166e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.6166e-05,
+            "upstream_inference_prompt_cost": 2.6166e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653124-jgAFKhhyBhZomz43caa1",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.23,
+        "semantic": 0.77
+      },
+      "confidence": 0.54
+    },
+    {
+      "qid": "c3q22",
+      "question": "Когда произошло сражение?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9858",
+      "wall_s": 1.71,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.99,
+              "semantic": 0.01
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 582,
+          "output_tokens": 33,
+          "cost": 2.4444e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.4444e-05,
+            "upstream_inference_prompt_cost": 2.4444e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653125-RjZR6t7HLwryn0m0GdMG",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.99,
+        "semantic": 0.01
+      },
+      "confidence": 0.98
+    },
+    {
+      "qid": "c3q23",
+      "question": "За что некоторые студенты принимали Hwæt! ?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9860",
+      "wall_s": 1.92,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.13,
+              "semantic": 0.87
+            },
+            "confidence": 0.74
+          }
+        },
+        "usage": {
+          "input_tokens": 595,
+          "output_tokens": 32,
+          "cost": 2.499e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.499e-05,
+            "upstream_inference_prompt_cost": 2.499e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653127-S8hdGhRS0S2IEqc9ggbT",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.13,
+        "semantic": 0.87
+      },
+      "confidence": 0.74
+    },
+    {
+      "qid": "c3q24",
+      "question": "Что такое филогенез?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9862",
+      "wall_s": 1.74,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.28,
+              "semantic": 0.72
+            },
+            "confidence": 0.44
+          }
+        },
+        "usage": {
+          "input_tokens": 583,
+          "output_tokens": 32,
+          "cost": 2.4486e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.4486e-05,
+            "upstream_inference_prompt_cost": 2.4486e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653129-W9Sqp8vcyVVN2eRfN2xQ",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.28,
+        "semantic": 0.72
+      },
+      "confidence": 0.44
+    },
+    {
+      "qid": "c3q25",
+      "question": "Какие особенности имеет одна пара щупалец у головоногих с 10 щупальцами?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9868",
+      "wall_s": 1.13,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.21,
+              "semantic": 0.79
+            },
+            "confidence": 0.58
+          }
+        },
+        "usage": {
+          "input_tokens": 614,
+          "output_tokens": 32,
+          "cost": 2.5788e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5788e-05,
+            "upstream_inference_prompt_cost": 2.5788e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653130-xwRqa8dNMqNRsM65TvIL",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.21,
+        "semantic": 0.79
+      },
+      "confidence": 0.58
+    },
+    {
+      "qid": "c3q26",
+      "question": "Когда было начато строительство в России Пулковской астрономической обсерватории?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9869",
+      "wall_s": 1.52,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 620,
+          "output_tokens": 33,
+          "cost": 2.604e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.604e-05,
+            "upstream_inference_prompt_cost": 2.604e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653131-hSEFWcEJQCjQxskl5DAy",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q27",
+      "question": "Какой альбом Дилана вышел в 1969 году?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9871",
+      "wall_s": 2.5,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 601,
+          "output_tokens": 33,
+          "cost": 2.5242e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5242e-05,
+            "upstream_inference_prompt_cost": 2.5242e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653134-Ny22YphVxr0Rk6r8O3u1",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q28",
+      "question": "Что служит центральной осью Садов Кью?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9872",
+      "wall_s": 1.15,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.97,
+              "semantic": 0.03
+            },
+            "confidence": 0.94
+          }
+        },
+        "usage": {
+          "input_tokens": 602,
+          "output_tokens": 33,
+          "cost": 2.5284e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5284e-05,
+            "upstream_inference_prompt_cost": 2.5284e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653135-keEY5MJElWlacsJ7f5tV",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.97,
+        "semantic": 0.03
+      },
+      "confidence": 0.94
+    },
+    {
+      "qid": "c3q29",
+      "question": "На что надеется автор?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9878",
+      "wall_s": 2.07,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.01,
+              "semantic": 0.99
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 583,
+          "output_tokens": 32,
+          "cost": 2.4486e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.4486e-05,
+            "upstream_inference_prompt_cost": 2.4486e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653137-MN7f8lq0b04FLgE9UfkL",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.01,
+        "semantic": 0.99
+      },
+      "confidence": 0.98
+    },
+    {
+      "qid": "c3q30",
+      "question": "Сколько акционеров было у банка в 1895 году?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9879",
+      "wall_s": 2.13,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 599,
+          "output_tokens": 33,
+          "cost": 2.5158e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5158e-05,
+            "upstream_inference_prompt_cost": 2.5158e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653139-9g69WmD6oODUYnatLtZs",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q31",
+      "question": "Куда операционная система записывает данные содержимого ОЗУ?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9881",
+      "wall_s": 1.69,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.88,
+              "semantic": 0.12
+            },
+            "confidence": 0.76
+          }
+        },
+        "usage": {
+          "input_tokens": 614,
+          "output_tokens": 33,
+          "cost": 2.5788e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5788e-05,
+            "upstream_inference_prompt_cost": 2.5788e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653141-VRmA5ZN11ArIiqirZdHr",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.88,
+        "semantic": 0.12
+      },
+      "confidence": 0.76
+    },
+    {
+      "qid": "c3q32",
+      "question": "Какой язык был более тысячелетия было языком международного общения большинства стран мира.",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9882",
+      "wall_s": 1.12,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.98,
+              "semantic": 0.02
+            },
+            "confidence": 0.96
+          }
+        },
+        "usage": {
+          "input_tokens": 616,
+          "output_tokens": 33,
+          "cost": 2.5872e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5872e-05,
+            "upstream_inference_prompt_cost": 2.5872e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653142-80xRNbBbjoAhH00xEudZ",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.98,
+        "semantic": 0.02
+      },
+      "confidence": 0.96
+    },
+    {
+      "qid": "c3q33",
+      "question": "На каком месте в мире находится Нигер по запасам урановой руды?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9885",
+      "wall_s": 1.13,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.99,
+              "semantic": 0.01
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 603,
+          "output_tokens": 33,
+          "cost": 2.5326e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5326e-05,
+            "upstream_inference_prompt_cost": 2.5326e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653144-3PyOtPIOADA1WcFKU0vc",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.99,
+        "semantic": 0.01
+      },
+      "confidence": 0.98
+    },
+    {
+      "qid": "c3q34",
+      "question": "В результате деятельности кого произошло накопление в атмосфере кислорода согласно гипотезе?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9886",
+      "wall_s": 1.1,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.92,
+              "semantic": 0.08
+            },
+            "confidence": 0.84
+          }
+        },
+        "usage": {
+          "input_tokens": 615,
+          "output_tokens": 33,
+          "cost": 2.583e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.583e-05,
+            "upstream_inference_prompt_cost": 2.583e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653145-eZyFC1QQPjR1d9jYmU4x",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.92,
+        "semantic": 0.08
+      },
+      "confidence": 0.84
+    },
+    {
+      "qid": "c3q35",
+      "question": "На ком завершилась баварская династия Теоделинды?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9887",
+      "wall_s": 1.25,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.99,
+              "semantic": 0.01
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 612,
+          "output_tokens": 33,
+          "cost": 2.5704e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5704e-05,
+            "upstream_inference_prompt_cost": 2.5704e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653146-dKRXUiTGdnBLmQvR8xVI",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.99,
+        "semantic": 0.01
+      },
+      "confidence": 0.98
+    },
+    {
+      "qid": "c3q36",
+      "question": "Как называется корректирующая оптическая система, установленная на телескоп во время первой экспедиции обслуживания в 1993 году для компенсации неточности изготовления главного зеркала?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9891",
+      "wall_s": 1.72,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 681,
+          "output_tokens": 33,
+          "cost": 2.8602e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.8602e-05,
+            "upstream_inference_prompt_cost": 2.8602e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653147-NQ2dUMW4oTYwzKXiB8Z1",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q37",
+      "question": "Чем привлекает Люксембург иностранные банки?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9892",
+      "wall_s": 2.18,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0,
+              "semantic": 1
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 607,
+          "output_tokens": 32,
+          "cost": 2.5494e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5494e-05,
+            "upstream_inference_prompt_cost": 2.5494e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653149-EfLwSL6cgC0LJJzStXMr",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0,
+        "semantic": 1
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q38",
+      "question": "Кого выбирали голосуя через компромисс?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9893",
+      "wall_s": 1.48,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.66,
+              "semantic": 0.34
+            },
+            "confidence": 0.32
+          }
+        },
+        "usage": {
+          "input_tokens": 602,
+          "output_tokens": 33,
+          "cost": 2.5284e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5284e-05,
+            "upstream_inference_prompt_cost": 2.5284e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653151-Tz7ogUZ9dyXkiUKUXJFt",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.66,
+        "semantic": 0.34
+      },
+      "confidence": 0.32
+    },
+    {
+      "qid": "c3q39",
+      "question": "Как назывался альбом новых песен, выпущенный Диланом в 1997 году?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9906",
+      "wall_s": 2.02,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 619,
+          "output_tokens": 33,
+          "cost": 2.5998e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5998e-05,
+            "upstream_inference_prompt_cost": 2.5998e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653153-RpyxN01kbJPmZEaPSU6A",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q40",
+      "question": "Когда были найдены останки Najash rionegrina? в 2006 году.",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9911",
+      "wall_s": 1.54,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 602,
+          "output_tokens": 33,
+          "cost": 2.5284e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5284e-05,
+            "upstream_inference_prompt_cost": 2.5284e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653155-fkNPYVUhBxBlPbpHbRe1",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q41",
+      "question": "Какой закон с 1934 часто изменялся?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9921",
+      "wall_s": 1.81,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.93,
+              "semantic": 0.07
+            },
+            "confidence": 0.86
+          }
+        },
+        "usage": {
+          "input_tokens": 594,
+          "output_tokens": 33,
+          "cost": 2.4948e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.4948e-05,
+            "upstream_inference_prompt_cost": 2.4948e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653157-tnMQGiMMZwUg8ZJ3wvcV",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.93,
+        "semantic": 0.07
+      },
+      "confidence": 0.86
+    },
+    {
+      "qid": "c3q42",
+      "question": "Чем был обмен по бартеру в торговле?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9932",
+      "wall_s": 2.03,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.08,
+              "semantic": 0.92
+            },
+            "confidence": 0.84
+          }
+        },
+        "usage": {
+          "input_tokens": 594,
+          "output_tokens": 32,
+          "cost": 2.4948e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.4948e-05,
+            "upstream_inference_prompt_cost": 2.4948e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653159-fJFqbcp03wwJF4OFrpG2",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.08,
+        "semantic": 0.92
+      },
+      "confidence": 0.84
+    },
+    {
+      "qid": "c3q43",
+      "question": "Эквивалентны ли точки на спирали, угловое расстояние между которыми 360°?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9940",
+      "wall_s": 2.56,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.1,
+              "semantic": 0.9
+            },
+            "confidence": 0.8
+          }
+        },
+        "usage": {
+          "input_tokens": 619,
+          "output_tokens": 32,
+          "cost": 2.5998e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5998e-05,
+            "upstream_inference_prompt_cost": 2.5998e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653160-gY10TPpmCKkG0Bkp8l0W",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.1,
+        "semantic": 0.9
+      },
+      "confidence": 0.8
+    },
+    {
+      "qid": "c3q44",
+      "question": "Как дословно на древне-греческом будет термин философия ?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9951",
+      "wall_s": 2.22,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.99,
+              "semantic": 0.01
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 614,
+          "output_tokens": 33,
+          "cost": 2.5788e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5788e-05,
+            "upstream_inference_prompt_cost": 2.5788e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653163-4cZhNOH5r1iUNVieR4U7",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.99,
+        "semantic": 0.01
+      },
+      "confidence": 0.98
+    },
+    {
+      "qid": "c3q45",
+      "question": "Кто описал Райсцуг в 1515 году?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9957",
+      "wall_s": 1.45,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 595,
+          "output_tokens": 33,
+          "cost": 2.499e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.499e-05,
+            "upstream_inference_prompt_cost": 2.499e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653165-WHzCPl8Z86S7sv0lyXwf",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q46",
+      "question": "Где выпущены патроны 38",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9970",
+      "wall_s": 2.02,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.96,
+              "semantic": 0.04
+            },
+            "confidence": 0.92
+          }
+        },
+        "usage": {
+          "input_tokens": 592,
+          "output_tokens": 33,
+          "cost": 2.4864e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.4864e-05,
+            "upstream_inference_prompt_cost": 2.4864e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653167-iqImccWNbgVtkj1dmFus",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.96,
+        "semantic": 0.04
+      },
+      "confidence": 0.92
+    },
+    {
+      "qid": "c3q47",
+      "question": "Кто выделил мифологию, науку и обобщение обыденного сознания как источники философской древнегреческой мысли?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9974",
+      "wall_s": 1.28,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.99,
+              "semantic": 0.01
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 662,
+          "output_tokens": 33,
+          "cost": 2.7804e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.7804e-05,
+            "upstream_inference_prompt_cost": 2.7804e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653168-3FjIbfcVWBdVP3OO8gng",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.99,
+        "semantic": 0.01
+      },
+      "confidence": 0.98
+    },
+    {
+      "qid": "c3q48",
+      "question": "Сколько человек было ранено во время событий 12-15 июня 1967 года в Чимкенте?",
+      "lexical_class_heuristic": "exact_match",
+      "exec_id": "9975",
+      "wall_s": 1.97,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 1,
+              "semantic": 0
+            },
+            "confidence": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 612,
+          "output_tokens": 33,
+          "cost": 2.5704e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5704e-05,
+            "upstream_inference_prompt_cost": 2.5704e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653169-JUxRJ3G5Q0AOMOmUr8h5",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 1,
+        "semantic": 0
+      },
+      "confidence": 1
+    },
+    {
+      "qid": "c3q49",
+      "question": "Каким вторым званием обладают жители города Рязань?",
+      "lexical_class_heuristic": "lexical_gap",
+      "exec_id": "9988",
+      "wall_s": 2.13,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "exact_fact",
+            "probabilities": {
+              "exact_fact": 0.99,
+              "semantic": 0.01
+            },
+            "confidence": 0.98
+          }
+        },
+        "usage": {
+          "input_tokens": 599,
+          "output_tokens": 33,
+          "cost": 2.5158e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5158e-05,
+            "upstream_inference_prompt_cost": 2.5158e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653172-3FMVRcM7kiPIbDQSWetu",
+        "provider": "TypeSafe"
+      },
+      "choice": "exact_fact",
+      "probabilities": {
+        "exact_fact": 0.99,
+        "semantic": 0.01
+      },
+      "confidence": 0.98
+    },
+    {
+      "qid": "c3q50",
+      "question": "Что согласывают стороны, участвующие в системе ЗУП?",
+      "lexical_class_heuristic": "neutral",
+      "exec_id": "9992",
+      "wall_s": 1.44,
+      "raw_response": {
+        "model": "typesafe/jev-1.13-20260917",
+        "answers": {
+          "type": {
+            "type": "choice",
+            "choice": "semantic",
+            "probabilities": {
+              "exact_fact": 0.36,
+              "semantic": 0.64
+            },
+            "confidence": 0.28
+          }
+        },
+        "usage": {
+          "input_tokens": 602,
+          "output_tokens": 32,
+          "cost": 2.5284e-05,
+          "is_byok": false,
+          "cost_details": {
+            "upstream_inference_cost": 2.5284e-05,
+            "upstream_inference_prompt_cost": 2.5284e-05,
+            "upstream_inference_completions_cost": 0
+          }
+        },
+        "id": "gen-dec-1794653174-sDrmQRSDEv7R33GwPghr",
+        "provider": "TypeSafe"
+      },
+      "choice": "semantic",
+      "probabilities": {
+        "exact_fact": 0.36,
+        "semantic": 0.64
+      },
+      "confidence": 0.28
+    }
+  ]
+}

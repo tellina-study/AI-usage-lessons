@@ -1,0 +1,160 @@
+{
+  "name": "С11 · Кейс 4 — скоупинг по домену (демо-экран)",
+  "nodes": [
+    {
+      "id": "trig",
+      "name": "Вопрос + объединённый индекс курсов",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -900,
+        0
+      ],
+      "webhookId": "s11-case4-scoping",
+      "parameters": {
+        "path": "s11-case4-scoping",
+        "formTitle": "С11 · Кейс 4 — скоупинг по домену (демо)",
+        "formDescription": "JSON: {question, course_id, docs: [{id, text, course_id}]}",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "payload",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    },
+    {
+      "id": "embed_all",
+      "name": "Embed query + оба документа (openai/text-embedding-3-small)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -620,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/embeddings",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openRouterApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  model: 'openai/text-embedding-3-small',\n  input: (() => { const p = JSON.parse($json.payload); return [p.question, p.docs[0].text, p.docs[1].text]; })()\n}) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "openRouterApi": {
+          "id": "VbxiQn8TbqA4R2mw",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "id": "unscoped",
+      "name": "Поиск без скоупинга (весь объединённый индекс)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -340,
+        0
+      ],
+      "parameters": {
+        "jsCode": "function cos(a,b){let d=0,na=0,nb=0;for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];}return d/(Math.sqrt(na)*Math.sqrt(nb));}\nconst payload = JSON.parse($('Вопрос + объединённый индекс курсов').first().json.payload);\nconst resp = $input.first().json;\nconst qvec = resp.data[0].embedding;\nconst docs = payload.docs.map((d, i) => ({...d, embedding: resp.data[i + 1].embedding}));\nconst scored = docs.map(d => ({...d, cosine: cos(qvec, d.embedding)})).sort((a, b) => b.cosine - a.cosine);\nconst top = scored[0];\nreturn [{json: {\n  question: payload.question, course_id: payload.course_id, docs, qvec,\n  unscoped_top_id: top.id, unscoped_top_course: top.course_id, unscoped_cosine: Number(top.cosine.toFixed(4)),\n  unscoped_n_candidates: docs.length\n}}];"
+      }
+    },
+    {
+      "id": "scoped",
+      "name": "Поиск со скоупингом (фильтр course_id перед ранжированием)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -60,
+        0
+      ],
+      "parameters": {
+        "jsCode": "function cos(a,b){let d=0,na=0,nb=0;for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];}return d/(Math.sqrt(na)*Math.sqrt(nb));}\nconst d = $input.first().json;\n// Единственное отличие от узла «без скоупинга»: фильтр по course_id\n// применён ДО ранжирования — чужой курс даже не входит в кандидатов.\nconst scopedDocs = d.docs.filter(doc => doc.course_id === d.course_id);\nconst scored = scopedDocs.map(doc => ({...doc, cosine: cos(d.qvec, doc.embedding)})).sort((a, b) => b.cosine - a.cosine);\nconst top = scored[0];\nreturn [{json: {...d, docs: undefined, qvec: undefined,\n  scoped_top_id: top.id, scoped_top_course: top.course_id,\n  scoped_cosine: Number(top.cosine.toFixed(4)),\n  scoped_n_candidates: scopedDocs.length\n}}];"
+      }
+    },
+    {
+      "id": "res",
+      "name": "Result screen — обе цифры рядом",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "Без скоупинга vs со скоупингом",
+        "completionMessage": "={{ 'Вопрос: ' + $json.question + '\\n\\nБЕЗ скоупинга (' + $json.unscoped_n_candidates + ' кандидата): top-1 = ' + $json.unscoped_top_id + ' (курс ' + $json.unscoped_top_course + '), cosine=' + $json.unscoped_cosine + '\\n\\nСО скоупингом (' + $json.scoped_n_candidates + ' кандидат, курс ' + $json.course_id + '): top-1 = ' + $json.scoped_top_id + ' (курс ' + $json.scoped_top_course + '), cosine=' + $json.scoped_cosine }}",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Вопрос + объединённый индекс курсов": {
+      "main": [
+        [
+          {
+            "node": "Embed query + оба документа (openai/text-embedding-3-small)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embed query + оба документа (openai/text-embedding-3-small)": {
+      "main": [
+        [
+          {
+            "node": "Поиск без скоупинга (весь объединённый индекс)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Поиск без скоупинга (весь объединённый индекс)": {
+      "main": [
+        [
+          {
+            "node": "Поиск со скоупингом (фильтр course_id перед ранжированием)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Поиск со скоупингом (фильтр course_id перед ранжированием)": {
+      "main": [
+        [
+          {
+            "node": "Result screen — обе цифры рядом",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

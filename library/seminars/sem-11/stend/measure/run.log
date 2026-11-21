@@ -1,0 +1,314 @@
+embedding 8 anchor contexts...
+  [anchor-ctx] batch 0-8 exec_id=11155 wall=1.24s cost=6.452e-05
+embedding 8 anchor questions...
+  [anchor-q] batch 0-8 exec_id=11156 wall=1.2s cost=3.92e-06
+embedding 678 Track H (same-domain random growth) docs...
+  [track-h] batch 0-80 exec_id=11157 wall=3.96s cost=0.00059704
+  [track-h] batch 80-160 exec_id=11158 wall=3.19s cost=0.0005589
+  [track-h] batch 160-240 exec_id=11159 wall=3.08s cost=0.00058748
+  [track-h] batch 240-320 exec_id=11160 wall=3.03s cost=0.00064254
+  [track-h] batch 320-400 exec_id=11161 wall=3.09s cost=0.00060152
+  [track-h] batch 400-480 exec_id=11162 wall=3.1s cost=0.00058376
+  [track-h] batch 480-560 exec_id=11163 wall=3.09s cost=0.00057894
+  [track-h] batch 560-640 exec_id=11164 wall=3.08s cost=0.00063928
+  [track-h] batch 640-678 exec_id=11165 wall=1.57s cost=0.00027548
+embedding 7838 Track D candidate pool (other domains) docs...
+  [track-d-candidates] batch 0-80 exec_id=11166 wall=3.54s cost=0.0005426
+  [track-d-candidates] batch 80-160 exec_id=11167 wall=3.03s cost=0.0005414
+  [track-d-candidates] batch 160-240 exec_id=11168 wall=3.0s cost=0.00061212
+  [track-d-candidates] batch 240-320 exec_id=11169 wall=3.51s cost=0.00056048
+  [track-d-candidates] batch 320-400 exec_id=11170 wall=3.1s cost=0.00054596
+  [track-d-candidates] batch 400-480 exec_id=11171 wall=4.16s cost=0.0005817
+  [track-d-candidates] batch 480-560 exec_id=11172 wall=3.99s cost=0.0005649
+  [track-d-candidates] batch 560-640 exec_id=11173 wall=3.11s cost=0.0005532
+  [track-d-candidates] batch 640-720 exec_id=11174 wall=3.1s cost=0.0005824
+  [track-d-candidates] batch 720-800 exec_id=11175 wall=3.09s cost=0.00058534
+  [track-d-candidates] batch 800-880 exec_id=11176 wall=4.2s cost=0.00057982
+  [track-d-candidates] batch 880-960 exec_id=11177 wall=4.12s cost=0.00055658
+  [track-d-candidates] batch 960-1040 exec_id=11178 wall=3.12s cost=0.00056842
+  [track-d-candidates] batch 1040-1120 exec_id=11179 wall=3.08s cost=0.00056512
+  [track-d-candidates] batch 1120-1200 exec_id=11180 wall=3.27s cost=0.00055556
+  [track-d-candidates] batch 1200-1280 exec_id=11181 wall=3.17s cost=0.00050926
+  [track-d-candidates] batch 1280-1360 exec_id=11182 wall=3.14s cost=0.0005469
+  [track-d-candidates] batch 1360-1440 exec_id=11183 wall=3.94s cost=0.00054732
+  [track-d-candidates] batch 1440-1520 exec_id=11184 wall=3.11s cost=0.00054442
+  [track-d-candidates] batch 1520-1600 exec_id=11185 wall=3.08s cost=0.0005431
+  [track-d-candidates] batch 1600-1680 exec_id=11186 wall=3.07s cost=0.00058874
+  [track-d-candidates] batch 1680-1760 exec_id=11187 wall=3.08s cost=0.0005585
+  [track-d-candidates] batch 1760-1840 exec_id=11188 wall=3.05s cost=0.00054494
+  [track-d-candidates] batch 1840-1920 exec_id=11189 wall=3.08s cost=0.00057796
+  [track-d-candidates] batch 1920-2000 exec_id=11190 wall=3.07s cost=0.0005971
+  [track-d-candidates] batch 2000-2080 exec_id=11191 wall=3.43s cost=0.00055576
+  [track-d-candidates] batch 2080-2160 exec_id=11193 wall=3.42s cost=0.00056258
+  [track-d-candidates] batch 2160-2240 exec_id=11194 wall=3.67s cost=0.00054432
+  [track-d-candidates] batch 2240-2320 exec_id=11200 wall=7.09s cost=0.0005902
+  [track-d-candidates] batch 2320-2400 exec_id=11213 wall=5.41s cost=0.00057002
+  [track-d-candidates] batch 2400-2480 exec_id=11229 wall=4.87s cost=0.00058392
+  [track-d-candidates] batch 2480-2560 exec_id=11247 wall=6.06s cost=0.00057376
+  [track-d-candidates] batch 2560-2640 exec_id=11267 wall=4.23s cost=0.0005823
+  [track-d-candidates] batch 2640-2720 exec_id=11277 wall=3.08s cost=0.00059428
+  [track-d-candidates] batch 2720-2800 exec_id=11278 wall=3.06s cost=0.00057288
+  [track-d-candidates] batch 2800-2880 exec_id=11279 wall=3.21s cost=0.00054232
+  [track-d-candidates] batch 2880-2960 exec_id=11280 wall=3.06s cost=0.00057716
+  [track-d-candidates] batch 2960-3040 exec_id=11281 wall=3.03s cost=0.00059196
+  [track-d-candidates] batch 3040-3120 exec_id=11282 wall=3.69s cost=0.00061222
+  [track-d-candidates] batch 3120-3200 exec_id=11283 wall=3.1s cost=0.0005961
+  [track-d-candidates] batch 3200-3280 exec_id=11284 wall=3.09s cost=0.00057616
+  [track-d-candidates] batch 3280-3360 exec_id=11285 wall=3.8s cost=0.00052202
+  [track-d-candidates] batch 3360-3440 exec_id=11286 wall=3.13s cost=0.00054836
+  [track-d-candidates] batch 3440-3520 exec_id=11287 wall=3.1s cost=0.00057764
+  [track-d-candidates] batch 3520-3600 exec_id=11288 wall=3.1s cost=0.00058906
+  [track-d-candidates] batch 3600-3680 exec_id=11289 wall=3.15s cost=0.00053336
+  [track-d-candidates] batch 3680-3760 exec_id=11290 wall=3.07s cost=0.00054808
+  [track-d-candidates] batch 3760-3840 exec_id=11291 wall=3.04s cost=0.00056202
+  [track-d-candidates] batch 3840-3920 exec_id=11292 wall=3.62s cost=0.00060068
+  [track-d-candidates] batch 3920-4000 exec_id=11293 wall=3.1s cost=0.00055998
+  [track-d-candidates] batch 4000-4080 exec_id=11294 wall=3.06s cost=0.00059274
+  [track-d-candidates] batch 4080-4160 exec_id=11295 wall=3.04s cost=0.00055992
+  [track-d-candidates] batch 4160-4240 exec_id=11296 wall=3.23s cost=0.00056312
+  [track-d-candidates] batch 4240-4320 exec_id=11297 wall=3.05s cost=0.00059948
+  [track-d-candidates] batch 4320-4400 exec_id=11298 wall=3.82s cost=0.0005347
+  [track-d-candidates] batch 4400-4480 exec_id=11299 wall=4.18s cost=0.00055972
+  [track-d-candidates] batch 4480-4560 exec_id=11300 wall=4.09s cost=0.00052762
+  [track-d-candidates] batch 4560-4640 exec_id=11301 wall=3.77s cost=0.00058208
+  [track-d-candidates] batch 4640-4720 exec_id=11302 wall=3.1s cost=0.00054742
+  [track-d-candidates] batch 4720-4800 exec_id=11303 wall=3.05s cost=0.00056642
+  [track-d-candidates] batch 4800-4880 exec_id=11304 wall=3.08s cost=0.00055312
+  [track-d-candidates] batch 4880-4960 exec_id=11305 wall=3.07s cost=0.00059522
+  [track-d-candidates] batch 4960-5040 exec_id=11306 wall=3.07s cost=0.00055142
+  [track-d-candidates] batch 5040-5120 exec_id=11307 wall=3.07s cost=0.00056962
+  [track-d-candidates] batch 5120-5200 exec_id=11308 wall=3.54s cost=0.00052938
+  [track-d-candidates] batch 5200-5280 exec_id=11309 wall=3.05s cost=0.00055552
+  [track-d-candidates] batch 5280-5360 exec_id=11310 wall=3.14s cost=0.0005521
+  [track-d-candidates] batch 5360-5440 exec_id=11311 wall=3.27s cost=0.00053432
+  [track-d-candidates] batch 5440-5520 exec_id=11312 wall=3.1s cost=0.00055144
+  [track-d-candidates] batch 5520-5600 exec_id=11313 wall=3.07s cost=0.0005605
+  [track-d-candidates] batch 5600-5680 exec_id=11314 wall=3.79s cost=0.00059308
+  [track-d-candidates] batch 5680-5760 exec_id=11315 wall=3.07s cost=0.0005856
+  [track-d-candidates] batch 5760-5840 exec_id=11316 wall=3.06s cost=0.00059272
+  [track-d-candidates] batch 5840-5920 exec_id=11317 wall=3.06s cost=0.00054292
+  [track-d-candidates] batch 5920-6000 exec_id=11318 wall=3.63s cost=0.00056488
+  [track-d-candidates] batch 6000-6080 exec_id=11319 wall=3.1s cost=0.00055288
+  [track-d-candidates] batch 6080-6160 exec_id=11321 wall=3.83s cost=0.00058446
+  [track-d-candidates] batch 6160-6240 exec_id=11322 wall=3.04s cost=0.00054696
+  [track-d-candidates] batch 6240-6320 exec_id=11323 wall=4.17s cost=0.00053262
+  [track-d-candidates] batch 6320-6400 exec_id=11324 wall=3.0s cost=0.00057206
+  [track-d-candidates] batch 6400-6480 exec_id=11325 wall=3.09s cost=0.00052914
+  [track-d-candidates] batch 6480-6560 exec_id=11326 wall=3.06s cost=0.0005831
+  [track-d-candidates] batch 6560-6640 exec_id=11327 wall=3.08s cost=0.00059718
+  [track-d-candidates] batch 6640-6720 exec_id=11328 wall=3.49s cost=0.00052908
+  [track-d-candidates] batch 6720-6800 exec_id=11329 wall=3.06s cost=0.00058846
+  [track-d-candidates] batch 6800-6880 exec_id=11330 wall=3.02s cost=0.00057336
+  [track-d-candidates] batch 6880-6960 exec_id=11331 wall=3.33s cost=0.0005752
+  [track-d-candidates] batch 6960-7040 exec_id=11332 wall=3.09s cost=0.00056278
+  [track-d-candidates] batch 7040-7120 exec_id=11333 wall=3.05s cost=0.0005511
+  [track-d-candidates] batch 7120-7200 exec_id=11334 wall=3.86s cost=0.0005496
+  [track-d-candidates] batch 7200-7280 exec_id=11335 wall=3.1s cost=0.00055812
+  [track-d-candidates] batch 7280-7360 exec_id=11336 wall=3.1s cost=0.00060146
+  [track-d-candidates] batch 7360-7440 exec_id=11337 wall=3.05s cost=0.00056566
+  [track-d-candidates] batch 7440-7520 exec_id=11338 wall=3.06s cost=0.00054878
+  [track-d-candidates] batch 7520-7600 exec_id=11339 wall=3.03s cost=0.0005515
+  [track-d-candidates] batch 7600-7680 exec_id=11340 wall=4.19s cost=0.00055244
+  [track-d-candidates] batch 7680-7760 exec_id=11341 wall=4.6s cost=0.00054778
+  [track-d-candidates] batch 7760-7838 exec_id=11342 wall=4.1s cost=0.0005366
+embedding cost so far: $0.060410
+D_adversarial pool (union of top-60 per anchor, deduped): 421 unique docs
+H_same_domain_random: available for growth = 678 (steps capped at this if smaller)
+D_random: available for growth = 7838 (steps capped at this if smaller)
+D_adversarial: available for growth = 421 (steps capped at this if smaller)
+[H_same_domain_random] step=0 corpus_size=8 — recall@1=8/8
+[H_same_domain_random] step=20 corpus_size=28 — recall@1=8/8
+[H_same_domain_random] step=100 corpus_size=108 — recall@1=7/8
+[H_same_domain_random] step=300 corpus_size=308 — recall@1=7/8
+[H_same_domain_random] step=678 corpus_size=686 — recall@1=7/8
+[D_random] step=0 corpus_size=8 — recall@1=8/8
+[D_random] step=20 corpus_size=28 — recall@1=8/8
+[D_random] step=100 corpus_size=108 — recall@1=8/8
+[D_random] step=300 corpus_size=308 — recall@1=8/8
+[D_random] step=678 corpus_size=686 — recall@1=8/8
+[D_random] step=2000 corpus_size=2008 — recall@1=8/8
+[D_random] step=5000 corpus_size=5008 — recall@1=6/8
+[D_random] step=7838 corpus_size=7846 — recall@1=6/8
+[D_adversarial] step=0 corpus_size=8 — recall@1=8/8
+[D_adversarial] step=20 corpus_size=28 — recall@1=6/8
+[D_adversarial] step=100 corpus_size=108 — recall@1=6/8
+[D_adversarial] step=300 corpus_size=308 — recall@1=6/8
+saved case4-results.json
+{
+  "H_same_domain_random": {
+    "0": {
+      "corpus_size": 8,
+      "n_anchors": 8,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.2445,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.0,
+      "mean_gold_cosine": 0.5672
+    },
+    "20": {
+      "corpus_size": 28,
+      "n_anchors": 8,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.2041,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.0,
+      "mean_gold_cosine": 0.5672
+    },
+    "100": {
+      "corpus_size": 108,
+      "n_anchors": 8,
+      "recall_at_1": 0.875,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.1267,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.125,
+      "mean_gold_cosine": 0.5672
+    },
+    "300": {
+      "corpus_size": 308,
+      "n_anchors": 8,
+      "recall_at_1": 0.875,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.0846,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.25,
+      "mean_gold_cosine": 0.5672
+    },
+    "678": {
+      "corpus_size": 686,
+      "n_anchors": 8,
+      "recall_at_1": 0.875,
+      "recall_at_3": 0.875,
+      "mean_margin_gold_minus_best_rival": 0.083,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.375,
+      "mean_gold_cosine": 0.5672
+    }
+  },
+  "D_random": {
+    "0": {
+      "corpus_size": 8,
+      "n_anchors": 8,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.2445,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.0,
+      "mean_gold_cosine": 0.5672
+    },
+    "20": {
+      "corpus_size": 28,
+      "n_anchors": 8,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.2425,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.0,
+      "mean_gold_cosine": 0.5672
+    },
+    "100": {
+      "corpus_size": 108,
+      "n_anchors": 8,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.2352,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.0,
+      "mean_gold_cosine": 0.5672
+    },
+    "300": {
+      "corpus_size": 308,
+      "n_anchors": 8,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.206,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.0,
+      "mean_gold_cosine": 0.5672
+    },
+    "678": {
+      "corpus_size": 686,
+      "n_anchors": 8,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.1802,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.0,
+      "mean_gold_cosine": 0.5672
+    },
+    "2000": {
+      "corpus_size": 2008,
+      "n_anchors": 8,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.169,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.0,
+      "mean_gold_cosine": 0.5672
+    },
+    "5000": {
+      "corpus_size": 5008,
+      "n_anchors": 8,
+      "recall_at_1": 0.75,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.1168,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.25,
+      "mean_gold_cosine": 0.5672
+    },
+    "7838": {
+      "corpus_size": 7846,
+      "n_anchors": 8,
+      "recall_at_1": 0.75,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.0998,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.25,
+      "mean_gold_cosine": 0.5672
+    }
+  },
+  "D_adversarial": {
+    "0": {
+      "corpus_size": 8,
+      "n_anchors": 8,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.2445,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.0,
+      "mean_gold_cosine": 0.5672
+    },
+    "20": {
+      "corpus_size": 28,
+      "n_anchors": 8,
+      "recall_at_1": 0.75,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.0998,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.25,
+      "mean_gold_cosine": 0.5672
+    },
+    "100": {
+      "corpus_size": 108,
+      "n_anchors": 8,
+      "recall_at_1": 0.75,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.0998,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.25,
+      "mean_gold_cosine": 0.5672
+    },
+    "300": {
+      "corpus_size": 308,
+      "n_anchors": 8,
+      "recall_at_1": 0.75,
+      "recall_at_3": 1.0,
+      "mean_margin_gold_minus_best_rival": 0.0998,
+      "recall_at_5": 1.0,
+      "mean_rank": 1.25,
+      "mean_gold_cosine": 0.5672
+    }
+  }
+}

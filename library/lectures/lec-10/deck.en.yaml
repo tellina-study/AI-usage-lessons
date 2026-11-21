@@ -320,8 +320,8 @@ slides:
       attribution_label: "Analysis by Hannah Ritchie based on the MDPI Sustainability journal 2024"
 
   - id: s12
-    title: "ChatGPT/Bard as an agronomist — “confidently wrong”"
-    assertion: "Tzachor et al. (Reichman University, Nature Food, May 2024): 184 questions about pesticide application; GPT-3.5/GPT-4/Bard answer confidently-wrong in tens of percent of cases. AP4 — a generic LLM in advisory — is a categorical anti-pattern."
+    title: "ChatGPT as an agronomist — “confidently wrong”"
+    assertion: "Tzachor et al. (Reichman University, Nature Food, November 2023, press coverage 2024-05): agronomic Q/A scenarios about pesticide application; GPT-3.5/GPT-4.0 answer confident-wrong in tens of percent of cases. AP4 — a generic LLM in advisory — is a categorical anti-pattern."
     section: "Р1"
     slide_type: "content"
     layout: "2-col-question-answer"

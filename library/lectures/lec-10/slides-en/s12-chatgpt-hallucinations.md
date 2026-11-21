@@ -2,7 +2,7 @@
 id: s12
 type: failure_case
 duration_min: 1.5
-assertion: "Tzachor et al. (Reichman University, Nature Food, November 2023, press coverage 2024-05): 184 questions about pesticide application; GPT-3.5/GPT-4/Bard answer confident-wrong in tens of percent of cases. AP4 — a generic LLM in advisory — is a categorical anti-pattern."
+assertion: "Tzachor et al. (Reichman University, Nature Food, November 2023, press coverage 2024-05): agronomic Q/A scenarios about pesticide application; GPT-3.5/GPT-4.0 answer confident-wrong in tens of percent of cases. AP4 — a generic LLM in advisory — is a categorical anti-pattern."
 learning_goal: "AP4 categorical anti-pattern + RAG-grounded alternative"
 learning_outcomes: [LO2, LO5]
 chapter_ref: "§1.5 Part 1 — Strict-in F2 generic LLM hallucinations"
@@ -12,11 +12,11 @@ visual:
   primary: "Left — Q/A example from the Tzachor 2024 paper (cassava farmer + ChatGPT confident wrong); right — AP4 callout + RAG-grounded architecture"
 ---
 
-# ChatGPT/Bard as an agronomist — «confidently wrong»
+# ChatGPT as an agronomist — «confidently wrong»
 
 ## Assertion
 
-Tzachor et al. (Reichman University, Nature Food, November 2023, press coverage 2024-05): 184 questions about pesticide application; GPT-3.5/GPT-4/Bard answer confident-wrong in tens of percent of cases. AP4 — a generic LLM in advisory — is a categorical anti-pattern.
+Tzachor et al. (Reichman University, Nature Food, November 2023, press coverage 2024-05): agronomic Q/A scenarios about pesticide application; GPT-3.5/GPT-4.0 answer confident-wrong in tens of percent of cases. AP4 — a generic LLM in advisory — is a categorical anti-pattern.
 
 ## Visual
 
@@ -26,13 +26,13 @@ A two-column layout.
 
 An Ocean rounded box reproducing a Q/A:
 
-**Farmer's question** (a typical one of the 184): «When should glyphosate be applied against fall armyworm in a cassava field at the 4-leaf stage in Kenya?»
+**Farmer's question** (a typical one from the study): «When should glyphosate be applied against fall armyworm in a cassava field at the 4-leaf stage in Kenya?»
 
 **GPT-4's answer (schematically):** "*Upon detecting a fall armyworm infestation in cassava — apply glyphosate at a concentration of X% Y days before harvest*" — specific numbers, a confident tone.
 
 **The problem:** glyphosate is a herbicide, **not an insecticide**. Against fall armyworm you need a Bt spray or a contact insecticide. A generic LLM doesn't know the context and answers confident-wrong.
 
-Below this — a small caption 12pt italic: «Tzachor et al., Nature Food, November 2023 (press coverage 2024-05). 184 questions, GPT-3.5 / GPT-4 / Bard. Co-authors: USA, UK, Kenya, Nigeria, Colombia».
+Below this — a small caption 12pt italic: «Tzachor et al., Nature Food, November 2023 (press coverage 2024-05). GPT-3.5 / GPT-4.0. Co-authors: USA, UK, Kenya, Nigeria, Colombia».
 
 **Right column (45%) — AP4 + alternative:**
 
@@ -54,7 +54,7 @@ Footer 12pt italic: «Source: Tzachor et al., Nature Food, November 2023 (press 
 
 The second failure block concerns a popular hope of the last three years: can a consulting agronomist be replaced by an LLM chatbot? This is especially tempting for developing regions, where the density of qualified agronomists is low but most farmers have smartphones with internet.
 
-The Tzachor et al. study from Reichman University in Israel, published in Nature Food in November 2023 (with wide resonance in May 2024 thanks to a Phys.org review), is a controlled experiment on one hundred eighty-four questions about applying pesticides and herbicides to specific crops. GPT-3.5, GPT-4, and Google Bard were tested. The co-authors — research groups from the USA, the UK, Kenya, Nigeria, Colombia; the object — potential use scenarios for ChatGPT-like models by African farmers: cassava, fall armyworm, fertilizer timing. The result: the models confidently recommended the wrong application window for a significant share of questions. On average — tens of percent of confident-wrong answers. This is not "sometimes wrong"; it's a confidently wrong answer with no explicit expression of uncertainty.
+The Tzachor et al. study from Reichman University in Israel, published in Nature Food in November 2023 (with wide resonance in May 2024 thanks to a Phys.org review), is a controlled experiment on a set of questions about applying pesticides and herbicides to specific crops. GPT-3.5 and GPT-4.0 were tested. The co-authors — research groups from the USA, the UK, Kenya, Nigeria, Colombia; the object — potential use scenarios for ChatGPT-like models by African farmers: cassava, fall armyworm, fertilizer timing. The result: the models confidently recommended the wrong application window for a significant share of questions. On average — tens of percent of confident-wrong answers. This is not "sometimes wrong"; it's a confidently wrong answer with no explicit expression of uncertainty.
 
 An important caveat: this is a study, a controlled experiment, not a documented real-world catastrophe. But the significance is the same. Confident-wrong is more dangerous than admitted-don't-know. A farmer who hears "not sure — consult an expert" consults an expert. A farmer who hears a specific recommendation with a number carries it out. Had a farmer carried out the recommendation from such answers — significant crop damage depending on the crop and the regulator.
 

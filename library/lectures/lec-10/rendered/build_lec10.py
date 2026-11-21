@@ -190,12 +190,15 @@ def add_speaker_notes(slide, notes_text):
 
 # ========== Slide-level helpers ==========
 
-# 7 sections: 0 Открытие, 1 Поле, 2 Робот, 3 Животное, 4 Цепочка, 4-bis Среда, 5 Полка
-SECTIONS = ["Открытие", "L1 Поле", "L2 Робот", "L3 Животное", "L4 Цепочка", "Среда", "L5 Полка"]
+# 6 sections: 0 Открытие, 1 Поле, 2 Робот, 3 Животное, 4 Среда, 5 Полка
+# (issue #340 v3.9: старый "4 Цепочка" (Раздел 4 трейдинг, s27-s32) удалён
+# целиком по указанию владельца; старое "4-bis Среда" стало просто "4";
+# ладдер-ярлык розницы поднялся с L5 на L4, см. deck.yaml central_question).
+SECTIONS = ["Открытие", "L1 Поле", "L2 Робот", "L3 Животное", "Среда", "L4 Полка"]
 
 
 def add_progress_bar(slide, current_section, *, y=6.95):
-    """7-card progress bar для section dividers и cover.
+    """6-card progress bar для section dividers и cover.
     current_section=-1 → no card highlighted (e.g., cover slide)."""
     sections = SECTIONS
     n = len(sections)
@@ -252,15 +255,38 @@ def load_speaker_notes(slide_id):
     return notes
 
 
-def section_divider(prs, number, title, frame_phrase, current_section, caption):
-    """Generic section divider slide with progress bar."""
+def section_divider(prs, number, title, frame_phrase, current_section, caption,
+                     image_path=None, image_caption=""):
+    """Generic section divider slide with progress bar.
+
+    image_path/image_caption are optional (default None/"") — when omitted,
+    layout is byte-for-byte identical to the pre-#340 version (giant number
+    fills the full left column). When an image IS given, the number shrinks
+    to make room for a real photo card under it (issue #340 Задача 1, s15)."""
     s = blank(prs); set_slide_bg(s, WHITE)
 
-    # Huge decorative number on left
-    text_box(s, 0.0, 0.7, 5.5, 6.0, str(number),
-             size=400, bold=True, color=COVER_OUTLINE,
-             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
-             font=FONT_HEAD, line_spacing=0.9)
+    if image_path is not None:
+        # Smaller decorative number — leaves room below for a photo card.
+        text_box(s, 0.0, 0.5, 5.5, 3.4, str(number),
+                 size=220, bold=True, color=COVER_OUTLINE,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_HEAD, line_spacing=0.9)
+
+        # Real thematic photo card, centered under the number.
+        card_x, card_y, card_w, card_h = 0.95, 4.05, 3.6, 2.45
+        ocean_box(s, card_x, card_y, card_w, card_h)
+        img_w, img_h = 3.3, 3.3 / 1.776
+        add_image(s, image_path, card_x + 0.15, card_y + 0.13, w=img_w, h=img_h)
+        if image_caption:
+            text_box(s, card_x + 0.15, card_y + 0.13 + img_h + 0.05, img_w, 0.4,
+                     image_caption, size=8.5, italic=True, color=LIGHT,
+                     align=PP_ALIGN.CENTER, line_spacing=1.05)
+    else:
+        # Huge decorative number on left (original, unchanged layout).
+        text_box(s, 0.0, 0.7, 5.5, 6.0, str(number),
+                 size=400, bold=True, color=COVER_OUTLINE,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_HEAD, line_spacing=0.9)
 
     # Right: title + frame
     text_box(s, 5.8, 2.5, 7.0, 1.5, title,
@@ -285,7 +311,7 @@ def main():
     # Phase 6 — building all 43 slides
     # Import slide builders from modular parts to keep each file <600 lines
     from build_lec10_p1 import build_part1_full  # s01-s14 (14 slides — Раздел 0 + L1)
-    from build_lec10_p2 import build_part2  # s15-s21+s17 (12 slides — Р2 L2 «Робот»)
+    from build_lec10_p2 import build_part2  # s15-s21+s16a+s16b (9 slides — Р2 L2 «Робот», issue #340 добавил s16b)
     from build_lec10_p3 import build_part3  # s22-s38 (17 slides — L3 + L4 + Среда + L5 + closing + Q&A)
 
     helpers = {

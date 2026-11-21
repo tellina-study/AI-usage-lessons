@@ -664,7 +664,7 @@ def build_part3(prs, H):
          "Not AI · open field or\ndifferent unit economics"),
         ("AP3", "Accuracy ≠ deployment", "Plantix 85% × 10M = ~100k errors",
          "Calibrated confidence +\nabstention"),
-        ("AP4", "Generic LLM as advisor", "Tzachor: 56-71% wrong",
+        ("AP4", "Generic LLM as advisor", "Tzachor: tens of % confident-wrong",
          "AI with source verification +\nhuman-in-the-loop"),
         ("AP6", "AI equipment = vendor lock-in", "Deere $5M + FTC + DJI ban",
          "Open standards / multi-vendor"),

@@ -536,7 +536,7 @@ def build_part1_full(prs, H):
     # ============ s12 ChatGPT hallucinations ============
     s = blank(prs); set_slide_bg(s, WHITE)
     add_assertion_title(s,
-        "ChatGPT and Bard as agronomists — \"confidently wrong\" in tens of percent of cases",
+        "ChatGPT as an agronomist — \"confidently wrong\" in tens of percent of cases",
         size=22)
 
     # Left: study summary
@@ -545,27 +545,29 @@ def build_part1_full(prs, H):
              "Tzachor et al., Nature Food, November 2023",
              size=14, bold=True, color=DEEP)
     text_box(s, 0.85, 2.15, 5.5, 0.4,
-             "Reichman University · 184 questions (publication 11.2023, press 05.2024)",
+             "Reichman University · agronomic Q/A scenarios (publication 11.2023, press 05.2024)",
              size=11, italic=True, color=MID)
     hr_line(s, 0.85, 2.6, 5.3, color=LIGHT, weight=1.0)
 
-    results = [
-        ("GPT-3.5", "32%", "correct"),
-        ("GPT-4", "44%", "correct"),
-        ("Bard", "29%", "correct"),
-    ]
-    ry = 2.85
-    for model, pct, lbl in results:
-        text_box(s, 1.0, ry, 1.8, 0.4, model, size=13, bold=True, color=DEEP)
-        text_box(s, 2.8, ry, 1.5, 0.4, pct, size=18, bold=True, color=GOLD)
-        text_box(s, 4.3, ry, 2.0, 0.4, lbl, size=11, italic=True, color=MID, anchor=MSO_ANCHOR.MIDDLE)
-        ry += 0.55
-
-    text_box(s, 0.85, 4.7, 5.5, 1.6,
-             "The other 56-71% of answers are confidently wrong: the model does not say \"I don't know\", "
-             "it produces a confident answer with the wrong dosage / an unsuitable chemical. "
-             "The failure mode is not \"the model is bad\", but \"the application is outside its mode\".",
-             size=11, color=DARK_GREY, italic=True, line_spacing=1.4)
+    # Fact-check fix (2026-11-14): the former per-model numbers (GPT-3.5 32% /
+    # GPT-4 44% / Bard 29% correct; "the other 56-71% wrong") are not supported by
+    # either the primary source (Tzachor et al., Nature Food, 11.2023 — a qualitative
+    # case study on cassava farmers in Nigeria, not a quantitative per-model benchmark)
+    # or the press coverage. The numbers were invented during the first build and never
+    # verified. Replaced with a qualitative formulation consistent with the corrected
+    # slides-en/s12-*.md speaker notes ("On average — tens of percent of confident-wrong
+    # answers") — without per-model numbers.
+    # Fact-check fix #2 (2026-11-14, same round): "184 questions" is unverifiable
+    # (removed above) and "Bard" — the model was NOT tested, per the abstract, the
+    # EurekAlert/Phys.org coverage, or the systematic review (all name only GPT-3.5 and
+    # GPT-4.0). Bard removed everywhere in this block; the pair of models is
+    # (GPT-3.5 and GPT-4.0).
+    text_box(s, 0.85, 2.75, 5.4, 2.2,
+             "On average — tens of percent of confident-wrong answers "
+             "(GPT-3.5 and GPT-4.0): the wrong dosage or chemical, "
+             "with no signal of uncertainty.",
+             size=16, color=DEEP, line_spacing=1.5,
+             anchor=MSO_ANCHOR.MIDDLE)
 
     # Right: Anti-pattern AP4 + alternative
     ocean_box(s, 6.8, 1.5, 5.95, 5.0, fill=GOLD_TINT, stroke=GOLD)

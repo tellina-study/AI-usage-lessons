@@ -6,10 +6,10 @@ assertion: "Plenty Unlimited Compton — открыт май 2023 с делег�
 learning_goal: "Эмоциональный hook + foreshadow keystone — AI не везде работает; ось — открытая среда vs закрытая"
 learning_outcomes: [LO1a]
 chapter_ref: "§0.1 Часть 1 — Зачем инженеру эта глава"
-references: [techcrunch-2025-plenty-ch11, bloomberg-law-2025-plenty, plenty-press-2023-may]
+references: [techcrunch-2025-plenty-ch11, bloomberg-law-2025-plenty, plenty-press-2023-may, 2urbangirls-2023-plenty-compton]
 visual:
   pattern: hero_split_frame
-  primary: "Split-frame: ribbon-cutting май 2023 (слева) + закрытый фасилитет декабрь 2024 (справа), обрамлённые Ocean rounded box. Под кадрами data card: $940M потерь · оценка $1,9 млрд → <$15M (–99%) · 19 месяцев."
+  primary: "Split-frame из ДВУХ настоящих фото церемонии открытия Plenty Compton, май 2023 (слева — мэр Комптона Эмма Шариф на церемонии; справа — интерьер объекта, фирменная стена «Continuing a Rich History of Farming in Compton»), обрамлённые Ocean rounded box. Под кадрами data card: $940M потерь · оценка $1,9 млрд → <$15M (–99%) · 19 месяцев."
 ---
 
 # ИИ-управляемая ферма обещала революцию. 19 месяцев — и закрылась
@@ -20,14 +20,16 @@ Plenty Unlimited Compton — открыт май 2023 с делегацией м
 
 ## Visual
 
-Слайд занят split-frame парой фотографий, обрамлённой Ocean rounded box. Слева — кадр ribbon-cutting церемонии в калифорнийском Комптоне в мае 2023 года: делегация мэра, СЕО Plenty, репортёры; на здании — баннер с обещанием 4,5 миллиона фунтов листовой зелени в год. Справа — кадр того же фасилитета в декабре 2024 года, закрытого, с висящими замками на входе и снятыми вывесками.
+Слайд занят split-frame парой **настоящих** фотографий объекта Plenty Compton, обрамлённой Ocean rounded box (суммарная площадь фото ≥40% слайда — hero-норматив). Обе фотографии — с церемонии открытия в мае 2023 года (local news coverage, 2urbangirls.com, «Compton hosts ribbon cutting ceremony for Plenty Compton Farm»); честного настоящего фото закрытия декабря 2024 за разумное число попыток (TechCrunch, Bloomberg Law, PitchBook, Green Profit, Bondoro Chapter 11 case summary) не нашлось — у этих источников либо нет изображений фасилитета, либо это родовые маркетинговые фото Plenty без узнаваемой привязки к дате закрытия; honest-отказ задокументирован в `iteration-log-part2.md`.
 
-Под split-frame — data card в Ocean palette с тремя крупными цифрами (gold accent на главной):
+Слева — мэр Комптона Эмма Шариф (бейдж «Mayor Sharif, City of Compton») рядом с представителем Plenty на церемонии открытия, на фоне баннера Plenty и стены вертикальных грядок. Справа — интерьер самого объекта: фирменная стена с надписью «Continuing a Rich History of Farming in Compton» и архивным чёрно-белым фото фермерского Комптона 1916 года — однозначно идентифицирует кадр именно как интерьер этого здания, не родовую иллюстрацию.
+
+Под split-frame — data card в Ocean palette с тремя крупными цифрами (gold accent на главной), несёт факт закрытия текстом, раз фото закрытия не найдено:
 - **$940 миллионов потерь** (привлечённый капитал SoftBank + Walmart + Bezos Expeditions)
 - **оценка $1,9 млрд → <$15M** (коллапс –99% за 3 года)
-- **19 месяцев** от открытия до закрытия
+- **19 месяцев** от открытия (май 2023) до закрытия (декабрь 2024)
 
-Внизу — caption 12pt italic: «Источники: Plenty press, май 2023; TechCrunch, март 2025; Bloomberg Law, 2025».
+Внизу — caption 12pt italic: «Источники фото: 2urbangirls.com, май 2023 (ribbon-cutting). Источники цифр: Plenty press, май 2023; TechCrunch, март 2025; Bloomberg Law, 2025».
 
 ## Speaker notes
 
@@ -42,3 +44,4 @@ Plenty Unlimited Compton — открыт май 2023 с делегацией м
 - TechCrunch (2025-03-24) — Plenty files Chapter 11.
 - Bloomberg Law (2025) — Plenty valuation collapse.
 - Plenty press release (май 2023) — Compton facility ribbon-cutting.
+- 2urbangirls.com (2023-05) — «Compton hosts ribbon cutting ceremony for Plenty Compton Farm» — источник двух фото слайда (мэр Шариф на церемонии; интерьер объекта).

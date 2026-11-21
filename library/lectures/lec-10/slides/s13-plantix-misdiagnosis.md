@@ -6,10 +6,10 @@ assertion: "Plantix self-report 85-90% accuracy (не independent). 10-15% misdi
 learning_goal: "AP3 + FP/FN dose-criticality breakdown"
 learning_outcomes: [LO5]
 chapter_ref: "§1.6 Часть 1 — Strict-in F3 Plantix"
-references: [frontiers-plant-2020-plantix, plantix-net]
+references: [frontiers-plant-2020-plantix, plantix-net, google-play-plantix-screenshots]
 visual:
   pattern: ui_screenshot_breakdown
-  primary: "Слева — Plantix mobile UI screenshot; справа — FP/FN dose-criticality breakdown table + AP3 callout"
+  primary: "Слева — настоящий Plantix mobile UI screenshot (официальный Google Play listing, экран «Instant disease detection» — диагноз Bacterial Spot + symptoms + treatment); справа — FP/FN dose-criticality breakdown table + AP3 callout"
 ---
 
 # Plantix — 10-15% misdiagnosis на 10M+ загрузок
@@ -24,7 +24,7 @@ Plantix self-report 85-90% accuracy (не independent). 10-15% misdiagnosis × 1
 
 **Левая колонка (45%) — Plantix UI screenshot:**
 
-Скриншот мобильного приложения Plantix: фото листа растения с диагнозом «Late Blight detected — 92% confidence» + рекомендация конкретного fungicide. Caption 12pt italic под скриншотом: «Plantix.net mobile app · 10M+ загрузок · primary market: smallholders в Индии (7M активных)».
+**Настоящий** скриншот мобильного приложения Plantix — официальный маркетинговый скриншот из листинга Google Play (play.google.com, com.peat.GartenBank): экран «Instant disease detection» — фото листа томата с видимыми поражениями в режиме камеры, диагноз **«Bacterial Spot»**, симптомы «Small yellow-green lesions», рекомендованное лечение «Tetracyline Chloride» (так в самом приложении). Caption 12pt italic под скриншотом: «Plantix (Google Play listing) · 10M+ загрузок · primary market: smallholders в Индии (7M активных)».
 
 **Правая колонка (55%) — breakdown + альтернатива:**
 
@@ -41,7 +41,7 @@ Mini-table в Ocean rounded box, 3 строки (FP / FN / Альтернати�
 - **Альтернатива:** calibrated confidence + abstention. При confidence < 80% → отказ + переключение на local extension agent.
 - **Engineering pattern:** ensemble methods (Monte Carlo Dropout, Deep Ensembles), +30% inference time. **Рабочий промышленный паттерн**, не исследовательская идея.
 
-Footer 12pt italic: «Источник 85-90% accuracy — self-reported Plantix (Frontiers in Plant Science 2020). Independent field validation отсутствует».
+Footer 12pt italic: «Источник 85-90% accuracy — self-reported Plantix (Frontiers in Plant Science 2020). Independent field validation отсутствует. Скриншот — Google Play listing, Plantix».
 
 ## Speaker notes
 
@@ -59,3 +59,4 @@ Breakdown справа — десять-пятнадцать процентов 
 
 - Frontiers in Plant Science (2020) — Plantix accuracy self-report.
 - Plantix.net — official product info.
+- Google Play listing, Plantix (com.peat.GartenBank) — источник UI-скриншота «Instant disease detection».

@@ -1,0 +1,1877 @@
+{
+  "model": "openai/gpt-4o-mini",
+  "embed_model": "openai/text-embedding-3-small",
+  "n_images": 30,
+  "variants": [
+    "caption",
+    "fields",
+    "hybrid"
+  ],
+  "queries": {
+    "light_1_max_total": {
+      "group": "light",
+      "text": "Какой чек (документ) имеет наибольшую итоговую сумму (TOTAL)?",
+      "gold": "receipt_28",
+      "field": "key_amount",
+      "rank": "max"
+    },
+    "light_2_min_total": {
+      "group": "light",
+      "text": "Какой чек (документ) имеет наименьшую итоговую сумму (TOTAL)?",
+      "gold": "receipt_03",
+      "field": "key_amount",
+      "rank": "min"
+    },
+    "hard_1_item_count_5": {
+      "group": "hard",
+      "text": "В каком чеке ровно 5 позиций товара (строк меню)?",
+      "gold": "receipt_20",
+      "field": "item_count",
+      "rank": "equals",
+      "value": 5
+    },
+    "hard_2_tax_range": {
+      "group": "hard",
+      "text": "В каком чеке сумма налога (отдельная строка налога/TAX/PB1, НЕ итоговая сумма чека) — от 12 500 до 14 000?",
+      "gold": "receipt_29",
+      "field": null,
+      "rank": "schema_blind_spot"
+    }
+  },
+  "summary": {
+    "caption": {
+      "n": 30,
+      "avg_cost_per_call": 0.00482386,
+      "cost_per_1000_images": 4.82386,
+      "avg_words": 67.63333333333334,
+      "avg_chars": 443.3,
+      "avg_prompt_tokens": 31670.8,
+      "avg_completion_tokens": 122.06666666666666,
+      "recall_light": {
+        "light_1_max_total": 0,
+        "light_2_min_total": 0
+      },
+      "recall_hard": {
+        "hard_1_item_count_5": 0,
+        "hard_2_tax_range": 0
+      },
+      "recall_light_avg": 0.0,
+      "recall_hard_avg": 0.0
+    },
+    "fields": {
+      "n": 30,
+      "avg_cost_per_call": 0.00480954,
+      "cost_per_1000_images": 4.80954,
+      "avg_words": 20.0,
+      "avg_chars": 129.16666666666666,
+      "avg_prompt_tokens": 31846.8,
+      "avg_completion_tokens": 54.2,
+      "recall_light": {
+        "light_1_max_total": 1,
+        "light_2_min_total": 1
+      },
+      "recall_hard": {
+        "hard_1_item_count_5": 0,
+        "hard_2_tax_range": 0
+      },
+      "recall_light_avg": 1.0,
+      "recall_hard_avg": 0.0
+    },
+    "hybrid": {
+      "n": 30,
+      "avg_cost_per_call": 0.00482803,
+      "cost_per_1000_images": 4.82803,
+      "avg_words": 29.266666666666666,
+      "avg_chars": 188.96666666666667,
+      "avg_prompt_tokens": 31893.8,
+      "avg_completion_tokens": 73.26666666666667,
+      "recall_light": {
+        "light_1_max_total": 0,
+        "light_2_min_total": 0
+      },
+      "recall_hard": {
+        "hard_1_item_count_5": 0,
+        "hard_2_tax_range": 0
+      },
+      "recall_light_avg": 0.0,
+      "recall_hard_avg": 0.0
+    }
+  },
+  "recall_detail": {
+    "caption": {
+      "light_1_max_total": {
+        "top1": "receipt_16",
+        "gold": "receipt_28",
+        "cos_top1": 0.53836506899193,
+        "cos_gold": 0.4177858512028701
+      },
+      "light_2_min_total": {
+        "top1": "receipt_16",
+        "gold": "receipt_03",
+        "cos_top1": 0.5492194060404715,
+        "cos_gold": 0.37760809307541204
+      },
+      "hard_1_item_count_5": {
+        "top1": "receipt_14",
+        "gold": "receipt_20",
+        "cos_top1": 0.4955040378297341,
+        "cos_gold": 0.4633057320674675
+      },
+      "hard_2_tax_range": {
+        "top1": "receipt_07",
+        "gold": "receipt_29",
+        "cos_top1": 0.5661151691320359,
+        "cos_gold": 0.42283532090470377
+      }
+    },
+    "fields": {
+      "light_1_max_total": {
+        "predicted_values": {
+          "receipt_00": 60000,
+          "receipt_01": 91000,
+          "receipt_02": 28000,
+          "receipt_03": 11000,
+          "receipt_04": 174600,
+          "receipt_05": 31000,
+          "receipt_06": 46000,
+          "receipt_07": 111000,
+          "receipt_08": 50000,
+          "receipt_09": 14000,
+          "receipt_10": 17000,
+          "receipt_11": 230000,
+          "receipt_12": 120000,
+          "receipt_13": 52000,
+          "receipt_14": 281435,
+          "receipt_15": 63000,
+          "receipt_16": 70000,
+          "receipt_17": 91000,
+          "receipt_18": 156000,
+          "receipt_19": 176000,
+          "receipt_20": 377859,
+          "receipt_21": 38000,
+          "receipt_22": 40000,
+          "receipt_23": 63000,
+          "receipt_24": 118000,
+          "receipt_25": 43000,
+          "receipt_26": 138000,
+          "receipt_27": 61600,
+          "receipt_28": 426195,
+          "receipt_29": 145900
+        },
+        "top1": "receipt_28",
+        "gold": "receipt_28"
+      },
+      "light_2_min_total": {
+        "predicted_values": {
+          "receipt_00": 60000,
+          "receipt_01": 91000,
+          "receipt_02": 28000,
+          "receipt_03": 11000,
+          "receipt_04": 174600,
+          "receipt_05": 31000,
+          "receipt_06": 46000,
+          "receipt_07": 111000,
+          "receipt_08": 50000,
+          "receipt_09": 14000,
+          "receipt_10": 17000,
+          "receipt_11": 230000,
+          "receipt_12": 120000,
+          "receipt_13": 52000,
+          "receipt_14": 281435,
+          "receipt_15": 63000,
+          "receipt_16": 70000,
+          "receipt_17": 91000,
+          "receipt_18": 156000,
+          "receipt_19": 176000,
+          "receipt_20": 377859,
+          "receipt_21": 38000,
+          "receipt_22": 40000,
+          "receipt_23": 63000,
+          "receipt_24": 118000,
+          "receipt_25": 43000,
+          "receipt_26": 138000,
+          "receipt_27": 61600,
+          "receipt_28": 426195,
+          "receipt_29": 145900
+        },
+        "top1": "receipt_03",
+        "gold": "receipt_03"
+      },
+      "hard_1_item_count_5": {
+        "predicted_values": {
+          "receipt_00": 2,
+          "receipt_01": 3,
+          "receipt_02": 2,
+          "receipt_03": 1,
+          "receipt_04": 3,
+          "receipt_05": 1,
+          "receipt_06": 3,
+          "receipt_07": 2,
+          "receipt_08": 3,
+          "receipt_09": 1,
+          "receipt_10": 1,
+          "receipt_11": 1,
+          "receipt_12": 2,
+          "receipt_13": 2,
+          "receipt_14": 5,
+          "receipt_15": 2,
+          "receipt_16": 5,
+          "receipt_17": 5,
+          "receipt_18": 1,
+          "receipt_19": 2,
+          "receipt_20": 5,
+          "receipt_21": 2,
+          "receipt_22": 2,
+          "receipt_23": 2,
+          "receipt_24": 3,
+          "receipt_25": 3,
+          "receipt_26": 3,
+          "receipt_27": 2,
+          "receipt_28": 3,
+          "receipt_29": 8
+        },
+        "top1": "receipt_14",
+        "gold": "receipt_20"
+      },
+      "hard_2_tax_range": {
+        "note": "в схеме «поля» нет поля под этот факт — структурно не отвечаем (0), не ошибка модели"
+      }
+    },
+    "hybrid": {
+      "light_1_max_total": {
+        "top1": "receipt_08",
+        "gold": "receipt_28",
+        "cos_top1": 0.6315219097101047,
+        "cos_gold": 0.5166625540117677
+      },
+      "light_2_min_total": {
+        "top1": "receipt_08",
+        "gold": "receipt_03",
+        "cos_top1": 0.6351005734375568,
+        "cos_gold": 0.46747145271892293
+      },
+      "hard_1_item_count_5": {
+        "top1": "receipt_28",
+        "gold": "receipt_20",
+        "cos_top1": 0.5253454599385949,
+        "cos_gold": 0.45446349029948385
+      },
+      "hard_2_tax_range": {
+        "top1": "receipt_05",
+        "gold": "receipt_29",
+        "cos_top1": 0.5717400809539728,
+        "cos_gold": 0.3092661713869323
+      }
+    }
+  },
+  "per_call": {
+    "receipt_00|caption": {
+      "exec_id": "11442",
+      "wall_s": 5.17,
+      "node_ms": 2935,
+      "prompt_tokens": 14292,
+      "completion_tokens": 105,
+      "cost": 0.0022068,
+      "raw_content": "На изображении представлен чек с информацией о покупке. Он содержит номер документа, а также количество купленных товаров — две единицы, стоимость которых составляет 60,000. В нижней части чека указана информация о налоге в размере 5.455, а также общая сумма платежа, которая также равна 60,000. Чек оформлен в формате, привычном для покупок в магазинах или кафе, и включает данные о способе оплаты — отсканированным терминалом.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек с информацией о покупке. Он содержит номер документа, а также количество купленных товаров — две единицы, стоимость которых составляет 60,000. В нижней части чека указана информация о налоге в размере 5.455, а также общая сумма платежа, которая также равна 60,000. Чек оформлен в формате, привычном для покупок в магазинах или кафе, и включает данные о способе оплаты — отсканированным терминалом.",
+      "len_chars": 428,
+      "len_words": 65
+    },
+    "receipt_00|fields": {
+      "exec_id": "11445",
+      "wall_s": 4.0,
+      "node_ms": 1858,
+      "prompt_tokens": 14468,
+      "completion_tokens": 54,
+      "cost": 0.0022026,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"смазанное\",\n  \"key_amount\": \"60.000\",\n  \"item_count\": 2\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "смазанное",
+        "key_amount": "60.000",
+        "item_count": 2
+      },
+      "len_chars": 131,
+      "len_words": 20
+    },
+    "receipt_00|hybrid": {
+      "exec_id": "11441",
+      "wall_s": 4.03,
+      "node_ms": 2606,
+      "prompt_tokens": 14515,
+      "completion_tokens": 74,
+      "cost": 0.00222165,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": true,\n  \"image_quality\": \"смазанное\",\n  \"key_amount\": \"60.000\",\n  \"item_count\": 2,\n  \"semantic_phrase\": \"чек с оплатой картой на сумму 60.000\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": true,
+        "image_quality": "смазанное",
+        "key_amount": "60.000",
+        "item_count": 2,
+        "semantic_phrase": "чек с оплатой картой на сумму 60.000"
+      },
+      "len_chars": 187,
+      "len_words": 30,
+      "text_for_embedding": "чек с оплатой картой на сумму 60.000"
+    },
+    "receipt_01|caption": {
+      "exec_id": "11443",
+      "wall_s": 4.84,
+      "node_ms": 3121,
+      "prompt_tokens": 25626,
+      "completion_tokens": 118,
+      "cost": 0.0039147,
+      "raw_content": "Изображение представляет собой кассовый чек магазина \"SAMS\", на котором указаны подробности о покупке. Чек показывает три позиции с их ценами: \"J.STB PROMO\" за 17,500, \"Y.B.BAT\" за 46,000 и \"Y.BASO PROM\" за 27,500. Общая сумма покупки составила 91,000, которая была оплачена наличными. В верхней части чека указаны адрес и контактная информация магазина, что делает его официальным документом о совершенной транзакции.",
+      "parsed": null,
+      "text_for_embedding": "Изображение представляет собой кассовый чек магазина \"SAMS\", на котором указаны подробности о покупке. Чек показывает три позиции с их ценами: \"J.STB PROMO\" за 17,500, \"Y.B.BAT\" за 46,000 и \"Y.BASO PROM\" за 27,500. Общая сумма покупки составила 91,000, которая была оплачена наличными. В верхней части чека указаны адрес и контактная информация магазина, что делает его официальным документом о совершенной транзакции.",
+      "len_chars": 418,
+      "len_words": 67
+    },
+    "receipt_01|fields": {
+      "exec_id": "11444",
+      "wall_s": 3.99,
+      "node_ms": 2086,
+      "prompt_tokens": 25802,
+      "completion_tokens": 53,
+      "cost": 0.0039021,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"91000\",\n  \"item_count\": 3\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "91000",
+        "item_count": 3
+      },
+      "len_chars": 127,
+      "len_words": 19
+    },
+    "receipt_01|hybrid": {
+      "exec_id": "11446",
+      "wall_s": 5.1,
+      "node_ms": 2183,
+      "prompt_tokens": 25849,
+      "completion_tokens": 70,
+      "cost": 0.00391935,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"91000\",\n  \"item_count\": 3,\n  \"semantic_phrase\": \"чек с суммой 91000 за покупки\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "91000",
+        "item_count": 3,
+        "semantic_phrase": "чек с суммой 91000 за покупки"
+      },
+      "len_chars": 177,
+      "len_words": 27,
+      "text_for_embedding": "чек с суммой 91000 за покупки"
+    },
+    "receipt_02|caption": {
+      "exec_id": "11448",
+      "wall_s": 4.67,
+      "node_ms": 3609,
+      "prompt_tokens": 36960,
+      "completion_tokens": 128,
+      "cost": 0.0056208,
+      "raw_content": "На изображении представлен чек, на котором указаны покупки, совершенные в кафе или ресторане. В списке товаров значатся один литр жасминового чая, стоимостью 24,000, и желе из кокоса за 4,000, что в сумме составляет 28,000. В разделе итогов указывается общая сумма продаж, равная 28,000, оплаченных наличными на сумму 100,000, с полученной сдачей в размере 72,000. Чек оформлен с номером очереди 102 и имеет характерные для продаж накладные характеристики.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек, на котором указаны покупки, совершенные в кафе или ресторане. В списке товаров значатся один литр жасминового чая, стоимостью 24,000, и желе из кокоса за 4,000, что в сумме составляет 28,000. В разделе итогов указывается общая сумма продаж, равная 28,000, оплаченных наличными на сумму 100,000, с полученной сдачей в размере 72,000. Чек оформлен с номером очереди 102 и имеет характерные для продаж накладные характеристики.",
+      "len_chars": 456,
+      "len_words": 73
+    },
+    "receipt_02|fields": {
+      "exec_id": "11449",
+      "wall_s": 3.69,
+      "node_ms": 2183,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": true,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"28.000\",\n  \"item_count\": 2\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": true,
+        "image_quality": "чёткое",
+        "key_amount": "28.000",
+        "item_count": 2
+      },
+      "len_chars": 127,
+      "len_words": 20
+    },
+    "receipt_02|hybrid": {
+      "exec_id": "11447",
+      "wall_s": 3.44,
+      "node_ms": 2585,
+      "prompt_tokens": 37183,
+      "completion_tokens": 74,
+      "cost": 0.00562185,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"28.000\",\n  \"item_count\": 2,\n  \"semantic_phrase\": \"чек с покупками напитков на сумму 28.000\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "28.000",
+        "item_count": 2,
+        "semantic_phrase": "чек с покупками напитков на сумму 28.000"
+      },
+      "len_chars": 189,
+      "len_words": 30,
+      "text_for_embedding": "чек с покупками напитков на сумму 28.000"
+    },
+    "receipt_03|caption": {
+      "exec_id": "11450",
+      "wall_s": 3.26,
+      "node_ms": 2908,
+      "prompt_tokens": 36960,
+      "completion_tokens": 122,
+      "cost": 0.0056172,
+      "raw_content": "На изображении представлена квитанция из пекарни и кафе, оформленная в стандартном формате для расчетов. На чеке указано название заведения \"Dynamic Bakery & Café\" и информация о покупке, в частности, название товара — \"Donat Gula\", который был приобретён по цене 11,000. Всего было куплено 1 единица с итоговой суммой 11,000. Квитанция также содержит информацию о способе оплаты, но эта часть нечеткая. Дизайн документа простой и функциональный, характерный для продаж на местах.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлена квитанция из пекарни и кафе, оформленная в стандартном формате для расчетов. На чеке указано название заведения \"Dynamic Bakery & Café\" и информация о покупке, в частности, название товара — \"Donat Gula\", который был приобретён по цене 11,000. Всего было куплено 1 единица с итоговой суммой 11,000. Квитанция также содержит информацию о способе оплаты, но эта часть нечеткая. Дизайн документа простой и функциональный, характерный для продаж на местах.",
+      "len_chars": 480,
+      "len_words": 70
+    },
+    "receipt_03|fields": {
+      "exec_id": "11451",
+      "wall_s": 3.42,
+      "node_ms": 2134,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"11,000\",\n  \"item_count\": 1\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "11,000",
+        "item_count": 1
+      },
+      "len_chars": 128,
+      "len_words": 20
+    },
+    "receipt_03|hybrid": {
+      "exec_id": "11452",
+      "wall_s": 3.64,
+      "node_ms": 2220,
+      "prompt_tokens": 37183,
+      "completion_tokens": 68,
+      "cost": 0.00561825,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"11,000\",\n  \"item_count\": 1,\n  \"semantic_phrase\": \"чек с покупкой доната\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "11,000",
+        "item_count": 1,
+        "semantic_phrase": "чек с покупкой доната"
+      },
+      "len_chars": 170,
+      "len_words": 26,
+      "text_for_embedding": "чек с покупкой доната"
+    },
+    "receipt_04|caption": {
+      "exec_id": "11453",
+      "wall_s": 4.53,
+      "node_ms": 3976,
+      "prompt_tokens": 36960,
+      "completion_tokens": 157,
+      "cost": 0.0056382,
+      "raw_content": "Изображение представляет собой смятую кассовую квитанцию с данными о покупке, сделанной в кафе или ресторане. В документе указаны три наименования товаров: два заказа на айс блэк-кофе, одно авокадо-кофе и одно блюдо чикен катсу. Общая сумма подытога составляет 194,000, из которой был предоставлен скидка 19,400, что приводит к общему итогу покупки в 174,600. Также указано, что квитанция была оплачена наличными, и клиенту было возвращено 28,400. Квитанция, вероятно, была завернута или сложена, что создает эффект смятости.",
+      "parsed": null,
+      "text_for_embedding": "Изображение представляет собой смятую кассовую квитанцию с данными о покупке, сделанной в кафе или ресторане. В документе указаны три наименования товаров: два заказа на айс блэк-кофе, одно авокадо-кофе и одно блюдо чикен катсу. Общая сумма подытога составляет 194,000, из которой был предоставлен скидка 19,400, что приводит к общему итогу покупки в 174,600. Также указано, что квитанция была оплачена наличными, и клиенту было возвращено 28,400. Квитанция, вероятно, была завернута или сложена, что создает эффект смятости.",
+      "len_chars": 525,
+      "len_words": 80
+    },
+    "receipt_04|fields": {
+      "exec_id": "11454",
+      "wall_s": 3.51,
+      "node_ms": 2269,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": true,\n  \"image_quality\": \"смазанное\",\n  \"key_amount\": \"174,600\",\n  \"item_count\": 3\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": true,
+        "image_quality": "смазанное",
+        "key_amount": "174,600",
+        "item_count": 3
+      },
+      "len_chars": 131,
+      "len_words": 20
+    },
+    "receipt_04|hybrid": {
+      "exec_id": "11455",
+      "wall_s": 3.49,
+      "node_ms": 2771,
+      "prompt_tokens": 37183,
+      "completion_tokens": 74,
+      "cost": 0.00562185,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"смазанное\",\n  \"key_amount\": \"174,600\",\n  \"item_count\": 3,\n  \"semantic_phrase\": \"чек из кафе с несколькими напитками и закусками\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "смазанное",
+        "key_amount": "174,600",
+        "item_count": 3,
+        "semantic_phrase": "чек из кафе с несколькими напитками и закусками"
+      },
+      "len_chars": 200,
+      "len_words": 30,
+      "text_for_embedding": "чек из кафе с несколькими напитками и закусками"
+    },
+    "receipt_05|caption": {
+      "exec_id": "11456",
+      "wall_s": 5.66,
+      "node_ms": 4633,
+      "prompt_tokens": 36960,
+      "completion_tokens": 123,
+      "cost": 0.0056178,
+      "raw_content": "На изображении представлен чек из заведения, вероятно, кафе или ресторана, на котором указана информация о заказе. Чек имеет название \"TRAD KY TOAST CARTE\" и содержит строки с деталями покупки, включая количество (1) и subtotal, который составляет 28.182. Общая сумма к оплате составляет 31.000, что также обозначено в разделе \"TOTAL\". Метод оплаты — наличными, сумма 31.000 указана в разделе \"CASH\". Под рукой виден фоновый элемент темного цвета, что добавляет контекст к изображению.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек из заведения, вероятно, кафе или ресторана, на котором указана информация о заказе. Чек имеет название \"TRAD KY TOAST CARTE\" и содержит строки с деталями покупки, включая количество (1) и subtotal, который составляет 28.182. Общая сумма к оплате составляет 31.000, что также обозначено в разделе \"TOTAL\". Метод оплаты — наличными, сумма 31.000 указана в разделе \"CASH\". Под рукой виден фоновый элемент темного цвета, что добавляет контекст к изображению.",
+      "len_chars": 485,
+      "len_words": 73
+    },
+    "receipt_05|fields": {
+      "exec_id": "11458",
+      "wall_s": 3.66,
+      "node_ms": 2949,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"31.000\",\n  \"item_count\": 1\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "31.000",
+        "item_count": 1
+      },
+      "len_chars": 128,
+      "len_words": 20
+    },
+    "receipt_05|hybrid": {
+      "exec_id": "11457",
+      "wall_s": 4.72,
+      "node_ms": 3423,
+      "prompt_tokens": 37183,
+      "completion_tokens": 74,
+      "cost": 0.00562185,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"31.000\",\n  \"item_count\": 1,\n  \"semantic_phrase\": \"чек с оплатой наличными на сумму 31.000\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "31.000",
+        "item_count": 1,
+        "semantic_phrase": "чек с оплатой наличными на сумму 31.000"
+      },
+      "len_chars": 188,
+      "len_words": 30,
+      "text_for_embedding": "чек с оплатой наличными на сумму 31.000"
+    },
+    "receipt_06|caption": {
+      "exec_id": "11459",
+      "wall_s": 3.26,
+      "node_ms": 2789,
+      "prompt_tokens": 36960,
+      "completion_tokens": 125,
+      "cost": 0.005619,
+      "raw_content": "На изображении представлен товарный чек с перечислением купленных продуктов. В чеке указаны три позиции: один яичный тарт за 13,000, два шоколадных пирожных за 24,000 и один блин с красной фасолью за 9,000. Общая сумма покупки составила 46,000, при этом был внесен платеж наличными в размере 50,000, что предполагает, что покупатель получил 4,000 в виде сдачи. Чек оформлен на стандартном бумажном носителе с четкими печатными данными.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен товарный чек с перечислением купленных продуктов. В чеке указаны три позиции: один яичный тарт за 13,000, два шоколадных пирожных за 24,000 и один блин с красной фасолью за 9,000. Общая сумма покупки составила 46,000, при этом был внесен платеж наличными в размере 50,000, что предполагает, что покупатель получил 4,000 в виде сдачи. Чек оформлен на стандартном бумажном носителе с четкими печатными данными.",
+      "len_chars": 435,
+      "len_words": 71
+    },
+    "receipt_06|fields": {
+      "exec_id": "11460",
+      "wall_s": 2.36,
+      "node_ms": 1867,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"46,000\",\n  \"item_count\": 3\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "46,000",
+        "item_count": 3
+      },
+      "len_chars": 128,
+      "len_words": 20
+    },
+    "receipt_06|hybrid": {
+      "exec_id": "11461",
+      "wall_s": 3.3,
+      "node_ms": 2291,
+      "prompt_tokens": 37183,
+      "completion_tokens": 72,
+      "cost": 0.00562065,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"46,000\",\n  \"item_count\": 3,\n  \"semantic_phrase\": \"чек с покупки выпечки на сумму 46000\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "46,000",
+        "item_count": 3,
+        "semantic_phrase": "чек с покупки выпечки на сумму 46000"
+      },
+      "len_chars": 185,
+      "len_words": 29,
+      "text_for_embedding": "чек с покупки выпечки на сумму 46000"
+    },
+    "receipt_07|caption": {
+      "exec_id": "11462",
+      "wall_s": 3.29,
+      "node_ms": 2696,
+      "prompt_tokens": 25626,
+      "completion_tokens": 112,
+      "cost": 0.0039111,
+      "raw_content": "На изображении представлен чек, вероятно, из ресторана или кафе. В верхней части видно описание предметов, таких как \"Kupon 15\" и \"ADD CHICKEN BOX\", с соответствующими суммами. Общая сумма составляет 111,000, а сумма налога (10%) — 10,091. Чек также указывает, что оплата была произведена наличными. Документ выполнен на стандартной расчетной бумаге, с четкой структурой и расшифровкой всех позиций.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек, вероятно, из ресторана или кафе. В верхней части видно описание предметов, таких как \"Kupon 15\" и \"ADD CHICKEN BOX\", с соответствующими суммами. Общая сумма составляет 111,000, а сумма налога (10%) — 10,091. Чек также указывает, что оплата была произведена наличными. Документ выполнен на стандартной расчетной бумаге, с четкой структурой и расшифровкой всех позиций.",
+      "len_chars": 399,
+      "len_words": 58
+    },
+    "receipt_07|fields": {
+      "exec_id": "11463",
+      "wall_s": 3.29,
+      "node_ms": 1939,
+      "prompt_tokens": 25802,
+      "completion_tokens": 56,
+      "cost": 0.0039039,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"Rp.111,000\",\n  \"item_count\": 2\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "Rp.111,000",
+        "item_count": 2
+      },
+      "len_chars": 132,
+      "len_words": 21
+    },
+    "receipt_07|hybrid": {
+      "exec_id": "11464",
+      "wall_s": 3.36,
+      "node_ms": 2228,
+      "prompt_tokens": 25849,
+      "completion_tokens": 75,
+      "cost": 0.00392235,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"Rp.111,000\",\n  \"item_count\": 2,\n  \"semantic_phrase\": \"чек из кафе с добавлением куриного бокса\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "Rp.111,000",
+        "item_count": 2,
+        "semantic_phrase": "чек из кафе с добавлением куриного бокса"
+      },
+      "len_chars": 193,
+      "len_words": 30,
+      "text_for_embedding": "чек из кафе с добавлением куриного бокса"
+    },
+    "receipt_08|caption": {
+      "exec_id": "11465",
+      "wall_s": 4.32,
+      "node_ms": 3214,
+      "prompt_tokens": 36960,
+      "completion_tokens": 114,
+      "cost": 0.0056124,
+      "raw_content": "На изображении представлен чек от ресторана или кафе, в котором указаны заказы и суммы. В списке заказанных предметов значатся \"Black Sakura\" с ценой 45,455, а также \"Cookie Doh Sauces\" и \"Nata de Coco\" с нулевой стоимостью. Общая сумма чека составляет 50,000, включающая 10% сервисный сбор в размере 4,545. Чек оформлен на пластиковый платеж и содержит контактные данные заведения, хотя они частично замазаны.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек от ресторана или кафе, в котором указаны заказы и суммы. В списке заказанных предметов значатся \"Black Sakura\" с ценой 45,455, а также \"Cookie Doh Sauces\" и \"Nata de Coco\" с нулевой стоимостью. Общая сумма чека составляет 50,000, включающая 10% сервисный сбор в размере 4,545. Чек оформлен на пластиковый платеж и содержит контактные данные заведения, хотя они частично замазаны.",
+      "len_chars": 410,
+      "len_words": 65
+    },
+    "receipt_08|fields": {
+      "exec_id": "11466",
+      "wall_s": 2.43,
+      "node_ms": 1799,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"50,000\",\n  \"item_count\": 3\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "50,000",
+        "item_count": 3
+      },
+      "len_chars": 128,
+      "len_words": 20
+    },
+    "receipt_08|hybrid": {
+      "exec_id": "11467",
+      "wall_s": 3.28,
+      "node_ms": 2095,
+      "prompt_tokens": 37183,
+      "completion_tokens": 72,
+      "cost": 0.00562065,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"50,000\",\n  \"item_count\": 3,\n  \"semantic_phrase\": \"чек с итоговой суммой 50,000\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "50,000",
+        "item_count": 3,
+        "semantic_phrase": "чек с итоговой суммой 50,000"
+      },
+      "len_chars": 177,
+      "len_words": 28,
+      "text_for_embedding": "чек с итоговой суммой 50,000"
+    },
+    "receipt_09|caption": {
+      "exec_id": "11468",
+      "wall_s": 3.37,
+      "node_ms": 2546,
+      "prompt_tokens": 25626,
+      "completion_tokens": 101,
+      "cost": 0.0039045,
+      "raw_content": "На изображении представлен чек, в котором указано приобретение продукта под названием \"Bumbu Kaldu Ayam 1\" с ценой 36,000. Общая сумма покупки составляет 36,000, и скидка не предоставляется (0%). Клиент внес сумму 50,000, из которой ожидается сумма возврата (kembalian) в 14,000. Чек оформлен в простой форме, с четкими разделами для указания наименований и цен.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек, в котором указано приобретение продукта под названием \"Bumbu Kaldu Ayam 1\" с ценой 36,000. Общая сумма покупки составляет 36,000, и скидка не предоставляется (0%). Клиент внес сумму 50,000, из которой ожидается сумма возврата (kembalian) в 14,000. Чек оформлен в простой форме, с четкими разделами для указания наименований и цен.",
+      "len_chars": 362,
+      "len_words": 57
+    },
+    "receipt_09|fields": {
+      "exec_id": "11469",
+      "wall_s": 2.22,
+      "node_ms": 1941,
+      "prompt_tokens": 25802,
+      "completion_tokens": 53,
+      "cost": 0.0039021,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"14000\",\n  \"item_count\": 1\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "14000",
+        "item_count": 1
+      },
+      "len_chars": 127,
+      "len_words": 19
+    },
+    "receipt_09|hybrid": {
+      "exec_id": "11470",
+      "wall_s": 3.28,
+      "node_ms": 2133,
+      "prompt_tokens": 25849,
+      "completion_tokens": 72,
+      "cost": 0.00392055,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"14000\",\n  \"item_count\": 1,\n  \"semantic_phrase\": \"чек с оплатой наличными и возвратом суммы\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "14000",
+        "item_count": 1,
+        "semantic_phrase": "чек с оплатой наличными и возвратом суммы"
+      },
+      "len_chars": 189,
+      "len_words": 28,
+      "text_for_embedding": "чек с оплатой наличными и возвратом суммы"
+    },
+    "receipt_10|caption": {
+      "exec_id": "11471",
+      "wall_s": 3.27,
+      "node_ms": 2976,
+      "prompt_tokens": 25626,
+      "completion_tokens": 109,
+      "cost": 0.0039093,
+      "raw_content": "На изображении представлена квитанция от заведения Auntie Anne's. В ней указано, что был заказан один предмет — кнедлик с сахаром и корицей, стоимость которого составила 17,000. Подсчет показывает итоговую сумму в 17,000, а наличные, переданные кассиру, составили 20,000. В результате, сумма возврата клиенту составляет 3,000. Квитанция также содержит логотип заведения и базовые реквизиты.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлена квитанция от заведения Auntie Anne's. В ней указано, что был заказан один предмет — кнедлик с сахаром и корицей, стоимость которого составила 17,000. Подсчет показывает итоговую сумму в 17,000, а наличные, переданные кассиру, составили 20,000. В результате, сумма возврата клиенту составляет 3,000. Квитанция также содержит логотип заведения и базовые реквизиты.",
+      "len_chars": 390,
+      "len_words": 57
+    },
+    "receipt_10|fields": {
+      "exec_id": "11472",
+      "wall_s": 3.29,
+      "node_ms": 2316,
+      "prompt_tokens": 25802,
+      "completion_tokens": 54,
+      "cost": 0.0039027,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"17,000\",\n  \"item_count\": 1\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "17,000",
+        "item_count": 1
+      },
+      "len_chars": 128,
+      "len_words": 20
+    },
+    "receipt_10|hybrid": {
+      "exec_id": "11473",
+      "wall_s": 4.33,
+      "node_ms": 2080,
+      "prompt_tokens": 25849,
+      "completion_tokens": 82,
+      "cost": 0.00392655,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"17,000\",\n  \"item_count\": 1,\n  \"semantic_phrase\": \"чек из Auntie Anne's с одной позицией и итоговой суммой 17,000\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "17,000",
+        "item_count": 1,
+        "semantic_phrase": "чек из Auntie Anne's с одной позицией и итоговой суммой 17,000"
+      },
+      "len_chars": 211,
+      "len_words": 35,
+      "text_for_embedding": "чек из Auntie Anne's с одной позицией и итоговой суммой 17,000"
+    },
+    "receipt_11|caption": {
+      "exec_id": "11474",
+      "wall_s": 3.93,
+      "node_ms": 2701,
+      "prompt_tokens": 25626,
+      "completion_tokens": 108,
+      "cost": 0.0039087,
+      "raw_content": "На изображении представлен чек с покупки, на котором указано, что был приобретен один торт \"Banaberry Fresh Cream Cake\" за 230,000. Общая сумма к оплате также составляет 230,000, что подтверждает, что покупка была оплатена наличными. В разделе \"Сдача\" указано 0, что означает, что покупатель расплатился точной суммой без необходимости получения сдачи. Чек оформлен на стандартном бланке с четкой печатью.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек с покупки, на котором указано, что был приобретен один торт \"Banaberry Fresh Cream Cake\" за 230,000. Общая сумма к оплате также составляет 230,000, что подтверждает, что покупка была оплатена наличными. В разделе \"Сдача\" указано 0, что означает, что покупатель расплатился точной суммой без необходимости получения сдачи. Чек оформлен на стандартном бланке с четкой печатью.",
+      "len_chars": 405,
+      "len_words": 60
+    },
+    "receipt_11|fields": {
+      "exec_id": "11475",
+      "wall_s": 3.64,
+      "node_ms": 2568,
+      "prompt_tokens": 25802,
+      "completion_tokens": 54,
+      "cost": 0.0039027,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"тёмное\",\n  \"key_amount\": \"230,000\",\n  \"item_count\": 1\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "тёмное",
+        "key_amount": "230,000",
+        "item_count": 1
+      },
+      "len_chars": 129,
+      "len_words": 20
+    },
+    "receipt_11|hybrid": {
+      "exec_id": "11476",
+      "wall_s": 3.87,
+      "node_ms": 2808,
+      "prompt_tokens": 25849,
+      "completion_tokens": 71,
+      "cost": 0.00391995,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"тёмное\",\n  \"key_amount\": \"230,000\",\n  \"item_count\": 1,\n  \"semantic_phrase\": \"чек с покупкой торта за наличные\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "тёмное",
+        "key_amount": "230,000",
+        "item_count": 1,
+        "semantic_phrase": "чек с покупкой торта за наличные"
+      },
+      "len_chars": 182,
+      "len_words": 28,
+      "text_for_embedding": "чек с покупкой торта за наличные"
+    },
+    "receipt_12|caption": {
+      "exec_id": "11477",
+      "wall_s": 3.65,
+      "node_ms": 2541,
+      "prompt_tokens": 25626,
+      "completion_tokens": 96,
+      "cost": 0.0039015,
+      "raw_content": "На изображении представлен кассовый чек, подтверждающий покупку двух товаров: блузы и сумки. В верхней части чека указаны коды и названия приобретенных вещей, а также их единичные и общие цены. Общая сумма покупки составляет 120,000, что отражено в итоговой строке. Оплата была произведена с использованием карты Visa. Чек выглядит слегка изношенным, с заметными следами обращения.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен кассовый чек, подтверждающий покупку двух товаров: блузы и сумки. В верхней части чека указаны коды и названия приобретенных вещей, а также их единичные и общие цены. Общая сумма покупки составляет 120,000, что отражено в итоговой строке. Оплата была произведена с использованием карты Visa. Чек выглядит слегка изношенным, с заметными следами обращения.",
+      "len_chars": 381,
+      "len_words": 55
+    },
+    "receipt_12|fields": {
+      "exec_id": "11478",
+      "wall_s": 3.52,
+      "node_ms": 1796,
+      "prompt_tokens": 25802,
+      "completion_tokens": 54,
+      "cost": 0.0039027,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"120,000\",\n  \"item_count\": 2\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "120,000",
+        "item_count": 2
+      },
+      "len_chars": 129,
+      "len_words": 20
+    },
+    "receipt_12|hybrid": {
+      "exec_id": "11480",
+      "wall_s": 3.8,
+      "node_ms": 2082,
+      "prompt_tokens": 25849,
+      "completion_tokens": 75,
+      "cost": 0.00392235,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": true,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"120,000\",\n  \"item_count\": 2,\n  \"semantic_phrase\": \"чек с оплатой картой на 120000 за два товара\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": true,
+        "image_quality": "чёткое",
+        "key_amount": "120,000",
+        "item_count": 2,
+        "semantic_phrase": "чек с оплатой картой на 120000 за два товара"
+      },
+      "len_chars": 193,
+      "len_words": 31,
+      "text_for_embedding": "чек с оплатой картой на 120000 за два товара"
+    },
+    "receipt_13|caption": {
+      "exec_id": "11481",
+      "wall_s": 3.85,
+      "node_ms": 2959,
+      "prompt_tokens": 36960,
+      "completion_tokens": 135,
+      "cost": 0.005625,
+      "raw_content": "На фотографии изображен фискальный чек из ресторана, оформленный на белом бумажном носителе с логотипом заведения \"A FUNG\". Чек включает в себя перечень товаров, среди которых значатся \"BASO KIAN\" за 43,636 и \"A.MINERAL GELAS\" за 3,000. Общая сумма перед налогами составляет 46,636, после добавления 10% налога итоговая сумма достигает 51,300. Внизу чеки указаны слова \"TUNAI\" и \"KEMBALI\", что может указывать на расчет наличными и сдачу.",
+      "parsed": null,
+      "text_for_embedding": "На фотографии изображен фискальный чек из ресторана, оформленный на белом бумажном носителе с логотипом заведения \"A FUNG\". Чек включает в себя перечень товаров, среди которых значатся \"BASO KIAN\" за 43,636 и \"A.MINERAL GELAS\" за 3,000. Общая сумма перед налогами составляет 46,636, после добавления 10% налога итоговая сумма достигает 51,300. Внизу чеки указаны слова \"TUNAI\" и \"KEMBALI\", что может указывать на расчет наличными и сдачу.",
+      "len_chars": 438,
+      "len_words": 69
+    },
+    "receipt_13|fields": {
+      "exec_id": "11479",
+      "wall_s": 2.53,
+      "node_ms": 1892,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"52.000\",\n  \"item_count\": 2\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "52.000",
+        "item_count": 2
+      },
+      "len_chars": 128,
+      "len_words": 20
+    },
+    "receipt_13|hybrid": {
+      "exec_id": "11482",
+      "wall_s": 3.29,
+      "node_ms": 2305,
+      "prompt_tokens": 37183,
+      "completion_tokens": 71,
+      "cost": 0.00562005,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"52,000\",\n  \"item_count\": 2,\n  \"semantic_phrase\": \"чек из ресторана с оплатой наличными\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "52,000",
+        "item_count": 2,
+        "semantic_phrase": "чек из ресторана с оплатой наличными"
+      },
+      "len_chars": 185,
+      "len_words": 28,
+      "text_for_embedding": "чек из ресторана с оплатой наличными"
+    },
+    "receipt_14|caption": {
+      "exec_id": "11483",
+      "wall_s": 5.67,
+      "node_ms": 4403,
+      "prompt_tokens": 36960,
+      "completion_tokens": 148,
+      "cost": 0.0056328,
+      "raw_content": "На изображении представлен чек с детализацией заказа в ресторане или кафе. В списке присутствуют такие блюда, как крас Velvet сырный торт, запеченный рис с курицей, рыба с картофелем фри, грибной суп, ромашковый чай и ледяной чай, с указанием их цен. Общая сумма заказа составляет 281,435, учитывая subtotal, сервисный сбор и дополнительную плату. Оплаченно на сумму 100,000 с использованием купона, наличными на 200,000 и предоставленным изменением в 18,565. Чек имеет характерный формат распечатки с чёткой структурой и указанием всех необходимых деталей.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек с детализацией заказа в ресторане или кафе. В списке присутствуют такие блюда, как крас Velvet сырный торт, запеченный рис с курицей, рыба с картофелем фри, грибной суп, ромашковый чай и ледяной чай, с указанием их цен. Общая сумма заказа составляет 281,435, учитывая subtotal, сервисный сбор и дополнительную плату. Оплаченно на сумму 100,000 с использованием купона, наличными на 200,000 и предоставленным изменением в 18,565. Чек имеет характерный формат распечатки с чёткой структурой и указанием всех необходимых деталей.",
+      "len_chars": 557,
+      "len_words": 84
+    },
+    "receipt_14|fields": {
+      "exec_id": "11484",
+      "wall_s": 3.58,
+      "node_ms": 2185,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"281,435\",\n  \"item_count\": 5\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "281,435",
+        "item_count": 5
+      },
+      "len_chars": 129,
+      "len_words": 20
+    },
+    "receipt_14|hybrid": {
+      "exec_id": "11485",
+      "wall_s": 3.57,
+      "node_ms": 2688,
+      "prompt_tokens": 37183,
+      "completion_tokens": 76,
+      "cost": 0.00562305,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"281,435\",\n  \"item_count\": 5,\n  \"semantic_phrase\": \"чек из ресторана с перечнем блюд и итоговой суммой\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "281,435",
+        "item_count": 5,
+        "semantic_phrase": "чек из ресторана с перечнем блюд и итоговой суммой"
+      },
+      "len_chars": 200,
+      "len_words": 31,
+      "text_for_embedding": "чек из ресторана с перечнем блюд и итоговой суммой"
+    },
+    "receipt_15|caption": {
+      "exec_id": "11486",
+      "wall_s": 3.48,
+      "node_ms": 2963,
+      "prompt_tokens": 25626,
+      "completion_tokens": 121,
+      "cost": 0.0039165,
+      "raw_content": "На изображении представлена кассовая квитанция из кафе под названием \"XXI Café\". В документе указаны купленные товары: лимонный чай большого объёма по цене 25.000 и маленький карамельный десерт за 38.000. Итоговая сумма заказа составила 63.000. Также на квитанции обозначено, что была оплачена сумма 70.000, в результате чего покупатель получил сдачу в размере 7.000. Квитанция содержит стандартные реквизиты, а также дату и время покупки.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлена кассовая квитанция из кафе под названием \"XXI Café\". В документе указаны купленные товары: лимонный чай большого объёма по цене 25.000 и маленький карамельный десерт за 38.000. Итоговая сумма заказа составила 63.000. Также на квитанции обозначено, что была оплачена сумма 70.000, в результате чего покупатель получил сдачу в размере 7.000. Квитанция содержит стандартные реквизиты, а также дату и время покупки.",
+      "len_chars": 439,
+      "len_words": 67
+    },
+    "receipt_15|fields": {
+      "exec_id": "11487",
+      "wall_s": 3.5,
+      "node_ms": 2270,
+      "prompt_tokens": 25802,
+      "completion_tokens": 54,
+      "cost": 0.0039027,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"смазанное\",\n  \"key_amount\": \"63.000\",\n  \"item_count\": 2\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "смазанное",
+        "key_amount": "63.000",
+        "item_count": 2
+      },
+      "len_chars": 131,
+      "len_words": 20
+    },
+    "receipt_15|hybrid": {
+      "exec_id": "11488",
+      "wall_s": 2.21,
+      "node_ms": 1893,
+      "prompt_tokens": 25849,
+      "completion_tokens": 72,
+      "cost": 0.00392055,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"смазанное\",\n  \"key_amount\": \"63.000\",\n  \"item_count\": 2,\n  \"semantic_phrase\": \"чек из кафе с чаем и кардамоном\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "смазанное",
+        "key_amount": "63.000",
+        "item_count": 2,
+        "semantic_phrase": "чек из кафе с чаем и кардамоном"
+      },
+      "len_chars": 183,
+      "len_words": 29,
+      "text_for_embedding": "чек из кафе с чаем и кардамоном"
+    },
+    "receipt_16|caption": {
+      "exec_id": "11489",
+      "wall_s": 4.46,
+      "node_ms": 3763,
+      "prompt_tokens": 36960,
+      "completion_tokens": 158,
+      "cost": 0.0056388,
+      "raw_content": "На изображении представлен чек, который включает в себя список заказанных товаров и итоговую сумму. В чеке указаны наименования, такие как черная сакура, лонган, жареный миндаль, нагго и минеральная вода с бандлом, с соответствующими ценами: черная сакура стоит 59,091, а минеральная вода — 4,545. Подсчитанная общая сумма без учета налогов составляет 63,636, с учетом налога (10%) — 70,000. Дано также, что сумма была оплачена наличными в размере 100,000, с возможным возвратом 30,000. Чек содержит стандартные поля для сумм и расчетов.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек, который включает в себя список заказанных товаров и итоговую сумму. В чеке указаны наименования, такие как черная сакура, лонган, жареный миндаль, нагго и минеральная вода с бандлом, с соответствующими ценами: черная сакура стоит 59,091, а минеральная вода — 4,545. Подсчитанная общая сумма без учета налогов составляет 63,636, с учетом налога (10%) — 70,000. Дано также, что сумма была оплачена наличными в размере 100,000, с возможным возвратом 30,000. Чек содержит стандартные поля для сумм и расчетов.",
+      "len_chars": 537,
+      "len_words": 83
+    },
+    "receipt_16|fields": {
+      "exec_id": "11490",
+      "wall_s": 2.35,
+      "node_ms": 1956,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"70,000\",\n  \"item_count\": 5\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "70,000",
+        "item_count": 5
+      },
+      "len_chars": 128,
+      "len_words": 20
+    },
+    "receipt_16|hybrid": {
+      "exec_id": "11491",
+      "wall_s": 3.27,
+      "node_ms": 2411,
+      "prompt_tokens": 37183,
+      "completion_tokens": 73,
+      "cost": 0.00562125,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"70,000\",\n  \"item_count\": 5,\n  \"semantic_phrase\": \"чек с покупками из магазина с наличным расчетом\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "70,000",
+        "item_count": 5,
+        "semantic_phrase": "чек с покупками из магазина с наличным расчетом"
+      },
+      "len_chars": 196,
+      "len_words": 30,
+      "text_for_embedding": "чек с покупками из магазина с наличным расчетом"
+    },
+    "receipt_17|caption": {
+      "exec_id": "11492",
+      "wall_s": 5.39,
+      "node_ms": 4335,
+      "prompt_tokens": 25626,
+      "completion_tokens": 140,
+      "cost": 0.0039279,
+      "raw_content": "На изображении представлен чек от ресторана, на котором указаны различные позиции заказанных блюд и их стоимость. Чек содержит название заведения, а также перечисление заказанных блюд, таких как \"Goblin's Mace\", \"Mozarella Hot Dog\", \"Chili Pepper Croquette\" и \"Cheese Croquette\", с соответствующими ценами. Общая сумма заказа составляет 91,000 индонезийских рупий, без указания скидок. В разделе \"Итого\" также указана сумма дебета, равная 91,000. Чек оформлен на белом фоне с черной печатью и расположен на деревянной поверхности.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек от ресторана, на котором указаны различные позиции заказанных блюд и их стоимость. Чек содержит название заведения, а также перечисление заказанных блюд, таких как \"Goblin's Mace\", \"Mozarella Hot Dog\", \"Chili Pepper Croquette\" и \"Cheese Croquette\", с соответствующими ценами. Общая сумма заказа составляет 91,000 индонезийских рупий, без указания скидок. В разделе \"Итого\" также указана сумма дебета, равная 91,000. Чек оформлен на белом фоне с черной печатью и расположен на деревянной поверхности.",
+      "len_chars": 530,
+      "len_words": 76
+    },
+    "receipt_17|fields": {
+      "exec_id": "11493",
+      "wall_s": 3.39,
+      "node_ms": 2146,
+      "prompt_tokens": 25802,
+      "completion_tokens": 57,
+      "cost": 0.0039045,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": true,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"Rp. 91,000\",\n  \"item_count\": 5\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": true,
+        "image_quality": "чёткое",
+        "key_amount": "Rp. 91,000",
+        "item_count": 5
+      },
+      "len_chars": 131,
+      "len_words": 21
+    },
+    "receipt_17|hybrid": {
+      "exec_id": "11494",
+      "wall_s": 3.54,
+      "node_ms": 2484,
+      "prompt_tokens": 25849,
+      "completion_tokens": 78,
+      "cost": 0.00392415,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": true,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"Rp. 91,000\",\n  \"item_count\": 6,\n  \"semantic_phrase\": \"чек с оплатой за еду на сумму 91.000\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": true,
+        "image_quality": "чёткое",
+        "key_amount": "Rp. 91,000",
+        "item_count": 6,
+        "semantic_phrase": "чек с оплатой за еду на сумму 91.000"
+      },
+      "len_chars": 188,
+      "len_words": 32,
+      "text_for_embedding": "чек с оплатой за еду на сумму 91.000"
+    },
+    "receipt_18|caption": {
+      "exec_id": "11495",
+      "wall_s": 5.5,
+      "node_ms": 4935,
+      "prompt_tokens": 25626,
+      "completion_tokens": 115,
+      "cost": 0.0039129,
+      "raw_content": "На изображении представлена товарная квитанция, в которой указаны детали покупки. Продукт под названием \"Propolis Cair 1\" стоит 156000, и эта же сумма указана в разделе \"Sub Total\". Потребитель произвел оплату наличными, также на квитанции отражено, что сдачи нет, сумма возврата составляет Rp. 0. Документ имеет стандартный формат, с четкими строками, обозначающими наименование товара и сумму. В нижней части на квитанции присутствует дополнительная информация.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлена товарная квитанция, в которой указаны детали покупки. Продукт под названием \"Propolis Cair 1\" стоит 156000, и эта же сумма указана в разделе \"Sub Total\". Потребитель произвел оплату наличными, также на квитанции отражено, что сдачи нет, сумма возврата составляет Rp. 0. Документ имеет стандартный формат, с четкими строками, обозначающими наименование товара и сумму. В нижней части на квитанции присутствует дополнительная информация.",
+      "len_chars": 463,
+      "len_words": 63
+    },
+    "receipt_18|fields": {
+      "exec_id": "11496",
+      "wall_s": 3.28,
+      "node_ms": 2058,
+      "prompt_tokens": 25802,
+      "completion_tokens": 53,
+      "cost": 0.0039021,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"156000\",\n  \"item_count\": 1\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "156000",
+        "item_count": 1
+      },
+      "len_chars": 128,
+      "len_words": 19
+    },
+    "receipt_18|hybrid": {
+      "exec_id": "11497",
+      "wall_s": 3.23,
+      "node_ms": 2890,
+      "prompt_tokens": 25849,
+      "completion_tokens": 68,
+      "cost": 0.00391815,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"156000\",\n  \"item_count\": 1,\n  \"semantic_phrase\": \"чек на покупку прополиса\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "156000",
+        "item_count": 1,
+        "semantic_phrase": "чек на покупку прополиса"
+      },
+      "len_chars": 173,
+      "len_words": 25,
+      "text_for_embedding": "чек на покупку прополиса"
+    },
+    "receipt_19|caption": {
+      "exec_id": "11498",
+      "wall_s": 4.34,
+      "node_ms": 4071,
+      "prompt_tokens": 25626,
+      "completion_tokens": 121,
+      "cost": 0.0039165,
+      "raw_content": "На изображении представлено кассовое чека, на котором указаны товары и их стоимость. Заказаны 4 позиции \"AMBUSH DBL CHS\" на сумму 68,000 и 10 позиций \"AMBUSH CHS BUR\" на сумму 100,000. В документе также указаны общие данные: чистая сумма 160,000, налог 16,000 и общая сумма к оплате 176,000. Чек напечатан на белой бумаге с нечетким текстом, что может усложнять чтение некоторых деталей.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлено кассовое чека, на котором указаны товары и их стоимость. Заказаны 4 позиции \"AMBUSH DBL CHS\" на сумму 68,000 и 10 позиций \"AMBUSH CHS BUR\" на сумму 100,000. В документе также указаны общие данные: чистая сумма 160,000, налог 16,000 и общая сумма к оплате 176,000. Чек напечатан на белой бумаге с нечетким текстом, что может усложнять чтение некоторых деталей.",
+      "len_chars": 387,
+      "len_words": 66
+    },
+    "receipt_19|fields": {
+      "exec_id": "11499",
+      "wall_s": 3.32,
+      "node_ms": 2246,
+      "prompt_tokens": 25802,
+      "completion_tokens": 53,
+      "cost": 0.0039021,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"смазанное\",\n  \"key_amount\": \"176000\",\n  \"item_count\": 2\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "смазанное",
+        "key_amount": "176000",
+        "item_count": 2
+      },
+      "len_chars": 131,
+      "len_words": 19
+    },
+    "receipt_19|hybrid": {
+      "exec_id": "11500",
+      "wall_s": 3.36,
+      "node_ms": 2468,
+      "prompt_tokens": 25849,
+      "completion_tokens": 74,
+      "cost": 0.00392175,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"смазанное\",\n  \"key_amount\": \"176000\",\n  \"item_count\": 2,\n  \"semantic_phrase\": \"чек с двумя позициями и итоговой суммой 176000\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "смазанное",
+        "key_amount": "176000",
+        "item_count": 2,
+        "semantic_phrase": "чек с двумя позициями и итоговой суммой 176000"
+      },
+      "len_chars": 198,
+      "len_words": 29,
+      "text_for_embedding": "чек с двумя позициями и итоговой суммой 176000"
+    },
+    "receipt_20|caption": {
+      "exec_id": "11501",
+      "wall_s": 4.48,
+      "node_ms": 3905,
+      "prompt_tokens": 36960,
+      "completion_tokens": 139,
+      "cost": 0.0056274,
+      "raw_content": "На изображении представлен чек ресторана, который отображает детали заказа, состоящего из шести блюд, включая курицу с кешью, говядину с чесноком и перцем, красное карри с говядиной, фхада тай и рис на пару. Каждое блюдо указано с соответствующей ценой, общей суммой без учета налогов и сборов, которая составляет 325,600. Также присутствуют графы с наценкой за обслуживание и налог, в результате чего итоговая сумма чека равна 377,859. Чек находится в руках человека, что подчеркивает его актуальность.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек ресторана, который отображает детали заказа, состоящего из шести блюд, включая курицу с кешью, говядину с чесноком и перцем, красное карри с говядиной, фхада тай и рис на пару. Каждое блюдо указано с соответствующей ценой, общей суммой без учета налогов и сборов, которая составляет 325,600. Также присутствуют графы с наценкой за обслуживание и налог, в результате чего итоговая сумма чека равна 377,859. Чек находится в руках человека, что подчеркивает его актуальность.",
+      "len_chars": 503,
+      "len_words": 76
+    },
+    "receipt_20|fields": {
+      "exec_id": "11502",
+      "wall_s": 3.28,
+      "node_ms": 2435,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"377,859\",\n  \"item_count\": 5\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "377,859",
+        "item_count": 5
+      },
+      "len_chars": 129,
+      "len_words": 20
+    },
+    "receipt_20|hybrid": {
+      "exec_id": "11503",
+      "wall_s": 3.33,
+      "node_ms": 2705,
+      "prompt_tokens": 37183,
+      "completion_tokens": 72,
+      "cost": 0.00562065,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"377,859\",\n  \"item_count\": 5,\n  \"semantic_phrase\": \"чек из ресторана с заказом нескольких блюд\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "377,859",
+        "item_count": 5,
+        "semantic_phrase": "чек из ресторана с заказом нескольких блюд"
+      },
+      "len_chars": 192,
+      "len_words": 29,
+      "text_for_embedding": "чек из ресторана с заказом нескольких блюд"
+    },
+    "receipt_21|caption": {
+      "exec_id": "11504",
+      "wall_s": 5.5,
+      "node_ms": 4648,
+      "prompt_tokens": 25626,
+      "completion_tokens": 133,
+      "cost": 0.0039237,
+      "raw_content": "На изображении представлен кассовый чек, подтверждающий покупку. В документе указаны два товара: \"Nasi Goreng\" по цене 35 000 рупий и \"Es Teh Tawar\" за 3 000 рупий, что в сумме составляет 38 000 рупий. Оплаченная сумма составила 50 000 рупий, из которых ресторатор вернул 12 000 рупий как сдачу. Чек содержит информацию о месте покупки, но она нечитабельна. Все суммы написаны и выделены жирным шрифтом для большей ясности.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен кассовый чек, подтверждающий покупку. В документе указаны два товара: \"Nasi Goreng\" по цене 35 000 рупий и \"Es Teh Tawar\" за 3 000 рупий, что в сумме составляет 38 000 рупий. Оплаченная сумма составила 50 000 рупий, из которых ресторатор вернул 12 000 рупий как сдачу. Чек содержит информацию о месте покупки, но она нечитабельна. Все суммы написаны и выделены жирным шрифтом для большей ясности.",
+      "len_chars": 423,
+      "len_words": 68
+    },
+    "receipt_21|fields": {
+      "exec_id": "11506",
+      "wall_s": 3.29,
+      "node_ms": 2213,
+      "prompt_tokens": 25802,
+      "completion_tokens": 55,
+      "cost": 0.0039033,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"Rp38.000\",\n  \"item_count\": 2\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "Rp38.000",
+        "item_count": 2
+      },
+      "len_chars": 130,
+      "len_words": 20
+    },
+    "receipt_21|hybrid": {
+      "exec_id": "11507",
+      "wall_s": 3.32,
+      "node_ms": 2365,
+      "prompt_tokens": 25849,
+      "completion_tokens": 73,
+      "cost": 0.00392115,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"Rp38.000\",\n  \"item_count\": 2,\n  \"semantic_phrase\": \"чек с заказом еды и оплатой наличными\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "Rp38.000",
+        "item_count": 2,
+        "semantic_phrase": "чек с заказом еды и оплатой наличными"
+      },
+      "len_chars": 188,
+      "len_words": 29,
+      "text_for_embedding": "чек с заказом еды и оплатой наличными"
+    },
+    "receipt_22|caption": {
+      "exec_id": "11508",
+      "wall_s": 4.37,
+      "node_ms": 3656,
+      "prompt_tokens": 36960,
+      "completion_tokens": 111,
+      "cost": 0.0056106,
+      "raw_content": "На изображении представлен чек из кафе или ресторана, где указаны приобретенные товары и их количество. В описании указаны два элемента: \"Soft Steamed Cheese\" и \"Soft Steamed Chocolate\", каждый из которых стоит 20,000. Общая сумма заказа составила 40,000, и платеж был произведен наличными на 100,000, что привело к сдаче в размере 60,000. Чек также содержит информацию о названии заведения и его контактах, но они частично размыты.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек из кафе или ресторана, где указаны приобретенные товары и их количество. В описании указаны два элемента: \"Soft Steamed Cheese\" и \"Soft Steamed Chocolate\", каждый из которых стоит 20,000. Общая сумма заказа составила 40,000, и платеж был произведен наличными на 100,000, что привело к сдаче в размере 60,000. Чек также содержит информацию о названии заведения и его контактах, но они частично размыты.",
+      "len_chars": 432,
+      "len_words": 69
+    },
+    "receipt_22|fields": {
+      "exec_id": "11509",
+      "wall_s": 3.24,
+      "node_ms": 2707,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"40,000\",\n  \"item_count\": 2\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "40,000",
+        "item_count": 2
+      },
+      "len_chars": 128,
+      "len_words": 20
+    },
+    "receipt_22|hybrid": {
+      "exec_id": "11510",
+      "wall_s": 3.32,
+      "node_ms": 2660,
+      "prompt_tokens": 37183,
+      "completion_tokens": 72,
+      "cost": 0.00562065,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"40,000\",\n  \"item_count\": 2,\n  \"semantic_phrase\": \"чек с оплатой наличными и сдачей\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "40,000",
+        "item_count": 2,
+        "semantic_phrase": "чек с оплатой наличными и сдачей"
+      },
+      "len_chars": 181,
+      "len_words": 28,
+      "text_for_embedding": "чек с оплатой наличными и сдачей"
+    },
+    "receipt_23|caption": {
+      "exec_id": "11511",
+      "wall_s": 4.38,
+      "node_ms": 3120,
+      "prompt_tokens": 36960,
+      "completion_tokens": 125,
+      "cost": 0.005619,
+      "raw_content": "На изображении представлена накладная на ярком зелёном фоне. В документе указаны покупки: шесть сладких пончиков и один хлеб с красной фасолью, с суммами 54,000 и 9,000, соответственно. Общая сумма заказа составляет 63,000. Также указано, что было внесено 70,000 наличными, в результате чего покупатель получил сдачу в размере 7,000. Накладная содержит стандартные элементы, характерные для магазина или кафе, однако элементы идентификации заведения и другие данные размазаны.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлена накладная на ярком зелёном фоне. В документе указаны покупки: шесть сладких пончиков и один хлеб с красной фасолью, с суммами 54,000 и 9,000, соответственно. Общая сумма заказа составляет 63,000. Также указано, что было внесено 70,000 наличными, в результате чего покупатель получил сдачу в размере 7,000. Накладная содержит стандартные элементы, характерные для магазина или кафе, однако элементы идентификации заведения и другие данные размазаны.",
+      "len_chars": 476,
+      "len_words": 70
+    },
+    "receipt_23|fields": {
+      "exec_id": "11512",
+      "wall_s": 3.31,
+      "node_ms": 2615,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"63,000\",\n  \"item_count\": 2\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "63,000",
+        "item_count": 2
+      },
+      "len_chars": 128,
+      "len_words": 20
+    },
+    "receipt_23|hybrid": {
+      "exec_id": "11513",
+      "wall_s": 3.31,
+      "node_ms": 2423,
+      "prompt_tokens": 37183,
+      "completion_tokens": 72,
+      "cost": 0.00562065,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"смазанное\",\n  \"key_amount\": \"63,000\",\n  \"item_count\": 2,\n  \"semantic_phrase\": \"чек с выпечкой и наличным расчетом\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "смазанное",
+        "key_amount": "63,000",
+        "item_count": 2,
+        "semantic_phrase": "чек с выпечкой и наличным расчетом"
+      },
+      "len_chars": 186,
+      "len_words": 28,
+      "text_for_embedding": "чек с выпечкой и наличным расчетом"
+    },
+    "receipt_24|caption": {
+      "exec_id": "11514",
+      "wall_s": 3.29,
+      "node_ms": 3019,
+      "prompt_tokens": 25626,
+      "completion_tokens": 123,
+      "cost": 0.0039177,
+      "raw_content": "На изображении представлен кассовый чек, подтверждающий покупку в магазине. Чек содержит наименования товаров: печенье \"Corn Flakes\" за 56.000 индонезийских рупий, печенье \"Chokoreto\" за 62.000 рупий и пакетик среднего размера, который не имеет стоимости. Всего было приобретено три товара, общая сумма составила 118.000 рупий. Оплата была произведена с помощью дебетовой карты. Чек включает стандартные элементы, такие как название магазина и итоговую сумму покупки.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен кассовый чек, подтверждающий покупку в магазине. Чек содержит наименования товаров: печенье \"Corn Flakes\" за 56.000 индонезийских рупий, печенье \"Chokoreto\" за 62.000 рупий и пакетик среднего размера, который не имеет стоимости. Всего было приобретено три товара, общая сумма составила 118.000 рупий. Оплата была произведена с помощью дебетовой карты. Чек включает стандартные элементы, такие как название магазина и итоговую сумму покупки.",
+      "len_chars": 467,
+      "len_words": 65
+    },
+    "receipt_24|fields": {
+      "exec_id": "11515",
+      "wall_s": 3.29,
+      "node_ms": 2234,
+      "prompt_tokens": 25802,
+      "completion_tokens": 56,
+      "cost": 0.0039039,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"смазанное\",\n  \"key_amount\": \"Rp.118.000\",\n  \"item_count\": 3\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "смазанное",
+        "key_amount": "Rp.118.000",
+        "item_count": 3
+      },
+      "len_chars": 135,
+      "len_words": 21
+    },
+    "receipt_24|hybrid": {
+      "exec_id": "11516",
+      "wall_s": 3.29,
+      "node_ms": 2339,
+      "prompt_tokens": 25849,
+      "completion_tokens": 76,
+      "cost": 0.00392295,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"смазанное\",\n  \"key_amount\": \"Rp.118.000\",\n  \"item_count\": 3,\n  \"semantic_phrase\": \"чек с покупкой печенья и пластикового пакета\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "смазанное",
+        "key_amount": "Rp.118.000",
+        "item_count": 3,
+        "semantic_phrase": "чек с покупкой печенья и пластикового пакета"
+      },
+      "len_chars": 200,
+      "len_words": 30,
+      "text_for_embedding": "чек с покупкой печенья и пластикового пакета"
+    },
+    "receipt_25|caption": {
+      "exec_id": "11517",
+      "wall_s": 3.27,
+      "node_ms": 2922,
+      "prompt_tokens": 36960,
+      "completion_tokens": 113,
+      "cost": 0.0056118,
+      "raw_content": "На изображении представлена квитанция о покупке, в которой указаны три товара: пончик с клубничным вкусом за 10,000, крокет TLJ за 17,000 и картофельный багет за 16,000. Общая сумма покупки составила 43,000, при этом наличные деньги, полученные от покупателя, составили 50,000. В конце квитанции указана сдача в размере 7,000. Документ также содержит название заведения и дату транзакции.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлена квитанция о покупке, в которой указаны три товара: пончик с клубничным вкусом за 10,000, крокет TLJ за 17,000 и картофельный багет за 16,000. Общая сумма покупки составила 43,000, при этом наличные деньги, полученные от покупателя, составили 50,000. В конце квитанции указана сдача в размере 7,000. Документ также содержит название заведения и дату транзакции.",
+      "len_chars": 388,
+      "len_words": 62
+    },
+    "receipt_25|fields": {
+      "exec_id": "11518",
+      "wall_s": 3.27,
+      "node_ms": 2896,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"43,000\",\n  \"item_count\": 3\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "43,000",
+        "item_count": 3
+      },
+      "len_chars": 128,
+      "len_words": 20
+    },
+    "receipt_25|hybrid": {
+      "exec_id": "11519",
+      "wall_s": 3.29,
+      "node_ms": 2949,
+      "prompt_tokens": 37183,
+      "completion_tokens": 71,
+      "cost": 0.00562005,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"43,000\",\n  \"item_count\": 3,\n  \"semantic_phrase\": \"чек с покупками и наличной оплатой\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "43,000",
+        "item_count": 3,
+        "semantic_phrase": "чек с покупками и наличной оплатой"
+      },
+      "len_chars": 183,
+      "len_words": 28,
+      "text_for_embedding": "чек с покупками и наличной оплатой"
+    },
+    "receipt_26|caption": {
+      "exec_id": "11520",
+      "wall_s": 3.26,
+      "node_ms": 2907,
+      "prompt_tokens": 36960,
+      "completion_tokens": 109,
+      "cost": 0.0056094,
+      "raw_content": "На изображении представлен ресторанный чек, оформленный на стандартном бланке. В верхней части документа указано название заведения, а ниже перечислены заказы. Чек включает в себя блюда, такие как Cap Cay и Fu Yung Hai, а также напиток Teh Tawar с соответствующими ценами. Суммарная стоимость составила 138000 рупий, что отражается в итоговой строке, где также указано, что оплата была произведена наличными без предоставления сдачи.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен ресторанный чек, оформленный на стандартном бланке. В верхней части документа указано название заведения, а ниже перечислены заказы. Чек включает в себя блюда, такие как Cap Cay и Fu Yung Hai, а также напиток Teh Tawar с соответствующими ценами. Суммарная стоимость составила 138000 рупий, что отражается в итоговой строке, где также указано, что оплата была произведена наличными без предоставления сдачи.",
+      "len_chars": 433,
+      "len_words": 62
+    },
+    "receipt_26|fields": {
+      "exec_id": "11521",
+      "wall_s": 3.27,
+      "node_ms": 2147,
+      "prompt_tokens": 37136,
+      "completion_tokens": 56,
+      "cost": 0.005604,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"Rp 138.000\",\n  \"item_count\": 3\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "Rp 138.000",
+        "item_count": 3
+      },
+      "len_chars": 132,
+      "len_words": 21
+    },
+    "receipt_26|hybrid": {
+      "exec_id": "11522",
+      "wall_s": 3.29,
+      "node_ms": 2544,
+      "prompt_tokens": 37183,
+      "completion_tokens": 74,
+      "cost": 0.00562185,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"Rp 138.000\",\n  \"item_count\": 3,\n  \"semantic_phrase\": \"чек из ресторана на сумму 138000 рублей\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "Rp 138.000",
+        "item_count": 3,
+        "semantic_phrase": "чек из ресторана на сумму 138000 рублей"
+      },
+      "len_chars": 192,
+      "len_words": 30,
+      "text_for_embedding": "чек из ресторана на сумму 138000 рублей"
+    },
+    "receipt_27|caption": {
+      "exec_id": "11523",
+      "wall_s": 4.32,
+      "node_ms": 3310,
+      "prompt_tokens": 36960,
+      "completion_tokens": 102,
+      "cost": 0.0056052,
+      "raw_content": "На изображении представлен чек, подтверждающий покупку, оформленный на двух предметов: \"PKT AYAM\" и \"GULAI OTAK\". Указано, что общая сумма до налога составила 56,000, на что добавлен налог 10% в размере 5,600. Общая сумма к оплате составляет 61,600. Чек оформлен в общепите, включая информацию о способе оплаты с пометкой \"CHARGE5\".",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек, подтверждающий покупку, оформленный на двух предметов: \"PKT AYAM\" и \"GULAI OTAK\". Указано, что общая сумма до налога составила 56,000, на что добавлен налог 10% в размере 5,600. Общая сумма к оплате составляет 61,600. Чек оформлен в общепите, включая информацию о способе оплаты с пометкой \"CHARGE5\".",
+      "len_chars": 332,
+      "len_words": 52
+    },
+    "receipt_27|fields": {
+      "exec_id": "11524",
+      "wall_s": 2.24,
+      "node_ms": 1911,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"61,600\",\n  \"item_count\": 2\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "61,600",
+        "item_count": 2
+      },
+      "len_chars": 128,
+      "len_words": 20
+    },
+    "receipt_27|hybrid": {
+      "exec_id": "11525",
+      "wall_s": 3.28,
+      "node_ms": 2393,
+      "prompt_tokens": 37183,
+      "completion_tokens": 76,
+      "cost": 0.00562305,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"61,600\",\n  \"item_count\": 2,\n  \"semantic_phrase\": \"чек с двумя блюдами и итоговой суммой 61,600\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "61,600",
+        "item_count": 2,
+        "semantic_phrase": "чек с двумя блюдами и итоговой суммой 61,600"
+      },
+      "len_chars": 193,
+      "len_words": 31,
+      "text_for_embedding": "чек с двумя блюдами и итоговой суммой 61,600"
+    },
+    "receipt_28|caption": {
+      "exec_id": "11526",
+      "wall_s": 5.42,
+      "node_ms": 4219,
+      "prompt_tokens": 36960,
+      "completion_tokens": 131,
+      "cost": 0.0056226,
+      "raw_content": "На изображении представлен чек с итоговой суммой в 426,195 местной валюты, который включает в себя стоимость блюд и услуги в ресторане. Чек отображает заказ, состоящий из двух порций самгёпсаля, одной порции суллунтанга и одного напитка маколи, с общей суммой блюда в 369,000. Дополнительно указаны суммы за услуги и налог на добавленную стоимость, составившие 18,450 и 38,745 соответственно. Чек также не содержит информации о скидках, так как сумма по этой строке равна нулю.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек с итоговой суммой в 426,195 местной валюты, который включает в себя стоимость блюд и услуги в ресторане. Чек отображает заказ, состоящий из двух порций самгёпсаля, одной порции суллунтанга и одного напитка маколи, с общей суммой блюда в 369,000. Дополнительно указаны суммы за услуги и налог на добавленную стоимость, составившие 18,450 и 38,745 соответственно. Чек также не содержит информации о скидках, так как сумма по этой строке равна нулю.",
+      "len_chars": 477,
+      "len_words": 76
+    },
+    "receipt_28|fields": {
+      "exec_id": "11527",
+      "wall_s": 4.39,
+      "node_ms": 3058,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"426,195\",\n  \"item_count\": 3\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "426,195",
+        "item_count": 3
+      },
+      "len_chars": 129,
+      "len_words": 20
+    },
+    "receipt_28|hybrid": {
+      "exec_id": "11528",
+      "wall_s": 4.44,
+      "node_ms": 3139,
+      "prompt_tokens": 37183,
+      "completion_tokens": 76,
+      "cost": 0.00562305,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"426,195\",\n  \"item_count\": 3,\n  \"semantic_phrase\": \"чек из ресторана с тремя позициями и итоговой суммой\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "426,195",
+        "item_count": 3,
+        "semantic_phrase": "чек из ресторана с тремя позициями и итоговой суммой"
+      },
+      "len_chars": 202,
+      "len_words": 31,
+      "text_for_embedding": "чек из ресторана с тремя позициями и итоговой суммой"
+    },
+    "receipt_29|caption": {
+      "exec_id": "11529",
+      "wall_s": 3.3,
+      "node_ms": 2784,
+      "prompt_tokens": 36960,
+      "completion_tokens": 120,
+      "cost": 0.005616,
+      "raw_content": "На изображении представлен чек из ресторана, на котором отмечены заказы и суммы к оплате. В списке фигурируют такие позиции, как холодный чай (Cold Ocha), различные виды удона, а также закуски, такие как шаума, жареные креветки и роллы с тофу. Общая сумма заказа составляет 145,900, которая была разбита на подитог (132,636) и налог (13,264). Чек также содержит информацию о возможности оплаты через банковские карты и обозначение промо-акции.",
+      "parsed": null,
+      "text_for_embedding": "На изображении представлен чек из ресторана, на котором отмечены заказы и суммы к оплате. В списке фигурируют такие позиции, как холодный чай (Cold Ocha), различные виды удона, а также закуски, такие как шаума, жареные креветки и роллы с тофу. Общая сумма заказа составляет 145,900, которая была разбита на подитог (132,636) и налог (13,264). Чек также содержит информацию о возможности оплаты через банковские карты и обозначение промо-акции.",
+      "len_chars": 443,
+      "len_words": 70
+    },
+    "receipt_29|fields": {
+      "exec_id": "11530",
+      "wall_s": 2.18,
+      "node_ms": 1831,
+      "prompt_tokens": 37136,
+      "completion_tokens": 54,
+      "cost": 0.0056028,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"145,900\",\n  \"item_count\": 8\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "145,900",
+        "item_count": 8
+      },
+      "len_chars": 129,
+      "len_words": 20
+    },
+    "receipt_29|hybrid": {
+      "exec_id": "11531",
+      "wall_s": 3.23,
+      "node_ms": 1987,
+      "prompt_tokens": 37183,
+      "completion_tokens": 71,
+      "cost": 0.00562005,
+      "raw_content": "{\n  \"scene_type\": \"чек\",\n  \"has_text\": true,\n  \"personal_data_present\": false,\n  \"image_quality\": \"чёткое\",\n  \"key_amount\": \"145,900\",\n  \"item_count\": 7,\n  \"semantic_phrase\": \"чек из ресторана с несколькими блюдами\"\n}",
+      "parsed": {
+        "scene_type": "чек",
+        "has_text": true,
+        "personal_data_present": false,
+        "image_quality": "чёткое",
+        "key_amount": "145,900",
+        "item_count": 7,
+        "semantic_phrase": "чек из ресторана с несколькими блюдами"
+      },
+      "len_chars": 188,
+      "len_words": 28,
+      "text_for_embedding": "чек из ресторана с несколькими блюдами"
+    }
+  },
+  "embed_usage": {
+    "caption": {
+      "wall_s": 1.39,
+      "cost": 0.00011448,
+      "prompt_tokens": 5724
+    },
+    "hybrid": {
+      "wall_s": 1.32,
+      "cost": 1.134e-05,
+      "prompt_tokens": 567
+    },
+    "queries": {
+      "wall_s": 1.15,
+      "cost": 2.78e-06,
+      "prompt_tokens": 139
+    }
+  },
+  "total_wall_s": 60.7
+}

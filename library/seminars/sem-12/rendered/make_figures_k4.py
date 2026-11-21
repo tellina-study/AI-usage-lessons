@@ -229,7 +229,7 @@ def case4_model_compare():
         tc = DEEP if share < 0.6 else W
         d.text((tx, y + 15), f"{label} ({share*100:.0f}%)", font=f(22, True), fill=tc)
         y += 150
-    d.text((bx0, y + 10), "75% — не «порог труднее подобрать», а «модель не инструмент для сканов»",
+    d.text((bx0, y + 10), "75% означает: эта модель не инструмент для сканов документов",
            font=f(19), fill=MUTE)
     save(im, "case4-model-compare.png")
 

@@ -266,8 +266,8 @@ def case3_odin_dokument_na_zapros():
         p.paste(img.resize((ATTR_PAIR_W, ATTR_PAIR_H)), (0, ATTR_CAP_H))
         return p
 
-    left = panel(r07, "этот чек", "источник для 34 из 60 запросов")
-    right = panel(r11, "этот чек", "источник для 20 из 60 запросов")
+    left = panel(r07, "чек слева", "источник для 34 из 60 запросов")
+    right = panel(r11, "чек справа", "источник для 20 из 60 запросов")
 
     gap = 40
     title_h = 70

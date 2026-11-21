@@ -1,0 +1,1973 @@
+{
+  "method": "Для каждого из 30 сканов ищем ближайший ДРУГОЙ скан (не сам себя, не дубль) среди остальных 29 по cosine оригинального эмбеддинга — часть (C) case4_full_retrieval_30.py, перенесённая на пару моделей вместо модель-vs-золотой-текстовый-ответ. Доля несогласия = доля сканов, где две модели называют РАЗНОГО ближайшего. chance-level при 29 кандидатах ≈ 28/29 = 0.9655 (вероятность НЕ совпасть при случайном выборе).",
+  "easy_case": {
+    "pair": [
+      "cohere/embed-5-fast",
+      "cohere/embed-5-pro"
+    ],
+    "result": {
+      "n_comparable": 30,
+      "n_disagree": 25,
+      "disagreement_rate": 0.8333,
+      "chance_level_disagreement_rate": 0.9655,
+      "rows": [
+        {
+          "id": "receipt_00",
+          "nn_a": "receipt_26",
+          "score_a": 0.9852,
+          "nn_b": "receipt_22",
+          "score_b": 0.9698,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_01",
+          "nn_a": "receipt_22",
+          "score_a": 0.9746,
+          "nn_b": "receipt_22",
+          "score_b": 0.9483,
+          "comparable": true,
+          "disagree": false
+        },
+        {
+          "id": "receipt_02",
+          "nn_a": "receipt_14",
+          "score_a": 0.9865,
+          "nn_b": "receipt_17",
+          "score_b": 0.9633,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_03",
+          "nn_a": "receipt_22",
+          "score_a": 0.9823,
+          "nn_b": "receipt_22",
+          "score_b": 0.9691,
+          "comparable": true,
+          "disagree": false
+        },
+        {
+          "id": "receipt_04",
+          "nn_a": "receipt_24",
+          "score_a": 0.9747,
+          "nn_b": "receipt_29",
+          "score_b": 0.9585,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_05",
+          "nn_a": "receipt_08",
+          "score_a": 0.9794,
+          "nn_b": "receipt_29",
+          "score_b": 0.9666,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_06",
+          "nn_a": "receipt_07",
+          "score_a": 0.9802,
+          "nn_b": "receipt_29",
+          "score_b": 0.9646,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_07",
+          "nn_a": "receipt_02",
+          "score_a": 0.9819,
+          "nn_b": "receipt_17",
+          "score_b": 0.9599,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_08",
+          "nn_a": "receipt_00",
+          "score_a": 0.9836,
+          "nn_b": "receipt_29",
+          "score_b": 0.9706,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_09",
+          "nn_a": "receipt_26",
+          "score_a": 0.9824,
+          "nn_b": "receipt_17",
+          "score_b": 0.9688,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_10",
+          "nn_a": "receipt_20",
+          "score_a": 0.9767,
+          "nn_b": "receipt_18",
+          "score_b": 0.9451,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_11",
+          "nn_a": "receipt_00",
+          "score_a": 0.9738,
+          "nn_b": "receipt_08",
+          "score_b": 0.9589,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_12",
+          "nn_a": "receipt_14",
+          "score_a": 0.9815,
+          "nn_b": "receipt_22",
+          "score_b": 0.9706,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_13",
+          "nn_a": "receipt_24",
+          "score_a": 0.9759,
+          "nn_b": "receipt_29",
+          "score_b": 0.9656,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_14",
+          "nn_a": "receipt_02",
+          "score_a": 0.9865,
+          "nn_b": "receipt_24",
+          "score_b": 0.9637,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_15",
+          "nn_a": "receipt_00",
+          "score_a": 0.9757,
+          "nn_b": "receipt_09",
+          "score_b": 0.9458,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_16",
+          "nn_a": "receipt_27",
+          "score_a": 0.9698,
+          "nn_b": "receipt_08",
+          "score_b": 0.9541,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_17",
+          "nn_a": "receipt_22",
+          "score_a": 0.9851,
+          "nn_b": "receipt_22",
+          "score_b": 0.9701,
+          "comparable": true,
+          "disagree": false
+        },
+        {
+          "id": "receipt_18",
+          "nn_a": "receipt_00",
+          "score_a": 0.9757,
+          "nn_b": "receipt_08",
+          "score_b": 0.9677,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_19",
+          "nn_a": "receipt_17",
+          "score_a": 0.9851,
+          "nn_b": "receipt_17",
+          "score_b": 0.9516,
+          "comparable": true,
+          "disagree": false
+        },
+        {
+          "id": "receipt_20",
+          "nn_a": "receipt_14",
+          "score_a": 0.9819,
+          "nn_b": "receipt_17",
+          "score_b": 0.9577,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_21",
+          "nn_a": "receipt_11",
+          "score_a": 0.97,
+          "nn_b": "receipt_29",
+          "score_b": 0.9626,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_22",
+          "nn_a": "receipt_17",
+          "score_a": 0.9851,
+          "nn_b": "receipt_12",
+          "score_b": 0.9706,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_23",
+          "nn_a": "receipt_02",
+          "score_a": 0.9797,
+          "nn_b": "receipt_09",
+          "score_b": 0.955,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_24",
+          "nn_a": "receipt_02",
+          "score_a": 0.9801,
+          "nn_b": "receipt_17",
+          "score_b": 0.9691,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_25",
+          "nn_a": "receipt_02",
+          "score_a": 0.9743,
+          "nn_b": "receipt_22",
+          "score_b": 0.9538,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_26",
+          "nn_a": "receipt_00",
+          "score_a": 0.9852,
+          "nn_b": "receipt_17",
+          "score_b": 0.9672,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_27",
+          "nn_a": "receipt_02",
+          "score_a": 0.9817,
+          "nn_b": "receipt_24",
+          "score_b": 0.9648,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_28",
+          "nn_a": "receipt_06",
+          "score_a": 0.9721,
+          "nn_b": "receipt_29",
+          "score_b": 0.964,
+          "comparable": true,
+          "disagree": true
+        },
+        {
+          "id": "receipt_29",
+          "nn_a": "receipt_08",
+          "score_a": 0.9775,
+          "nn_b": "receipt_08",
+          "score_b": 0.9706,
+          "comparable": true,
+          "disagree": false
+        }
+      ]
+    }
+  },
+  "hard_case": {
+    "models": [
+      "nvidia/nemotron-3.5-embed-8b:free",
+      "google/gemini-embedding-2",
+      "cohere/embed-5-fast",
+      "mongodb/voyage-multimodal-3.5"
+    ],
+    "pairs": {
+      "nvidia/nemotron-3.5-embed-8b:free x google/gemini-embedding-2": {
+        "n_comparable": 30,
+        "n_disagree": 27,
+        "disagreement_rate": 0.9,
+        "chance_level_disagreement_rate": 0.9655,
+        "rows": [
+          {
+            "id": "receipt_00",
+            "nn_a": "receipt_12",
+            "score_a": 0.4731,
+            "nn_b": "receipt_28",
+            "score_b": 0.9714,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_01",
+            "nn_a": "receipt_21",
+            "score_a": 0.5273,
+            "nn_b": "receipt_26",
+            "score_b": 0.974,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_02",
+            "nn_a": "receipt_04",
+            "score_a": 0.5823,
+            "nn_b": "receipt_17",
+            "score_b": 0.9778,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_03",
+            "nn_a": "receipt_05",
+            "score_a": 0.5317,
+            "nn_b": "receipt_28",
+            "score_b": 0.9756,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_04",
+            "nn_a": "receipt_14",
+            "score_a": 0.6189,
+            "nn_b": "receipt_11",
+            "score_b": 0.9785,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_05",
+            "nn_a": "receipt_02",
+            "score_a": 0.5588,
+            "nn_b": "receipt_28",
+            "score_b": 0.9798,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_06",
+            "nn_a": "receipt_25",
+            "score_a": 0.6335,
+            "nn_b": "receipt_15",
+            "score_b": 0.9802,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_07",
+            "nn_a": "receipt_05",
+            "score_a": 0.5549,
+            "nn_b": "receipt_19",
+            "score_b": 0.9596,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_08",
+            "nn_a": "receipt_16",
+            "score_a": 0.7147,
+            "nn_b": "receipt_25",
+            "score_b": 0.9756,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_09",
+            "nn_a": "receipt_18",
+            "score_a": 0.6692,
+            "nn_b": "receipt_15",
+            "score_b": 0.9841,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_10",
+            "nn_a": "receipt_02",
+            "score_a": 0.4915,
+            "nn_b": "receipt_14",
+            "score_b": 0.9772,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_11",
+            "nn_a": "receipt_22",
+            "score_a": 0.5766,
+            "nn_b": "receipt_12",
+            "score_b": 0.9793,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_12",
+            "nn_a": "receipt_17",
+            "score_a": 0.5618,
+            "nn_b": "receipt_14",
+            "score_b": 0.9802,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_13",
+            "nn_a": "receipt_14",
+            "score_a": 0.5289,
+            "nn_b": "receipt_27",
+            "score_b": 0.9749,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_14",
+            "nn_a": "receipt_04",
+            "score_a": 0.6189,
+            "nn_b": "receipt_12",
+            "score_b": 0.9802,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_15",
+            "nn_a": "receipt_23",
+            "score_a": 0.5319,
+            "nn_b": "receipt_09",
+            "score_b": 0.9841,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_16",
+            "nn_a": "receipt_08",
+            "score_a": 0.7147,
+            "nn_b": "receipt_23",
+            "score_b": 0.9628,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_17",
+            "nn_a": "receipt_14",
+            "score_a": 0.5887,
+            "nn_b": "receipt_14",
+            "score_b": 0.9781,
+            "comparable": true,
+            "disagree": false
+          },
+          {
+            "id": "receipt_18",
+            "nn_a": "receipt_09",
+            "score_a": 0.6692,
+            "nn_b": "receipt_09",
+            "score_b": 0.9816,
+            "comparable": true,
+            "disagree": false
+          },
+          {
+            "id": "receipt_19",
+            "nn_a": "receipt_04",
+            "score_a": 0.4651,
+            "nn_b": "receipt_12",
+            "score_b": 0.9796,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_20",
+            "nn_a": "receipt_14",
+            "score_a": 0.59,
+            "nn_b": "receipt_12",
+            "score_b": 0.9673,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_21",
+            "nn_a": "receipt_14",
+            "score_a": 0.5819,
+            "nn_b": "receipt_14",
+            "score_b": 0.9717,
+            "comparable": true,
+            "disagree": false
+          },
+          {
+            "id": "receipt_22",
+            "nn_a": "receipt_25",
+            "score_a": 0.6497,
+            "nn_b": "receipt_29",
+            "score_b": 0.9759,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_23",
+            "nn_a": "receipt_25",
+            "score_a": 0.6613,
+            "nn_b": "receipt_08",
+            "score_b": 0.9737,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_24",
+            "nn_a": "receipt_17",
+            "score_a": 0.5159,
+            "nn_b": "receipt_09",
+            "score_b": 0.9816,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_25",
+            "nn_a": "receipt_23",
+            "score_a": 0.6613,
+            "nn_b": "receipt_06",
+            "score_b": 0.9773,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_26",
+            "nn_a": "receipt_21",
+            "score_a": 0.5659,
+            "nn_b": "receipt_28",
+            "score_b": 0.9804,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_27",
+            "nn_a": "receipt_09",
+            "score_a": 0.5298,
+            "nn_b": "receipt_29",
+            "score_b": 0.975,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_28",
+            "nn_a": "receipt_17",
+            "score_a": 0.5641,
+            "nn_b": "receipt_29",
+            "score_b": 0.9806,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_29",
+            "nn_a": "receipt_20",
+            "score_a": 0.5037,
+            "nn_b": "receipt_28",
+            "score_b": 0.9806,
+            "comparable": true,
+            "disagree": true
+          }
+        ]
+      },
+      "nvidia/nemotron-3.5-embed-8b:free x cohere/embed-5-fast": {
+        "n_comparable": 30,
+        "n_disagree": 29,
+        "disagreement_rate": 0.9667,
+        "chance_level_disagreement_rate": 0.9655,
+        "rows": [
+          {
+            "id": "receipt_00",
+            "nn_a": "receipt_12",
+            "score_a": 0.4731,
+            "nn_b": "receipt_26",
+            "score_b": 0.9852,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_01",
+            "nn_a": "receipt_21",
+            "score_a": 0.5273,
+            "nn_b": "receipt_22",
+            "score_b": 0.9746,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_02",
+            "nn_a": "receipt_04",
+            "score_a": 0.5823,
+            "nn_b": "receipt_14",
+            "score_b": 0.9865,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_03",
+            "nn_a": "receipt_05",
+            "score_a": 0.5317,
+            "nn_b": "receipt_22",
+            "score_b": 0.9823,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_04",
+            "nn_a": "receipt_14",
+            "score_a": 0.6189,
+            "nn_b": "receipt_24",
+            "score_b": 0.9747,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_05",
+            "nn_a": "receipt_02",
+            "score_a": 0.5588,
+            "nn_b": "receipt_08",
+            "score_b": 0.9794,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_06",
+            "nn_a": "receipt_25",
+            "score_a": 0.6335,
+            "nn_b": "receipt_07",
+            "score_b": 0.9802,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_07",
+            "nn_a": "receipt_05",
+            "score_a": 0.5549,
+            "nn_b": "receipt_02",
+            "score_b": 0.9819,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_08",
+            "nn_a": "receipt_16",
+            "score_a": 0.7147,
+            "nn_b": "receipt_00",
+            "score_b": 0.9836,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_09",
+            "nn_a": "receipt_18",
+            "score_a": 0.6692,
+            "nn_b": "receipt_26",
+            "score_b": 0.9824,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_10",
+            "nn_a": "receipt_02",
+            "score_a": 0.4915,
+            "nn_b": "receipt_20",
+            "score_b": 0.9767,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_11",
+            "nn_a": "receipt_22",
+            "score_a": 0.5766,
+            "nn_b": "receipt_00",
+            "score_b": 0.9738,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_12",
+            "nn_a": "receipt_17",
+            "score_a": 0.5618,
+            "nn_b": "receipt_14",
+            "score_b": 0.9815,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_13",
+            "nn_a": "receipt_14",
+            "score_a": 0.5289,
+            "nn_b": "receipt_24",
+            "score_b": 0.9759,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_14",
+            "nn_a": "receipt_04",
+            "score_a": 0.6189,
+            "nn_b": "receipt_02",
+            "score_b": 0.9865,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_15",
+            "nn_a": "receipt_23",
+            "score_a": 0.5319,
+            "nn_b": "receipt_00",
+            "score_b": 0.9757,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_16",
+            "nn_a": "receipt_08",
+            "score_a": 0.7147,
+            "nn_b": "receipt_27",
+            "score_b": 0.9698,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_17",
+            "nn_a": "receipt_14",
+            "score_a": 0.5887,
+            "nn_b": "receipt_22",
+            "score_b": 0.9851,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_18",
+            "nn_a": "receipt_09",
+            "score_a": 0.6692,
+            "nn_b": "receipt_00",
+            "score_b": 0.9757,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_19",
+            "nn_a": "receipt_04",
+            "score_a": 0.4651,
+            "nn_b": "receipt_17",
+            "score_b": 0.9851,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_20",
+            "nn_a": "receipt_14",
+            "score_a": 0.59,
+            "nn_b": "receipt_14",
+            "score_b": 0.9819,
+            "comparable": true,
+            "disagree": false
+          },
+          {
+            "id": "receipt_21",
+            "nn_a": "receipt_14",
+            "score_a": 0.5819,
+            "nn_b": "receipt_11",
+            "score_b": 0.97,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_22",
+            "nn_a": "receipt_25",
+            "score_a": 0.6497,
+            "nn_b": "receipt_17",
+            "score_b": 0.9851,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_23",
+            "nn_a": "receipt_25",
+            "score_a": 0.6613,
+            "nn_b": "receipt_02",
+            "score_b": 0.9797,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_24",
+            "nn_a": "receipt_17",
+            "score_a": 0.5159,
+            "nn_b": "receipt_02",
+            "score_b": 0.9801,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_25",
+            "nn_a": "receipt_23",
+            "score_a": 0.6613,
+            "nn_b": "receipt_02",
+            "score_b": 0.9743,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_26",
+            "nn_a": "receipt_21",
+            "score_a": 0.5659,
+            "nn_b": "receipt_00",
+            "score_b": 0.9852,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_27",
+            "nn_a": "receipt_09",
+            "score_a": 0.5298,
+            "nn_b": "receipt_02",
+            "score_b": 0.9817,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_28",
+            "nn_a": "receipt_17",
+            "score_a": 0.5641,
+            "nn_b": "receipt_06",
+            "score_b": 0.9721,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_29",
+            "nn_a": "receipt_20",
+            "score_a": 0.5037,
+            "nn_b": "receipt_08",
+            "score_b": 0.9775,
+            "comparable": true,
+            "disagree": true
+          }
+        ]
+      },
+      "nvidia/nemotron-3.5-embed-8b:free x mongodb/voyage-multimodal-3.5": {
+        "n_comparable": 30,
+        "n_disagree": 28,
+        "disagreement_rate": 0.9333,
+        "chance_level_disagreement_rate": 0.9655,
+        "rows": [
+          {
+            "id": "receipt_00",
+            "nn_a": "receipt_12",
+            "score_a": 0.4731,
+            "nn_b": "receipt_12",
+            "score_b": 0.994,
+            "comparable": true,
+            "disagree": false
+          },
+          {
+            "id": "receipt_01",
+            "nn_a": "receipt_21",
+            "score_a": 0.5273,
+            "nn_b": "receipt_25",
+            "score_b": 0.9904,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_02",
+            "nn_a": "receipt_04",
+            "score_a": 0.5823,
+            "nn_b": "receipt_00",
+            "score_b": 0.9912,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_03",
+            "nn_a": "receipt_05",
+            "score_a": 0.5317,
+            "nn_b": "receipt_00",
+            "score_b": 0.9863,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_04",
+            "nn_a": "receipt_14",
+            "score_a": 0.6189,
+            "nn_b": "receipt_12",
+            "score_b": 0.9954,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_05",
+            "nn_a": "receipt_02",
+            "score_a": 0.5588,
+            "nn_b": "receipt_27",
+            "score_b": 0.9936,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_06",
+            "nn_a": "receipt_25",
+            "score_a": 0.6335,
+            "nn_b": "receipt_25",
+            "score_b": 0.9973,
+            "comparable": true,
+            "disagree": false
+          },
+          {
+            "id": "receipt_07",
+            "nn_a": "receipt_05",
+            "score_a": 0.5549,
+            "nn_b": "receipt_12",
+            "score_b": 0.9903,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_08",
+            "nn_a": "receipt_16",
+            "score_a": 0.7147,
+            "nn_b": "receipt_06",
+            "score_b": 0.9971,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_09",
+            "nn_a": "receipt_18",
+            "score_a": 0.6692,
+            "nn_b": "receipt_24",
+            "score_b": 0.9951,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_10",
+            "nn_a": "receipt_02",
+            "score_a": 0.4915,
+            "nn_b": "receipt_25",
+            "score_b": 0.9952,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_11",
+            "nn_a": "receipt_22",
+            "score_a": 0.5766,
+            "nn_b": "receipt_06",
+            "score_b": 0.9953,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_12",
+            "nn_a": "receipt_17",
+            "score_a": 0.5618,
+            "nn_b": "receipt_08",
+            "score_b": 0.9966,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_13",
+            "nn_a": "receipt_14",
+            "score_a": 0.5289,
+            "nn_b": "receipt_27",
+            "score_b": 0.9959,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_14",
+            "nn_a": "receipt_04",
+            "score_a": 0.6189,
+            "nn_b": "receipt_27",
+            "score_b": 0.9947,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_15",
+            "nn_a": "receipt_23",
+            "score_a": 0.5319,
+            "nn_b": "receipt_06",
+            "score_b": 0.9967,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_16",
+            "nn_a": "receipt_08",
+            "score_a": 0.7147,
+            "nn_b": "receipt_21",
+            "score_b": 0.9962,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_17",
+            "nn_a": "receipt_14",
+            "score_a": 0.5887,
+            "nn_b": "receipt_24",
+            "score_b": 0.9937,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_18",
+            "nn_a": "receipt_09",
+            "score_a": 0.6692,
+            "nn_b": "receipt_06",
+            "score_b": 0.9948,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_19",
+            "nn_a": "receipt_04",
+            "score_a": 0.4651,
+            "nn_b": "receipt_12",
+            "score_b": 0.9946,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_20",
+            "nn_a": "receipt_14",
+            "score_a": 0.59,
+            "nn_b": "receipt_25",
+            "score_b": 0.9948,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_21",
+            "nn_a": "receipt_14",
+            "score_a": 0.5819,
+            "nn_b": "receipt_16",
+            "score_b": 0.9962,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_22",
+            "nn_a": "receipt_25",
+            "score_a": 0.6497,
+            "nn_b": "receipt_27",
+            "score_b": 0.992,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_23",
+            "nn_a": "receipt_25",
+            "score_a": 0.6613,
+            "nn_b": "receipt_13",
+            "score_b": 0.9918,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_24",
+            "nn_a": "receipt_17",
+            "score_a": 0.5159,
+            "nn_b": "receipt_25",
+            "score_b": 0.9957,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_25",
+            "nn_a": "receipt_23",
+            "score_a": 0.6613,
+            "nn_b": "receipt_06",
+            "score_b": 0.9973,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_26",
+            "nn_a": "receipt_21",
+            "score_a": 0.5659,
+            "nn_b": "receipt_00",
+            "score_b": 0.9865,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_27",
+            "nn_a": "receipt_09",
+            "score_a": 0.5298,
+            "nn_b": "receipt_25",
+            "score_b": 0.9971,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_28",
+            "nn_a": "receipt_17",
+            "score_a": 0.5641,
+            "nn_b": "receipt_08",
+            "score_b": 0.9957,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_29",
+            "nn_a": "receipt_20",
+            "score_a": 0.5037,
+            "nn_b": "receipt_06",
+            "score_b": 0.9951,
+            "comparable": true,
+            "disagree": true
+          }
+        ]
+      },
+      "google/gemini-embedding-2 x cohere/embed-5-fast": {
+        "n_comparable": 30,
+        "n_disagree": 29,
+        "disagreement_rate": 0.9667,
+        "chance_level_disagreement_rate": 0.9655,
+        "rows": [
+          {
+            "id": "receipt_00",
+            "nn_a": "receipt_28",
+            "score_a": 0.9714,
+            "nn_b": "receipt_26",
+            "score_b": 0.9852,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_01",
+            "nn_a": "receipt_26",
+            "score_a": 0.974,
+            "nn_b": "receipt_22",
+            "score_b": 0.9746,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_02",
+            "nn_a": "receipt_17",
+            "score_a": 0.9778,
+            "nn_b": "receipt_14",
+            "score_b": 0.9865,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_03",
+            "nn_a": "receipt_28",
+            "score_a": 0.9756,
+            "nn_b": "receipt_22",
+            "score_b": 0.9823,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_04",
+            "nn_a": "receipt_11",
+            "score_a": 0.9785,
+            "nn_b": "receipt_24",
+            "score_b": 0.9747,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_05",
+            "nn_a": "receipt_28",
+            "score_a": 0.9798,
+            "nn_b": "receipt_08",
+            "score_b": 0.9794,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_06",
+            "nn_a": "receipt_15",
+            "score_a": 0.9802,
+            "nn_b": "receipt_07",
+            "score_b": 0.9802,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_07",
+            "nn_a": "receipt_19",
+            "score_a": 0.9596,
+            "nn_b": "receipt_02",
+            "score_b": 0.9819,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_08",
+            "nn_a": "receipt_25",
+            "score_a": 0.9756,
+            "nn_b": "receipt_00",
+            "score_b": 0.9836,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_09",
+            "nn_a": "receipt_15",
+            "score_a": 0.9841,
+            "nn_b": "receipt_26",
+            "score_b": 0.9824,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_10",
+            "nn_a": "receipt_14",
+            "score_a": 0.9772,
+            "nn_b": "receipt_20",
+            "score_b": 0.9767,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_11",
+            "nn_a": "receipt_12",
+            "score_a": 0.9793,
+            "nn_b": "receipt_00",
+            "score_b": 0.9738,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_12",
+            "nn_a": "receipt_14",
+            "score_a": 0.9802,
+            "nn_b": "receipt_14",
+            "score_b": 0.9815,
+            "comparable": true,
+            "disagree": false
+          },
+          {
+            "id": "receipt_13",
+            "nn_a": "receipt_27",
+            "score_a": 0.9749,
+            "nn_b": "receipt_24",
+            "score_b": 0.9759,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_14",
+            "nn_a": "receipt_12",
+            "score_a": 0.9802,
+            "nn_b": "receipt_02",
+            "score_b": 0.9865,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_15",
+            "nn_a": "receipt_09",
+            "score_a": 0.9841,
+            "nn_b": "receipt_00",
+            "score_b": 0.9757,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_16",
+            "nn_a": "receipt_23",
+            "score_a": 0.9628,
+            "nn_b": "receipt_27",
+            "score_b": 0.9698,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_17",
+            "nn_a": "receipt_14",
+            "score_a": 0.9781,
+            "nn_b": "receipt_22",
+            "score_b": 0.9851,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_18",
+            "nn_a": "receipt_09",
+            "score_a": 0.9816,
+            "nn_b": "receipt_00",
+            "score_b": 0.9757,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_19",
+            "nn_a": "receipt_12",
+            "score_a": 0.9796,
+            "nn_b": "receipt_17",
+            "score_b": 0.9851,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_20",
+            "nn_a": "receipt_12",
+            "score_a": 0.9673,
+            "nn_b": "receipt_14",
+            "score_b": 0.9819,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_21",
+            "nn_a": "receipt_14",
+            "score_a": 0.9717,
+            "nn_b": "receipt_11",
+            "score_b": 0.97,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_22",
+            "nn_a": "receipt_29",
+            "score_a": 0.9759,
+            "nn_b": "receipt_17",
+            "score_b": 0.9851,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_23",
+            "nn_a": "receipt_08",
+            "score_a": 0.9737,
+            "nn_b": "receipt_02",
+            "score_b": 0.9797,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_24",
+            "nn_a": "receipt_09",
+            "score_a": 0.9816,
+            "nn_b": "receipt_02",
+            "score_b": 0.9801,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_25",
+            "nn_a": "receipt_06",
+            "score_a": 0.9773,
+            "nn_b": "receipt_02",
+            "score_b": 0.9743,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_26",
+            "nn_a": "receipt_28",
+            "score_a": 0.9804,
+            "nn_b": "receipt_00",
+            "score_b": 0.9852,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_27",
+            "nn_a": "receipt_29",
+            "score_a": 0.975,
+            "nn_b": "receipt_02",
+            "score_b": 0.9817,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_28",
+            "nn_a": "receipt_29",
+            "score_a": 0.9806,
+            "nn_b": "receipt_06",
+            "score_b": 0.9721,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_29",
+            "nn_a": "receipt_28",
+            "score_a": 0.9806,
+            "nn_b": "receipt_08",
+            "score_b": 0.9775,
+            "comparable": true,
+            "disagree": true
+          }
+        ]
+      },
+      "google/gemini-embedding-2 x mongodb/voyage-multimodal-3.5": {
+        "n_comparable": 30,
+        "n_disagree": 27,
+        "disagreement_rate": 0.9,
+        "chance_level_disagreement_rate": 0.9655,
+        "rows": [
+          {
+            "id": "receipt_00",
+            "nn_a": "receipt_28",
+            "score_a": 0.9714,
+            "nn_b": "receipt_12",
+            "score_b": 0.994,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_01",
+            "nn_a": "receipt_26",
+            "score_a": 0.974,
+            "nn_b": "receipt_25",
+            "score_b": 0.9904,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_02",
+            "nn_a": "receipt_17",
+            "score_a": 0.9778,
+            "nn_b": "receipt_00",
+            "score_b": 0.9912,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_03",
+            "nn_a": "receipt_28",
+            "score_a": 0.9756,
+            "nn_b": "receipt_00",
+            "score_b": 0.9863,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_04",
+            "nn_a": "receipt_11",
+            "score_a": 0.9785,
+            "nn_b": "receipt_12",
+            "score_b": 0.9954,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_05",
+            "nn_a": "receipt_28",
+            "score_a": 0.9798,
+            "nn_b": "receipt_27",
+            "score_b": 0.9936,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_06",
+            "nn_a": "receipt_15",
+            "score_a": 0.9802,
+            "nn_b": "receipt_25",
+            "score_b": 0.9973,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_07",
+            "nn_a": "receipt_19",
+            "score_a": 0.9596,
+            "nn_b": "receipt_12",
+            "score_b": 0.9903,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_08",
+            "nn_a": "receipt_25",
+            "score_a": 0.9756,
+            "nn_b": "receipt_06",
+            "score_b": 0.9971,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_09",
+            "nn_a": "receipt_15",
+            "score_a": 0.9841,
+            "nn_b": "receipt_24",
+            "score_b": 0.9951,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_10",
+            "nn_a": "receipt_14",
+            "score_a": 0.9772,
+            "nn_b": "receipt_25",
+            "score_b": 0.9952,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_11",
+            "nn_a": "receipt_12",
+            "score_a": 0.9793,
+            "nn_b": "receipt_06",
+            "score_b": 0.9953,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_12",
+            "nn_a": "receipt_14",
+            "score_a": 0.9802,
+            "nn_b": "receipt_08",
+            "score_b": 0.9966,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_13",
+            "nn_a": "receipt_27",
+            "score_a": 0.9749,
+            "nn_b": "receipt_27",
+            "score_b": 0.9959,
+            "comparable": true,
+            "disagree": false
+          },
+          {
+            "id": "receipt_14",
+            "nn_a": "receipt_12",
+            "score_a": 0.9802,
+            "nn_b": "receipt_27",
+            "score_b": 0.9947,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_15",
+            "nn_a": "receipt_09",
+            "score_a": 0.9841,
+            "nn_b": "receipt_06",
+            "score_b": 0.9967,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_16",
+            "nn_a": "receipt_23",
+            "score_a": 0.9628,
+            "nn_b": "receipt_21",
+            "score_b": 0.9962,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_17",
+            "nn_a": "receipt_14",
+            "score_a": 0.9781,
+            "nn_b": "receipt_24",
+            "score_b": 0.9937,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_18",
+            "nn_a": "receipt_09",
+            "score_a": 0.9816,
+            "nn_b": "receipt_06",
+            "score_b": 0.9948,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_19",
+            "nn_a": "receipt_12",
+            "score_a": 0.9796,
+            "nn_b": "receipt_12",
+            "score_b": 0.9946,
+            "comparable": true,
+            "disagree": false
+          },
+          {
+            "id": "receipt_20",
+            "nn_a": "receipt_12",
+            "score_a": 0.9673,
+            "nn_b": "receipt_25",
+            "score_b": 0.9948,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_21",
+            "nn_a": "receipt_14",
+            "score_a": 0.9717,
+            "nn_b": "receipt_16",
+            "score_b": 0.9962,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_22",
+            "nn_a": "receipt_29",
+            "score_a": 0.9759,
+            "nn_b": "receipt_27",
+            "score_b": 0.992,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_23",
+            "nn_a": "receipt_08",
+            "score_a": 0.9737,
+            "nn_b": "receipt_13",
+            "score_b": 0.9918,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_24",
+            "nn_a": "receipt_09",
+            "score_a": 0.9816,
+            "nn_b": "receipt_25",
+            "score_b": 0.9957,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_25",
+            "nn_a": "receipt_06",
+            "score_a": 0.9773,
+            "nn_b": "receipt_06",
+            "score_b": 0.9973,
+            "comparable": true,
+            "disagree": false
+          },
+          {
+            "id": "receipt_26",
+            "nn_a": "receipt_28",
+            "score_a": 0.9804,
+            "nn_b": "receipt_00",
+            "score_b": 0.9865,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_27",
+            "nn_a": "receipt_29",
+            "score_a": 0.975,
+            "nn_b": "receipt_25",
+            "score_b": 0.9971,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_28",
+            "nn_a": "receipt_29",
+            "score_a": 0.9806,
+            "nn_b": "receipt_08",
+            "score_b": 0.9957,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_29",
+            "nn_a": "receipt_28",
+            "score_a": 0.9806,
+            "nn_b": "receipt_06",
+            "score_b": 0.9951,
+            "comparable": true,
+            "disagree": true
+          }
+        ]
+      },
+      "cohere/embed-5-fast x mongodb/voyage-multimodal-3.5": {
+        "n_comparable": 30,
+        "n_disagree": 29,
+        "disagreement_rate": 0.9667,
+        "chance_level_disagreement_rate": 0.9655,
+        "rows": [
+          {
+            "id": "receipt_00",
+            "nn_a": "receipt_26",
+            "score_a": 0.9852,
+            "nn_b": "receipt_12",
+            "score_b": 0.994,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_01",
+            "nn_a": "receipt_22",
+            "score_a": 0.9746,
+            "nn_b": "receipt_25",
+            "score_b": 0.9904,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_02",
+            "nn_a": "receipt_14",
+            "score_a": 0.9865,
+            "nn_b": "receipt_00",
+            "score_b": 0.9912,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_03",
+            "nn_a": "receipt_22",
+            "score_a": 0.9823,
+            "nn_b": "receipt_00",
+            "score_b": 0.9863,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_04",
+            "nn_a": "receipt_24",
+            "score_a": 0.9747,
+            "nn_b": "receipt_12",
+            "score_b": 0.9954,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_05",
+            "nn_a": "receipt_08",
+            "score_a": 0.9794,
+            "nn_b": "receipt_27",
+            "score_b": 0.9936,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_06",
+            "nn_a": "receipt_07",
+            "score_a": 0.9802,
+            "nn_b": "receipt_25",
+            "score_b": 0.9973,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_07",
+            "nn_a": "receipt_02",
+            "score_a": 0.9819,
+            "nn_b": "receipt_12",
+            "score_b": 0.9903,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_08",
+            "nn_a": "receipt_00",
+            "score_a": 0.9836,
+            "nn_b": "receipt_06",
+            "score_b": 0.9971,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_09",
+            "nn_a": "receipt_26",
+            "score_a": 0.9824,
+            "nn_b": "receipt_24",
+            "score_b": 0.9951,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_10",
+            "nn_a": "receipt_20",
+            "score_a": 0.9767,
+            "nn_b": "receipt_25",
+            "score_b": 0.9952,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_11",
+            "nn_a": "receipt_00",
+            "score_a": 0.9738,
+            "nn_b": "receipt_06",
+            "score_b": 0.9953,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_12",
+            "nn_a": "receipt_14",
+            "score_a": 0.9815,
+            "nn_b": "receipt_08",
+            "score_b": 0.9966,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_13",
+            "nn_a": "receipt_24",
+            "score_a": 0.9759,
+            "nn_b": "receipt_27",
+            "score_b": 0.9959,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_14",
+            "nn_a": "receipt_02",
+            "score_a": 0.9865,
+            "nn_b": "receipt_27",
+            "score_b": 0.9947,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_15",
+            "nn_a": "receipt_00",
+            "score_a": 0.9757,
+            "nn_b": "receipt_06",
+            "score_b": 0.9967,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_16",
+            "nn_a": "receipt_27",
+            "score_a": 0.9698,
+            "nn_b": "receipt_21",
+            "score_b": 0.9962,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_17",
+            "nn_a": "receipt_22",
+            "score_a": 0.9851,
+            "nn_b": "receipt_24",
+            "score_b": 0.9937,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_18",
+            "nn_a": "receipt_00",
+            "score_a": 0.9757,
+            "nn_b": "receipt_06",
+            "score_b": 0.9948,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_19",
+            "nn_a": "receipt_17",
+            "score_a": 0.9851,
+            "nn_b": "receipt_12",
+            "score_b": 0.9946,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_20",
+            "nn_a": "receipt_14",
+            "score_a": 0.9819,
+            "nn_b": "receipt_25",
+            "score_b": 0.9948,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_21",
+            "nn_a": "receipt_11",
+            "score_a": 0.97,
+            "nn_b": "receipt_16",
+            "score_b": 0.9962,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_22",
+            "nn_a": "receipt_17",
+            "score_a": 0.9851,
+            "nn_b": "receipt_27",
+            "score_b": 0.992,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_23",
+            "nn_a": "receipt_02",
+            "score_a": 0.9797,
+            "nn_b": "receipt_13",
+            "score_b": 0.9918,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_24",
+            "nn_a": "receipt_02",
+            "score_a": 0.9801,
+            "nn_b": "receipt_25",
+            "score_b": 0.9957,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_25",
+            "nn_a": "receipt_02",
+            "score_a": 0.9743,
+            "nn_b": "receipt_06",
+            "score_b": 0.9973,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_26",
+            "nn_a": "receipt_00",
+            "score_a": 0.9852,
+            "nn_b": "receipt_00",
+            "score_b": 0.9865,
+            "comparable": true,
+            "disagree": false
+          },
+          {
+            "id": "receipt_27",
+            "nn_a": "receipt_02",
+            "score_a": 0.9817,
+            "nn_b": "receipt_25",
+            "score_b": 0.9971,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_28",
+            "nn_a": "receipt_06",
+            "score_a": 0.9721,
+            "nn_b": "receipt_08",
+            "score_b": 0.9957,
+            "comparable": true,
+            "disagree": true
+          },
+          {
+            "id": "receipt_29",
+            "nn_a": "receipt_08",
+            "score_a": 0.9775,
+            "nn_b": "receipt_06",
+            "score_b": 0.9951,
+            "comparable": true,
+            "disagree": true
+          }
+        ]
+      }
+    }
+  },
+  "originals_fail_log_by_model": {
+    "cohere/embed-5-fast": [],
+    "cohere/embed-5-pro": [],
+    "nvidia/nemotron-3.5-embed-8b:free": [],
+    "google/gemini-embedding-2": [],
+    "mongodb/voyage-multimodal-3.5": []
+  },
+  "elapsed_s": 2.6
+}

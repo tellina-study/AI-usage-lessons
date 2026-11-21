@@ -73,6 +73,11 @@ RAW = HERE.parent / "stend" / "zamery-k2" / "raw"       # .../sem-12/stend/zamer
 SCENE_W_PX = 1700
 
 
+def ru_fmt(x, prec=3):
+    """Форматирует число с русской десятичной запятой вместо точки."""
+    return f"{x:.{prec}f}".replace(".", ",")
+
+
 # ── n28 — схема постановки Кейса 2 (правило С1, канон
 # `tools/seminar-production/forma-keysa-s-zamerom.md` §2). Сплошное — то,
 # что уже работает по итогам Кейса 1 этого же занятия: скан → описание/поля
@@ -148,7 +153,7 @@ def case2_patch_grid():
         d.line([gx, y, gx + side, y], fill=GOLD, width=1)
     d.rectangle([gx, gy, gx + side, gy + side], outline=DEEP, width=3)
     clabel(d, im_w / 2, gy + side + 20,
-           "14×14 = 196 патчей, receipt_07 (CORD) — сетка иллюстративная",
+           "14×14 = 196 патчей (CORD) — сетка иллюстративная",
            16, MUTE, where="подпись сетки патчей", limit=im_w - 80)
     clabel(d, im_w / 2, gy + side + 46,
            "размер ViT-B/16 при входе 224×224 (arXiv:2010.11929), не устройство модели справа",
@@ -156,12 +161,12 @@ def case2_patch_grid():
 
     vectors = json.load(open(RAW / "originals_mongodb_voyage-multimodal-3.5.json"))["vectors"]
     vec = vectors["receipt_07"]
-    nums = ", ".join(f"{x:.3f}" for x in vec[:8])
+    nums = ", ".join(ru_fmt(x) for x in vec[:8])
 
     px, py = gx + side + 70, gy
     pw = im_w - px - 40
     box(d, px, py, pw, 160,
-        ["вектор receipt_07 — mongodb/voyage-multimodal-3.5",
+        ["вектор этого скана — mongodb/voyage-multimodal-3.5",
          nums + ", …", "длина вектора — 1024 (настройка вызова, не фиксированное свойство модели)"],
         SURF, tc=DEEP, sz=16, outline=LIGHT, where="вектор-плашка")
     box(d, px, py + 200, pw, 100,
@@ -181,7 +186,7 @@ TWO_W, TWO_H = 1700, 760
 def case2_two_encoders():
     im = Image.new("RGB", (TWO_W, TWO_H), W)
     d = ImageDraw.Draw(im)
-    head(d, "Два энкодера в одно пространство — не совпадение размерности, а обучение", sz=26)
+    head(d, "Два кодировщика сводятся в одно пространство обучением", sz=26)
 
     top_w, top_h = 320, 90
     gap_cols = 60
@@ -337,14 +342,15 @@ def case2_image_pairs():
     hard = _hard_dup(base)
 
     panels = [
-        _captioned_panel(original, "оригинал", "receipt_07, корпус CORD"),
+        _captioned_panel(original, "оригинал", "реальный чек, корпус CORD"),
         _captioned_panel(
             soft, "мягкий дубль",
-            f"SigLIP: {soft_rec['cosine_to_own_original']:.2f} к себе, сосед — сам же"),
+            f"SigLIP: {ru_fmt(soft_rec['cosine_to_own_original'], 2)} к себе, сосед — сам же"),
         _captioned_panel(
             hard, "жёсткий дубль",
-            f"SigLIP: {hard_rec['cosine_to_own_original']:.2f} к себе, сосед — "
-            f"{hard_rec['nearest_original'].replace('receipt_', 'r')} ({hard_rec['nearest_cosine']:.2f})"),
+            f"SigLIP: {ru_fmt(hard_rec['cosine_to_own_original'], 2)} к себе, сосед — "
+            f"{hard_rec['nearest_original'].replace('receipt_', 'r')} "
+            f"({ru_fmt(hard_rec['nearest_cosine'], 2)})"),
     ]
 
     gap = 32
@@ -405,8 +411,9 @@ def case2_similarity_map():
         d.rectangle([bx + 2, plot_y + plot_h - height, bx + bin_w - 2, plot_y + plot_h],
                     fill=LIGHT)
 
-    for v, col, lbl in [(0.0, MUTE, "0"), (lo, TEAL, f"минимум {lo:.3f}"),
-                        (mean, GOLD, f"среднее {mean:.3f}"), (hi, TEAL, f"максимум {hi:.3f}")]:
+    for v, col, lbl in [(0.0, MUTE, "0"), (lo, TEAL, f"минимум {ru_fmt(lo)}"),
+                        (mean, GOLD, f"среднее {ru_fmt(mean)}"),
+                        (hi, TEAL, f"максимум {ru_fmt(hi)}")]:
         x = to_x(v)
         d.line([x, plot_y - 10, x, plot_y + plot_h + 10], fill=col, width=3)
         clabel(d, x, plot_y + plot_h + 16, lbl, 15, col, b=True, where=f"метка {lbl}", limit=220)

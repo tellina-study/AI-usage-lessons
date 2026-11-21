@@ -1,0 +1,571 @@
+{
+  "purpose": "Потолок задачи: доля из 60 запросов (30 лёгких + 30 трудных, те же, что в case3_tiles_vs_whole_results.json и case3_text_control_results.json), у которых строка-запрос встречается РОВНО в одном чеке корпуса (значит у вопроса физически есть единственный верный ответ). Совпадение — по границе токена: строка не засчитывается, если она часть более длинного числа.",
+  "method": "re.search с lookaround по не-алфанумерик/,/. с обеих сторон, без новых вызовов модели/API",
+  "n_matches_easy": 28,
+  "n_matches_hard": 21,
+  "n_total": 60,
+  "ceiling_easy": 0.9333333333333333,
+  "ceiling_hard": 0.7,
+  "ceiling_combined": 0.8166666666666667,
+  "details_easy": [
+    {
+      "source_id": "receipt_00",
+      "line_text": "EDC CIMB NIAGA No: xx7730 60.000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_00"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_01",
+      "line_text": "CASH 91000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_01"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_02",
+      "line_text": "CASH 100,000",
+      "n_matching_receipts": 2,
+      "matching_receipts": [
+        "receipt_02",
+        "receipt_22"
+      ],
+      "unique_answer": false
+    },
+    {
+      "source_id": "receipt_03",
+      "line_text": "SUBTOTAL 11,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_03"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_04",
+      "line_text": "TOTAL 174,600",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_04"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_05",
+      "line_text": "PB-1 10% 2.818",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_05"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_06",
+      "line_text": "CHANGE 4,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_06"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_07",
+      "line_text": "Subtotal 100,909",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_07"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_08",
+      "line_text": "PB1 (10%) 4,545",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_08"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_09",
+      "line_text": "Sub Total 36000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_09"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_10",
+      "line_text": "CASH IDR 20,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_10"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_11",
+      "line_text": "TOTAL 230,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_11"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_12",
+      "line_text": "CC.Visa.BCA 120,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_12"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_13",
+      "line_text": "TOTAL 46.636",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_13"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_14",
+      "line_text": "Change 18,565",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_14"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_15",
+      "line_text": "CHANGED 7.000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_15"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_16",
+      "line_text": "Total 70,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_16"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_17",
+      "line_text": "TOTAL Rp. 91,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_17"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_18",
+      "line_text": "Sub Tofal 156000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_18"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_19",
+      "line_text": "AMOUNT DUE 176000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_19"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_20",
+      "line_text": "TOTAL 377,859",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_20"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_21",
+      "line_text": "CHANGE Rp 12.000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_21"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_22",
+      "line_text": "CHANGE 60,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_22"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_23",
+      "line_text": "CHANGE 7,000",
+      "n_matching_receipts": 2,
+      "matching_receipts": [
+        "receipt_23",
+        "receipt_25"
+      ],
+      "unique_answer": false
+    },
+    {
+      "source_id": "receipt_24",
+      "line_text": "Total, Rp.118.000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_24"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_25",
+      "line_text": "TOTAL 43,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_25"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_26",
+      "line_text": "Change Rp 0",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_26"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_27",
+      "line_text": "TOTAL 61,600",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_27"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_28",
+      "line_text": "TOTAL 426,195",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_28"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_29",
+      "line_text": "GRAND TOTAL 145,900",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_29"
+      ],
+      "unique_answer": true
+    }
+  ],
+  "details_hard": [
+    {
+      "source_id": "receipt_00",
+      "line_text": "60.000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_00"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_01",
+      "line_text": "17500",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_01"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_02",
+      "line_text": "4,000",
+      "n_matching_receipts": 2,
+      "matching_receipts": [
+        "receipt_02",
+        "receipt_06"
+      ],
+      "unique_answer": false
+    },
+    {
+      "source_id": "receipt_03",
+      "line_text": "1X",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_03"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_04",
+      "line_text": "51,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_04"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_05",
+      "line_text": "28.182",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_05"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_06",
+      "line_text": "9,000",
+      "n_matching_receipts": 2,
+      "matching_receipts": [
+        "receipt_06",
+        "receipt_23"
+      ],
+      "unique_answer": false
+    },
+    {
+      "source_id": "receipt_07",
+      "line_text": "909",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_07"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_08",
+      "line_text": "45,455",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_08"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_09",
+      "line_text": "36000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_09"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_10",
+      "line_text": "1 x",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_10"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_11",
+      "line_text": "230,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_11"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_12",
+      "line_text": "0%",
+      "n_matching_receipts": 2,
+      "matching_receipts": [
+        "receipt_09",
+        "receipt_12"
+      ],
+      "unique_answer": false
+    },
+    {
+      "source_id": "receipt_13",
+      "line_text": "3,000",
+      "n_matching_receipts": 2,
+      "matching_receipts": [
+        "receipt_10",
+        "receipt_13"
+      ],
+      "unique_answer": false
+    },
+    {
+      "source_id": "receipt_14",
+      "line_text": "38,000",
+      "n_matching_receipts": 2,
+      "matching_receipts": [
+        "receipt_14",
+        "receipt_17"
+      ],
+      "unique_answer": false
+    },
+    {
+      "source_id": "receipt_15",
+      "line_text": "25.000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_15"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_16",
+      "line_text": "4,545",
+      "n_matching_receipts": 2,
+      "matching_receipts": [
+        "receipt_08",
+        "receipt_16"
+      ],
+      "unique_answer": false
+    },
+    {
+      "source_id": "receipt_17",
+      "line_text": "14,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_17"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_18",
+      "line_text": "156000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_18"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_19",
+      "line_text": "10",
+      "n_matching_receipts": 7,
+      "matching_receipts": [
+        "receipt_05",
+        "receipt_07",
+        "receipt_08",
+        "receipt_16",
+        "receipt_19",
+        "receipt_20",
+        "receipt_27"
+      ],
+      "unique_answer": false
+    },
+    {
+      "source_id": "receipt_20",
+      "line_text": "64,500",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_20"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_21",
+      "line_text": "3.000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_21"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_22",
+      "line_text": "20,000",
+      "n_matching_receipts": 3,
+      "matching_receipts": [
+        "receipt_10",
+        "receipt_14",
+        "receipt_22"
+      ],
+      "unique_answer": false
+    },
+    {
+      "source_id": "receipt_23",
+      "line_text": "9,000",
+      "n_matching_receipts": 2,
+      "matching_receipts": [
+        "receipt_06",
+        "receipt_23"
+      ],
+      "unique_answer": false
+    },
+    {
+      "source_id": "receipt_24",
+      "line_text": "x1",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_24"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_25",
+      "line_text": "10,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_25"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_26",
+      "line_text": "4.000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_26"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_27",
+      "line_text": "33,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_27"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_28",
+      "line_text": "75,000",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_28"
+      ],
+      "unique_answer": true
+    },
+    {
+      "source_id": "receipt_29",
+      "line_text": "12,727",
+      "n_matching_receipts": 1,
+      "matching_receipts": [
+        "receipt_29"
+      ],
+      "unique_answer": true
+    }
+  ]
+}

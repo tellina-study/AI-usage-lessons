@@ -25,15 +25,15 @@ visual:
 
 ## Assertion
 
-PhotoDNA и PDQ решают точный повтор хэшем; Pinterest и AWS решают смысл эмбеддингом; Pinterest Shop The Look решает деталь детекцией объекта — три разных устройства, не три настройки одного.
+PhotoDNA и PDQ решают точный повтор хэшем; Pinterest и AWS решают смысл эмбеддингом; Pinterest Shop The Look решает деталь детекцией объекта — три разных устройства под три разные задачи.
 
 ## Visual
 
 > **Точный повтор — хэш-функция.** [PhotoDNA](https://en.wikipedia.org/wiki/PhotoDNA) (Microsoft + Dartmouth, 2009) — закрытый протокол, заявленная вероятность ложного совпадения — 1 на 10 миллиардов. [PDQ](https://github.com/facebook/ThreatExchange/tree/main/pdq) (Meta, открыт 2019) — тот же класс задачи открытым кодом, скорость сопоставления по индексу FAISS до 4000 изображений/сек.
 
-> **Похожесть по смыслу — эмбеддинг с приближённым поиском соседей.** Pinterest строит на нём Flashlight и Lens для 250 млн пользователей ежемесячно. [Google формулирует задачу через единую эмбеддинг-модель](https://ai.googleblog.com/2022/08/introducing-google-universal-image.html) (Universal Image Embedding Challenge, 2022). [AWS Guidance for Visual Search](https://docs.aws.amazon.com/solutions/visual-search-on-aws/) кладёт вектор Amazon Titan Multimodal Embedding в индекс k-NN — готовая эталонная архитектура, не эксклюзив одной компании.
+> **Похожесть по смыслу — эмбеддинг с приближённым поиском соседей.** Pinterest строит на нём Flashlight и Lens для 250 млн пользователей ежемесячно. [Google формулирует задачу через единую эмбеддинг-модель](https://ai.googleblog.com/2022/08/introducing-google-universal-image.html) (Universal Image Embedding Challenge, 2022). [AWS Guidance for Visual Search](https://docs.aws.amazon.com/solutions/visual-search-on-aws/) кладёт вектор Amazon Titan Multimodal Embedding в индекс k-NN — готовая эталонная архитектура, доступная любому заказчику.
 
-> **Деталь внутри кадра — детекция объекта плюс вектор региона.** [Pinterest Shop The Look](https://arxiv.org/pdf/2006.10866) перешёл от сравнения целых изображений к сравнению найденных внутри них объектов: рост релевантности более 160% у людей-оценщиков и более 80% в вовлечённости — переход на другой уровень гранулярности, не улучшение той же модели.
+> **Деталь внутри кадра — детекция объекта плюс вектор региона.** [Pinterest Shop The Look](https://arxiv.org/pdf/2006.10866) перешёл от сравнения целых изображений к сравнению найденных внутри них объектов: рост релевантности более 160% у людей-оценщиков и более 80% в вовлечённости — переход на другой уровень гранулярности поиска.
 
 > **Граница, коротко.** На точный повтор файла модель не нужна вовсе: хэш дешевле, быстрее, детерминирован. Полная граница — дальше, после собственного замера признака.
 

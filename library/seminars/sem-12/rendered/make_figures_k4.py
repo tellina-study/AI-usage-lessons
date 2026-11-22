@@ -140,7 +140,7 @@ def _number_line(d, x0, x1, y, lo, hi, col=MUTE):
     for v in [round(lo + (hi - lo) * k / 5, 2) for k in range(6)]:
         px = x0 + (x1 - x0) * (v - lo) / (hi - lo)
         d.line([px, y - 8, px, y + 8], fill=col, width=2)
-        d.text((px - 18, y + 14), f"{v:.2f}", font=f(16), fill=MUTE)
+        d.text((px - 18, y + 14), f"{v:.2f}".replace(".", ","), font=f(16), fill=MUTE)
 
 
 def _dots(d, x0, x1, y, lo, hi, values, col, r=9, jitter=14):

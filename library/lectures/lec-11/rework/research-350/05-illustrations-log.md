@@ -176,3 +176,232 @@ press.siemens.com. Обоснование повторного использо�
 
 Честных пробелов «не нашлось ничего настоящего» — **нет**: все три новых кейса закрыты
 настоящими фотографиями уровня tier 1–3, без обращения к tier 4–6 и без единого mock.
+
+## 7. Tesla, откат 1 — тентовая линия GA4, 2017–2018 (§4.2 chapter-part3.md, слайд s31) — issue #353
+
+Задача прямо указала: владелец курса сказал, что по Tesla реально найти много интересного и
+большого, не ограничиваясь одним Giga Press. В деке Tesla фигурирует в двух разных кейсах, и
+этот — первый: «производственный ад» Model 3, ручная сборочная линия GA4 (General Assembly 4)
+под тентовой конструкцией на территории завода Fremont, построенная за ~3 недели в июне–июле
+2018 года (слайд `s31-tesla-otkat-tent.md`; фронтматтер слайда сейчас помечен
+`media_needed: "медиа не нужно"` — находка зарегистрирована здесь по прямому указанию владельца,
+решение о подключении медиа к слайду остаётся за сборкой деки).
+
+**Tier сработал: 1 (og:image пресс-статей, через Wayback Machine — оба живых сайта отдавали
+Cloudflare-блок/504 напрямую, `curl` без JS успешно читает архивную копию).**
+
+Сохранено два файла:
+
+- **`tesla-fremont-ga4-tent-flyover.jpg`** — кадр дрон-пролёта (flyover) над территорией Fremont:
+  Model 3 съезжает с конвейера на краю тентовой конструкции, рядом — рабочий в тёмной одежде у
+  финальной операции. Источник — статья Teslarati «Tesla flyover captures Model 3 rolling off
+  Fremont's giant tent assembly line» (27 июня 2018,
+  `https://www.teslarati.com/tesla-model-3-assembly-line-fremont-flyover/`), og:image статьи;
+  сама статья встраивает твит NBC-ведущего Рэя Матаи (@rajmathai, 27 июня 2018,
+  `twitter.com/rajmathai/status/1011842477232287744`) с подписью «A Tesla Model 3 rolls off the
+  new assembly line inside a sprung structure» — именно он снял пролёт с дрона. Credit в статье:
+  «Raj Mathai/Twitter».
+- **`tesla-fremont-ga4-tent-interior.jpg`** — вид изнутри/сквозь рёбра тентовой арочной
+  конструкции (видна характерная полукруглая металлическая решётка тента в правом верхнем углу
+  кадра) на кузов Model 3 в защитном чехле на конвейере, рядом — рабочий в оранжевом жилете и
+  каске у ручной операции, штабель коробок. Источник — featured/og:image статьи Teslarati «Spy
+  shots inside Tesla's giant tent suggest assembly line buildout in progress»
+  (`https://www.teslarati.com/tesla-model-3-assembly-line-fremont-giant-tent-pictures/`, июнь
+  2018). Credit в статье и в подписях к фотогалерее: «skabooshka/Twitter» («The interior of
+  Tesla's massive tent on the grounds of the Fremont factory»).
+
+**Честно исключено:** og:image статьи TechCrunch «Tesla built 20% of last week's Model 3s in its
+fancy new tent» (через Wayback, `techcrunch.com/wp-content/uploads/2018/03/tesla-model-3-13.jpg`)
+— при открытии оказался generic-фото Model 3 на берегу (дата EXIF 2018-03-07, за три месяца до
+постройки тента), без всякой связи с тентом или линией GA4; не сохранён.
+
+Атрибуция для подписи на слайде: «Teslarati, кадр дрон-пролёта Raj Mathai/Twitter и фотогалерея
+skabooshka/Twitter, июнь 2018».
+
+## 8. Tesla, откат 2 — от одноэтапной гигаотливки к трём деталям, 2023–2024 (§4.2 chapter-part3.md, слайд s32) — issue #353
+
+Второй эпизод того же разбора: Tesla отказалась от цельной одноэтапной гигаотливки днища в
+пользу трёхдетальной схемы (та же, что в Model Y/Cybertruck). На слайде `s32` уже стоит
+переиспользованный `s01-tesla-giga-press.png` (станок Giga Press, Wikipedia) — он показывает
+сам станок гигалитья, но не показывает **что именно отливается**. По прямому указанию
+владельца («не ограничивайся одним Giga Press») найден дополнительный кадр, показывающий сам
+предмет кейса — однодетальную отливку заднего подрамника, то есть именно ту конструкцию, от
+которой Tesla впоследствии отказалась.
+
+**Tier сработал: 1 (og:image пресс-статьи, через Wayback — живой Teslarati отдаёт 504).**
+
+Сохранён один файл:
+
+- **`tesla-fremont-model-y-single-piece-megacast.jpg`** — два фото бок о бок (композиция из
+  исходного твита): задняя часть кузова Model Y изнутри багажника, видна цельная алюминиевая
+  отливка с рёбрами жёсткости без промежуточного соединительного листа (на обоих кадрах
+  зелёным кружком обведена зона, которая у многодетальной версии была бы стыком/крепежом).
+  Источник — og:image статьи Teslarati «Tesla Model Y single-piece rear 'Megacast' spotted in
+  production vehicle» (10 января 2021,
+  `https://www.teslarati.com/tesla-model-y-single-piece-mega-cast-images/`). Фото изначально
+  опубликовано владельцем Model Y Тони Фамом (@TonyQuickBandit) в Twitter: «Model Y single
+  piece rear casting! VIN 97k, delivered 12/23/2020» — завод Fremont (в статье прямо: «suggesting
+  that the electric car maker started using Giga Press machines at the Fremont Factory»).
+  Дата фото — январь 2021, то есть это именно ранняя, однодетальная версия отливки (предмет,
+  от которого Tesla откатилась в 2023–2024) — не позднейшая трёхдетальная.
+
+Атрибуция для подписи на слайде: «Twitter/@TonyQuickBandit через Teslarati, январь 2021».
+
+## 9. GM × FANUC — Zero Down Time, завод Fairfax (§2.1 chapter-part2.md, слайд s17) — issue #353
+
+Слайд `s17-gm-fanuc-zero-down-time.md` был прямо помечен `media_needed: "фаза 6 — промышленный
+робот FANUC на сборочной линии GM, Tier 1–2"`.
+
+**Tier сработал: 1 (og:image отраслевой статьи Automotive Manufacturing Solutions).**
+
+Сохранён один файл:
+
+- **`gm-fairfax-fanuc-zero-down-time-robots.jpg`** — вид сверху на кузов автомобиля на сварочной
+  линии, с обеих сторон — жёлтые роботы-манипуляторы FANUC в сварочных масках/защитных кожухах,
+  видны искры сварки. Источник — og:image статьи Automotive Manufacturing Solutions «Zero
+  Downtime» (8 июля 2017, `https://www.automotivemanufacturingsolutions.com/press-and-body/
+  zero-downtime/544069`), посвящённой именно разбираемому случаю GM/FANUC Zero Down Time —
+  статья цитирует Марти Линна (General Motors): «We are collecting data that the robots already
+  have, but which simply was not being utilised at the level required by the Zero Downtime
+  approach». Имя файла изображения на странице-источнике — `Fairfax184.jpg`, что указывает на
+  завод GM Fairfax Assembly (Канзас-Сити, Канзас); подпись на странице: «So far 8,000 of the
+  company's global roster of 30,000 robots has been connected to the system» — прямое числовое
+  подтверждение масштаба внедрения ZDT, упомянутого в разборе.
+
+**Честно исключено:** попытка взять фото непосредственно со страницы пресс-релиза
+FANUC America (fanucamerica.com, перепубликация 2018 года) — сайт мигрировал на новый шаблон,
+статья этого периода не содержит собственных фото, только навигационные иконки сайта; GE
+(businesswire-зеркало того же релиза) тоже не даёт og:image помимо логотипа.
+
+Атрибуция для подписи на слайде: «Automotive Manufacturing Solutions, 2017, завод GM Fairfax».
+
+## 10. Philips Drachten — сборочная ячейка Adept SCARA (§4.3/ось «скорость», chapter.md, упоминание) — issue #353
+
+Philips Drachten (128 роботов → более 300, 2012–2022) упомянут в основной линии аргументации
+главы (`chapter.md` §2 «Медленное ступенчатое насыщение», строка про Amberg/Philips/FANUC) как
+пример медленного насыщения — в отличие от Tesla/Foxconn/Adidas. Отдельного слайда с кейсом
+нет; фото зарегистрировано для использования сборкой деки при появлении такого слайда или в
+коллаже раздела 4.
+
+**Tier сработал: 3 (референс-страница системного интегратора, построившего именно эту линию).**
+
+Сохранён один файл:
+
+- **`philips-drachten-adept-scara-assembly-cell.jpg`** — крупный план сборочной ячейки: два
+  SCARA-робота Adept (виден логотип «adept» на корпусе) над круглым поворотным столом с
+  прецизионными оснастками-фикстурами для деталей электробритвы, вокруг — пневматика, разъёмы,
+  датчики позиционирования. Источник — og:image страницы Total Productivity B.V. (нидерландский
+  системный интегратор) «Robot & Vision Integratie Philips Drachten»
+  (`https://totalproductivity.nl/en/references/robot-vision-integration-philips/`) — прямая
+  референс-страница именно этого проекта (SCARA + 6-осевые роботы Adept, vision-guidance,
+  более 120 роботов и 40 flex-фидеров на линии, по независимому пересказу в отраслевой прессе
+  того же проекта — Adept Technology/Omron, `assemblymag.com`).
+
+**Честно исключено:** official assemblymag.com статьи (обе — `articles/90173` и `articles/93686`)
+не дают собственного фото проекта, только логотип Omron-Adept; Wikipedia «Philishave» — только
+товарные фото самой бритвы, не линии; PDF `edata.omron.com.au/.../philips_customer_reference.pdf`
+— хост не резолвится (DNS), недоступен.
+
+Атрибуция для подписи на слайде: «Total Productivity B.V., референс-проект Philips Drachten
+(Adept Technology / Omron)».
+
+## 11. Unilever, завод Doom Dooma (Тинсукия, Ассам) — FGI Control Station (упоминание s37, chapter-part3.md) — issue #353
+
+Unilever/Тинсукия упомянут в заметках лектора слайда `s37-wef-nesovpadeniya.md` как один из двух
+случаев во всей сети WEF Lighthouse с абсолютной базой («период «заморозки» планирования для
+электронной торговли сократился с 14 дней до 1 дня»). Отдельного кейс-слайда нет — находка
+зарегистрирована для коллажа/иллюстрации этого упоминания.
+
+**Tier сработал: 1 (og:image статьи индийского регионального издания о признании завода WEF
+Lighthouse).**
+
+Сохранён один файл:
+
+- **`unilever-doomdooma-tinsukia-fgi-control-station.jpg`** — реальное документальное фото
+  внутри цеха завода Doom Dooma: станция контроля готовой продукции («FGI CONTROL STATION»,
+  finished-goods inspection) с автоматизированной машиной «ROBO-SmartFLEX», группа сотрудников
+  HUL в сетках для волос и гарнитурах во время инспекционного обхода. Источник — og:image
+  статьи EastMojo «Assam: HUL factory recognised by WEF as 4IR Lighthouse Site» (16 января 2025,
+  `https://eastmojo.com/assam/2025/01/16/assam-hul-factory-recognised-by-wef-as-4ir-lighthouse-site/`).
+  **Уточнение по географии/продукту:** завод Doom Dooma в Тинсукии, Ассам — предприятие Hindustan
+  Unilever по товарам красоты и ухода (Dove, Vaseline, Pond's, Sunsilk, TRESemmé), не чайная
+  фабрика; слайд/заметки, ссылающиеся на этот кейс, не должны называть его «чайным заводом».
+
+**Честно исключено:** og:image официального пресс-релиза HUL
+(`hul.co.in/news/press-releases/2025/wef-declares-huls-assam-factory-as-e2e-value-chain-lighthouse/`)
+— составное промо-изображение (реальное аэрофото territории завода с наложенной поверх
+нарисованной/подсвеченной графикой «маяка» и цифровой сетки) — по правилу no-mock-fallbacks не
+принято как «настоящее фото»: это промо-композит, а не прямая фотография, даже притом что
+фоновый слой — реальный дрон-снимок.
+
+Атрибуция для подписи на слайде: «EastMojo, январь 2025, завод HUL Doom Dooma (Тинсукия,
+Ассам)».
+
+## 12. Честные пробелы — GE Predix, Foxconn «миллион роботов», Aramco Северный Гавар — issue #353
+
+Три кандидата из брифа сборки деки проверены по полной 6-уровневой таблице; настоящего
+производственного/продуктового фото ни для одного не нашлось — зафиксировано честно, без
+mock-заглушки.
+
+**GE Predix (§2.2 chapter-part2.md, слайд s18, помечен `media_needed: "фаза 6"`).**
+Проверено: (1) og:image обеих пресс-страниц ge.com о Predix/APM — на обеих generic-плейсхолдер
+(`Generic Image.PNG`) или архитектурный рендеринг будущего здания завода («This New GE Factory
+Is A Blueprint...», явно CGI — идеальные отражения, нереалистичное освещение, помечено на
+источнике как не-фото); (2) Wikipedia «Predix (software)» — только файл логотипа
+(`File:Predix Logo.svg`), фото нет; (3) пресс-релиз запуска Predix 2013 года (Business Wire,
+через Wayback) — og:image оказался GE-монограммой (`GE_Monogram_Pressrelease_square.jpg`),
+то есть логотип; (4) архивная статья SF Chronicle о конференции Minds+Machines 2015 (где был
+анонс) дала только портретное фото CEO Джеффа Иммельта крупным планом — не производственный/
+софтверный контекст, и сам Иммельт в тексте главы не упоминается; решено не использовать как
+нерелевантное для этого конкретного разбора. (5)-(6) поиск по Wikimedia Commons и
+DuckDuckGo HTML — без результата (DuckDuckGo отдал пустую/заблокированную страницу). **Вывод:
+честный пробел** — Predix как история провала платформы и стратегии (не продукта с видимым
+интерфейсом или цехом) не имеет доступного настоящего фото уровня tier 1–5; слайд остаётся без
+медиа, как и было запланировано (`media_needed` уже допускал это: «не нужен отдельный визуал»
+для part, держащейся на цифрах).
+
+**Foxconn, «миллион роботов» 2011–2025 (§4.3 chapter-part3.md, слайд s34).**
+Проверено: (1) Getty Images — платный каталог, недоступен без лицензии; (2) Wikipedia «Foxconn»
+— pageimage не задан; Wikimedia Commons, категория «Foxconn Technology Group in China» — только
+фото протеста и старых станков, не про роботизацию; (3) MIT Technology Review, «China Is
+Building a Robot Army of Model Workers» (2016) — og:image найден (фото промышленного робота
+Denso с печатными платами, фотограф Daniele Mattioli), **но проверка подписи в теле статьи
+показала: это фото завода CIG (компания Gerald Wong) в Шанхае, не Foxconn** — Foxconn
+упоминается в статье только текстом, без собственной фотографии; использовать это изображение
+под подписью «Foxconn» означало бы приписать компании чужой цех — не сохранено, несмотря на
+формальное совпадение темы «китайские роботы на производстве»; (4) Qz.com, «iPhone maker
+Foxconn is churning out Foxbots» — og:image нашёлся (рука человека касается робота-манипулятора
+крупным планом), но в статье нет подписи/credit, привязывающих кадр именно к цеху Foxconn (по
+композиции и одежде похоже на универсальное фото с конференции/демо-стенда, не на цех) — не
+сохранено как непроверяемое. **Вывод: честный пробел** — ни одного фото с подтверждённой
+привязкой именно к цеху/роботам Foxconn не найдено в пределах tier 1–4; tier 5 (Wayback для
+дополнительных источников) и дальнейший tier 6 не дали новых кандидатов за разумное время
+поиска.
+
+**Aramco, Северный Гавар (§4.4 chapter-part3.md/s37, упоминание, помечено `БЕЗ-БАЗЫ` в реестре).**
+Проверено: (1) официальная case-study страница WEF Global Lighthouse Network для «Aramco -
+North Ghawar» — og:image есть, но хост `assets.weforum.org` отдаёт `Access Denied` (hotlink-
+защита) при прямом скачивании, включая попытку с `--referer`; (2) общий веб-поиск даёт только
+статьи про AI-стратегию Aramco в целом (Fortune, EnkiAI) без указания на фото конкретно Северного
+Гавара. **Вывод: честный пробел** — технически возможное фото (WEF og:image) заблокировано
+защитой хостинга и не извлечено в разумное время; у this случая и так нет отдельного слайда
+(только текстовая заметка с пометкой «без базы» в реестре), поэтому отсутствие фото не блокирует
+ни один кадр деки.
+
+## Сводка по tier'ам (новые находки, issue #353)
+
+| Кейс | Tier | Источник |
+|---|---|---|
+| Tesla GA4 — flyover | 1 (og:image) | teslarati.com (через Wayback), credit Raj Mathai/Twitter |
+| Tesla GA4 — интерьер тента | 1 (og:image) | teslarati.com (через Wayback), credit skabooshka/Twitter |
+| Tesla — однодетальная megacast (откат 2, доп. фото) | 1 (og:image) | teslarati.com (через Wayback), Twitter/@TonyQuickBandit |
+| GM × FANUC Zero Down Time | 1 (og:image) | automotivemanufacturingsolutions.com |
+| Philips Drachten | 3 (референс интегратора) | totalproductivity.nl |
+| Unilever Doom Dooma (Тинсукия) | 1 (og:image) | eastmojo.com |
+| GE Predix | — | честный пробел (5 источников проверены, 0 настоящих фото) |
+| Foxconn «миллион роботов» | — | честный пробел (2 найденных кадра отклонены как непроверяемые/чужие) |
+| Aramco Северный Гавар | — | честный пробел (og:image заблокирован hotlink-защитой) |
+
+Итого по этой сессии: **6 новых настоящих фотографий сохранено** (3 — Tesla, по запросу
+владельца; 3 — GM×FANUC/Philips/Unilever из кандидатов Раздела 2/4/5), **3 честных пробела**
+задокументированы без единого mock.

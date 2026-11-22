@@ -142,10 +142,14 @@ def k1_recall_chart():
     # Лёгкая полоса — ЧИСЛИТЕЛЬ из 16 запросов (13/16 = 0,8125 и т.д., сырьё
     # `stend/zamery-k1/README.md`, свод Замера №1); доля на кадре подаётся
     # произносимой дробью «13 из 16», не «0,8125».
+    # Трудная полоса — тоже произносимой дробью от сырья: трудных запросов 3
+    # (`stend/zamery-k1/README.md`, «Трудные запросы — вердикт: ... 0/3 у
+    # каждого»), все три варианта — 0 из 3; «0,0» на кадре была десятичной
+    # долей без базы, исправлено 2026-11-22.
     rows = [
-        ("Поля", 13, 0.0),
-        ("Подпись", 1, 0.0),
-        ("Гибрид", 0, 0.0),
+        ("Поля", 13, 0),
+        ("Подпись", 1, 0),
+        ("Гибрид", 0, 0),
     ]
     chart_x, max_w = 360, 950
     bar_h, gap = 90, 46
@@ -164,11 +168,11 @@ def k1_recall_chart():
                              fill=MID)
         clabel(d, chart_x + lw + 90, y + 16, _fmt_recall(light), 22, MID, b=True,
                where=f"число (лёгкие) {name}")
-        hw = max(4, int(max_w * hard)) if hard > 0 else 4
+        hw = max(4, int(max_w * hard / 3)) if hard > 0 else 4
         yy = y + bar_h * 0.62
         d.rounded_rectangle([chart_x, yy, chart_x + hw, yy + bar_h * 0.3], radius=6,
                              fill=TEAL)
-        clabel(d, chart_x + hw + 90, yy - 2, f"{hard:.1f}".replace(".", ","), 17, TEAL,
+        clabel(d, chart_x + hw + 90, yy - 2, f"{hard} из 3", 17, TEAL,
                where=f"число (трудные) {name}")
         y += bar_h + gap
 

@@ -126,11 +126,10 @@ def k1_scan_grid():
 
 
 # ── n14 — recall@1: 3 варианта × лёгкие/трудные запросы ─────────────────────
-def _fmt_recall(x):
-    if x == 0:
-        return "0,0 (ноль)"
-    s = f"{x:.4f}".rstrip("0").rstrip(".")
-    return s.replace(".", ",")
+def _fmt_recall(n):
+    """Подпись лёгкой полосы — произносимой дробью от сырья (16 запросов),
+    не десятичной долей: «13 из 16», не «0,8125»."""
+    return f"{n} из 16"
 
 
 def k1_recall_chart():
@@ -140,10 +139,17 @@ def k1_recall_chart():
     d.text((40, 56), "16 лёгких запросов (синяя полоса) и 3 трудных (бирюзовая)",
            font=f(18), fill=LIGHT)
 
+    # Лёгкая полоса — ЧИСЛИТЕЛЬ из 16 запросов (13/16 = 0,8125 и т.д., сырьё
+    # `stend/zamery-k1/README.md`, свод Замера №1); доля на кадре подаётся
+    # произносимой дробью «13 из 16», не «0,8125».
+    # Трудная полоса — тоже произносимой дробью от сырья: трудных запросов 3
+    # (`stend/zamery-k1/README.md`, «Трудные запросы — вердикт: ... 0/3 у
+    # каждого»), все три варианта — 0 из 3; «0,0» на кадре была десятичной
+    # долей без базы, исправлено 2026-11-22.
     rows = [
-        ("Поля", 0.8125, 0.0),
-        ("Подпись", 0.0625, 0.0),
-        ("Гибрид", 0.0, 0.0),
+        ("Поля", 13, 0),
+        ("Подпись", 1, 0),
+        ("Гибрид", 0, 0),
     ]
     chart_x, max_w = 360, 950
     bar_h, gap = 90, 46
@@ -157,16 +163,16 @@ def k1_recall_chart():
         # что на самом деле нарисовано. `fit()` проверяет, что подпись не
         # вылезет за правый край холста (прошлый круг этого не проверял —
         # «0,8125 — лёгкие запросы» у «Поля» вышло за холст и обрезалось).
-        lw = max(6, int(max_w * light))
+        lw = max(6, int(max_w * light / 16))
         d.rounded_rectangle([chart_x, y, chart_x + lw, y + bar_h * 0.55], radius=8,
                              fill=MID)
         clabel(d, chart_x + lw + 90, y + 16, _fmt_recall(light), 22, MID, b=True,
                where=f"число (лёгкие) {name}")
-        hw = max(4, int(max_w * hard)) if hard > 0 else 4
+        hw = max(4, int(max_w * hard / 3)) if hard > 0 else 4
         yy = y + bar_h * 0.62
         d.rounded_rectangle([chart_x, yy, chart_x + hw, yy + bar_h * 0.3], radius=6,
                              fill=TEAL)
-        clabel(d, chart_x + hw + 90, yy - 2, f"{hard:.1f}".replace(".", ","), 17, TEAL,
+        clabel(d, chart_x + hw + 90, yy - 2, f"{hard} из 3", 17, TEAL,
                where=f"число (трудные) {name}")
         y += bar_h + gap
 
@@ -222,7 +228,8 @@ def k1_attractor_diagram():
     doc_x = W_PX - doc_w - 90
     doc_y = 190
     box(d, doc_x, doc_y, doc_w, doc_h,
-        ["чек с фразой «итоговая сумма 50,000»", "(гибрид)", "16 из 16 запросов"],
+        ["чек с фразой «итоговая сумма 50,000»", "(гибрид)",
+         "16 из 16 запросов (показаны 6 из 16)"],
         W, tc=DEEP, sz=17, outline=GOLD, where="документ-получатель")
 
     queries = ["наибольшая сумма", "наименьшая сумма", "диапазон 150–160 тыс",
@@ -306,7 +313,10 @@ def k1_degradation_grid():
 
 # ── n21/n22 — пропуски против ложных тревог по разрешениям ──────────────────
 def k1_fp_miss_chart():
-    im = Image.new("RGB", (W_PX, 560), W)
+    # Высота 640, не 560: строка-вывод под столбиками рисуется на y≈606 —
+    # на холсте 560 она МОЛЧА обрезалась и на кадр не попадала вовсе
+    # (замечено глазами при перерендере 2026-11-22).
+    im = Image.new("RGB", (W_PX, 640), W)
     d = ImageDraw.Draw(im)
     head(d, "Пропуски против ложных тревог — лёгкий случай", sz=26)
 
@@ -314,31 +324,41 @@ def k1_fp_miss_chart():
     # на k1-degradation-grid.png (receipt_00, 432 px по длинной стороне на
     # полном разрешении, 432/16≈27 px, 432/32≈14 px) — не ключи JSON
     # (`full`/`sixteenth`/`thirtysecond`), которые были нарисованы раньше.
+    # Числители/знаменатели — из сырья `stend/zamery-k1/raw/
+    # case2_personal_data_results.json` (summary, лёгкая раскладка): пропуски
+    # считаются из 6 позитивных чеков, ложные тревоги — из 9 негативных;
+    # 0/6=0,000 · 1/6=0,167 · 2/6=0,333 и 5/9=0,556 · 7/9=0,778 · 6/9=0,667 —
+    # те же доли, что были на фигуре, теперь со знаменателем на кадре.
     data = [
-        ("полное (432 точки)", 0.000, 0.556),
-        ("1/16 (27 точек)", 0.167, 0.778),
-        ("1/32 (14 точек)", 0.333, 0.667),
+        ("полное (432 точки)", 0, 5),
+        ("1/16 (27 точек)", 1, 7),
+        ("1/32 (14 точек)", 2, 6),
     ]
+    miss_total, fp_total = 6, 9
     chart_x, chart_w = 420, 1080
     bar_h, gap = 110, 50
     y = 120
-    for name, miss, fp in data:
+    for name, miss_n, fp_n in data:
+        miss, fp = miss_n / miss_total, fp_n / fp_total
         clabel(d, chart_x - 230, y + bar_h / 2 - 14, name, 22, DEEP, b=True,
                where=f"метка {name}")
         mw = max(4, int(chart_w * miss))
         d.rounded_rectangle([chart_x, y, chart_x + mw, y + bar_h * 0.42], radius=8,
                              fill=TEAL)
-        d.text((chart_x + mw + 14, y - 2), f"пропуски {miss:.3f}".replace(".", ","),
+        d.text((chart_x + mw + 14, y - 2),
+               f"пропуски {miss_n} из {miss_total} ({miss:.3f})".replace(".", ","),
                font=f(18), fill=TEAL)
         fw = max(6, int(chart_w * fp))
         yy = y + bar_h * 0.5
         d.rounded_rectangle([chart_x, yy, chart_x + fw, yy + bar_h * 0.42], radius=8,
                              fill=(0xB3, 0x26, 0x1E))
-        d.text((chart_x + fw + 14, yy - 2), f"ложные тревоги {fp:.3f}".replace(".", ","),
+        d.text((chart_x + fw + 14, yy - 2),
+               f"ложные тревоги {fp_n} из {fp_total} ({fp:.3f})".replace(".", ","),
                font=f(18, True), fill=(0xB3, 0x26, 0x1E))
         y += bar_h + gap
     d.text((chart_x, y + 6),
-           "ложных тревог в 2–5 раз больше пропусков на каждом разрешении",
+           "ложных тревог больше, чем пропусков, на пяти клетках из шести; "
+           "на полном разрешении пропусков нет вовсе",
            font=f(17), fill=MUTE)
     save(im, "k1-fp-miss-chart.png")
 

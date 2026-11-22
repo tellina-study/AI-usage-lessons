@@ -112,8 +112,8 @@ def case4_image_pairs():
 
     panels = [
         (orig, "Оригинал: чек с жасминовым чаем", "лежит в архиве"),
-        (dup, "Его повёрнутый и обрезанный дубль", "похожесть на свой оригинал: не измерена,\nизвестно: меньше 0,75"),
-        (other, "Совсем другой чек — кофе и курица", "похожесть на дубль слева: 0,75\n(модель назвала его «ближайшим»)"),
+        (dup, "Его повёрнутый и обрезанный дубль", "похожесть на свой оригинал: не измерена,\nизвестно: ниже 0,755"),
+        (other, "Совсем другой чек — кофе и курица", "похожесть на дубль слева: 0,755\n(модель назвала его «ближайшим»)"),
     ]
     y0 = 130
     for i, (pil, title, sub) in enumerate(panels):
@@ -140,7 +140,7 @@ def _number_line(d, x0, x1, y, lo, hi, col=MUTE):
     for v in [round(lo + (hi - lo) * k / 5, 2) for k in range(6)]:
         px = x0 + (x1 - x0) * (v - lo) / (hi - lo)
         d.line([px, y - 8, px, y + 8], fill=col, width=2)
-        d.text((px - 18, y + 14), f"{v:.2f}", font=f(16), fill=MUTE)
+        d.text((px - 18, y + 14), f"{v:.2f}".replace(".", ","), font=f(16), fill=MUTE)
 
 
 def _dots(d, x0, x1, y, lo, hi, values, col, r=9, jitter=14):
@@ -203,7 +203,7 @@ def case4_band_hard():
     d.text((x0, y - 60), "другой документ", font=f(17, True), fill=LIGHT)
     d.text((x0, y + 60), "тот же документ", font=f(17, True), fill=GOLDTX)
     d.text((x0, y + 150), "ещё одна настоящая пара осталась не измеренной — известно "
-                            "лишь, что она ниже 0,75", font=f(16), fill=MUTE)
+                            "лишь, что она ниже 0,755", font=f(16), fill=MUTE)
     save(im, "case4-band-hard.png")
 
 

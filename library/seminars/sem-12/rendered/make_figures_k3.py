@@ -16,7 +16,7 @@ rendered/make_figures_*.py», тулкит один на все занятия).
                                        пунктирная золотая стрелка — вопрос
                                        этого кейса («какой метод поиска?»).
     case3-hash-device.png            n55 — устройство перцептивного хэша:
-                                       average hash и pHash, сходящиеся в
+                                       средний хэш (aHash) и pHash, сходящиеся в
                                        расстояние Хэмминга.
     case3-image-pairs.png            n56 — четыре НАСТОЯЩИЕ фотографии:
                                        оригинал / мягкий дубль / жёсткий
@@ -100,7 +100,7 @@ def case3_shema_postanovka():
 
 
 # ── n55 — устройство перцептивного хэша ─────────────────────────────────────
-# Две параллельные ветки (average hash / pHash), каждая — цепочка шагов,
+# Две параллельные ветки (средний хэш (aHash) / pHash), каждая — цепочка шагов,
 # сходящаяся в общий узел расстояния Хэмминга. Числа и порядок шагов — по
 # первоисточникам (Krawetz 2011, Zauner 2010), см. backup n55.
 HASH_W, HASH_H = 1700, 760
@@ -150,12 +150,15 @@ def case3_hash_device():
             y += h + gapy
         return y - gapy  # y нижнего края последнего бокса
 
-    bottom_avg = column(x_left, "average hash", steps_avg)
+    bottom_avg = column(x_left, "средний хэш (aHash)", steps_avg)
     bottom_phash = column(x_right, "pHash", steps_phash)
 
-    arrow(d, top_x + top_w * 0.25, top_y + top_h, x_left + col_w / 2, 230,
+    # Стрелки заканчиваются НАД заголовком колонки (y=193), не на верхней
+    # кромке первого бокса (y=230): линия до бокса проходила сквозь текст
+    # заголовка — с подписью «средний хэш (aHash)» перечёркивала «(aHash)».
+    arrow(d, top_x + top_w * 0.25, top_y + top_h, x_left + col_w / 2, 193,
           col=TEAL, wd=3)
-    arrow(d, top_x + top_w * 0.75, top_y + top_h, x_right + col_w / 2, 230,
+    arrow(d, top_x + top_w * 0.75, top_y + top_h, x_right + col_w / 2, 193,
           col=TEAL, wd=3)
 
     merge_w, merge_h = 560, 110

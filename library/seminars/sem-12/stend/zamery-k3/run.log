@@ -1,0 +1,42 @@
+=== 30 receipts loaded from ground truth ===
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]Loading weights: 100%|██████████| 398/398 [00:00<00:00, 15056.53it/s]
+=== CLIP (openai/clip-vit-base-patch32) loaded in 1.6s ===
+=== built 30 easy + 30 hard queries (0 anomalies logged) ===
+=== embedding 30 full frames (CLIP, local, CLIPProcessor default resize) ===
+  done (30 images, avg 2.286s)
+=== embedding tiles (4x2 grid, 240 total) ===
+  done (240 tiles, avg 2.026s)
+=== Part: easy queries (largest line per receipt) ===
+  [easy] 30 queries embedded, avg 2.093s/crop
+=== Part: hard queries (smallest line per receipt) ===
+  [hard] 30 queries embedded, avg 2.045s/crop
+
+=== SUMMARY (recall@1) ===
+{
+  "whole_frame_recall_at_1_easy": 0.1,
+  "whole_frame_recall_at_1_hard": 0.1,
+  "tiles_recall_at_1_easy": 0.1,
+  "tiles_recall_at_1_hard": 0.03333333333333333
+}
+
+=== saved to /home/harness/harness-control-data/accounts/256/claude-code-maxim-levko-1be11ee3/harness-projects/256/.worktrees/folder-288/s12-k3-tri-zadachi-6aa3fb1a/library/seminars/sem-12/stend/zamery-k3/raw/case3_tiles_vs_whole_results.json ===
+{
+  "summary_recall_at_1": {
+    "whole_frame_recall_at_1_easy": 0.1,
+    "whole_frame_recall_at_1_hard": 0.1,
+    "tiles_recall_at_1_easy": 0.1,
+    "tiles_recall_at_1_hard": 0.03333333333333333
+  },
+  "timing": {
+    "n_full_frame_embeddings": 30,
+    "n_tile_embeddings": 240,
+    "n_query_crop_embeddings": 60,
+    "total_embedding_passes": 330,
+    "avg_s_per_full_frame": 2.286,
+    "avg_s_per_tile": 2.0256,
+    "total_wall_s": 701.2,
+    "note": "Все эмбеддинги считаются локально на CPU, без сетевых вызовов к внешним API."
+  },
+  "n_anomalies": 0
+}

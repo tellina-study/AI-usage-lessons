@@ -1,0 +1,28 @@
+=== loaded 30 easy + 30 hard queries from case3_tiles_vs_whole_results.json ===
+=== loaded 30 corpus OCR texts from cord_sample_meta.json ===
+=== embedding 30 corpus OCR texts (openai/text-embedding-3-small, via webhook) ===
+  done, wall_s=1.38, cost=3.422e-05
+=== embedding 60 query line_texts (30 easy + 30 hard, one batch) ===
+  done, wall_s=2.94, cost=5.4e-06
+=== Part: easy queries (text control) ===
+  [easy] recall@1 = 0.3333 (10/30)
+=== Part: hard queries (text control) ===
+  [hard] recall@1 = 0.2000 (6/30)
+
+=== saved to /home/harness/harness-control-data/accounts/256/claude-code-maxim-levko-1be11ee3/harness-projects/256/.worktrees/folder-288/s12-k3-tri-zadachi-6aa3fb1a/library/seminars/sem-12/stend/zamery-k3/raw/case3_text_control_results.json ===
+{
+  "summary_recall_at_1": {
+    "text_control_recall_at_1_easy": 0.3333333333333333,
+    "text_control_recall_at_1_hard": 0.2
+  },
+  "timing": {
+    "total_wall_s": 5.1,
+    "corpus_embed_wall_s": 1.38,
+    "query_embed_wall_s": 2.94
+  },
+  "cost_usd": {
+    "corpus_embed_cost": 3.422e-05,
+    "query_embed_cost": 5.4e-06,
+    "total_cost": 3.9620000000000004e-05
+  }
+}

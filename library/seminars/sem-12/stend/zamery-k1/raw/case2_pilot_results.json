@@ -1,0 +1,2255 @@
+{
+  "model": "openai/gpt-4o-mini",
+  "mode": "pilot",
+  "scales_tested": [
+    "full",
+    "half",
+    "quarter",
+    "eighth",
+    "sixteenth",
+    "thirtysecond"
+  ],
+  "positives": [
+    "receipt_00",
+    "receipt_08",
+    "receipt_12",
+    "receipt_17",
+    "receipt_24"
+  ],
+  "negatives": [
+    "receipt_10",
+    "receipt_14",
+    "receipt_19",
+    "receipt_20",
+    "receipt_26"
+  ],
+  "summary": {
+    "quarter|easy": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.2,
+      "miss_count": 1,
+      "miss_ids": [
+        "receipt_08"
+      ],
+      "false_positive_rate_neg": 0.4,
+      "fp_count": 2,
+      "fp_ids": [
+        "receipt_19",
+        "receipt_20"
+      ]
+    },
+    "thirtysecond|easy": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.6,
+      "miss_count": 3,
+      "miss_ids": [
+        "receipt_00",
+        "receipt_12",
+        "receipt_17"
+      ],
+      "false_positive_rate_neg": 0.6,
+      "fp_count": 3,
+      "fp_ids": [
+        "receipt_10",
+        "receipt_14",
+        "receipt_26"
+      ]
+    },
+    "sixteenth|easy": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.2,
+      "miss_count": 1,
+      "miss_ids": [
+        "receipt_12"
+      ],
+      "false_positive_rate_neg": 0.8,
+      "fp_count": 4,
+      "fp_ids": [
+        "receipt_10",
+        "receipt_14",
+        "receipt_20",
+        "receipt_26"
+      ]
+    },
+    "half|easy": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.0,
+      "miss_count": 0,
+      "miss_ids": [],
+      "false_positive_rate_neg": 0.0,
+      "fp_count": 0,
+      "fp_ids": []
+    },
+    "eighth|easy": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.0,
+      "miss_count": 0,
+      "miss_ids": [],
+      "false_positive_rate_neg": 1.0,
+      "fp_count": 5,
+      "fp_ids": [
+        "receipt_10",
+        "receipt_14",
+        "receipt_19",
+        "receipt_20",
+        "receipt_26"
+      ]
+    },
+    "full|easy": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.0,
+      "miss_count": 0,
+      "miss_ids": [],
+      "false_positive_rate_neg": 0.4,
+      "fp_count": 2,
+      "fp_ids": [
+        "receipt_10",
+        "receipt_14"
+      ]
+    },
+    "full|hard": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.2,
+      "miss_count": 1,
+      "miss_ids": [
+        "receipt_24"
+      ],
+      "false_positive_rate_neg": 0.6,
+      "fp_count": 3,
+      "fp_ids": [
+        "receipt_10",
+        "receipt_14",
+        "receipt_26"
+      ]
+    },
+    "half|hard": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.4,
+      "miss_count": 2,
+      "miss_ids": [
+        "receipt_08",
+        "receipt_24"
+      ],
+      "false_positive_rate_neg": 0.4,
+      "fp_count": 2,
+      "fp_ids": [
+        "receipt_10",
+        "receipt_14"
+      ]
+    },
+    "sixteenth|hard": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.2,
+      "miss_count": 1,
+      "miss_ids": [
+        "receipt_12"
+      ],
+      "false_positive_rate_neg": 0.8,
+      "fp_count": 4,
+      "fp_ids": [
+        "receipt_10",
+        "receipt_14",
+        "receipt_20",
+        "receipt_26"
+      ]
+    },
+    "eighth|hard": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.0,
+      "miss_count": 0,
+      "miss_ids": [],
+      "false_positive_rate_neg": 0.8,
+      "fp_count": 4,
+      "fp_ids": [
+        "receipt_10",
+        "receipt_14",
+        "receipt_20",
+        "receipt_26"
+      ]
+    },
+    "quarter|hard": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.2,
+      "miss_count": 1,
+      "miss_ids": [
+        "receipt_08"
+      ],
+      "false_positive_rate_neg": 0.4,
+      "fp_count": 2,
+      "fp_ids": [
+        "receipt_10",
+        "receipt_19"
+      ]
+    },
+    "thirtysecond|hard": {
+      "n_pos": 5,
+      "n_neg": 5,
+      "miss_rate_pos": 0.8,
+      "miss_count": 4,
+      "miss_ids": [
+        "receipt_00",
+        "receipt_12",
+        "receipt_17",
+        "receipt_24"
+      ],
+      "false_positive_rate_neg": 0.2,
+      "fp_count": 1,
+      "fp_ids": [
+        "receipt_14"
+      ]
+    }
+  },
+  "results": [
+    {
+      "id": "receipt_00",
+      "layout": "easy",
+      "scale": "quarter",
+      "dims": [
+        108,
+        162
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видны финансовые данные, включая суммы и возможные идентификаторы транзакций.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видны финансовые данные, включая суммы и возможные идентификаторы транзакций.\"}",
+      "exec_id": "11536",
+      "wall_s": 2.65,
+      "cost": 0.0013107,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_00",
+      "layout": "easy",
+      "scale": "thirtysecond",
+      "dims": [
+        14,
+        20
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "Изображение не разборчиво для анализа.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"Изображение не разборчиво для анализа.\"}",
+      "exec_id": "11537",
+      "wall_s": 3.85,
+      "cost": 0.0013047,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_00",
+      "layout": "easy",
+      "scale": "sixteenth",
+      "dims": [
+        27,
+        40
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видны персональные данные.",
+      "raw_content": "```json\n{\"personal_data_present\": true, \"reason\": \"На изображении видны персональные данные.\"}\n```",
+      "exec_id": "11538",
+      "wall_s": 4.01,
+      "cost": 0.0013059,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_00",
+      "layout": "easy",
+      "scale": "half",
+      "dims": [
+        216,
+        324
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке есть информация о сумме и товаре, что может считаться финансовыми данными.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке есть информация о сумме и товаре, что может считаться финансовыми данными.\"}",
+      "exec_id": "11539",
+      "wall_s": 4.05,
+      "cost": 0.0013107,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_00",
+      "layout": "easy",
+      "scale": "eighth",
+      "dims": [
+        54,
+        81
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видны персональные данные, такие как номер счета и возможные фамилии.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видны персональные данные, такие как номер счета и возможные фамилии.\"}",
+      "exec_id": "11540",
+      "wall_s": 4.07,
+      "cost": 0.0013095,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_00",
+      "layout": "easy",
+      "scale": "full",
+      "dims": [
+        432,
+        648
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке присутствует информация о банковском счете и возможно имя клиента.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке присутствует информация о банковском счете и возможно имя клиента.\"}",
+      "exec_id": "11541",
+      "wall_s": 4.08,
+      "cost": 0.00215775,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_00",
+      "layout": "hard",
+      "scale": "full",
+      "dims": [
+        432,
+        648
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении присутствуют данные о транзакции и детали, которые могут быть связаны с платёжной информацией.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении присутствуют данные о транзакции и детали, которые могут быть связаны с платёжной информацией.\"}",
+      "exec_id": "11542",
+      "wall_s": 2.51,
+      "cost": 0.00216315,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_00",
+      "layout": "hard",
+      "scale": "half",
+      "dims": [
+        216,
+        324
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении присутствует информация о сумме и деталях покупки.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении присутствует информация о сумме и деталях покупки.\"}",
+      "exec_id": "11543",
+      "wall_s": 2.4,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_00",
+      "layout": "hard",
+      "scale": "sixteenth",
+      "dims": [
+        27,
+        40
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видны персональные данные, такие как ФИО и, возможно, контактная информация.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видны персональные данные, такие как ФИО и, возможно, контактная информация.\"}",
+      "exec_id": "11544",
+      "wall_s": 2.62,
+      "cost": 0.0013113,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_00",
+      "layout": "hard",
+      "scale": "eighth",
+      "dims": [
+        54,
+        81
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видны данные, такие как ФИО и финансовые операции.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видны данные, такие как ФИО и финансовые операции.\"}",
+      "exec_id": "11545",
+      "wall_s": 2.64,
+      "cost": 0.0013083,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_00",
+      "layout": "hard",
+      "scale": "quarter",
+      "dims": [
+        108,
+        162
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении виден номер карты и возможные финансовые данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении виден номер карты и возможные финансовые данные.\"}",
+      "exec_id": "11546",
+      "wall_s": 2.83,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_08",
+      "layout": "easy",
+      "scale": "full",
+      "dims": [
+        864,
+        1296
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке присутствует информация о платёжной карте.",
+      "raw_content": "```json\n{\"personal_data_present\": true, \"reason\": \"На чеке присутствует информация о платёжной карте.\"}\n```",
+      "exec_id": "11548",
+      "wall_s": 2.24,
+      "cost": 0.00555795,
+      "prompt_tokens": 36941
+    },
+    {
+      "id": "receipt_00",
+      "layout": "hard",
+      "scale": "thirtysecond",
+      "dims": [
+        14,
+        20
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "Изображение не содержит видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"Изображение не содержит видимых персональных или платёжных данных.\"}",
+      "exec_id": "11547",
+      "wall_s": 3.84,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_08",
+      "layout": "easy",
+      "scale": "half",
+      "dims": [
+        432,
+        648
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке видны детали платежа и возможные персональные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке видны детали платежа и возможные персональные данные.\"}",
+      "exec_id": "11549",
+      "wall_s": 2.26,
+      "cost": 0.00215715,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_08",
+      "layout": "easy",
+      "scale": "quarter",
+      "dims": [
+        216,
+        324
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "На изображении отсутствуют видимые персональные или платёжные данные.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении отсутствуют видимые персональные или платёжные данные.\"}",
+      "exec_id": "11550",
+      "wall_s": 2.27,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_08",
+      "layout": "easy",
+      "scale": "eighth",
+      "dims": [
+        108,
+        162
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видно, что присутствует информация о платёжной карте.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видно, что присутствует информация о платёжной карте.\"}",
+      "exec_id": "11551",
+      "wall_s": 2.53,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_08",
+      "layout": "easy",
+      "scale": "sixteenth",
+      "dims": [
+        54,
+        81
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видны финансовые данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видны финансовые данные.\"}",
+      "exec_id": "11552",
+      "wall_s": 2.54,
+      "cost": 0.0013035,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_08",
+      "layout": "easy",
+      "scale": "thirtysecond",
+      "dims": [
+        27,
+        40
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видимы личные данные, такие как ФИО и возможно другие идентификаторы.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видимы личные данные, такие как ФИО и возможно другие идентификаторы.\"}",
+      "exec_id": "11553",
+      "wall_s": 2.19,
+      "cost": 0.0013113,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_08",
+      "layout": "hard",
+      "scale": "full",
+      "dims": [
+        864,
+        1296
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении есть информация о платёжной карте и общая сумма.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении есть информация о платёжной карте и общая сумма.\"}",
+      "exec_id": "11554",
+      "wall_s": 2.31,
+      "cost": 0.00555735,
+      "prompt_tokens": 36941
+    },
+    {
+      "id": "receipt_08",
+      "layout": "hard",
+      "scale": "half",
+      "dims": [
+        432,
+        648
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "Нет видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"Нет видимых персональных или платёжных данных.\"}",
+      "exec_id": "11555",
+      "wall_s": 2.25,
+      "cost": 0.00215475,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_08",
+      "layout": "hard",
+      "scale": "quarter",
+      "dims": [
+        216,
+        324
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "На изображении нет видимых персональных или платежных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении нет видимых персональных или платежных данных.\"}",
+      "exec_id": "11556",
+      "wall_s": 2.28,
+      "cost": 0.0013059,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_08",
+      "layout": "hard",
+      "scale": "eighth",
+      "dims": [
+        108,
+        162
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении имеется информация о сумме, которая может быть связана с платежом.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении имеется информация о сумме, которая может быть связана с платежом.\"}",
+      "exec_id": "11557",
+      "wall_s": 2.32,
+      "cost": 0.0013089,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_08",
+      "layout": "hard",
+      "scale": "sixteenth",
+      "dims": [
+        54,
+        81
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видно информацию, которая может содержать персональные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видно информацию, которая может содержать персональные данные.\"}",
+      "exec_id": "11558",
+      "wall_s": 2.27,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_08",
+      "layout": "hard",
+      "scale": "thirtysecond",
+      "dims": [
+        27,
+        40
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении виден документ с текстом, который может содержать личные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении виден документ с текстом, который может содержать личные данные.\"}",
+      "exec_id": "11559",
+      "wall_s": 2.31,
+      "cost": 0.0013089,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_12",
+      "layout": "easy",
+      "scale": "full",
+      "dims": [
+        576,
+        864
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке указана информация о карточке, включая тип и банк.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке указана информация о карточке, включая тип и банк.\"}",
+      "exec_id": "11560",
+      "wall_s": 2.22,
+      "cost": 0.00385725,
+      "prompt_tokens": 25607
+    },
+    {
+      "id": "receipt_12",
+      "layout": "easy",
+      "scale": "half",
+      "dims": [
+        288,
+        432
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении присутствует информация о финансовой транзакции и банковская карта.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении присутствует информация о финансовой транзакции и банковская карта.\"}",
+      "exec_id": "11561",
+      "wall_s": 2.26,
+      "cost": 0.0013083,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_12",
+      "layout": "easy",
+      "scale": "sixteenth",
+      "dims": [
+        36,
+        54
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "Нет видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"Нет видимых персональных или платёжных данных.\"}",
+      "exec_id": "11564",
+      "wall_s": 1.32,
+      "cost": 0.0013047,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_12",
+      "layout": "easy",
+      "scale": "quarter",
+      "dims": [
+        144,
+        216
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке могут быть видимые платёжные данные и информация о транзакции.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке могут быть видимые платёжные данные и информация о транзакции.\"}",
+      "exec_id": "11562",
+      "wall_s": 2.21,
+      "cost": 0.0013089,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_12",
+      "layout": "easy",
+      "scale": "eighth",
+      "dims": [
+        72,
+        108
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видно, что присутствуют данные из квитанции.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видно, что присутствуют данные из квитанции.\"}",
+      "exec_id": "11563",
+      "wall_s": 2.23,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_12",
+      "layout": "easy",
+      "scale": "thirtysecond",
+      "dims": [
+        18,
+        27
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "Изображение не содержит видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"Изображение не содержит видимых персональных или платёжных данных.\"}",
+      "exec_id": "11565",
+      "wall_s": 2.32,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_12",
+      "layout": "hard",
+      "scale": "quarter",
+      "dims": [
+        144,
+        216
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "Чек может содержать информацию о транзакции и персональные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"Чек может содержать информацию о транзакции и персональные данные.\"}",
+      "exec_id": "11567",
+      "wall_s": 2.25,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_12",
+      "layout": "hard",
+      "scale": "half",
+      "dims": [
+        288,
+        432
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке виден номер карты и общая сумма покупки.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке виден номер карты и общая сумма покупки.\"}",
+      "exec_id": "11568",
+      "wall_s": 2.48,
+      "cost": 0.0013059,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_12",
+      "layout": "hard",
+      "scale": "full",
+      "dims": [
+        576,
+        864
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении присутствуют данные кредитной карты.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении присутствуют данные кредитной карты.\"}",
+      "exec_id": "11566",
+      "wall_s": 3.48,
+      "cost": 0.00385425,
+      "prompt_tokens": 25607
+    },
+    {
+      "id": "receipt_12",
+      "layout": "hard",
+      "scale": "eighth",
+      "dims": [
+        72,
+        108
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На этом чеке могут быть видны персональные данные, такие как имя и номер телефона.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На этом чеке могут быть видны персональные данные, такие как имя и номер телефона.\"}",
+      "exec_id": "11569",
+      "wall_s": 2.47,
+      "cost": 0.0013095,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_12",
+      "layout": "hard",
+      "scale": "sixteenth",
+      "dims": [
+        36,
+        54
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "Изображение не содержит видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"Изображение не содержит видимых персональных или платёжных данных.\"}",
+      "exec_id": "11570",
+      "wall_s": 2.25,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_12",
+      "layout": "hard",
+      "scale": "thirtysecond",
+      "dims": [
+        18,
+        27
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "На изображении нет видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении нет видимых персональных или платёжных данных.\"}",
+      "exec_id": "11571",
+      "wall_s": 2.23,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_17",
+      "layout": "easy",
+      "scale": "full",
+      "dims": [
+        960,
+        1280
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке виден номер дебетовой карты.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке виден номер дебетовой карты.\"}",
+      "exec_id": "11572",
+      "wall_s": 2.21,
+      "cost": 0.00385485,
+      "prompt_tokens": 25607
+    },
+    {
+      "id": "receipt_17",
+      "layout": "easy",
+      "scale": "half",
+      "dims": [
+        480,
+        640
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке есть закрытые данные, которые могут содержать персональные или платёжные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке есть закрытые данные, которые могут содержать персональные или платёжные данные.\"}",
+      "exec_id": "11573",
+      "wall_s": 2.22,
+      "cost": 0.00216015,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_17",
+      "layout": "easy",
+      "scale": "eighth",
+      "dims": [
+        120,
+        160
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке могут быть видны персональные данные, такие как имя или номер карты.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке могут быть видны персональные данные, такие как имя или номер карты.\"}",
+      "exec_id": "11574",
+      "wall_s": 2.24,
+      "cost": 0.0013089,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_17",
+      "layout": "easy",
+      "scale": "sixteenth",
+      "dims": [
+        60,
+        80
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке могут быть видимы личные данные, такие как ФИО, номер телефона или данные о покупке.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке могут быть видимы личные данные, такие как ФИО, номер телефона или данные о покупке.\"}",
+      "exec_id": "11575",
+      "wall_s": 2.33,
+      "cost": 0.0013131,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_17",
+      "layout": "easy",
+      "scale": "quarter",
+      "dims": [
+        240,
+        320
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке видны сведения о транзакции, включая сумму и возможные идентифицирующие данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке видны сведения о транзакции, включая сумму и возможные идентифицирующие данные.\"}",
+      "exec_id": "11576",
+      "wall_s": 2.5,
+      "cost": 0.0013119,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_17",
+      "layout": "easy",
+      "scale": "thirtysecond",
+      "dims": [
+        30,
+        40
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "На изображении не видно персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении не видно персональных или платёжных данных.\"}",
+      "exec_id": "11577",
+      "wall_s": 2.23,
+      "cost": 0.0013059,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_17",
+      "layout": "hard",
+      "scale": "full",
+      "dims": [
+        960,
+        1280
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке присутствует информация о сумме и методе оплаты.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке присутствует информация о сумме и методе оплаты.\"}",
+      "exec_id": "11578",
+      "wall_s": 2.3,
+      "cost": 0.00385665,
+      "prompt_tokens": 25607
+    },
+    {
+      "id": "receipt_17",
+      "layout": "hard",
+      "scale": "half",
+      "dims": [
+        480,
+        640
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке виден номер карты, который является персональными данными.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке виден номер карты, который является персональными данными.\"}",
+      "exec_id": "11579",
+      "wall_s": 2.35,
+      "cost": 0.00215715,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_17",
+      "layout": "hard",
+      "scale": "quarter",
+      "dims": [
+        240,
+        320
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении виден чек, который может содержать информацию о транзакции и личные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении виден чек, который может содержать информацию о транзакции и личные данные.\"}",
+      "exec_id": "11580",
+      "wall_s": 2.19,
+      "cost": 0.0013107,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_17",
+      "layout": "hard",
+      "scale": "eighth",
+      "dims": [
+        120,
+        160
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На квитанции могут быть видны персональные или платёжные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На квитанции могут быть видны персональные или платёжные данные.\"}",
+      "exec_id": "11581",
+      "wall_s": 2.21,
+      "cost": 0.0013077,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_17",
+      "layout": "hard",
+      "scale": "sixteenth",
+      "dims": [
+        60,
+        80
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении может быть виден номер карты и/или другая информация.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении может быть виден номер карты и/или другая информация.\"}",
+      "exec_id": "11582",
+      "wall_s": 2.35,
+      "cost": 0.0013077,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_17",
+      "layout": "hard",
+      "scale": "thirtysecond",
+      "dims": [
+        30,
+        40
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "Изображение не содержит видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"Изображение не содержит видимых персональных или платёжных данных.\"}",
+      "exec_id": "11583",
+      "wall_s": 2.45,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_24",
+      "layout": "easy",
+      "scale": "full",
+      "dims": [
+        576,
+        864
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке присутствуют данные о платёжном методе.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке присутствуют данные о платёжном методе.\"}",
+      "exec_id": "11584",
+      "wall_s": 2.21,
+      "cost": 0.00385605,
+      "prompt_tokens": 25607
+    },
+    {
+      "id": "receipt_24",
+      "layout": "easy",
+      "scale": "half",
+      "dims": [
+        288,
+        432
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке указаны данные о дебетовой карте.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке указаны данные о дебетовой карте.\"}",
+      "exec_id": "11585",
+      "wall_s": 2.24,
+      "cost": 0.0013053,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_24",
+      "layout": "easy",
+      "scale": "quarter",
+      "dims": [
+        144,
+        216
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке указаны данные о покупке и банковском продукте.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке указаны данные о покупке и банковском продукте.\"}",
+      "exec_id": "11586",
+      "wall_s": 2.26,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_24",
+      "layout": "easy",
+      "scale": "eighth",
+      "dims": [
+        72,
+        108
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении есть видимые данные о платёжной карте.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении есть видимые данные о платёжной карте.\"}",
+      "exec_id": "11587",
+      "wall_s": 2.17,
+      "cost": 0.0013059,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_24",
+      "layout": "easy",
+      "scale": "sixteenth",
+      "dims": [
+        36,
+        54
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении присутствуют персональные данные, такие как ФИО и другие идентификационные сведения.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении присутствуют персональные данные, такие как ФИО и другие идентификационные сведения.\"}",
+      "exec_id": "11588",
+      "wall_s": 2.23,
+      "cost": 0.0013113,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_24",
+      "layout": "easy",
+      "scale": "thirtysecond",
+      "dims": [
+        18,
+        27
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видны личные данные, такие как ФИО.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видны личные данные, такие как ФИО.\"}",
+      "exec_id": "11589",
+      "wall_s": 2.22,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_24",
+      "layout": "hard",
+      "scale": "full",
+      "dims": [
+        576,
+        864
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "На изображении нет видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении нет видимых персональных или платёжных данных.\"}",
+      "exec_id": "11590",
+      "wall_s": 2.18,
+      "cost": 0.00385665,
+      "prompt_tokens": 25607
+    },
+    {
+      "id": "receipt_24",
+      "layout": "hard",
+      "scale": "half",
+      "dims": [
+        288,
+        432
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "На изображении нет видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении нет видимых персональных или платёжных данных.\"}",
+      "exec_id": "11591",
+      "wall_s": 2.24,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_24",
+      "layout": "hard",
+      "scale": "quarter",
+      "dims": [
+        144,
+        216
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На чеке есть информация о сумме и методе оплаты.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке есть информация о сумме и методе оплаты.\"}",
+      "exec_id": "11592",
+      "wall_s": 2.21,
+      "cost": 0.0013059,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_24",
+      "layout": "hard",
+      "scale": "eighth",
+      "dims": [
+        72,
+        108
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видны данные о транзакции и, возможно, ФИО.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видны данные о транзакции и, возможно, ФИО.\"}",
+      "exec_id": "11593",
+      "wall_s": 2.2,
+      "cost": 0.0013089,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_24",
+      "layout": "hard",
+      "scale": "sixteenth",
+      "dims": [
+        36,
+        54
+      ],
+      "gold_positive": true,
+      "pred": true,
+      "reason": "На изображении видны персональные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видны персональные данные.\"}",
+      "exec_id": "11594",
+      "wall_s": 2.21,
+      "cost": 0.0013035,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_24",
+      "layout": "hard",
+      "scale": "thirtysecond",
+      "dims": [
+        18,
+        27
+      ],
+      "gold_positive": true,
+      "pred": false,
+      "reason": "Все данные на изображении неразличимы.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"Все данные на изображении неразличимы.\"}",
+      "exec_id": "11595",
+      "wall_s": 2.21,
+      "cost": 0.0013047,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_10",
+      "layout": "easy",
+      "scale": "full",
+      "dims": [
+        576,
+        864
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке присутствуют расчетные данные, такие как сумма и изменения.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке присутствуют расчетные данные, такие как сумма и изменения.\"}",
+      "exec_id": "11596",
+      "wall_s": 2.32,
+      "cost": 0.00385725,
+      "prompt_tokens": 25607
+    },
+    {
+      "id": "receipt_10",
+      "layout": "easy",
+      "scale": "half",
+      "dims": [
+        288,
+        432
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении нет видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении нет видимых персональных или платёжных данных.\"}",
+      "exec_id": "11597",
+      "wall_s": 2.21,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_10",
+      "layout": "easy",
+      "scale": "quarter",
+      "dims": [
+        144,
+        216
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении представлен чек без видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении представлен чек без видимых персональных или платёжных данных.\"}",
+      "exec_id": "11598",
+      "wall_s": 2.21,
+      "cost": 0.0013077,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_10",
+      "layout": "easy",
+      "scale": "eighth",
+      "dims": [
+        72,
+        108
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении видно имя и стоимость услуг.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видно имя и стоимость услуг.\"}",
+      "exec_id": "11599",
+      "wall_s": 2.22,
+      "cost": 0.0013035,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_10",
+      "layout": "easy",
+      "scale": "sixteenth",
+      "dims": [
+        36,
+        54
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении есть данные о транзакции, включая сумму и другие детали, которые могут быть идентифицирующими.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении есть данные о транзакции, включая сумму и другие детали, которые могут быть идентифицирующими.\"}",
+      "exec_id": "11600",
+      "wall_s": 2.16,
+      "cost": 0.0013137,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_10",
+      "layout": "easy",
+      "scale": "thirtysecond",
+      "dims": [
+        18,
+        27
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении видны потенциальные персональные или платёжные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении видны потенциальные персональные или платёжные данные.\"}",
+      "exec_id": "11601",
+      "wall_s": 2.19,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_10",
+      "layout": "hard",
+      "scale": "full",
+      "dims": [
+        576,
+        864
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении есть данные о транзакции, включая суммы и возможно скрытые персональные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении есть данные о транзакции, включая суммы и возможно скрытые персональные данные.\"}",
+      "exec_id": "11602",
+      "wall_s": 2.17,
+      "cost": 0.00386025,
+      "prompt_tokens": 25607
+    },
+    {
+      "id": "receipt_10",
+      "layout": "hard",
+      "scale": "half",
+      "dims": [
+        288,
+        432
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке видны суммы и информация о покупке, что может считаться платежными данными.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке видны суммы и информация о покупке, что может считаться платежными данными.\"}",
+      "exec_id": "11603",
+      "wall_s": 2.22,
+      "cost": 0.0013101,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_10",
+      "layout": "hard",
+      "scale": "quarter",
+      "dims": [
+        144,
+        216
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке есть информация о сумме, а также может содержаться информация о месте покупки.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке есть информация о сумме, а также может содержаться информация о месте покупки.\"}",
+      "exec_id": "11604",
+      "wall_s": 2.22,
+      "cost": 0.0013095,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_10",
+      "layout": "hard",
+      "scale": "eighth",
+      "dims": [
+        72,
+        108
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке могут содержаться сведения о транзакции и, возможно, идентифицирующая информация.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке могут содержаться сведения о транзакции и, возможно, идентифицирующая информация.\"}",
+      "exec_id": "11605",
+      "wall_s": 2.28,
+      "cost": 0.0013113,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_10",
+      "layout": "hard",
+      "scale": "sixteenth",
+      "dims": [
+        36,
+        54
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении виден номер заказа или позиции.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении виден номер заказа или позиции.\"}",
+      "exec_id": "11606",
+      "wall_s": 2.23,
+      "cost": 0.0013041,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_10",
+      "layout": "hard",
+      "scale": "thirtysecond",
+      "dims": [
+        18,
+        27
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "изображение не четкое и данные неразборчивы.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"изображение не четкое и данные неразборчивы.\"}",
+      "exec_id": "11607",
+      "wall_s": 2.25,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_14",
+      "layout": "easy",
+      "scale": "full",
+      "dims": [
+        1836,
+        3264
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке есть сумма, что может указывать на платёжные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке есть сумма, что может указывать на платёжные данные.\"}",
+      "exec_id": "11608",
+      "wall_s": 2.33,
+      "cost": 0.00555795,
+      "prompt_tokens": 36941
+    },
+    {
+      "id": "receipt_14",
+      "layout": "easy",
+      "scale": "quarter",
+      "dims": [
+        459,
+        816
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении виден только чек без персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении виден только чек без персональных или платёжных данных.\"}",
+      "exec_id": "11610",
+      "wall_s": 2.35,
+      "cost": 0.00215775,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_14",
+      "layout": "easy",
+      "scale": "sixteenth",
+      "dims": [
+        115,
+        204
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке могут быть видны данные, такие как суммы транзакций и, возможно, информация о кредитной карте.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке могут быть видны данные, такие как суммы транзакций и, возможно, информация о кредитной карте.\"}",
+      "exec_id": "11611",
+      "wall_s": 2.18,
+      "cost": 0.0013131,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_14",
+      "layout": "easy",
+      "scale": "eighth",
+      "dims": [
+        230,
+        408
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении присутствует информация о покупке, включая общую сумму и стоимость товаров.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении присутствует информация о покупке, включая общую сумму и стоимость товаров.\"}",
+      "exec_id": "11612",
+      "wall_s": 2.43,
+      "cost": 0.0013083,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_14",
+      "layout": "easy",
+      "scale": "thirtysecond",
+      "dims": [
+        57,
+        102
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке могут быть видимы номер карты и другие платежные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке могут быть видимы номер карты и другие платежные данные.\"}",
+      "exec_id": "11613",
+      "wall_s": 2.25,
+      "cost": 0.0013077,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_14",
+      "layout": "easy",
+      "scale": "half",
+      "dims": [
+        918,
+        1632
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении видно только чек с данными о покупке, но нет видимых персональных или платежных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении видно только чек с данными о покупке, но нет видимых персональных или платежных данных.\"}",
+      "exec_id": "11609",
+      "wall_s": 3.43,
+      "cost": 0.00556215,
+      "prompt_tokens": 36941
+    },
+    {
+      "id": "receipt_14",
+      "layout": "hard",
+      "scale": "half",
+      "dims": [
+        918,
+        1632
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке присутствуют финансовые данные, включая общую сумму и способы оплаты.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке присутствуют финансовые данные, включая общую сумму и способы оплаты.\"}",
+      "exec_id": "11615",
+      "wall_s": 2.29,
+      "cost": 0.00555855,
+      "prompt_tokens": 36941
+    },
+    {
+      "id": "receipt_14",
+      "layout": "hard",
+      "scale": "quarter",
+      "dims": [
+        459,
+        816
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении присутствует только чек с информацией о покупке.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении присутствует только чек с информацией о покупке.\"}",
+      "exec_id": "11616",
+      "wall_s": 2.25,
+      "cost": 0.00215595,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_14",
+      "layout": "hard",
+      "scale": "full",
+      "dims": [
+        1836,
+        3264
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке есть информация о способах оплаты, что может быть расценено как персональные данные.",
+      "raw_content": "```json\n{\"personal_data_present\": true, \"reason\": \"На чеке есть информация о способах оплаты, что может быть расценено как персональные данные.\"}\n```",
+      "exec_id": "11614",
+      "wall_s": 3.47,
+      "cost": 0.00556335,
+      "prompt_tokens": 36941
+    },
+    {
+      "id": "receipt_14",
+      "layout": "hard",
+      "scale": "eighth",
+      "dims": [
+        230,
+        408
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке могут быть видимые данные о транзакции, включая сумму и возможные идентификаторы.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке могут быть видимые данные о транзакции, включая сумму и возможные идентификаторы.\"}",
+      "exec_id": "11617",
+      "wall_s": 2.51,
+      "cost": 0.0013113,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_14",
+      "layout": "hard",
+      "scale": "sixteenth",
+      "dims": [
+        115,
+        204
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке могут быть видимые персональные данные, включая имя и адрес.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке могут быть видимые персональные данные, включая имя и адрес.\"}",
+      "exec_id": "11618",
+      "wall_s": 2.36,
+      "cost": 0.0013077,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_14",
+      "layout": "hard",
+      "scale": "thirtysecond",
+      "dims": [
+        57,
+        102
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении присутствуют данные о платеже.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении присутствуют данные о платеже.\"}",
+      "exec_id": "11619",
+      "wall_s": 2.43,
+      "cost": 0.0013047,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_19",
+      "layout": "easy",
+      "scale": "full",
+      "dims": [
+        576,
+        864
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении отсутствуют персональные или платежные данные.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении отсутствуют персональные или платежные данные.\"}",
+      "exec_id": "11620",
+      "wall_s": 2.27,
+      "cost": 0.00385545,
+      "prompt_tokens": 25607
+    },
+    {
+      "id": "receipt_19",
+      "layout": "easy",
+      "scale": "half",
+      "dims": [
+        288,
+        432
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении отсутствуют видимые персональные или платёжные данные.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении отсутствуют видимые персональные или платёжные данные.\"}",
+      "exec_id": "11621",
+      "wall_s": 2.21,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_19",
+      "layout": "easy",
+      "scale": "quarter",
+      "dims": [
+        144,
+        216
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении виден номер карты и сумма, что считается персональными данными.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении виден номер карты и сумма, что считается персональными данными.\"}",
+      "exec_id": "11622",
+      "wall_s": 2.22,
+      "cost": 0.0013083,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_19",
+      "layout": "easy",
+      "scale": "sixteenth",
+      "dims": [
+        36,
+        54
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении нет видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении нет видимых персональных или платёжных данных.\"}",
+      "exec_id": "11623",
+      "wall_s": 2.22,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_19",
+      "layout": "easy",
+      "scale": "eighth",
+      "dims": [
+        72,
+        108
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении присутствуют видимые данные, которые могут считаться персональными и платёжными.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении присутствуют видимые данные, которые могут считаться персональными и платёжными.\"}",
+      "exec_id": "11624",
+      "wall_s": 2.45,
+      "cost": 0.0013101,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_19",
+      "layout": "easy",
+      "scale": "thirtysecond",
+      "dims": [
+        18,
+        27
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении не видно явных персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении не видно явных персональных или платёжных данных.\"}",
+      "exec_id": "11625",
+      "wall_s": 2.23,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_19",
+      "layout": "hard",
+      "scale": "full",
+      "dims": [
+        576,
+        864
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении нет видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении нет видимых персональных или платёжных данных.\"}",
+      "exec_id": "11626",
+      "wall_s": 2.26,
+      "cost": 0.00385665,
+      "prompt_tokens": 25607
+    },
+    {
+      "id": "receipt_19",
+      "layout": "hard",
+      "scale": "half",
+      "dims": [
+        288,
+        432
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении нет явных персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении нет явных персональных или платёжных данных.\"}",
+      "exec_id": "11627",
+      "wall_s": 2.18,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_19",
+      "layout": "hard",
+      "scale": "quarter",
+      "dims": [
+        144,
+        216
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении может быть номер карты или другие финансовые данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении может быть номер карты или другие финансовые данные.\"}",
+      "exec_id": "11628",
+      "wall_s": 2.16,
+      "cost": 0.0013059,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_19",
+      "layout": "hard",
+      "scale": "eighth",
+      "dims": [
+        72,
+        108
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "изображение не содержит видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"изображение не содержит видимых персональных или платёжных данных.\"}",
+      "exec_id": "11629",
+      "wall_s": 2.2,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_19",
+      "layout": "hard",
+      "scale": "thirtysecond",
+      "dims": [
+        18,
+        27
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "изображение не содержит видимых данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"изображение не содержит видимых данных.\"}",
+      "exec_id": "11630",
+      "wall_s": 2.23,
+      "cost": 0.0013035,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_19",
+      "layout": "hard",
+      "scale": "sixteenth",
+      "dims": [
+        36,
+        54
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "изображение нечёткое и не содержит видимых данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"изображение нечёткое и не содержит видимых данных.\"}",
+      "exec_id": "11631",
+      "wall_s": 2.55,
+      "cost": 0.0013059,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_20",
+      "layout": "easy",
+      "scale": "full",
+      "dims": [
+        864,
+        1296
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении отсутствуют персональные или платёжные данные.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении отсутствуют персональные или платёжные данные.\"}",
+      "exec_id": "11632",
+      "wall_s": 2.33,
+      "cost": 0.00555615,
+      "prompt_tokens": 36941
+    },
+    {
+      "id": "receipt_20",
+      "layout": "easy",
+      "scale": "half",
+      "dims": [
+        432,
+        648
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении только посторонние данные о покупке, без личной информации.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении только посторонние данные о покупке, без личной информации.\"}",
+      "exec_id": "11633",
+      "wall_s": 2.28,
+      "cost": 0.00215775,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_20",
+      "layout": "easy",
+      "scale": "quarter",
+      "dims": [
+        216,
+        324
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке указаны суммы и итоги платежа.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке указаны суммы и итоги платежа.\"}",
+      "exec_id": "11634",
+      "wall_s": 2.24,
+      "cost": 0.0013053,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_20",
+      "layout": "easy",
+      "scale": "eighth",
+      "dims": [
+        108,
+        162
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке видны суммы и возможно идентифицируемая информация.",
+      "raw_content": "```json\n{\"personal_data_present\": true, \"reason\": \"На чеке видны суммы и возможно идентифицируемая информация.\"}\n```",
+      "exec_id": "11635",
+      "wall_s": 2.2,
+      "cost": 0.0013095,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_20",
+      "layout": "easy",
+      "scale": "sixteenth",
+      "dims": [
+        54,
+        81
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении может быть информация, связанная с платёжными данными.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении может быть информация, связанная с платёжными данными.\"}",
+      "exec_id": "11636",
+      "wall_s": 2.3,
+      "cost": 0.0013077,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_20",
+      "layout": "easy",
+      "scale": "thirtysecond",
+      "dims": [
+        27,
+        40
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении не видно никаких персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении не видно никаких персональных или платёжных данных.\"}",
+      "exec_id": "11637",
+      "wall_s": 2.18,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_20",
+      "layout": "hard",
+      "scale": "full",
+      "dims": [
+        864,
+        1296
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении представлен чек без видимых личных или платежных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении представлен чек без видимых личных или платежных данных.\"}",
+      "exec_id": "11638",
+      "wall_s": 2.3,
+      "cost": 0.00555735,
+      "prompt_tokens": 36941
+    },
+    {
+      "id": "receipt_20",
+      "layout": "hard",
+      "scale": "half",
+      "dims": [
+        432,
+        648
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На чеке отсутствуют персональные и платёжные данные.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На чеке отсутствуют персональные и платёжные данные.\"}",
+      "exec_id": "11639",
+      "wall_s": 2.3,
+      "cost": 0.00215595,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_20",
+      "layout": "hard",
+      "scale": "quarter",
+      "dims": [
+        216,
+        324
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На чеке нет видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На чеке нет видимых персональных или платёжных данных.\"}",
+      "exec_id": "11640",
+      "wall_s": 2.24,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_20",
+      "layout": "hard",
+      "scale": "eighth",
+      "dims": [
+        108,
+        162
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке могут быть видны данные о транзакции и, возможно, ФИО.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке могут быть видны данные о транзакции и, возможно, ФИО.\"}",
+      "exec_id": "11641",
+      "wall_s": 2.22,
+      "cost": 0.0013101,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_20",
+      "layout": "hard",
+      "scale": "sixteenth",
+      "dims": [
+        54,
+        81
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "Изображение может содержать подписанные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"Изображение может содержать подписанные данные.\"}",
+      "exec_id": "11642",
+      "wall_s": 2.17,
+      "cost": 0.0013041,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_20",
+      "layout": "hard",
+      "scale": "thirtysecond",
+      "dims": [
+        27,
+        40
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "Изображение не содержит видимых персональных или платежных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"Изображение не содержит видимых персональных или платежных данных.\"}",
+      "exec_id": "11643",
+      "wall_s": 2.34,
+      "cost": 0.0013065,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_26",
+      "layout": "easy",
+      "scale": "full",
+      "dims": [
+        720,
+        1280
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении отсутствуют видимые персональные или платёжные данные.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении отсутствуют видимые персональные или платёжные данные.\"}",
+      "exec_id": "11644",
+      "wall_s": 2.27,
+      "cost": 0.00555735,
+      "prompt_tokens": 36941
+    },
+    {
+      "id": "receipt_26",
+      "layout": "easy",
+      "scale": "half",
+      "dims": [
+        360,
+        640
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении нет видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении нет видимых персональных или платёжных данных.\"}",
+      "exec_id": "11645",
+      "wall_s": 2.25,
+      "cost": 0.00215655,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_26",
+      "layout": "easy",
+      "scale": "quarter",
+      "dims": [
+        180,
+        320
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении присутствует только чек без персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении присутствует только чек без персональных или платёжных данных.\"}",
+      "exec_id": "11646",
+      "wall_s": 2.37,
+      "cost": 0.0013077,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_26",
+      "layout": "easy",
+      "scale": "eighth",
+      "dims": [
+        90,
+        160
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке присутствуют данные, такие как телефонный номер и сумма транзакции.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке присутствуют данные, такие как телефонный номер и сумма транзакции.\"}",
+      "exec_id": "11647",
+      "wall_s": 2.35,
+      "cost": 0.0013089,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_26",
+      "layout": "easy",
+      "scale": "sixteenth",
+      "dims": [
+        45,
+        80
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке видны данные, такие как имя, номер карты и возможные другие персональные данные.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На чеке видны данные, такие как имя, номер карты и возможные другие персональные данные.\"}",
+      "exec_id": "11648",
+      "wall_s": 2.26,
+      "cost": 0.0013107,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_26",
+      "layout": "easy",
+      "scale": "thirtysecond",
+      "dims": [
+        22,
+        40
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении может быть видимый номер карты.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении может быть видимый номер карты.\"}",
+      "exec_id": "11649",
+      "wall_s": 2.22,
+      "cost": 0.0013041,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_26",
+      "layout": "hard",
+      "scale": "full",
+      "dims": [
+        720,
+        1280
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении присутствуют суммы, текстовая информация может соответствовать платежным данным.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении присутствуют суммы, текстовая информация может соответствовать платежным данным.\"}",
+      "exec_id": "11651",
+      "wall_s": 2.23,
+      "cost": 0.00555855,
+      "prompt_tokens": 36941
+    },
+    {
+      "id": "receipt_26",
+      "layout": "hard",
+      "scale": "half",
+      "dims": [
+        360,
+        640
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении нет видимых персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении нет видимых персональных или платёжных данных.\"}",
+      "exec_id": "11652",
+      "wall_s": 2.23,
+      "cost": 0.00215655,
+      "prompt_tokens": 14273
+    },
+    {
+      "id": "receipt_26",
+      "layout": "hard",
+      "scale": "quarter",
+      "dims": [
+        180,
+        320
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении отсутствуют видимые персональные или платёжные данные.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении отсутствуют видимые персональные или платёжные данные.\"}",
+      "exec_id": "11653",
+      "wall_s": 2.28,
+      "cost": 0.0013071,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_26",
+      "layout": "hard",
+      "scale": "eighth",
+      "dims": [
+        90,
+        160
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На чеке указаны суммы и, возможно, данные карты.",
+      "raw_content": "```json\n{\"personal_data_present\": true, \"reason\": \"На чеке указаны суммы и, возможно, данные карты.\"}\n```",
+      "exec_id": "11654",
+      "wall_s": 2.28,
+      "cost": 0.0013083,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_26",
+      "layout": "hard",
+      "scale": "sixteenth",
+      "dims": [
+        45,
+        80
+      ],
+      "gold_positive": false,
+      "pred": true,
+      "reason": "На изображении может быть видимая информация о платежах.",
+      "raw_content": "{\"personal_data_present\": true, \"reason\": \"На изображении может быть видимая информация о платежах.\"}",
+      "exec_id": "11655",
+      "wall_s": 2.19,
+      "cost": 0.0013059,
+      "prompt_tokens": 8606
+    },
+    {
+      "id": "receipt_26",
+      "layout": "hard",
+      "scale": "thirtysecond",
+      "dims": [
+        22,
+        40
+      ],
+      "gold_positive": false,
+      "pred": false,
+      "reason": "На изображении не видно персональных или платёжных данных.",
+      "raw_content": "{\"personal_data_present\": false, \"reason\": \"На изображении не видно персональных или платёжных данных.\"}",
+      "exec_id": "11656",
+      "wall_s": 2.23,
+      "cost": 0.0013059,
+      "prompt_tokens": 8606
+    }
+  ]
+}

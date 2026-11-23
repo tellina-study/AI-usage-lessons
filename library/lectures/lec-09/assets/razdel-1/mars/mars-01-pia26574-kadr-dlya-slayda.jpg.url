@@ -1,0 +1,14 @@
+source: https://commons.wikimedia.org/wiki/File:PIA26574-Mars-PerseveranceRover-Selfie-20250510.jpg
+direct_asset: https://photojournal.jpl.nasa.gov/jpeg/PIA26574.jpg
+catalog_id: PIA26574
+title: "Perseverance на 1500-й сол (кадрирование для слайда)"
+credit: NASA/JPL-Caltech/MSSS
+date_accessed: 2026-11-12
+derived_from: mars-01-pia26574-perseverance-selfie.jpg
+crop: "x 700..1920 из 1920, высота полная — отношение сторон 1,07:1 вместо исходных 1,68:1"
+crop_reason: >
+  В боковой колонке кадра s15 (3,50" при контуре слева) исходная пропорция
+  отдаёт аппарату меньше четверти площади снимка: на экране видна в основном
+  поверхность. Кадрирование до почти квадратного оставляет ту же сцену с тем
+  же склоном, но марсоход занимает центр. Исходник лежит рядом нетронутым.
+license: NASA public domain (US government work); на Викискладе — PD-USGov-NASA.

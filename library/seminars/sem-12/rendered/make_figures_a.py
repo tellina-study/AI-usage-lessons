@@ -3,7 +3,8 @@
 слайды n10-n23(+n15a).
 
 Источники чисел и фактов — `stend/zamery-A/README.md` (целиком) и
-`stend/zamery-A/zhurnal.md`. Корпус — 30 форм FUNSD `testing_data`
+`stend/zamery-A/zhurnal.md`. Корпус (Веха 3, issue #351, 2026-11-24) — 100
+форм FUNSD, `testing_data` + `training_data`
 (`stend/zamery-A/korpus/vyborka.json`), не копируется сюда.
 
     python3 make_figures_a.py
@@ -111,7 +112,7 @@ def a_mekhanika():
     y2 = 280
     box(d, 40, y2, W_PX - 80, 110,
         ["Чем крупнее скан — тем больше тайлов и тем дороже вызов",
-         "измерено: $3,85 на 1000 форм (30 реальных вызовов, не оценка)"],
+         "измерено: $3,888 на 1000 форм (100 реальных вызовов, не оценка)"],
         WARM, tc=DEEP, sz=19, outline=GOLD, where="механика-цена")
 
     save(im, "a-mekhanika.png")

@@ -41,6 +41,8 @@
 import re
 from dataclasses import dataclass, field, replace
 
+from pptx.enum.text import PP_ALIGN
+
 from . import floor, metrics, prims, report
 from .theme import DEEP, GOLD, LIGHT, SLATE, SURFACE, TEAL, WHITE
 
@@ -82,6 +84,13 @@ class PlateStyle:
     # равно пришпилено в том наборе явно — по правилу этого же модуля:
     # пришпиленное число обещание, унаследованное совпадение.
     value_rows_safe: bool = True
+    # COMPACT (issue #355 §9.8): note обрезается до `note_rows` строк с
+    # предупреждением вместо того, чтобы растить плашку под полный текст.
+    # По умолчанию выключено — поведение DEFAULT/LEC06/LEC07 не меняется.
+    note_truncate: bool = False
+    # COMPACT: подпись и значение в ОДНУ строку, если короткое значение
+    # туда помещается, — экономит ярус высоты на плашку.
+    label_value_oneline: bool = False
     # ЦВЕТ КЛЮЧЕВОГО ЗНАЧЕНИЯ — решение владельца О3 (`decisions-orkestratora.md`,
     # «на весь курс»), исполненное ПЕРЕКЛЮЧАТЕЛЕМ, а не сменой темы.
     #
@@ -134,6 +143,22 @@ LEC06 = PlateStyle(
     note_italic=False, note_color=SLATE, note_wsafe=True,
     value_rows_safe=True,
     warn_overflow=True, gold_fallback_last=False, total_from_rows=False)
+
+# COMPACT (issue #355 §9.8): против анти-формы BULLET_COLLAGE — плашки,
+# свёрнутые в текстовые буллиты, потому что `DEFAULT` не умел ужиматься
+# (Лекция 11, `plates_as_list`/`best_plate_style`: три типографских яруса
+# + поле съедали 4,5-5" на 4-6 плашек с длинными `note`). Три приёма:
+# поле ≤0,08" (`pad`), подпись и значение в ОДНУ строку, когда короткое
+# значение туда помещается (`label_value_oneline`), и `note` обрезается до
+# `note_rows` строк с предупреждением, а не растит плашку под полный текст
+# (`note_truncate`) — хвост уходит в заметки лектора, не на кадр.
+COMPACT = PlateStyle(
+    gap=0.12, pad=0.08, max_per_row=6, stroke_pt=1.0, gold_stroke_pt=1.6,
+    label_pt=12.0, label_ls=1.05, label_extra=0.02, label_extra_in_box=True,
+    value_hi=20.0, value_lo=12.0, value_floor=12.0, value_ls=1.02,
+    value_extra=0.0, value_rows_digit=1, value_rows_word=2,
+    note_pt=12.0, note_ls=1.08, note_extra=0.02, note_rows=2,
+    warn_overflow=True, note_truncate=True, label_value_oneline=True)
 
 
 def plates_of(sl, st=DEFAULT):
@@ -248,6 +273,50 @@ def _val_fit(value, iw, st):
     return f, rows
 
 
+def _combo_fits(p, st, iw):
+    """Подпись и значение в ОДНУ строку — кегль значения, если влезает,
+    иначе `None` (COMPACT, §9.8). Проверка ведётся по ФЛЕТ-строке на
+    кегле ЗНАЧЕНИЯ (крупнее подписи) — переоценка ширины консервативна:
+    если так влезает, смешанный набор (подпись мельче) влезет тем более."""
+    if not (st.label_value_oneline and p["label"] and p["value"]):
+        return None
+    f, rows = _val_fit(p["value"], iw, st)
+    if rows != 1:
+        return None
+    flat = f"{p['label'].upper()}: {p['value']}"
+    if metrics.n_lines(flat, f, iw, True) != 1:
+        return None
+    return f
+
+
+def _truncate_note(text, pt, w, rows, italic=True):
+    """Оговорка → (текст, обрезана?). Обрезка идёт по словам до самого
+    длинного префикса, который влезает в `rows` строк, плюс многоточие —
+    не удаление произвольного хвоста, а поиск наибольшего куска, который
+    держит форму (COMPACT, §9.8)."""
+    if metrics.n_lines(text, pt, w, False, italic) <= rows:
+        return text, False
+    words = text.split()
+    for k in range(len(words), 0, -1):
+        cand = " ".join(words[:k]).rstrip(" .,;:—–-") + "…"
+        if metrics.n_lines(cand, pt, w, False, italic) <= rows:
+            return cand, True
+    return "…", True
+
+
+def _note_fit(text, st, nw):
+    """Оговорка → (текст для рисования, обрезана?, высота). Общая мера для
+    `plate_h` и `_draw_plate` — одна арифметика, один результат."""
+    if st.note_truncate:
+        text2, truncated = _truncate_note(text, st.note_pt, nw,
+                                          st.note_rows, st.note_italic)
+    else:
+        text2, truncated = text, False
+    h = metrics.est_h(text2, st.note_pt, nw, st.note_ls, False,
+                      st.note_italic)
+    return text2, truncated, h
+
+
 def plate_h(p, pw, st=DEFAULT):
     """Высота ОДНОЙ плашки по её собственному содержимому.
 
@@ -256,18 +325,23 @@ def plate_h(p, pw, st=DEFAULT):
     светлым давала плашку ниже надписи, и надпись наезжала на оговорку."""
     iw = max(0.3, pw - 2 * st.pad)
     h = 2 * st.pad
-    if p["label"]:
-        lw = iw * metrics.W_SAFE if st.label_wsafe else iw
-        h += metrics.est_h(p["label"].upper(), st.label_pt, lw,
-                           st.label_ls, True) + st.label_extra
-    if p["value"]:
-        f, rows = _val_fit(p["value"], iw, st)
-        h += (rows * f * st.value_ls * metrics.LH / 72.0 * metrics.SAFE
+    combo_f = _combo_fits(p, st, iw)
+    if combo_f:
+        h += (combo_f * st.value_ls * metrics.LH / 72.0 * metrics.SAFE
               + st.value_extra)
+    else:
+        if p["label"]:
+            lw = iw * metrics.W_SAFE if st.label_wsafe else iw
+            h += metrics.est_h(p["label"].upper(), st.label_pt, lw,
+                               st.label_ls, True) + st.label_extra
+        if p["value"]:
+            f, rows = _val_fit(p["value"], iw, st)
+            h += (rows * f * st.value_ls * metrics.LH / 72.0 * metrics.SAFE
+                  + st.value_extra)
     if p["note"]:
         nw = iw * metrics.W_SAFE if st.note_wsafe else iw
-        h += st.note_extra + metrics.est_h(
-            p["note"], st.note_pt, nw, st.note_ls, False, st.note_italic)
+        _text2, _truncated, hn = _note_fit(p["note"], st, nw)
+        h += st.note_extra + hn
     return h
 
 
@@ -317,55 +391,99 @@ def _draw_plate(s, sid, p, x, y, w, h, is_gold, st, tag):
         report.GOLD_SEEN.add(sid)
     iw = max(0.3, w - 2 * st.pad)
     cy = y + st.pad
-    if p["label"]:
-        lw = iw * metrics.W_SAFE if st.label_wsafe else iw
-        lab = p["label"].upper()
-        rows = metrics.n_lines(lab, st.label_pt, lw, True)
-        if st.warn_overflow and rows > 2:
-            report.warn(
-                f"[плашки] {tag}: подпись «{p['label']}» заняла {rows} "
-                "строки — она задумана капителью в строку-две, длинное "
-                "место ей в `note`")
-        # РАСХОЖДЕНИЕ, видимое в геометрии: lec-07 кладёт отбивку (0,05")
-        # ВНУТРЬ рамки подписи, lec-06 — только в сдвиг курсора, а рамку
-        # даёт ровно по строкам. Сумма высот одна и та же, поэтому полоса
-        # целиком у обоих одинаковой высоты, но рамка самой подписи
-        # отличается на 0,05" — и это видно в XML доставленных дек.
+    combo_f = _combo_fits(p, st, iw)
+    if combo_f:
         floor.pt(st.label_pt, tag, "подпись плашки")
-        hl = metrics.est_h(lab, st.label_pt, lw, st.label_ls, True)
-        box = hl + st.label_extra if st.label_extra_in_box else hl
-        prims.text_box(s, x + st.pad, cy, iw, box, lab, size=st.label_pt,
-                       bold=True, color=st.label_color, ls=st.label_ls,
-                       tag=f"{tag}/подпись")
-        cy += hl + st.label_extra
-    if p["value"]:
-        f, rows = _val_fit(p["value"], iw, st)
-        if st.warn_overflow and rows > _rows_max(p["value"], st):
-            report.warn(
-                f"[плашки] {tag}: значению «{p['value']}» и на {f:.1f} пт "
-                f"нужно {rows} строки — плашка держит крупное ЧИСЛО, а не "
-                "фразу: длинное в `note` или на отдельную плашку")
-        floor.pt(f, tag, "значение плашки")
-        hv = (rows * f * st.value_ls * metrics.LH / 72.0 * metrics.SAFE
+        floor.pt(combo_f, tag, "значение плашки")
+        hv = (combo_f * st.value_ls * metrics.LH / 72.0 * metrics.SAFE
               + st.value_extra)
-        prims.text_box(s, x + st.pad, cy, iw, hv, p["value"], size=f,
-                       bold=True,
-                       color=st.value_key_color if is_gold else DEEP,
-                       ls=st.value_ls, tag=f"{tag}/значение")
+        runs = [
+            {"text": p["label"].upper() + ": ", "size": st.label_pt,
+             "bold": True, "color": st.label_color},
+            {"text": p["value"], "size": combo_f, "bold": True,
+             "color": st.value_key_color if is_gold else DEEP},
+        ]
+        prims.text_runs(s, x + st.pad, cy, iw, hv, runs, ls=st.value_ls,
+                        tag=f"{tag}/значение", quiet=True)
         cy += hv
+    else:
+        if p["label"]:
+            lw = iw * metrics.W_SAFE if st.label_wsafe else iw
+            lab = p["label"].upper()
+            rows = metrics.n_lines(lab, st.label_pt, lw, True)
+            if st.warn_overflow and rows > 2:
+                report.warn(
+                    f"[плашки] {tag}: подпись «{p['label']}» заняла {rows} "
+                    "строки — она задумана капителью в строку-две, длинное "
+                    "место ей в `note`")
+            # РАСХОЖДЕНИЕ, видимое в геометрии: lec-07 кладёт отбивку
+            # (0,05") ВНУТРЬ рамки подписи, lec-06 — только в сдвиг
+            # курсора, а рамку даёт ровно по строкам. Сумма высот одна и та
+            # же, поэтому полоса целиком у обоих одинаковой высоты, но
+            # рамка самой подписи отличается на 0,05" — и это видно в XML
+            # доставленных дек.
+            floor.pt(st.label_pt, tag, "подпись плашки")
+            hl = metrics.est_h(lab, st.label_pt, lw, st.label_ls, True)
+            box = hl + st.label_extra if st.label_extra_in_box else hl
+            prims.text_box(s, x + st.pad, cy, iw, box, lab, size=st.label_pt,
+                           bold=True, color=st.label_color, ls=st.label_ls,
+                           tag=f"{tag}/подпись")
+            cy += hl + st.label_extra
+        if p["value"]:
+            f, rows = _val_fit(p["value"], iw, st)
+            if st.warn_overflow and rows > _rows_max(p["value"], st):
+                report.warn(
+                    f"[плашки] {tag}: значению «{p['value']}» и на {f:.1f} "
+                    f"пт нужно {rows} строки — плашка держит крупное ЧИСЛО, "
+                    "а не фразу: длинное в `note` или на отдельную плашку")
+            floor.pt(f, tag, "значение плашки")
+            hv = (rows * f * st.value_ls * metrics.LH / 72.0 * metrics.SAFE
+                  + st.value_extra)
+            prims.text_box(s, x + st.pad, cy, iw, hv, p["value"], size=f,
+                           bold=True,
+                           color=st.value_key_color if is_gold else DEEP,
+                           ls=st.value_ls, tag=f"{tag}/значение")
+            cy += hv
     if p["note"]:
         nw = iw * metrics.W_SAFE if st.note_wsafe else iw
-        rows = metrics.n_lines(p["note"], st.note_pt, nw, False,
-                               st.note_italic)
-        if st.warn_overflow and rows > st.note_rows:
+        text2, truncated, hn = _note_fit(p["note"], st, nw)
+        if truncated:
             report.warn(
-                f"[плашки] {tag}: оговорка заняла {rows} строки "
-                f"(> {st.note_rows}) — полоса плашек выросла на эту высоту "
-                "за счёт тела слайда")
+                f"[плашки] {tag}: оговорка обрезана до {st.note_rows} "
+                "строк — хвост ушёл бы в заметки лектора, не на кадр")
+        elif st.warn_overflow:
+            rows = metrics.n_lines(text2, st.note_pt, nw, False,
+                                   st.note_italic)
+            if rows > st.note_rows:
+                report.warn(
+                    f"[плашки] {tag}: оговорка заняла {rows} строки "
+                    f"(> {st.note_rows}) — полоса плашек выросла на эту "
+                    "высоту за счёт тела слайда")
         floor.pt(st.note_pt, tag, "оговорка плашки")
-        hn = metrics.est_h(p["note"], st.note_pt, nw, st.note_ls, False,
-                           st.note_italic)
-        prims.text_box(s, x + st.pad, cy + st.note_extra, iw, hn, p["note"],
+        prims.text_box(s, x + st.pad, cy + st.note_extra, iw, hn, text2,
                        size=st.note_pt, italic=st.note_italic,
                        color=st.note_color, ls=st.note_ls,
                        tag=f"{tag}/оговорка")
+
+
+def draw_stat_tile(s, sid, x, y, w, h, value, label, *, note="",
+                   annotation=None, is_gold=False, st=COMPACT, tag=None):
+    """Одна самостоятельная плашка-статистика с необязательной МЕЛКОЙ
+    пометкой в правом верхнем углу («+12%», «НОВОЕ», «↑») — issue #355
+    §9.8, образец Лекции 10 k-12 (плитки справа от фото). Рисуется через
+    `_draw_plate`, той же мерой, что полоса `draw_plates`, но стоит
+    самостоятельно — не в ряду: раскладку (сколько плиток, где) даёт дека.
+
+    Пометка — не содержимое плашки, а ярлык НАД ним: разметку `note`
+    возвращает непустой, только если автор её передал."""
+    tag = tag or sid
+    p = {"label": label, "value": value, "note": note, "key": is_gold}
+    _draw_plate(s, sid, p, x, y, w, h, is_gold, st, tag)
+    report.PRIM["плашка-статистика"] += 1
+    if annotation:
+        ann_w = min(1.6, w * 0.5)
+        prims.text_box(s, x + w - ann_w - 0.06, y + 0.05, ann_w, 0.24,
+                       annotation, size=9.5, bold=True,
+                       color=GOLD if is_gold else TEAL,
+                       align=PP_ALIGN.RIGHT, tag=f"{tag}/пометка")
+    return h

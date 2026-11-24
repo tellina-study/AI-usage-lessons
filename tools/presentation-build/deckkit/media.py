@@ -14,6 +14,8 @@
 97 МБ при той же картинке на экране. Исходник НЕ подменяется: производная
 кладётся рядом, в отдельный каталог.
 """
+import os
+import subprocess
 from pathlib import Path
 
 from PIL import Image
@@ -95,13 +97,31 @@ def img_ratio(path):
     return 0.75 if not ar else 1.0 / ar
 
 
+def _candidate_path(root, rel):
+    """`root / rel`, перебирая КОНВЕНЦИИ пути по порядку, если `root` —
+    список кандидатов, а не одна папка (issue #355 §9.4: репозиторий ·
+    `rendered/` · папка лекции — три корня, которые раньше складывала
+    КАЖДАЯ дека сама, у Лекции 9 — один, у Лекции 11 — все три).
+
+    Возвращает первый СУЩЕСТВУЮЩИЙ путь, а если ни один не нашёлся — путь
+    от первого кандидата: вызывающий (`media_path`) сам скажет `[кадр]:
+    файла нет`, и сказать он обязан про осмысленный путь, не про голое имя."""
+    roots = root if isinstance(root, (list, tuple)) else (root,)
+    for r in roots:
+        p = Path(r) / rel
+        if p.exists():
+            return p
+    return Path(roots[0]) / rel
+
+
 def media_path(meta, root, sid=""):
     """Поле `media` → путь на диске или None. Файла нет — `[кадр]` в отчёт,
-    а кадр собирается как кадр без снимка."""
+    а кадр собирается как кадр без снимка. `root` — одна папка или список
+    кандидатов, перебираемых по порядку (`_candidate_path`)."""
     m = str(meta.get("media") or "").strip()
     if not m or m in ("none", "None"):
         return None
-    p = Path(m) if Path(m).is_absolute() else Path(root) / m
+    p = Path(m) if Path(m).is_absolute() else _candidate_path(root, m)
     if not p.exists():
         report.warn(f"[кадр] {sid}: файла нет — {m}")
         return None
@@ -117,12 +137,66 @@ def frames(meta, root, sid=""):
     out = [first]
     second = str(meta.get("media_2") or "").strip()
     if second:
-        p = Path(root) / second
+        p = _candidate_path(root, second)
         if p.exists():
             out.append(p)
         else:
             report.MISSING_MEDIA.append(f"{sid}: нет файла {p}")
     return out
+
+
+# ── .svg / .webp → .png, кешировано ─────────────────────────────────
+# [#289-1]-класс дефект: PIL/python-pptx их не берут, а ядро про это
+# молчит — снимок просто не рисуется без единого предупреждения. Эта
+# пара решает его ОДИН раз для всех дек (поднято из build_lec09.py:344 —
+# там это стояло локальной копией одной лекции).
+_RSVG_BIN = "/home/harness/.local/render-extras/sysroot/usr/bin/rsvg-convert"
+_RSVG_LIB = "/home/harness/.local/render-extras/sysroot/usr/lib/x86_64-linux-gnu"
+
+
+def _convert_svg(path, out, rsvg_bin, rsvg_lib):
+    env = dict(os.environ)
+    if rsvg_lib:
+        env["LD_LIBRARY_PATH"] = rsvg_lib + (
+            ":" + env["LD_LIBRARY_PATH"] if env.get("LD_LIBRARY_PATH") else "")
+    r = subprocess.run([rsvg_bin, "-w", "1600", str(path), "-o", str(out)],
+                       env=env, capture_output=True, text=True)
+    if r.returncode:
+        report.warn(f"[кадр] {path.name}: rsvg-convert упал — "
+                    f"{r.stderr[-300:]}")
+        return False
+    return True
+
+
+def _convert_webp(path, out):
+    try:
+        im = Image.open(path)
+        if im.mode not in ("RGB", "RGBA"):
+            im = im.convert("RGB")
+        im.save(out, "PNG")
+        return True
+    except Exception as e:                            # noqa: BLE001
+        report.warn(f"[кадр] {path.name}: конвертация .webp упала — {e}")
+        return False
+
+
+def convert_if_needed(path, cache_dir, *, rsvg_bin=_RSVG_BIN,
+                      rsvg_lib=_RSVG_LIB):
+    """`.svg`/`.webp` → кешированный `.png` в `cache_dir`. Любой другой
+    формат возвращается нетронутым. Кеш по времени изменения исходника —
+    пересборка не бьёт по диску и по времени на каждом прогоне."""
+    path = Path(path)
+    ext = path.suffix.lower()
+    if ext not in (".svg", ".webp"):
+        return path
+    cache_dir = Path(cache_dir)
+    out = cache_dir / (path.stem + ".png")
+    if out.exists() and out.stat().st_mtime >= path.stat().st_mtime:
+        return out
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    ok = (_convert_svg(path, out, rsvg_bin, rsvg_lib) if ext == ".svg"
+          else _convert_webp(path, out))
+    return out if ok and out.exists() else path
 
 
 def is_ribbon(meta, fr):
@@ -457,6 +531,63 @@ def place_hero(s, sid, meta, p, x_right, y_top, y_bot, w_max):
             f"[кадр] {sid}: обязательный hero занял {100 * area:.1f}% "
             f"площади кадра при пороге {100 * HERO_MIN_AREA:.0f}% (§5.9)")
     return x_box, bot
+
+
+def place_hero_centered(s, sid, meta, p, x_right, y_top, body_bot_y, *,
+                        target=0.42, w_cap=9.0):
+    """Hero-иллюстрация (§5.9, ≥40% площади) по ВЕРТИКАЛЬНОЙ СЕРЕДИНЕ
+    отведённой полосы, шириной, выведенной из СОБСТВЕННОГО отношения
+    сторон снимка — не из чужого магического числа.
+
+    issue #355 §9.3: третья копия подряд (`build_lec09.py:551`,
+    `build_lec11.py:400`) — уравнение `w² / ar = target·SLIDE_W·SLIDE_H`
+    решается заново для КАЖДОГО hero-кадра по его собственному `ar`,
+    потому что квадратный снимок (ar=1,0) и снимок 16:9 (ar≈1,778) не
+    делят одно число ширины. `target=0.42`, не 0.40 — запас, чтобы порог
+    §5.9 не задевался впритык при любой разумной пропорции.
+
+    Возвращает (левый край коробки, низ коробки, верх коробки)."""
+    ar = img_ar(p, sid) or (16 / 9)
+    w = min(w_cap, (target * SLIDE_W * SLIDE_H * ar) ** 0.5)
+    box_h = w / ar + 2 * HERO_PAD
+    top = max(y_top, y_top + (body_bot_y - y_top - box_h) / 2)
+    x_box, bot = place_hero(s, sid, meta, p, x_right, top, body_bot_y, w)
+    return x_box, bot, top
+
+
+def photo_strip(s, sid, photos, x, y, w, h, *, gap=0.14, cap_pt=CAP_PT,
+                cap_h=0.30, tag=""):
+    """2-3 снимка в РЯД, каждый со своей ОДНОСТРОЧНОЙ подписью под ним —
+    issue #355 §9.9, образец Лекции 10 (`build_lec10_p2.py:608`, s20:
+    «что получилось» / «что не получилось» рядом, подпись-вывод под
+    каждым). `photos` — список `{"media": <путь>, "caption": <строка>}`;
+    путь уже РАЗРЕШЁН (`media.media_path`/`resolve_media`) — эта функция
+    не читает фронтматтер и не выбирает конвенцию пути, только рисует.
+
+    Файла нет — рамка с честной надписью в месте снимка (тот же договор,
+    что у `prims.add_image`), а не тихо пустой квадрат. Возвращает занятую
+    высоту (снимки + подписи)."""
+    n = len(photos)
+    if not n:
+        report.warn(f"[кадр] {tag or sid}: photo_strip без фотографий")
+        return 0.0
+    pw = max(0.3, (w - (n - 1) * gap) / n)
+    ph = max(0.3, h - CAP_GAP - cap_h)
+    for i, item in enumerate(photos):
+        px = x + i * (pw + gap)
+        path = item.get("media") if isinstance(item, dict) else item
+        cap = (item.get("caption") or "") if isinstance(item, dict) else ""
+        itag = f"{tag or sid}/фото{i + 1}"
+        if path and Path(path).exists():
+            prims.add_image(s, path, px, y, pw, ph, tag=itag)
+        else:
+            report.warn(f"[кадр] {itag}: файла нет — {path}")
+            prims.ocean_box(s, px, y, pw, ph, fill=SURFACE)
+        if cap:
+            prims.text_box(s, px, y + ph + CAP_GAP, pw, cap_h, cap,
+                           size=cap_pt, italic=True, color=LIGHT,
+                           align=PP_ALIGN.CENTER, ls=1.10, tag=itag)
+    return ph + CAP_GAP + cap_h
 
 
 # ── hero по ПОРЯДКУ ДЕКИ, а не по объявлению автора ─────────────────

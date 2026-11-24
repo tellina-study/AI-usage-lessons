@@ -1226,13 +1226,33 @@ def content(p, sl, root):
         y += th + GAP
 
     body_w, media_bot, draw_img = body_w_top, 0.0, None
-    if not hero and img:
+    img2 = None
+    if not hero and img and sl.meta.get("media_2"):
+        img2 = resolve_media({"media": sl.meta.get("media_2")}, sl.sid)
+    if not hero and img and img2:
+        # Второе фото рядом с первым в той же боковой колонке — раздел 5
+        # спеки (`s13`): «Событие» + «дверь в лаборатории NTSB» одной
+        # парой, стопкой друг над другом (та же ширина колонки, что у
+        # одиночного фото, высота колонки делится пополам).
+        mw = sl.media_w or MEDIA_W
+        half_h = min(MEDIA_H_CAP, col_bot - y) / 2 - COL_GAP / 2
+        mw1, mh1 = media.media_box_size(media.img_ar(img, sl.sid), mw, half_h)
+        mw2, mh2 = media.media_box_size(media.img_ar(img2, sl.sid), mw, half_h)
+        mw_col = max(mw1, mw2)
+        body_w = body_w_top - mw_col - COL_GAP
+        draw_img = (MX + body_w + COL_GAP, y, mw1, mh1)
+        draw_img2 = (MX + body_w + COL_GAP, y + mh1 + COL_GAP, mw2, mh2)
+        media_bot = y + mh1 + COL_GAP + mh2
+    elif not hero and img:
         mw, mh = media.media_box_size(
             media.img_ar(img, sl.sid), sl.media_w or MEDIA_W,
             min(MEDIA_H_CAP, col_bot - y))
         body_w = body_w_top - mw - COL_GAP
         draw_img = (MX + body_w + COL_GAP, y, mw, mh)
         media_bot = y + mh
+        draw_img2 = None
+    else:
+        draw_img2 = None
 
     avail = col_bot - y
     blocks_present = bool(slidefile.body_blocks(sl)) and not body_drawn
@@ -1333,6 +1353,8 @@ def content(p, sl, root):
                     f"({avail:.2f}\") — примитивы съели кадр")
     if draw_img:
         media.draw_media(s, sl.sid, img, *draw_img)
+    if draw_img2:
+        media.draw_media(s, sl.sid, img2, *draw_img2)
     gold_tick(s, sl.sid, MX, sl.tick_y or (TITLE_Y + 0.98))
     footer(s, sl)
     return s

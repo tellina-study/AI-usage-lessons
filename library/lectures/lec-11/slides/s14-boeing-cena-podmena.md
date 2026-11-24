@@ -6,7 +6,8 @@ type: case_study
 title: "Boeing 737 MAX 9 — цена и подмена"
 assertion: "Финальная проверка четырёх болтов — задача ровно того класса, который машинное зрение решает хорошо: фиксированная геометрия, контролируемый свет, бинарный признак «есть / нет» — и зрение не спросили"
 source: "[NTSB, финальный отчёт AIR-25-04](https://www.ntsb.gov/investigations/AccidentReports/Reports/AIR2504.pdf) · [Forbes, компенсация Alaska](https://www.forbes.com/sites/jamesfarrell/2024/04/04/boeing-pays-alaska-airlines-160-million-after-door-blowout-incident/) · [Forbes, потери United](https://www.forbes.com/sites/suzannerowankelleher/2024/04/17/united-airlines-lost-200-million-from-boeing-max-9-grounding/)"
-media: ""
+media: "assets/screenshots/boeing-missing-bolts-ntsb-lab.jpg"
+media_needed: "лабораторное фото NTSB — отсутствующие болты заглушки, вещественное доказательство расследования"
 blocks:
   - {label: "Компенсация Boeing → Alaska Air Group", value: "$160 млн", note: "объявлена предварительной, 4 апреля 2024"}
   - {label: "Потери United за квартал", value: "$200 млн", note: "в составе квартального доналогового убытка $164 млн, Q1 2024"}

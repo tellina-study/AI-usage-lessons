@@ -719,10 +719,12 @@ def udar(p, sl, root):
     список-напоминание · `itog`-плашка · подвал."""
     s = prims.blank(p)
     prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE, count="фон")
-    check_prims(sl, "udar", allow=("figure", "itog"))
+    check_prims(sl, "udar", allow=("figure", "itog", "piktogrammy"))
     y = heading(s, sl)
     bb = body_bot(sl)
     fig = figure.figure_of(sl, FIG_S43)
+    pik = piktogrammy.pikto_of(sl, st=PIKTO)
+    pik_h = piktogrammy.pikto_h(pik, FULL_W, PIKTO) if pik else 0.0
     it = itog.itog_of(sl, st=ITOG)
     it_h = itog.itog_h(it, FULL_W, ITOG) if it else 0.0
     list_runs = body_runs(sl, {"bullet": 15.0, "para": 15.0})
@@ -731,17 +733,22 @@ def udar(p, sl, root):
         figure.check_figure(sl.sid, fig, FULL_W, FIG_S43)
         fig_h = figure.figure_h(fig, FULL_W, FIG_S43)
         avail = bb - y
-        reserve = list_h + (GAP if list_runs else 0) + it_h + (GAP if it else 0)
+        reserve = (pik_h + (GAP if pik else 0) + list_h
+                  + (GAP if list_runs else 0) + it_h + (GAP if it else 0))
         if fig_h > avail - reserve + 0.02:
             report.warn(
-                f"[высота] {sl.sid}/удар: фигура+список+итог заняли бы "
-                f"{fig_h + reserve:.2f}\" при {avail:.2f}\" свободных — "
-                "фигура сжата до пола, но может не влезть")
+                f"[высота] {sl.sid}/удар: фигура+пиктограммы+список+итог "
+                f"заняли бы {fig_h + reserve:.2f}\" при {avail:.2f}\" "
+                "свободных — фигура сжата до пола, но может не влезть")
         figure.draw_figure(s, sl.sid, fig, MX, y, FULL_W, FIG_S43)
         y += fig_h + GAP
     else:
         report.warn(f"[число] {sl.sid}: кадр-удар без поля `figure` — "
                     "ударять нечем")
+    if pik:
+        piktogrammy.check_pikto(sl.sid, pik, FULL_W, PIKTO)
+        piktogrammy.draw_pikto(s, sl.sid, pik, MX, y, FULL_W, PIKTO)
+        y += pik_h + GAP
     if list_runs:
         metrics.fit_runs(list_runs, FULL_W - 0.08, bb - (it_h + GAP if it else 0) - y,
                          ls=1.22, tag=f"{sl.sid}/список", proj_base=BODY_PT)

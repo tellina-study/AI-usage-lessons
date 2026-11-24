@@ -1,5 +1,5 @@
 ---
-id: s09
+id: s10
 local_id: s1-01
 section: "1. Технический контроль качества"
 type: case_study

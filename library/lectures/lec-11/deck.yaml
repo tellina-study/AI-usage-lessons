@@ -104,22 +104,21 @@ slides:
     type: divider
     section: "1. Технический контроль качества"
     assertion: "1. Технический контроль качества"
-    media: ""
-    note: "ПРАВКА issue #353 правка 1 — фото снято: тот же файл, что на s09/s10, рисовался в Ocean rounded box дивайдера и читался как content-слайд, не как раздел-переход"
+    media: "assets/screenshots/divider-s08-audi-neckarsulm-wps-team.jpg"
 
   - id: s09
-    file: slides/s09-audi-cena-klassika-model.md
-    type: case_study
-    section: "1. Технический контроль качества"
-    assertion: "WPS Analytics целится в охват до 100% сварных точек там, где ультразвук проверял выборку неизвестного размера — а учителем модели остаётся тот же ультразвук"
-    media: "assets/screenshots/audi-neckarsulm-wps-production.jpg"
-
-  - id: s10
-    file: slides/s10-audi-foto-dashboard.md
+    file: slides/s09-audi-foto-dashboard.md
     type: case_study
     section: "1. Технический контроль качества"
     assertion: "Пилот 2022 года в Неккарсульме идёт на три площадки группы в 2023-м, и к модели пристёгнут собственный контур сертификации"
     media: "assets/screenshots/audi-neckarsulm-wps-dashboard.jpg"
+
+  - id: s10
+    file: slides/s10-audi-cena-klassika-model.md
+    type: case_study
+    section: "1. Технический контроль качества"
+    assertion: "WPS Analytics целится в охват до 100% сварных точек там, где ультразвук проверял выборку неизвестного размера — а учителем модели остаётся тот же ультразвук"
+    media: "assets/screenshots/audi-neckarsulm-wps-production.jpg"
 
   - id: s11
     file: slides/s11-audi-ustroystvo.md
@@ -162,7 +161,7 @@ slides:
     type: divider
     section: "2. Техническое обслуживание и ремонт"
     assertion: "Модель предсказывает состояние узла — расписание меняется, сам процесс модель не трогает"
-    media: ""
+    media: "assets/screenshots/divider-s16-robot-service-shop.jpg"
 
   - id: s17
     file: slides/s17-gm-fanuc-zero-down-time.md
@@ -170,7 +169,6 @@ slides:
     section: "2. Техническое обслуживание и ремонт"
     assertion: "FANUC довела горизонт предупреждения об отказе робота с «нескольких недель» до шести месяцев — но заявленные $40 млн экономии не сходятся с открытой арифметикой простоя в 20–40 раз"
     media: "assets/screenshots/gm-fairfax-fanuc-zero-down-time-robots.jpg"
-    note: "ПРАВКА issue #353 правка 3 — фото подключено (было пусто)"
 
   - id: s18
     file: slides/s18-ge-predix-proval.md
@@ -199,21 +197,21 @@ slides:
     type: divider
     section: "3. Управление технологическим процессом"
     assertion: "3. Управление технологическим процессом"
-    media: ""
+    media: "assets/screenshots/divider-s21-dcs-control-room.jpg"
 
   - id: s22
-    file: slides/s22-yokogawa-cena-klassika-model.md
-    type: case_study
-    section: "3. Управление технологическим процессом"
-    assertion: "FKDPP провёл дистилляционную колонну 35 суток (840 часов) без вмешательства человека и снизил расход пара и выбросов CO₂ на 40% — против ручного управления, не против работавшей рядом связки ПИД+APC"
-    media: "assets/screenshots/yokogawa-eneos-yokkaichi-plant.jpg"
-
-  - id: s23
-    file: slides/s23-yokogawa-foto-kolonna.md
+    file: slides/s22-yokogawa-foto-kolonna.md
     type: norm
     section: "3. Управление технологическим процессом"
     assertion: "Эффект (−40% пара) опубликован; цена разработки, лицензии и внедрения — нигде. Два с половиной года работы остаются за кадром пресс-релиза"
     media: "assets/screenshots/yokogawa-eneos-materials-overview.jpg"
+
+  - id: s23
+    file: slides/s23-yokogawa-cena-klassika-model.md
+    type: case_study
+    section: "3. Управление технологическим процессом"
+    assertion: "FKDPP провёл дистилляционную колонну 35 суток (840 часов) без вмешательства человека и снизил расход пара и выбросов CO₂ на 40% — против ручного управления, не против работавшей рядом связки ПИД+APC"
+    media: "assets/screenshots/yokogawa-eneos-yokkaichi-plant.jpg"
 
   - id: s24
     file: slides/s24-yokogawa-ustroystvo.md
@@ -242,21 +240,21 @@ slides:
     type: divider
     section: "4. Безлюдное производство"
     assertion: "Раздел 4. Безлюдное производство"
-    media: ""
+    media: "assets/screenshots/divider-s27-fanuc-cnc-factory.jpg"
 
   - id: s28
-    file: slides/s28-amberg-traektoriya.md
-    type: case_study
-    section: "4. Безлюдное производство"
-    assertion: "Amberg в основном сам и есть классический режим: 75% цепочки стоимости машинами, штат не выросший — и один случай обученной модели на весь завод; множитель роста выпуска при этом называют четырьмя разными числами в четырёх публикациях"
-    media: ""
-
-  - id: s29
-    file: slides/s29-amberg-foto-tsekh.md
+    file: slides/s28-amberg-foto-tsekh.md
     type: norm
     section: "4. Безлюдное производство"
     assertion: "Три четверти цепочки стоимости завода выполняют машины — вот как выглядит оставшаяся четверть, где работают люди"
     media: "assets/screenshots/siemens-amberg-ewa-shopfloor.jpg"
+
+  - id: s29
+    file: slides/s29-amberg-traektoriya.md
+    type: case_study
+    section: "4. Безлюдное производство"
+    assertion: "Amberg в основном сам и есть классический режим: 75% цепочки стоимости машинами, штат не выросший — и один случай обученной модели на весь завод; множитель роста выпуска при этом называют четырьмя разными числами в четырёх публикациях"
+    media: ""
 
   - id: s30
     file: slides/s30-amberg-ml-keys-ustroystvo.md
@@ -271,7 +269,6 @@ slides:
     section: "4. Безлюдное производство"
     assertion: "План — 5000 Model 3 в неделю «в течение 2017 года»; факт Q3 2017 — 260 машин за квартал; цель достигнута через ручную линию в тентовой конструкции GA4, собранную за три недели и давшую пятую часть рекордной недели"
     media: "assets/screenshots/tesla-fremont-ga4-tent-interior.jpg"
-    note: "ПРАВКА issue #353 правка 3 — фото подключено (было пусто)"
 
   - id: s32
     file: slides/s32-tesla-otkat-otlivka-sintez.md
@@ -279,7 +276,6 @@ slides:
     section: "4. Безлюдное производство"
     assertion: "Одна и та же компания откатилась от самой амбициозной версии технологии к проверенной дважды за шесть лет — и оба раза возврат к проверенному методу сработал"
     media: "assets/screenshots/tesla-fremont-model-y-single-piece-megacast.jpg"
-    note: "ПРАВКА issue #353 правка 3 — заменено фото станка Giga Press на фото самой однодетальной отливки"
 
   - id: s33
     file: slides/s33-fanuc-mif.md
@@ -322,7 +318,7 @@ slides:
     type: divider
     section: "5. Цена решения и границы"
     assertion: "5. Цена решения и границы"
-    media: ""
+    media: "assets/screenshots/divider-s38-balance-scale.jpg"
 
   - id: s39
     file: slides/s39-tsena-resheniya.md

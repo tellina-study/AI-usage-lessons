@@ -1,5 +1,5 @@
 ---
-id: s22
+id: s23
 local_id: s3-01
 section: "3. Управление технологическим процессом"
 type: case_study

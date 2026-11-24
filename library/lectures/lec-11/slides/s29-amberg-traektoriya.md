@@ -1,5 +1,5 @@
 ---
-id: s28
+id: s29
 local_id: s4-01
 section: "4. Безлюдное производство"
 type: case_study

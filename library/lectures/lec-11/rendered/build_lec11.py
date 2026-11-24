@@ -1061,7 +1061,16 @@ def content(p, sl, root):
         # приём, что у `divider()`/`build_lec09.content`): полоса TEAL,
         # нулевая по высоте и не отнимающая ширины у тела.
         prims.rect(s, 0, 0, 0.17, SLIDE_H, TEAL, count="полоса")
+    is_content = kind in CONTENT_TYPES
     bb = body_bot(sl)
+    # `itog:` на обычном содержательном кадре (не только `stage_overview`/
+    # `udar`, которые уже умели его рисовать) — золотая полоса-вывод
+    # прижата к НИЗУ тела, резервируется ПЕРВОЙ, до hero/боковой колонки,
+    # тем же ходом, что `stage_overview()` резервирует свою.
+    it = itog.itog_of(sl, st=ITOG) if is_content else None
+    it_h = itog.itog_h(it, FULL_W, ITOG) if it else 0.0
+    if it:
+        bb = bb - it_h - GAP
     img = resolve_media(sl.meta, sl.sid)
     hero = img is not None and bool(sl.meta.get("media_hero"))
     col_bot, body_w_top = bb, FULL_W
@@ -1085,7 +1094,6 @@ def content(p, sl, root):
     else:
         y = heading(s, sl)
 
-    is_content = kind in CONTENT_TYPES
     if not is_content:
         check_prims(sl, kind)
 
@@ -1356,6 +1364,11 @@ def content(p, sl, root):
         media.draw_media(s, sl.sid, img, *draw_img)
     if draw_img2:
         media.draw_media(s, sl.sid, img2, *draw_img2)
+    if it:
+        itog.check_itog(sl.sid, it, FULL_W, ITOG)
+        itog.draw_itog(s, sl.sid, it, MX, bb + GAP, FULL_W, ITOG,
+                       tag=f"{sl.sid}/итог")
+        report.GOLD_SEEN.add(sl.sid)
     gold_tick(s, sl.sid, MX, sl.tick_y or (TITLE_Y + 0.98))
     footer(s, sl)
     return s

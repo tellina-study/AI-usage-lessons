@@ -833,6 +833,36 @@ def probe_headline_wired(tmp):
                    "одном прогоне s09 — content() не нарисовал headline_number")
 
 
+def probe_media_roots(tmp):
+    """`media.media_path` перебирает НЕСКОЛЬКО корней по порядку (issue
+    #355 §9.4: репозиторий / `rendered/` / папка лекции — раньше каждая
+    дека складывала их сама). Единственный корень — старое поведение, не
+    тронуто."""
+    from deckkit import media as _media
+    d = tmp / "media-roots"
+    (d / "a").mkdir(parents=True, exist_ok=True)
+    (d / "b").mkdir(parents=True, exist_ok=True)
+    (d / "b" / "logo.png").write_bytes(b"x")
+    report.reset()
+    single = _media.media_path({"media": "logo.png"}, d / "b", "проба")
+    report.reset()
+    multi = _media.media_path({"media": "logo.png"}, [d / "a", d / "b"],
+                              "проба")
+    report.reset()
+    none_found = _media.media_path({"media": "logo.png"}, [d / "a"], "проба")
+    missing_named = any(w.startswith("[кадр]") and "logo.png" in w
+                        for w in report.WARNINGS)
+    if single and multi and single == multi and none_found is None \
+            and missing_named:
+        OK.append("[кадр] конвенции пути")
+        say(f"{'[кадр] конвенции пути':<24} несколько корней: ЛОВИТ  →  "
+            "второй корень находит файл, который первый не нашёл; старое "
+            "поведение (один корень) не изменилось")
+    else:
+        BAD.append(f"[кадр] конвенции пути single={single} multi={multi} "
+                   f"none={none_found} named={missing_named}")
+
+
 def probe_font_gap():
     """Отсутствующее начертание выходит ПРОБЕЛОМ `[шрифт]`, а не молчаливой
     оценкой по соседнему файлу."""
@@ -933,6 +963,7 @@ def selftest():
     probe_plates_compact()
     probe_ikonki(tmp)
     probe_headline_wired(tmp)
+    probe_media_roots(tmp)
     probe_font_gap()
     probe_live_links(tmp)
     probe_fingerprint(tmp)

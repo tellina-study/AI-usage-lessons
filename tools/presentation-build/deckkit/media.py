@@ -14,6 +14,8 @@
 97 МБ при той же картинке на экране. Исходник НЕ подменяется: производная
 кладётся рядом, в отдельный каталог.
 """
+import os
+import subprocess
 from pathlib import Path
 
 from PIL import Image
@@ -95,13 +97,31 @@ def img_ratio(path):
     return 0.75 if not ar else 1.0 / ar
 
 
+def _candidate_path(root, rel):
+    """`root / rel`, перебирая КОНВЕНЦИИ пути по порядку, если `root` —
+    список кандидатов, а не одна папка (issue #355 §9.4: репозиторий ·
+    `rendered/` · папка лекции — три корня, которые раньше складывала
+    КАЖДАЯ дека сама, у Лекции 9 — один, у Лекции 11 — все три).
+
+    Возвращает первый СУЩЕСТВУЮЩИЙ путь, а если ни один не нашёлся — путь
+    от первого кандидата: вызывающий (`media_path`) сам скажет `[кадр]:
+    файла нет`, и сказать он обязан про осмысленный путь, не про голое имя."""
+    roots = root if isinstance(root, (list, tuple)) else (root,)
+    for r in roots:
+        p = Path(r) / rel
+        if p.exists():
+            return p
+    return Path(roots[0]) / rel
+
+
 def media_path(meta, root, sid=""):
     """Поле `media` → путь на диске или None. Файла нет — `[кадр]` в отчёт,
-    а кадр собирается как кадр без снимка."""
+    а кадр собирается как кадр без снимка. `root` — одна папка или список
+    кандидатов, перебираемых по порядку (`_candidate_path`)."""
     m = str(meta.get("media") or "").strip()
     if not m or m in ("none", "None"):
         return None
-    p = Path(m) if Path(m).is_absolute() else Path(root) / m
+    p = Path(m) if Path(m).is_absolute() else _candidate_path(root, m)
     if not p.exists():
         report.warn(f"[кадр] {sid}: файла нет — {m}")
         return None
@@ -117,12 +137,66 @@ def frames(meta, root, sid=""):
     out = [first]
     second = str(meta.get("media_2") or "").strip()
     if second:
-        p = Path(root) / second
+        p = _candidate_path(root, second)
         if p.exists():
             out.append(p)
         else:
             report.MISSING_MEDIA.append(f"{sid}: нет файла {p}")
     return out
+
+
+# ── .svg / .webp → .png, кешировано ─────────────────────────────────
+# [#289-1]-класс дефект: PIL/python-pptx их не берут, а ядро про это
+# молчит — снимок просто не рисуется без единого предупреждения. Эта
+# пара решает его ОДИН раз для всех дек (поднято из build_lec09.py:344 —
+# там это стояло локальной копией одной лекции).
+_RSVG_BIN = "/home/harness/.local/render-extras/sysroot/usr/bin/rsvg-convert"
+_RSVG_LIB = "/home/harness/.local/render-extras/sysroot/usr/lib/x86_64-linux-gnu"
+
+
+def _convert_svg(path, out, rsvg_bin, rsvg_lib):
+    env = dict(os.environ)
+    if rsvg_lib:
+        env["LD_LIBRARY_PATH"] = rsvg_lib + (
+            ":" + env["LD_LIBRARY_PATH"] if env.get("LD_LIBRARY_PATH") else "")
+    r = subprocess.run([rsvg_bin, "-w", "1600", str(path), "-o", str(out)],
+                       env=env, capture_output=True, text=True)
+    if r.returncode:
+        report.warn(f"[кадр] {path.name}: rsvg-convert упал — "
+                    f"{r.stderr[-300:]}")
+        return False
+    return True
+
+
+def _convert_webp(path, out):
+    try:
+        im = Image.open(path)
+        if im.mode not in ("RGB", "RGBA"):
+            im = im.convert("RGB")
+        im.save(out, "PNG")
+        return True
+    except Exception as e:                            # noqa: BLE001
+        report.warn(f"[кадр] {path.name}: конвертация .webp упала — {e}")
+        return False
+
+
+def convert_if_needed(path, cache_dir, *, rsvg_bin=_RSVG_BIN,
+                      rsvg_lib=_RSVG_LIB):
+    """`.svg`/`.webp` → кешированный `.png` в `cache_dir`. Любой другой
+    формат возвращается нетронутым. Кеш по времени изменения исходника —
+    пересборка не бьёт по диску и по времени на каждом прогоне."""
+    path = Path(path)
+    ext = path.suffix.lower()
+    if ext not in (".svg", ".webp"):
+        return path
+    cache_dir = Path(cache_dir)
+    out = cache_dir / (path.stem + ".png")
+    if out.exists() and out.stat().st_mtime >= path.stat().st_mtime:
+        return out
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    ok = (_convert_svg(path, out, rsvg_bin, rsvg_lib) if ext == ".svg"
+          else _convert_webp(path, out))
+    return out if ok and out.exists() else path
 
 
 def is_ribbon(meta, fr):

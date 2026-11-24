@@ -162,6 +162,7 @@ FOOT_PT, FOOT_LS = 15.0, 1.12
 FOOT_GAP = 0.12
 MEDIA_W = 4.30
 MEDIA_H_CAP = 3.40
+MEDIA_H_CAP_OVERRIDE = {"s31": 5.2}
 COL_GAP = 0.34
 # 0,14"→0,10": четвёртая сборка — несколько плотных case_study/schema_
 # layered-кадров (`s22`/`s26`/`s30`) топили тело на 0,16-0,25" уже после
@@ -775,8 +776,13 @@ def keystone_gap_box(s, sid, text, x, y, w):
 # (жирный ярлык — значение — оговорка) даёт то же утверждение БЕЗ этого
 # оверхеда. Это раскладка, не контент: слова label/value/note переносятся
 # буквально, просто без боксов.
-BULLET_COLLAGE = {"s20", "s39", "s41", "s26", "s30",
-                  "s40"}
+BULLET_COLLAGE = set()
+# Раздел 5 спеки (issue #353): все кадры анти-формы BULLET_COLLAGE
+# переведены на `plates.COMPACT`/`best_plate_style`/новые формы ядра
+# (`COMPACT_PLATES`, `ikonki:`, `itog:` и т. д.) по отдельности, ниже по
+# файлам кадров. Множество оставлено пустым (не удалено) — единственное
+# место, которое проверяется, если на какой-то кадр снова понадобится
+# анти-форма вместо плашек.
 # Раздел 5/9 спеки 07-design-review-spec.md (issue #353/#355): `plates.
 # COMPACT` — пресет, который `BULLET_COLLAGE` пыталось заменить ДО того,
 # как ядро научилось ужиматься (issue #355 §9.8, `note_truncate`/
@@ -1253,9 +1259,13 @@ def content(p, sl, root):
         draw_img2 = (MX + body_w + COL_GAP, y + mh1 + COL_GAP, mw2, mh2)
         media_bot = y + mh1 + COL_GAP + mh2
     elif not hero and img:
+        # `s31` (раздел 5 спеки): фото было тёмным и мелким на умолчательном
+        # потолке `MEDIA_H_CAP` 3,40" — слот поднят до ~5,2" точечно для
+        # этого кадра, остальные некадрированные фото деки не трогает.
+        h_cap = MEDIA_H_CAP_OVERRIDE.get(sl.sid, MEDIA_H_CAP)
         mw, mh = media.media_box_size(
             media.img_ar(img, sl.sid), sl.media_w or MEDIA_W,
-            min(MEDIA_H_CAP, col_bot - y))
+            min(h_cap, col_bot - y))
         body_w = body_w_top - mw - COL_GAP
         draw_img = (MX + body_w + COL_GAP, y, mw, mh)
         media_bot = y + mh

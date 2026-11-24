@@ -6,9 +6,9 @@ type: case_study
 title: "Tesla, производственный ад 2017–2018: план на 5000 машин в неделю и ручная линия в тенте"
 assertion: "План — 5000 Model 3 в неделю «в течение 2017 года»; факт Q3 2017 — 260 машин за квартал; цель достигнута через ручную линию в тентовой конструкции GA4, собранную за три недели и давшую пятую часть рекордной недели"
 source: "[TechCrunch, план 5000/нед.](https://techcrunch.com/2017/11/01/tesla-predicts-production-rate-of-5k-model-3-cars-per-week-by-late-q1-2018/) · [Teslarati, факт Q3 2017](https://www.teslarati.com/tesla-produces-260-model-3-delivers-220-q3-citing-production-bottlenecks/) · [CNBC, тент GA4](https://www.cnbc.com/2019/07/15/tesla-workers-in-ga4-tent-describe-pressure-to-make-model-3-goals.html) · [твит Маска, 13.04.2018](https://x.com/elonmusk/status/984882630947753984)"
-media: "assets/screenshots/tesla-fremont-ga4-tent-interior.jpg"
-media_caption: "Внутри тентовой линии GA4, Fremont, июнь 2018 — видна арочная ферма тента, кузов Model 3 в защитном чехле на конвейере, рабочий у ручной операции"
-media_needed: "найдено и подключено (issue #353, правка 3): вид изнутри тентовой линии GA4 — характерная арочная металлическая решётка тента в кадре, Teslarati через Wayback Machine, июнь 2018 — Tier 1 (og:image), см. rework/research-350/05-illustrations-log.md §7. Взят вместо второго найденного кандидата (tesla-fremont-ga4-tent-flyover.jpg — дрон-кадр ниже качеством, car-wash-силуэт без видимого тента; оставлен в assets/ как резерв, не подключён). По прямому указанию владельца («не ограничивайся одним Giga Press») — отдельное фото под этот эпизод, не Giga Press (тот относится ко ВТОРОМУ откату, s32)."
+media: "assets/screenshots/tesla-tent-interior-line.jpg"
+media_caption: "Внутри тентовой линии GA4, Fremont, июнь 2018 — сборочная линия и рабочие на ручной операции под тентом"
+media_needed: "раздел 5 спеки 07-design-review-spec.md: прежнее фото (tesla-fremont-ga4-tent-interior.jpg) тёмное и мелкое на развёртке — заменено на более читаемое tesla-tent-interior-line.jpg, слот фото поднят"
 blocks:
   - {label: "План, май 2017", value: "5000 машин / нед.", note: "обещано «в течение 2017 года»"}
   - {label: "Факт, Q3 2017", value: "260 машин за квартал", note: "план квартала ≈1500 — отставание почти шестикратное"}

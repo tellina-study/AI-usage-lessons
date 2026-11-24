@@ -212,6 +212,44 @@ def table_geom(table, size, w):
     return widths, heights, rows
 
 
+def table_of(sl):
+    """Поле `table` (`headers:`/`rows:`) → список списков для `draw_table`
+    — тот же перевод словаря в список списков, что `blocks:`/`scheme:`
+    уже получают от `plates.plates_of`/`scheme.scheme_of`. Третья копия
+    подряд (issue #355 §9.5: `build_lec09.py:599`, `build_lec11.py:413`)
+    — поле `table` до сих пор не читал ни один модуль ядра."""
+    raw = sl.meta.get("table")
+    if raw in (None, "", [], {}):
+        return None
+    if not isinstance(raw, dict):
+        report.warn(f"[таблица] {sl.sid}: поле `table` — "
+                    f"{type(raw).__name__}, а должно быть словарём")
+        return None
+    headers = [str(h) for h in (raw.get("headers") or [])]
+    rows = raw.get("rows") or []
+    if not headers or not rows:
+        report.warn(f"[таблица] {sl.sid}: поле `table` без headers/rows — "
+                    "не рисуется")
+        return None
+    return [headers] + [[str(c) for c in r] for r in rows]
+
+
+def fit_height(table, hi, avail_h, w):
+    """Кегль таблицы, подобранный по ВЫСОТЕ, а не только по ширине столбца
+    (`tbl_size` меряет только ширину — таблица с короткими клетками, но
+    многими строками укладывается по ширине на любом кегле, а по высоте
+    нет). Поднято из `build_lec09.py:315`: тот же перебор «от большего
+    кегля вниз», что `metrics.fit_size`, но критерий — сумма высот строк."""
+    size = hi
+    while size > TBL_FLOOR:
+        sz = tbl_size(table, size, w)
+        _w, heights, _rows = table_geom(table, sz, w)
+        if sum(heights) <= avail_h:
+            return sz
+        size -= 0.5
+    return TBL_FLOOR
+
+
 def check_cols(table, size, w, tag):
     """`[столбец]`: столбец всё равно уже своего самого длинного слова.
 

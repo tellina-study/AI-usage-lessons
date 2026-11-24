@@ -90,7 +90,8 @@ def file_probes(tmp, seq):
                  ("s07-clean-illustration.md", probes.CLEAN_ILLUSTRATION),
                  ("s08-clean-divider-photo.md", probes.CLEAN_DIVIDER_PHOTO),
                  ("s09-clean-headline-number.md",
-                  probes.CLEAN_HEADLINE_NUMBER)],
+                  probes.CLEAN_HEADLINE_NUMBER),
+                 ("s10-clean-table-field.md", probes.CLEAN_TABLE_FIELD)],
                 tmp, seq, name="clean")
     say("── САМОПРОВЕРКА ЯДРА ────────────────────────────────────────")
     say(f"чистые кадры (прогон · таблица · одно число · дорожки · "
@@ -863,6 +864,27 @@ def probe_media_roots(tmp):
                    f"none={none_found} named={missing_named}")
 
 
+def probe_table_field_wired(tmp):
+    """`table:` (issue #355 §9.5): образцовый `content()` теперь ЧИТАЕТ
+    поле напрямую, как `blocks:`/`scheme:`. Самоотчёт не принимается —
+    считается текст в сохранённом пакете, тем же приёмом, что
+    `probe_headline_wired`."""
+    from pptx import Presentation
+    prs = Presentation(str(tmp / "clean.pptx"))
+    sl = prs.slides[9]            # s10-clean-table-field.md
+    texts = [r.text for shp in sl.shapes if shp.has_text_frame
+             for p in shp.text_frame.paragraphs for r in p.runs]
+    want = {"Было", "Стало", "5500 ч", "10500 ч"}
+    if want <= set(texts):
+        OK.append("[таблица] поле")
+        say(f"{'[таблица] поле':<24} в пакете: ЛОВИТ  →  шапка и клетки "
+            "`table:` стоят на s10 — content() прочитал поле, а не "
+            "промолчал о нём")
+    else:
+        BAD.append(f"[таблица] поле — {want - set(texts)} не найдено "
+                   "на s10")
+
+
 def probe_font_gap():
     """Отсутствующее начертание выходит ПРОБЕЛОМ `[шрифт]`, а не молчаливой
     оценкой по соседнему файлу."""
@@ -964,6 +986,7 @@ def selftest():
     probe_ikonki(tmp)
     probe_headline_wired(tmp)
     probe_media_roots(tmp)
+    probe_table_field_wired(tmp)
     probe_font_gap()
     probe_live_links(tmp)
     probe_fingerprint(tmp)

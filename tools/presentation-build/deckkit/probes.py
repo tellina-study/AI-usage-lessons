@@ -208,6 +208,28 @@ headline_number: "27%"
 проба
 """
 
+# issue #355 §9.5: поле `table` (`headers:`/`rows:`) читает ядро напрямую,
+# как `blocks:`/`scheme:` уже делают. Третья копия подряд
+# (build_lec09.py:599, build_lec11.py:413).
+CLEAN_TABLE_FIELD = """---
+id: s10
+type: case
+title: "Проба на поле table"
+source: "—"
+table:
+  headers: ["Было", "Стало"]
+  rows:
+    - ["5500 ч", "10500 ч"]
+    - ["ручная вычитка", "два круга согласования"]
+---
+
+## Видимый текст слайда
+
+## Заметки лектора
+
+проба
+"""
+
 CLEAN_DIVIDER_PHOTO = """---
 id: s08
 type: divider

@@ -145,7 +145,7 @@ def check_prims(sl, kind):
     сессия раздела написала бы полосу плашек и не узнала, что её нет."""
     for f, name in (("blocks", "плашки"), ("scheme", "схема"),
                     ("columns", "столбцы"), ("matrix_empty", "матрица"),
-                    ("figure", "число")):
+                    ("figure", "число"), ("table", "таблица")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
@@ -303,6 +303,17 @@ def content(p, sl, root, g=G):
         ch = max(columns.MIN_H, min(col_bot - y, columns.MAX_H))
         columns.draw_columns(s, sl.sid, cols, g.mx, y, body_w, ch)
         y += ch + g.gap
+    # `table:` (issue #355 §9.5) — поле читает ядро напрямую, как `blocks:`
+    # и `scheme:` уже делают; раскладка та же, что у строки-таблицы, которую
+    # `slidefile.body_ordered` разбирает ИЗ ТЕКСТА (`|a|b|`) — здесь вход
+    # структурный, из фронтматтера, а не из markdown-пайпов тела.
+    tbl = tables.table_of(sl) if is_content else None
+    if tbl:
+        avail_tbl = max(0.3, col_bot - y)
+        size = tables.fit_height(tbl, g.body_pt, avail_tbl, body_w)
+        tables.check_cols(tbl, size, body_w, f"{sl.sid}/таблица")
+        y += tables.draw_table(s, g.mx, y, tbl, size, body_w,
+                               f"{sl.sid}/таблица") + g.gap
 
     heading_ord, blocks = slidefile.body_ordered(sl)
     tables.apply_matrix_empty(sl.sid, sl.meta, blocks)

@@ -129,16 +129,15 @@ def case_b_corpus_overview():
     n = len(thumbs)
     im = Image.new("RGB", (1988, 700), W)
     d = ImageDraw.Draw(im)
-    head(d, "Корпус: настоящие снимки, одна запись целиком", sz=30)
-    d.text((40, 64),
+    d.text((40, 24),
             f"{n} групп корпуса из {len({e['group'] for e in entries})} — каждая фотография "
             "получает три записи ниже",
-            font=f(21), fill=LIGHT)
+            font=f(24), fill=DEEP)
 
     gap, margin = 16, 40
     tw = (1988 - 2 * margin - (n - 1) * gap) / n
-    th = 150
-    ty = 100
+    th = 170
+    ty = 64
     for i, (g, pid) in enumerate(thumbs):
         tx = margin + i * (tw + gap)
         _paste_fit(im, CORPUS / f"{pid}.jpg", tx, ty, tw, th)

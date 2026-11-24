@@ -33,7 +33,7 @@ from PIL import Image
 from pptx import Presentation
 from pptx.enum.shapes import MSO_SHAPE
 
-from . import (axis, ladder, markup, metrics, plates, prims, probes,
+from . import (axis, ikonki, ladder, markup, metrics, plates, prims, probes,
                refdeck, regress, render, report, scheme, selftest_contrast,
                selftest_layout, tables, tracks)
 from .theme import SURFACE, WHITE
@@ -770,6 +770,47 @@ def probe_plates_compact():
                    f"{h_default:.2f}, обрезано={truncated}")
 
 
+def probe_ikonki(tmp):
+    """`ikonki.py` (issue #355 §9.6): строка карточек рисует ровно то, что
+    `ikonki_h` обещала, иконка без файла на диске называется предупреждением
+    и не роняет сборку, а чужая форма поля — тоже предупреждение, не
+    падение (тот же договор, что у `plates.plates_of`)."""
+    report.reset()
+    icon_dir = tmp / "ikonki-assets"
+    icon_dir.mkdir(exist_ok=True)
+    data = {"mode": "row", "rows": [
+        {"label": "Раздел", "arrows": True, "items": [
+            {"icon": "sprout", "text": "Один"},
+            {"icon": "wheat", "text": "Два"},
+        ]},
+    ]}
+    h_promised = ikonki.ikonki_h(data, 12.23)
+    p = prims.new_deck()
+    s = prims.blank(p)
+    h_drawn = ikonki.draw_ikonki(s, icon_dir, data, 0.55, 1.0, 12.23,
+                                 tag="проба/иконки")
+    missing_named = any(w.startswith("[иконка]") and "sprout" in w
+                        for w in report.WARNINGS)
+    report.reset()
+
+    class _Bad:
+        sid = "проба-плохое-поле"
+        meta = {"ikonki": "не словарь"}
+
+    bad = ikonki.ikonki_of(_Bad())
+    bad_named = any(w.startswith("[иконки]") for w in report.WARNINGS)
+    ok = (abs(h_promised - h_drawn) < 0.01 and missing_named
+          and bad is None and bad_named)
+    if ok:
+        OK.append("[иконки]")
+        say(f"{'[иконки]':<24} строка карточек: ЛОВИТ  →  высота обещана "
+            f"{h_promised:.2f}\", нарисована {h_drawn:.2f}\"; иконка без "
+            "файла и `ikonki` не-словарём — обе предупреждением, не падением")
+    else:
+        BAD.append(f"[иконки] h={h_promised:.2f}/{h_drawn:.2f} "
+                   f"missing={missing_named} bad={bad}/{bad_named}")
+
+
 def probe_font_gap():
     """Отсутствующее начертание выходит ПРОБЕЛОМ `[шрифт]`, а не молчаливой
     оценкой по соседнему файлу."""
@@ -868,6 +909,7 @@ def selftest():
     probe_shadow()
     probe_tint()
     probe_plates_compact()
+    probe_ikonki(tmp)
     probe_font_gap()
     probe_live_links(tmp)
     probe_fingerprint(tmp)

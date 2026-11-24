@@ -34,7 +34,7 @@
      наша). Поле ИСКЛЮЧЕНО из подсчёта точности для всех трёх методов — сравнение с
      испорченным эталоном не может быть ни «верно», ни «неверно».
 
-Обе правки найдены на числах варианта «модель-зрение» (там, где они были видны
+Обе правки найдены на числах варианта «мультимодальная модель» (там, где они были видны
 первыми) и применены РОВНО ОДИНАКОВО к vision/hybrid/ocr_rules — поправка эталона,
 а не метода.
 """
@@ -188,7 +188,7 @@ def main():
     rows_hybrid = score_method(corpus, targets_by_form, hybrid_pred, "hybrid")
     rows_rules = score_method(corpus, targets_by_form, rules_pred, "ocr_rules")
 
-    for rows, title in [(rows_vision, "Модель-зрение"),
+    for rows, title in [(rows_vision, "Мультимодальная модель"),
                          (rows_hybrid, "Гибрид (OCR-текст -> gpt-4o-mini)"),
                          (rows_rules, "OCR + правила")]:
         print(f"\n=== {title}: {len(rows)} полей (после исключения GT-брака и склейки) ===")

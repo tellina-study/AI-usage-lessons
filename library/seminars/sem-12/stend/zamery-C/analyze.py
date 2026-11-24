@@ -11,7 +11,9 @@ from corpus import (SMOKE_POS, SMOKE_NEG, SMOKE_DISPUTED, SMOKE_VALTEST_HARDNEG,
                      SMOKE_TRAIN_HARDNEG, SMOKE_GENERAL_NEG, SMOKE_VALTEST_POS,
                      SMOKE_TRAIN_POS_SCENE, SMOKE_TRAIN_POS_IMAGE,
                      FOOD_POS_FULL, FOOD_NEG, FOOD_ANIMAL_NEG, FOOD_B_NEG,
+                     FOOD_MINOR_EXCLUDED, FOOD_DISPUTED,
                      SLIDES_SCREEN_PRESENT, SLIDES_SCREEN_ABSENT, SLIDES_READABLE, SLIDES_BLANK,
+                     SLIDES_HARDNEG, SLIDES_GENERAL_NEG_NEW,
                      SMOKE_VALTEST_DIR, SMOKE_TRAIN_DIR)
 
 HERE = Path(__file__).parent
@@ -53,9 +55,11 @@ smoke_total_reviewed = vt_total + tr_total
 smoke_total_hardneg = len(SMOKE_VALTEST_HARDNEG) + len(SMOKE_TRAIN_HARDNEG)
 print(f"курение ОБЪЕДИНЁННО: строго неверно {pct(smoke_total_hardneg, smoke_total_reviewed)}, "
       f"спорно {pct(len(SMOKE_DISPUTED), smoke_total_reviewed)}")
-food_total = len(FOOD_POS_FULL) + len(FOOD_ANIMAL_NEG) + 4 + 2  # +minors +disputed
+food_total = len(FOOD_POS_FULL) + len(FOOD_ANIMAL_NEG) + len(FOOD_MINOR_EXCLUDED) + len(FOOD_DISPUTED)
 print(f"еда/напитки: животное вместо человека {pct(len(FOOD_ANIMAL_NEG), len(FOOD_POS_FULL)+len(FOOD_ANIMAL_NEG))} "
-      f"из позитивно-помеченного пула 'Eating'")
+      f"из позитивно-помеченного пула 'Eating'/'Drinking' (всего просмотрено {food_total}: "
+      f"позитив {len(FOOD_POS_FULL)}, несовершеннолетние исключены {len(FOOD_MINOR_EXCLUDED)}, "
+      f"спорно {len(FOOD_DISPUTED)})")
 
 print()
 print("=" * 70)
@@ -116,6 +120,14 @@ print("YOLO (класс 'tv'/'laptop'):", conf_yolo_s)
 conf_vision_s = confusion(SLIDES_SCREEN_PRESENT, SLIDES_SCREEN_ABSENT,
                            lambda k: (vision.get(k, {}).get("parsed") or {}).get("screen_present", False))
 print("Vision:", conf_vision_s)
+# разложение ложных тревог vision по трём группам негатива (круг 3, добор): печатный
+# постер/баннер, принятый пометкой OI за "Presentation", vs обычная B-сцена без экрана
+hardneg_fp = sum(1 for k in SLIDES_HARDNEG if (vision.get(k, {}).get("parsed") or {}).get("screen_present", False))
+gennew_fp = sum(1 for k in SLIDES_GENERAL_NEG_NEW if (vision.get(k, {}).get("parsed") or {}).get("screen_present", False))
+bscene_fp = sum(1 for k in FOOD_B_NEG if (vision.get(k, {}).get("parsed") or {}).get("screen_present", False))
+print(f"  из них на печатном постере/баннере, принятом пометкой OI за экран ({len(SLIDES_HARDNEG)}): {hardneg_fp}/{len(SLIDES_HARDNEG)}")
+print(f"  из них на обычном \"экрана просто нет\" добора ({len(SLIDES_GENERAL_NEG_NEW)}): {gennew_fp}/{len(SLIDES_GENERAL_NEG_NEW)}")
+print(f"  из них на B-сценах мероприятий без экрана ({len(FOOD_B_NEG)}): {bscene_fp}/{len(FOOD_B_NEG)}")
 
 readable_keys = [k for k in SLIDES_SCREEN_PRESENT if k[1] in SLIDES_READABLE]
 blank_keys = [k for k in SLIDES_SCREEN_PRESENT if k[1] in SLIDES_BLANK]
@@ -154,6 +166,12 @@ for cls, pos, neg, key in [
           f"негатив-скоры min/med/max = {neg_scores[0]:.3f}/{neg_scores[len(neg_scores)//2]:.3f}/{neg_scores[-1]:.3f}; "
           f"лучший порог={best_thr}, сумма ошибок={best_sum_err} из {len(pos)+len(neg)} "
           f"({round(100*best_sum_err/(len(pos)+len(neg)),1)}%)")
+    # раздельные доли (поймано/пропустил/ложная тревога) НА ЭТОМ ЖЕ лучшем пороге —
+    # пробел, названный сессией кадров: раньше была только сумма ошибок для еды/экрана
+    conf_best = confusion(pos, neg, lambda k, t=best_thr: siglip.get(k, {}).get(key, 0) >= t)
+    print(f"  @лучший порог {best_thr} раздельно: попал {conf_best['tp']} из {len(pos)}, "
+          f"пропустил {conf_best['fn']} из {len(pos)} ({pct(conf_best['fn'], len(pos))}), "
+          f"ложная тревога {conf_best['fp']} из {len(neg)} ({pct(conf_best['fp'], len(neg))})")
 
 print()
 print("=" * 70)

@@ -1,0 +1,545 @@
+{
+  "meta": {
+    "model": "openai/gpt-4o-mini",
+    "n_forms": 30,
+    "total_cost": 0.115437,
+    "total_wall_s": 15.99
+  },
+  "per_form": {
+    "83823750": {
+      "exec_id": "12357",
+      "wall_s": 2.96,
+      "node_ms": 2221,
+      "content": "{\n  \"field_1\": \"Robert H. Shaw, Esq.\",\n  \"field_2\": \"910-336-7077\",\n  \"field_3\": \"November 11, 1997\",\n  \"field_4\": \"2\",\n  \"field_5\": \"Charles Duggan\",\n  \"field_6\": \"910-335-7720\"\n}",
+      "prompt_tokens": 25748,
+      "completion_tokens": 79,
+      "cost": 0.0039096,
+      "raw_error": null,
+      "wall_s_outer": 2.96,
+      "parsed": {
+        "field_1": "Robert H. Shaw, Esq.",
+        "field_2": "910-336-7077",
+        "field_3": "November 11, 1997",
+        "field_4": "2",
+        "field_5": "Charles Duggan",
+        "field_6": "910-335-7720"
+      }
+    },
+    "83443897": {
+      "exec_id": "12361",
+      "wall_s": 3.38,
+      "node_ms": 2175,
+      "content": "{\n  \"field_1\": \"Andy Zaunser and Rob Mangas\",\n  \"field_2\": \"202/828-2259 and 202/828-2241\",\n  \"field_3\": \"January 11, 1999\",\n  \"field_4\": \"2\",\n  \"field_5\": \"336/373-6750\",\n  \"field_6\": \"Dewey Tedder\"\n}",
+      "prompt_tokens": 25747,
+      "completion_tokens": 91,
+      "cost": 0.00391665,
+      "raw_error": null,
+      "wall_s_outer": 3.38,
+      "parsed": {
+        "field_1": "Andy Zaunser and Rob Mangas",
+        "field_2": "202/828-2259 and 202/828-2241",
+        "field_3": "January 11, 1999",
+        "field_4": "2",
+        "field_5": "336/373-6750",
+        "field_6": "Dewey Tedder"
+      }
+    },
+    "83624198": {
+      "exec_id": "12362",
+      "wall_s": 3.88,
+      "node_ms": 2065,
+      "content": "{\n  \"field_1\": \"Andy Zausner\",\n  \"field_2\": \"910/335-7718\",\n  \"field_3\": \"February 25, 1998\",\n  \"field_4\": \"12\",\n  \"field_5\": \"910/335-7718\",\n  \"field_6\": \"202\"\n}",
+      "prompt_tokens": 25746,
+      "completion_tokens": 75,
+      "cost": 0.0039069,
+      "raw_error": null,
+      "wall_s_outer": 3.88,
+      "parsed": {
+        "field_1": "Andy Zausner",
+        "field_2": "910/335-7718",
+        "field_3": "February 25, 1998",
+        "field_4": "12",
+        "field_5": "910/335-7718",
+        "field_6": "202"
+      }
+    },
+    "83553333_3334": {
+      "exec_id": "12358",
+      "wall_s": 4.11,
+      "node_ms": 2273,
+      "content": "{\n  \"field_1\": \"Charles Duggan\",\n  \"field_2\": \"Fax Transmittal\",\n  \"field_3\": \"November 12, 1999\",\n  \"field_4\": \"6\",\n  \"field_5\": null,\n  \"field_6\": \"Thomas M. Sobol\"\n}",
+      "prompt_tokens": 25749,
+      "completion_tokens": 70,
+      "cost": 0.00390435,
+      "raw_error": null,
+      "wall_s_outer": 4.11,
+      "parsed": {
+        "field_1": "Charles Duggan",
+        "field_2": "Fax Transmittal",
+        "field_3": "November 12, 1999",
+        "field_4": "6",
+        "field_5": null,
+        "field_6": "Thomas M. Sobol"
+      }
+    },
+    "83573282": {
+      "exec_id": "12359",
+      "wall_s": 4.24,
+      "node_ms": 1955,
+      "content": "{\n  \"field_1\": \"Steve W. Berman\",\n  \"field_2\": \"(206) 633-7292\",\n  \"field_3\": \"January 14, 1999\",\n  \"field_4\": \"37\",\n  \"field_5\": null,\n  \"field_6\": null\n}",
+      "prompt_tokens": 25749,
+      "completion_tokens": 70,
+      "cost": 0.00390435,
+      "raw_error": null,
+      "wall_s_outer": 4.24,
+      "parsed": {
+        "field_1": "Steve W. Berman",
+        "field_2": "(206) 633-7292",
+        "field_3": "January 14, 1999",
+        "field_4": "37",
+        "field_5": null,
+        "field_6": null
+      }
+    },
+    "82092117": {
+      "exec_id": "12360",
+      "wall_s": 4.45,
+      "node_ms": 2380,
+      "content": "{\n  \"field_1\": \"George Baroody\",\n  \"field_2\": \"(336) 335-7392\",\n  \"field_3\": \"12/10/98\",\n  \"field_4\": \"3\",\n  \"field_5\": \"(614) 466-5087\",\n  \"field_6\": null\n}",
+      "prompt_tokens": 25749,
+      "completion_tokens": 74,
+      "cost": 0.00239955,
+      "raw_error": null,
+      "wall_s_outer": 4.45,
+      "parsed": {
+        "field_1": "George Baroody",
+        "field_2": "(336) 335-7392",
+        "field_3": "12/10/98",
+        "field_4": "3",
+        "field_5": "(614) 466-5087",
+        "field_6": null
+      }
+    },
+    "86220490": {
+      "exec_id": "12363",
+      "wall_s": 2.41,
+      "node_ms": 1734,
+      "content": "{\n  \"field_1\": \"Mike Mozina\",\n  \"field_2\": \"Autodial\",\n  \"field_3\": \"8/31/98\",\n  \"field_4\": \"3 (including this cover page)\",\n  \"field_5\": \"Susan Smith\",\n  \"field_6\": \"335-7733\"\n}",
+      "prompt_tokens": 25741,
+      "completion_tokens": 73,
+      "cost": 0.00390495,
+      "raw_error": null,
+      "wall_s_outer": 2.41,
+      "parsed": {
+        "field_1": "Mike Mozina",
+        "field_2": "Autodial",
+        "field_3": "8/31/98",
+        "field_4": "3 (including this cover page)",
+        "field_5": "Susan Smith",
+        "field_6": "335-7733"
+      }
+    },
+    "82562350": {
+      "exec_id": "12364",
+      "wall_s": 2.28,
+      "node_ms": 1699,
+      "content": "{\n  \"field_1\": \"Mr. Randy Spell\",\n  \"field_2\": \"952 894-9690\",\n  \"field_3\": \"May 1, 2000\",\n  \"field_4\": \"4\",\n  \"field_5\": \"Rick Redfield\",\n  \"field_6\": null\n}",
+      "prompt_tokens": 25740,
+      "completion_tokens": 71,
+      "cost": 0.0039036,
+      "raw_error": null,
+      "wall_s_outer": 2.28,
+      "parsed": {
+        "field_1": "Mr. Randy Spell",
+        "field_2": "952 894-9690",
+        "field_3": "May 1, 2000",
+        "field_4": "4",
+        "field_5": "Rick Redfield",
+        "field_6": null
+      }
+    },
+    "83594639": {
+      "exec_id": "12365",
+      "wall_s": 2.18,
+      "node_ms": 1550,
+      "content": "{\n  \"field_1\": \"Ron Milstein\",\n  \"field_2\": \"(910) 335-7707\",\n  \"field_3\": \"September 22, 1997\",\n  \"field_4\": \"3\",\n  \"field_5\": \"\\\"JJ\\\" Klein\"\n}",
+      "prompt_tokens": 25735,
+      "completion_tokens": 63,
+      "cost": 0.00389805,
+      "raw_error": null,
+      "wall_s_outer": 2.18,
+      "parsed": {
+        "field_1": "Ron Milstein",
+        "field_2": "(910) 335-7707",
+        "field_3": "September 22, 1997",
+        "field_4": "3",
+        "field_5": "\"JJ\" Klein"
+      }
+    },
+    "92380595": {
+      "exec_id": "12366",
+      "wall_s": 2.33,
+      "node_ms": 1847,
+      "content": "{\n  \"field_1\": \"LORILLARD, INC.\",\n  \"field_2\": null,\n  \"field_3\": \"12-13-89\",\n  \"field_4\": \"MR. ARTHUR STEVENS\",\n  \"field_5\": null,\n  \"field_6\": \"12/14/89\"\n}",
+      "prompt_tokens": 25742,
+      "completion_tokens": 74,
+      "cost": 0.0039057,
+      "raw_error": null,
+      "wall_s_outer": 2.33,
+      "parsed": {
+        "field_1": "LORILLARD, INC.",
+        "field_2": null,
+        "field_3": "12-13-89",
+        "field_4": "MR. ARTHUR STEVENS",
+        "field_5": null,
+        "field_6": "12/14/89"
+      }
+    },
+    "87528380": {
+      "exec_id": "12368",
+      "wall_s": 2.42,
+      "node_ms": 1629,
+      "content": "{\n  \"field_1\": \"Lorillard Corporation\",\n  \"field_2\": \"October 16, 1987\",\n  \"field_3\": \"4\",\n  \"field_4\": \"Mr. Robert Kennedy\"\n}",
+      "prompt_tokens": 25720,
+      "completion_tokens": 49,
+      "cost": 0.0038874,
+      "raw_error": null,
+      "wall_s_outer": 2.42,
+      "parsed": {
+        "field_1": "Lorillard Corporation",
+        "field_2": "October 16, 1987",
+        "field_3": "4",
+        "field_4": "Mr. Robert Kennedy"
+      }
+    },
+    "86328049_8050": {
+      "exec_id": "12369",
+      "wall_s": 2.23,
+      "node_ms": 1481,
+      "content": "{\n  \"field_1\": \"Ken Forrest\",\n  \"field_2\": \"212-403-2211\",\n  \"field_3\": null,\n  \"field_4\": \"Tom Frederick\",\n  \"field_5\": \"Tom Griffin\",\n  \"field_6\": \"Even-Hurwitz\"\n}",
+      "prompt_tokens": 25744,
+      "completion_tokens": 66,
+      "cost": 0.0039012,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": "Ken Forrest",
+        "field_2": "212-403-2211",
+        "field_3": null,
+        "field_4": "Tom Frederick",
+        "field_5": "Tom Griffin",
+        "field_6": "Even-Hurwitz"
+      }
+    },
+    "83635935": {
+      "exec_id": "12367",
+      "wall_s": 3.69,
+      "node_ms": 2300,
+      "content": "{\n  \"field_1\": \"Dr. Spears/A.J. Stevens/R. Milstain\",\n  \"field_2\": \"(212) 935-6801.\",\n  \"field_3\": \"June 4, 1997\",\n  \"field_4\": \"Barry Hirsch\"\n}",
+      "prompt_tokens": 25721,
+      "completion_tokens": 62,
+      "cost": 0.00389535,
+      "raw_error": null,
+      "wall_s_outer": 3.69,
+      "parsed": {
+        "field_1": "Dr. Spears/A.J. Stevens/R. Milstain",
+        "field_2": "(212) 935-6801.",
+        "field_3": "June 4, 1997",
+        "field_4": "Barry Hirsch"
+      }
+    },
+    "83641919_1921": {
+      "exec_id": "12370",
+      "wall_s": 2.27,
+      "node_ms": 1947,
+      "content": "{\n  \"field_1\": \"S. P. ZOLOT\",\n  \"field_2\": \"13\",\n  \"field_3\": \"R. W. RICHARDSON\",\n  \"field_4\": \"12\",\n  \"field_5\": \"Quality Dairy\",\n  \"field_6\": \"Speedy Q\"\n}",
+      "prompt_tokens": 25746,
+      "completion_tokens": 72,
+      "cost": 0.0039051,
+      "raw_error": null,
+      "wall_s_outer": 2.27,
+      "parsed": {
+        "field_1": "S. P. ZOLOT",
+        "field_2": "13",
+        "field_3": "R. W. RICHARDSON",
+        "field_4": "12",
+        "field_5": "Quality Dairy",
+        "field_6": "Speedy Q"
+      }
+    },
+    "82253245_3247": {
+      "exec_id": "12373",
+      "wall_s": 2.29,
+      "node_ms": 1870,
+      "content": "{\n  \"field_1\": \"K. A. Sparrow\",\n  \"field_2\": \"15\",\n  \"field_3\": \"R. E. Lane\",\n  \"field_4\": \"M. Maskos & Sons\",\n  \"field_5\": \"Pollock Candy and Cigar\",\n  \"field_6\": \"McKeesport Candy Co.\"\n}",
+      "prompt_tokens": 25750,
+      "completion_tokens": 79,
+      "cost": 0.0039099,
+      "raw_error": null,
+      "wall_s_outer": 2.29,
+      "parsed": {
+        "field_1": "K. A. Sparrow",
+        "field_2": "15",
+        "field_3": "R. E. Lane",
+        "field_4": "M. Maskos & Sons",
+        "field_5": "Pollock Candy and Cigar",
+        "field_6": "McKeesport Candy Co."
+      }
+    },
+    "82253362_3364": {
+      "exec_id": "12371",
+      "wall_s": 3.29,
+      "node_ms": 2383,
+      "content": "{\n  \"field_1\": \"K. A. Sparrow\",\n  \"field_2\": \"20\",\n  \"field_3\": \"J. L. McGinnis\",\n  \"field_4\": \"Don & Bens\",\n  \"field_5\": \"Western Beverage\",\n  \"field_6\": \"Speedy Stop\"\n}",
+      "prompt_tokens": 25750,
+      "completion_tokens": 73,
+      "cost": 0.0039063,
+      "raw_error": null,
+      "wall_s_outer": 3.29,
+      "parsed": {
+        "field_1": "K. A. Sparrow",
+        "field_2": "20",
+        "field_3": "J. L. McGinnis",
+        "field_4": "Don & Bens",
+        "field_5": "Western Beverage",
+        "field_6": "Speedy Stop"
+      }
+    },
+    "86230203_0206": {
+      "exec_id": "12372",
+      "wall_s": 3.27,
+      "node_ms": 2094,
+      "content": "{\n  \"field_1\": \"K. A. Sparrow\",\n  \"field_2\": \"180\",\n  \"field_3\": \"F. Strickland\",\n  \"field_4\": \"K&B\",\n  \"field_5\": \"Sayle Oil\",\n  \"field_6\": \"Dantzler\"\n}",
+      "prompt_tokens": 25750,
+      "completion_tokens": 69,
+      "cost": 0.0039039,
+      "raw_error": null,
+      "wall_s_outer": 3.27,
+      "parsed": {
+        "field_1": "K. A. Sparrow",
+        "field_2": "180",
+        "field_3": "F. Strickland",
+        "field_4": "K&B",
+        "field_5": "Sayle Oil",
+        "field_6": "Dantzler"
+      }
+    },
+    "82252956_2958": {
+      "exec_id": "12375",
+      "wall_s": 2.27,
+      "node_ms": 1428,
+      "content": "{\n  \"field_1\": \"K. A. Sparrow\",\n  \"field_2\": \"7\",\n  \"field_3\": \"D. J. Landro\",\n  \"field_4\": \"Walgreen Drug\",\n  \"field_5\": \"93\"\n}",
+      "prompt_tokens": 25735,
+      "completion_tokens": 58,
+      "cost": 0.00389505,
+      "raw_error": null,
+      "wall_s_outer": 2.27,
+      "parsed": {
+        "field_1": "K. A. Sparrow",
+        "field_2": "7",
+        "field_3": "D. J. Landro",
+        "field_4": "Walgreen Drug",
+        "field_5": "93"
+      }
+    },
+    "82254765": {
+      "exec_id": "12376",
+      "wall_s": 2.38,
+      "node_ms": 1849,
+      "content": "{\n  \"field_1\": \"K. A SPARROW\",\n  \"field_2\": \"1/24/97\",\n  \"field_3\": \"S. Reindel\",\n  \"field_4\": \"H. Levinson Tradeshow\",\n  \"field_5\": \"2/6/97\"\n}",
+      "prompt_tokens": 25741,
+      "completion_tokens": 69,
+      "cost": 0.00390255,
+      "raw_error": null,
+      "wall_s_outer": 2.38,
+      "parsed": {
+        "field_1": "K. A SPARROW",
+        "field_2": "1/24/97",
+        "field_3": "S. Reindel",
+        "field_4": "H. Levinson Tradeshow",
+        "field_5": "2/6/97"
+      }
+    },
+    "82200067_0069": {
+      "exec_id": "12374",
+      "wall_s": 3.3,
+      "node_ms": 2067,
+      "content": "{\n  \"field_1\": \"K. A. Sparrow\",\n  \"field_2\": \"15 + STORES\",\n  \"field_3\": \"T. D. Blachly\",\n  \"field_4\": \"Texaco - Seattle\",\n  \"field_5\": \"Texaco - Portland\",\n  \"field_6\": \"Maid-O-Clover\"\n}",
+      "prompt_tokens": 25750,
+      "completion_tokens": 79,
+      "cost": 0.0039099,
+      "raw_error": null,
+      "wall_s_outer": 3.3,
+      "parsed": {
+        "field_1": "K. A. Sparrow",
+        "field_2": "15 + STORES",
+        "field_3": "T. D. Blachly",
+        "field_4": "Texaco - Seattle",
+        "field_5": "Texaco - Portland",
+        "field_6": "Maid-O-Clover"
+      }
+    },
+    "91814768_91814769": {
+      "exec_id": "12377",
+      "wall_s": 2.31,
+      "node_ms": 1501,
+      "content": "{\n  \"field_1\": \"Committee Against Unfair Taxes\",\n  \"field_2\": \"10/26/92\",\n  \"field_3\": \"10/30/92\",\n  \"field_4\": null\n}",
+      "prompt_tokens": 25728,
+      "completion_tokens": 49,
+      "cost": 0.0038886,
+      "raw_error": null,
+      "wall_s_outer": 2.31,
+      "parsed": {
+        "field_1": "Committee Against Unfair Taxes",
+        "field_2": "10/26/92",
+        "field_3": "10/30/92",
+        "field_4": null
+      }
+    },
+    "93106788": {
+      "exec_id": "12378",
+      "wall_s": 2.28,
+      "node_ms": 1352,
+      "content": "{\n  \"field_1\": \"ESSENCE\",\n  \"field_2\": \"MARCH 17, 1995\",\n  \"field_3\": \"JOYCE WINSTON\",\n  \"field_4\": \"JUNE 1995\"\n}",
+      "prompt_tokens": 25719,
+      "completion_tokens": 53,
+      "cost": 0.00388965,
+      "raw_error": null,
+      "wall_s_outer": 2.28,
+      "parsed": {
+        "field_1": "ESSENCE",
+        "field_2": "MARCH 17, 1995",
+        "field_3": "JOYCE WINSTON",
+        "field_4": "JUNE 1995"
+      }
+    },
+    "82250337_0338": {
+      "exec_id": "12379",
+      "wall_s": 2.31,
+      "node_ms": 1305,
+      "content": "{\n  \"field_1\": \"Sam Zolot\",\n  \"field_2\": \"2-Dec-97\",\n  \"field_3\": \"D. J. Landro\"\n}",
+      "prompt_tokens": 25707,
+      "completion_tokens": 40,
+      "cost": 0.00388005,
+      "raw_error": null,
+      "wall_s_outer": 2.31,
+      "parsed": {
+        "field_1": "Sam Zolot",
+        "field_2": "2-Dec-97",
+        "field_3": "D. J. Landro"
+      }
+    },
+    "82253058_3059": {
+      "exec_id": "12380",
+      "wall_s": 2.35,
+      "node_ms": 1452,
+      "content": "{\n  \"field_1\": \"MRS. K. A. SPARROW\",\n  \"field_2\": \"12/10/96\",\n  \"field_3\": \"R.G. Ryan\"\n}",
+      "prompt_tokens": 25707,
+      "completion_tokens": 45,
+      "cost": 0.00388305,
+      "raw_error": null,
+      "wall_s_outer": 2.35,
+      "parsed": {
+        "field_1": "MRS. K. A. SPARROW",
+        "field_2": "12/10/96",
+        "field_3": "R.G. Ryan"
+      }
+    },
+    "82491256": {
+      "exec_id": "12381",
+      "wall_s": 2.44,
+      "node_ms": 1455,
+      "content": "{\n  \"field_1\": \"Wanda G. Robinson and Carroll Robinson v. Raybestos-Manhattan, et al.\",\n  \"field_2\": \"July 23, 1998\",\n  \"field_3\": \"August 3, 1998\"\n}",
+      "prompt_tokens": 25712,
+      "completion_tokens": 57,
+      "cost": 0.003891,
+      "raw_error": null,
+      "wall_s_outer": 2.44,
+      "parsed": {
+        "field_1": "Wanda G. Robinson and Carroll Robinson v. Raybestos-Manhattan, et al.",
+        "field_2": "July 23, 1998",
+        "field_3": "August 3, 1998"
+      }
+    },
+    "82573104": {
+      "exec_id": "12382",
+      "wall_s": 2.23,
+      "node_ms": 1375,
+      "content": "{\n  \"field_1\": \"Haney H. Bell, Esq.\",\n  \"field_2\": \"December 9, 1999\",\n  \"field_3\": \"David H. Remes\"\n}",
+      "prompt_tokens": 25707,
+      "completion_tokens": 45,
+      "cost": 0.00388305,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": "Haney H. Bell, Esq.",
+        "field_2": "December 9, 1999",
+        "field_3": "David H. Remes"
+      }
+    },
+    "87125460": {
+      "exec_id": "12383",
+      "wall_s": 2.23,
+      "node_ms": 1408,
+      "content": "{\n  \"field_1\": \"October 27, 1986\",\n  \"field_2\": \"8/7/87\",\n  \"field_3\": \"February 26, 1987\"\n}",
+      "prompt_tokens": 25710,
+      "completion_tokens": 45,
+      "cost": 0.0038835,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": "October 27, 1986",
+        "field_2": "8/7/87",
+        "field_3": "February 26, 1987"
+      }
+    },
+    "86263525": {
+      "exec_id": "12384",
+      "wall_s": 2.31,
+      "node_ms": 1426,
+      "content": "{\n  \"field_1\": \"2/15/90\",\n  \"field_2\": \"4/18/90\",\n  \"field_3\": \"7/25/90\"\n}",
+      "prompt_tokens": 25707,
+      "completion_tokens": 41,
+      "cost": 0.00388065,
+      "raw_error": null,
+      "wall_s_outer": 2.31,
+      "parsed": {
+        "field_1": "2/15/90",
+        "field_2": "4/18/90",
+        "field_3": "7/25/90"
+      }
+    },
+    "87528321": {
+      "exec_id": "12385",
+      "wall_s": 2.19,
+      "node_ms": 1337,
+      "content": "{\n  \"field_1\": \"8-17-88\",\n  \"field_2\": \"8-17-88\",\n  \"field_3\": \"9/8/88\"\n}",
+      "prompt_tokens": 25708,
+      "completion_tokens": 41,
+      "cost": 0.0038808,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "8-17-88",
+        "field_2": "8-17-88",
+        "field_3": "9/8/88"
+      }
+    },
+    "87594142_87594144": {
+      "exec_id": "12386",
+      "wall_s": 3.32,
+      "node_ms": 2024,
+      "content": "{\n  \"field_1\": \"Steven R. Kleeberger, Ph.D.  Associate Professor  (410) 955-3515/955-0299  615 North Wolfe Street, Baltimore, Maryland\",\n  \"field_2\": \"(C) (410) 955-3515/955-0299\",\n  \"field_3\": null\n}",
+      "prompt_tokens": 25730,
+      "completion_tokens": 78,
+      "cost": 0.0039063,
+      "raw_error": null,
+      "wall_s_outer": 3.32,
+      "parsed": {
+        "field_1": "Steven R. Kleeberger, Ph.D.  Associate Professor  (410) 955-3515/955-0299  615 North Wolfe Street, Baltimore, Maryland",
+        "field_2": "(C) (410) 955-3515/955-0299",
+        "field_3": null
+      }
+    }
+  }
+}

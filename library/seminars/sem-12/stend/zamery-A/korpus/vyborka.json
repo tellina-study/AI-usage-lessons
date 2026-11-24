@@ -1,0 +1,1469 @@
+[
+  {
+    "form_id": "83553333_3334",
+    "img": "83553333_3334.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "date",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 23,
+    "targets": [
+      {
+        "q_text": "Sender",
+        "a_text": "Charles Duggan",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Fax Transmittal",
+        "a_text": "450 Lexington Avenue New York, NY 10017 212- 450- 4000",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date",
+        "a_text": "November",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Number of Pages (this page included)",
+        "a_text": "6",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date",
+        "a_text": "1999",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "To",
+        "a_text": "Thomas M. Sobol",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": [
+      [
+        "Sender Fax Number",
+        "Sender Voice Number"
+      ],
+      [
+        "Fax Number",
+        "Recipient Phone Number"
+      ]
+    ]
+  },
+  {
+    "form_id": "83573282",
+    "img": "83573282.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "date",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 13,
+    "targets": [
+      {
+        "q_text": "From:",
+        "a_text": "Steve W. Berman",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Phone No.:",
+        "a_text": "(212) 403- 1000",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date:",
+        "a_text": "January 14, 1999",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "No. of Pages",
+        "a_text": "37 (including this page)",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Phone No.:",
+        "a_text": "(212) 450- 4000",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Phone No.:",
+        "a_text": "(312) 861- 2000",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "83624198",
+    "img": "83624198.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "date",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 9,
+    "targets": [
+      {
+        "q_text": "FROM:",
+        "a_text": "Andy Zausner",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "PHONE:",
+        "a_text": "910 /335 -7718",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE:",
+        "a_text": "February 25, 1998",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "PAGES (including Cover Sheet):",
+        "a_text": "12",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "PHONE:",
+        "a_text": "202 /828 -2259",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Tel",
+        "a_text": "202 785 9700",
+        "cat": "phone",
+        "edge": true,
+        "hard_reason": "поле у края кадра (нижняя строка бланка)"
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "82092117",
+    "img": "82092117.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "date",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 8,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "George Baroody",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Fax:",
+        "a_text": "614 -466 -5087",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE:",
+        "a_text": "12 /10 /98",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NUMBER OF PAGES INCLUDING COVER SHEET:",
+        "a_text": "3",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FAX NO.",
+        "a_text": "(614) 466- 5087",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FAX NUMBER:",
+        "a_text": "(336) 335- 7392",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": [
+      [
+        "FAX NUMBER:",
+        "PHONE NUMBER:"
+      ]
+    ]
+  },
+  {
+    "form_id": "83443897",
+    "img": "83443897.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "date",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 7,
+    "targets": [
+      {
+        "q_text": "FROM:",
+        "a_text": "Andy Zausner and Rob Mangas",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "PHONE:",
+        "a_text": "336/ 373- 6750",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE:",
+        "a_text": "January 11, 1999",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "PAGES (including Cover Sheet):",
+        "a_text": "2",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "PHONE:",
+        "a_text": "202/ 828- 2259 and 202/ 828 2241",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "MESSAGE TO:",
+        "a_text": "Dewey Tedder",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "83823750",
+    "img": "83823750.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "date",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 8,
+    "targets": [
+      {
+        "q_text": "To",
+        "a_text": "Robert H. Shaw, Esq.",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Fax Number",
+        "a_text": "910 -335- 7077",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": "визуально двусмысленная цифра (исправление/наложение в факсе — 910-335-7077 читается похоже на 7877/7017)"
+      },
+      {
+        "q_text": "Date",
+        "a_text": "November 11, 1997",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Number of Pages (this page included)",
+        "a_text": "2",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Sender",
+        "a_text": "Charles Duggan",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Voice Number",
+        "a_text": "910 -335- 7720",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "86220490",
+    "img": "86220490.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "date",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 7,
+    "targets": [
+      {
+        "q_text": "To:",
+        "a_text": "Mike Mozina",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FAX",
+        "a_text": "Autodial",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date:",
+        "a_text": "8/ 31/ 98",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "# Pages:",
+        "a_text": "3 (including this cover page)",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "From:",
+        "a_text": "Susan Smith",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FAX #:",
+        "a_text": "335- 7733",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "82562350",
+    "img": "82562350.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "date",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 6,
+    "targets": [
+      {
+        "q_text": "To:",
+        "a_text": "Mr. Randy Spell",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Fax:",
+        "a_text": "952 894- 9690",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date:",
+        "a_text": "May 1, 2000",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Pages:",
+        "a_text": "4",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "From:",
+        "a_text": "Rick Redfield",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Telephone:",
+        "a_text": "(952) 694-2238",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "83594639",
+    "img": "83594639.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "date",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 5,
+    "targets": [
+      {
+        "q_text": "To:",
+        "a_text": "Ron Milstein",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Fax Number:",
+        "a_text": "(910) 335 7707",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date:",
+        "a_text": "September 22, 1997",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Pages (Including cover page):",
+        "a_text": "3",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "From:",
+        "a_text": "\"JJ\" Klein",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "92380595",
+    "img": "92380595.png",
+    "img_w": 802,
+    "img_h": 1000,
+    "cats_available": [
+      "date",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 6,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "LORILLARD, INC. ONE PARK AVENUE 18TH FL NEW YORK, N. Y. 10016",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Phone",
+        "a_text": "512/478- 4873",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE:",
+        "a_text": "12- 13- 89",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "ATTN:",
+        "a_text": "MR. ARTHUR STEVENS, ESQ A. J. STEVENS",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": "рукописное: типографский бланк, а имя получателя дописано от руки поверх напечатанного"
+      },
+      {
+        "q_text": "DATE",
+        "a_text": "Monday next 20 days from date of service",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date Received:",
+        "a_text": "12/ 14/ 89",
+        "cat": "date",
+        "edge": true,
+        "hard_reason": "рукописное + у края кадра (нижняя строка штампа получения)"
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "83635935",
+    "img": "83635935.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "date",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 4,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "Dr. Spears/ A. J. Stevens/ R. Milstein",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "OUR FAX NUMBER",
+        "a_text": "(212) 935 6801",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE:",
+        "a_text": "June 4, 1997",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FROM:",
+        "a_text": "Barry Hirsch",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "87528380",
+    "img": "87528380.png",
+    "img_w": 777,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "date",
+      "name"
+    ],
+    "n_fields_available": 4,
+    "targets": [
+      {
+        "q_text": "TO",
+        "a_text": "Lorillard Corporation",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE",
+        "a_text": "October 16, 1987",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NUMBER OF",
+        "a_text": "4",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Attn:",
+        "a_text": "Mr. Robert Kennedy",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "86328049_8050",
+    "img": "86328049_8050.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "name",
+      "phone"
+    ],
+    "n_fields_available": 36,
+    "targets": [
+      {
+        "q_text": "Name:",
+        "a_text": "Ken Forrest",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FAX NO:",
+        "a_text": "212- 403- 2211",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Pages (Including Cover)",
+        "a_text": "4",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Name:",
+        "a_text": "Tom Frederick",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Name:",
+        "a_text": "Tom Griffin",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Name:",
+        "a_text": "Ever Hurwitz",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "83641919_1921",
+    "img": "83641919_1921.png",
+    "img_w": 802,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "name"
+    ],
+    "n_fields_available": 41,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "S. P. ZOLOT",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "# REPS:",
+        "a_text": "13",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FROM:",
+        "a_text": "R. W. RICHARDSON",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "# REPS:",
+        "a_text": "12",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Name of Account",
+        "a_text": "Quality Dairy",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Name of Account",
+        "a_text": "Bay Stations",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "82253362_3364",
+    "img": "82253362_3364.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "name"
+    ],
+    "n_fields_available": 40,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "K. A. Sparrow",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NO. OF STORES",
+        "a_text": "20",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FROM:",
+        "a_text": "J. L. McGinnis",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "Don & Bens",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "Western Beverage",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "Speedy Stop",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "86230203_0206",
+    "img": "86230203_0206.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "name"
+    ],
+    "n_fields_available": 33,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "K. A. Sparrow",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NO. OF STORES",
+        "a_text": "180",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FROM:",
+        "a_text": "F. Strickland",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "K&B",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "Delchamps",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "Winn Dixie",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "82253245_3247",
+    "img": "82253245_3247.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "name"
+    ],
+    "n_fields_available": 27,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "K. A. Sparrow",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NO. OF STORES",
+        "a_text": "18",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FROM:",
+        "a_text": "R. E. Lane",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "M. Maskos & Sons",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "Pollock Candy and Cigar",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "McKeesport Candy Co.",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "82200067_0069",
+    "img": "82200067_0069.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "name"
+    ],
+    "n_fields_available": 16,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "K. A. Sparrow",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NO. OF STORES",
+        "a_text": "225",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FROM:",
+        "a_text": "T. D. Blachly",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "Texaco Seattle",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "Texaco Portland",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "Maid -O Clover",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "82252956_2958",
+    "img": "82252956_2958.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "count",
+      "name"
+    ],
+    "n_fields_available": 6,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "K. A. Sparrow",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "# REP",
+        "a_text": "7",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FROM:",
+        "a_text": "D. J. Landro",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF ACCOUNT",
+        "a_text": "Walgreen Drug",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NO. OF STORES",
+        "a_text": "93",
+        "cat": "count",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "82254765",
+    "img": "82254765.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "date",
+      "name"
+    ],
+    "n_fields_available": 5,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "K. A. SPARROW",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE TO NYO:",
+        "a_text": "1/24/97",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FROM:",
+        "a_text": "S. Reindel",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "NAME OF EVENT:",
+        "a_text": "H. Levinson Tradeshow",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE FORWARDED TO PROMOTION SERVICES:",
+        "a_text": "zbulan",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "91814768_91814769",
+    "img": "91814768_91814769.png",
+    "img_w": 777,
+    "img_h": 1000,
+    "cats_available": [
+      "date",
+      "name"
+    ],
+    "n_fields_available": 5,
+    "targets": [
+      {
+        "q_text": "To Whom Paid (Alphabetical Listing Mandatory)",
+        "a_text": "Committee Against Unfair Taxes",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date",
+        "a_text": "March 30, 1993",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date Paid",
+        "a_text": "10/ 26/ 92",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date Paid",
+        "a_text": "10/ 30/ 92",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "93106788",
+    "img": "93106788.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "date",
+      "name"
+    ],
+    "n_fields_available": 4,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "ESSENCE 1500 BROADWAY NEW YORK, NY 10036",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE:",
+        "a_text": "MARCH 17, 1995",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "ATTN:",
+        "a_text": "JOYCE WINSTON",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE:",
+        "a_text": "JUNE 1995",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "82250337_0338",
+    "img": "82250337_0338.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "date",
+      "name"
+    ],
+    "n_fields_available": 3,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "Sam Zolot",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE:",
+        "a_text": "2- Dec- 97",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FROM:",
+        "a_text": "D. J. Landro",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "82253058_3059",
+    "img": "82253058_3059.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "date",
+      "name"
+    ],
+    "n_fields_available": 3,
+    "targets": [
+      {
+        "q_text": "TO:",
+        "a_text": "MRS. K. A. SPARROW",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE:",
+        "a_text": "12/ 10/ 96",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "FROM:",
+        "a_text": "R. G. Ryan",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "82491256",
+    "img": "82491256.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "date",
+      "name"
+    ],
+    "n_fields_available": 3,
+    "targets": [
+      {
+        "q_text": "CASE NAME:",
+        "a_text": "Wanda G. Robinson and Carroll Robinson v Raybestos- Manhattan, et al.",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE FILED:",
+        "a_text": "July 23, 1998",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE SERVED:",
+        "a_text": "August 3, 1998",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "82573104",
+    "img": "82573104.png",
+    "img_w": 754,
+    "img_h": 1000,
+    "cats_available": [
+      "date",
+      "name"
+    ],
+    "n_fields_available": 3,
+    "targets": [
+      {
+        "q_text": "To:",
+        "a_text": "Haney H. Bell, Esq.",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date:",
+        "a_text": "December 9, 1999",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "From:",
+        "a_text": "David H. Remes (202) 778 5212 - direct fax",
+        "cat": "name",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "87125460",
+    "img": "87125460.png",
+    "img_w": 768,
+    "img_h": 1000,
+    "cats_available": [
+      "date"
+    ],
+    "n_fields_available": 6,
+    "targets": [
+      {
+        "q_text": "DATE",
+        "a_text": "8/ 7/ 87",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE",
+        "a_text": "08/ 14/ 87",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE OF FINAL REPORT",
+        "a_text": "February 26, 1987",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "86263525",
+    "img": "86263525.png",
+    "img_w": 780,
+    "img_h": 1000,
+    "cats_available": [
+      "date"
+    ],
+    "n_fields_available": 3,
+    "targets": [
+      {
+        "q_text": "DATE",
+        "a_text": "2 /15 /90",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE",
+        "a_text": "4 /18 /90",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE",
+        "a_text": "7 /25 /90",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "87528321",
+    "img": "87528321.png",
+    "img_w": 794,
+    "img_h": 1000,
+    "cats_available": [
+      "date"
+    ],
+    "n_fields_available": 3,
+    "targets": [
+      {
+        "q_text": "Date",
+        "a_text": "B-17-88",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "DATE",
+        "a_text": "8-17-88",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "Date Prepared",
+        "a_text": "8-17-88",
+        "cat": "date",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  },
+  {
+    "form_id": "87594142_87594144",
+    "img": "87594142_87594144.png",
+    "img_w": 774,
+    "img_h": 1000,
+    "cats_available": [
+      "phone"
+    ],
+    "n_fields_available": 3,
+    "targets": [
+      {
+        "q_text": "1. PRINCIPAL INVESTIGATOR NAME, TITLE, TELEPHONE # AND MAILING ADDRESS.",
+        "a_text": "Steven R. Kleeberger, Ph. D.",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "(C) TELEPHONE",
+        "a_text": "(410) 955-9253",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      },
+      {
+        "q_text": "(c) TELEPHONE",
+        "a_text": "(410) 955-3515/955-0299",
+        "cat": "phone",
+        "edge": false,
+        "hard_reason": null
+      }
+    ],
+    "adjacent_pairs": []
+  }
+]

@@ -6,13 +6,18 @@ type: case
 title: "Foxconn: миллион роботов, обещанный к 2014 году"
 assertion: "От обещания миллиона роботов в 2011 году до замера 150–200 тысяч работников на пике сезона в 2025-м прошло 14 лет — не 3, как сама компания себе назначила"
 source: "[TechCrunch, анонс 2011](https://techcrunch.com/2011/08/01/foxconn-planning-to-hire-1-million-robots/) · [China Labor Watch, отчёт 2025](https://chinalaborwatch.org/wp-content/uploads/2025/09/Foxconn-Report-2025-25-sep.pdf) · [NPR, Висконсин](https://www.npr.org/2020/01/13/795847956/foxconn-promised-13-000-jobs-to-wisconsin-where-are-they) · [CNBC, пересмотр Висконсина 2021](https://www.cnbc.com/2021/04/21/foxconn-mostly-abandons-10-billion-wisconsin-project-touted-by-trump.html)"
-media: ""
-media_needed: "медиа не нужно — случай держится на разрыве чисел по времени, не на фото"
+media: "assets/screenshots/foxconn-foxbot-expo-robots.jpg"
+media_needed: "раздел 5 спеки 07-design-review-spec.md: пустой низ 40% на кадре без фото — подключено"
+timeline:
+  unit: "хронология обещания"
+  stages: ["31.07.2011", "конец 2014", "09.2025"]
+  marks:
+    - {at: 0, head: "Анонс", text: "1 млн роботов к 2014 году — база 10 000, план 300 000 к концу 2012"}
+    - {at: 1, head: "Обещанный срок", text: "точность 0,05 мм при допуске 0,02 мм — разворот риторики компании"}
+    - {at: 2, head: "Замер China Labor Watch", text: "150 000–200 000 работников на пике сезона"}
 blocks:
-  - {label: "Обещано, 31 июля 2011", value: "1 млн роботов к 2014", note: "база 10 000 → план 300 000 к концу 2012"}
-  - {label: "Факт, пик сезона, сентябрь 2025", value: "150 000–200 000 работников", note: "China Labor Watch — оба диапазона у разных оценок одного явления"}
-  - {label: "Между обещанием и замером", value: "14 лет", note: "не 3 года: три года — срок, который Foxconn сам себе назначил до 2014-го, а не срок до фактического замера", key: true}
-  - {label: "Foxconn в Висконсине, 2017 → 2021", value: "$10 млрд / 13 000 мест → $672 млн / 1454 места", note: "−93% инвестиций, −89% рабочих мест за 4 года"}
+  - {label: "Между обещанием и замером", value: "14 лет, не 3", note: "три года — срок, который Foxconn сам себе назначил до 2014-го", key: true}
+  - {label: "Foxconn в Висконсине, 2017 → 2021", value: "$10 млрд/13 000 мест → $672 млн/1454 места", note: "−93% инвестиций, −89% рабочих мест за 4 года"}
 in_bucket: true
 status: draft
 ---

@@ -1,0 +1,2120 @@
+{
+  "branch": "1_lexical",
+  "описание": "pymorphy3-леммы, обратный индекс, без модели; индекс строится по caption (рассказ) кейса B",
+  "n_queries": 100,
+  "by_class": {
+    "1": {
+      "n": 31,
+      "recall@1": 0.9032258064516129,
+      "recall@3": 0.967741935483871
+    },
+    "2": {
+      "n": 32,
+      "recall@1": 0.46875,
+      "recall@3": 0.59375
+    },
+    "3": {
+      "n": 37,
+      "recall@1": 0.24324324324324326,
+      "recall@3": 0.4594594594594595
+    }
+  },
+  "overall_recall@1": 0.52,
+  "overall_recall@3": 0.66,
+  "details": [
+    {
+      "num": "1.1",
+      "class": 1,
+      "answer": "e9114065de005073",
+      "query_lemmas": [
+        "записывать",
+        "идея",
+        "маркер",
+        "мужчина",
+        "флипчарт"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "e9114065de005073",
+        "0329b7efc120db25",
+        "3a739b0a9f2c748c"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "1.2",
+      "class": 1,
+      "answer": "ea8304d584aaa1ae",
+      "query_lemmas": [
+        "время",
+        "доска",
+        "женщина",
+        "план",
+        "после",
+        "указывать"
+      ],
+      "n_matched_top1": 6,
+      "top3": [
+        "ea8304d584aaa1ae",
+        "124d86a6d3953a13",
+        "511a66ac77d12201"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "1.3",
+      "class": 1,
+      "answer": "b53d36ec5de1bf52",
+      "query_lemmas": [
+        "борода",
+        "говорить",
+        "длинный",
+        "микрофон",
+        "мужчина",
+        "стол"
+      ],
+      "n_matched_top1": 6,
+      "top3": [
+        "b53d36ec5de1bf52",
+        "38af0f20239b6619",
+        "0e6e608af9477a08"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "1.4",
+      "class": 1,
+      "answer": "0fb3b09b91685b46",
+      "query_lemmas": [
+        "белый",
+        "кофе",
+        "кружка",
+        "ложка",
+        "рядом",
+        "тарелка",
+        "узор"
+      ],
+      "n_matched_top1": 7,
+      "top3": [
+        "0fb3b09b91685b46",
+        "0656563fdd704b9f",
+        "1d33f79971824c1c"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "1.5",
+      "class": 1,
+      "answer": "84810eb298f1d8f8",
+      "query_lemmas": [
+        "горячее",
+        "кафе",
+        "логотип",
+        "чашка",
+        "шоколад"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "0656563fdd704b9f",
+        "84810eb298f1d8f8",
+        "0071f62f5d703904"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "1.6",
+      "class": 1,
+      "answer": "5b9193e5398fd5e5",
+      "query_lemmas": [
+        "жёлтый",
+        "кофе",
+        "пенка",
+        "подложка",
+        "чашка"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "5b9193e5398fd5e5",
+        "01c715ada9a9b193",
+        "0656563fdd704b9f"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "1.7",
+      "class": 1,
+      "answer": "8cb7d659e2d0a541",
+      "query_lemmas": [
+        "кофе",
+        "поднос",
+        "сладость",
+        "чашка"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "8cb7d659e2d0a541",
+        "0071f62f5d703904",
+        "01c715ada9a9b193"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "1.8",
+      "class": 1,
+      "answer": "b755be9b601382d3",
+      "query_lemmas": [
+        "классный",
+        "ковёр",
+        "комната",
+        "костюм",
+        "ребёнок",
+        "сидеть",
+        "учитель"
+      ],
+      "n_matched_top1": 7,
+      "top3": [
+        "b755be9b601382d3",
+        "b12fa0eed7d648f3",
+        "1e7cc92a68af4ace"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "1.9",
+      "class": 1,
+      "answer": "f24b6d2e4a6e3467",
+      "query_lemmas": [
+        "волос",
+        "девочка",
+        "держать",
+        "игрушка",
+        "пластиковый",
+        "пучок",
+        "стол"
+      ],
+      "n_matched_top1": 7,
+      "top3": [
+        "f24b6d2e4a6e3467",
+        "050631743357d5f0",
+        "11789876e782aed8"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "1.10",
+      "class": 1,
+      "answer": "5e9c983ecbe4af71",
+      "query_lemmas": [
+        "женщина",
+        "жилетка",
+        "объяснять",
+        "план",
+        "чертёж",
+        "яркий"
+      ],
+      "n_matched_top1": 6,
+      "top3": [
+        "5e9c983ecbe4af71",
+        "5387c89ff13471a3",
+        "00372528d0ae529e"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "1.11",
+      "class": 1,
+      "answer": "e4c90e496724afe1",
+      "query_lemmas": [
+        "военный",
+        "карта",
+        "проектор",
+        "слушатель"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "e4c90e496724afe1",
+        "07a41b00866f81d9",
+        "50d1a495e942b809"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "1.12",
+      "class": 1,
+      "answer": "71681aa82b7ef15f",
+      "query_lemmas": [
+        "красный",
+        "кресло",
+        "люстра",
+        "пустой",
+        "ряд",
+        "театр"
+      ],
+      "n_matched_top1": 6,
+      "top3": [
+        "71681aa82b7ef15f",
+        "c53e9e5ce002345f",
+        "004e67c094c01d68"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "2.1",
+      "class": 2,
+      "answer": "e9114065de005073",
+      "query_lemmas": [
+        "групповой",
+        "доска",
+        "конспектировать",
+        "приём",
+        "работа",
+        "человек"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "163fe17e4667e76b",
+        "069dc9e79cc1cdcc",
+        "18ccdc568d0792d6"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "2.2",
+      "class": 2,
+      "answer": "ea8304d584aaa1ae",
+      "query_lemmas": [
+        "время",
+        "выступать",
+        "после",
+        "разбирать",
+        "событие",
+        "стадия"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "ea8304d584aaa1ae",
+        "c51d831708b6ded1",
+        "2944a2f209f693f1"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "2.3",
+      "class": 2,
+      "answer": "8cb7d659e2d0a541",
+      "query_lemmas": [
+        "восточный",
+        "напиток",
+        "подать",
+        "сладость"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "8cb7d659e2d0a541",
+        "18ccdc568d0792d6",
+        "0071f62f5d703904"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "2.4",
+      "class": 2,
+      "answer": "1d33f79971824c1c",
+      "query_lemmas": [
+        "итальянск",
+        "кофейный",
+        "маленький",
+        "подписать",
+        "самый",
+        "чашка"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "0656563fdd704b9f",
+        "8cb7d659e2d0a541",
+        "0fb3b09b91685b46"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "2.5",
+      "class": 2,
+      "answer": "d50064dfabf0fbd5",
+      "query_lemmas": [
+        "вдоль",
+        "где",
+        "класс",
+        "машина",
+        "расчёт",
+        "стена",
+        "стоять"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "03cb58dfb0ecb4fd",
+        "01f26ca52e27a8d9",
+        "2c0dbd6d1984d8e1"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "2.6",
+      "class": 2,
+      "answer": "5e9c983ecbe4af71",
+      "query_lemmas": [
+        "будущий",
+        "где",
+        "занятие",
+        "здание",
+        "план",
+        "строитель",
+        "учить",
+        "читать"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "360fc1faeddf8ea1",
+        "00372528d0ae529e",
+        "071c63563e51dac9"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "2.7",
+      "class": 2,
+      "answer": "c53e9e5ce002345f",
+      "query_lemmas": [
+        "буквенный",
+        "где",
+        "зал",
+        "каждый",
+        "место",
+        "номер",
+        "пустой",
+        "числовой"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "a173420cfdc0bc21",
+        "c1334a6df9636a45",
+        "004e67c094c01d68"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "2.8",
+      "class": 2,
+      "answer": "511a66ac77d12201",
+      "query_lemmas": [
+        "больший",
+        "бумажный",
+        "вести",
+        "где",
+        "запись",
+        "лист",
+        "совещание",
+        "стойка"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "511a66ac77d12201",
+        "01f26ca52e27a8d9",
+        "f24b6d2e4a6e3467"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "2.9",
+      "class": 2,
+      "answer": "b755be9b601382d3",
+      "query_lemmas": [
+        "выступать",
+        "гость",
+        "костюм",
+        "младший",
+        "школьник"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "b755be9b601382d3",
+        "0536436b72e5fefc",
+        "128f582673ba68fc"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "2.10",
+      "class": 2,
+      "answer": "c1334a6df9636a45",
+      "query_lemmas": [
+        "всемирный",
+        "зал",
+        "земной",
+        "организация",
+        "шар",
+        "эмблема"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "1d810b4d7f6e122b",
+        "c1334a6df9636a45",
+        "26f3e4d6e2e3143e"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "2.11",
+      "class": 2,
+      "answer": "87eb5a45f2b87933",
+      "query_lemmas": [
+        "доклад",
+        "зелёный",
+        "сплошной",
+        "стена",
+        "фон",
+        "ярко"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "1d33f79971824c1c",
+        "87eb5a45f2b87933",
+        "01f26ca52e27a8d9"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "2.12",
+      "class": 2,
+      "answer": "dfc78e19d1ba6658",
+      "query_lemmas": [
+        "гнутый",
+        "имя",
+        "место",
+        "микрофон",
+        "ряд",
+        "табличка"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "360fc1faeddf8ea1",
+        "a173420cfdc0bc21",
+        "c1334a6df9636a45"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "3.1",
+      "class": 3,
+      "answer": "b755be9b601382d3",
+      "query_lemmas": [
+        "мольберт",
+        "плакат",
+        "система",
+        "солнечный"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "11789876e782aed8",
+        "00372528d0ae529e",
+        "004e67c094c01d68"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "3.2",
+      "class": 3,
+      "answer": "31e0383b18a48a63",
+      "query_lemmas": [
+        "настенный",
+        "часы",
+        "штора"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "31e0383b18a48a63",
+        "26f3e4d6e2e3143e",
+        "00372528d0ae529e"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "3.3",
+      "class": 3,
+      "answer": "5e9c983ecbe4af71",
+      "query_lemmas": [
+        "жилет",
+        "жёлтый",
+        "светоотражающий"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "050631743357d5f0",
+        "10dfe877492f2dd3",
+        "5b9193e5398fd5e5"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "3.4",
+      "class": 3,
+      "answer": "1e7cc92a68af4ace",
+      "query_lemmas": [
+        "глаз",
+        "надувной",
+        "помидор",
+        "слайд"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "1e7cc92a68af4ace",
+        "01ada3c0d980be5e",
+        "30dc8f6e837f7b47"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "3.5",
+      "class": 3,
+      "answer": "01ada3c0d980be5e",
+      "query_lemmas": [
+        "иконка",
+        "пирамида",
+        "роллапа",
+        "цветной"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "00372528d0ae529e",
+        "14bad13e066ba376",
+        "e9114065de005073"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "3.6",
+      "class": 3,
+      "answer": "01ada3c0d980be5e",
+      "query_lemmas": [
+        "кружка",
+        "логотип",
+        "одинаковый",
+        "стол",
+        "фирменный"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "050631743357d5f0",
+        "1fd783e47a5a621a",
+        "9cfa372f80c96bb4"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "3.7",
+      "class": 3,
+      "answer": "bdd7fd3ffee39259",
+      "query_lemmas": [
+        "принципиальный",
+        "проекция",
+        "схема",
+        "электрический"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "c7735280a73d65e1",
+        "069dc9e79cc1cdcc",
+        "1eb99df4147f898f"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "3.8",
+      "class": 3,
+      "answer": "50d1a495e942b809",
+      "query_lemmas": [
+        "карта",
+        "красный",
+        "проекция",
+        "пятно"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "c7735280a73d65e1",
+        "50d1a495e942b809",
+        "e4c90e496724afe1"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "3.9",
+      "class": 3,
+      "answer": "a2adb6250fbb4f8c",
+      "query_lemmas": [
+        "буква",
+        "корейский",
+        "надпись",
+        "сцена"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "0319000d042d15b9",
+        "360fc1faeddf8ea1",
+        "0b3445eeb72b3803"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "3.10",
+      "class": 3,
+      "answer": "dfc78e19d1ba6658",
+      "query_lemmas": [
+        "зал",
+        "многий",
+        "стена",
+        "страна",
+        "флаг"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "dfc78e19d1ba6658",
+        "05162223d18ef5e9",
+        "004e67c094c01d68"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "3.11",
+      "class": 3,
+      "answer": "84810eb298f1d8f8",
+      "query_lemmas": [
+        "десерт",
+        "позади",
+        "тарелка",
+        "чашка"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "01c715ada9a9b193",
+        "84810eb298f1d8f8",
+        "0bc7015328a7f447"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "3.12",
+      "class": 3,
+      "answer": "8cb7d659e2d0a541",
+      "query_lemmas": [
+        "коробочка",
+        "металлический",
+        "портсигар",
+        "стол"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "0b3445eeb72b3803",
+        "2106a1f615643a62",
+        "00372528d0ae529e"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "3.13",
+      "class": 3,
+      "answer": "94043f06b44df043",
+      "query_lemmas": [
+        "выступать",
+        "значок",
+        "лацкан"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "30dc8f6e837f7b47",
+        "01ada3c0d980be5e",
+        "0536436b72e5fefc"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "3.14",
+      "class": 3,
+      "answer": "59f89863852379cf",
+      "query_lemmas": [
+        "жёлтый",
+        "клейкий",
+        "стикер",
+        "стол"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "050631743357d5f0",
+        "5b9193e5398fd5e5",
+        "10dfe877492f2dd3"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.1",
+      "class": 2,
+      "answer": "01f26ca52e27a8d9",
+      "query_lemmas": [
+        "взрослый",
+        "несколько",
+        "одноместный",
+        "парта",
+        "писать",
+        "рука",
+        "ряд",
+        "слушатель"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "1102e183babc6483",
+        "f24b6d2e4a6e3467",
+        "00372528d0ae529e"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.2",
+      "class": 1,
+      "answer": "0329b7efc120db25",
+      "query_lemmas": [
+        "голубой",
+        "задний",
+        "класс",
+        "компьютер",
+        "план",
+        "старый",
+        "стена"
+      ],
+      "n_matched_top1": 7,
+      "top3": [
+        "0329b7efc120db25",
+        "03cb58dfb0ecb4fd",
+        "128f582673ba68fc"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.3",
+      "class": 3,
+      "answer": "03cb58dfb0ecb4fd",
+      "query_lemmas": [
+        "бумажный",
+        "зонт",
+        "класс",
+        "лежать",
+        "пакет",
+        "пустой",
+        "ручка",
+        "чёрный"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "128f582673ba68fc",
+        "11789876e782aed8",
+        "30dc8f6e837f7b47"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.4",
+      "class": 3,
+      "answer": "0b3445eeb72b3803",
+      "query_lemmas": [
+        "вентилятор",
+        "класс",
+        "лопасть",
+        "потолочный",
+        "пустой",
+        "пять"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "0071f62f5d703904",
+        "004e67c094c01d68",
+        "128f582673ba68fc"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.5",
+      "class": 1,
+      "answer": "0e4332e5c234255c",
+      "query_lemmas": [
+        "запуск",
+        "зрительница",
+        "объяснять",
+        "программа",
+        "смартфон",
+        "снимать",
+        "спикер"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "0e4332e5c234255c",
+        "c7735280a73d65e1",
+        "00372528d0ae529e"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.6",
+      "class": 2,
+      "answer": "1102e183babc6483",
+      "query_lemmas": [
+        "вверх",
+        "занятие",
+        "рука",
+        "сидеть",
+        "тянуть"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "1102e183babc6483",
+        "a2adb6250fbb4f8c",
+        "11789876e782aed8"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.7",
+      "class": 2,
+      "answer": "128f582673ba68fc",
+      "query_lemmas": [
+        "деревянный",
+        "докладчик",
+        "кадр",
+        "кафедра",
+        "костюм",
+        "массивный",
+        "нет",
+        "слушатель"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "360fc1faeddf8ea1",
+        "c51d831708b6ded1",
+        "124d86a6d3953a13"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.8",
+      "class": 3,
+      "answer": "145e02a1608f2a7c",
+      "query_lemmas": [
+        "веб",
+        "проекция",
+        "текст",
+        "форма",
+        "французский",
+        "язык"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "235a6e575ba5c6b1",
+        "c7735280a73d65e1",
+        "e4c90e496724afe1"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.9",
+      "class": 2,
+      "answer": "163fe17e4667e76b",
+      "query_lemmas": [
+        "выкладка",
+        "доска",
+        "единственный",
+        "переговорный",
+        "смотреть",
+        "человек"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "31e0383b18a48a63",
+        "5e9c983ecbe4af71",
+        "163fe17e4667e76b"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.10",
+      "class": 1,
+      "answer": "24955fd68bc70264",
+      "query_lemmas": [
+        "исследовательский",
+        "научно",
+        "объяснять",
+        "работа",
+        "стенд",
+        "школьница"
+      ],
+      "n_matched_top1": 6,
+      "top3": [
+        "24955fd68bc70264",
+        "7348dec4f19d9d7f",
+        "806c7b43b701d4ef"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.11",
+      "class": 3,
+      "answer": "2c0dbd6d1984d8e1",
+      "query_lemmas": [
+        "c",
+        "printf",
+        "вызов",
+        "исходный",
+        "код",
+        "экран",
+        "язык"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "2c0dbd6d1984d8e1",
+        "004e67c094c01d68",
+        "01ada3c0d980be5e"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.12",
+      "class": 3,
+      "answer": "30dc8f6e837f7b47",
+      "query_lemmas": [
+        "greenpeace",
+        "красный",
+        "маркер",
+        "написать",
+        "флипчарт"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "e9114065de005073",
+        "05bd562acd97329e",
+        "1973cd54f73bed7b"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.13",
+      "class": 3,
+      "answer": "14bad13e066ba376",
+      "query_lemmas": [
+        "design",
+        "shanghai",
+        "где",
+        "задник",
+        "зал",
+        "крупно",
+        "написать"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "027b16382feaca69",
+        "0319000d042d15b9",
+        "0dd052cc9c05ea78"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.14",
+      "class": 2,
+      "answer": "0493f305183ad8e4",
+      "query_lemmas": [
+        "дальний",
+        "дверь",
+        "зал",
+        "пустой",
+        "ряд",
+        "складный",
+        "стена",
+        "стол",
+        "учебный",
+        "яркий"
+      ],
+      "n_matched_top1": 5,
+      "top3": [
+        "0493f305183ad8e4",
+        "004e67c094c01d68",
+        "71681aa82b7ef15f"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.15",
+      "class": 1,
+      "answer": "05162223d18ef5e9",
+      "query_lemmas": [
+        "контрольный",
+        "космический",
+        "красный",
+        "кресло",
+        "миссия",
+        "ряд",
+        "управление",
+        "центр"
+      ],
+      "n_matched_top1": 8,
+      "top3": [
+        "05162223d18ef5e9",
+        "004e67c094c01d68",
+        "0b37c87f551023c7"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.16",
+      "class": 2,
+      "answer": "1d810b4d7f6e122b",
+      "query_lemmas": [
+        "большой",
+        "докладчик",
+        "заседание",
+        "международный",
+        "показать",
+        "сверху",
+        "трансляция",
+        "экран"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "dfc78e19d1ba6658",
+        "14bad13e066ba376",
+        "124197904aebee39"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.17",
+      "class": 2,
+      "answer": "004e67c094c01d68",
+      "query_lemmas": [
+        "белый",
+        "засветить",
+        "кинотеатр",
+        "красный",
+        "портьера",
+        "пустой",
+        "экран"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "004e67c094c01d68",
+        "71681aa82b7ef15f",
+        "c53e9e5ce002345f"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.18",
+      "class": 3,
+      "answer": "0e6e608af9477a08",
+      "query_lemmas": [
+        "paco",
+        "ragageles",
+        "имя",
+        "настольный",
+        "табличка"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "360fc1faeddf8ea1",
+        "07a41b00866f81d9",
+        "26f3e4d6e2e3143e"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.19",
+      "class": 2,
+      "answer": "190d1af3cb805f47",
+      "query_lemmas": [
+        "выступление",
+        "двое",
+        "президиум",
+        "сидеть",
+        "спина",
+        "трибуна"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "190d1af3cb805f47",
+        "59f89863852379cf",
+        "2944a2f209f693f1"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.20",
+      "class": 1,
+      "answer": "1fd783e47a5a621a",
+      "query_lemmas": [
+        "central",
+        "college",
+        "north",
+        "выступать",
+        "женщина",
+        "задник",
+        "фон"
+      ],
+      "n_matched_top1": 5,
+      "top3": [
+        "1fd783e47a5a621a",
+        "0536436b72e5fefc",
+        "1e7cc92a68af4ace"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.21",
+      "class": 1,
+      "answer": "2e6df1cefddeb607",
+      "query_lemmas": [
+        "d",
+        "fdp",
+        "sseldorf",
+        "баннер",
+        "микрофон",
+        "мужчина",
+        "синий",
+        "фон"
+      ],
+      "n_matched_top1": 5,
+      "top3": [
+        "2e6df1cefddeb607",
+        "145e02a1608f2a7c",
+        "01ada3c0d980be5e"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.22",
+      "class": 3,
+      "answer": "1eb99df4147f898f",
+      "query_lemmas": [
+        "install",
+        "uninstall",
+        "доска",
+        "написать"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "05bd562acd97329e",
+        "1973cd54f73bed7b",
+        "235a6e575ba5c6b1"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.23",
+      "class": 3,
+      "answer": "38af0f20239b6619",
+      "query_lemmas": [
+        "звездообразный",
+        "конференц",
+        "переговорный",
+        "стол",
+        "телефон",
+        "форма"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "e4c90e496724afe1",
+        "38af0f20239b6619",
+        "511a66ac77d12201"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.24",
+      "class": 3,
+      "answer": "3a739b0a9f2c748c",
+      "query_lemmas": [
+        "angeles",
+        "history",
+        "los",
+        "museum",
+        "natural",
+        "of",
+        "кружка",
+        "надпись"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "0fb3b09b91685b46",
+        "1d33f79971824c1c",
+        "050631743357d5f0"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.25",
+      "class": 1,
+      "answer": "0319000d042d15b9",
+      "query_lemmas": [
+        "center",
+        "conversations",
+        "kennedy",
+        "зал",
+        "роллапый"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "0319000d042d15b9",
+        "004e67c094c01d68",
+        "027b16382feaca69"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.26",
+      "class": 3,
+      "answer": "069dc9e79cc1cdcc",
+      "query_lemmas": [
+        "ansoff",
+        "generic",
+        "growth",
+        "porter",
+        "s",
+        "vector",
+        "лист",
+        "пункт"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "94043f06b44df043",
+        "069dc9e79cc1cdcc",
+        "1973cd54f73bed7b"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.27",
+      "class": 1,
+      "answer": "186adccdfbc2c77f",
+      "query_lemmas": [
+        "exhale",
+        "голова",
+        "надпись",
+        "профиль",
+        "рисунок"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "22926e7f863df9f1",
+        "186adccdfbc2c77f",
+        "0319000d042d15b9"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.28",
+      "class": 1,
+      "answer": "05bd562acd97329e",
+      "query_lemmas": [
+        "доска",
+        "меловой",
+        "рисунок",
+        "теория",
+        "узел",
+        "формула"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "05bd562acd97329e",
+        "22926e7f863df9f1",
+        "163fe17e4667e76b"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.29",
+      "class": 2,
+      "answer": "071c63563e51dac9",
+      "query_lemmas": [
+        "доска",
+        "камера",
+        "мел",
+        "почти",
+        "пустой",
+        "спина",
+        "фигура",
+        "человек",
+        "чертить"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "071c63563e51dac9",
+        "128f582673ba68fc",
+        "163fe17e4667e76b"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.30",
+      "class": 3,
+      "answer": "1973cd54f73bed7b",
+      "query_lemmas": [
+        "an",
+        "animal",
+        "create",
+        "список",
+        "строка",
+        "флипчарт",
+        "функция"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "1973cd54f73bed7b",
+        "e9114065de005073",
+        "00372528d0ae529e"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.31",
+      "class": 1,
+      "answer": "22926e7f863df9f1",
+      "query_lemmas": [
+        "daily",
+        "erase",
+        "доска",
+        "табличка",
+        "хронология"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "22926e7f863df9f1",
+        "07a41b00866f81d9",
+        "26f3e4d6e2e3143e"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.32",
+      "class": 1,
+      "answer": "235a6e575ba5c6b1",
+      "query_lemmas": [
+        "docs",
+        "google",
+        "skype",
+        "доска",
+        "заметка"
+      ],
+      "n_matched_top1": 5,
+      "top3": [
+        "235a6e575ba5c6b1",
+        "069dc9e79cc1cdcc",
+        "163fe17e4667e76b"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.33",
+      "class": 1,
+      "answer": "18ccdc568d0792d6",
+      "query_lemmas": [
+        "вывеска",
+        "десерт",
+        "меловой",
+        "мороженое",
+        "надпись",
+        "эспрессо"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "18ccdc568d0792d6",
+        "84810eb298f1d8f8",
+        "0319000d042d15b9"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.34",
+      "class": 3,
+      "answer": "0071f62f5d703904",
+      "query_lemmas": [
+        "бадьян",
+        "звёздочка",
+        "лежать",
+        "поднос",
+        "пять",
+        "рядом",
+        "чашка"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "8cb7d659e2d0a541",
+        "0071f62f5d703904",
+        "0656563fdd704b9f"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.35",
+      "class": 1,
+      "answer": "050631743357d5f0",
+      "query_lemmas": [
+        "белка",
+        "белый",
+        "кружка",
+        "птица",
+        "рисунок"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "050631743357d5f0",
+        "0fb3b09b91685b46",
+        "1d33f79971824c1c"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.36",
+      "class": 1,
+      "answer": "0656563fdd704b9f",
+      "query_lemmas": [
+        "segafredo",
+        "капучиный",
+        "логотип",
+        "чашка"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "0656563fdd704b9f",
+        "84810eb298f1d8f8",
+        "0071f62f5d703904"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.37",
+      "class": 3,
+      "answer": "01c715ada9a9b193",
+      "query_lemmas": [
+        "восточный",
+        "кофе",
+        "медный",
+        "подстаканник",
+        "чеканный"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "01c715ada9a9b193",
+        "0656563fdd704b9f",
+        "0fb3b09b91685b46"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.38",
+      "class": 3,
+      "answer": "09f08ac7c71b4675",
+      "query_lemmas": [
+        "jim",
+        "library",
+        "morris",
+        "mr",
+        "библиотека",
+        "табличка",
+        "школьный"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "07a41b00866f81d9",
+        "26f3e4d6e2e3143e",
+        "09f08ac7c71b4675"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.39",
+      "class": 1,
+      "answer": "0a951714918ace53",
+      "query_lemmas": [
+        "american",
+        "drama",
+        "literature",
+        "poetry",
+        "библиотека",
+        "рукописный",
+        "табличка"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "07a41b00866f81d9",
+        "26f3e4d6e2e3143e",
+        "09f08ac7c71b4675"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.40",
+      "class": 3,
+      "answer": "11789876e782aed8",
+      "query_lemmas": [
+        "gibson",
+        "william",
+        "книжный",
+        "магазин",
+        "плакат"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "11789876e782aed8",
+        "11c10d9d7a456822",
+        "147de698c52bcb60"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.41",
+      "class": 1,
+      "answer": "147de698c52bcb60",
+      "query_lemmas": [
+        "civilizaci",
+        "conquista",
+        "de",
+        "la",
+        "n",
+        "книжный",
+        "полка",
+        "том"
+      ],
+      "n_matched_top1": 7,
+      "top3": [
+        "147de698c52bcb60",
+        "11789876e782aed8",
+        "11c10d9d7a456822"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.42",
+      "class": 3,
+      "answer": "19aa0e0ad2fa06b6",
+      "query_lemmas": [
+        "где",
+        "девушка",
+        "книга",
+        "опера",
+        "полка",
+        "снимать",
+        "стоять"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "11789876e782aed8",
+        "03cb58dfb0ecb4fd",
+        "0a951714918ace53"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.43",
+      "class": 1,
+      "answer": "11c10d9d7a456822",
+      "query_lemmas": [
+        "fiction",
+        "проход",
+        "стеллаж",
+        "табличка"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "11c10d9d7a456822",
+        "07a41b00866f81d9",
+        "26f3e4d6e2e3143e"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.44",
+      "class": 2,
+      "answer": "0bc7015328a7f447",
+      "query_lemmas": [
+        "лаборатория",
+        "периодический",
+        "рамка",
+        "стена",
+        "таблица",
+        "человек"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "0bc7015328a7f447",
+        "7348dec4f19d9d7f",
+        "128f582673ba68fc"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.45",
+      "class": 3,
+      "answer": "10dfe877492f2dd3",
+      "query_lemmas": [
+        "thermo",
+        "защитный",
+        "лаборант",
+        "стена",
+        "табличка",
+        "щиток"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "26f3e4d6e2e3143e",
+        "07a41b00866f81d9",
+        "10dfe877492f2dd3"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.46",
+      "class": 2,
+      "answer": "11cd71943afb477e",
+      "query_lemmas": [
+        "белый",
+        "позировать",
+        "пробирка",
+        "стол",
+        "халат",
+        "цветной",
+        "четверо",
+        "штатив"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "11cd71943afb477e",
+        "00372528d0ae529e",
+        "10dfe877492f2dd3"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.47",
+      "class": 2,
+      "answer": "26f3e4d6e2e3143e",
+      "query_lemmas": [
+        "двое",
+        "лоток",
+        "одноразовый",
+        "разбирать",
+        "раковина",
+        "синий",
+        "шапочка"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "2944a2f209f693f1",
+        "3a739b0a9f2c748c",
+        "03cb58dfb0ecb4fd"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.48",
+      "class": 2,
+      "answer": "2944a2f209f693f1",
+      "query_lemmas": [
+        "комбинезон",
+        "линия",
+        "наполнять",
+        "работник",
+        "стаканчик"
+      ],
+      "n_matched_top1": 0,
+      "top3": [
+        "00372528d0ae529e",
+        "004e67c094c01d68",
+        "0071f62f5d703904"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.49",
+      "class": 3,
+      "answer": "57ca2239566c9f44",
+      "query_lemmas": [
+        "женщина",
+        "красный",
+        "петереть",
+        "пипетировать",
+        "среда",
+        "чашка"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "ea8304d584aaa1ae",
+        "10dfe877492f2dd3",
+        "0071f62f5d703904"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.50",
+      "class": 3,
+      "answer": "6598fc49bcfb6c69",
+      "query_lemmas": [
+        "бандан",
+        "мастер",
+        "пила",
+        "торцовочный"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "6598fc49bcfb6c69",
+        "00372528d0ae529e",
+        "004e67c094c01d68"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.51",
+      "class": 3,
+      "answer": "67310c81574cfaba",
+      "query_lemmas": [
+        "wadkin",
+        "деревянный",
+        "колесо",
+        "мастерская",
+        "станок",
+        "столярный"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "6598fc49bcfb6c69",
+        "67310c81574cfaba",
+        "806c7b43b701d4ef"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.52",
+      "class": 2,
+      "answer": "7348dec4f19d9d7f",
+      "query_lemmas": [
+        "двое",
+        "зеркало",
+        "линза",
+        "оптический",
+        "склониться",
+        "стол"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "3a739b0a9f2c748c",
+        "2944a2f209f693f1",
+        "00372528d0ae529e"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.53",
+      "class": 2,
+      "answer": "806c7b43b701d4ef",
+      "query_lemmas": [
+        "велосипед",
+        "зажать",
+        "необработанный",
+        "рама",
+        "ремонтный",
+        "стойка"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "806c7b43b701d4ef",
+        "00372528d0ae529e",
+        "004e67c094c01d68"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.54",
+      "class": 3,
+      "answer": "5387c89ff13471a3",
+      "query_lemmas": [
+        "занятие",
+        "книга",
+        "лежать",
+        "надпись",
+        "ноутбук",
+        "рядом",
+        "тетрис"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "163fe17e4667e76b",
+        "0656563fdd704b9f",
+        "128f582673ba68fc"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.55",
+      "class": 2,
+      "answer": "07a41b00866f81d9",
+      "query_lemmas": [
+        "ангар",
+        "винт",
+        "выставить",
+        "поршневой",
+        "самолёт",
+        "трёхлопастный"
+      ],
+      "n_matched_top1": 1,
+      "top3": [
+        "07a41b00866f81d9",
+        "11c10d9d7a456822",
+        "00372528d0ae529e"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.56",
+      "class": 1,
+      "answer": "027b16382feaca69",
+      "query_lemmas": [
+        "questions",
+        "слово",
+        "старинный",
+        "театр",
+        "экран"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "027b16382feaca69",
+        "0e4332e5c234255c",
+        "0e6e608af9477a08"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.57",
+      "class": 2,
+      "answer": "0b37c87f551023c7",
+      "query_lemmas": [
+        "зал",
+        "зритель",
+        "огонь",
+        "одинокий",
+        "потолок",
+        "пустой",
+        "точечный"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "71681aa82b7ef15f",
+        "004e67c094c01d68",
+        "c53e9e5ce002345f"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": false
+    },
+    {
+      "num": "4.58",
+      "class": 2,
+      "answer": "0dd052cc9c05ea78",
+      "query_lemmas": [
+        "зал",
+        "красный",
+        "лестница",
+        "парламентский",
+        "полукруглый",
+        "скамья",
+        "центр"
+      ],
+      "n_matched_top1": 3,
+      "top3": [
+        "004e67c094c01d68",
+        "0b37c87f551023c7",
+        "0dd052cc9c05ea78"
+      ],
+      "correct_at_1": false,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.59",
+      "class": 1,
+      "answer": "124197904aebee39",
+      "query_lemmas": [
+        "ансамбль",
+        "зал",
+        "заседание",
+        "играть",
+        "круглый",
+        "струнный",
+        "центр"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "124197904aebee39",
+        "0dd052cc9c05ea78",
+        "c1334a6df9636a45"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.60",
+      "class": 2,
+      "answer": "2106a1f615643a62",
+      "query_lemmas": [
+        "белый",
+        "зал",
+        "кресло",
+        "оранжевый",
+        "потолок",
+        "пустой",
+        "реечный"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "2106a1f615643a62",
+        "71681aa82b7ef15f",
+        "004e67c094c01d68"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.61",
+      "class": 3,
+      "answer": "2ec2e501c2994103",
+      "query_lemmas": [
+        "ciu",
+        "где",
+        "зал",
+        "логотип",
+        "экран"
+      ],
+      "n_matched_top1": 4,
+      "top3": [
+        "2ec2e501c2994103",
+        "9cfa372f80c96bb4",
+        "94043f06b44df043"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    },
+    {
+      "num": "4.62",
+      "class": 2,
+      "answer": "8cb7d659e2d0a541",
+      "query_lemmas": [
+        "восточный",
+        "кофе",
+        "лукум",
+        "металлический",
+        "поднос",
+        "рахат"
+      ],
+      "n_matched_top1": 2,
+      "top3": [
+        "8cb7d659e2d0a541",
+        "0b3445eeb72b3803",
+        "2106a1f615643a62"
+      ],
+      "correct_at_1": true,
+      "correct_at_3": true
+    }
+  ]
+}

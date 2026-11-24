@@ -985,10 +985,12 @@ slides:
 
       '
     backup: 'Снимки — `rendered/make_figures_D.py::case_d_korpus()`, кэш корпуса кейса B. Все три помечены
-      `deck_allowed: true` в `zamery-B/razmetka.json` («людей нет» / «людей почти нет»), лицензия CC BY
-      2.0, автор подписан на кадре. Состав корпуса — `zamery-B/razmetka.json` (`in_corpus: true`), группы
-      — `plan-peredelki/razmetka-B.md`. Контроль — `stend/zamery-D/ README.md`, раздел «Контроль на документах
-      A — D12».'
+      `deck_allowed: true` в `zamery-B/razmetka.json` («людей нет» / «людей почти нет»). Лицензия CC BY
+      2.0 — атрибуция стоит дословно в заметке этого кадра, не на кадре: «источники фотографий на слайде
+      не подписывать» (`trebovaniya-k-soderzhaniyu-forma.md` §5.12), а заметки публикуются вместе с материалом.
+      Так же сделано у кейса C на таком же кадре. Состав корпуса — `zamery-B/razmetka.json` (`in_corpus:
+      true`), группы — `plan-peredelki/razmetka-B.md`. Контроль — `stend/zamery-D/ README.md`, раздел
+      «Контроль на документах A — D12».'
 - id: n61
   file: slides/n61-d07-klassy-zaprosov.md
   type: test_structure_table

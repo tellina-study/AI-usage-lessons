@@ -714,6 +714,30 @@ def probe_shadow():
             f"({res[False]}) — именно он и даёт тень в LibreOffice")
 
 
+def probe_tint():
+    """`prims.tint_box`: тон рисует свою пару заливка/обводка, а незнакомый
+    тон называется предупреждением и падает на серый, а не рисует
+    произвольный цвет молча (issue #355 §9.7)."""
+    report.reset()
+    p = prims.new_deck()
+    s = prims.blank(p)
+    shp = prims.tint_box(s, 1, 1, 2, 1, tone="gold")
+    fill_ok = shp.fill.fore_color.rgb == prims.TINTS["gold"][0]
+    stroke_ok = shp.line.color.rgb == prims.TINTS["gold"][1]
+    report.reset()
+    shp2 = prims.tint_box(s, 4, 1, 2, 1, tone="нет-такого")
+    fell_back = (shp2.fill.fore_color.rgb == prims.TINTS["grey"][0]
+                 and any(w.startswith("[тинт]") for w in report.WARNINGS))
+    if fill_ok and stroke_ok and fell_back:
+        OK.append("[тинт]")
+        say(f"{'[тинт]':<24} тон → заливка/обводка: ЛОВИТ  →  «gold» даёт "
+            f"{prims.TINTS['gold'][0]}/{prims.TINTS['gold'][1]}; незнакомый "
+            "тон назван и упал на «grey»")
+    else:
+        BAD.append(f"[тинт] gold={fill_ok}·{stroke_ok}, откат на "
+                   f"незнакомом тоне={fell_back}")
+
+
 def probe_font_gap():
     """Отсутствующее начертание выходит ПРОБЕЛОМ `[шрифт]`, а не молчаливой
     оценкой по соседнему файлу."""
@@ -810,6 +834,7 @@ def selftest():
     probe_kind_fallback()
     probe_thin_switch(tmp, seq)
     probe_shadow()
+    probe_tint()
     probe_font_gap()
     probe_live_links(tmp)
     probe_fingerprint(tmp)

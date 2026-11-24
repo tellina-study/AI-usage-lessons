@@ -17,8 +17,10 @@ from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.util import Inches, Pt
 
 from . import metrics, report
-from .theme import (DEEP, LIGHT, MOTIF_RADIUS_PT, OUTLINE, SLATE, SURFACE,
-                    TEAL, WHITE, FONT, MID, SLIDE_H, SLIDE_W)
+from .theme import (DARK_GREY, DEEP, GOLD, GOLD_TINT, LIGHT, LIGHT_TINT,
+                    MOTIF_RADIUS_PT, OUTLINE, RED_WARN, SLATE, SOFT_GREY,
+                    SURFACE, TEAL, TEAL_TINT, WHITE, FONT, MID, SLIDE_H,
+                    SLIDE_W)
 
 _A = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
 _P = "{http://schemas.openxmlformats.org/presentationml/2006/main}"
@@ -123,6 +125,42 @@ def ocean_box(s, x, y, w, h, *, fill=SURFACE, stroke=LIGHT, stroke_pt=1.5,
     if count:
         report.PRIM[count] += 1
     return shp
+
+
+# Тон → (заливка, обводка). issue #355 §9.7: шесть рабочих оттенков
+# Лекции 10 (`build_lec10.py:38-44`), которые та дека держала списком
+# костылём в собственном словаре `helpers`, а ядро знало только 7 базовых
+# цветов палитры — отсюда «все рамки одинаковые» у дек на ядре. `warn`
+# тонирует не заливкой (у RED_WARN своего тинта в исходнике не было —
+# заводить пятый оттенок без образца значит рисовать цвет, которого никто
+# не просил), а обводкой на белом, тем же приёмом, что уже стоит в
+# `build_lec10_p1.py:1905` (`fill=WHITE, stroke=SOFT_GREY`).
+TINTS = {
+    "gold": (GOLD_TINT, GOLD),
+    "teal": (TEAL_TINT, TEAL),
+    "light": (LIGHT_TINT, LIGHT),
+    "grey": (SOFT_GREY, DARK_GREY),
+    "warn": (WHITE, RED_WARN),
+}
+
+
+def tint_box(s, x, y, w, h, *, tone="gold", stroke_pt=1.5,
+            radius_pt=MOTIF_RADIUS_PT, count="мотив-тинт"):
+    """Мотив деки с цветной заливкой — золотая полоса центрального вопроса
+    или формулы (образец Лекции 10 k-03/k-05:
+    `ocean_box(..., fill=GOLD_TINT, stroke=GOLD)`) и однотипные тонированные
+    рамки других тонов тем же приёмом.
+
+    Незнакомый `tone` называется предупреждением и падает на `grey`, а не
+    рисует произвольный цвет молча — тот же договор, что у `scheme.py` на
+    незнакомом `kind`."""
+    if tone not in TINTS:
+        report.warn(f"[тинт] незнакомый tone «{tone}» — доступны "
+                    f"{', '.join(sorted(TINTS))}, взят «grey»")
+        tone = "grey"
+    fill, stroke = TINTS[tone]
+    return ocean_box(s, x, y, w, h, fill=fill, stroke=stroke,
+                     stroke_pt=stroke_pt, radius_pt=radius_pt, count=count)
 
 
 def _plain_arrow(s, shape, x, y, w, h, color):

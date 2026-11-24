@@ -459,6 +459,28 @@ def place_hero(s, sid, meta, p, x_right, y_top, y_bot, w_max):
     return x_box, bot
 
 
+def place_hero_centered(s, sid, meta, p, x_right, y_top, body_bot_y, *,
+                        target=0.42, w_cap=9.0):
+    """Hero-иллюстрация (§5.9, ≥40% площади) по ВЕРТИКАЛЬНОЙ СЕРЕДИНЕ
+    отведённой полосы, шириной, выведенной из СОБСТВЕННОГО отношения
+    сторон снимка — не из чужого магического числа.
+
+    issue #355 §9.3: третья копия подряд (`build_lec09.py:551`,
+    `build_lec11.py:400`) — уравнение `w² / ar = target·SLIDE_W·SLIDE_H`
+    решается заново для КАЖДОГО hero-кадра по его собственному `ar`,
+    потому что квадратный снимок (ar=1,0) и снимок 16:9 (ar≈1,778) не
+    делят одно число ширины. `target=0.42`, не 0.40 — запас, чтобы порог
+    §5.9 не задевался впритык при любой разумной пропорции.
+
+    Возвращает (левый край коробки, низ коробки, верх коробки)."""
+    ar = img_ar(p, sid) or (16 / 9)
+    w = min(w_cap, (target * SLIDE_W * SLIDE_H * ar) ** 0.5)
+    box_h = w / ar + 2 * HERO_PAD
+    top = max(y_top, y_top + (body_bot_y - y_top - box_h) / 2)
+    x_box, bot = place_hero(s, sid, meta, p, x_right, top, body_bot_y, w)
+    return x_box, bot, top
+
+
 # ── hero по ПОРЯДКУ ДЕКИ, а не по объявлению автора ─────────────────
 # Прожарка 2026-10-14, §3.3. `place_hero` выше меряет порог §5.9 только на
 # тех кадрах, где автор САМ поставил `media_hero: true`. У Лекции 7 таких

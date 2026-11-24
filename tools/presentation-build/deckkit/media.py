@@ -481,6 +481,41 @@ def place_hero_centered(s, sid, meta, p, x_right, y_top, body_bot_y, *,
     return x_box, bot, top
 
 
+def photo_strip(s, sid, photos, x, y, w, h, *, gap=0.14, cap_pt=CAP_PT,
+                cap_h=0.30, tag=""):
+    """2-3 снимка в РЯД, каждый со своей ОДНОСТРОЧНОЙ подписью под ним —
+    issue #355 §9.9, образец Лекции 10 (`build_lec10_p2.py:608`, s20:
+    «что получилось» / «что не получилось» рядом, подпись-вывод под
+    каждым). `photos` — список `{"media": <путь>, "caption": <строка>}`;
+    путь уже РАЗРЕШЁН (`media.media_path`/`resolve_media`) — эта функция
+    не читает фронтматтер и не выбирает конвенцию пути, только рисует.
+
+    Файла нет — рамка с честной надписью в месте снимка (тот же договор,
+    что у `prims.add_image`), а не тихо пустой квадрат. Возвращает занятую
+    высоту (снимки + подписи)."""
+    n = len(photos)
+    if not n:
+        report.warn(f"[кадр] {tag or sid}: photo_strip без фотографий")
+        return 0.0
+    pw = max(0.3, (w - (n - 1) * gap) / n)
+    ph = max(0.3, h - CAP_GAP - cap_h)
+    for i, item in enumerate(photos):
+        px = x + i * (pw + gap)
+        path = item.get("media") if isinstance(item, dict) else item
+        cap = (item.get("caption") or "") if isinstance(item, dict) else ""
+        itag = f"{tag or sid}/фото{i + 1}"
+        if path and Path(path).exists():
+            prims.add_image(s, path, px, y, pw, ph, tag=itag)
+        else:
+            report.warn(f"[кадр] {itag}: файла нет — {path}")
+            prims.ocean_box(s, px, y, pw, ph, fill=SURFACE)
+        if cap:
+            prims.text_box(s, px, y + ph + CAP_GAP, pw, cap_h, cap,
+                           size=cap_pt, italic=True, color=LIGHT,
+                           align=PP_ALIGN.CENTER, ls=1.10, tag=itag)
+    return ph + CAP_GAP + cap_h
+
+
 # ── hero по ПОРЯДКУ ДЕКИ, а не по объявлению автора ─────────────────
 # Прожарка 2026-10-14, §3.3. `place_hero` выше меряет порог §5.9 только на
 # тех кадрах, где автор САМ поставил `media_hero: true`. У Лекции 7 таких

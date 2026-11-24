@@ -13,6 +13,13 @@
 (n15a) добавлена рядом, по образцу `_paste_fit`/`case_b_light_hard` из
 `make_figures_B.py` этого же занятия (двухпанельная раскладка — реальный
 скан + рамка вокруг интересующей области + подпись под каждой панелью).
+
+ПРАВИЛО (наступили независимо две сессии — эта и сессия Кейса B, круг
+доводки issue #351): функция-фигура НЕ рисует собственный заголовок через
+`head(...)` — заголовок слайду уже даёт `# Заголовок` markdown-файла, и
+`head()` внутри фигуры поверх него — дублирование, не второй уровень
+иерархии. Фигура начинается сразу с подзаголовка-строки (обычным `d.text`)
+или с самой раскладки.
 """
 import sys
 from pathlib import Path
@@ -132,10 +139,9 @@ def a_primer_skanov():
     box=[88,228,126,241], ответ «MR. ARTHUR STEVENS, ESQ A. J. STEVENS»
     box=[131,216,398,240] (`annotations/92380595.json`, id 3/39) — имя
     получателя дописано от руки поверх напечатанного текста, §8.11 канона."""
-    im = Image.new("RGB", (2350, 600), W)
+    im = Image.new("RGB", (2350, 560), W)
     d = ImageDraw.Draw(im)
-    head(d, "Два настоящих скана FUNSD testing_data", sz=28)
-    d.text((40, 62),
+    d.text((40, 20),
             "лёгкий случай — машинописный бланк; трудный — рукописная вставка поверх напечатанного",
             font=f(18), fill=LIGHT)
 
@@ -148,7 +154,7 @@ def a_primer_skanov():
     easy = easy.resize((int(easy.width * target_h / easy.height), target_h))
     hard = hard.resize((int(hard.width * target_h / hard.height), target_h))
 
-    gx1, gy = 50, 110
+    gx1, gy = 50, 70
     gx2 = gx1 + easy.width + 50
     im.paste(easy, (gx1, gy))
     im.paste(hard, (gx2, gy))

@@ -57,7 +57,7 @@ slides:
 
   - id: s03
     file: slides/s03-lecture-map.md
-    type: schema_matrix
+    type: map_cards
     section: "0. Вход"
     assertion: "Шесть разделов идут по нарастанию глубины вмешательства модели — от взгляда на продукт до завода целиком — и заканчиваются ценой решения и сборкой"
     media: ""
@@ -72,7 +72,7 @@ slides:
 
   - id: s04
     file: slides/s04-glossary.md
-    type: norm
+    type: term_cards
     section: "0. Вход"
     assertion: "Шесть терминов отрасли выдаются до первого употребления: ОТ и ИТ, статистическое управление процессом, ПИД-регулятор, усовершенствованное управление процессом, обучение с подкреплением, дефекты на миллион"
     media: ""
@@ -126,7 +126,7 @@ slides:
     type: case_study
     section: "1. Технический контроль качества"
     assertion: "WPS Analytics целится в охват до 100% сварных точек там, где ультразвук проверял выборку неизвестного размера — а учителем модели остаётся тот же ультразвук"
-    media: "assets/screenshots/audi-neckarsulm-wps-production.jpg"
+    media: ""
 
   - id: s11
     file: slides/s11-audi-ustroystvo.md
@@ -140,7 +140,7 @@ slides:
     type: norm
     section: "1. Технический контроль качества"
     assertion: "Три относительных эффекта, и ни один не сопровождён знаменателем"
-    media: ""
+    media: "assets/screenshots/s14-tsmc.jpg"
 
   - id: s13
     file: slides/s13-boeing-sobytie-khronologiya.md
@@ -154,7 +154,7 @@ slides:
     type: case_study
     section: "1. Технический контроль качества"
     assertion: "Финальная проверка четырёх болтов — задача ровно того класса, который машинное зрение решает хорошо: фиксированная геометрия, контролируемый свет, бинарный признак «есть / нет» — и зрение не спросили"
-    media: ""
+    media: "assets/screenshots/boeing-missing-bolts-ntsb-lab.jpg"
 
   - id: s15
     file: slides/s15-cv-granitsy.md
@@ -191,14 +191,14 @@ slides:
     type: case_study
     section: "2. Техническое обслуживание и ремонт"
     assertion: "GE обещала $15 млрд выручки от Predix к 2020 году — получила фактически около $1 млрд, и бренд свёрнут"
-    media: ""
+    media: "assets/screenshots/gepredix-wind-turbine-technician.jpg"
 
   - id: s19
     file: slides/s19-toir-upominaniya-collage.md
     type: norm
     section: "2. Техническое обслуживание и ремонт"
     assertion: "Пять упоминаний подряд — минус часы, минус процент, плюс миллиард — и ни одно не называет исходное число"
-    media: ""
+    media: "assets/screenshots/softsensors-mmk-domna6.jpg"
 
   - id: s20
     file: slides/s20-kogda-pdr-ne-nuzhen.md
@@ -235,7 +235,7 @@ slides:
     type: case_study
     section: "3. Управление технологическим процессом"
     assertion: "FKDPP провёл дистилляционную колонну 35 суток (840 часов) без вмешательства человека и снизил расход пара и выбросов CO₂ на 40% — против ручного управления, не против работавшей рядом связки ПИД+APC"
-    media: "assets/screenshots/yokogawa-eneos-yokkaichi-plant.jpg"
+    media: ""
 
   - id: s24
     file: slides/s24-yokogawa-ustroystvo.md
@@ -249,7 +249,7 @@ slides:
     type: mentions
     section: "3. Управление технологическим процессом"
     assertion: "У каждого из трёх упоминаний — своё число, и у каждого числа — именно та оговорка, которая делает его нестрогим"
-    media: ""
+    media: "assets/screenshots/softsensors-sibur-econs-control-room.jpg"
 
   - id: s26
     file: slides/s26-regulyatorika-granitsy.md
@@ -300,11 +300,11 @@ slides:
     type: case_study
     section: "4. Безлюдное производство"
     assertion: "План — 5000 Model 3 в неделю «в течение 2017 года»; факт Q3 2017 — 260 машин за квартал; цель достигнута через ручную линию в тентовой конструкции GA4, собранную за три недели и давшую пятую часть рекордной недели"
-    media: "assets/screenshots/tesla-fremont-ga4-tent-interior.jpg"
+    media: "assets/screenshots/tesla-tent-interior-line.jpg"
 
   - id: s32
     file: slides/s32-tesla-otkat-otlivka-sintez.md
-    type: comparison
+    type: norm
     section: "4. Безлюдное производство"
     assertion: "Одна и та же компания откатилась от самой амбициозной версии технологии к проверенной дважды за шесть лет — и оба раза возврат к проверенному методу сработал"
     media: "assets/screenshots/tesla-fremont-model-y-single-piece-megacast.jpg"
@@ -314,21 +314,21 @@ slides:
     type: case
     section: "4. Безлюдное производство"
     assertion: "В истории про 50 роботов за смену и 30 суток без людей нет искусственного интеллекта вовсе — исходные материалы не упоминают ни ИИ, ни обучение; и даже у самой FANUC 72% операций производства по-прежнему выполняют люди"
-    media: ""
+    media: "assets/screenshots/fanuc-oshino-robot-sobiraet-robota.jpg"
 
   - id: s34
     file: slides/s34-foxconn-obeschanie.md
     type: case
     section: "4. Безлюдное производство"
     assertion: "От обещания миллиона роботов в 2011 году до замера 150–200 тысяч работников на пике сезона в 2025-м прошло 14 лет — не 3, как сама компания себе назначила"
-    media: ""
+    media: "assets/screenshots/foxconn-foxbot-expo-robots.jpg"
 
   - id: s35
     file: slides/s35-adidas-speedfactory.md
     type: case_study
     section: "4. Безлюдное производство"
     assertion: "Суммарная мощность двух Speedfactory — 1 млн пар из 448 млн, выпущенных Adidas в 2019 году, — это 0,22% собственного объёма компании"
-    media: ""
+    media: "assets/screenshots/adidas-speedfactory-robot-arm-shoe.jpg"
 
   - id: s36
     file: slides/s36-anons-ne-vnedrenie-collage.md
@@ -339,7 +339,7 @@ slides:
 
   - id: s37
     file: slides/s37-wef-nesovpadeniya.md
-    type: comparison
+    type: norm
     section: "4. Безлюдное производство"
     assertion: "Один и тот же источник даёт разные числа накопленных «маяков» для одного года в документах разных лет — расхождение от 8 до 24 сайтов на точку, и сходятся только старт и последний итог"
     media: ""
@@ -364,7 +364,7 @@ slides:
     type: summary
     section: "5. Цена решения и границы"
     assertion: "Четыре контура дают явные критерии отказа от модели, а завод «Черкизово» в Кашире сократил штат в четыре раза относительно типового завода без единой обученной модели внутри"
-    media: ""
+    media: "assets/screenshots/cherkizovo-robot-sortirovka.jpg"
 
   - id: s41
     file: slides/s41-zanyatost.md
@@ -375,7 +375,7 @@ slides:
 
   - id: s42
     file: slides/s42-5-shagov-voprosy-postavschiku.md
-    type: norm
+    type: comparison
     section: "5. Цена решения и границы"
     assertion: "Решение о ступени автоматизации складывается из пяти проверяемых шагов и проверяется девятью вопросами — пятью поставщику и четырьмя себе"
     media: ""

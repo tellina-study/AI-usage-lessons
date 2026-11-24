@@ -620,7 +620,7 @@ def divider(p, sl, root):
         mw, mh = media.media_box_size(media.img_ar(img, sl.sid), 4.60, 3.60)
         body_w = FULL_W - 0.22 - mw - COL_GAP
         img_box = (body_x + body_w + COL_GAP, 0.95, mw, mh)
-    y = 0.90
+    y = 0.70
     blocks_left = len(slidefile.body_blocks(sl))
     for kind, t in slidefile.body_blocks(sl):
         blocks_left -= 1
@@ -631,9 +631,10 @@ def divider(p, sl, root):
             h = metrics.est_h(t, sz, body_w, 1.10, True)
             prims.text_box(s, body_x, y, body_w, h, t, size=sz, bold=True,
                            color=DEEP, ls=1.10, tag=f"{sl.sid}/дивайдер-имя")
-            y += h + 0.08
+            content_bottom = y + h
+            y = content_bottom + 0.04
             gold_tick(s, sl.sid, body_x, y)
-            y += 0.20
+            y += 0.10
         else:
             runs = []
             for i, part in enumerate(split_named_items(t)):
@@ -652,16 +653,22 @@ def divider(p, sl, root):
             # тот клип, который эта правка снимает).
             reserve = 0.22 * blocks_left
             avail = max(0.3, bb - y - reserve)
-            metrics.fit_runs(runs, body_w, avail, ls=1.24,
+            metrics.fit_runs(runs, body_w, avail, ls=1.20,
                              tag=f"{sl.sid}/дивайдер-тело", proj_base=15.5)
             floor.check_runs(runs, f"{sl.sid}/дивайдер-тело")
-            h = min(avail, metrics.runs_h(runs, body_w, 1.24))
-            prims.text_runs(s, body_x, y, body_w, h + 0.04, runs, ls=1.24,
+            h = min(avail, metrics.runs_h(runs, body_w, 1.20))
+            prims.text_runs(s, body_x, y, body_w, h + 0.04, runs, ls=1.20,
                             tag=f"{sl.sid}/дивайдер-тело", quiet=True)
-            y += h + 0.10
-        if y > bb - 0.2:
+            content_bottom = y + h
+            y = content_bottom + 0.06
+        # Проверка — против фактического низа ДОРИСОВАННОГО текста, а не
+        # против технического отступа перед следующим блоком: для
+        # последнего блока в перечне такого следующего блока нет, и
+        # голый `y` после своей же финальной прокладки регулярно
+        # перескакивал предел чисто от зазора на несуществующий блок.
+        if content_bottom > bb - 0.2:
             report.warn(f"[высота] {sl.sid}/дивайдер: текст дошёл до "
-                        f"подвала — {y:.2f}\" при пределе {bb:.2f}\"")
+                        f"подвала — {content_bottom:.2f}\" при пределе {bb:.2f}\"")
             break
     if not sl.title and not slidefile.body_blocks(sl):
         report.warn(f"[заголовок] {sl.sid}: дивайдер без заголовка и без "

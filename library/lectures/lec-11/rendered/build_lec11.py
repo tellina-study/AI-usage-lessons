@@ -164,6 +164,12 @@ MEDIA_W = 4.30
 MEDIA_H_CAP = 3.40
 MEDIA_H_CAP_OVERRIDE = {"s31": 5.2}
 PHOTO_STRIP_H_OVERRIDE = {"s37": 1.1}
+IKONKI_ROW_BIG = {"s20": dict(card_h=2.00, icon_size=0.48, label_pt=15.0,
+                              card_pt=11.0)}
+# Визуальный осмотр (раздел 8 приёмки, #353): s20 несёт одну строку из пяти
+# карточек на коротком теле (2 абзаца) — форма по умолчанию (карточка 0,58")
+# топила почти половину кадра пустой. Крупнее карточка и иконка — та же
+# информация, не новый текст.
 # `s37` делит кадр с `polosy:` (4 пары, легенда, ось, сетка — уже ≈3,6" на
 # суженном стиле) — полный `photo_strip` в 1,85" не умещается рядом ни на
 # каком бюджете кадра; 1,1" даёт полосе фото узкую, но непустую высоту.
@@ -1226,13 +1232,35 @@ def content(p, sl, root):
     # карточки раздела 5 спеки, например s20/s39/s40/s42.
     ik = ikonki.ikonki_of(sl) if is_content else None
     if ik:
-        ik_h = ikonki.ikonki_h(ik, body_w_top)
-        avail_ik = col_bot - y
-        if ik_h > avail_ik + 0.02:
-            report.warn(f"[иконки] {sl.sid}: карточки просят {ik_h:.2f}\" "
-                        f"при {avail_ik:.2f}\" свободных")
-        ikonki.draw_ikonki(s, IKON_DIR, ik, MX, y, body_w_top, tag=sl.sid)
-        y += ik_h + GAP
+        big = IKONKI_ROW_BIG.get(sl.sid)
+        if big and ik["mode"] == "row" and len(ik["rows"]) == 1:
+            # Полный визуальный осмотр (раздел 8 приёмки, #353) поймал
+            # ровно одну строку карточек на коротком теле — на умолчании
+            # формы (карточка 0,58") кадр топил почти половину своей
+            # высоты пустой. Текста не прибавляем — только геометрия
+            # одной уже существующей строки, напрямую через row_h/draw_row
+            # в обход диспетчера `ikonki_h`/`draw_ikonki`, у которых
+            # card_h/icon_size — параметры по умолчанию функции (связаны
+            # при определении модуля, не читаются из атрибута заново, так
+            # что монкипатч модульной константы здесь не сработал бы).
+            row = ik["rows"][0]
+            h_kw = {k: v for k, v in big.items() if k in ("card_h", "label_pt")}
+            ik_h = ikonki.row_h(row, body_w_top, **h_kw)
+            avail_ik = col_bot - y
+            if ik_h > avail_ik + 0.02:
+                report.warn(f"[иконки] {sl.sid}: карточки просят {ik_h:.2f}\" "
+                            f"при {avail_ik:.2f}\" свободных")
+            ikonki.draw_row(s, IKON_DIR, row, MX, y, body_w_top, tag=sl.sid,
+                            **big)
+            y += ik_h + GAP
+        else:
+            ik_h = ikonki.ikonki_h(ik, body_w_top)
+            avail_ik = col_bot - y
+            if ik_h > avail_ik + 0.02:
+                report.warn(f"[иконки] {sl.sid}: карточки просят {ik_h:.2f}\" "
+                            f"при {avail_ik:.2f}\" свободных")
+            ikonki.draw_ikonki(s, IKON_DIR, ik, MX, y, body_w_top, tag=sl.sid)
+            y += ik_h + GAP
 
     cols = columns.columns_of(sl) if is_content else None
     tbl = table_from(sl) if is_content else None

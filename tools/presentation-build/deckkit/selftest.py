@@ -88,7 +88,9 @@ def file_probes(tmp, seq):
                  ("s05-clean-ladder.md", probes.CLEAN_LADDER),
                  ("s06-clean-axis.md", probes.CLEAN_AXIS),
                  ("s07-clean-illustration.md", probes.CLEAN_ILLUSTRATION),
-                 ("s08-clean-divider-photo.md", probes.CLEAN_DIVIDER_PHOTO)],
+                 ("s08-clean-divider-photo.md", probes.CLEAN_DIVIDER_PHOTO),
+                 ("s09-clean-headline-number.md",
+                  probes.CLEAN_HEADLINE_NUMBER)],
                 tmp, seq, name="clean")
     say("── САМОПРОВЕРКА ЯДРА ────────────────────────────────────────")
     say(f"чистые кадры (прогон · таблица · одно число · дорожки · "
@@ -811,6 +813,26 @@ def probe_ikonki(tmp):
                    f"missing={missing_named} bad={bad}/{bad_named}")
 
 
+def probe_headline_wired(tmp):
+    """`headline_number` (issue #355 §9.10): образцовый `content()` теперь
+    ЗОВЁТ `titles.headline_of`, а не просто знает о нём откуда-то из ядра.
+    Самоотчёт не принимается — считается текст в сохранённом пакете, тем
+    же приёмом, что `probe_live_links`."""
+    from pptx import Presentation
+    prs = Presentation(str(tmp / "clean.pptx"))
+    sl = prs.slides[8]            # s09-clean-headline-number.md
+    texts = [r.text for shp in sl.shapes if shp.has_text_frame
+             for p in shp.text_frame.paragraphs for r in p.runs]
+    if any("27%" == t.strip() for t in texts):
+        OK.append("[число-заголовок] проведено")
+        say(f"{'[число-заголовок] проведено':<24} в пакете: ЛОВИТ  →  "
+            "«27%» стоит отдельным прогоном на s09 — content() вызвал "
+            "headline_of, а не промолчал о поле")
+    else:
+        BAD.append("[число-заголовок] проведено «27%» не найдено ни в "
+                   "одном прогоне s09 — content() не нарисовал headline_number")
+
+
 def probe_font_gap():
     """Отсутствующее начертание выходит ПРОБЕЛОМ `[шрифт]`, а не молчаливой
     оценкой по соседнему файлу."""
@@ -910,6 +932,7 @@ def selftest():
     probe_tint()
     probe_plates_compact()
     probe_ikonki(tmp)
+    probe_headline_wired(tmp)
     probe_font_gap()
     probe_live_links(tmp)
     probe_fingerprint(tmp)

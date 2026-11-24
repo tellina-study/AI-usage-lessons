@@ -27,7 +27,7 @@ from dataclasses import dataclass
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 
 from . import (columns, figure, flow, markup, media, metrics, plates,
-               prims, report, scheme, slidefile, tables, wrap)
+               prims, report, scheme, slidefile, tables, titles, wrap)
 from .theme import DEEP, GOLD, LIGHT, MID, SLIDE_H, SLIDE_W, WHITE
 
 
@@ -53,6 +53,8 @@ class Geometry:
     divider_img_w: float = 4.60      # боковая фотография дивайдера
     divider_img_h: float = 3.60      # (issue #355 §9.1, геометрия двух
                                      # копий — build_lec09.py/build_lec11.py)
+    sub_h: float = 0.52              # подзаголовок под числом-заголовком
+    sub_gap: float = 0.05            # (issue #355 §9.10, headline_number)
 
     @property
     def full_w(self):
@@ -69,22 +71,38 @@ CONTENT_TYPES = {"case", "norm", "comparison", "summary", "map", "question"}
 
 def heading(s, sl, g=G, *, size=27.0, width=None, color=DEEP):
     """Заголовок-утверждение. Кегль подбирается под длину строки ИЗ ФАЙЛА:
-    заголовки правятся в `slides/`, и подгонять их руками нельзя."""
+    заголовки правятся в `slides/`, и подгонять их руками нельзя.
+
+    `headline_number` (issue #355 §9.10) — число-заголовок лестницей НАД
+    фразой, тем же приёмом, что уже стоит в `build_lec09.heading`, но
+    образцовый `content()` его не звал: деку, которая ставит этот
+    фронтматтер, негде было посмотреть собранной на самом ядре."""
     if not sl.title:
         report.warn(f"[заголовок] {sl.sid}: поле `title` пусто")
         return g.body_top
     w = g.full_w if width is None else width
-    sz = metrics.fit_size(sl.title, w, g.title_h, hi=size, lo=19.0,
-                          floor=15.0, bold=True, ls=1.08,
-                          tag=f"{sl.sid}/заголовок")
-    prims.text_box(s, g.mx, g.title_y, w, g.title_h, sl.title, size=sz,
-                   bold=True, color=color, ls=1.08,
-                   tag=f"{sl.sid}/заголовок")
+    tag = f"{sl.sid}/заголовок"
+    num = titles.headline_of(sl)
+    if num:
+        nf, _nl, sf, _sl2 = titles.fit_headline(num, sl.title, w, g.title_h,
+                                                g.sub_h, tag=tag)
+        nh = metrics.est_h(num, nf, w, 1.06, True)
+        prims.text_box(s, g.mx, g.title_y, w, nh, num, size=nf, bold=True,
+                       color=color, ls=1.06, tag=f"{tag}-число")
+        sh = metrics.est_h(sl.title, sf, w, 1.14)
+        prims.text_box(s, g.mx, g.title_y + nh + g.sub_gap, w, sh, sl.title,
+                       size=sf, color=MID, ls=1.14, tag=f"{tag}-подзаголовок")
+        bottom = g.title_y + nh + g.sub_gap + sh
+    else:
+        sz = metrics.fit_size(sl.title, w, g.title_h, hi=size, lo=19.0,
+                              floor=15.0, bold=True, ls=1.08, tag=tag)
+        prims.text_box(s, g.mx, g.title_y, w, g.title_h, sl.title, size=sz,
+                       bold=True, color=color, ls=1.08, tag=tag)
+        bottom = g.title_y + metrics.est_h(sl.title, sz, w, 1.08, True)
     # Акцент садится под НАСТОЯЩУЮ высоту заголовка, а не под рамку: у
     # однострочного заголовка рамка на полдюйма выше текста, и акцент по
     # рамке попадал под коробку мотива.
-    sl.tick_y = min(g.title_y + metrics.est_h(sl.title, sz, w, 1.08, True)
-                    + 0.07, g.body_top - 0.17)
+    sl.tick_y = min(bottom + 0.07, g.body_top - 0.17)
     return g.body_top
 
 

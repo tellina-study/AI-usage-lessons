@@ -8,23 +8,21 @@ assertion: "FANUC довела горизонт предупреждения о�
 source: "[GM×FANUC, Design News](https://www.designnews.com/motion-control/predictive-maintenance-hits-robotics-as-fanuc-and-cisco-team-up) · [The Robot Report](https://www.therobotreport.com/big-data-the-cloud-fanuc-and-kuka/) · [происхождение «$22 тыс./мин»](https://archsys.io/hub/articles/the-22000-per-minute-cost-of-automotive-line-downtime-how-ai-predicts-and-prevents-equipment-failures/) · [Siemens/Senseye, «True Cost of Downtime» 2024, PDF](https://assets.new.siemens.com/siemens/assets/api/uuid:1b43afb5-2d07-47f7-9eb7-893fe7d0bc59/tcod-2024_original.pdf)"
 media: "assets/screenshots/gm-fairfax-fanuc-zero-down-time-robots.jpg"
 media_hero: true
-media_hero_target: 0.38
+media_hero_target: 0.43
 media_needed: "найдено и подключено (issue #353, правка 3): сварочная линия завода GM Fairfax, роботы FANUC в масках/кожухах, искры сварки — Automotive Manufacturing Solutions, 2017, og:image статьи «Zero Downtime», где цитируется Марти Линн (GM) — тот самый разбор. Tier 1, см. rework/research-350/05-illustrations-log.md §9."
 graf: "б"
 blocks:
-  - {label: "Цена простоя — ориентир сам устарел", value: "$22 тыс./мин (≈2006) → $2,3 млн/час (2023)", note: "цена часа выросла на 113% с 2019 — старый ориентир стал недооценкой"}
-  - {label: "Классический режим", value: "ППР по регламенту + ремонт по факту отказа", note: "своего числа в единице простоя источники не дают"}
-  - {label: "Модель (FANUC Zero Down Time)", value: "горизонт до 6 месяцев вместо «нескольких недель»", note: "более 100 предотвращённых значимых остановок по 6–8 часов", key: true}
-  - {label: "Денежный эффект", value: "«до $40 млн» — целевая оценка", note: "расходится с открытой арифметикой простоя в 20–40 раз"}
+  - {label: "Цена простоя — ориентир устарел", value: "$22 тыс./мин (≈2006) → $2,3 млн/час (2023)", note: "рост 113% с 2019"}
+  - {label: "Классический режим", value: "ППР + ремонт по факту отказа", note: "своего числа простоя нет"}
+  - {label: "Модель (FANUC Zero Down Time)", value: "горизонт до 6 мес. вместо недель", note: "100+ остановок предотвращено", key: true}
+  - {label: "Денежный эффект", value: "«до $40 млн» — целевая оценка", note: "расходится с арифметикой в 20–40 раз"}
 in_bucket: false
 status: draft
 ---
 
 ## Видимый текст слайда
 
-**Что переехало.** Наряд на обслуживание теперь строится на прогнозе с горизонтом, а не только на календаре или на факте отказа — служба обслуживания GM встраивает работу в уже запланированное окно вместо аварийной остановки.
-
-*Прогноз события по многомерному временному ряду телеметрии приводов.*
+**Что переехало.** Наряд строится на прогнозе с горизонтом, а не на календаре или факте отказа.
 
 ## Заметки лектора
 

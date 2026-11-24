@@ -50,6 +50,9 @@ class Geometry:
                                      # вернувшим себе полную ширину
     body_pt: float = 15.0            # номинальный кегль тела: по нему
                                      # мерится пол проекции
+    divider_img_w: float = 4.60      # боковая фотография дивайдера
+    divider_img_h: float = 3.60      # (issue #355 §9.1, геометрия двух
+                                     # копий — build_lec09.py/build_lec11.py)
 
     @property
     def full_w(self):
@@ -166,33 +169,70 @@ def cover(p, sl, root, g=G):
 
 
 def divider(p, sl, root, g=G):
+    """Дивайдер раздела: левая полоса держит идентичность раздела, имя
+    раздела идёт золотой чёрточкой, тело — перечень разборов раздела
+    (`markup.split_named_items` режет строки «**Имя** — текст», стоящие в
+    файле подряд без пустой строки). Фотография раздела — необязательная
+    боковая колонка справа (`g.divider_img_w`/`g.divider_img_h`), тем же
+    приёмом, что боковая иллюстрация содержательного кадра.
+
+    issue #355 §9.1: поднято в ядро из `build_lec09.py:686` и
+    `build_lec11.py:523` (посимвольные копии друг друга). ПОПУТНО исправлен
+    дефект обеих копий: тело рисовалось ФИКСИРОВАННЫМ кеглем 15,5 пт, и
+    только ПОСЛЕ отрисовки проверялось, не дошёл ли курсор до подвала — на
+    длинном перечне (живой пример s21 Лекции 11) текст уходил за рамку
+    тела молча, предупреждение называло дефект, который уже был на экране.
+    Здесь тело собирается ОДНИМ прогоном и мерится `metrics.fit_runs` ДО
+    рисования: кегль ужимается до пола, и только на полу, если перечень и
+    так не влезает, предупреждение называет предел честно."""
     s = prims.blank(p)
     prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE, count="фон")
     prims.rect(s, 0, 0, 0.17, SLIDE_H, MID, count="полоса")
     check_prims(sl, "divider")
+    img = media.media_path(sl.meta, root, sl.sid)
+    body_x = g.mx + 0.22
+    body_w = g.full_w - 0.22
+    img_box = None
+    if img:
+        mw, mh = media.media_box_size(media.img_ar(img, sl.sid),
+                                      g.divider_img_w, g.divider_img_h)
+        body_w = g.full_w - 0.22 - mw - g.col_gap
+        img_box = (body_x + body_w + g.col_gap, 0.95, mw, mh)
     y = 1.05
+    head_done = False
+    runs = []
     for kind, t in slidefile.body_blocks(sl):
-        if kind == "head":
-            sz = metrics.fit_size(t, g.full_w, 1.05, hi=30.0, lo=20.0,
+        if kind == "head" and not head_done:
+            sz = metrics.fit_size(t, body_w, 1.05, hi=30.0, lo=20.0,
                                   floor=16.0, bold=True, ls=1.10,
                                   tag=f"{sl.sid}/дивайдер-имя")
-            h = metrics.est_h(t, sz, g.full_w, 1.10, True)
-            prims.text_box(s, g.mx + 0.22, y, g.full_w, h, t, size=sz,
-                           bold=True, color=DEEP, ls=1.10,
-                           tag=f"{sl.sid}/дивайдер-имя")
+            h = metrics.est_h(t, sz, body_w, 1.10, True)
+            prims.text_box(s, body_x, y, body_w, h, t, size=sz, bold=True,
+                           color=DEEP, ls=1.10, tag=f"{sl.sid}/дивайдер-имя")
             y += h + 0.10
-            gold_tick(s, sl.sid, g.mx + 0.22, y, g)
+            gold_tick(s, sl.sid, body_x, y, g)
             y += 0.30
-        else:
-            h = metrics.est_h(t, 15.5, g.full_w - 0.22, 1.24)
-            prims.text_runs(s, g.mx + 0.22, y, g.full_w - 0.22, h + 0.04,
-                            markup.inline_runs(t, 15.5, DEEP), ls=1.24,
-                            tag=f"{sl.sid}/дивайдер-тело")
-            y += h + 0.18
-        if y > g.foot_y - 0.2:
-            report.warn(f"[высота] {sl.sid}/дивайдер: текст дошёл до подвала "
-                        f"— {y:.2f}\" при пределе {g.foot_y:.2f}\"")
-            break
+            head_done = True
+            continue
+        for j, part in enumerate(markup.split_named_items(t)):
+            piece = markup.inline_runs(part, 15.5, DEEP)
+            if runs:
+                piece[0]["newpara"] = True
+                # Отбивка между отдельными разборами перечня (6 пт) против
+                # отбивки между отдельными абзацами файла (0,18" ≈ 13 пт) —
+                # то же РАЗЛИЧИЕ, что держали копии между названными
+                # пунктами одного абзаца и соседними абзацами тела.
+                piece[0]["space_before"] = 6 if j else 13
+            runs.extend(piece)
+    if runs:
+        avail = max(0.3, (g.foot_y - 0.2) - y)
+        metrics.fit_runs(runs, body_w, avail, ls=1.24,
+                         tag=f"{sl.sid}/дивайдер-тело", proj_base=15.5)
+        h = metrics.runs_h(runs, body_w, 1.24)
+        prims.text_runs(s, body_x, y, body_w, h + 0.04, runs, ls=1.24,
+                        tag=f"{sl.sid}/дивайдер-тело", quiet=True)
+    if img_box:
+        media.draw_media(s, sl.sid, img, *img_box)
     footer(s, sl, g)
     return s
 

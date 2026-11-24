@@ -87,7 +87,8 @@ def file_probes(tmp, seq):
                  ("s04-clean-kinds.md", probes.CLEAN_KINDS),
                  ("s05-clean-ladder.md", probes.CLEAN_LADDER),
                  ("s06-clean-axis.md", probes.CLEAN_AXIS),
-                 ("s07-clean-illustration.md", probes.CLEAN_ILLUSTRATION)],
+                 ("s07-clean-illustration.md", probes.CLEAN_ILLUSTRATION),
+                 ("s08-clean-divider-photo.md", probes.CLEAN_DIVIDER_PHOTO)],
                 tmp, seq, name="clean")
     say("── САМОПРОВЕРКА ЯДРА ────────────────────────────────────────")
     say(f"чистые кадры (прогон · таблица · одно число · дорожки · "

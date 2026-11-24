@@ -6,8 +6,8 @@ type: divider
 title: "2. Техническое обслуживание и ремонт"
 assertion: "Модель предсказывает состояние узла — расписание меняется, сам процесс модель не трогает"
 source: "—"
-media: ""
-media_needed: "фаза 6 — фото цеха ТОиР / промышленного робота под обслуживанием, Tier 1–2 (Wikimedia/press)."
+media: "assets/screenshots/divider-s16-robot-service-shop.jpg"
+media_needed: "найдено и подключено (issue #353): Wikimedia (Tier 2) не дал подходящего кадра (выдача — военные сапёрные роботы, архивные PDF, манипулятор МКС). Tier 3 — официальная страница сервисного подрядчика Blumenbecker Group: техник обслуживает промышленный робот KUKA со снятым корпусом в сервисном центре. Прямое прочтение темы раздела — ремонт/обслуживание, не производство. См. rework/research-350/06-photos-dividers.md."
 in_bucket: false
 status: draft
 ---

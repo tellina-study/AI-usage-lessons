@@ -6,8 +6,8 @@ type: divider
 title: "5. Цена решения и границы"
 assertion: "5. Цена решения и границы"
 source: "—"
-media: ""
-media_needed: "не требуется — раздел держится числами и рамкой решения, без иллюстрации"
+media: "assets/screenshots/divider-s38-balance-scale.jpg"
+media_needed: "найдено и подключено (issue #353 — владелец развернул прежнее решение «не требуется»): тема раздела абстрактна (TCO-рамка, не кейс), поэтому фото метафорическое, не постановочное — архивное предметное фото антикварных аптекарских весов с гирьками (Wellcome Collection, Wikimedia, Tier 2), образ «взвесить цену решения». См. rework/research-350/06-photos-dividers.md."
 in_bucket: false
 status: draft
 ---

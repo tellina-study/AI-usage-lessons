@@ -94,3 +94,4 @@ library/seminars/*/rendered/sem-*-n*.pptx
 # служебные выводы самопроверок форм ядра
 tools/presentation-build/out-*/
 tools/presentation-build/probe-out/
+library/seminars/sem-12/stend/zamery-B/corpus-cache/

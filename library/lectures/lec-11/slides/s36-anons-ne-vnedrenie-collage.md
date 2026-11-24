@@ -7,9 +7,12 @@ title: "Анонс не равно внедрение: Xiaomi и Hyundai"
 assertion: "Заявленная автоматизация и анонсированный робот — не то же самое, что фактическая загрузка линии и робот, работающий на ней"
 source: "[euronews.com, репортаж апрель 2026](https://www.euronews.com/2026/04/24/inside-xiaomis-beijing-factory-the-machine-behind-a-smartphone-made-every-6-seconds) · [slashgear.com, пересчёт темпа](https://www.slashgear.com/2144548/xiaomi-smartphone-robot-dark-factory-how-works-makes-phones-fast/) · [Boston Dynamics pr, Spot подтверждён](https://bostondynamics.com/news/boston-dynamics-hyundai-motor-group-expand-collaboration-drive-mobility-manufacturing-innovation/) · [Automotive Manufacturing Solutions, Hyundai](https://www.automotivemanufacturingsolutions.com/smart-factory/hyundai-reshapes-vehicle-production-at-metaplant-america/2677700)"
 media: ""
-media_needed: "медиа не нужно — коллаж держится на двух компактных блоках чисел"
+media_needed: "раздел 5 спеки 07-design-review-spec.md: пустой низ 45% — подключена полоса из 2 фото площадок (П6)"
+photos:
+  - {media: "assets/screenshots/xiaomi-changping-line-workers-booths.jpg", caption: "Xiaomi, Чанпин — автоматизация линии"}
+  - {media: "assets/screenshots/hyundai-metaplant-manual-assembly.jpg", caption: "Hyundai Metaplant America"}
 blocks:
-  - {label: "Xiaomi, Чанпин — автоматизация линии", value: "81%", note: "самоотчёт компании, устойчиво на двух визитах репортёров"}
+  - {label: "Xiaomi, Чанпин — автоматизация линии", value: "81%", note: "устойчиво на двух визитах репортёров"}
   - {label: "Xiaomi — репортаж с места, апрель 2026", value: "≈220 человек на линии", note: "арифметика «1 телефон/сек» не сходится: при 10 млн/год это 1 за 3,15 сек, не за 1"}
   - {label: "Hyundai Metaplant — гуманоид Atlas", value: "анонс, не развёрнут", note: "пилот — план 2026, сборка — план 2030"}
   - {label: "Hyundai — число роботов в пересказах", value: "500÷600 / «1000+»÷«850»", note: "расхождение 2–3× внутри пересказов одной статьи"}

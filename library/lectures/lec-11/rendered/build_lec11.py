@@ -163,6 +163,10 @@ FOOT_GAP = 0.12
 MEDIA_W = 4.30
 MEDIA_H_CAP = 3.40
 MEDIA_H_CAP_OVERRIDE = {"s31": 5.2}
+PHOTO_STRIP_H_OVERRIDE = {"s37": 1.1}
+# `s37` делит кадр с `polosy:` (4 пары, легенда, ось, сетка — уже ≈3,6" на
+# суженном стиле) — полный `photo_strip` в 1,85" не умещается рядом ни на
+# каком бюджете кадра; 1,1" даёт полосе фото узкую, но непустую высоту.
 COL_GAP = 0.34
 # 0,14"→0,10": четвёртая сборка — несколько плотных case_study/schema_
 # layered-кадров (`s22`/`s26`/`s30`) топили тело на 0,16-0,25" уже после
@@ -292,7 +296,13 @@ TIMELINE = replace(timeline.DEFAULT, unit_pt=15.0, cap_pt=15.0,
                    val_pt=15.0, srok_txt_pt=15.0, end_pt=15.0)
 POLOSY = polosy.PolosyStyle(lab_pt=15.0, val_pt=15.0, mn_pt=15.0,
                             leg_pt=15.0, tick_pt=15.0, unit_pt=15.0,
-                            cap_pt=15.0)
+                            cap_pt=15.0, row_gap=0.12, bar_h=0.22,
+                            bar_gap=0.06, leg_gap=0.06)
+# `row_gap`/`bar_h`/`bar_gap`/`leg_gap` сужены — единственный кадр-носитель
+# `polosy:` в этой деке (`s37`) несёт форму НЕ одну на кадре: под ней ещё
+# встаёт полоса из 3 фото (раздел 5 спеки) и тело с арифметикой месяца. На
+# умолчательных числах форма одна просила 4,72" при бюджете кадра 5,28" —
+# тот же приём, что сужение `lane_h`/`lane_gap` оси на `s01`.
 EPOHI = epohi.EpohiStyle(label_pt=15.0, step_pt=15.0, vyvod_pt=15.0,
                          step_lo=15.0)
 PIKTO = piktogrammy.PiktoStyle(leg_txt_pt=15.0)
@@ -1076,8 +1086,20 @@ def content(p, sl, root):
     # тем же ходом, что `stage_overview()` резервирует свою.
     it = itog.itog_of(sl, st=ITOG) if is_content else None
     it_h = itog.itog_h(it, FULL_W, ITOG) if it else 0.0
-    if it:
-        bb = bb - it_h - GAP
+    # `photos:` — полоса 2-3 фото в ряд с подписями (П6, раздел 5 спеки
+    # 07-design-review-spec.md: s36/s37) — `media.photo_strip`. Резервируется
+    # тем же ходом, что `itog`, стоит НАД ним: итог ближе к подвалу, полоса
+    # фото выше (ни один кадр деки пока не несёт оба сразу, но порядок на
+    # этот случай назван явно, а не угадан по месту).
+    photos_raw = sl.meta.get("photos") if is_content else None
+    photos = None
+    if isinstance(photos_raw, list) and photos_raw:
+        photos = [{"media": resolve_media({"media": p.get("media")}, sl.sid),
+                  "caption": p.get("caption", "")} for p in photos_raw]
+    PHOTO_STRIP_H = PHOTO_STRIP_H_OVERRIDE.get(sl.sid, 1.85)
+    itog_y = bb - it_h
+    photo_strip_y = itog_y - (PHOTO_STRIP_H if photos else 0.0) - (GAP if photos and it else 0.0)
+    bb = photo_strip_y - (GAP if photos or it else 0.0)
     img = resolve_media(sl.meta, sl.sid)
     hero = img is not None and bool(sl.meta.get("media_hero"))
     col_bot, body_w_top = bb, FULL_W
@@ -1384,9 +1406,12 @@ def content(p, sl, root):
         media.draw_media(s, sl.sid, img, *draw_img)
     if draw_img2:
         media.draw_media(s, sl.sid, img2, *draw_img2)
+    if photos:
+        media.photo_strip(s, sl.sid, photos, MX, photo_strip_y, FULL_W,
+                          PHOTO_STRIP_H, tag=f"{sl.sid}/фото-полоса")
     if it:
         itog.check_itog(sl.sid, it, FULL_W, ITOG)
-        itog.draw_itog(s, sl.sid, it, MX, bb + GAP, FULL_W, ITOG,
+        itog.draw_itog(s, sl.sid, it, MX, itog_y, FULL_W, ITOG,
                        tag=f"{sl.sid}/итог")
         report.GOLD_SEEN.add(sl.sid)
     gold_tick(s, sl.sid, MX, sl.tick_y or (TITLE_Y + 0.98))

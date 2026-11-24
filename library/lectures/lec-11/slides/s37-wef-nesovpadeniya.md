@@ -6,32 +6,29 @@ type: comparison
 title: "Сеть «маяков» WEF: когда ряды не сходятся у самого источника"
 assertion: "Один и тот же источник даёт разные числа накопленных «маяков» для одного года в документах разных лет — расхождение от 8 до 24 сайтов на точку, и сходятся только старт и последний итог"
 source: "[WEF_Global_Lighthouse_Network_2025.pdf](https://reports.weforum.org/docs/WEF_Global_Lighthouse_Network_2025.pdf) · [WEF_Global_Lighthouse_Network_2026.pdf](https://reports.weforum.org/docs/WEF_Global_Lighthouse_Network_2026.pdf) · [WEF_GLN_2021_Reimagining_Operations_for_Growth.pdf](https://www3.weforum.org/docs/WEF_GLN_2021_Reimagining_Operations_for_Growth.pdf)"
+type: norm
 media: ""
-media_needed: "медиа не нужно — находка целиком числовая и держится на сопоставлении двух рядов"
-columns:
-  left:
-    head: "Ряд А — пресс-релиз года анонса"
-    items:
-      - "2019 — 44"
-      - "2021 — 69"
-      - "2023 — 153"
-      - "2024 — 189"
-  right:
-    head: "Ряд Б — ретроспектива из документа 2026 года"
-    items:
-      - "2019 — 26 (разрыв 18)"
-      - "2021 — 93 (разрыв 24)"
-      - "2023 — 170 (разрыв 17)"
-      - "2024 — 201 (разрыв 12)"
+media_needed: "раздел 5 спеки 07-design-review-spec.md: два списка → polosy: (разрыв виден расстоянием); под полосами — фото-полоса из трёх маяков (П6)"
+polosy:
+  unit: "сайтов сети Lighthouse"
+  klassika_name: "Ряд А (пресс-релиз года анонса)"
+  model_name: "Ряд Б (ретроспектива 2026)"
+  rows:
+    - {label: "2019", klassika: {value: 44}, model: {value: 26}}
+    - {label: "2021", klassika: {value: 69}, model: {value: 93}}
+    - {label: "2023", klassika: {value: 153}, model: {value: 170}}
+    - {label: "2024", klassika: {value: 189}, model: {value: 201}}
+photos:
+  - {media: "assets/screenshots/wef-lighthouse-novo-nordisk-hillerod.jpg", caption: "Novo Nordisk, Хиллерёд"}
+  - {media: "assets/screenshots/wef-lighthouse-jnj-helsingborg.jpg", caption: "J&J, Хельсингборг"}
+  - {media: "assets/screenshots/wef-lighthouse-unilever-tinsukia.jpg", caption: "Unilever, Тинсукия"}
 in_bucket: true
 status: draft
 ---
 
 ## Видимый текст слайда
 
-**Сходятся только концы ряда:** старт (16 в 2018-м) и последний итог (223 в 2025-м). Внутри — разрыв от 8 до 24.
-
-**Внутри одного месяца тоже не сходится:** релиз января 2026 — «23 новых сайта»; документ того же месяца — «34 новых за 2025 год». 189 + 23 = 212, заявлено 223 — разрыв 11.
+**Сходятся только концы ряда** (16 в 2018-м, 223 в 2025-м) — внутри разрыв от 8 до 24. **И внутри одного месяца:** 189 + 23 = 212, заявлено 223.
 
 ## Заметки лектора
 

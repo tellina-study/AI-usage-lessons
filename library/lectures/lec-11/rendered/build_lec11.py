@@ -104,12 +104,22 @@ LEC_ROOT = HERE.parent                               # .../lec-11
 REPO_ROOT = HERE.parents[3]                           # корень репозитория
 sys.path.insert(0, str(REPO_ROOT / "tools" / "presentation-build"))
 
-from deckkit import (arhitektura, columns, figure, floor, itog, markup,  # noqa: E402
-                     media, metrics, plates, prims, report, scheme,
-                     slidefile, tables, titles, wrap)
+from deckkit import (arhitektura, axis, columns, epohi, figure, floor,  # noqa: E402
+                     ikonki, itog, ladder, markup, media, metrics,
+                     piktogrammy, plates, polosy, prims, report, scheme,
+                     slidefile, tables, timeline, titles, vyvody, wrap)
 from deckkit import render as rnd                     # noqa: E402
 from deckkit.theme import (DEEP, GOLD, LIGHT, MID, SURFACE, TEAL,  # noqa: E402
                            WHITE, SLIDE_H, SLIDE_W)
+
+# issue #355 §9.1/§9.6/§9.7/§9.8 — апгрейд ядра деки (07-design-review-spec.md
+# раздел 9, ветка issue-355-deckkit-core-upgrade, слитая в этот worktree):
+# шесть новых форм разбора (timeline/polosy/epohi/piktogrammy/vyvody — свои
+# поля фронтматтера; `axis` — через `scheme: kind: shkala`, уже встроено в
+# `scheme.KINDS`, прямой импорт здесь только чтобы завести деке свой стиль
+# тем же приёмом `_obyortki`, что `build_lec08_v5.py`/`build_lec09.py`) и
+# иконки (`ikonki:`, каталог `rendered/assets/icons/`, раздел 7 спеки).
+IKON_DIR = HERE / "assets" / "icons"
 
 # ─── ПОЛ КЕГЛЯ ВИДИМОГО СЛОЯ: 15 пт — решение владельца (CLAUDE.md, этот
 # бриф: «15pt floor на видимом слое»), тот же приём, что у Лекций 9/10:
@@ -265,6 +275,53 @@ FIG_S43 = replace(figure.DEFAULT, val_hi=36.0, val_lo=28.0, pad=0.16,
 ITOG = replace(itog.DEFAULT, chip_pt=15.0, text_pt=16.0, text_ls=1.14)
 
 tables.TBL_ROW_MIN = 0.30
+
+# ─── формы раздела 9 апгрейда ядра (issue #355), пол 15 пт тем же приёмом,
+# что `PLATES`/`SCHEME`/`ARH` выше — своя именная копия стиля модуля на
+# ВСЕ поля, которые модуль реально проверяет `floor.pt(...)` при рисовании
+# (не только помеченные в его исходнике «пол видимого слоя»), скопировано
+# буквально у `build_lec08_v5.py`/`build_lec09.py`, тех же дек на этом ядре.
+TIMELINE = replace(timeline.DEFAULT, unit_pt=15.0, cap_pt=15.0,
+                   stage_pt=15.0, head_pt=15.0, txt_pt=15.0, lab_pt=15.0,
+                   val_pt=15.0, srok_txt_pt=15.0, end_pt=15.0)
+POLOSY = polosy.PolosyStyle(lab_pt=15.0, val_pt=15.0, mn_pt=15.0,
+                            leg_pt=15.0, tick_pt=15.0, unit_pt=15.0,
+                            cap_pt=15.0)
+EPOHI = epohi.EpohiStyle(label_pt=15.0, step_pt=15.0, vyvod_pt=15.0,
+                         step_lo=15.0)
+PIKTO = piktogrammy.PiktoStyle(leg_txt_pt=15.0)
+VYVODY = vyvody.VyvodyStyle(text_pt=15.0, most_pt=15.0)
+
+# `scheme: kind: shkala` → `axis.py`, уже встроено в `scheme.KINDS` —
+# `axis.height`/`.check`/`.draw` зовутся БЕЗ декиного стиля и уходят на
+# `axis.DEFAULT` (пол 12 пт). `_obyortki` подменяет эти три модульных
+# алиаса декиным стилем, не трогая ни `scheme.py`, ни `axis.py` — тот же
+# приём, что `build_lec08_v5._obyortki`/`build_lec09._obyortki`.
+AXIS = replace(axis.DEFAULT, lab_pt=15.0, unit_pt=15.0, cap_pt=15.0,
+              end_pt=15.0)
+
+
+def _obyortki(mod, st, h_fn, c_fn, d_fn):
+    mod.height = lambda d, w: h_fn(d, w, st)
+    mod.check = lambda sid, d, w: c_fn(sid, d, w, st)
+    mod.draw = lambda s, sid, d, x, y, w, tag=None: d_fn(
+        s, sid, d, x, y, w, st, tag=tag)
+
+
+_obyortki(axis, AXIS, axis.axis_h, axis.check_axis, axis.draw_axis)
+
+# `scheme: kind: lestnitsa` → `ladder.py` (П11, обзорные кадры раздела 4
+# спеки) — та же подмена алиасов, пол 15 пт.
+LADDER = replace(ladder.DEFAULT, step_hi=17.0, step_lo=15.0, axis_pt=15.0,
+                 axis_h=0.30, cap_pt=15.0)
+_obyortki(ladder, LADDER, ladder.ladder_h, ladder.check_ladder,
+         ladder.draw_ladder)
+
+# Кадры, на которых `ikonki:`/`scheme: kind: lestnitsa` держат кадр
+# самостоятельно, без hero/боковой иллюстрации (раздел 4 спеки
+# 07-design-review-spec.md: 4 новых обзорных кадра s08a/s16a/s21a/s27a) —
+# собственная раскладка `stage_overview()` ниже, не `content()`.
+STAGE_OVERVIEW_IDS = {"s08a", "s16a", "s21a", "s27a"}
 
 
 def fit_table_height(tbl, hi, avail_h, w):
@@ -771,6 +828,71 @@ def best_plate_style(pl, w, base=PLATES):
     return min(scored, key=lambda t: t[0])[1]
 
 
+def stage_overview(p, sl, root):
+    """`stage_overview` — s08a/s16a/s21a/s27a (раздел 4 спеки
+    `07-design-review-spec.md`, шаблон П4: обзор стадии ДО первого кейса
+    раздела, канон `stroenie-i-povestvovanie.md` §3 пункт (в) — перечень
+    способов получения данных стоит «на кадре», не только в заметках
+    дивайдера). Заголовок · строка-определение · лестница режимов
+    (`scheme: kind: lestnitsa`, когда объявлена) · иконко-карточки
+    (`ikonki:`) · золотая полоса решения стадии (`itog:`). Собственная
+    раскладка, а не `content()`: порядок «определение → лестница →
+    карточки → решение» задаёт эта функция, а не фиксированный порядок
+    форм `content()` (там тело прозы рисуется ПОСЛЕ количественных форм
+    всегда — здесь строка-определение нужна ДО них)."""
+    s = prims.blank(p)
+    prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE, count="фон")
+    check_prims(sl, "stage_overview", allow=("scheme", "ikonki", "itog"))
+    y = heading(s, sl)
+    bb = body_bot(sl)
+    caps = [t for k, t in slidefile.body_blocks(sl) if k == "cap"]
+    if caps:
+        ch = metrics.est_h(caps[0], 16.0, FULL_W, 1.22, italic=True)
+        prims.text_box(s, MX, y, FULL_W, ch, caps[0], size=16.0, italic=True,
+                       color=LIGHT, ls=1.22, tag=f"{sl.sid}/определение")
+        y += ch + GAP
+    sch = scheme.scheme_of(sl, SCHEME)
+    if sch:
+        scheme.check_scheme(sl.sid, sch, FULL_W, SCHEME)
+        y += scheme.draw_scheme(s, sl.sid, sch, MX, y, FULL_W, SCHEME) + GAP
+    it = itog.itog_of(sl, st=ITOG)
+    it_h = itog.itog_h(it, FULL_W, ITOG) if it else 0.0
+    ik = ikonki.ikonki_of(sl)
+    if ik:
+        ik_h = ikonki.ikonki_h(ik, FULL_W)
+        avail = bb - y - (it_h + GAP if it else 0)
+        if ik_h > avail + 0.02:
+            report.warn(
+                f"[иконки] {sl.sid}: карточки просят {ik_h:.2f}\" при "
+                f"{avail:.2f}\" свободных — наезд "
+                f"{ik_h - avail:.2f}\"")
+        # Кадр без `scheme` (s08a/s27a — чистая сетка карточек, без
+        # лестницы) иначе оставляет пустой низ >30% между карточками и
+        # золотой полосой (находка этой сборки, Пре-гейт п.3 — тот же
+        # класс дефекта, который спека ставит в вину исходной деке).
+        # Карточки центрируются в остатке высоты, а не прижимаются к верху.
+        extra = avail - ik_h
+        if extra > 0.5:
+            y += extra / 2
+        ikonki.draw_ikonki(s, IKON_DIR, ik, MX, y, FULL_W, tag=sl.sid)
+        y += ik_h + GAP
+    else:
+        report.warn(f"[иконки] {sl.sid}: обзорный кадр стадии без `ikonki` "
+                    "— карточки способов не нарисованы")
+    if it:
+        itog.check_itog(sl.sid, it, FULL_W, ITOG)
+        iy = max(y, bb - it_h)
+        itog.draw_itog(s, sl.sid, it, MX, iy, FULL_W, ITOG,
+                       tag=f"{sl.sid}/итог")
+        report.GOLD_SEEN.add(sl.sid)
+    else:
+        report.warn(f"[итог] {sl.sid}: обзорный кадр стадии без "
+                    "`itog` — решение стадии не названо")
+    gold_tick(s, sl.sid, MX, sl.tick_y or (TITLE_Y + 0.98))
+    footer(s, sl)
+    return s
+
+
 def content(p, sl, root):
     """Содержательный кадр: заголовок · плашки/число · схема · архитектура
     · столбцы · таблица · тело · подвал.
@@ -994,7 +1116,8 @@ def content(p, sl, root):
     return s
 
 
-BUILDERS = {"cover": cover, "divider": divider, "qa": qa, "udar": udar}
+BUILDERS = {"cover": cover, "divider": divider, "qa": qa, "udar": udar,
+           "stage_overview": stage_overview}
 
 
 # ════════════════════════════════════════════════════════════════════

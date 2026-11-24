@@ -106,6 +106,14 @@ slides:
     assertion: "1. Технический контроль качества"
     media: "assets/screenshots/divider-s08-audi-neckarsulm-wps-team.jpg"
 
+  - id: s08a
+    file: slides/s08a-ustroystvo-tehnicheskogo-kontrolya.md
+    type: stage_overview
+    section: "1. Технический контроль качества"
+    assertion: "Вердикт «норма или отклонение» по уже готовой детали выносят четырьмя классическими способами — ультразвуком, рентгеном, разрушающим испытанием, визуальным контролем; окончательное слово в спорном случае остаётся за инженером, а не за моделью"
+    media: ""
+    note: "НОВЫЙ кадр issue #353 раздел 4 спеки 07-design-review-spec.md — обзор стадии «технический контроль качества» по шаблону П4, сразу после дивайдера s08"
+
   - id: s09
     file: slides/s09-audi-foto-dashboard.md
     type: case_study
@@ -163,6 +171,14 @@ slides:
     assertion: "Модель предсказывает состояние узла — расписание меняется, сам процесс модель не трогает"
     media: "assets/screenshots/divider-s16-robot-service-shop.jpg"
 
+  - id: s16a
+    file: slides/s16a-ustroystvo-obsluzhivaniya.md
+    type: stage_overview
+    section: "2. Техническое обслуживание и ремонт"
+    assertion: "Четыре режима обслуживания стоят лестницей по росту зрелости — от ремонта по факту отказа до предиктивного обслуживания по телемерии узла; решение стадии — наряд на обслуживание, а не судьба изделия"
+    media: ""
+    note: "НОВЫЙ кадр issue #353 раздел 4 спеки 07-design-review-spec.md — обзор стадии «техническое обслуживание и ремонт» по шаблону П4, сразу после дивайдера s16"
+
   - id: s17
     file: slides/s17-gm-fanuc-zero-down-time.md
     type: case_study
@@ -198,6 +214,14 @@ slides:
     section: "3. Управление технологическим процессом"
     assertion: "3. Управление технологическим процессом"
     media: "assets/screenshots/divider-s21-dcs-control-room.jpg"
+
+  - id: s21a
+    file: slides/s21a-ustroystvo-upravleniya-processom.md
+    type: stage_overview
+    section: "3. Управление технологическим процессом"
+    assertion: "ПИД держит контур сто лет, усовершенствованное управление — сорок; модель встаёт поверх обоих, выбирая задание, а защита остаётся отдельным сертифицированным контуром, которого модель не касается"
+    media: ""
+    note: "НОВЫЙ кадр issue #353 раздел 4 спеки 07-design-review-spec.md — обзор стадии «управление технологическим процессом» по шаблону П4, сразу после дивайдера s21"
 
   - id: s22
     file: slides/s22-yokogawa-foto-kolonna.md
@@ -241,6 +265,14 @@ slides:
     section: "4. Безлюдное производство"
     assertion: "Раздел 4. Безлюдное производство"
     media: "assets/screenshots/divider-s27-fanuc-cnc-factory.jpg"
+
+  - id: s27a
+    file: slides/s27a-ustroystvo-bezlyudnogo-proizvodstva.md
+    type: stage_overview
+    section: "4. Безлюдное производство"
+    assertion: "Безлюдный участок складывается из четырёх классических компонентов — ЧПУ, роботов по программам, автосклада, системы управления производством — а не из одной обученной модели; решение о степени автоматизации принимают за завод целиком, и ошибка здесь почти всегда ошибка этого выбора, а не модели"
+    media: ""
+    note: "НОВЫЙ кадр issue #353 раздел 4 спеки 07-design-review-spec.md — обзор стадии «безлюдное производство» по шаблону П4, сразу после дивайдера s27"
 
   - id: s28
     file: slides/s28-amberg-foto-tsekh.md

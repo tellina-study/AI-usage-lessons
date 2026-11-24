@@ -166,7 +166,10 @@ vladeet: оркестратор
 |---|---|
 | `torch`, `transformers`, `PIL`, `numpy`, `sklearn` | **есть** |
 | `ultralytics` (YOLO), OCR-движок, `cv2`, `tesseract` | **нет** |
-| `pip install` с PyPI | **работает** (проверено скачиванием `ultralytics`) |
+| `pip download` с PyPI | **работает** (проверено скачиванием `ultralytics`) |
+| `pip install` голый | **отказ** PEP 668 `externally-managed-environment` |
+| `pip install --target <кат>` · `python3 -m virtualenv` | **работают** — этим путём и ставить |
+| `python3 -m venv` | **падает** (нет `ensurepip`, `apt`/`sudo` нет) |
 | Hugging Face: каталог и загрузка весов | **работает** (`google/siglip-base-patch16-224` в кэше) |
 | `sudo` / `apt` | **недоступны** — системный пакет не поставить |
 | n8n-стенд `https://n8n.lessons.tellian.io` | живой, вебхук `s10-raw-openrouter`, ключ подставляется на сервере |

@@ -6,20 +6,22 @@ type: case
 title: "FANUC, Ошино: безлюдный режим с 2001 года — и миф, который к нему прирос"
 assertion: "В истории про 50 роботов за смену и 30 суток без людей нет искусственного интеллекта вовсе — исходные материалы не упоминают ни ИИ, ни обучение; и даже у самой FANUC 72% операций производства по-прежнему выполняют люди"
 source: "[Wikipedia: Lights out (manufacturing), цит. CNN Money 2003](https://en.wikipedia.org/wiki/Lights_out_(manufacturing)) · [andrewtobias.com](https://andrewtobias.com/building-robots-in-the-dark/) · [assemblymag.com](https://www.assemblymag.com/articles/94982-lights-out-automation-fact-or-fiction)"
-media: ""
-media_needed: "медиа не нужно — случай держится на числах и прямой цитате, не на фото конкретного цеха"
+media: "assets/screenshots/fanuc-oshino-robot-sobiraet-robota.jpg"
+media_hero: true
+media_hero_target: 0.44
+media_needed: "раздел 5 спеки 07-design-review-spec.md: пустой низ 40% на кадре без фото при 8 фото на диске — подключена самая говорящая картинка кейса (робот собирает робота)"
 blocks:
-  - {label: "Безлюдный ночной режим с", value: "2001 год", note: "завод в Ошино"}
-  - {label: "Темп сборки роботов роботами", value: "≈50 роботов / смену", note: "CNN Money, 2003, через Wikipedia"}
-  - {label: "Автономная работа участка", value: "до 30 суток подряд", note: "без людей, тот же первоисточник"}
-  - {label: "Ручной труд в среднем по отрасли", value: "72% операций", note: "независимое издание Assembly Magazine — сама FANUC признаёт: «не практично для каждого применения»", key: true}
+  - {label: "Ночной режим с", value: "2001 год", note: "завод в Ошино"}
+  - {label: "Темп сборки", value: "≈50 роботов/смену", note: "CNN Money, 2003", key: true}
+  - {label: "Автономность", value: "до 30 суток", note: "без людей"}
+itog:
+  yarlyk: "Вывод"
+  text: "нет искусственного интеллекта вовсе — классическая автоматика; и даже у FANUC 72% операций по отрасли выполняют люди (Assembly Magazine)"
 in_bucket: true
 status: draft
 ---
 
 ## Видимый текст слайда
-
-**В этой истории нет искусственного интеллекта.** Исходные материалы 2001–2003 годов не упоминают ни ИИ, ни глубокое обучение, ни машинное обучение — это классическая автоматика: ЧПУ-станки, роботы по жёстким программам, автоматический склад.
 
 ## Заметки лектора
 

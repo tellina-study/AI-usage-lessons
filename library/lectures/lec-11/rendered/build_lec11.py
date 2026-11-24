@@ -791,7 +791,8 @@ BULLET_COLLAGE = set()
 # текстовым перечнем: числа снова читаются блочками, а не абзацем.
 PLATES_COMPACT = replace(plates.COMPACT, label_pt=15.0, value_hi=20.0,
                         value_lo=15.0, value_floor=15.0, note_pt=15.0)
-COMPACT_PLATES = {"s06", "s19"}
+COMPACT_PLATES = {"s06", "s19", "s33"}
+PLATES_FORCE_SINGLE_COL = {"s33"}
 # `s22`/`s26`/`s30` — не коллажи по смыслу (это §5.13 «цена ошибки →
 # классика → модель → устройство» на `case_study`/`schema_layered`), но
 # измерены (`plates.plates_h`) той же мерой: 4 плашки с оговорками до
@@ -1106,7 +1107,16 @@ def content(p, sl, root):
     if is_content and sl.sid in COMPACT_PLATES:
         pl_c = plates.plates_of(sl, PLATES_COMPACT)
         if pl_c:
-            pst_c = best_plate_style(pl_c, body_w_top, base=PLATES_COMPACT)
+            # `s33`: колонка рядом с hero-фото широкого кадра (аспект
+            # ≈1,52 — чтобы набрать обязательные §5.9 40% площади, фото
+            # ушло в ширину и оставило узкую колонку ≈4,3"): 2 плашки в
+            # ряд на такой ширине рвут слова даже компактным пресетом.
+            # Один столбец шириной во всю узкую колонку чинит это —
+            # мера, а не вкус (`best_plate_style` этот случай не видит:
+            # он выбирает по высоте, не по ширине слова).
+            pst_c = (replace(PLATES_COMPACT, max_per_row=1)
+                    if sl.sid in PLATES_FORCE_SINGLE_COL else
+                    best_plate_style(pl_c, body_w_top, base=PLATES_COMPACT))
             y += plates.draw_plates(s, sl.sid, pl_c, MX, y, body_w_top,
                                     pst_c) + GAP
         pl = []

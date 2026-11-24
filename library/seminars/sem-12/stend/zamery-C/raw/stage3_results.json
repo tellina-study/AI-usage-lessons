@@ -86,8 +86,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-03",
-      "emb_top1_sim": 0.8371,
-      "emb_true_sim": 0.8371,
+      "emb_top1_sim": 0.837,
+      "emb_true_sim": 0.837,
       "emb_recall1": true
     },
     {
@@ -116,8 +116,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-19",
-      "emb_top1_sim": 0.9331,
-      "emb_true_sim": 0.9331,
+      "emb_top1_sim": 0.933,
+      "emb_true_sim": 0.933,
       "emb_recall1": false
     },
     {
@@ -131,8 +131,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-19",
-      "emb_top1_sim": 0.9218,
-      "emb_true_sim": 0.9218,
+      "emb_top1_sim": 0.9216,
+      "emb_true_sim": 0.9216,
       "emb_recall1": false
     },
     {
@@ -146,8 +146,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s01",
-      "emb_top1_sim": 0.9764,
-      "emb_true_sim": 0.9764,
+      "emb_top1_sim": 0.9761,
+      "emb_true_sim": 0.9761,
       "emb_recall1": true
     },
     {
@@ -161,8 +161,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s01",
-      "emb_top1_sim": 0.9221,
-      "emb_true_sim": 0.9221,
+      "emb_top1_sim": 0.9219,
+      "emb_true_sim": 0.9219,
       "emb_recall1": true
     },
     {
@@ -176,8 +176,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s01",
-      "emb_top1_sim": 0.9122,
-      "emb_true_sim": 0.9122,
+      "emb_top1_sim": 0.9121,
+      "emb_true_sim": 0.9121,
       "emb_recall1": true
     },
     {
@@ -206,8 +206,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s12",
-      "emb_top1_sim": 0.9094,
-      "emb_true_sim": 0.9094,
+      "emb_top1_sim": 0.9095,
+      "emb_true_sim": 0.9095,
       "emb_recall1": true
     },
     {
@@ -221,8 +221,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s12",
-      "emb_top1_sim": 0.9078,
-      "emb_true_sim": 0.9078,
+      "emb_top1_sim": 0.9077,
+      "emb_true_sim": 0.9077,
       "emb_recall1": true
     },
     {
@@ -236,8 +236,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s55",
-      "emb_top1_sim": 0.9958,
-      "emb_true_sim": 0.9958,
+      "emb_top1_sim": 0.9957,
+      "emb_true_sim": 0.9957,
       "emb_recall1": true
     },
     {
@@ -251,8 +251,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s55",
-      "emb_top1_sim": 0.8495,
-      "emb_true_sim": 0.8495,
+      "emb_top1_sim": 0.8497,
+      "emb_true_sim": 0.8497,
       "emb_recall1": true
     },
     {
@@ -266,8 +266,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.8286,
-      "emb_true_sim": 0.8225,
+      "emb_top1_sim": 0.8287,
+      "emb_true_sim": 0.8224,
       "emb_recall1": false
     },
     {
@@ -311,8 +311,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s22",
-      "emb_top1_sim": 0.9296,
-      "emb_true_sim": 0.9296,
+      "emb_top1_sim": 0.9295,
+      "emb_true_sim": 0.9295,
       "emb_recall1": true
     },
     {
@@ -326,8 +326,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-24",
-      "emb_top1_sim": 0.9948,
-      "emb_true_sim": 0.9948,
+      "emb_top1_sim": 0.9949,
+      "emb_true_sim": 0.9949,
       "emb_recall1": false
     },
     {
@@ -341,7 +341,7 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s05",
-      "emb_top1_sim": 0.8348,
+      "emb_top1_sim": 0.8349,
       "emb_true_sim": 0.8315,
       "emb_recall1": false
     },
@@ -356,8 +356,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-24",
-      "emb_top1_sim": 0.854,
-      "emb_true_sim": 0.854,
+      "emb_top1_sim": 0.8539,
+      "emb_true_sim": 0.8539,
       "emb_recall1": false
     },
     {
@@ -431,8 +431,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s43",
-      "emb_top1_sim": 0.8921,
-      "emb_true_sim": 0.8921,
+      "emb_top1_sim": 0.892,
+      "emb_true_sim": 0.892,
       "emb_recall1": true
     },
     {
@@ -491,8 +491,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter3-02",
-      "emb_top1_sim": 0.8689,
-      "emb_true_sim": 0.8689,
+      "emb_top1_sim": 0.869,
+      "emb_true_sim": 0.869,
       "emb_recall1": false
     },
     {
@@ -506,8 +506,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter2-22",
-      "emb_top1_sim": 0.9959,
-      "emb_true_sim": 0.9959,
+      "emb_top1_sim": 0.996,
+      "emb_true_sim": 0.996,
       "emb_recall1": false
     },
     {
@@ -521,8 +521,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter2-22",
-      "emb_top1_sim": 0.8458,
-      "emb_true_sim": 0.8458,
+      "emb_top1_sim": 0.8459,
+      "emb_true_sim": 0.8459,
       "emb_recall1": false
     },
     {
@@ -536,8 +536,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter2-22",
-      "emb_top1_sim": 0.8823,
-      "emb_true_sim": 0.8823,
+      "emb_top1_sim": 0.8824,
+      "emb_true_sim": 0.8824,
       "emb_recall1": false
     },
     {
@@ -551,8 +551,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-28",
-      "emb_top1_sim": 0.9965,
-      "emb_true_sim": 0.9965,
+      "emb_top1_sim": 0.9966,
+      "emb_true_sim": 0.9966,
       "emb_recall1": false
     },
     {
@@ -566,8 +566,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-28",
-      "emb_top1_sim": 0.8977,
-      "emb_true_sim": 0.8977,
+      "emb_top1_sim": 0.8978,
+      "emb_true_sim": 0.8978,
       "emb_recall1": false
     },
     {
@@ -581,8 +581,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-28",
-      "emb_top1_sim": 0.9053,
-      "emb_true_sim": 0.9053,
+      "emb_top1_sim": 0.9052,
+      "emb_true_sim": 0.9052,
       "emb_recall1": false
     },
     {
@@ -611,8 +611,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s42",
-      "emb_top1_sim": 0.9684,
-      "emb_true_sim": 0.9684,
+      "emb_top1_sim": 0.9685,
+      "emb_true_sim": 0.9685,
       "emb_recall1": true
     },
     {
@@ -641,8 +641,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s13",
-      "emb_top1_sim": 0.9929,
-      "emb_true_sim": 0.9929,
+      "emb_top1_sim": 0.9928,
+      "emb_true_sim": 0.9928,
       "emb_recall1": true
     },
     {
@@ -656,8 +656,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s19",
-      "emb_top1_sim": 0.8764,
-      "emb_true_sim": 0.8508,
+      "emb_top1_sim": 0.8763,
+      "emb_true_sim": 0.8507,
       "emb_recall1": false
     },
     {
@@ -671,8 +671,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s13",
-      "emb_top1_sim": 0.8501,
-      "emb_true_sim": 0.8501,
+      "emb_top1_sim": 0.85,
+      "emb_true_sim": 0.85,
       "emb_recall1": true
     },
     {
@@ -686,8 +686,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter2-15",
-      "emb_top1_sim": 0.998,
-      "emb_true_sim": 0.998,
+      "emb_top1_sim": 0.9981,
+      "emb_true_sim": 0.9981,
       "emb_recall1": false
     },
     {
@@ -716,8 +716,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter2-15",
-      "emb_top1_sim": 0.888,
-      "emb_true_sim": 0.888,
+      "emb_top1_sim": 0.8882,
+      "emb_true_sim": 0.8882,
       "emb_recall1": false
     },
     {
@@ -746,7 +746,7 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter2-11",
-      "emb_top1_sim": 0.9196,
+      "emb_top1_sim": 0.9195,
       "emb_true_sim": 0.9042,
       "emb_recall1": false
     },
@@ -807,7 +807,7 @@
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s24",
       "emb_top1_sim": 0.8754,
-      "emb_true_sim": 0.8715,
+      "emb_true_sim": 0.8713,
       "emb_recall1": false
     },
     {
@@ -821,8 +821,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s33",
-      "emb_top1_sim": 0.9837,
-      "emb_true_sim": 0.9837,
+      "emb_top1_sim": 0.9836,
+      "emb_true_sim": 0.9836,
       "emb_recall1": true
     },
     {
@@ -836,8 +836,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s33",
-      "emb_top1_sim": 0.8445,
-      "emb_true_sim": 0.8445,
+      "emb_top1_sim": 0.8443,
+      "emb_true_sim": 0.8443,
       "emb_recall1": true
     },
     {
@@ -851,8 +851,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s33",
-      "emb_top1_sim": 0.8624,
-      "emb_true_sim": 0.8624,
+      "emb_top1_sim": 0.8625,
+      "emb_true_sim": 0.8625,
       "emb_recall1": true
     },
     {
@@ -866,8 +866,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-20",
-      "emb_top1_sim": 0.9971,
-      "emb_true_sim": 0.9971,
+      "emb_top1_sim": 0.9972,
+      "emb_true_sim": 0.9972,
       "emb_recall1": false
     },
     {
@@ -881,8 +881,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-20",
-      "emb_top1_sim": 0.908,
-      "emb_true_sim": 0.9066,
+      "emb_top1_sim": 0.9079,
+      "emb_true_sim": 0.9064,
       "emb_recall1": false
     },
     {
@@ -896,8 +896,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-20",
-      "emb_top1_sim": 0.9235,
-      "emb_true_sim": 0.9231,
+      "emb_top1_sim": 0.9234,
+      "emb_true_sim": 0.923,
       "emb_recall1": false
     },
     {
@@ -926,8 +926,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-22",
-      "emb_top1_sim": 0.8523,
-      "emb_true_sim": 0.8523,
+      "emb_top1_sim": 0.8524,
+      "emb_true_sim": 0.8524,
       "emb_recall1": true
     },
     {
@@ -986,8 +986,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s20",
-      "emb_top1_sim": 0.8997,
-      "emb_true_sim": 0.8997,
+      "emb_top1_sim": 0.8995,
+      "emb_true_sim": 0.8995,
       "emb_recall1": true
     },
     {
@@ -1016,8 +1016,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s23",
-      "emb_top1_sim": 0.867,
-      "emb_true_sim": 0.867,
+      "emb_top1_sim": 0.8669,
+      "emb_true_sim": 0.8669,
       "emb_recall1": true
     },
     {
@@ -1031,8 +1031,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s23",
-      "emb_top1_sim": 0.8962,
-      "emb_true_sim": 0.8962,
+      "emb_top1_sim": 0.8963,
+      "emb_true_sim": 0.8963,
       "emb_recall1": true
     },
     {
@@ -1061,8 +1061,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s04",
-      "emb_top1_sim": 0.8967,
-      "emb_true_sim": 0.8967,
+      "emb_top1_sim": 0.8968,
+      "emb_true_sim": 0.8968,
       "emb_recall1": true
     },
     {
@@ -1076,8 +1076,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s04",
-      "emb_top1_sim": 0.8852,
-      "emb_true_sim": 0.8852,
+      "emb_top1_sim": 0.8853,
+      "emb_true_sim": 0.8853,
       "emb_recall1": true
     },
     {
@@ -1091,8 +1091,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s54",
-      "emb_top1_sim": 0.9834,
-      "emb_true_sim": 0.9834,
+      "emb_top1_sim": 0.9833,
+      "emb_true_sim": 0.9833,
       "emb_recall1": true
     },
     {
@@ -1121,8 +1121,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s54",
-      "emb_top1_sim": 0.8462,
-      "emb_true_sim": 0.8462,
+      "emb_top1_sim": 0.8463,
+      "emb_true_sim": 0.8463,
       "emb_recall1": true
     },
     {
@@ -1136,8 +1136,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-24",
-      "emb_top1_sim": 0.9948,
-      "emb_true_sim": 0.9948,
+      "emb_top1_sim": 0.9949,
+      "emb_true_sim": 0.9949,
       "emb_recall1": false
     },
     {
@@ -1151,7 +1151,7 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s05",
-      "emb_top1_sim": 0.8348,
+      "emb_top1_sim": 0.8349,
       "emb_true_sim": 0.8315,
       "emb_recall1": false
     },
@@ -1166,8 +1166,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter1-24",
-      "emb_top1_sim": 0.854,
-      "emb_true_sim": 0.854,
+      "emb_top1_sim": 0.8539,
+      "emb_true_sim": 0.8539,
       "emb_recall1": false
     },
     {
@@ -1181,8 +1181,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter2-18",
-      "emb_top1_sim": 0.9956,
-      "emb_true_sim": 0.9956,
+      "emb_top1_sim": 0.9955,
+      "emb_true_sim": 0.9955,
       "emb_recall1": false
     },
     {
@@ -1196,8 +1196,8 @@
       "hash_recall1": false,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter2-18",
-      "emb_top1_sim": 0.8759,
-      "emb_true_sim": 0.8759,
+      "emb_top1_sim": 0.876,
+      "emb_true_sim": 0.876,
       "emb_recall1": false
     },
     {
@@ -1226,8 +1226,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s15",
-      "emb_top1_sim": 0.9941,
-      "emb_true_sim": 0.9941,
+      "emb_top1_sim": 0.994,
+      "emb_true_sim": 0.994,
       "emb_recall1": true
     },
     {
@@ -1256,8 +1256,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s15",
-      "emb_top1_sim": 0.9152,
-      "emb_true_sim": 0.9152,
+      "emb_top1_sim": 0.9155,
+      "emb_true_sim": 0.9155,
       "emb_recall1": true
     },
     {
@@ -1301,8 +1301,8 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s37",
-      "emb_top1_sim": 0.8577,
-      "emb_true_sim": 0.8577,
+      "emb_top1_sim": 0.8581,
+      "emb_true_sim": 0.8581,
       "emb_recall1": true
     },
     {
@@ -1346,12 +1346,93 @@
       "hash_recall1": true,
       "emb_top1_deck": "sem-03",
       "emb_top1_sid": "iter5-10",
-      "emb_top1_sim": 0.9168,
-      "emb_true_sim": 0.9168,
+      "emb_top1_sim": 0.9169,
+      "emb_true_sim": 0.9169,
       "emb_recall1": true
     }
   ],
   "foreign": [
+    {
+      "id": "00b5f2b0ade593ed",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s36",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.5362
+    },
+    {
+      "id": "00e978b3a43a311d",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s22",
+      "hash_top1_dist": 24,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.4826
+    },
+    {
+      "id": "015a559f45c55722",
+      "hash_top1_deck": "sem-04",
+      "hash_top1_sid": "s13",
+      "hash_top1_dist": 22,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.5567
+    },
+    {
+      "id": "01ac16fdb1e4b983",
+      "hash_top1_deck": "sem-03",
+      "hash_top1_sid": "iter2-12",
+      "hash_top1_dist": 18,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.5646
+    },
+    {
+      "id": "01ada3c0d980be5e",
+      "hash_top1_deck": "sem-04",
+      "hash_top1_sid": "s37",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.6258
+    },
+    {
+      "id": "023bb1f26c57512f",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s31",
+      "hash_top1_dist": 26,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s30",
+      "emb_top1_sim": 0.4866
+    },
+    {
+      "id": "05eea091c2b4cbaf",
+      "hash_top1_deck": "sem-03",
+      "hash_top1_sid": "iter1-07",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s30",
+      "emb_top1_sim": 0.6181
+    },
+    {
+      "id": "06078c7cd3eec910",
+      "hash_top1_deck": "sem-04",
+      "hash_top1_sid": "s14",
+      "hash_top1_dist": 22,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s42",
+      "emb_top1_sim": 0.3969
+    },
+    {
+      "id": "06abf4c423f8519d",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s39",
+      "hash_top1_dist": 24,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s21",
+      "emb_top1_sim": 0.6347
+    },
     {
       "id": "0941817c92716021",
       "hash_top1_deck": "sem-04",
@@ -1359,7 +1440,25 @@
       "hash_top1_dist": 18,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.5189
+      "emb_top1_sim": 0.5193
+    },
+    {
+      "id": "09b5c9a79c959dbc",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s39",
+      "hash_top1_dist": 24,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s42",
+      "emb_top1_sim": 0.4437
+    },
+    {
+      "id": "0ca96e946074d366",
+      "hash_top1_deck": "sem-03",
+      "hash_top1_sid": "iter5-22",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-03",
+      "emb_top1_sid": "iter1-28",
+      "emb_top1_sim": 0.3924
     },
     {
       "id": "0cd992ac5ca38878",
@@ -1368,7 +1467,34 @@
       "hash_top1_dist": 24,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.5476
+      "emb_top1_sim": 0.5477
+    },
+    {
+      "id": "0d27f48afe799682",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s37",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.5999
+    },
+    {
+      "id": "0f9975603b5e2dcd",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s02",
+      "hash_top1_dist": 18,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.4795
+    },
+    {
+      "id": "10091a24ff3b5ea5",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s03",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.4257
     },
     {
       "id": "11a303c2b9360432",
@@ -1380,13 +1506,130 @@
       "emb_top1_sim": 0.546
     },
     {
+      "id": "124d86a6d3953a13",
+      "hash_top1_deck": "sem-04",
+      "hash_top1_sid": "s24",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.582
+    },
+    {
+      "id": "128f582673ba68fc",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s37",
+      "hash_top1_dist": 22,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.5471
+    },
+    {
+      "id": "145e02a1608f2a7c",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s29",
+      "hash_top1_dist": 22,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s30",
+      "emb_top1_sim": 0.6529
+    },
+    {
+      "id": "160d474ed25f3d68",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s02",
+      "hash_top1_dist": 24,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s30",
+      "emb_top1_sim": 0.579
+    },
+    {
+      "id": "16ca4d097400a5ef",
+      "hash_top1_deck": "sem-04",
+      "hash_top1_sid": "s13",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.6315
+    },
+    {
+      "id": "183f239baf015477",
+      "hash_top1_deck": "sem-03",
+      "hash_top1_sid": "iter1-07",
+      "hash_top1_dist": 24,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.6101
+    },
+    {
+      "id": "19399b34555c9ca1",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s37",
+      "hash_top1_dist": 22,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.5198
+    },
+    {
+      "id": "195088533bfc38e7",
+      "hash_top1_deck": "sem-04",
+      "hash_top1_sid": "s51",
+      "hash_top1_dist": 22,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s30",
+      "emb_top1_sim": 0.4706
+    },
+    {
+      "id": "1a9a500855f183b7",
+      "hash_top1_deck": "sem-03",
+      "hash_top1_sid": "iter1-20",
+      "hash_top1_dist": 22,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.5359
+    },
+    {
+      "id": "1b9856b55be84dbc",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s42",
+      "hash_top1_dist": 24,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.5966
+    },
+    {
+      "id": "1cda5a905ff90d15",
+      "hash_top1_deck": "sem-03",
+      "hash_top1_sid": "iter1-13",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-04",
+      "emb_top1_sid": "s23",
+      "emb_top1_sim": 0.562
+    },
+    {
       "id": "1f8cabb4593744bc",
       "hash_top1_deck": "sem-04",
       "hash_top1_sid": "s19",
       "hash_top1_dist": 22,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.5305
+      "emb_top1_sim": 0.5304
+    },
+    {
+      "id": "1ff27a55871e30db",
+      "hash_top1_deck": "sem-03",
+      "hash_top1_sid": "iter1-13",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s21",
+      "emb_top1_sim": 0.5471
+    },
+    {
+      "id": "21030307b448f406",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s15",
+      "hash_top1_dist": 22,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.4742
     },
     {
       "id": "216f77a3366db4d1",
@@ -1398,13 +1641,85 @@
       "emb_top1_sim": 0.611
     },
     {
+      "id": "24955fd68bc70264",
+      "hash_top1_deck": "sem-03",
+      "hash_top1_sid": "iter1-19",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.637
+    },
+    {
+      "id": "26d995aae6afc6c3",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s16",
+      "hash_top1_dist": 22,
+      "emb_top1_deck": "sem-04",
+      "emb_top1_sid": "s04",
+      "emb_top1_sim": 0.6031
+    },
+    {
+      "id": "272d20fc147a64e7",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s22",
+      "hash_top1_dist": 22,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.6098
+    },
+    {
+      "id": "27b872caa0ce8db2",
+      "hash_top1_deck": "sem-04",
+      "hash_top1_sid": "s15",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s42",
+      "emb_top1_sim": 0.4
+    },
+    {
+      "id": "2a5ba7c16f8d3d1b",
+      "hash_top1_deck": "sem-03",
+      "hash_top1_sid": "iter1-25",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.6188
+    },
+    {
+      "id": "2b2d0d784b050012",
+      "hash_top1_deck": "sem-03",
+      "hash_top1_sid": "iter1-11",
+      "hash_top1_dist": 22,
+      "emb_top1_deck": "sem-04",
+      "emb_top1_sid": "s04",
+      "emb_top1_sim": 0.584
+    },
+    {
+      "id": "2b9edb0f98e9074a",
+      "hash_top1_deck": "sem-03",
+      "hash_top1_sid": "iter5-20",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.4581
+    },
+    {
+      "id": "2babd42fcffaef4c",
+      "hash_top1_deck": "sem-02",
+      "hash_top1_sid": "s42",
+      "hash_top1_dist": 20,
+      "emb_top1_deck": "sem-02",
+      "emb_top1_sid": "s03",
+      "emb_top1_sim": 0.618
+    },
+    {
       "id": "5161f0efe9c9f131",
       "hash_top1_deck": "sem-03",
       "hash_top1_sid": "iter5-20",
       "hash_top1_dist": 20,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s30",
-      "emb_top1_sim": 0.5937
+      "emb_top1_sim": 0.5935
     },
     {
       "id": "587a45e5669f017c",
@@ -1413,7 +1728,7 @@
       "hash_top1_dist": 20,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.5655
+      "emb_top1_sim": 0.5653
     },
     {
       "id": "5c4060e9777569cd",
@@ -1422,7 +1737,7 @@
       "hash_top1_dist": 22,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.6291
+      "emb_top1_sim": 0.629
     },
     {
       "id": "8e7da37e8d770db6",
@@ -1431,7 +1746,7 @@
       "hash_top1_dist": 22,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.6003
+      "emb_top1_sim": 0.6006
     },
     {
       "id": "940527b1aa9ee00e",
@@ -1440,7 +1755,7 @@
       "hash_top1_dist": 20,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.6458
+      "emb_top1_sim": 0.6457
     },
     {
       "id": "ac0e5b015128a830",
@@ -1449,7 +1764,7 @@
       "hash_top1_dist": 24,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.6024
+      "emb_top1_sim": 0.6022
     },
     {
       "id": "ae8a91da37d478f9",
@@ -1458,7 +1773,7 @@
       "hash_top1_dist": 22,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.6112
+      "emb_top1_sim": 0.6108
     },
     {
       "id": "b4e13abee1f93dde",
@@ -1467,7 +1782,7 @@
       "hash_top1_dist": 24,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.5277
+      "emb_top1_sim": 0.5278
     },
     {
       "id": "b71d9156e2ab6b9c",
@@ -1476,7 +1791,7 @@
       "hash_top1_dist": 22,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.5887
+      "emb_top1_sim": 0.5888
     },
     {
       "id": "ba3b757c190403fe",
@@ -1485,7 +1800,7 @@
       "hash_top1_dist": 22,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.5569
+      "emb_top1_sim": 0.557
     },
     {
       "id": "c031589c47fd2417",
@@ -1494,7 +1809,7 @@
       "hash_top1_dist": 20,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s30",
-      "emb_top1_sim": 0.5611
+      "emb_top1_sim": 0.561
     },
     {
       "id": "c91df33dde17f8ab",
@@ -1503,7 +1818,7 @@
       "hash_top1_dist": 22,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.6591
+      "emb_top1_sim": 0.6593
     },
     {
       "id": "cc98b6d31226495b",
@@ -1512,7 +1827,7 @@
       "hash_top1_dist": 24,
       "emb_top1_deck": "sem-04",
       "emb_top1_sid": "s04",
-      "emb_top1_sim": 0.4329
+      "emb_top1_sim": 0.433
     },
     {
       "id": "e5534596dbf86a9d",
@@ -1521,7 +1836,7 @@
       "hash_top1_dist": 20,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s30",
-      "emb_top1_sim": 0.46
+      "emb_top1_sim": 0.4603
     },
     {
       "id": "ea0f9e84c294e923",
@@ -1530,7 +1845,7 @@
       "hash_top1_dist": 24,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.5417
+      "emb_top1_sim": 0.5418
     },
     {
       "id": "faba9c40610acaef",
@@ -1539,7 +1854,7 @@
       "hash_top1_dist": 20,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.525
+      "emb_top1_sim": 0.5249
     },
     {
       "id": "fca611eb639635a5",
@@ -1548,7 +1863,7 @@
       "hash_top1_dist": 22,
       "emb_top1_deck": "sem-02",
       "emb_top1_sid": "s03",
-      "emb_top1_sim": 0.6787
+      "emb_top1_sim": 0.6789
     }
   ],
   "library_size": 239

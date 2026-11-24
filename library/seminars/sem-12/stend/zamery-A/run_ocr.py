@@ -1,7 +1,7 @@
 import json, time
 from rapidocr_onnxruntime import RapidOCR
 
-IMG_DIR = "/tmp/s12-corpora/funsd/dataset/testing_data/images"
+BASE_DIR = "/tmp/s12-corpora/funsd/dataset"
 
 def main():
     corpus = json.load(open("korpus/vyborka.json"))
@@ -10,7 +10,7 @@ def main():
     t_total0 = time.time()
     for o in corpus:
         fid = o["form_id"]
-        path = f"{IMG_DIR}/{o['img']}"
+        path = f"{BASE_DIR}/{o['split']}/images/{o['img']}"
         t0 = time.time()
         result, elapse = engine(path)
         dt = time.time() - t0

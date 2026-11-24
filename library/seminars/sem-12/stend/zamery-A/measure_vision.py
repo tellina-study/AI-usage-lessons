@@ -16,13 +16,13 @@ from pathlib import Path
 from harness_a import SYS_EXTRACT, build_user_prompt, extract_json, to_data_url, vision_call
 
 HERE = Path(__file__).resolve().parent
-IMG_DIR = Path("/tmp/s12-corpora/funsd/dataset/testing_data/images")
+BASE_DIR = Path("/tmp/s12-corpora/funsd/dataset")
 OUT_PATH = HERE / "raw" / "vision_results.json"
 
 
 def run_one(form):
     fid = form["form_id"]
-    img_path = IMG_DIR / form["img"]
+    img_path = BASE_DIR / form["split"] / "images" / form["img"]
     data_url = to_data_url(img_path)
     user = build_user_prompt(form["targets"])
     t0 = time.time()

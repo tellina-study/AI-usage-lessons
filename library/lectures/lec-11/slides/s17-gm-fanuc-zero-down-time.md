@@ -3,26 +3,27 @@ id: s17
 local_id: s2-01
 section: "2. Техническое обслуживание и ремонт"
 type: case_study
-title: "Пример: GM × FANUC, предиктивное обслуживание парка роботов (Zero Down Time)"
+title: "Пример: GM × FANUC — предиктивное обслуживание роботов"
 assertion: "FANUC довела горизонт предупреждения об отказе робота с «нескольких недель» до шести месяцев — но заявленные $40 млн экономии не сходятся с открытой арифметикой простоя в 20–40 раз"
 source: "[GM×FANUC, Design News](https://www.designnews.com/motion-control/predictive-maintenance-hits-robotics-as-fanuc-and-cisco-team-up) · [The Robot Report](https://www.therobotreport.com/big-data-the-cloud-fanuc-and-kuka/) · [происхождение «$22 тыс./мин»](https://archsys.io/hub/articles/the-22000-per-minute-cost-of-automotive-line-downtime-how-ai-predicts-and-prevents-equipment-failures/) · [Siemens/Senseye, «True Cost of Downtime» 2024, PDF](https://assets.new.siemens.com/siemens/assets/api/uuid:1b43afb5-2d07-47f7-9eb7-893fe7d0bc59/tcod-2024_original.pdf)"
 media: "assets/screenshots/gm-fairfax-fanuc-zero-down-time-robots.jpg"
 media_hero: true
-media_hero_target: 0.43
+media_hero_target: 0.40
 media_needed: "найдено и подключено (issue #353, правка 3): сварочная линия завода GM Fairfax, роботы FANUC в масках/кожухах, искры сварки — Automotive Manufacturing Solutions, 2017, og:image статьи «Zero Downtime», где цитируется Марти Линн (GM) — тот самый разбор. Tier 1, см. rework/research-350/05-illustrations-log.md §9."
 graf: "б"
-blocks:
-  - {label: "Цена простоя — ориентир устарел", value: "$22 тыс./мин (≈2006) → $2,3 млн/час (2023)", note: "рост 113% с 2019"}
-  - {label: "Классический режим", value: "ППР + ремонт по факту отказа", note: "своего числа простоя нет"}
-  - {label: "Модель (FANUC Zero Down Time)", value: "горизонт до 6 мес. вместо недель", note: "100+ остановок предотвращено", key: true}
-  - {label: "Денежный эффект", value: "«до $40 млн» — целевая оценка", note: "расходится с арифметикой в 20–40 раз"}
 in_bucket: false
 status: draft
 ---
 
 ## Видимый текст слайда
 
-**Что переехало.** Наряд строится на прогнозе с горизонтом, а не на календаре или факте отказа.
+**Цена простоя.** $22 тыс./мин (2006) → $2,3 млн/час (2023), рост 113% — ориентир устарел.
+
+**Классика.** ППР + ремонт по отказу, своего числа простоя нет.
+
+**Модель.** Горизонт 6 мес. вместо недель, 100+ остановок предотвращено — наряд строится на прогнозе, не на календаре.
+
+**Эффект.** «До $40 млн» — целевая оценка, расходится с арифметикой в 20–40 раз.
 
 ## Заметки лектора
 

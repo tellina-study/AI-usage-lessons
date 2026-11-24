@@ -5,13 +5,19 @@ section: "0. Вход"
 type: hook
 title: "Автоматизация — ошибка? Мир утверждает обратное"
 assertion: "13 апреля 2018 года Маск назвал избыточную автоматизацию Tesla своей ошибкой — после квартала, в котором вместо плана 5000 машин в неделю Tesla выпустила 260 машин за весь квартал. Тем же семилетием мировая плотность роботизации удвоилась: 74 → 162 робота на 10 тысяч занятых (2016→2023). Это противоречие держит открытым вопрос лекции: сколько завода отдать машине и с какой скоростью туда идти."
-source: "[TechCrunch, 13.04.2018 — точная цитата Маска](https://techcrunch.com/2018/04/13/elon-musk-says-humans-are-underrated-calls-teslas-excessive-automation-a-mistake/) · [IFR — «Global Robot Density in Factories Doubled in Seven Years»](https://ifr.org/ifr-press-releases/news/global-robot-density-in-factories-doubled-in-seven-years)"
+source: "[TechCrunch, 13.04.2018 — точная цитата Маска](https://techcrunch.com/2018/04/13/elon-musk-says-humans-are-underrated-calls-teslas-excessive-automation-a-mistake/) · [IFR — «Global Robot Density in Factories Doubled in Seven Years»](https://ifr.org/ifr-press-releases/news/global-robot-density-in-factories-doubled-in-seven-years) · [cyberleninka.ru — нацпроект «Средства производства и автоматизации»](https://cyberleninka.ru/article/n/o-vhozhdenii-rossiyskoy-federatsii-k-2030-godu-v-chislo-25-veduschih-stran-mira-po-pokazatelyu-plotnosti-robotizatsii)"
 media: ""
 media_needed: "честного фото не требуется замыслом формы — кадр держат цитата и число во весь экран, без иллюстрации (форма `figure:`, аналог s01_1 Лекции 7, где тоже один удар числом). Designer может рассмотреть второй слой — архивное фото тент-линии GA4 завода Tesla Fremont, 2018 — но только фоном под затемнением, не поверх текста"
 figure:
   value: "162"
   unit: "робота на 10 тысяч занятых в обрабатывающей промышленности, мир, 2023"
   base: "против 74 в 2016 году — рост ровно вдвое за 7 лет (IFR)"
+scheme:
+  kind: shkala
+  marks:
+    - {value: 74, label: "Мир, 2016"}
+    - {value: 162, label: "Мир, 2023", key: true}
+    - {value: 29, label: "Россия, 2024"}
 in_bucket: false
 status: draft
 ---

@@ -260,7 +260,12 @@ ARH_S24 = replace(ARH, head_rows=4, line_rows=7)
 # (не на весь экран, как у `udar`): кадр несёт заголовок + тело-цитату +
 # фигуру рядом/под ней. `base_pt`/`note_pt`/`unit_pt` поднят до пола 15.
 FIG_HOOK = replace(figure.DEFAULT, val_hi=64.0, val_lo=34.0,
-                   unit_pt=16.0, base_pt=15.0, note_pt=15.0, min_h=1.55)
+                   unit_pt=16.0, base_pt=15.0, note_pt=15.0, min_h=1.55,
+                   pad=0.06)
+# `pad` 0,30→0,10: раздел 5 спеки добавил ось-шкалу под цитатой (`s01`) —
+# бюджет кадра (заголовок+коробка-число+ось+цитата) не сходится на
+# умолчательном поле коробки без того, чтобы срезать цитату или число
+# (владелец запретил оба). Поле — раскладка, не содержимое «162».
 
 # Фигура кадра `s43` (`type: udar`, собственная раскладка) — уменьшенная
 # относительно `FIG_HOOK`: под ней ещё стоят список-напоминание и
@@ -298,7 +303,15 @@ VYVODY = vyvody.VyvodyStyle(text_pt=15.0, most_pt=15.0)
 # алиаса декиным стилем, не трогая ни `scheme.py`, ни `axis.py` — тот же
 # приём, что `build_lec08_v5._obyortki`/`build_lec09._obyortki`.
 AXIS = replace(axis.DEFAULT, lab_pt=15.0, unit_pt=15.0, cap_pt=15.0,
-              end_pt=15.0)
+              end_pt=15.0, lane_h=0.46, lane_gap=0.06, tick_h=0.12)
+# `lane_h` 0,62→0,46: единственный кадр-носитель оси в этой деке — `s01`
+# (hook), где ось стоит ДОПОЛНЕНИЕМ под уже готовой коробкой-числом (162) и
+# цитатой, не единственным содержимым кадра, как у Лекции 7/9. На умолчании
+# ось одна просила ≈2,6" — на кадре, где фигура + цитата уже стояли
+# впритык к подвалу (авторский «низ пуст на ~30%» — slack, не пустой
+# бюджет), это сминало цитату до 12 пт и топило её в подвал. Сужение
+# дорожки подписи — та же мера, что подъём пола кегля: часть формы, не
+# правка её контента.
 
 
 def _obyortki(mod, st, h_fn, c_fn, d_fn):
@@ -747,8 +760,17 @@ def keystone_gap_box(s, sid, text, x, y, w):
 # (жирный ярлык — значение — оговорка) даёт то же утверждение БЕЗ этого
 # оверхеда. Это раскладка, не контент: слова label/value/note переносятся
 # буквально, просто без боксов.
-BULLET_COLLAGE = {"s06", "s19", "s20", "s39", "s41", "s22", "s26", "s30",
+BULLET_COLLAGE = {"s19", "s20", "s39", "s41", "s22", "s26", "s30",
                   "s40"}
+# Раздел 5/9 спеки 07-design-review-spec.md (issue #353/#355): `plates.
+# COMPACT` — пресет, который `BULLET_COLLAGE` пыталось заменить ДО того,
+# как ядро научилось ужиматься (issue #355 §9.8, `note_truncate`/
+# `label_value_oneline`). Кадры этого множества возвращены В ПЛАШКИ, но
+# компактным пресетом (пол 15 пт тем же приёмом, что `PLATES`), а не
+# текстовым перечнем: числа снова читаются блочками, а не абзацем.
+PLATES_COMPACT = replace(plates.COMPACT, label_pt=15.0, value_hi=20.0,
+                        value_lo=15.0, value_floor=15.0, note_pt=15.0)
+COMPACT_PLATES = {"s06"}
 # `s22`/`s26`/`s30` — не коллажи по смыслу (это §5.13 «цена ошибки →
 # классика → модель → устройство» на `case_study`/`schema_layered`), но
 # измерены (`plates.plates_h`) той же мерой: 4 плашки с оговорками до
@@ -826,6 +848,121 @@ def best_plate_style(pl, w, base=PLATES):
     scored = [(plates.plates_h(pl, w, st), st)
               for st in (replace(base, max_per_row=n) for n in (4, 3, 2))]
     return min(scored, key=lambda t: t[0])[1]
+
+
+def lecture_map(p, sl, root):
+    """`map_cards` — s03 (раздел 5 спеки `07-design-review-spec.md`, П1:
+    «карта лекции карточками с мини-фото, не таблицей», образец Л10 k-03).
+    Сетка 3×2 карточек (не ряд из 6 — на ширине кадра курса ряд из 6 даёт
+    ~1,85" на карточку, фото+номер+термин+«что держит» не читаются; та же
+    раскладочная правка, что `ikonki.draw_grid`): номер + термин отрасли +
+    строка «что держит» + мини-фото раздела. Поле `table:` снято — П1 прямо
+    требует заменить таблицу карточками, а не держать обе формы разом."""
+    s = prims.blank(p)
+    prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE, count="фон")
+    check_prims(sl, "map_cards", allow=("map_cards",))
+    y = heading(s, sl)
+    bb = body_bot(sl)
+    cards = sl.meta.get("map_cards") or []
+    cols, gap = 3, 0.22
+    cw = (FULL_W - (cols - 1) * gap) / cols
+    img_h = 1.15
+    txt_h = 1.55
+    card_h = img_h + 0.08 + txt_h
+    rows = -(-len(cards) // cols)
+    grid_h = rows * card_h + (rows - 1) * gap
+    avail = bb - y
+    if grid_h > avail + 0.02:
+        report.warn(f"[карта] {sl.sid}: сетка карточек просит "
+                    f"{grid_h:.2f}\" при {avail:.2f}\" свободных")
+    extra = avail - grid_h
+    if extra > 0.3:
+        y += extra / 2
+    for i, c in enumerate(cards):
+        col, row = i % cols, i // cols
+        cx = MX + col * (cw + gap)
+        cy = y + row * (card_h + gap)
+        prims.ocean_box(s, cx, cy, cw, card_h)
+        img = media.media_path(c, [REPO_ROOT, HERE, LEC_ROOT], f"{sl.sid}/карточка{i + 1}")
+        if img:
+            prims.add_image_cover(s, img, cx + 0.06, cy + 0.06, cw - 0.12,
+                                  img_h, tag=f"{sl.sid}/карточка{i + 1}")
+        else:
+            prims.ocean_box(s, cx + 0.06, cy + 0.06, cw - 0.12, img_h,
+                            fill=SURFACE)
+        ty = cy + img_h + 0.14
+        term = f"{c.get('n', '')}. {c.get('term', '')}".strip(". ")
+        th = metrics.est_h(term, 14.0, cw - 0.16, 1.10, True)
+        prims.text_box(s, cx + 0.08, ty, cw - 0.16, th, term, size=14.0,
+                       bold=True, color=DEEP, ls=1.10,
+                       tag=f"{sl.sid}/карточка{i + 1}-термин")
+        dh = metrics.est_h(c.get("derzhit", ""), 12.0, cw - 0.16, 1.14,
+                          italic=True)
+        prims.text_box(s, cx + 0.08, ty + th + 0.05, cw - 0.16,
+                       min(dh, card_h - (ty + th + 0.05 - cy) - 0.05),
+                       c.get("derzhit", ""), size=12.0, italic=True,
+                       color=LIGHT, ls=1.14, tag=f"{sl.sid}/карточка{i + 1}-держит")
+    y += grid_h + GAP
+    runs = body_runs(sl, {"head": 20.0, "cap": 15.0, "bullet": 15.0})
+    if runs:
+        avail2 = bb - y
+        if avail2 > 0.35:
+            metrics.fit_runs(runs, FULL_W - 0.08, avail2, ls=1.26,
+                             tag=f"{sl.sid}/тело", proj_base=BODY_PT)
+            floor.check_runs(runs, f"{sl.sid}/тело")
+            h_text = min(avail2, metrics.runs_h(runs, FULL_W - 0.08, 1.26))
+            prims.ocean_box(s, MX - 0.14, y - 0.10, FULL_W + 0.28,
+                            h_text + 0.20)
+            prims.text_runs(s, MX + 0.04, y, FULL_W - 0.08, h_text, runs,
+                            ls=1.26, tag=f"{sl.sid}/тело")
+    gold_tick(s, sl.sid, MX, sl.tick_y or (TITLE_Y + 0.98))
+    footer(s, sl)
+    return s
+
+
+def term_cards(p, sl, root):
+    """`terms` — s04 (раздел 5 спеки, П·словарь): рамка с 7 абзацами →
+    2 колонки × 3 термино-карточки с иконкой. Текст определений не
+    меняется, только раскладка (та же оговорка, что у `lecture_map`/s03)."""
+    s = prims.blank(p)
+    prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE, count="фон")
+    check_prims(sl, "term_cards", allow=("terms",))
+    y = heading(s, sl)
+    bb = body_bot(sl)
+    items = sl.meta.get("terms") or []
+    cols, gap = 2, 0.28
+    cw = (FULL_W - (cols - 1) * gap) / cols
+    rows = -(-len(items) // cols)
+    row_h = (bb - y - (rows - 1) * gap) / max(rows, 1)
+    icon_size = 0.36
+    for i, it in enumerate(items):
+        col, row = i % cols, i // cols
+        cx = MX + col * (cw + gap)
+        cy = y + row * (row_h + gap)
+        prims.tint_box(s, cx, cy, cw, row_h, tone="light")
+        has_icon = ikonki.draw_icon(s, IKON_DIR, it.get("icon"), cx + 0.12,
+                                    cy + 0.12, icon_size,
+                                    tag=f"{sl.sid}/термин{i + 1}")
+        tx = cx + (0.12 + icon_size + 0.12 if has_icon else 0.16)
+        tw = max(0.3, cx + cw - 0.12 - tx)
+        term = str(it.get("term") or "")
+        runs = markup.inline_runs(term, 14.5, DEEP)
+        for r in runs:
+            r["bold"] = True
+        defin = str(it.get("def") or "")
+        runs.append({"text": "", "size": 12.5, "newpara": True,
+                     "space_before": 3})
+        runs.extend(markup.inline_runs(defin, 12.5, DEEP))
+        rh = metrics.runs_h(runs, tw, 1.16)
+        metrics.fit_runs(runs, tw, row_h - 0.24, ls=1.16,
+                         tag=f"{sl.sid}/термин{i + 1}", proj_base=12.5)
+        floor.check_runs(runs, f"{sl.sid}/термин{i + 1}")
+        rh = min(row_h - 0.24, metrics.runs_h(runs, tw, 1.16))
+        prims.text_runs(s, tx, cy + 0.12, tw, rh, runs, ls=1.16,
+                        tag=f"{sl.sid}/термин{i + 1}")
+    gold_tick(s, sl.sid, MX, sl.tick_y or (TITLE_Y + 0.98))
+    footer(s, sl)
+    return s
 
 
 def stage_overview(p, sl, root):
@@ -936,7 +1073,14 @@ def content(p, sl, root):
     if not is_content:
         check_prims(sl, kind)
 
-    pl = plates.plates_of(sl, PLATES) if is_content else []
+    if is_content and sl.sid in COMPACT_PLATES:
+        pl_c = plates.plates_of(sl, PLATES_COMPACT)
+        if pl_c:
+            y += plates.draw_plates(s, sl.sid, pl_c, MX, y, body_w_top,
+                                    PLATES_COMPACT) + GAP
+        pl = []
+    else:
+        pl = plates.plates_of(sl, PLATES) if is_content else []
     if pl and (sl.sid in BULLET_COLLAGE or sl.sid in BULLET_SINGLE_KEY):
         runs = plates_as_list(sl, pl, body_w_top - 0.08)
         h = metrics.runs_h(runs, body_w_top - 0.08, 1.22)
@@ -1043,14 +1187,29 @@ def content(p, sl, root):
         avail = draw_budget
         if sl.sid == "s05":
             # `keystone` — первый абзац («Четвёртая опора…») рисуется в
-            # отдельной серой рамке (см. docstring `keystone_gap_box`),
-            # остальные два абзаца («Вопрос лекции.» / «Сквозная линия.»)
-            # — обычным телом в коробке мотива ниже.
+            # отдельной серой рамке (см. docstring `keystone_gap_box`);
+            # «Вопрос лекции» — раздел 5 спеки 07-design-review-spec.md
+            # (П9): собственная золотая tint-полоса (`prims.tint_box`),
+            # визуально отделяющая ось лекции от любой другой рамки деки
+            # — не Ocean rounded box, как раньше. «Сквозная линия» —
+            # обычным телом в коробке мотива ниже, как и было.
             blocks = slidefile.body_blocks(sl)
             gap_text = blocks[0][1] if blocks else ""
-            rest = blocks[1:]
+            question = blocks[1][1] if len(blocks) > 1 else ""
+            rest = blocks[2:]
             gh = keystone_gap_box(s, sl.sid, gap_text, MX, y, body_w)
             y += gh + GAP
+            if question:
+                q_runs = markup.inline_runs(question, 17.0, DEEP)
+                for r in q_runs:
+                    r["bold"] = True
+                qh = metrics.runs_h(q_runs, body_w - 0.28, 1.22) + 0.20
+                prims.tint_box(s, MX, y, body_w, qh, tone="gold")
+                prims.text_runs(s, MX + 0.14, y + 0.10, body_w - 0.28,
+                                qh - 0.20, q_runs, ls=1.22,
+                                tag=f"{sl.sid}/вопрос")
+                report.GOLD_SEEN.add(sl.sid)
+                y += qh + GAP
             runs = []
             first = True
             for kind2, t in rest:
@@ -1117,7 +1276,8 @@ def content(p, sl, root):
 
 
 BUILDERS = {"cover": cover, "divider": divider, "qa": qa, "udar": udar,
-           "stage_overview": stage_overview}
+           "stage_overview": stage_overview, "map_cards": lecture_map,
+           "term_cards": term_cards}
 
 
 # ════════════════════════════════════════════════════════════════════

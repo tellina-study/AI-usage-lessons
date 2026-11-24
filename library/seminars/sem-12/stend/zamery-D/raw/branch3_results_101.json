@@ -1,0 +1,4254 @@
+{
+  "branch": "3_siglip_local",
+  "model": "google/siglip-base-patch16-224",
+  "device": "cpu",
+  "vector_source": ".pooler_output ([#351-3])",
+  "n_images": 101,
+  "n_queries": 100,
+  "EN": {
+    "by_class": {
+      "1": {
+        "n": 31,
+        "recall@1": 0.8709677419354839,
+        "recall@3": 0.967741935483871
+      },
+      "2": {
+        "n": 32,
+        "recall@1": 0.71875,
+        "recall@3": 0.8125
+      },
+      "3": {
+        "n": 37,
+        "recall@1": 0.5945945945945946,
+        "recall@3": 0.7027027027027027
+      }
+    },
+    "overall_recall@1": 0.72,
+    "overall_recall@3": 0.82,
+    "details": [
+      {
+        "num": "1.1",
+        "class": 1,
+        "answer": "e9114065de005073",
+        "top3": [
+          [
+            "e9114065de005073",
+            0.1277
+          ],
+          [
+            "30dc8f6e837f7b47",
+            0.0816
+          ],
+          [
+            "145e02a1608f2a7c",
+            0.0789
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.2",
+        "class": 1,
+        "answer": "ea8304d584aaa1ae",
+        "top3": [
+          [
+            "ea8304d584aaa1ae",
+            0.1087
+          ],
+          [
+            "24955fd68bc70264",
+            0.0706
+          ],
+          [
+            "1973cd54f73bed7b",
+            0.0552
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.3",
+        "class": 1,
+        "answer": "b53d36ec5de1bf52",
+        "top3": [
+          [
+            "0e6e608af9477a08",
+            0.1009
+          ],
+          [
+            "128f582673ba68fc",
+            0.0954
+          ],
+          [
+            "c7735280a73d65e1",
+            0.0893
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "1.4",
+        "class": 1,
+        "answer": "0fb3b09b91685b46",
+        "top3": [
+          [
+            "0fb3b09b91685b46",
+            0.1567
+          ],
+          [
+            "1d33f79971824c1c",
+            0.1011
+          ],
+          [
+            "0656563fdd704b9f",
+            0.0852
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.5",
+        "class": 1,
+        "answer": "84810eb298f1d8f8",
+        "top3": [
+          [
+            "84810eb298f1d8f8",
+            0.1131
+          ],
+          [
+            "0656563fdd704b9f",
+            0.0895
+          ],
+          [
+            "5b9193e5398fd5e5",
+            0.0793
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.6",
+        "class": 1,
+        "answer": "5b9193e5398fd5e5",
+        "top3": [
+          [
+            "5b9193e5398fd5e5",
+            0.0908
+          ],
+          [
+            "01c715ada9a9b193",
+            0.0688
+          ],
+          [
+            "0656563fdd704b9f",
+            0.0484
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.7",
+        "class": 1,
+        "answer": "8cb7d659e2d0a541",
+        "top3": [
+          [
+            "8cb7d659e2d0a541",
+            0.1276
+          ],
+          [
+            "0071f62f5d703904",
+            0.0999
+          ],
+          [
+            "84810eb298f1d8f8",
+            0.0473
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.8",
+        "class": 1,
+        "answer": "b755be9b601382d3",
+        "top3": [
+          [
+            "b755be9b601382d3",
+            0.101
+          ],
+          [
+            "09f08ac7c71b4675",
+            0.0594
+          ],
+          [
+            "31e0383b18a48a63",
+            0.0449
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.9",
+        "class": 1,
+        "answer": "f24b6d2e4a6e3467",
+        "top3": [
+          [
+            "f24b6d2e4a6e3467",
+            0.1079
+          ],
+          [
+            "00372528d0ae529e",
+            0.0085
+          ],
+          [
+            "2ebe189cf7049839",
+            0.0016
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.10",
+        "class": 1,
+        "answer": "5e9c983ecbe4af71",
+        "top3": [
+          [
+            "5e9c983ecbe4af71",
+            0.1315
+          ],
+          [
+            "e4c90e496724afe1",
+            0.0534
+          ],
+          [
+            "00372528d0ae529e",
+            0.0443
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.11",
+        "class": 1,
+        "answer": "e4c90e496724afe1",
+        "top3": [
+          [
+            "e4c90e496724afe1",
+            0.1638
+          ],
+          [
+            "50d1a495e942b809",
+            0.1075
+          ],
+          [
+            "bdd7fd3ffee39259",
+            0.0896
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.12",
+        "class": 1,
+        "answer": "71681aa82b7ef15f",
+        "top3": [
+          [
+            "0b37c87f551023c7",
+            0.1052
+          ],
+          [
+            "0dd052cc9c05ea78",
+            0.0977
+          ],
+          [
+            "71681aa82b7ef15f",
+            0.096
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.1",
+        "class": 2,
+        "answer": "e9114065de005073",
+        "top3": [
+          [
+            "ea8304d584aaa1ae",
+            0.1304
+          ],
+          [
+            "e9114065de005073",
+            0.1287
+          ],
+          [
+            "1973cd54f73bed7b",
+            0.1051
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.2",
+        "class": 2,
+        "answer": "ea8304d584aaa1ae",
+        "top3": [
+          [
+            "c7735280a73d65e1",
+            0.1004
+          ],
+          [
+            "0e4332e5c234255c",
+            0.0879
+          ],
+          [
+            "14bad13e066ba376",
+            0.0844
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "2.3",
+        "class": 2,
+        "answer": "8cb7d659e2d0a541",
+        "top3": [
+          [
+            "8cb7d659e2d0a541",
+            0.1161
+          ],
+          [
+            "01c715ada9a9b193",
+            0.0646
+          ],
+          [
+            "84810eb298f1d8f8",
+            0.0628
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.4",
+        "class": 2,
+        "answer": "1d33f79971824c1c",
+        "top3": [
+          [
+            "1d33f79971824c1c",
+            0.1393
+          ],
+          [
+            "5b9193e5398fd5e5",
+            0.109
+          ],
+          [
+            "0656563fdd704b9f",
+            0.1031
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.5",
+        "class": 2,
+        "answer": "d50064dfabf0fbd5",
+        "top3": [
+          [
+            "05162223d18ef5e9",
+            0.1132
+          ],
+          [
+            "0329b7efc120db25",
+            0.0661
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0618
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "2.6",
+        "class": 2,
+        "answer": "5e9c983ecbe4af71",
+        "top3": [
+          [
+            "5e9c983ecbe4af71",
+            0.1127
+          ],
+          [
+            "e4c90e496724afe1",
+            0.0813
+          ],
+          [
+            "bdd7fd3ffee39259",
+            0.0678
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.7",
+        "class": 2,
+        "answer": "c53e9e5ce002345f",
+        "top3": [
+          [
+            "c53e9e5ce002345f",
+            0.0902
+          ],
+          [
+            "0dd052cc9c05ea78",
+            0.0883
+          ],
+          [
+            "0b3445eeb72b3803",
+            0.0844
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.8",
+        "class": 2,
+        "answer": "511a66ac77d12201",
+        "top3": [
+          [
+            "ea8304d584aaa1ae",
+            0.0871
+          ],
+          [
+            "d50064dfabf0fbd5",
+            0.0834
+          ],
+          [
+            "511a66ac77d12201",
+            0.0811
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.9",
+        "class": 2,
+        "answer": "b755be9b601382d3",
+        "top3": [
+          [
+            "1e7cc92a68af4ace",
+            0.0757
+          ],
+          [
+            "50d1a495e942b809",
+            0.0722
+          ],
+          [
+            "14bad13e066ba376",
+            0.0702
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "2.10",
+        "class": 2,
+        "answer": "c1334a6df9636a45",
+        "top3": [
+          [
+            "c1334a6df9636a45",
+            0.1484
+          ],
+          [
+            "1d810b4d7f6e122b",
+            0.123
+          ],
+          [
+            "dfc78e19d1ba6658",
+            0.1198
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.11",
+        "class": 2,
+        "answer": "87eb5a45f2b87933",
+        "top3": [
+          [
+            "87eb5a45f2b87933",
+            0.1294
+          ],
+          [
+            "360fc1faeddf8ea1",
+            0.0914
+          ],
+          [
+            "50d1a495e942b809",
+            0.0912
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.12",
+        "class": 2,
+        "answer": "dfc78e19d1ba6658",
+        "top3": [
+          [
+            "05162223d18ef5e9",
+            0.1006
+          ],
+          [
+            "0dd052cc9c05ea78",
+            0.0629
+          ],
+          [
+            "128f582673ba68fc",
+            0.0619
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.1",
+        "class": 3,
+        "answer": "b755be9b601382d3",
+        "top3": [
+          [
+            "bdd7fd3ffee39259",
+            0.0305
+          ],
+          [
+            "24955fd68bc70264",
+            0.0211
+          ],
+          [
+            "1973cd54f73bed7b",
+            0.0181
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.2",
+        "class": 3,
+        "answer": "31e0383b18a48a63",
+        "top3": [
+          [
+            "05162223d18ef5e9",
+            0.0054
+          ],
+          [
+            "c1334a6df9636a45",
+            -0.0024
+          ],
+          [
+            "0319000d042d15b9",
+            -0.0065
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.3",
+        "class": 3,
+        "answer": "5e9c983ecbe4af71",
+        "top3": [
+          [
+            "5e9c983ecbe4af71",
+            0.028
+          ],
+          [
+            "e4c90e496724afe1",
+            -0.006
+          ],
+          [
+            "2e6df1cefddeb607",
+            -0.0153
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.4",
+        "class": 3,
+        "answer": "1e7cc92a68af4ace",
+        "top3": [
+          [
+            "0e6e608af9477a08",
+            -0.0585
+          ],
+          [
+            "31e0383b18a48a63",
+            -0.062
+          ],
+          [
+            "2ec2e501c2994103",
+            -0.0687
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.5",
+        "class": 3,
+        "answer": "01ada3c0d980be5e",
+        "top3": [
+          [
+            "01ada3c0d980be5e",
+            0.0323
+          ],
+          [
+            "14bad13e066ba376",
+            0.0175
+          ],
+          [
+            "24955fd68bc70264",
+            0.0168
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.6",
+        "class": 3,
+        "answer": "01ada3c0d980be5e",
+        "top3": [
+          [
+            "0656563fdd704b9f",
+            0.0716
+          ],
+          [
+            "84810eb298f1d8f8",
+            0.0699
+          ],
+          [
+            "0071f62f5d703904",
+            0.0622
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.7",
+        "class": 3,
+        "answer": "bdd7fd3ffee39259",
+        "top3": [
+          [
+            "bdd7fd3ffee39259",
+            0.0914
+          ],
+          [
+            "7348dec4f19d9d7f",
+            0.0588
+          ],
+          [
+            "e9114065de005073",
+            0.0473
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.8",
+        "class": 3,
+        "answer": "50d1a495e942b809",
+        "top3": [
+          [
+            "50d1a495e942b809",
+            0.0453
+          ],
+          [
+            "05162223d18ef5e9",
+            0.0267
+          ],
+          [
+            "30dc8f6e837f7b47",
+            0.0243
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.9",
+        "class": 3,
+        "answer": "a2adb6250fbb4f8c",
+        "top3": [
+          [
+            "0b37c87f551023c7",
+            0.0745
+          ],
+          [
+            "c53e9e5ce002345f",
+            0.064
+          ],
+          [
+            "124d86a6d3953a13",
+            0.0613
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.10",
+        "class": 3,
+        "answer": "dfc78e19d1ba6658",
+        "top3": [
+          [
+            "05162223d18ef5e9",
+            0.0364
+          ],
+          [
+            "0b3445eeb72b3803",
+            0.0338
+          ],
+          [
+            "1d810b4d7f6e122b",
+            0.0327
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.11",
+        "class": 3,
+        "answer": "84810eb298f1d8f8",
+        "top3": [
+          [
+            "84810eb298f1d8f8",
+            0.1093
+          ],
+          [
+            "1d33f79971824c1c",
+            0.0757
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.0743
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.12",
+        "class": 3,
+        "answer": "8cb7d659e2d0a541",
+        "top3": [
+          [
+            "8cb7d659e2d0a541",
+            0.0074
+          ],
+          [
+            "31e0383b18a48a63",
+            -0.0098
+          ],
+          [
+            "18ccdc568d0792d6",
+            -0.0099
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.13",
+        "class": 3,
+        "answer": "94043f06b44df043",
+        "top3": [
+          [
+            "94043f06b44df043",
+            0.0314
+          ],
+          [
+            "0536436b72e5fefc",
+            0.0301
+          ],
+          [
+            "c51d831708b6ded1",
+            0.0188
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.14",
+        "class": 3,
+        "answer": "59f89863852379cf",
+        "top3": [
+          [
+            "235a6e575ba5c6b1",
+            0.0086
+          ],
+          [
+            "1973cd54f73bed7b",
+            0.0081
+          ],
+          [
+            "5e9c983ecbe4af71",
+            0.0048
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.1",
+        "class": 2,
+        "answer": "01f26ca52e27a8d9",
+        "top3": [
+          [
+            "01f26ca52e27a8d9",
+            0.1234
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0728
+          ],
+          [
+            "59f89863852379cf",
+            0.0725
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.2",
+        "class": 1,
+        "answer": "0329b7efc120db25",
+        "top3": [
+          [
+            "0329b7efc120db25",
+            0.1251
+          ],
+          [
+            "05162223d18ef5e9",
+            0.0904
+          ],
+          [
+            "d50064dfabf0fbd5",
+            0.0828
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.3",
+        "class": 3,
+        "answer": "03cb58dfb0ecb4fd",
+        "top3": [
+          [
+            "0b3445eeb72b3803",
+            0.0535
+          ],
+          [
+            "a173420cfdc0bc21",
+            0.0296
+          ],
+          [
+            "00372528d0ae529e",
+            0.0263
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.4",
+        "class": 3,
+        "answer": "0b3445eeb72b3803",
+        "top3": [
+          [
+            "0b3445eeb72b3803",
+            0.1309
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0871
+          ],
+          [
+            "a173420cfdc0bc21",
+            0.0581
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.5",
+        "class": 1,
+        "answer": "0e4332e5c234255c",
+        "top3": [
+          [
+            "0e4332e5c234255c",
+            0.1127
+          ],
+          [
+            "50d1a495e942b809",
+            0.1052
+          ],
+          [
+            "2c0dbd6d1984d8e1",
+            0.0859
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.6",
+        "class": 2,
+        "answer": "1102e183babc6483",
+        "top3": [
+          [
+            "59f89863852379cf",
+            0.0988
+          ],
+          [
+            "c7735280a73d65e1",
+            0.093
+          ],
+          [
+            "b12fa0eed7d648f3",
+            0.092
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.7",
+        "class": 2,
+        "answer": "128f582673ba68fc",
+        "top3": [
+          [
+            "128f582673ba68fc",
+            0.1435
+          ],
+          [
+            "190d1af3cb805f47",
+            0.0904
+          ],
+          [
+            "360fc1faeddf8ea1",
+            0.0833
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.8",
+        "class": 3,
+        "answer": "145e02a1608f2a7c",
+        "top3": [
+          [
+            "145e02a1608f2a7c",
+            0.0175
+          ],
+          [
+            "0e4332e5c234255c",
+            0.0171
+          ],
+          [
+            "235a6e575ba5c6b1",
+            0.017
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.9",
+        "class": 2,
+        "answer": "163fe17e4667e76b",
+        "top3": [
+          [
+            "163fe17e4667e76b",
+            0.1595
+          ],
+          [
+            "0319000d042d15b9",
+            0.1039
+          ],
+          [
+            "50d1a495e942b809",
+            0.0939
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.10",
+        "class": 1,
+        "answer": "24955fd68bc70264",
+        "top3": [
+          [
+            "24955fd68bc70264",
+            0.1175
+          ],
+          [
+            "ea8304d584aaa1ae",
+            0.0658
+          ],
+          [
+            "00372528d0ae529e",
+            0.0639
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.11",
+        "class": 3,
+        "answer": "2c0dbd6d1984d8e1",
+        "top3": [
+          [
+            "bdd7fd3ffee39259",
+            0.0331
+          ],
+          [
+            "2c0dbd6d1984d8e1",
+            0.033
+          ],
+          [
+            "145e02a1608f2a7c",
+            0.024
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.12",
+        "class": 3,
+        "answer": "30dc8f6e837f7b47",
+        "top3": [
+          [
+            "1973cd54f73bed7b",
+            0.0646
+          ],
+          [
+            "235a6e575ba5c6b1",
+            0.0641
+          ],
+          [
+            "30dc8f6e837f7b47",
+            0.0632
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.13",
+        "class": 3,
+        "answer": "14bad13e066ba376",
+        "top3": [
+          [
+            "14bad13e066ba376",
+            0.0887
+          ],
+          [
+            "17f40b08e494565d",
+            0.0743
+          ],
+          [
+            "9cfa372f80c96bb4",
+            0.0708
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.14",
+        "class": 2,
+        "answer": "0493f305183ad8e4",
+        "top3": [
+          [
+            "0493f305183ad8e4",
+            0.1179
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.111
+          ],
+          [
+            "0b3445eeb72b3803",
+            0.0951
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.15",
+        "class": 1,
+        "answer": "05162223d18ef5e9",
+        "top3": [
+          [
+            "05162223d18ef5e9",
+            0.1372
+          ],
+          [
+            "0dd052cc9c05ea78",
+            0.0203
+          ],
+          [
+            "0b37c87f551023c7",
+            0.013
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.16",
+        "class": 2,
+        "answer": "1d810b4d7f6e122b",
+        "top3": [
+          [
+            "05162223d18ef5e9",
+            0.0933
+          ],
+          [
+            "2ec2e501c2994103",
+            0.0911
+          ],
+          [
+            "027b16382feaca69",
+            0.085
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.17",
+        "class": 2,
+        "answer": "004e67c094c01d68",
+        "top3": [
+          [
+            "004e67c094c01d68",
+            0.1097
+          ],
+          [
+            "2106a1f615643a62",
+            0.0823
+          ],
+          [
+            "0b37c87f551023c7",
+            0.0747
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.18",
+        "class": 3,
+        "answer": "0e6e608af9477a08",
+        "top3": [
+          [
+            "0e6e608af9477a08",
+            0.1391
+          ],
+          [
+            "11789876e782aed8",
+            0.0636
+          ],
+          [
+            "128f582673ba68fc",
+            0.0574
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.19",
+        "class": 2,
+        "answer": "190d1af3cb805f47",
+        "top3": [
+          [
+            "190d1af3cb805f47",
+            0.0938
+          ],
+          [
+            "b53d36ec5de1bf52",
+            0.0934
+          ],
+          [
+            "128f582673ba68fc",
+            0.0847
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.20",
+        "class": 1,
+        "answer": "1fd783e47a5a621a",
+        "top3": [
+          [
+            "1fd783e47a5a621a",
+            0.1704
+          ],
+          [
+            "2c0dbd6d1984d8e1",
+            0.0615
+          ],
+          [
+            "124d86a6d3953a13",
+            0.0501
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.21",
+        "class": 1,
+        "answer": "2e6df1cefddeb607",
+        "top3": [
+          [
+            "2e6df1cefddeb607",
+            0.185
+          ],
+          [
+            "145e02a1608f2a7c",
+            0.0867
+          ],
+          [
+            "0536436b72e5fefc",
+            0.0823
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.22",
+        "class": 3,
+        "answer": "1eb99df4147f898f",
+        "top3": [
+          [
+            "22926e7f863df9f1",
+            0.0709
+          ],
+          [
+            "069dc9e79cc1cdcc",
+            0.0666
+          ],
+          [
+            "e9114065de005073",
+            0.0523
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.23",
+        "class": 3,
+        "answer": "38af0f20239b6619",
+        "top3": [
+          [
+            "511a66ac77d12201",
+            0.0305
+          ],
+          [
+            "38af0f20239b6619",
+            0.0302
+          ],
+          [
+            "dfc78e19d1ba6658",
+            0.0299
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.24",
+        "class": 3,
+        "answer": "3a739b0a9f2c748c",
+        "top3": [
+          [
+            "050631743357d5f0",
+            0.0607
+          ],
+          [
+            "5b9193e5398fd5e5",
+            0.0443
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.0371
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.25",
+        "class": 1,
+        "answer": "0319000d042d15b9",
+        "top3": [
+          [
+            "0319000d042d15b9",
+            0.1063
+          ],
+          [
+            "428904ac70ad4ac5",
+            0.0763
+          ],
+          [
+            "511a66ac77d12201",
+            0.0738
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.26",
+        "class": 3,
+        "answer": "069dc9e79cc1cdcc",
+        "top3": [
+          [
+            "069dc9e79cc1cdcc",
+            0.0699
+          ],
+          [
+            "235a6e575ba5c6b1",
+            0.0169
+          ],
+          [
+            "1973cd54f73bed7b",
+            0.012
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.27",
+        "class": 1,
+        "answer": "186adccdfbc2c77f",
+        "top3": [
+          [
+            "186adccdfbc2c77f",
+            0.1475
+          ],
+          [
+            "e9114065de005073",
+            -0.0311
+          ],
+          [
+            "c7735280a73d65e1",
+            -0.0355
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.28",
+        "class": 1,
+        "answer": "05bd562acd97329e",
+        "top3": [
+          [
+            "05bd562acd97329e",
+            0.1481
+          ],
+          [
+            "163fe17e4667e76b",
+            0.0848
+          ],
+          [
+            "22926e7f863df9f1",
+            0.0544
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.29",
+        "class": 2,
+        "answer": "071c63563e51dac9",
+        "top3": [
+          [
+            "071c63563e51dac9",
+            0.1491
+          ],
+          [
+            "163fe17e4667e76b",
+            0.0718
+          ],
+          [
+            "e9114065de005073",
+            0.0494
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.30",
+        "class": 3,
+        "answer": "1973cd54f73bed7b",
+        "top3": [
+          [
+            "1973cd54f73bed7b",
+            0.1482
+          ],
+          [
+            "235a6e575ba5c6b1",
+            0.109
+          ],
+          [
+            "22926e7f863df9f1",
+            0.1032
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.31",
+        "class": 1,
+        "answer": "22926e7f863df9f1",
+        "top3": [
+          [
+            "22926e7f863df9f1",
+            0.1135
+          ],
+          [
+            "1973cd54f73bed7b",
+            0.0448
+          ],
+          [
+            "235a6e575ba5c6b1",
+            0.037
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.32",
+        "class": 1,
+        "answer": "235a6e575ba5c6b1",
+        "top3": [
+          [
+            "235a6e575ba5c6b1",
+            0.1559
+          ],
+          [
+            "1973cd54f73bed7b",
+            0.1459
+          ],
+          [
+            "22926e7f863df9f1",
+            0.1272
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.33",
+        "class": 1,
+        "answer": "18ccdc568d0792d6",
+        "top3": [
+          [
+            "18ccdc568d0792d6",
+            0.1919
+          ],
+          [
+            "05bd562acd97329e",
+            -0.001
+          ],
+          [
+            "5b9193e5398fd5e5",
+            -0.0171
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.34",
+        "class": 3,
+        "answer": "0071f62f5d703904",
+        "top3": [
+          [
+            "0071f62f5d703904",
+            0.1176
+          ],
+          [
+            "8cb7d659e2d0a541",
+            0.0502
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.0119
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.35",
+        "class": 1,
+        "answer": "050631743357d5f0",
+        "top3": [
+          [
+            "050631743357d5f0",
+            0.1327
+          ],
+          [
+            "5b9193e5398fd5e5",
+            0.0278
+          ],
+          [
+            "84810eb298f1d8f8",
+            0.0192
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.36",
+        "class": 1,
+        "answer": "0656563fdd704b9f",
+        "top3": [
+          [
+            "0656563fdd704b9f",
+            0.1962
+          ],
+          [
+            "5b9193e5398fd5e5",
+            0.1248
+          ],
+          [
+            "84810eb298f1d8f8",
+            0.0519
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.37",
+        "class": 3,
+        "answer": "01c715ada9a9b193",
+        "top3": [
+          [
+            "01c715ada9a9b193",
+            0.1046
+          ],
+          [
+            "8cb7d659e2d0a541",
+            0.0769
+          ],
+          [
+            "0656563fdd704b9f",
+            0.0275
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.38",
+        "class": 3,
+        "answer": "09f08ac7c71b4675",
+        "top3": [
+          [
+            "0a951714918ace53",
+            0.0988
+          ],
+          [
+            "19aa0e0ad2fa06b6",
+            0.0608
+          ],
+          [
+            "11789876e782aed8",
+            0.047
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.39",
+        "class": 1,
+        "answer": "0a951714918ace53",
+        "top3": [
+          [
+            "0a951714918ace53",
+            0.1632
+          ],
+          [
+            "11c10d9d7a456822",
+            0.0607
+          ],
+          [
+            "147de698c52bcb60",
+            0.0525
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.40",
+        "class": 3,
+        "answer": "11789876e782aed8",
+        "top3": [
+          [
+            "11789876e782aed8",
+            0.1308
+          ],
+          [
+            "11c10d9d7a456822",
+            0.0713
+          ],
+          [
+            "147de698c52bcb60",
+            0.0681
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.41",
+        "class": 1,
+        "answer": "147de698c52bcb60",
+        "top3": [
+          [
+            "147de698c52bcb60",
+            0.1538
+          ],
+          [
+            "11c10d9d7a456822",
+            0.0459
+          ],
+          [
+            "19aa0e0ad2fa06b6",
+            0.0326
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.42",
+        "class": 3,
+        "answer": "19aa0e0ad2fa06b6",
+        "top3": [
+          [
+            "19aa0e0ad2fa06b6",
+            0.1297
+          ],
+          [
+            "11789876e782aed8",
+            0.0705
+          ],
+          [
+            "0a951714918ace53",
+            0.0531
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.43",
+        "class": 1,
+        "answer": "11c10d9d7a456822",
+        "top3": [
+          [
+            "11c10d9d7a456822",
+            0.1052
+          ],
+          [
+            "0a951714918ace53",
+            0.0871
+          ],
+          [
+            "19aa0e0ad2fa06b6",
+            0.0609
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.44",
+        "class": 2,
+        "answer": "0bc7015328a7f447",
+        "top3": [
+          [
+            "0bc7015328a7f447",
+            0.0967
+          ],
+          [
+            "05162223d18ef5e9",
+            0.066
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0412
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.45",
+        "class": 3,
+        "answer": "10dfe877492f2dd3",
+        "top3": [
+          [
+            "10dfe877492f2dd3",
+            0.1034
+          ],
+          [
+            "26f3e4d6e2e3143e",
+            0.062
+          ],
+          [
+            "0319000d042d15b9",
+            0.0137
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.46",
+        "class": 2,
+        "answer": "11cd71943afb477e",
+        "top3": [
+          [
+            "11cd71943afb477e",
+            0.1265
+          ],
+          [
+            "2944a2f209f693f1",
+            0.0589
+          ],
+          [
+            "26f3e4d6e2e3143e",
+            0.0402
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.47",
+        "class": 2,
+        "answer": "26f3e4d6e2e3143e",
+        "top3": [
+          [
+            "26f3e4d6e2e3143e",
+            0.1363
+          ],
+          [
+            "2944a2f209f693f1",
+            0.0423
+          ],
+          [
+            "10dfe877492f2dd3",
+            0.0376
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.48",
+        "class": 2,
+        "answer": "2944a2f209f693f1",
+        "top3": [
+          [
+            "26f3e4d6e2e3143e",
+            0.1358
+          ],
+          [
+            "2944a2f209f693f1",
+            0.0955
+          ],
+          [
+            "57ca2239566c9f44",
+            0.0593
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.49",
+        "class": 3,
+        "answer": "57ca2239566c9f44",
+        "top3": [
+          [
+            "57ca2239566c9f44",
+            0.1272
+          ],
+          [
+            "10dfe877492f2dd3",
+            0.0434
+          ],
+          [
+            "11cd71943afb477e",
+            0.0401
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.50",
+        "class": 3,
+        "answer": "6598fc49bcfb6c69",
+        "top3": [
+          [
+            "6598fc49bcfb6c69",
+            0.093
+          ],
+          [
+            "67310c81574cfaba",
+            0.0453
+          ],
+          [
+            "26f3e4d6e2e3143e",
+            -0.008
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.51",
+        "class": 3,
+        "answer": "67310c81574cfaba",
+        "top3": [
+          [
+            "67310c81574cfaba",
+            0.1655
+          ],
+          [
+            "6598fc49bcfb6c69",
+            0.0713
+          ],
+          [
+            "26f3e4d6e2e3143e",
+            0.0011
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.52",
+        "class": 2,
+        "answer": "7348dec4f19d9d7f",
+        "top3": [
+          [
+            "7348dec4f19d9d7f",
+            0.1001
+          ],
+          [
+            "26f3e4d6e2e3143e",
+            0.0805
+          ],
+          [
+            "0bc7015328a7f447",
+            0.0507
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.53",
+        "class": 2,
+        "answer": "806c7b43b701d4ef",
+        "top3": [
+          [
+            "806c7b43b701d4ef",
+            0.0775
+          ],
+          [
+            "67310c81574cfaba",
+            0.0371
+          ],
+          [
+            "6598fc49bcfb6c69",
+            -0.0066
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.54",
+        "class": 3,
+        "answer": "5387c89ff13471a3",
+        "top3": [
+          [
+            "59f89863852379cf",
+            0.0875
+          ],
+          [
+            "b12fa0eed7d648f3",
+            0.0806
+          ],
+          [
+            "5387c89ff13471a3",
+            0.0784
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.55",
+        "class": 2,
+        "answer": "07a41b00866f81d9",
+        "top3": [
+          [
+            "07a41b00866f81d9",
+            0.1435
+          ],
+          [
+            "67310c81574cfaba",
+            0.0182
+          ],
+          [
+            "05162223d18ef5e9",
+            -0.0076
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.56",
+        "class": 1,
+        "answer": "027b16382feaca69",
+        "top3": [
+          [
+            "2ec2e501c2994103",
+            0.1135
+          ],
+          [
+            "027b16382feaca69",
+            0.1068
+          ],
+          [
+            "004e67c094c01d68",
+            0.0786
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.57",
+        "class": 2,
+        "answer": "0b37c87f551023c7",
+        "top3": [
+          [
+            "0b37c87f551023c7",
+            0.1184
+          ],
+          [
+            "dfc78e19d1ba6658",
+            0.079
+          ],
+          [
+            "a173420cfdc0bc21",
+            0.0738
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.58",
+        "class": 2,
+        "answer": "0dd052cc9c05ea78",
+        "top3": [
+          [
+            "0dd052cc9c05ea78",
+            0.1384
+          ],
+          [
+            "dfc78e19d1ba6658",
+            0.0891
+          ],
+          [
+            "c1334a6df9636a45",
+            0.0827
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.59",
+        "class": 1,
+        "answer": "124197904aebee39",
+        "top3": [
+          [
+            "027b16382feaca69",
+            0.0842
+          ],
+          [
+            "1d810b4d7f6e122b",
+            0.0791
+          ],
+          [
+            "124197904aebee39",
+            0.0783
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.60",
+        "class": 2,
+        "answer": "2106a1f615643a62",
+        "top3": [
+          [
+            "2106a1f615643a62",
+            0.1016
+          ],
+          [
+            "71681aa82b7ef15f",
+            0.0851
+          ],
+          [
+            "c53e9e5ce002345f",
+            0.0702
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.61",
+        "class": 3,
+        "answer": "2ec2e501c2994103",
+        "top3": [
+          [
+            "2ec2e501c2994103",
+            0.139
+          ],
+          [
+            "0319000d042d15b9",
+            0.0956
+          ],
+          [
+            "05162223d18ef5e9",
+            0.0898
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.62",
+        "class": 2,
+        "answer": "8cb7d659e2d0a541",
+        "top3": [
+          [
+            "8cb7d659e2d0a541",
+            0.1252
+          ],
+          [
+            "01c715ada9a9b193",
+            0.0293
+          ],
+          [
+            "84810eb298f1d8f8",
+            0.0244
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      }
+    ]
+  },
+  "RU": {
+    "by_class": {
+      "1": {
+        "n": 31,
+        "recall@1": 0.7741935483870968,
+        "recall@3": 0.9354838709677419
+      },
+      "2": {
+        "n": 32,
+        "recall@1": 0.4375,
+        "recall@3": 0.65625
+      },
+      "3": {
+        "n": 37,
+        "recall@1": 0.35135135135135137,
+        "recall@3": 0.5135135135135135
+      }
+    },
+    "overall_recall@1": 0.51,
+    "overall_recall@3": 0.69,
+    "details": [
+      {
+        "num": "1.1",
+        "class": 1,
+        "answer": "e9114065de005073",
+        "top3": [
+          [
+            "e9114065de005073",
+            0.0657
+          ],
+          [
+            "0e6e608af9477a08",
+            0.0565
+          ],
+          [
+            "30dc8f6e837f7b47",
+            0.0556
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.2",
+        "class": 1,
+        "answer": "ea8304d584aaa1ae",
+        "top3": [
+          [
+            "ea8304d584aaa1ae",
+            0.0326
+          ],
+          [
+            "24955fd68bc70264",
+            0.0191
+          ],
+          [
+            "2c0dbd6d1984d8e1",
+            0.0058
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.3",
+        "class": 1,
+        "answer": "b53d36ec5de1bf52",
+        "top3": [
+          [
+            "0e6e608af9477a08",
+            0.0571
+          ],
+          [
+            "124d86a6d3953a13",
+            0.0462
+          ],
+          [
+            "c7735280a73d65e1",
+            0.0455
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "1.4",
+        "class": 1,
+        "answer": "0fb3b09b91685b46",
+        "top3": [
+          [
+            "0fb3b09b91685b46",
+            0.1068
+          ],
+          [
+            "0656563fdd704b9f",
+            0.0497
+          ],
+          [
+            "5b9193e5398fd5e5",
+            0.049
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.5",
+        "class": 1,
+        "answer": "84810eb298f1d8f8",
+        "top3": [
+          [
+            "84810eb298f1d8f8",
+            0.1012
+          ],
+          [
+            "0656563fdd704b9f",
+            0.0838
+          ],
+          [
+            "5b9193e5398fd5e5",
+            0.0774
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.6",
+        "class": 1,
+        "answer": "5b9193e5398fd5e5",
+        "top3": [
+          [
+            "5b9193e5398fd5e5",
+            0.0838
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.0687
+          ],
+          [
+            "84810eb298f1d8f8",
+            0.0443
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.7",
+        "class": 1,
+        "answer": "8cb7d659e2d0a541",
+        "top3": [
+          [
+            "0071f62f5d703904",
+            0.0971
+          ],
+          [
+            "8cb7d659e2d0a541",
+            0.0928
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.0654
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.8",
+        "class": 1,
+        "answer": "b755be9b601382d3",
+        "top3": [
+          [
+            "b755be9b601382d3",
+            0.057
+          ],
+          [
+            "24955fd68bc70264",
+            0.0381
+          ],
+          [
+            "a2adb6250fbb4f8c",
+            0.0316
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.9",
+        "class": 1,
+        "answer": "f24b6d2e4a6e3467",
+        "top3": [
+          [
+            "f24b6d2e4a6e3467",
+            0.0514
+          ],
+          [
+            "7348dec4f19d9d7f",
+            0.0045
+          ],
+          [
+            "00372528d0ae529e",
+            -0.0162
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.10",
+        "class": 1,
+        "answer": "5e9c983ecbe4af71",
+        "top3": [
+          [
+            "5e9c983ecbe4af71",
+            0.0508
+          ],
+          [
+            "00372528d0ae529e",
+            0.0165
+          ],
+          [
+            "ea8304d584aaa1ae",
+            0.0119
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.11",
+        "class": 1,
+        "answer": "e4c90e496724afe1",
+        "top3": [
+          [
+            "e4c90e496724afe1",
+            0.1373
+          ],
+          [
+            "50d1a495e942b809",
+            0.0838
+          ],
+          [
+            "05162223d18ef5e9",
+            0.0543
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "1.12",
+        "class": 1,
+        "answer": "71681aa82b7ef15f",
+        "top3": [
+          [
+            "2106a1f615643a62",
+            0.0905
+          ],
+          [
+            "0b37c87f551023c7",
+            0.084
+          ],
+          [
+            "71681aa82b7ef15f",
+            0.0817
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.1",
+        "class": 2,
+        "answer": "e9114065de005073",
+        "top3": [
+          [
+            "5e9c983ecbe4af71",
+            0.0912
+          ],
+          [
+            "e9114065de005073",
+            0.091
+          ],
+          [
+            "e4c90e496724afe1",
+            0.087
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.2",
+        "class": 2,
+        "answer": "ea8304d584aaa1ae",
+        "top3": [
+          [
+            "0e6e608af9477a08",
+            0.0399
+          ],
+          [
+            "2e6df1cefddeb607",
+            0.0389
+          ],
+          [
+            "0e4332e5c234255c",
+            0.0325
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "2.3",
+        "class": 2,
+        "answer": "8cb7d659e2d0a541",
+        "top3": [
+          [
+            "8cb7d659e2d0a541",
+            0.0895
+          ],
+          [
+            "0071f62f5d703904",
+            0.0632
+          ],
+          [
+            "01c715ada9a9b193",
+            0.0486
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.4",
+        "class": 2,
+        "answer": "1d33f79971824c1c",
+        "top3": [
+          [
+            "01c715ada9a9b193",
+            0.0978
+          ],
+          [
+            "1d33f79971824c1c",
+            0.0971
+          ],
+          [
+            "5b9193e5398fd5e5",
+            0.0923
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.5",
+        "class": 2,
+        "answer": "d50064dfabf0fbd5",
+        "top3": [
+          [
+            "0493f305183ad8e4",
+            0.0711
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0587
+          ],
+          [
+            "0b3445eeb72b3803",
+            0.0532
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "2.6",
+        "class": 2,
+        "answer": "5e9c983ecbe4af71",
+        "top3": [
+          [
+            "5e9c983ecbe4af71",
+            0.0944
+          ],
+          [
+            "bdd7fd3ffee39259",
+            0.0547
+          ],
+          [
+            "7348dec4f19d9d7f",
+            0.0531
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.7",
+        "class": 2,
+        "answer": "c53e9e5ce002345f",
+        "top3": [
+          [
+            "c53e9e5ce002345f",
+            0.089
+          ],
+          [
+            "9cfa372f80c96bb4",
+            0.0887
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0871
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.8",
+        "class": 2,
+        "answer": "511a66ac77d12201",
+        "top3": [
+          [
+            "24955fd68bc70264",
+            0.069
+          ],
+          [
+            "124197904aebee39",
+            0.0612
+          ],
+          [
+            "9cfa372f80c96bb4",
+            0.0581
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "2.9",
+        "class": 2,
+        "answer": "b755be9b601382d3",
+        "top3": [
+          [
+            "24955fd68bc70264",
+            0.0657
+          ],
+          [
+            "128f582673ba68fc",
+            0.0543
+          ],
+          [
+            "b53d36ec5de1bf52",
+            0.0503
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "2.10",
+        "class": 2,
+        "answer": "c1334a6df9636a45",
+        "top3": [
+          [
+            "c1334a6df9636a45",
+            0.1124
+          ],
+          [
+            "1d810b4d7f6e122b",
+            0.109
+          ],
+          [
+            "dfc78e19d1ba6658",
+            0.0877
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "2.11",
+        "class": 2,
+        "answer": "87eb5a45f2b87933",
+        "top3": [
+          [
+            "0493f305183ad8e4",
+            0.0276
+          ],
+          [
+            "2106a1f615643a62",
+            0.0153
+          ],
+          [
+            "147de698c52bcb60",
+            0.012
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "2.12",
+        "class": 2,
+        "answer": "dfc78e19d1ba6658",
+        "top3": [
+          [
+            "e4c90e496724afe1",
+            0.0708
+          ],
+          [
+            "124d86a6d3953a13",
+            0.0611
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0608
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.1",
+        "class": 3,
+        "answer": "b755be9b601382d3",
+        "top3": [
+          [
+            "24955fd68bc70264",
+            0.0612
+          ],
+          [
+            "bdd7fd3ffee39259",
+            0.0174
+          ],
+          [
+            "30dc8f6e837f7b47",
+            0.003
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.2",
+        "class": 3,
+        "answer": "31e0383b18a48a63",
+        "top3": [
+          [
+            "190d1af3cb805f47",
+            0.0101
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0044
+          ],
+          [
+            "c1334a6df9636a45",
+            0.0023
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.3",
+        "class": 3,
+        "answer": "5e9c983ecbe4af71",
+        "top3": [
+          [
+            "5e9c983ecbe4af71",
+            0.015
+          ],
+          [
+            "e4c90e496724afe1",
+            0.013
+          ],
+          [
+            "9cfa372f80c96bb4",
+            0.0018
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.4",
+        "class": 3,
+        "answer": "1e7cc92a68af4ace",
+        "top3": [
+          [
+            "0656563fdd704b9f",
+            -0.0294
+          ],
+          [
+            "2e6df1cefddeb607",
+            -0.0322
+          ],
+          [
+            "9cfa372f80c96bb4",
+            -0.0333
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.5",
+        "class": 3,
+        "answer": "01ada3c0d980be5e",
+        "top3": [
+          [
+            "01ada3c0d980be5e",
+            0.0115
+          ],
+          [
+            "1d810b4d7f6e122b",
+            0.0029
+          ],
+          [
+            "0e6e608af9477a08",
+            -0.0027
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.6",
+        "class": 3,
+        "answer": "01ada3c0d980be5e",
+        "top3": [
+          [
+            "84810eb298f1d8f8",
+            0.0754
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.0667
+          ],
+          [
+            "0656563fdd704b9f",
+            0.0624
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.7",
+        "class": 3,
+        "answer": "bdd7fd3ffee39259",
+        "top3": [
+          [
+            "7348dec4f19d9d7f",
+            0.0415
+          ],
+          [
+            "bdd7fd3ffee39259",
+            0.0379
+          ],
+          [
+            "5e9c983ecbe4af71",
+            0.036
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.8",
+        "class": 3,
+        "answer": "50d1a495e942b809",
+        "top3": [
+          [
+            "50d1a495e942b809",
+            0.0376
+          ],
+          [
+            "1973cd54f73bed7b",
+            0.015
+          ],
+          [
+            "30dc8f6e837f7b47",
+            0.0149
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.9",
+        "class": 3,
+        "answer": "a2adb6250fbb4f8c",
+        "top3": [
+          [
+            "a2adb6250fbb4f8c",
+            0.0439
+          ],
+          [
+            "124d86a6d3953a13",
+            0.0405
+          ],
+          [
+            "14bad13e066ba376",
+            0.033
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.10",
+        "class": 3,
+        "answer": "dfc78e19d1ba6658",
+        "top3": [
+          [
+            "190d1af3cb805f47",
+            0.0109
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            -0.0077
+          ],
+          [
+            "1d810b4d7f6e122b",
+            -0.0094
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.11",
+        "class": 3,
+        "answer": "84810eb298f1d8f8",
+        "top3": [
+          [
+            "0071f62f5d703904",
+            0.0753
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.061
+          ],
+          [
+            "84810eb298f1d8f8",
+            0.0595
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "3.12",
+        "class": 3,
+        "answer": "8cb7d659e2d0a541",
+        "top3": [
+          [
+            "11789876e782aed8",
+            0.0205
+          ],
+          [
+            "806c7b43b701d4ef",
+            0.0166
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0084
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.13",
+        "class": 3,
+        "answer": "94043f06b44df043",
+        "top3": [
+          [
+            "186adccdfbc2c77f",
+            0.0318
+          ],
+          [
+            "128f582673ba68fc",
+            0.03
+          ],
+          [
+            "1d810b4d7f6e122b",
+            0.0284
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "3.14",
+        "class": 3,
+        "answer": "59f89863852379cf",
+        "top3": [
+          [
+            "5e9c983ecbe4af71",
+            0.0276
+          ],
+          [
+            "00372528d0ae529e",
+            -0.0005
+          ],
+          [
+            "0bc7015328a7f447",
+            -0.0077
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.1",
+        "class": 2,
+        "answer": "01f26ca52e27a8d9",
+        "top3": [
+          [
+            "1d810b4d7f6e122b",
+            0.0609
+          ],
+          [
+            "124197904aebee39",
+            0.0598
+          ],
+          [
+            "b53d36ec5de1bf52",
+            0.056
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.2",
+        "class": 1,
+        "answer": "0329b7efc120db25",
+        "top3": [
+          [
+            "0329b7efc120db25",
+            0.0773
+          ],
+          [
+            "d50064dfabf0fbd5",
+            0.0499
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0485
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.3",
+        "class": 3,
+        "answer": "03cb58dfb0ecb4fd",
+        "top3": [
+          [
+            "00372528d0ae529e",
+            -0.0421
+          ],
+          [
+            "004e67c094c01d68",
+            -0.0442
+          ],
+          [
+            "30dc8f6e837f7b47",
+            -0.0597
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.4",
+        "class": 3,
+        "answer": "0b3445eeb72b3803",
+        "top3": [
+          [
+            "0b3445eeb72b3803",
+            0.1073
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0907
+          ],
+          [
+            "0493f305183ad8e4",
+            0.0707
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.5",
+        "class": 1,
+        "answer": "0e4332e5c234255c",
+        "top3": [
+          [
+            "bdd7fd3ffee39259",
+            0.0419
+          ],
+          [
+            "145e02a1608f2a7c",
+            0.0305
+          ],
+          [
+            "7348dec4f19d9d7f",
+            0.024
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.6",
+        "class": 2,
+        "answer": "1102e183babc6483",
+        "top3": [
+          [
+            "0e4332e5c234255c",
+            0.0625
+          ],
+          [
+            "e4c90e496724afe1",
+            0.0569
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0566
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.7",
+        "class": 2,
+        "answer": "128f582673ba68fc",
+        "top3": [
+          [
+            "128f582673ba68fc",
+            0.05
+          ],
+          [
+            "b53d36ec5de1bf52",
+            0.0225
+          ],
+          [
+            "190d1af3cb805f47",
+            0.0171
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.8",
+        "class": 3,
+        "answer": "145e02a1608f2a7c",
+        "top3": [
+          [
+            "0e6e608af9477a08",
+            0.0645
+          ],
+          [
+            "2e6df1cefddeb607",
+            0.0613
+          ],
+          [
+            "0e4332e5c234255c",
+            0.0401
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.9",
+        "class": 2,
+        "answer": "163fe17e4667e76b",
+        "top3": [
+          [
+            "e9114065de005073",
+            0.0685
+          ],
+          [
+            "145e02a1608f2a7c",
+            0.0618
+          ],
+          [
+            "30dc8f6e837f7b47",
+            0.0606
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.10",
+        "class": 1,
+        "answer": "24955fd68bc70264",
+        "top3": [
+          [
+            "2ebe189cf7049839",
+            0.0786
+          ],
+          [
+            "24955fd68bc70264",
+            0.0676
+          ],
+          [
+            "7348dec4f19d9d7f",
+            0.0599
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.11",
+        "class": 3,
+        "answer": "2c0dbd6d1984d8e1",
+        "top3": [
+          [
+            "186adccdfbc2c77f",
+            0.0506
+          ],
+          [
+            "145e02a1608f2a7c",
+            0.0465
+          ],
+          [
+            "24955fd68bc70264",
+            0.0341
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.12",
+        "class": 3,
+        "answer": "30dc8f6e837f7b47",
+        "top3": [
+          [
+            "0e6e608af9477a08",
+            0.0562
+          ],
+          [
+            "050631743357d5f0",
+            0.0502
+          ],
+          [
+            "00372528d0ae529e",
+            0.0296
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.13",
+        "class": 3,
+        "answer": "14bad13e066ba376",
+        "top3": [
+          [
+            "2106a1f615643a62",
+            0.0875
+          ],
+          [
+            "14bad13e066ba376",
+            0.0771
+          ],
+          [
+            "1d810b4d7f6e122b",
+            0.0722
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.14",
+        "class": 2,
+        "answer": "0493f305183ad8e4",
+        "top3": [
+          [
+            "03cb58dfb0ecb4fd",
+            0.1015
+          ],
+          [
+            "0493f305183ad8e4",
+            0.0893
+          ],
+          [
+            "0b3445eeb72b3803",
+            0.0832
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.15",
+        "class": 1,
+        "answer": "05162223d18ef5e9",
+        "top3": [
+          [
+            "05162223d18ef5e9",
+            0.1108
+          ],
+          [
+            "c1334a6df9636a45",
+            0.0587
+          ],
+          [
+            "2106a1f615643a62",
+            0.0581
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.16",
+        "class": 2,
+        "answer": "1d810b4d7f6e122b",
+        "top3": [
+          [
+            "124197904aebee39",
+            0.0686
+          ],
+          [
+            "1d810b4d7f6e122b",
+            0.0655
+          ],
+          [
+            "c1334a6df9636a45",
+            0.0547
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.17",
+        "class": 2,
+        "answer": "004e67c094c01d68",
+        "top3": [
+          [
+            "004e67c094c01d68",
+            0.0915
+          ],
+          [
+            "2106a1f615643a62",
+            0.0848
+          ],
+          [
+            "0b37c87f551023c7",
+            0.0551
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.18",
+        "class": 3,
+        "answer": "0e6e608af9477a08",
+        "top3": [
+          [
+            "0e6e608af9477a08",
+            0.0834
+          ],
+          [
+            "1d33f79971824c1c",
+            0.0453
+          ],
+          [
+            "18ccdc568d0792d6",
+            0.0255
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.19",
+        "class": 2,
+        "answer": "190d1af3cb805f47",
+        "top3": [
+          [
+            "9cfa372f80c96bb4",
+            0.0721
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0704
+          ],
+          [
+            "01ada3c0d980be5e",
+            0.0695
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.20",
+        "class": 1,
+        "answer": "1fd783e47a5a621a",
+        "top3": [
+          [
+            "1fd783e47a5a621a",
+            0.1443
+          ],
+          [
+            "0e4332e5c234255c",
+            0.0843
+          ],
+          [
+            "2ebe189cf7049839",
+            0.0834
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.21",
+        "class": 1,
+        "answer": "2e6df1cefddeb607",
+        "top3": [
+          [
+            "2e6df1cefddeb607",
+            0.1382
+          ],
+          [
+            "0536436b72e5fefc",
+            0.0755
+          ],
+          [
+            "145e02a1608f2a7c",
+            0.0642
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.22",
+        "class": 3,
+        "answer": "1eb99df4147f898f",
+        "top3": [
+          [
+            "071c63563e51dac9",
+            0.0424
+          ],
+          [
+            "22926e7f863df9f1",
+            0.0381
+          ],
+          [
+            "05bd562acd97329e",
+            0.0342
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.23",
+        "class": 3,
+        "answer": "38af0f20239b6619",
+        "top3": [
+          [
+            "05162223d18ef5e9",
+            0.0546
+          ],
+          [
+            "dfc78e19d1ba6658",
+            0.0495
+          ],
+          [
+            "128f582673ba68fc",
+            0.0483
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.24",
+        "class": 3,
+        "answer": "3a739b0a9f2c748c",
+        "top3": [
+          [
+            "050631743357d5f0",
+            0.0719
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.0547
+          ],
+          [
+            "1d33f79971824c1c",
+            0.0303
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.25",
+        "class": 1,
+        "answer": "0319000d042d15b9",
+        "top3": [
+          [
+            "0319000d042d15b9",
+            0.1053
+          ],
+          [
+            "027b16382feaca69",
+            0.095
+          ],
+          [
+            "428904ac70ad4ac5",
+            0.0945
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.26",
+        "class": 3,
+        "answer": "069dc9e79cc1cdcc",
+        "top3": [
+          [
+            "069dc9e79cc1cdcc",
+            0.0559
+          ],
+          [
+            "1973cd54f73bed7b",
+            0.0207
+          ],
+          [
+            "235a6e575ba5c6b1",
+            -0.0181
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.27",
+        "class": 1,
+        "answer": "186adccdfbc2c77f",
+        "top3": [
+          [
+            "186adccdfbc2c77f",
+            0.1465
+          ],
+          [
+            "e9114065de005073",
+            -0.0212
+          ],
+          [
+            "01ada3c0d980be5e",
+            -0.033
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.28",
+        "class": 1,
+        "answer": "05bd562acd97329e",
+        "top3": [
+          [
+            "05bd562acd97329e",
+            0.0972
+          ],
+          [
+            "071c63563e51dac9",
+            0.0694
+          ],
+          [
+            "18ccdc568d0792d6",
+            0.0507
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.29",
+        "class": 2,
+        "answer": "071c63563e51dac9",
+        "top3": [
+          [
+            "071c63563e51dac9",
+            0.0904
+          ],
+          [
+            "e9114065de005073",
+            0.0632
+          ],
+          [
+            "163fe17e4667e76b",
+            0.0597
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.30",
+        "class": 3,
+        "answer": "1973cd54f73bed7b",
+        "top3": [
+          [
+            "00372528d0ae529e",
+            0.0084
+          ],
+          [
+            "1973cd54f73bed7b",
+            0.008
+          ],
+          [
+            "186adccdfbc2c77f",
+            0.0021
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.31",
+        "class": 1,
+        "answer": "22926e7f863df9f1",
+        "top3": [
+          [
+            "05bd562acd97329e",
+            0.0739
+          ],
+          [
+            "22926e7f863df9f1",
+            0.0684
+          ],
+          [
+            "e9114065de005073",
+            0.0577
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.32",
+        "class": 1,
+        "answer": "235a6e575ba5c6b1",
+        "top3": [
+          [
+            "22926e7f863df9f1",
+            0.0694
+          ],
+          [
+            "1973cd54f73bed7b",
+            0.067
+          ],
+          [
+            "235a6e575ba5c6b1",
+            0.0666
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.33",
+        "class": 1,
+        "answer": "18ccdc568d0792d6",
+        "top3": [
+          [
+            "18ccdc568d0792d6",
+            0.0779
+          ],
+          [
+            "1d33f79971824c1c",
+            0.0112
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.0049
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.34",
+        "class": 3,
+        "answer": "0071f62f5d703904",
+        "top3": [
+          [
+            "8cb7d659e2d0a541",
+            0.0798
+          ],
+          [
+            "0071f62f5d703904",
+            0.0782
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.0564
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.35",
+        "class": 1,
+        "answer": "050631743357d5f0",
+        "top3": [
+          [
+            "050631743357d5f0",
+            0.1275
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.061
+          ],
+          [
+            "5b9193e5398fd5e5",
+            0.0405
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.36",
+        "class": 1,
+        "answer": "0656563fdd704b9f",
+        "top3": [
+          [
+            "0656563fdd704b9f",
+            0.1497
+          ],
+          [
+            "5b9193e5398fd5e5",
+            0.0928
+          ],
+          [
+            "1d33f79971824c1c",
+            0.0731
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.37",
+        "class": 3,
+        "answer": "01c715ada9a9b193",
+        "top3": [
+          [
+            "8cb7d659e2d0a541",
+            0.092
+          ],
+          [
+            "01c715ada9a9b193",
+            0.0779
+          ],
+          [
+            "0656563fdd704b9f",
+            0.0569
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.38",
+        "class": 3,
+        "answer": "09f08ac7c71b4675",
+        "top3": [
+          [
+            "11789876e782aed8",
+            0.0988
+          ],
+          [
+            "0a951714918ace53",
+            0.0955
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0815
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.39",
+        "class": 1,
+        "answer": "0a951714918ace53",
+        "top3": [
+          [
+            "0a951714918ace53",
+            0.083
+          ],
+          [
+            "11789876e782aed8",
+            0.0765
+          ],
+          [
+            "147de698c52bcb60",
+            0.0706
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.40",
+        "class": 3,
+        "answer": "11789876e782aed8",
+        "top3": [
+          [
+            "11789876e782aed8",
+            0.1152
+          ],
+          [
+            "11c10d9d7a456822",
+            0.0905
+          ],
+          [
+            "147de698c52bcb60",
+            0.0697
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.41",
+        "class": 1,
+        "answer": "147de698c52bcb60",
+        "top3": [
+          [
+            "147de698c52bcb60",
+            0.1384
+          ],
+          [
+            "19aa0e0ad2fa06b6",
+            0.0707
+          ],
+          [
+            "11789876e782aed8",
+            0.0653
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.42",
+        "class": 3,
+        "answer": "19aa0e0ad2fa06b6",
+        "top3": [
+          [
+            "19aa0e0ad2fa06b6",
+            0.0857
+          ],
+          [
+            "0a951714918ace53",
+            0.0443
+          ],
+          [
+            "11789876e782aed8",
+            0.0324
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.43",
+        "class": 1,
+        "answer": "11c10d9d7a456822",
+        "top3": [
+          [
+            "11c10d9d7a456822",
+            0.0977
+          ],
+          [
+            "11789876e782aed8",
+            0.0977
+          ],
+          [
+            "147de698c52bcb60",
+            0.0912
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.44",
+        "class": 2,
+        "answer": "0bc7015328a7f447",
+        "top3": [
+          [
+            "03cb58dfb0ecb4fd",
+            0.0708
+          ],
+          [
+            "0bc7015328a7f447",
+            0.07
+          ],
+          [
+            "0493f305183ad8e4",
+            0.0529
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.45",
+        "class": 3,
+        "answer": "10dfe877492f2dd3",
+        "top3": [
+          [
+            "0493f305183ad8e4",
+            0.0703
+          ],
+          [
+            "26f3e4d6e2e3143e",
+            0.067
+          ],
+          [
+            "24955fd68bc70264",
+            0.0525
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.46",
+        "class": 2,
+        "answer": "11cd71943afb477e",
+        "top3": [
+          [
+            "10dfe877492f2dd3",
+            0.0268
+          ],
+          [
+            "11cd71943afb477e",
+            0.026
+          ],
+          [
+            "2944a2f209f693f1",
+            0.0232
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.47",
+        "class": 2,
+        "answer": "26f3e4d6e2e3143e",
+        "top3": [
+          [
+            "26f3e4d6e2e3143e",
+            0.0716
+          ],
+          [
+            "10dfe877492f2dd3",
+            0.0303
+          ],
+          [
+            "2944a2f209f693f1",
+            0.0162
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.48",
+        "class": 2,
+        "answer": "2944a2f209f693f1",
+        "top3": [
+          [
+            "26f3e4d6e2e3143e",
+            0.0768
+          ],
+          [
+            "2944a2f209f693f1",
+            0.0352
+          ],
+          [
+            "e4c90e496724afe1",
+            0.0291
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.49",
+        "class": 3,
+        "answer": "57ca2239566c9f44",
+        "top3": [
+          [
+            "57ca2239566c9f44",
+            0.0995
+          ],
+          [
+            "11cd71943afb477e",
+            0.0282
+          ],
+          [
+            "00372528d0ae529e",
+            0.0277
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.50",
+        "class": 3,
+        "answer": "6598fc49bcfb6c69",
+        "top3": [
+          [
+            "6598fc49bcfb6c69",
+            0.0737
+          ],
+          [
+            "67310c81574cfaba",
+            0.0312
+          ],
+          [
+            "e4c90e496724afe1",
+            0.0221
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.51",
+        "class": 3,
+        "answer": "67310c81574cfaba",
+        "top3": [
+          [
+            "67310c81574cfaba",
+            0.1032
+          ],
+          [
+            "6598fc49bcfb6c69",
+            0.091
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0366
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.52",
+        "class": 2,
+        "answer": "7348dec4f19d9d7f",
+        "top3": [
+          [
+            "128f582673ba68fc",
+            0.0505
+          ],
+          [
+            "03cb58dfb0ecb4fd",
+            0.0486
+          ],
+          [
+            "11789876e782aed8",
+            0.0479
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.53",
+        "class": 2,
+        "answer": "806c7b43b701d4ef",
+        "top3": [
+          [
+            "806c7b43b701d4ef",
+            0.1054
+          ],
+          [
+            "26f3e4d6e2e3143e",
+            0.035
+          ],
+          [
+            "67310c81574cfaba",
+            0.0346
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.54",
+        "class": 3,
+        "answer": "5387c89ff13471a3",
+        "top3": [
+          [
+            "19aa0e0ad2fa06b6",
+            0.0452
+          ],
+          [
+            "0a951714918ace53",
+            0.0344
+          ],
+          [
+            "147de698c52bcb60",
+            0.0268
+          ]
+        ],
+        "correct_at_1": false,
+        "correct_at_3": false
+      },
+      {
+        "num": "4.55",
+        "class": 2,
+        "answer": "07a41b00866f81d9",
+        "top3": [
+          [
+            "07a41b00866f81d9",
+            0.0863
+          ],
+          [
+            "0e6e608af9477a08",
+            0.0453
+          ],
+          [
+            "e4c90e496724afe1",
+            0.0435
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.56",
+        "class": 1,
+        "answer": "027b16382feaca69",
+        "top3": [
+          [
+            "027b16382feaca69",
+            0.0907
+          ],
+          [
+            "0dd052cc9c05ea78",
+            0.0733
+          ],
+          [
+            "2ec2e501c2994103",
+            0.0733
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.57",
+        "class": 2,
+        "answer": "0b37c87f551023c7",
+        "top3": [
+          [
+            "0b37c87f551023c7",
+            0.0799
+          ],
+          [
+            "2106a1f615643a62",
+            0.0782
+          ],
+          [
+            "9cfa372f80c96bb4",
+            0.0643
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.58",
+        "class": 2,
+        "answer": "0dd052cc9c05ea78",
+        "top3": [
+          [
+            "0dd052cc9c05ea78",
+            0.0901
+          ],
+          [
+            "9cfa372f80c96bb4",
+            0.0716
+          ],
+          [
+            "0b37c87f551023c7",
+            0.0714
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.59",
+        "class": 1,
+        "answer": "124197904aebee39",
+        "top3": [
+          [
+            "124197904aebee39",
+            0.1237
+          ],
+          [
+            "dfc78e19d1ba6658",
+            0.1233
+          ],
+          [
+            "1d810b4d7f6e122b",
+            0.121
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.60",
+        "class": 2,
+        "answer": "2106a1f615643a62",
+        "top3": [
+          [
+            "2106a1f615643a62",
+            0.1082
+          ],
+          [
+            "0493f305183ad8e4",
+            0.0854
+          ],
+          [
+            "14bad13e066ba376",
+            0.0552
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.61",
+        "class": 3,
+        "answer": "2ec2e501c2994103",
+        "top3": [
+          [
+            "2ec2e501c2994103",
+            0.1252
+          ],
+          [
+            "1d810b4d7f6e122b",
+            0.0886
+          ],
+          [
+            "dfc78e19d1ba6658",
+            0.0825
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      },
+      {
+        "num": "4.62",
+        "class": 2,
+        "answer": "8cb7d659e2d0a541",
+        "top3": [
+          [
+            "8cb7d659e2d0a541",
+            0.1178
+          ],
+          [
+            "0fb3b09b91685b46",
+            0.0692
+          ],
+          [
+            "0071f62f5d703904",
+            0.0511
+          ]
+        ],
+        "correct_at_1": true,
+        "correct_at_3": true
+      }
+    ]
+  }
+}

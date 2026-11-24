@@ -3,17 +3,17 @@ id: s19
 local_id: s2-03
 section: "2. Техническое обслуживание и ремонт"
 type: norm
-title: "Упоминания ТОиР: Pfizer, ММК, «Северсталь», WEF-трио — без знаменателя"
+title: "Упоминания ТОиР: Pfizer, ММК, «Северсталь», WEF-трио"
 assertion: "Пять упоминаний подряд — минус часы, минус процент, плюс миллиард — и ни одно не называет исходное число"
 source: "[Pfizer, годовой отчёт 2022](https://www.pfizer.com/sites/default/files/investors/financial_reports/annual_reports/2022/story/data-and-ai-are-helping-to-get-medicines-to-patients-faster/) · [Pfizer × AWS, PACT](https://www.iotm2mcouncil.org/iot-library/news/connected-industries-news/pfizer-accelerates-drug-manufacturing/) · [ММК, эффект цифровизации](https://dostup1.ru/economics/Tehnologii-II-pozvolili-MMK-poluchitekonomicheskiy-effekt-v-68-mlrd-rubley_201429.html) · [«Северсталь», портфель решений](https://smart-lab.ru/company/severstal/blog/1176738.php) · [WEF Global Lighthouse Network, отчёты](https://www3.weforum.org/docs/WEF_GLN_2021_Reimagining_Operations_for_Growth.pdf)"
-media: ""
-media_needed: "фаза 6 — не нужен отдельный визуал, плотность несёт сама форма плашек."
+media: "assets/screenshots/softsensors-mmk-domna6.jpg"
+media_needed: "доменная печь ММК — иллюстрация к кейсу «Оптимальный чугун»"
 blocks:
-  - {label: "Pfizer, PCMM — детекция аномалий", value: "16 000 ч/год экономии, −55% инфраструктурных затрат", note: "по всем 14 проектам партнёрства Pfizer×AWS, не по одному кейсу — и это не «Vox»: Vox — отдельный чат-бот Pfizer, детекция аномалий работает на Lookout for Equipment/Metrics"}
-  - {label: "Pfizer, Paxlovid", value: "−67% цикла, +20 000 доз/партию", note: "исходный размер партии не назван — рост на 20% или на 200%? образцовый отсутствующий знаменатель"}
-  - {label: "ММК, «Оптимальный чугун»", value: "≈1,8 млрд ₽ по одному проекту", note: "период не назван; рядом — 6,8/8,6 млрд ₽ эффекта всей цифровизации: учёт плюс роботизация документооборота плюс ИИ вместе, не только ИИ"}
-  - {label: "«Северсталь», ПдР", value: "−31% незапланированных простоев", note: "без исходных часов простоя и без года внедрения — ни один параметр не назван"}
-  - {label: "WEF-трио (Lighthouse)", value: "Jubilant −85% / ReNew Power −31% / Novo Nordisk −40…85%", note: "три разных предприятия, три самоотчёта Всемирного экономического форума, ни одной абсолютной базы", key: true}
+  - {label: "Pfizer, PCMM — детекция аномалий", value: "16 000 ч/год, −55% инфраструктурных затрат", note: "по всем 14 проектам партнёрства Pfizer×AWS"}
+  - {label: "Pfizer, Paxlovid", value: "−67% цикла, +20 000 доз/партию", note: "исходный размер партии не назван"}
+  - {label: "ММК, «Оптимальный чугун»", value: "≈1,8 млрд ₽ по одному проекту", note: "период не назван; эффект всей цифровизации — 6,8/8,6 млрд ₽"}
+  - {label: "«Северсталь», ПдР", value: "−31% незапланированных простоев", note: "без исходных часов простоя и без года"}
+  - {label: "WEF-трио (Lighthouse)", value: "Jubilant −85% / ReNew −31% / Novo Nordisk −40…85%", note: "три самоотчёта, ни одной абсолютной базы", key: true}
 in_bucket: false
 status: draft
 ---

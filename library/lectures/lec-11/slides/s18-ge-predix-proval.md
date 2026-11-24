@@ -6,19 +6,23 @@ type: case_study
 title: "Провал: GE Predix и платформенная ставка"
 assertion: "GE обещала $15 млрд выручки от Predix к 2020 году — получила фактически около $1 млрд, и бренд свёрнут"
 source: "[GE запускает Predix, Business Wire](https://www.businesswire.com/news/home/20131009005749/en/GE-Launches-14-Industrial-Internet-Predictivity-Technologies) · [GE сворачивает Predix, CIO Dive](https://www.ciodive.com/news/ge-to-scale-back-predix-amid-companywide-restructure/510758/) · [продажа цифровых активов, CNBC](https://www.cnbc.com/2018/07/31/ge-hires-bankers-to-mull-sale-of-digital-assets-wsj.html) · [GE, white paper «Industrial Internet» 2012, PDF](https://www.ge.com/docs/chapters/Industrial_Internet.pdf)"
-media: ""
-media_needed: "фаза 6 — скриншот/фото Predix-платформы или GE Digital, Tier 1–3 (press)."
-blocks:
-  - {label: "Цель (объявлена ≈2016)", value: "$15 млрд выручки от ПО в год к 2020", note: "целевой прогноз, самоотчёт GE; к этому моменту вложено ≈$2 млрд (оценка Goldman Sachs)"}
-  - {label: "Факт (2018)", value: "≈$1 млрд выручки от ПО в год", note: "преимущественно унаследованные продукты; цель снижена в ноябре 2017 новым руководителем"}
-  - {label: "Вложено всего", value: "наиболее обоснованная оценка — $4 млрд (2011–2019)", note: "разброс источников от $1 до «более $7 млрд» — размер провала живёт собственной жизнью в пересказах", key: true}
+media: "assets/screenshots/gepredix-wind-turbine-technician.jpg"
+media_needed: "подключено — техник у ветрогенератора с планшетом Predix, пресс-фото GE"
+timeline:
+  unit: "хронология Predix"
+  caption: "Вложено всего — наиболее обоснованная оценка $4 млрд (2011–2019); источники расходятся от $1 до «$7 млрд+»"
+  stages: ["2012–13", "≈2016", "11.2017", "2018", "2022"]
+  marks:
+    - {at: 0, head: "Старт", text: "white paper «Industrial Internet» + публичный запуск Predix"}
+    - {at: 1, head: "Цель $15 млрд", text: "выручка от ПО к 2020 году; вложено к этому моменту ≈$2 млрд"}
+    - {at: 2, head: "Цель снижена", text: "новый руководитель: фокус на GE, факт — ≈$1 млрд выручки"}
+    - {at: 3, head: "Продажа активов", text: "поиск покупателя на цифровые активы, продажа ServiceMax"}
+    - {at: 4, head: "Бренд свёрнут", text: "функциональность — в облачный набор управления активами"}
 in_bucket: true
 status: draft
 ---
 
 ## Видимый текст слайда
-
-**Хронология короткой строкой.** 2012 — концептуальный white paper «Industrial Internet»; 2013 — публичный запуск Predix; ≈2016 — цель $15 млрд выручки от ПО к 2020, вложено на тот момент ≈$2 млрд; ноябрь 2017 — новый руководитель снижает цель до «более $1 млрд», фокус сужается до клиентов самой GE; 2018 — поиск покупателя на цифровые активы, продажа ServiceMax; 2022 — бренд Predix свёрнут.
 
 **Классификация.** Провал стратегии и исполнения — не отказ алгоритма. Predix был главным образом платформой сбора и аналитики промышленных данных; обученная модель здесь не провалилась.
 

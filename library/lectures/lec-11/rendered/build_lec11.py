@@ -609,8 +609,10 @@ def divider(p, sl, root):
         mw, mh = media.media_box_size(media.img_ar(img, sl.sid), 4.60, 3.60)
         body_w = FULL_W - 0.22 - mw - COL_GAP
         img_box = (body_x + body_w + COL_GAP, 0.95, mw, mh)
-    y = 1.05
+    y = 0.90
+    blocks_left = len(slidefile.body_blocks(sl))
     for kind, t in slidefile.body_blocks(sl):
+        blocks_left -= 1
         if kind == "head":
             sz = metrics.fit_size(t, body_w, 1.05, hi=30.0, lo=20.0,
                                   floor=16.0, bold=True, ls=1.10,
@@ -618,9 +620,9 @@ def divider(p, sl, root):
             h = metrics.est_h(t, sz, body_w, 1.10, True)
             prims.text_box(s, body_x, y, body_w, h, t, size=sz, bold=True,
                            color=DEEP, ls=1.10, tag=f"{sl.sid}/дивайдер-имя")
-            y += h + 0.10
+            y += h + 0.08
             gold_tick(s, sl.sid, body_x, y)
-            y += 0.30
+            y += 0.20
         else:
             runs = []
             for i, part in enumerate(split_named_items(t)):
@@ -629,10 +631,23 @@ def divider(p, sl, root):
                     piece[0]["newpara"] = True
                     piece[0]["space_before"] = 6
                 runs.extend(piece)
-            h = metrics.runs_h(runs, body_w, 1.24)
+            # issue #355 §9.1: тело дивайдера меряется и ужимается ДО
+            # рисования (`fit_runs` до пола видимого слоя), а не рисуется
+            # на фиксированном кегле с клипом по месту постфактум — живой
+            # пример дефекта был здесь же, s21, длинный перечень раздела 3.
+            # Резерв под ОСТАЛЬНЫЕ блоки ниже — 0,22" на блок, грубая, но
+            # ненулевая оценка (голый `bb - y` отдавал ВЕСЬ остаток текущему
+            # блоку и оставлял последующим пустое место, то есть ровно
+            # тот клип, который эта правка снимает).
+            reserve = 0.22 * blocks_left
+            avail = max(0.3, bb - y - reserve)
+            metrics.fit_runs(runs, body_w, avail, ls=1.24,
+                             tag=f"{sl.sid}/дивайдер-тело", proj_base=15.5)
+            floor.check_runs(runs, f"{sl.sid}/дивайдер-тело")
+            h = min(avail, metrics.runs_h(runs, body_w, 1.24))
             prims.text_runs(s, body_x, y, body_w, h + 0.04, runs, ls=1.24,
-                            tag=f"{sl.sid}/дивайдер-тело")
-            y += h + 0.18
+                            tag=f"{sl.sid}/дивайдер-тело", quiet=True)
+            y += h + 0.10
         if y > bb - 0.2:
             report.warn(f"[высота] {sl.sid}/дивайдер: текст дошёл до "
                         f"подвала — {y:.2f}\" при пределе {bb:.2f}\"")
@@ -760,7 +775,7 @@ def keystone_gap_box(s, sid, text, x, y, w):
 # (жирный ярлык — значение — оговорка) даёт то же утверждение БЕЗ этого
 # оверхеда. Это раскладка, не контент: слова label/value/note переносятся
 # буквально, просто без боксов.
-BULLET_COLLAGE = {"s19", "s20", "s39", "s41", "s22", "s26", "s30",
+BULLET_COLLAGE = {"s20", "s39", "s41", "s22", "s26", "s30",
                   "s40"}
 # Раздел 5/9 спеки 07-design-review-spec.md (issue #353/#355): `plates.
 # COMPACT` — пресет, который `BULLET_COLLAGE` пыталось заменить ДО того,
@@ -770,7 +785,7 @@ BULLET_COLLAGE = {"s19", "s20", "s39", "s41", "s22", "s26", "s30",
 # текстовым перечнем: числа снова читаются блочками, а не абзацем.
 PLATES_COMPACT = replace(plates.COMPACT, label_pt=15.0, value_hi=20.0,
                         value_lo=15.0, value_floor=15.0, note_pt=15.0)
-COMPACT_PLATES = {"s06"}
+COMPACT_PLATES = {"s06", "s19"}
 # `s22`/`s26`/`s30` — не коллажи по смыслу (это §5.13 «цена ошибки →
 # классика → модель → устройство» на `case_study`/`schema_layered`), но
 # измерены (`plates.plates_h`) той же мерой: 4 плашки с оговорками до
@@ -1076,8 +1091,9 @@ def content(p, sl, root):
     if is_content and sl.sid in COMPACT_PLATES:
         pl_c = plates.plates_of(sl, PLATES_COMPACT)
         if pl_c:
+            pst_c = best_plate_style(pl_c, body_w_top, base=PLATES_COMPACT)
             y += plates.draw_plates(s, sl.sid, pl_c, MX, y, body_w_top,
-                                    PLATES_COMPACT) + GAP
+                                    pst_c) + GAP
         pl = []
     else:
         pl = plates.plates_of(sl, PLATES) if is_content else []
@@ -1109,6 +1125,53 @@ def content(p, sl, root):
         arhitektura.check_arhitektura(sl.sid, arh, body_w_top, arh_style)
         y += arhitektura.draw_arhitektura(s, sl.sid, arh, MX, y,
                                           body_w_top, arh_style) + GAP
+
+    # ── количественные формы раздела 9 апгрейда ядра (issue #355):
+    # таймлайн · полосы · эпохи · пиктограммы · выводы — та же позиция в
+    # конвейере кадра, что у `build_lec08_v5.content()` (сразу после
+    # архитектуры, до столбцов/таблицы): это формы РАЗБОРА, гасятся
+    # `is_content` тем же ходом, что `pl`/`fig` выше.
+    tml = timeline.timeline_of(sl) if is_content else None
+    if tml:
+        timeline.check_timeline(sl.sid, tml, body_w_top, TIMELINE)
+        y += timeline.draw_timeline(s, sl.sid, tml, MX, y, body_w_top,
+                                    TIMELINE) + GAP
+
+    pol = polosy.polosy_of(sl, POLOSY) if is_content else None
+    if pol:
+        polosy.check_polosy(sl.sid, pol, body_w_top, POLOSY)
+        y += polosy.draw_polosy(s, sl.sid, pol, MX, y, body_w_top,
+                                POLOSY) + GAP
+
+    eph = epohi.epohi_of(sl, EPOHI) if is_content else None
+    if eph:
+        epohi.check_epohi(sl.sid, eph, body_w_top, EPOHI)
+        y += epohi.draw_epohi(s, sl.sid, eph, MX, y, body_w_top, EPOHI) + GAP
+
+    pik = piktogrammy.pikto_of(sl, st=PIKTO) if is_content else None
+    if pik:
+        piktogrammy.check_pikto(sl.sid, pik, body_w_top, PIKTO)
+        y += piktogrammy.draw_pikto(s, sl.sid, pik, MX, y, body_w_top,
+                                    PIKTO) + GAP
+
+    vyv = vyvody.vyvody_of(sl, VYVODY) if is_content else None
+    if vyv:
+        vyvody.check_vyvody(sl.sid, vyv, body_w_top, VYVODY)
+        y += vyvody.draw_vyvody(s, sl.sid, vyv, MX, y, body_w_top,
+                                VYVODY) + GAP
+
+    # `ikonki:` на обычном содержательном кадре (не только на обзорных
+    # кадрах стадий — `stage_overview()` зовёт ту же пару сам): П7/stage_row
+    # карточки раздела 5 спеки, например s20/s39/s40/s42.
+    ik = ikonki.ikonki_of(sl) if is_content else None
+    if ik:
+        ik_h = ikonki.ikonki_h(ik, body_w_top)
+        avail_ik = col_bot - y
+        if ik_h > avail_ik + 0.02:
+            report.warn(f"[иконки] {sl.sid}: карточки просят {ik_h:.2f}\" "
+                        f"при {avail_ik:.2f}\" свободных")
+        ikonki.draw_ikonki(s, IKON_DIR, ik, MX, y, body_w_top, tag=sl.sid)
+        y += ik_h + GAP
 
     cols = columns.columns_of(sl) if is_content else None
     tbl = table_from(sl) if is_content else None

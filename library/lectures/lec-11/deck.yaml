@@ -307,7 +307,7 @@ slides:
     type: norm
     section: "4. Безлюдное производство"
     assertion: "Одна и та же компания откатилась от самой амбициозной версии технологии к проверенной дважды за шесть лет — и оба раза возврат к проверенному методу сработал"
-    media: "assets/screenshots/tesla-fremont-model-y-single-piece-megacast.jpg"
+    media: ""
 
   - id: s33
     file: slides/s33-fanuc-mif.md

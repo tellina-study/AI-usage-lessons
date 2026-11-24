@@ -1332,7 +1332,7 @@ def content(p, sl, root):
         draw_img = (MX + body_w + COL_GAP, y, mw1, mh1)
         draw_img2 = (MX + body_w + COL_GAP, y + mh1 + COL_GAP, mw2, mh2)
         media_bot = y + mh1 + COL_GAP + mh2
-    elif not hero and img:
+    elif not hero and img and (col_bot - y) >= 0.6:
         # `s31` (раздел 5 спеки): фото было тёмным и мелким на умолчательном
         # потолке `MEDIA_H_CAP` 3,40" — слот поднят до ~5,2" точечно для
         # этого кадра, остальные некадрированные фото деки не трогает.
@@ -1343,6 +1343,17 @@ def content(p, sl, root):
         body_w = body_w_top - mw - COL_GAP
         draw_img = (MX + body_w + COL_GAP, y, mw, mh)
         media_bot = y + mh
+        draw_img2 = None
+    elif not hero and img:
+        # Визуальный осмотр (раздел 8 приёмки, #353) поймал s32: тело выше
+        # (здесь — `epohi:`) уже съело весь бюджет до подвала (`col_bot - y`
+        # уходило в минус), а этот путь всё равно считал фото по ШИРИНЕ,
+        # игнорируя отрицательную высоту — кадр реально печатал фото ПОВЕРХ
+        # подвала. Нет свободного места под фото (меньше 0,6") — фото не
+        # рисуется вовсе, тем же договором, что у «файла нет», а не тихо
+        # ломает геометрию.
+        report.warn(f"[кадр] {sl.sid}: фото не рисуется — тело выше "
+                    f"оставило {col_bot - y:.2f}\" вместо нужных 0.6\"+")
         draw_img2 = None
     else:
         draw_img2 = None

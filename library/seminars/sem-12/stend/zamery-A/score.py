@@ -45,7 +45,22 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 
-GT_EXCLUDE = {("82254765", "DATE FORWARDED TO PROMOTION SERVICES:")}
+# Веха 2 (issue #351, корпус 30->100 форм) — систематическая проверка правдоподобия
+# повторена на ВСЕХ 369 целевых полях (не только старых 145). Найден ОДИН новый
+# подтверждённый дефект эталона, того же типа, что уже есть ниже (вопрос связан не с
+# ответом, а с текстом чужой метки): 71341634, вопрос «Date» (их на форме ДВА с
+# одинаковым текстом подписи) — второй связан разметкой FUNSD с текстом «Check#», это
+# метка СОСЕДНЕЙ ячейки таблицы «Verification» («Date | Vendor # | Account Month» /
+# «Check # | Check Date | Pay Handling»), не ответ на вопрос «Date» вообще. Подтверждено
+# прямым просмотром скана и разметки (d['form']: Q=28 'Date', linking=[[28,30]], A=30
+# 'Check#'). Ключ расширен до (форма, текст подписи, ТЕКСТ ОТВЕТА), чтобы не исключить
+# заодно первый, корректный вопрос «Date» той же формы (у него a_text='03/ 24/ 99') —
+# старая запись ниже однозначна и так (её q_text уникален на своей форме), добавление
+# a_text в ключ её не меняет.
+GT_EXCLUDE = {
+    ("82254765", "DATE FORWARDED TO PROMOTION SERVICES:", "zbulan"),
+    ("71341634", "Date", "Check#"),
+}
 
 
 def normalize(s):
@@ -95,7 +110,7 @@ def load_targets_with_field_index(corpus):
         fid = form["form_id"]
         items = []
         for i, t in enumerate(form["targets"], 1):
-            if (fid, t["q_text"]) in GT_EXCLUDE:
+            if (fid, t["q_text"], t["a_text"]) in GT_EXCLUDE:
                 continue
             items.append({"field_key": f"field_{i}", "q_text": t["q_text"], "cat": t["cat"],
                           "a_text": t["a_text"], "hard_reason": t["hard_reason"]})
@@ -121,6 +136,33 @@ def apply_date_split_merge(fid, items, pred_by_key):
     return new_items, new_pred
 
 
+def apply_date_split_merge_2(fid, items, pred_by_key):
+    """Веха 2 находка — тот же класс дефекта, что apply_date_split_merge выше (одно
+    значение даты разметчик FUNSD разбил на несколько ответных текстовых блоков одного
+    вопроса), новый конкретный случай: 92091873, вопрос «Date» (их на форме ТРИ с
+    одинаковым текстом подписи — не путать с «Date (s)» и «Date Submitted», это другие
+    вопросы) связан разметкой с ТРЕМЯ ответами: '6/', '12/', '95'. Прямой просмотр скана:
+    строка «Date Rec'd   6/12/95» — одна дата, разбитая по символу «/» на три отдельных
+    OCR-бокса в исходной разметке датасета (аннотация: Q=12 'Date', linking=[[12,35],
+    [12,36],[12,37]], box-порядок слева направо совпадает с порядком field_1/2/3 в уже
+    отправленных промтах — '6/'+'12/'+'95' => «6/12/95», ровно как на скане)."""
+    if fid != "92091873":
+        return items, pred_by_key
+    keys = [it["field_key"] for it in items if it["q_text"] == "Date"]
+    if set(keys) != {"field_1", "field_2", "field_3"}:
+        return items, pred_by_key  # защита: структура не та, что ожидали — не трогаем
+    merged_pred = " ".join(
+        p for p in (pred_by_key.get("field_1"), pred_by_key.get("field_2"),
+                    pred_by_key.get("field_3")) if p
+    ) or None
+    new_items = [it for it in items if it["q_text"] != "Date"]
+    new_items.append({"field_key": "field_1+2+3", "q_text": "Date", "cat": "date",
+                       "a_text": "6/ 12/ 95", "hard_reason": None})
+    new_pred = dict(pred_by_key)
+    new_pred["field_1+2+3"] = merged_pred
+    return new_items, new_pred
+
+
 def score_method(corpus, targets_by_form, get_pred_by_key, method_label):
     rows = []
     for form in corpus:
@@ -128,6 +170,7 @@ def score_method(corpus, targets_by_form, get_pred_by_key, method_label):
         items = targets_by_form[fid]
         pred_by_key = get_pred_by_key(fid, items)
         items, pred_by_key = apply_date_split_merge(fid, items, pred_by_key)
+        items, pred_by_key = apply_date_split_merge_2(fid, items, pred_by_key)
         by_label = {}
         for it in items:
             by_label.setdefault(it["q_text"], []).append(it)
@@ -235,13 +278,27 @@ def main():
     # ГЕНУИННЫЕ дефекты самого эталона (не баг нашего кода подсчёта) — найдены
     # систематической проверкой правдоподобия (должна быть цифра в date/phone/count)
     # по всем 145 полям ДО склейки/исключения, подтверждены прямым просмотром скана. ---
+    n_total_fields = sum(len(f["targets"]) for f in corpus)
     print("\n=== Дефекты эталона FUNSD, найденные систематической проверкой правдоподобия ===")
-    print("база: 145 целевых полей (до склейки/исключения)")
-    print("подтверждённые дефекты эталона: 2 (1,4%)")
+    print(f"база: {n_total_fields} целевых полей (до склейки/исключения), n=100 форм, Веха 2")
+    print("систематическая проверка (цифра обязательна в date/count, >=5 цифр в phone)"
+          " нашла 19 кандидатов (369 полей) — каждый проверен прямым просмотром скана:")
+    print("подтверждённые дефекты эталона: 4 (4/369 = 1,1%)")
     print("  1) 82254765 «DATE FORWARDED TO PROMOTION SERVICES:» — эталон «zbulan»,"
-          " скан показывает рукописную дату (~2/6/97)")
+          " скан показывает рукописную дату (~2/6/97) [старое, корпус 30, исключено]")
     print("  2) 83553333_3334 «Date» — одно значение разметчик разбил на два"
-          " ответных блока («November» + «1999»)")
+          " ответных блока («November» + «1999») [старое, корпус 30, склеено]")
+    print("  3) 92091873 «Date» — одно значение «6/12/95» разметчик разбил на ТРИ"
+          " ответных блока («6/» + «12/» + «95») [новое, Веха 2, корпус 100, склеено]")
+    print("  4) 71341634 «Date» (второй вопрос с тем же текстом подписи на форме) —"
+          " разметка связала его с «Check#», меткой соседней ячейки таблицы"
+          " Verification, а не с ответом [новое, Веха 2, корпус 100, исключено]")
+    print("НЕ считаются дефектом эталона (это наша ошибка категоризации ИЛИ не-дефект,"
+          " полный список и обоснование — в отчёте Вехи 2, не только здесь):"
+          " 86220490 FAX=«Autodial» [старое], 87594142_87594144 Kleeberger [старое],"
+          " плюс 14 новых кандидатов из 70 добавленных форм (composite-поля,"
+          " легитимные нечисловые значения «N/A»/«Unk.»/«As required»/«One», короткие"
+          " внутренние добавочные номера, баг классификатора на «Motel»/«Phone Booth»)")
     print("НЕ считается дефектом эталона (это баг НАШЕГО кода подсчёта, не датасета):"
           " группировка полей по широкой категории вместо точного текста подписи"
           " (исправлено до публикации итоговых чисел)")

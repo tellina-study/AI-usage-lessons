@@ -738,6 +738,38 @@ def probe_tint():
                    f"незнакомом тоне={fell_back}")
 
 
+def probe_plates_compact():
+    """COMPACT (issue #355 §9.8): подпись+значение в одну строку, длинная
+    оговорка обрезается с предупреждением вместо того, чтобы растить
+    плашку, и полоса плашек заметно ниже `DEFAULT` на тех же данных —
+    против анти-формы BULLET_COLLAGE (Лекция 11 свернула плашки в текстовые
+    буллиты, потому что `DEFAULT` не умел ужиматься)."""
+    report.reset()
+    pl = [
+        {"label": "Было", "value": "5500 ч", "note": "ручная вычитка",
+         "key": False},
+        {"label": "Стало", "value": "10500 ч",
+         "note": "очень длинная оговорка, которая заведомо не уместится в "
+                 "отведённые ей две строки ни при каком разумном кегле",
+         "key": True},
+    ]
+    h_default = plates.plates_h(pl, 6.0, plates.DEFAULT)
+    h_compact = plates.plates_h(pl, 6.0, plates.COMPACT)
+    p = prims.new_deck()
+    s = prims.blank(p)
+    plates.draw_plates(s, "проба", pl, 0.55, 1.0, 6.0, plates.COMPACT)
+    truncated = any(w.startswith("[плашки]") and "обрезана" in w
+                    for w in report.WARNINGS)
+    if h_compact < h_default and truncated:
+        OK.append("[плашки] компакт")
+        say(f"{'[плашки] компакт':<24} высота: ЛОВИТ  →  DEFAULT "
+            f"{h_default:.2f}\" против COMPACT {h_compact:.2f}\", длинная "
+            "оговорка обрезана с предупреждением")
+    else:
+        BAD.append(f"[плашки] компакт высота {h_compact:.2f} vs "
+                   f"{h_default:.2f}, обрезано={truncated}")
+
+
 def probe_font_gap():
     """Отсутствующее начертание выходит ПРОБЕЛОМ `[шрифт]`, а не молчаливой
     оценкой по соседнему файлу."""
@@ -835,6 +867,7 @@ def selftest():
     probe_thin_switch(tmp, seq)
     probe_shadow()
     probe_tint()
+    probe_plates_compact()
     probe_font_gap()
     probe_live_links(tmp)
     probe_fingerprint(tmp)

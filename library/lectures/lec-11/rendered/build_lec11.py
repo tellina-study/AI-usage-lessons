@@ -801,8 +801,8 @@ BULLET_COLLAGE = set()
 # текстовым перечнем: числа снова читаются блочками, а не абзацем.
 PLATES_COMPACT = replace(plates.COMPACT, label_pt=15.0, value_hi=20.0,
                         value_lo=15.0, value_floor=15.0, note_pt=15.0)
-COMPACT_PLATES = {"s06", "s19", "s33", "s35"}
-PLATES_FORCE_SINGLE_COL = {"s33", "s35"}
+COMPACT_PLATES = {"s06", "s19", "s33", "s35", "s40"}
+PLATES_FORCE_SINGLE_COL = {"s33", "s35", "s40"}
 # `s22`/`s26`/`s30` — не коллажи по смыслу (это §5.13 «цена ошибки →
 # классика → модель → устройство» на `case_study`/`schema_layered`), но
 # измерены (`plates.plates_h`) той же мерой: 4 плашки с оговорками до

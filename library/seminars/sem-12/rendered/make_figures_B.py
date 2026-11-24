@@ -83,6 +83,110 @@ def _paste_fit(im, path, x, y, w, h):
     im.paste(photo, (int(x), int(y)))
 
 
+_GROUP_LABEL = {
+    "G1": "класс", "G2": "лекция", "G3": "семинар", "G4": "залы",
+    "G5": "выступление", "G6": "совещание", "G7": "у доски", "G8": "кружки",
+}
+
+# Снимок примера записи — подобран сессией правки #351 (чистый, без строгой
+# выдумки: намеренно другой снимок, чем confab-example ниже, чтобы n28
+# показывал устройство трёх записей, а не повторял провал рассказа заранее).
+_WORKED_EXAMPLE_ID = "94043f06b44df043"
+
+
+def case_b_corpus_overview():
+    """Строка настоящих миниатюр (по одной на группу корпуса, где в группе
+    есть снимок с `deck_allowed: true`) + одна фотография целиком с тем, что
+    о ней записал каждый из трёх способов — устройство, не выдумка (та — на
+    `case_b_confab_example`, другой снимок намеренно).
+
+    Группы и выбор снимка на миниатюру читаются из `razmetka.json` КАЖДЫЙ
+    прогон заново (первый `deck_allowed: true` в порядке файла), а не
+    зашиты списком id — когда корпус расширится с 40 до ~100 снимков
+    (`s12-korpus-foto-100`), эта фигура пересоберётся с новыми снимками той
+    же формой, без правки кода (правка #351, требование «смена чисел не
+    ломает форму»). `_WORKED_EXAMPLE_ID` — единственное намеренное
+    исключение: конкретный разобранный снимок, не обязанный меняться при
+    росте корпуса.
+
+    Холст 1988×700 (отношение 2,84), как у `case_b_light_hard` — тот же
+    расчёт под потолок высоты схемы на кадре (4,30″, правка #351 round 2:
+    первая версия на 1988×1000 сжималась сборкой до 63% ширины и вылезала
+    за рабочее поле — "СХЕМА ЗАЖАТА"/"НЕ ПОМЕСТИЛОСЬ")."""
+    raz = json.loads((ZAMERY_B / "razmetka.json").read_text(encoding="utf-8"))
+    op = json.loads((ZAMERY_B / "opisaniya.json").read_text(encoding="utf-8"))
+    entries = [e for e in raz["entries"] if e.get("in_corpus")]
+    by_id = {e["id"]: e for e in entries}
+    op_by_id = {e["id"]: e for e in op["entries"]}
+
+    thumbs = []
+    for g in sorted({e["group"] for e in entries}):
+        cand = next((e["id"] for e in entries
+                     if e["group"] == g and e.get("deck_allowed")), None)
+        if cand:
+            thumbs.append((g, cand))
+
+    n = len(thumbs)
+    im = Image.new("RGB", (1988, 700), W)
+    d = ImageDraw.Draw(im)
+    head(d, "Корпус: настоящие снимки, одна запись целиком", sz=30)
+    d.text((40, 64),
+            f"{n} групп корпуса из {len({e['group'] for e in entries})} — каждая фотография "
+            "получает три записи ниже",
+            font=f(21), fill=LIGHT)
+
+    gap, margin = 16, 40
+    tw = (1988 - 2 * margin - (n - 1) * gap) / n
+    th = 150
+    ty = 100
+    for i, (g, pid) in enumerate(thumbs):
+        tx = margin + i * (tw + gap)
+        _paste_fit(im, CORPUS / f"{pid}.jpg", tx, ty, tw, th)
+        d.rectangle([tx, ty, tx + tw, ty + th], outline=LIGHT, width=3)
+        clabel(d, tx + tw / 2, ty + th + 6, _GROUP_LABEL.get(g, g), 15, col=DEEP, b=True)
+
+    wy = ty + th + 40
+    photo_w = photo_h = 380
+    _paste_fit(im, CORPUS / f"{_WORKED_EXAMPLE_ID}.jpg", margin, wy, photo_w, photo_h)
+    d.rectangle([margin, wy, margin + photo_w, wy + photo_h], outline=GOLD, width=4)
+
+    e = by_id[_WORKED_EXAMPLE_ID]
+    o = op_by_id[_WORKED_EXAMPLE_ID]
+    fl = o["fields"]
+    tags = " · ".join(t["class"] for t in o["yolo_tags"])
+
+    col_x = margin + photo_w + 30
+    col_w = 1988 - col_x - margin
+    row_h, row_gap = 90, 13
+    ry = wy
+    box(d, col_x, ry, col_w, row_h,
+        ["Разметка человека:",
+         "говорящий с микрофоном, экран со слайдом (лого Creative Commons,",
+         "текст), ноутбук в кадре — еды и слушателей нет"],
+        SURF, tc=DEEP, sz=16, outline=LIGHT, where="разметка")
+    ry += row_h + row_gap
+    box(d, col_x, ry, col_w, row_h,
+        ["Рассказ:",
+         "«человек выступает с речью, держа микрофон; на экране — логотип",
+         "Creative Commons и надпись про мероприятие»"],
+        W, tc=DEEP, sz=16, outline=LIGHT, where="рассказ")
+    ry += row_h + row_gap
+    box(d, col_x, ry, col_w, row_h,
+        ["Поля:",
+         f"event_type: {fl['event_type']} · people_count: {fl['people_count']} · "
+         f"food: {str(fl['food_or_drink_present']).lower()} · "
+         f"screen: {str(fl['screen_or_slide_visible']).lower()}"],
+        SURF, tc=DEEP, sz=16, m=True, outline=LIGHT, where="поля")
+    ry += row_h + row_gap
+    box(d, col_x, ry, col_w, row_h,
+        ["Теги YOLO:",
+         f"{tags}",
+         "— экран (класс «tv») в кадре виден, но не назван ни одним тегом"],
+        WARM, tc=GOLDINK, sz=16, outline=GOLD, where="теги")
+
+    save(im, "case-b-corpus-example.png")
+
+
 def case_b_light_hard():
     """Лёгкий — один крупный сюжет (кофе по-восточному, людей почти нет).
     Трудный — компьютерный класс: предметная деталь (три ноутбука, наушники,
@@ -120,33 +224,40 @@ def case_b_light_hard():
 def case_b_confab_example():
     """Настоящий снимок + вердикт: рассказ приписывает еду снимку, где разметка
     прямо говорит «Еды в кадре нет». Снимок `2ebe189cf7049839` — deck_allowed:
-    true (лицо в профиль, не крупно)."""
-    im = Image.new("RGB", (1700, 700), W)
+    true (лицо в профиль, не крупно).
+
+    Холст 1700×600 (отношение 2,83, было 1700×700/2,43) — правка #351
+    round 2: при 2,43 фигура на кадре n33 сжималась сборкой до ~70% ширины
+    («СХЕМА ЗАЖАТА») после того, как под неё добавили плашку вывода."""
+    im = Image.new("RGB", (1700, 600), W)
     d = ImageDraw.Draw(im)
     head(d, "Выдумка рассказа: проверено по кадру", sz=30)
 
-    pw, ph = 620, 480
-    gx, gy = 60, 110
+    pw, ph = 550, 430
+    gx, gy = 60, 95
     _paste_fit(im, CORPUS / "2ebe189cf7049839.jpg", gx, gy, pw, ph)
     d.rectangle([gx, gy, gx + pw, gy + ph], outline=GOLD, width=4)
 
     tx = gx + pw + 50
     tw = 1700 - tx - 40
-    box(d, tx, gy, tw, 150,
+    box(d, tx, gy, tw, 130,
         ["Поле «food_or_drink_present»: true", "(модель о еде в кадре)"],
-        W, tc=RED, sz=20, outline=RED, where="вердикт-поле")
-    box(d, tx, gy + 170, tw, 150,
-        ["Разметка-истина:", "«Еды в кадре нет, экранов нет»"],
-        SURF, tc=DEEP, sz=20, outline=LIGHT, where="вердикт-истина")
-    box(d, tx, gy + 340, tw, 140,
+        W, tc=RED, sz=19, outline=RED, where="вердикт-поле")
+    box(d, tx, gy + 145, tw, 130,
+        ["Разметка:", "«Еды в кадре нет, экранов нет»"],
+        SURF, tc=DEEP, sz=19, outline=LIGHT, where="вердикт-разметка")
+    box(d, tx, gy + 290, tw, 120,
         ["Проверено по кадру:", "еды на снимке действительно нет — выдумка подтверждена"],
-        WARM, tc=GOLDINK, sz=18, outline=GOLD, where="вердикт-итог")
+        WARM, tc=GOLDINK, sz=17, outline=GOLD, where="вердикт-итог")
 
     save(im, "case-b-confab-example.png")
 
 
 def main():
-    case_b_shema_postanovka()
+    # case_b_shema_postanovka() больше не вызывается с круга #351: n28 несёт
+    # настоящие снимки (case_b_corpus_overview) вместо абстрактной схемы —
+    # функция оставлена в файле, не удалена, если понадобится где-то ещё.
+    case_b_corpus_overview()
     case_b_light_hard()
     case_b_confab_example()
     print("готово:", sorted(p.name for p in OUT.glob("case-b-*.png")))

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Кейс A, вариант 3 — гибрид: OCR-текст (rapidocr-onnxruntime, уже прогнан, см.
 raw/ocr_results.json) подаётся текстом в openai/gpt-4o-mini с тем же JSON-промтом, что
-у варианта «модель-зрение» (harness_a.SYS_EXTRACT/build_user_prompt) — меняется только
+у варианта «мультимодальная модель» (harness_a.SYS_EXTRACT/build_user_prompt) — меняется только
 вход (текст вместо картинки), промт и схема не меняются (С6: единица сравнения общая).
 
 Запуск:

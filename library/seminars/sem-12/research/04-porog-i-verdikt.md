@@ -36,7 +36,7 @@ issue: 351
   Detroit Police Department](https://www.aclu.org/press-releases/after-third-wrongful-arrest-aclu-slams-detroit-police-department-for-continuing-to-use-faulty-facial-recognition-technology)
   (прочитано 2026-11-21).
 
-Оба анкера подтверждены ровно в той форме, в которой они названы в `SETKA-KEYSOV.md`.
+Оба анкера подтверждены ровно в той форме, в которой они названы в `SETKA-KEYSOV-KRUG-1.md`.
 Доложено оркестратору вехой 1/3 до начала остальной работы.
 
 ## 2. Как на практике ставят порог похожести — и кто его подписывает

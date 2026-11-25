@@ -2,7 +2,7 @@
 section: 3
 title: "Семинар 12. Кейс 3: чем ищем — три задачи, которые зал считает одной"
 case: 3
-duration_min: "~16 (SETKA-KEYSOV.md; не входит в порядок снятия CUT-ORDER.md)"
+duration_min: "~16 (SETKA-KEYSOV-KRUG-1.md; не входит в порядок снятия CUT-ORDER.md)"
 status: draft-v1-measured
 terms_note: >
   «Перцептивный хэш», «мультимодальный эмбеддинг», «подпись словами» — рабочие названия
@@ -11,7 +11,7 @@ terms_note: >
   (платный мультимодальный эмбеддинг через OpenRouter), `openai/clip-vit-base-patch32` (локальный
   CLIP), `openai/text-embedding-3-small` (текстовый эмбеддинг распознанной подписи).
 source:
-  - library/seminars/sem-12/SETKA-KEYSOV.md, Кейс 3
+  - library/seminars/sem-12/SETKA-KEYSOV-KRUG-1.md, Кейс 3
   - library/seminars/sem-12/ARCHITECTURE.md §3, §5
   - library/seminars/sem-12/research/03-tri-zadachi-poiska.md
   - library/seminars/sem-12/stend/zamery-k3/README.md (собственный замер этой сессии)

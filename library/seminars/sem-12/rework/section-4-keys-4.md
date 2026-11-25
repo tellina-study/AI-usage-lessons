@@ -17,7 +17,7 @@ terms_note: >
   термины одного вендора. «Investigative lead» (регламент DPD) переведено как «оперативная
   наводка» — рабочий перевод для этого раздела, не устоявшийся русский юридический термин.
 source:
-  - library/seminars/sem-12/SETKA-KEYSOV.md, Кейс 4
+  - library/seminars/sem-12/SETKA-KEYSOV-KRUG-1.md, Кейс 4
   - library/seminars/sem-12/ARCHITECTURE.md §3, §8, §8.1
   - library/seminars/sem-12/research/04-porog-i-verdikt.md
   - library/seminars/sem-12/stend/zamery-k4/README.md, raw/band_analysis.json

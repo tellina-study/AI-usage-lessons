@@ -2,7 +2,7 @@
 section: 2
 title: "Семинар 12. Кейс 2: как картинка становится числами, и почему у одной картинки векторов много"
 case: 2
-duration_min: "~24 (SETKA-KEYSOV.md; двойной кейс, вдвое больше соседних Кейсов 1 и 4). Идёт четырьмя тактами вместо пяти и начинается не со сцены, а с числа — сознательный сбой ритма занятия, ARCHITECTURE.md §4"
+duration_min: "~24 (SETKA-KEYSOV-KRUG-1.md; двойной кейс, вдвое больше соседних Кейсов 1 и 4). Идёт четырьмя тактами вместо пяти и начинается не со сцены, а с числа — сознательный сбой ритма занятия, ARCHITECTURE.md §4"
 status: draft-v1-measured
 terms_note: >
   Словарь занятия (ARCHITECTURE.md §9), термины фиксированные, не рабочие: вектор картинки ·
@@ -10,7 +10,7 @@ terms_note: >
   моделей, идентификаторы arXiv и числа — фиксированные. «Запас различения» используется как
   русский эквивалент margin-теста Семинара 10 — тот же расчёт, другое имя.
 source:
-  - library/seminars/sem-12/SETKA-KEYSOV.md, Кейс 2
+  - library/seminars/sem-12/SETKA-KEYSOV-KRUG-1.md, Кейс 2
   - library/seminars/sem-12/ARCHITECTURE.md §3, §5, §8.1, §9
   - library/seminars/sem-12/research/02-vektorizatsiya-kartinki.md
   - library/seminars/sem-12/stend/zamery-k2/README.md (собственные замеры №3 и №4 этой сессии)

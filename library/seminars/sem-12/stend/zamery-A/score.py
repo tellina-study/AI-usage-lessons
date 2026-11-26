@@ -200,6 +200,11 @@ def main():
     vision = json.load(open(HERE / "raw" / "vision_results.json"))["per_form"]
     hybrid = json.load(open(HERE / "raw" / "hybrid_results.json"))["per_form"]
     rules = json.load(open(HERE / "raw" / "rules_extraction.json"))
+    # Четвёртый метод (задание владельца 2026-11-25) — «картинка и распознанный текст
+    # вместе». ДОБАВЛЕН, а не вставлен в существующие ветки: ни normalize, ни GT_EXCLUDE,
+    # ни apply_date_split_merge*, ни порядок строк первых трёх методов этим не затронуты
+    # (проверено: первые 1092 строки raw/scored_all.json остались байт в байт теми же).
+    vision_ocr = json.load(open(HERE / "raw" / "vision_ocr_results.json"))["per_form"]
 
     targets_by_form = load_targets_with_field_index(corpus)
 
@@ -211,6 +216,12 @@ def main():
 
     def hybrid_pred(fid, items):
         parsed = (hybrid.get(fid) or {}).get("parsed")
+        if not isinstance(parsed, dict):
+            return {}
+        return {it["field_key"]: parsed.get(it["field_key"]) for it in items}
+
+    def vision_ocr_pred(fid, items):
+        parsed = (vision_ocr.get(fid) or {}).get("parsed")
         if not isinstance(parsed, dict):
             return {}
         return {it["field_key"]: parsed.get(it["field_key"]) for it in items}
@@ -230,10 +241,12 @@ def main():
     rows_vision = score_method(corpus, targets_by_form, vision_pred, "vision")
     rows_hybrid = score_method(corpus, targets_by_form, hybrid_pred, "hybrid")
     rows_rules = score_method(corpus, targets_by_form, rules_pred, "ocr_rules")
+    rows_vision_ocr = score_method(corpus, targets_by_form, vision_ocr_pred, "vision_ocr")
 
     for rows, title in [(rows_vision, "Мультимодальная модель"),
                          (rows_hybrid, "Гибрид (OCR-текст -> gpt-4o-mini)"),
-                         (rows_rules, "OCR + правила")]:
+                         (rows_rules, "OCR + правила"),
+                         (rows_vision_ocr, "Картинка + распознанный текст вместе")]:
         print(f"\n=== {title}: {len(rows)} полей (после исключения GT-брака и склейки) ===")
         exact = sum(r["exact"] for r in rows)
         print(f"точных совпадений: {exact}/{len(rows)} = {exact/len(rows):.3f}")
@@ -251,7 +264,7 @@ def main():
         e = sum(x["exact"] for x in easy)
         print(f"  [остальные]: {e}/{len(easy)} = {e/len(easy):.3f}")
 
-    all_rows = rows_vision + rows_hybrid + rows_rules
+    all_rows = rows_vision + rows_hybrid + rows_rules + rows_vision_ocr
     with open(HERE / "raw" / "scored_all.json", "w", encoding="utf-8") as fh:
         json.dump(all_rows, fh, ensure_ascii=False, indent=2)
     print(f"\nвсего строк сведения: {len(all_rows)} -> raw/scored_all.json")

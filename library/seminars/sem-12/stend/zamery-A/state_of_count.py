@@ -157,6 +157,11 @@ def main():
     vision = json.load(open(HERE / "raw" / "vision_results.json"))["per_form"]
     hybrid = json.load(open(HERE / "raw" / "hybrid_results.json"))["per_form"]
     rules = json.load(open(HERE / "raw" / "rules_extraction.json"))
+    # Четвёртый метод (задание владельца 2026-11-25) — ДОБАВЛЕН в тот же прогон состояний,
+    # ни одна из пяти ступеней не переписана под него: он проходит ровно те же правки,
+    # в том же порядке, что три прежних (иначе таблица перестала бы быть доказательством
+    # «правки не подгонка» и стала бы четырьмя разными лестницами рядом).
+    vision_ocr = json.load(open(HERE / "raw" / "vision_ocr_results.json"))["per_form"]
 
     def vision_pred(fid, items):
         return {it["field_key"]: get_pred(vision, fid, it["field_key"]) for it in items}
@@ -167,7 +172,11 @@ def main():
     def rules_predfn(fid, items):
         return rules_pred_all(rules, fid, items)
 
-    methods = [("vision", vision_pred), ("hybrid", hybrid_pred), ("ocr_rules", rules_predfn)]
+    def vision_ocr_pred(fid, items):
+        return {it["field_key"]: get_pred(vision_ocr, fid, it["field_key"]) for it in items}
+
+    methods = [("vision", vision_pred), ("hybrid", hybrid_pred), ("ocr_rules", rules_predfn),
+               ("vision_ocr", vision_ocr_pred)]
 
     # --- Состояние 0: без исключений/склейки, без перестановок, базовый normalize ---
     targets0 = build_targets(corpus, use_exclude=False, use_merge=False)

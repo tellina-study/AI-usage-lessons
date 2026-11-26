@@ -11,7 +11,7 @@ istochniki:
   - library/seminars/sem-12/stend/zamery-D/README.md (единственность ответа, снятые сторожа)
   - notes/mcp-limitations.md [#351-4], [#351-8] (таяние открытого набора)
   - library/seminars/sem-12/stend/zamery-k2/README.md §0 (исчезновение модели из каталога)
-  - library/seminars/sem-12/slides/n35-gryaz-istiny.md, n51-gryaz-istiny.md, n82-istina-gryaznaya.md, n83-chuzhoy-arkhiv-smertnost.md
+  - library/seminars/sem-12/slides/n35-gryaz-istiny.md, n51-gryaz-istiny.md, n82-istina-gryaznaya.md, n82a-gryaz-na-uzkom-sreze.md, n83-chuzhoy-arkhiv-smertnost.md
 ---
 
 # Теоретическая часть. Файл 8. Грязная истина

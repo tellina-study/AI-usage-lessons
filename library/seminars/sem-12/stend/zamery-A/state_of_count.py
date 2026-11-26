@@ -20,6 +20,8 @@ import json
 import re
 from pathlib import Path
 
+import etalon_pravki
+
 HERE = Path(__file__).resolve().parent
 
 OLD_EXCLUDE = {("82254765", "DATE FORWARDED TO PROMOTION SERVICES:", "zbulan")}
@@ -69,8 +71,14 @@ def build_targets(corpus, use_exclude, use_merge):
             key3 = (fid, t["q_text"], t["a_text"])
             if use_exclude and (key3 in OLD_EXCLUDE or key3 in NEW_EXCLUDE):
                 continue
+            # Круг «правка эталона» (issue #351): снятие нечитаемого поля идёт
+            # вместе с прочими исключениями (ступень 1+), а правки транскрипции —
+            # на ВСЕХ ступенях, включая нулевую: лестница меряет выбор СПОСОБА
+            # счёта, а эталон на всех её ступенях один и тот же.
+            if use_exclude and etalon_pravki.is_excluded_new(fid, t["q_text"], t["a_text"]):
+                continue
             items.append({"field_key": f"field_{i}", "q_text": t["q_text"], "cat": t["cat"],
-                          "a_text": t["a_text"]})
+                          "a_text": etalon_pravki.fix_a_text(fid, t["q_text"], t["a_text"])})
         if use_merge:
             # 83553333_3334: field_3(November)+field_5(1999) -> одно поле
             if fid == "83553333_3334":
@@ -78,7 +86,7 @@ def build_targets(corpus, use_exclude, use_merge):
                 if set(keys) == {"field_3", "field_5"}:
                     items = [it for it in items if it["q_text"] != "Date"] + [
                         {"field_key": "field_3+5", "q_text": "Date", "cat": "date",
-                         "a_text": "November 1999"}]
+                         "a_text": etalon_pravki.MERGE_FIX["83553333_3334"][0]}]
             # 92091873: field_1(6/)+field_2(12/)+field_3(95) -> одно поле
             if fid == "92091873":
                 keys = [it["field_key"] for it in items if it["q_text"] == "Date"]

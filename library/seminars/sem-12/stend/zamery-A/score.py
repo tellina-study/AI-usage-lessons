@@ -43,6 +43,8 @@ import json
 import re
 from pathlib import Path
 
+import etalon_pravki
+
 HERE = Path(__file__).resolve().parent
 
 # Веха 2 (issue #351, корпус 30->100 форм) — систематическая проверка правдоподобия
@@ -112,8 +114,15 @@ def load_targets_with_field_index(corpus):
         for i, t in enumerate(form["targets"], 1):
             if (fid, t["q_text"], t["a_text"]) in GT_EXCLUDE:
                 continue
+            # Круг «правка эталона» (issue #351, 2026-11-26): 7 дефектов транскрипции
+            # исправлены, 1 нечитаемое поле снято. Таблица с обоснованием и тем, чем
+            # каждая правка подтверждена, — etalon_pravki.py. Прежние значения оттуда
+            # не стёрты: они остались ключами таблицы.
+            if etalon_pravki.is_excluded_new(fid, t["q_text"], t["a_text"]):
+                continue
+            a_text = etalon_pravki.fix_a_text(fid, t["q_text"], t["a_text"])
             items.append({"field_key": f"field_{i}", "q_text": t["q_text"], "cat": t["cat"],
-                          "a_text": t["a_text"], "hard_reason": t["hard_reason"]})
+                          "a_text": a_text, "hard_reason": t["hard_reason"]})
         out[fid] = items
     return out
 
@@ -129,8 +138,11 @@ def apply_date_split_merge(fid, items, pred_by_key):
         p for p in (pred_by_key.get("field_3"), pred_by_key.get("field_5")) if p
     ) or None
     new_items = [it for it in items if it["q_text"] != "Date"]
+    # Было «November 1999». Блок «12,» в разметке помечен label='other' и потому
+    # потерялся — прежняя склейка воспроизвела потерю. См. etalon_pravki.MERGE_FIX.
     new_items.append({"field_key": "field_3+5", "q_text": "Date", "cat": "date",
-                       "a_text": "November 1999", "hard_reason": None})
+                       "a_text": etalon_pravki.MERGE_FIX["83553333_3334"][0],
+                       "hard_reason": None})
     new_pred = dict(pred_by_key)
     new_pred["field_3+5"] = merged_pred
     return new_items, new_pred

@@ -36,8 +36,17 @@ def load():
     ocr = json.load(open(HERE / "raw" / "ocr_results.json"))["per_form"]
     ocr_norm = {fid: normalize(v["text_joined"]) for fid, v in ocr.items()}
     by = defaultdict(dict)
+    # Ключ ОБЯЗАН содержать номер вхождения: после правки эталона (issue #351)
+    # на форме 11508234 два поля «Date:» несут один и тот же эталон «3/ 3/ 95»
+    # (у второго он был «3433/ 3/ 95»), и ключ без номера схлопнул бы их в одну
+    # запись, молча потеряв поле. Порядок строк одинаков у всех четырёх методов
+    # (score.py обходит корпус одним и тем же циклом), поэтому n-е вхождение у
+    # одного метода отвечает n-му у другого.
+    seen = defaultdict(int)
     for r in rows:
-        by[r["method"]][(r["form_id"], r["q_text"], r["gt"])] = r
+        base = (r["form_id"], r["q_text"], r["gt"])
+        seen[(r["method"], base)] += 1
+        by[r["method"]][base + (seen[(r["method"], base)],)] = r
     return by, ocr_norm, rows
 
 
@@ -57,12 +66,13 @@ def main():
     keys = list(by["vision"].keys())
 
     print("=" * 78)
-    print("СВОД: четыре метода на одном корпусе (364 целевых поля, 100 форм)")
+    print("СВОД: четыре метода на одном корпусе (363 целевых поля, 100 форм)")
     print("=" * 78)
     for m in ["vision", "hybrid", "ocr_rules", "vision_ocr"]:
         rs = list(by[m].values())
         e = sum(r["exact"] for r in rs)
-        line = [f"{LABELS[m]:28s} {e:3d}/364 = {e/364:.1%}"]
+        n_all = len(rs)
+        line = [f"{LABELS[m]:28s} {e:3d}/{n_all} = {e/n_all:.1%}"]
         for c in ["name", "date", "phone", "count"]:
             cr = [r for r in rs if r["cat"] == c]
             ce = sum(r["exact"] for r in cr)

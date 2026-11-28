@@ -33,7 +33,7 @@ from PIL import Image
 from pptx import Presentation
 from pptx.enum.shapes import MSO_SHAPE
 
-from . import (axis, ladder, markup, metrics, plates, prims, probes,
+from . import (axis, ikonki, ladder, markup, metrics, plates, prims, probes,
                refdeck, regress, render, report, scheme, selftest_contrast,
                selftest_layout, tables, tracks)
 from .theme import SURFACE, WHITE
@@ -87,7 +87,11 @@ def file_probes(tmp, seq):
                  ("s04-clean-kinds.md", probes.CLEAN_KINDS),
                  ("s05-clean-ladder.md", probes.CLEAN_LADDER),
                  ("s06-clean-axis.md", probes.CLEAN_AXIS),
-                 ("s07-clean-illustration.md", probes.CLEAN_ILLUSTRATION)],
+                 ("s07-clean-illustration.md", probes.CLEAN_ILLUSTRATION),
+                 ("s08-clean-divider-photo.md", probes.CLEAN_DIVIDER_PHOTO),
+                 ("s09-clean-headline-number.md",
+                  probes.CLEAN_HEADLINE_NUMBER),
+                 ("s10-clean-table-field.md", probes.CLEAN_TABLE_FIELD)],
                 tmp, seq, name="clean")
     say("── САМОПРОВЕРКА ЯДРА ────────────────────────────────────────")
     say(f"чистые кадры (прогон · таблица · одно число · дорожки · "
@@ -713,6 +717,174 @@ def probe_shadow():
             f"({res[False]}) — именно он и даёт тень в LibreOffice")
 
 
+def probe_tint():
+    """`prims.tint_box`: тон рисует свою пару заливка/обводка, а незнакомый
+    тон называется предупреждением и падает на серый, а не рисует
+    произвольный цвет молча (issue #355 §9.7)."""
+    report.reset()
+    p = prims.new_deck()
+    s = prims.blank(p)
+    shp = prims.tint_box(s, 1, 1, 2, 1, tone="gold")
+    fill_ok = shp.fill.fore_color.rgb == prims.TINTS["gold"][0]
+    stroke_ok = shp.line.color.rgb == prims.TINTS["gold"][1]
+    report.reset()
+    shp2 = prims.tint_box(s, 4, 1, 2, 1, tone="нет-такого")
+    fell_back = (shp2.fill.fore_color.rgb == prims.TINTS["grey"][0]
+                 and any(w.startswith("[тинт]") for w in report.WARNINGS))
+    if fill_ok and stroke_ok and fell_back:
+        OK.append("[тинт]")
+        say(f"{'[тинт]':<24} тон → заливка/обводка: ЛОВИТ  →  «gold» даёт "
+            f"{prims.TINTS['gold'][0]}/{prims.TINTS['gold'][1]}; незнакомый "
+            "тон назван и упал на «grey»")
+    else:
+        BAD.append(f"[тинт] gold={fill_ok}·{stroke_ok}, откат на "
+                   f"незнакомом тоне={fell_back}")
+
+
+def probe_plates_compact():
+    """COMPACT (issue #355 §9.8): подпись+значение в одну строку, длинная
+    оговорка обрезается с предупреждением вместо того, чтобы растить
+    плашку, и полоса плашек заметно ниже `DEFAULT` на тех же данных —
+    против анти-формы BULLET_COLLAGE (Лекция 11 свернула плашки в текстовые
+    буллиты, потому что `DEFAULT` не умел ужиматься)."""
+    report.reset()
+    pl = [
+        {"label": "Было", "value": "5500 ч", "note": "ручная вычитка",
+         "key": False},
+        {"label": "Стало", "value": "10500 ч",
+         "note": "очень длинная оговорка, которая заведомо не уместится в "
+                 "отведённые ей две строки ни при каком разумном кегле",
+         "key": True},
+    ]
+    h_default = plates.plates_h(pl, 6.0, plates.DEFAULT)
+    h_compact = plates.plates_h(pl, 6.0, plates.COMPACT)
+    p = prims.new_deck()
+    s = prims.blank(p)
+    plates.draw_plates(s, "проба", pl, 0.55, 1.0, 6.0, plates.COMPACT)
+    truncated = any(w.startswith("[плашки]") and "обрезана" in w
+                    for w in report.WARNINGS)
+    if h_compact < h_default and truncated:
+        OK.append("[плашки] компакт")
+        say(f"{'[плашки] компакт':<24} высота: ЛОВИТ  →  DEFAULT "
+            f"{h_default:.2f}\" против COMPACT {h_compact:.2f}\", длинная "
+            "оговорка обрезана с предупреждением")
+    else:
+        BAD.append(f"[плашки] компакт высота {h_compact:.2f} vs "
+                   f"{h_default:.2f}, обрезано={truncated}")
+
+
+def probe_ikonki(tmp):
+    """`ikonki.py` (issue #355 §9.6): строка карточек рисует ровно то, что
+    `ikonki_h` обещала, иконка без файла на диске называется предупреждением
+    и не роняет сборку, а чужая форма поля — тоже предупреждение, не
+    падение (тот же договор, что у `plates.plates_of`)."""
+    report.reset()
+    icon_dir = tmp / "ikonki-assets"
+    icon_dir.mkdir(exist_ok=True)
+    data = {"mode": "row", "rows": [
+        {"label": "Раздел", "arrows": True, "items": [
+            {"icon": "sprout", "text": "Один"},
+            {"icon": "wheat", "text": "Два"},
+        ]},
+    ]}
+    h_promised = ikonki.ikonki_h(data, 12.23)
+    p = prims.new_deck()
+    s = prims.blank(p)
+    h_drawn = ikonki.draw_ikonki(s, icon_dir, data, 0.55, 1.0, 12.23,
+                                 tag="проба/иконки")
+    missing_named = any(w.startswith("[иконка]") and "sprout" in w
+                        for w in report.WARNINGS)
+    report.reset()
+
+    class _Bad:
+        sid = "проба-плохое-поле"
+        meta = {"ikonki": "не словарь"}
+
+    bad = ikonki.ikonki_of(_Bad())
+    bad_named = any(w.startswith("[иконки]") for w in report.WARNINGS)
+    ok = (abs(h_promised - h_drawn) < 0.01 and missing_named
+          and bad is None and bad_named)
+    if ok:
+        OK.append("[иконки]")
+        say(f"{'[иконки]':<24} строка карточек: ЛОВИТ  →  высота обещана "
+            f"{h_promised:.2f}\", нарисована {h_drawn:.2f}\"; иконка без "
+            "файла и `ikonki` не-словарём — обе предупреждением, не падением")
+    else:
+        BAD.append(f"[иконки] h={h_promised:.2f}/{h_drawn:.2f} "
+                   f"missing={missing_named} bad={bad}/{bad_named}")
+
+
+def probe_headline_wired(tmp):
+    """`headline_number` (issue #355 §9.10): образцовый `content()` теперь
+    ЗОВЁТ `titles.headline_of`, а не просто знает о нём откуда-то из ядра.
+    Самоотчёт не принимается — считается текст в сохранённом пакете, тем
+    же приёмом, что `probe_live_links`."""
+    from pptx import Presentation
+    prs = Presentation(str(tmp / "clean.pptx"))
+    sl = prs.slides[8]            # s09-clean-headline-number.md
+    texts = [r.text for shp in sl.shapes if shp.has_text_frame
+             for p in shp.text_frame.paragraphs for r in p.runs]
+    if any("27%" == t.strip() for t in texts):
+        OK.append("[число-заголовок] проведено")
+        say(f"{'[число-заголовок] проведено':<24} в пакете: ЛОВИТ  →  "
+            "«27%» стоит отдельным прогоном на s09 — content() вызвал "
+            "headline_of, а не промолчал о поле")
+    else:
+        BAD.append("[число-заголовок] проведено «27%» не найдено ни в "
+                   "одном прогоне s09 — content() не нарисовал headline_number")
+
+
+def probe_media_roots(tmp):
+    """`media.media_path` перебирает НЕСКОЛЬКО корней по порядку (issue
+    #355 §9.4: репозиторий / `rendered/` / папка лекции — раньше каждая
+    дека складывала их сама). Единственный корень — старое поведение, не
+    тронуто."""
+    from deckkit import media as _media
+    d = tmp / "media-roots"
+    (d / "a").mkdir(parents=True, exist_ok=True)
+    (d / "b").mkdir(parents=True, exist_ok=True)
+    (d / "b" / "logo.png").write_bytes(b"x")
+    report.reset()
+    single = _media.media_path({"media": "logo.png"}, d / "b", "проба")
+    report.reset()
+    multi = _media.media_path({"media": "logo.png"}, [d / "a", d / "b"],
+                              "проба")
+    report.reset()
+    none_found = _media.media_path({"media": "logo.png"}, [d / "a"], "проба")
+    missing_named = any(w.startswith("[кадр]") and "logo.png" in w
+                        for w in report.WARNINGS)
+    if single and multi and single == multi and none_found is None \
+            and missing_named:
+        OK.append("[кадр] конвенции пути")
+        say(f"{'[кадр] конвенции пути':<24} несколько корней: ЛОВИТ  →  "
+            "второй корень находит файл, который первый не нашёл; старое "
+            "поведение (один корень) не изменилось")
+    else:
+        BAD.append(f"[кадр] конвенции пути single={single} multi={multi} "
+                   f"none={none_found} named={missing_named}")
+
+
+def probe_table_field_wired(tmp):
+    """`table:` (issue #355 §9.5): образцовый `content()` теперь ЧИТАЕТ
+    поле напрямую, как `blocks:`/`scheme:`. Самоотчёт не принимается —
+    считается текст в сохранённом пакете, тем же приёмом, что
+    `probe_headline_wired`."""
+    from pptx import Presentation
+    prs = Presentation(str(tmp / "clean.pptx"))
+    sl = prs.slides[9]            # s10-clean-table-field.md
+    texts = [r.text for shp in sl.shapes if shp.has_text_frame
+             for p in shp.text_frame.paragraphs for r in p.runs]
+    want = {"Было", "Стало", "5500 ч", "10500 ч"}
+    if want <= set(texts):
+        OK.append("[таблица] поле")
+        say(f"{'[таблица] поле':<24} в пакете: ЛОВИТ  →  шапка и клетки "
+            "`table:` стоят на s10 — content() прочитал поле, а не "
+            "промолчал о нём")
+    else:
+        BAD.append(f"[таблица] поле — {want - set(texts)} не найдено "
+                   "на s10")
+
+
 def probe_font_gap():
     """Отсутствующее начертание выходит ПРОБЕЛОМ `[шрифт]`, а не молчаливой
     оценкой по соседнему файлу."""
@@ -809,6 +981,12 @@ def selftest():
     probe_kind_fallback()
     probe_thin_switch(tmp, seq)
     probe_shadow()
+    probe_tint()
+    probe_plates_compact()
+    probe_ikonki(tmp)
+    probe_headline_wired(tmp)
+    probe_media_roots(tmp)
+    probe_table_field_wired(tmp)
     probe_font_gap()
     probe_live_links(tmp)
     probe_fingerprint(tmp)

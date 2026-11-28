@@ -27,7 +27,7 @@ from dataclasses import dataclass
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 
 from . import (columns, figure, flow, markup, media, metrics, plates,
-               prims, report, scheme, slidefile, tables, wrap)
+               prims, report, scheme, slidefile, tables, titles, wrap)
 from .theme import DEEP, GOLD, LIGHT, MID, SLIDE_H, SLIDE_W, WHITE
 
 
@@ -50,6 +50,11 @@ class Geometry:
                                      # вернувшим себе полную ширину
     body_pt: float = 15.0            # номинальный кегль тела: по нему
                                      # мерится пол проекции
+    divider_img_w: float = 4.60      # боковая фотография дивайдера
+    divider_img_h: float = 3.60      # (issue #355 §9.1, геометрия двух
+                                     # копий — build_lec09.py/build_lec11.py)
+    sub_h: float = 0.52              # подзаголовок под числом-заголовком
+    sub_gap: float = 0.05            # (issue #355 §9.10, headline_number)
 
     @property
     def full_w(self):
@@ -66,22 +71,38 @@ CONTENT_TYPES = {"case", "norm", "comparison", "summary", "map", "question"}
 
 def heading(s, sl, g=G, *, size=27.0, width=None, color=DEEP):
     """Заголовок-утверждение. Кегль подбирается под длину строки ИЗ ФАЙЛА:
-    заголовки правятся в `slides/`, и подгонять их руками нельзя."""
+    заголовки правятся в `slides/`, и подгонять их руками нельзя.
+
+    `headline_number` (issue #355 §9.10) — число-заголовок лестницей НАД
+    фразой, тем же приёмом, что уже стоит в `build_lec09.heading`, но
+    образцовый `content()` его не звал: деку, которая ставит этот
+    фронтматтер, негде было посмотреть собранной на самом ядре."""
     if not sl.title:
         report.warn(f"[заголовок] {sl.sid}: поле `title` пусто")
         return g.body_top
     w = g.full_w if width is None else width
-    sz = metrics.fit_size(sl.title, w, g.title_h, hi=size, lo=19.0,
-                          floor=15.0, bold=True, ls=1.08,
-                          tag=f"{sl.sid}/заголовок")
-    prims.text_box(s, g.mx, g.title_y, w, g.title_h, sl.title, size=sz,
-                   bold=True, color=color, ls=1.08,
-                   tag=f"{sl.sid}/заголовок")
+    tag = f"{sl.sid}/заголовок"
+    num = titles.headline_of(sl)
+    if num:
+        nf, _nl, sf, _sl2 = titles.fit_headline(num, sl.title, w, g.title_h,
+                                                g.sub_h, tag=tag)
+        nh = metrics.est_h(num, nf, w, 1.06, True)
+        prims.text_box(s, g.mx, g.title_y, w, nh, num, size=nf, bold=True,
+                       color=color, ls=1.06, tag=f"{tag}-число")
+        sh = metrics.est_h(sl.title, sf, w, 1.14)
+        prims.text_box(s, g.mx, g.title_y + nh + g.sub_gap, w, sh, sl.title,
+                       size=sf, color=MID, ls=1.14, tag=f"{tag}-подзаголовок")
+        bottom = g.title_y + nh + g.sub_gap + sh
+    else:
+        sz = metrics.fit_size(sl.title, w, g.title_h, hi=size, lo=19.0,
+                              floor=15.0, bold=True, ls=1.08, tag=tag)
+        prims.text_box(s, g.mx, g.title_y, w, g.title_h, sl.title, size=sz,
+                       bold=True, color=color, ls=1.08, tag=tag)
+        bottom = g.title_y + metrics.est_h(sl.title, sz, w, 1.08, True)
     # Акцент садится под НАСТОЯЩУЮ высоту заголовка, а не под рамку: у
     # однострочного заголовка рамка на полдюйма выше текста, и акцент по
     # рамке попадал под коробку мотива.
-    sl.tick_y = min(g.title_y + metrics.est_h(sl.title, sz, w, 1.08, True)
-                    + 0.07, g.body_top - 0.17)
+    sl.tick_y = min(bottom + 0.07, g.body_top - 0.17)
     return g.body_top
 
 
@@ -124,7 +145,7 @@ def check_prims(sl, kind):
     сессия раздела написала бы полосу плашек и не узнала, что её нет."""
     for f, name in (("blocks", "плашки"), ("scheme", "схема"),
                     ("columns", "столбцы"), ("matrix_empty", "матрица"),
-                    ("figure", "число")):
+                    ("figure", "число"), ("table", "таблица")):
         if sl.meta.get(f):
             report.warn(
                 f"[{name}] {sl.sid}: поле `{f}` объявлено на кадре типа "
@@ -166,33 +187,70 @@ def cover(p, sl, root, g=G):
 
 
 def divider(p, sl, root, g=G):
+    """Дивайдер раздела: левая полоса держит идентичность раздела, имя
+    раздела идёт золотой чёрточкой, тело — перечень разборов раздела
+    (`markup.split_named_items` режет строки «**Имя** — текст», стоящие в
+    файле подряд без пустой строки). Фотография раздела — необязательная
+    боковая колонка справа (`g.divider_img_w`/`g.divider_img_h`), тем же
+    приёмом, что боковая иллюстрация содержательного кадра.
+
+    issue #355 §9.1: поднято в ядро из `build_lec09.py:686` и
+    `build_lec11.py:523` (посимвольные копии друг друга). ПОПУТНО исправлен
+    дефект обеих копий: тело рисовалось ФИКСИРОВАННЫМ кеглем 15,5 пт, и
+    только ПОСЛЕ отрисовки проверялось, не дошёл ли курсор до подвала — на
+    длинном перечне (живой пример s21 Лекции 11) текст уходил за рамку
+    тела молча, предупреждение называло дефект, который уже был на экране.
+    Здесь тело собирается ОДНИМ прогоном и мерится `metrics.fit_runs` ДО
+    рисования: кегль ужимается до пола, и только на полу, если перечень и
+    так не влезает, предупреждение называет предел честно."""
     s = prims.blank(p)
     prims.rect(s, 0, 0, SLIDE_W, SLIDE_H, WHITE, count="фон")
     prims.rect(s, 0, 0, 0.17, SLIDE_H, MID, count="полоса")
     check_prims(sl, "divider")
+    img = media.media_path(sl.meta, root, sl.sid)
+    body_x = g.mx + 0.22
+    body_w = g.full_w - 0.22
+    img_box = None
+    if img:
+        mw, mh = media.media_box_size(media.img_ar(img, sl.sid),
+                                      g.divider_img_w, g.divider_img_h)
+        body_w = g.full_w - 0.22 - mw - g.col_gap
+        img_box = (body_x + body_w + g.col_gap, 0.95, mw, mh)
     y = 1.05
+    head_done = False
+    runs = []
     for kind, t in slidefile.body_blocks(sl):
-        if kind == "head":
-            sz = metrics.fit_size(t, g.full_w, 1.05, hi=30.0, lo=20.0,
+        if kind == "head" and not head_done:
+            sz = metrics.fit_size(t, body_w, 1.05, hi=30.0, lo=20.0,
                                   floor=16.0, bold=True, ls=1.10,
                                   tag=f"{sl.sid}/дивайдер-имя")
-            h = metrics.est_h(t, sz, g.full_w, 1.10, True)
-            prims.text_box(s, g.mx + 0.22, y, g.full_w, h, t, size=sz,
-                           bold=True, color=DEEP, ls=1.10,
-                           tag=f"{sl.sid}/дивайдер-имя")
+            h = metrics.est_h(t, sz, body_w, 1.10, True)
+            prims.text_box(s, body_x, y, body_w, h, t, size=sz, bold=True,
+                           color=DEEP, ls=1.10, tag=f"{sl.sid}/дивайдер-имя")
             y += h + 0.10
-            gold_tick(s, sl.sid, g.mx + 0.22, y, g)
+            gold_tick(s, sl.sid, body_x, y, g)
             y += 0.30
-        else:
-            h = metrics.est_h(t, 15.5, g.full_w - 0.22, 1.24)
-            prims.text_runs(s, g.mx + 0.22, y, g.full_w - 0.22, h + 0.04,
-                            markup.inline_runs(t, 15.5, DEEP), ls=1.24,
-                            tag=f"{sl.sid}/дивайдер-тело")
-            y += h + 0.18
-        if y > g.foot_y - 0.2:
-            report.warn(f"[высота] {sl.sid}/дивайдер: текст дошёл до подвала "
-                        f"— {y:.2f}\" при пределе {g.foot_y:.2f}\"")
-            break
+            head_done = True
+            continue
+        for j, part in enumerate(markup.split_named_items(t)):
+            piece = markup.inline_runs(part, 15.5, DEEP)
+            if runs:
+                piece[0]["newpara"] = True
+                # Отбивка между отдельными разборами перечня (6 пт) против
+                # отбивки между отдельными абзацами файла (0,18" ≈ 13 пт) —
+                # то же РАЗЛИЧИЕ, что держали копии между названными
+                # пунктами одного абзаца и соседними абзацами тела.
+                piece[0]["space_before"] = 6 if j else 13
+            runs.extend(piece)
+    if runs:
+        avail = max(0.3, (g.foot_y - 0.2) - y)
+        metrics.fit_runs(runs, body_w, avail, ls=1.24,
+                         tag=f"{sl.sid}/дивайдер-тело", proj_base=15.5)
+        h = metrics.runs_h(runs, body_w, 1.24)
+        prims.text_runs(s, body_x, y, body_w, h + 0.04, runs, ls=1.24,
+                        tag=f"{sl.sid}/дивайдер-тело", quiet=True)
+    if img_box:
+        media.draw_media(s, sl.sid, img, *img_box)
     footer(s, sl, g)
     return s
 
@@ -245,6 +303,17 @@ def content(p, sl, root, g=G):
         ch = max(columns.MIN_H, min(col_bot - y, columns.MAX_H))
         columns.draw_columns(s, sl.sid, cols, g.mx, y, body_w, ch)
         y += ch + g.gap
+    # `table:` (issue #355 §9.5) — поле читает ядро напрямую, как `blocks:`
+    # и `scheme:` уже делают; раскладка та же, что у строки-таблицы, которую
+    # `slidefile.body_ordered` разбирает ИЗ ТЕКСТА (`|a|b|`) — здесь вход
+    # структурный, из фронтматтера, а не из markdown-пайпов тела.
+    tbl = tables.table_of(sl) if is_content else None
+    if tbl:
+        avail_tbl = max(0.3, col_bot - y)
+        size = tables.fit_height(tbl, g.body_pt, avail_tbl, body_w)
+        tables.check_cols(tbl, size, body_w, f"{sl.sid}/таблица")
+        y += tables.draw_table(s, g.mx, y, tbl, size, body_w,
+                               f"{sl.sid}/таблица") + g.gap
 
     heading_ord, blocks = slidefile.body_ordered(sl)
     tables.apply_matrix_empty(sl.sid, sl.meta, blocks)

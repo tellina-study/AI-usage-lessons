@@ -1,0 +1,745 @@
+{
+ "model": "yolov8n.pt",
+ "conf_threshold": 0.25,
+ "vocab": "COCO 80 классов (общий детектор, не обучен под нашу задачу)",
+ "n_images": 40,
+ "total_wall_s": 18.65,
+ "results": {
+  "2ebe189cf7049839": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.867
+    },
+    {
+     "class": "dining table",
+     "conf": 0.616
+    },
+    {
+     "class": "tv",
+     "conf": 0.303
+    }
+   ],
+   "n_boxes": 3,
+   "wall_s": 4.192
+  },
+  "5e9c983ecbe4af71": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.875
+    },
+    {
+     "class": "dining table",
+     "conf": 0.251
+    }
+   ],
+   "n_boxes": 6,
+   "wall_s": 0.439
+  },
+  "00372528d0ae529e": {
+   "tags": [
+    {
+     "class": "bowl",
+     "conf": 0.94
+    },
+    {
+     "class": "person",
+     "conf": 0.892
+    },
+    {
+     "class": "dining table",
+     "conf": 0.62
+    },
+    {
+     "class": "chair",
+     "conf": 0.598
+    },
+    {
+     "class": "cell phone",
+     "conf": 0.254
+    }
+   ],
+   "n_boxes": 15,
+   "wall_s": 0.934
+  },
+  "b755be9b601382d3": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.905
+    },
+    {
+     "class": "tie",
+     "conf": 0.835
+    },
+    {
+     "class": "teddy bear",
+     "conf": 0.45
+    },
+    {
+     "class": "book",
+     "conf": 0.279
+    }
+   ],
+   "n_boxes": 11,
+   "wall_s": 0.86
+  },
+  "f24b6d2e4a6e3467": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.88
+    },
+    {
+     "class": "chair",
+     "conf": 0.836
+    },
+    {
+     "class": "cup",
+     "conf": 0.812
+    },
+    {
+     "class": "dining table",
+     "conf": 0.534
+    }
+   ],
+   "n_boxes": 11,
+   "wall_s": 0.805
+  },
+  "19c429fb5cabf992": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.943
+    },
+    {
+     "class": "chair",
+     "conf": 0.535
+    }
+   ],
+   "n_boxes": 5,
+   "wall_s": 0.325
+  },
+  "94043f06b44df043": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.863
+    },
+    {
+     "class": "tie",
+     "conf": 0.65
+    },
+    {
+     "class": "laptop",
+     "conf": 0.607
+    }
+   ],
+   "n_boxes": 3,
+   "wall_s": 0.3
+  },
+  "c7735280a73d65e1": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.925
+    }
+   ],
+   "n_boxes": 2,
+   "wall_s": 0.307
+  },
+  "87eb5a45f2b87933": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.94
+    }
+   ],
+   "n_boxes": 2,
+   "wall_s": 0.189
+  },
+  "01ada3c0d980be5e": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.891
+    },
+    {
+     "class": "chair",
+     "conf": 0.782
+    },
+    {
+     "class": "bottle",
+     "conf": 0.697
+    },
+    {
+     "class": "cup",
+     "conf": 0.441
+    },
+    {
+     "class": "dining table",
+     "conf": 0.355
+    },
+    {
+     "class": "laptop",
+     "conf": 0.263
+    }
+   ],
+   "n_boxes": 28,
+   "wall_s": 0.301
+  },
+  "1e7cc92a68af4ace": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.828
+    },
+    {
+     "class": "chair",
+     "conf": 0.73
+    },
+    {
+     "class": "dog",
+     "conf": 0.66
+    },
+    {
+     "class": "laptop",
+     "conf": 0.379
+    },
+    {
+     "class": "tv",
+     "conf": 0.372
+    }
+   ],
+   "n_boxes": 15,
+   "wall_s": 0.288
+  },
+  "50d1a495e942b809": {
+   "tags": [
+    {
+     "class": "laptop",
+     "conf": 0.91
+    },
+    {
+     "class": "bottle",
+     "conf": 0.877
+    },
+    {
+     "class": "person",
+     "conf": 0.871
+    },
+    {
+     "class": "cup",
+     "conf": 0.454
+    }
+   ],
+   "n_boxes": 6,
+   "wall_s": 0.715
+  },
+  "a2adb6250fbb4f8c": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.884
+    },
+    {
+     "class": "chair",
+     "conf": 0.854
+    },
+    {
+     "class": "tv",
+     "conf": 0.782
+    },
+    {
+     "class": "potted plant",
+     "conf": 0.453
+    }
+   ],
+   "n_boxes": 17,
+   "wall_s": 0.466
+  },
+  "b12fa0eed7d648f3": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.917
+    },
+    {
+     "class": "tv",
+     "conf": 0.841
+    },
+    {
+     "class": "chair",
+     "conf": 0.833
+    },
+    {
+     "class": "dining table",
+     "conf": 0.321
+    }
+   ],
+   "n_boxes": 17,
+   "wall_s": 0.217
+  },
+  "bdd7fd3ffee39259": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.952
+    },
+    {
+     "class": "remote",
+     "conf": 0.457
+    }
+   ],
+   "n_boxes": 3,
+   "wall_s": 0.302
+  },
+  "428904ac70ad4ac5": {
+   "tags": [
+    {
+     "class": "chair",
+     "conf": 0.866
+    },
+    {
+     "class": "person",
+     "conf": 0.855
+    },
+    {
+     "class": "tv",
+     "conf": 0.679
+    }
+   ],
+   "n_boxes": 21,
+   "wall_s": 0.319
+  },
+  "71681aa82b7ef15f": {
+   "tags": [
+    {
+     "class": "truck",
+     "conf": 0.406
+    },
+    {
+     "class": "clock",
+     "conf": 0.259
+    }
+   ],
+   "n_boxes": 2,
+   "wall_s": 0.295
+  },
+  "a173420cfdc0bc21": {
+   "tags": [
+    {
+     "class": "chair",
+     "conf": 0.729
+    }
+   ],
+   "n_boxes": 26,
+   "wall_s": 0.607
+  },
+  "c53e9e5ce002345f": {
+   "tags": [
+    {
+     "class": "chair",
+     "conf": 0.747
+    }
+   ],
+   "n_boxes": 21,
+   "wall_s": 0.575
+  },
+  "c1334a6df9636a45": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.323
+    }
+   ],
+   "n_boxes": 1,
+   "wall_s": 0.883
+  },
+  "dfc78e19d1ba6658": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.289
+    }
+   ],
+   "n_boxes": 1,
+   "wall_s": 0.617
+  },
+  "124d86a6d3953a13": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.912
+    }
+   ],
+   "n_boxes": 2,
+   "wall_s": 0.217
+  },
+  "360fc1faeddf8ea1": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.921
+    },
+    {
+     "class": "tie",
+     "conf": 0.366
+    }
+   ],
+   "n_boxes": 2,
+   "wall_s": 0.176
+  },
+  "c51d831708b6ded1": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.899
+    },
+    {
+     "class": "dining table",
+     "conf": 0.538
+    },
+    {
+     "class": "tie",
+     "conf": 0.367
+    },
+    {
+     "class": "baseball bat",
+     "conf": 0.302
+    }
+   ],
+   "n_boxes": 4,
+   "wall_s": 0.123
+  },
+  "0536436b72e5fefc": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.949
+    },
+    {
+     "class": "tie",
+     "conf": 0.82
+    }
+   ],
+   "n_boxes": 2,
+   "wall_s": 0.194
+  },
+  "b53d36ec5de1bf52": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.934
+    },
+    {
+     "class": "tie",
+     "conf": 0.836
+    },
+    {
+     "class": "chair",
+     "conf": 0.675
+    },
+    {
+     "class": "clock",
+     "conf": 0.513
+    },
+    {
+     "class": "cup",
+     "conf": 0.45
+    }
+   ],
+   "n_boxes": 12,
+   "wall_s": 0.271
+  },
+  "17f40b08e494565d": {
+   "tags": [
+    {
+     "class": "chair",
+     "conf": 0.857
+    },
+    {
+     "class": "person",
+     "conf": 0.498
+    },
+    {
+     "class": "dining table",
+     "conf": 0.29
+    }
+   ],
+   "n_boxes": 21,
+   "wall_s": 0.324
+  },
+  "31e0383b18a48a63": {
+   "tags": [
+    {
+     "class": "laptop",
+     "conf": 0.954
+    },
+    {
+     "class": "person",
+     "conf": 0.915
+    },
+    {
+     "class": "tv",
+     "conf": 0.888
+    },
+    {
+     "class": "bottle",
+     "conf": 0.797
+    },
+    {
+     "class": "clock",
+     "conf": 0.763
+    },
+    {
+     "class": "cell phone",
+     "conf": 0.45
+    }
+   ],
+   "n_boxes": 11,
+   "wall_s": 0.691
+  },
+  "59f89863852379cf": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.903
+    },
+    {
+     "class": "laptop",
+     "conf": 0.752
+    },
+    {
+     "class": "chair",
+     "conf": 0.568
+    },
+    {
+     "class": "tv",
+     "conf": 0.472
+    },
+    {
+     "class": "dining table",
+     "conf": 0.456
+    },
+    {
+     "class": "cup",
+     "conf": 0.29
+    },
+    {
+     "class": "book",
+     "conf": 0.261
+    }
+   ],
+   "n_boxes": 26,
+   "wall_s": 0.216
+  },
+  "d50064dfabf0fbd5": {
+   "tags": [
+    {
+     "class": "laptop",
+     "conf": 0.953
+    },
+    {
+     "class": "chair",
+     "conf": 0.91
+    },
+    {
+     "class": "person",
+     "conf": 0.871
+    },
+    {
+     "class": "tv",
+     "conf": 0.635
+    }
+   ],
+   "n_boxes": 19,
+   "wall_s": 0.285
+  },
+  "e4c90e496724afe1": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.869
+    },
+    {
+     "class": "laptop",
+     "conf": 0.732
+    },
+    {
+     "class": "chair",
+     "conf": 0.46
+    },
+    {
+     "class": "tv",
+     "conf": 0.34
+    }
+   ],
+   "n_boxes": 13,
+   "wall_s": 0.198
+  },
+  "511a66ac77d12201": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.884
+    },
+    {
+     "class": "chair",
+     "conf": 0.843
+    },
+    {
+     "class": "cup",
+     "conf": 0.716
+    },
+    {
+     "class": "dining table",
+     "conf": 0.643
+    },
+    {
+     "class": "bowl",
+     "conf": 0.596
+    },
+    {
+     "class": "book",
+     "conf": 0.489
+    },
+    {
+     "class": "potted plant",
+     "conf": 0.404
+    },
+    {
+     "class": "bottle",
+     "conf": 0.332
+    }
+   ],
+   "n_boxes": 31,
+   "wall_s": 0.216
+  },
+  "9cfa372f80c96bb4": {
+   "tags": [
+    {
+     "class": "chair",
+     "conf": 0.85
+    },
+    {
+     "class": "tv",
+     "conf": 0.512
+    },
+    {
+     "class": "person",
+     "conf": 0.484
+    }
+   ],
+   "n_boxes": 54,
+   "wall_s": 0.403
+  },
+  "e9114065de005073": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.867
+    }
+   ],
+   "n_boxes": 1,
+   "wall_s": 0.363
+  },
+  "ea8304d584aaa1ae": {
+   "tags": [
+    {
+     "class": "person",
+     "conf": 0.903
+    }
+   ],
+   "n_boxes": 2,
+   "wall_s": 0.119
+  },
+  "8cb7d659e2d0a541": {
+   "tags": [
+    {
+     "class": "spoon",
+     "conf": 0.885
+    },
+    {
+     "class": "cup",
+     "conf": 0.876
+    },
+    {
+     "class": "bowl",
+     "conf": 0.842
+    },
+    {
+     "class": "dining table",
+     "conf": 0.798
+    },
+    {
+     "class": "cell phone",
+     "conf": 0.578
+    },
+    {
+     "class": "person",
+     "conf": 0.532
+    },
+    {
+     "class": "knife",
+     "conf": 0.282
+    },
+    {
+     "class": "laptop",
+     "conf": 0.274
+    }
+   ],
+   "n_boxes": 12,
+   "wall_s": 0.201
+  },
+  "0fb3b09b91685b46": {
+   "tags": [
+    {
+     "class": "spoon",
+     "conf": 0.965
+    },
+    {
+     "class": "cup",
+     "conf": 0.927
+    }
+   ],
+   "n_boxes": 2,
+   "wall_s": 0.193
+  },
+  "1d33f79971824c1c": {
+   "tags": [
+    {
+     "class": "cup",
+     "conf": 0.936
+    }
+   ],
+   "n_boxes": 1,
+   "wall_s": 0.111
+  },
+  "84810eb298f1d8f8": {
+   "tags": [
+    {
+     "class": "cup",
+     "conf": 0.894
+    },
+    {
+     "class": "dining table",
+     "conf": 0.492
+    }
+   ],
+   "n_boxes": 2,
+   "wall_s": 0.203
+  },
+  "5b9193e5398fd5e5": {
+   "tags": [
+    {
+     "class": "cake",
+     "conf": 0.522
+    }
+   ],
+   "n_boxes": 1,
+   "wall_s": 0.185
+  }
+ }
+}

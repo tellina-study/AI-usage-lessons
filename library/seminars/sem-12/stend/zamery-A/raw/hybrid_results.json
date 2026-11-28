@@ -1,0 +1,1679 @@
+{
+  "meta": {
+    "model": "openai/gpt-4o-mini (текст, вход — OCR rapidocr-onnxruntime)",
+    "n_forms": 100,
+    "total_cost": 0.011213,
+    "total_wall_s": 39.17
+  },
+  "per_form": {
+    "0001456787": {
+      "exec_id": "12970",
+      "wall_s": 2.04,
+      "node_ms": 822,
+      "content": "{\n  \"field_1\": \"N/A\"\n}",
+      "prompt_tokens": 550,
+      "completion_tokens": 12,
+      "cost": 8.97e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.04,
+      "parsed": {
+        "field_1": "N/A"
+      }
+    },
+    "0001123541": {
+      "exec_id": "12965",
+      "wall_s": 2.57,
+      "node_ms": 1026,
+      "content": "{\n  \"field_1\": \"June 21,1993\",\n  \"field_2\": \"612/93\"\n}",
+      "prompt_tokens": 560,
+      "completion_tokens": 27,
+      "cost": 0.0001002,
+      "raw_error": null,
+      "wall_s_outer": 2.57,
+      "parsed": {
+        "field_1": "June 21,1993",
+        "field_2": "612/93"
+      }
+    },
+    "0000971160": {
+      "exec_id": "12966",
+      "wall_s": 2.95,
+      "node_ms": 1186,
+      "content": "{\n  \"field_1\": \"M.Hamann.P.Harper.P.Martinez\",\n  \"field_2\": \"9/3/92\"\n}",
+      "prompt_tokens": 421,
+      "completion_tokens": 35,
+      "cost": 8.415e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.95,
+      "parsed": {
+        "field_1": "M.Hamann.P.Harper.P.Martinez",
+        "field_2": "9/3/92"
+      }
+    },
+    "0000989556": {
+      "exec_id": "12967",
+      "wall_s": 3.01,
+      "node_ms": 1014,
+      "content": "{\n  \"field_1\": \"May 1,1985\",\n  \"field_2\": \"None\"\n}",
+      "prompt_tokens": 692,
+      "completion_tokens": 25,
+      "cost": 0.0001188,
+      "raw_error": null,
+      "wall_s_outer": 3.01,
+      "parsed": {
+        "field_1": "May 1,1985",
+        "field_2": "None"
+      }
+    },
+    "0001129658": {
+      "exec_id": "12968",
+      "wall_s": 3.12,
+      "node_ms": 1540,
+      "content": "{\n  \"field_1\": \"Kevin Narko\",\n  \"field_2\": \"(305)400-6106\",\n  \"field_3\": \"10/13/99\",\n  \"field_4\": null,\n  \"field_5\": null,\n  \"field_6\": \"305400-6107\"\n}",
+      "prompt_tokens": 707,
+      "completion_tokens": 69,
+      "cost": 0.00014745,
+      "raw_error": null,
+      "wall_s_outer": 3.12,
+      "parsed": {
+        "field_1": "Kevin Narko",
+        "field_2": "(305)400-6106",
+        "field_3": "10/13/99",
+        "field_4": null,
+        "field_5": null,
+        "field_6": "305400-6107"
+      }
+    },
+    "0001463282": {
+      "exec_id": "12969",
+      "wall_s": 3.15,
+      "node_ms": 1086,
+      "content": "{\n  \"field_1\": \"4/16/90\",\n  \"field_2\": null,\n  \"field_3\": null\n}",
+      "prompt_tokens": 663,
+      "completion_tokens": 31,
+      "cost": 0.00011805,
+      "raw_error": null,
+      "wall_s_outer": 3.15,
+      "parsed": {
+        "field_1": "4/16/90",
+        "field_2": null,
+        "field_3": null
+      }
+    },
+    "00040534": {
+      "exec_id": "12971",
+      "wall_s": 1.18,
+      "node_ms": 792,
+      "content": "{\n  \"field_1\": \"DATE RECEIVED\"\n}",
+      "prompt_tokens": 652,
+      "completion_tokens": 13,
+      "cost": 0.0001056,
+      "raw_error": null,
+      "wall_s_outer": 1.18,
+      "parsed": {
+        "field_1": "DATE RECEIVED"
+      }
+    },
+    "0011838621": {
+      "exec_id": "12972",
+      "wall_s": 2.24,
+      "node_ms": 1599,
+      "content": "{\n  \"field_1\": \"6/21/90\",\n  \"field_2\": null,\n  \"field_3\": null\n}",
+      "prompt_tokens": 546,
+      "completion_tokens": 31,
+      "cost": 0.0001005,
+      "raw_error": null,
+      "wall_s_outer": 2.24,
+      "parsed": {
+        "field_1": "6/21/90",
+        "field_2": null,
+        "field_3": null
+      }
+    },
+    "0011845203": {
+      "exec_id": "12973",
+      "wall_s": 2.44,
+      "node_ms": 1658,
+      "content": "{\n  \"field_1\": \"Mr.JohnnyPedersen.-Gallup\",\n  \"field_2\": \"1-502-568-8092\",\n  \"field_3\": \"_2/22_by_courier.\",\n  \"field_4\": \"1-502-568-8092\"\n}",
+      "prompt_tokens": 479,
+      "completion_tokens": 66,
+      "cost": 0.00011145,
+      "raw_error": null,
+      "wall_s_outer": 2.44,
+      "parsed": {
+        "field_1": "Mr.JohnnyPedersen.-Gallup",
+        "field_2": "1-502-568-8092",
+        "field_3": "_2/22_by_courier.",
+        "field_4": "1-502-568-8092"
+      }
+    },
+    "0011976929": {
+      "exec_id": "12974",
+      "wall_s": 2.39,
+      "node_ms": 1199,
+      "content": "{\n  \"field_1\": \"Mrs. Illinois Beauty Pageant\",\n  \"field_2\": \"Ms. Joy Weathers (Sales) 312/426-8000\"\n}",
+      "prompt_tokens": 361,
+      "completion_tokens": 39,
+      "cost": 7.755e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.39,
+      "parsed": {
+        "field_1": "Mrs. Illinois Beauty Pageant",
+        "field_2": "Ms. Joy Weathers (Sales) 312/426-8000"
+      }
+    },
+    "0011974919": {
+      "exec_id": "12975",
+      "wall_s": 2.6,
+      "node_ms": 1082,
+      "content": "{\n  \"field_1\": \"JoeLeinster\",\n  \"field_2\": \"September 10.1996\",\n  \"field_3\": \"Joyce Bagby\"\n}",
+      "prompt_tokens": 433,
+      "completion_tokens": 40,
+      "cost": 8.895e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.6,
+      "parsed": {
+        "field_1": "JoeLeinster",
+        "field_2": "September 10.1996",
+        "field_3": "Joyce Bagby"
+      }
+    },
+    "0012529284": {
+      "exec_id": "12976",
+      "wall_s": 2.82,
+      "node_ms": 1348,
+      "content": "{\n  \"field_1\": \"12-4-87\",\n  \"field_2\": null,\n  \"field_3\": \"12-4-87\"\n}",
+      "prompt_tokens": 624,
+      "completion_tokens": 36,
+      "cost": 0.0001152,
+      "raw_error": null,
+      "wall_s_outer": 2.82,
+      "parsed": {
+        "field_1": "12-4-87",
+        "field_2": null,
+        "field_3": "12-4-87"
+      }
+    },
+    "0012529295": {
+      "exec_id": "12977",
+      "wall_s": 2.82,
+      "node_ms": 1153,
+      "content": "{\n  \"field_1\": \"10/9/87\",\n  \"field_2\": null,\n  \"field_3\": null\n}",
+      "prompt_tokens": 662,
+      "completion_tokens": 31,
+      "cost": 0.0001179,
+      "raw_error": null,
+      "wall_s_outer": 2.82,
+      "parsed": {
+        "field_1": "10/9/87",
+        "field_2": null,
+        "field_3": null
+      }
+    },
+    "0012602424": {
+      "exec_id": "12978",
+      "wall_s": 2.29,
+      "node_ms": 1397,
+      "content": "{\n  \"field_1\": \"11/28/84\",\n  \"field_2\": null,\n  \"field_3\": null,\n  \"field_4\": \"12-10-84\",\n  \"field_5\": \"12-11\"\n}",
+      "prompt_tokens": 648,
+      "completion_tokens": 55,
+      "cost": 0.0001302,
+      "raw_error": null,
+      "wall_s_outer": 2.29,
+      "parsed": {
+        "field_1": "11/28/84",
+        "field_2": null,
+        "field_3": null,
+        "field_4": "12-10-84",
+        "field_5": "12-11"
+      }
+    },
+    "0012947358": {
+      "exec_id": "12979",
+      "wall_s": 2.19,
+      "node_ms": 1353,
+      "content": "{\n  \"field_1\": \"Wiiliem R.Degenhardt,Tax Director\",\n  \"field_2\": \"1-27-69\",\n  \"field_3\": \"CT Corporation System\",\n  \"field_4\": \"January 27,1969 9:00a.m,\"\n}",
+      "prompt_tokens": 828,
+      "completion_tokens": 64,
+      "cost": 0.0001626,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "Wiiliem R.Degenhardt,Tax Director",
+        "field_2": "1-27-69",
+        "field_3": "CT Corporation System",
+        "field_4": "January 27,1969 9:00a.m,"
+      }
+    },
+    "0060036622": {
+      "exec_id": "12980",
+      "wall_s": 2.23,
+      "node_ms": 1683,
+      "content": "{\n  \"field_1\": \"Mr.G.J. Schramm\",\n  \"field_2\": \"Mr.W.P.Myhan\",\n  \"field_3\": \"Mr.R.H. Stinnette\",\n  \"field_4\": \"Mr.F.X.Whelan\",\n  \"field_5\": \"Mr.J.B.McCarthy\",\n  \"field_6\": \"E.E.Curtin\"\n}",
+      "prompt_tokens": 502,
+      "completion_tokens": 86,
+      "cost": 0.0001269,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": "Mr.G.J. Schramm",
+        "field_2": "Mr.W.P.Myhan",
+        "field_3": "Mr.R.H. Stinnette",
+        "field_4": "Mr.F.X.Whelan",
+        "field_5": "Mr.J.B.McCarthy",
+        "field_6": "E.E.Curtin"
+      }
+    },
+    "0060029036": {
+      "exec_id": "12981",
+      "wall_s": 2.38,
+      "node_ms": 1263,
+      "content": "{\n  \"field_1\": \"MICHAEL WRIGHT\",\n  \"field_2\": \"1-11-94\",\n  \"field_3\": \"JOE'S PLACE EXHIBITS\",\n  \"field_4\": \"January 11,1994\"\n}",
+      "prompt_tokens": 510,
+      "completion_tokens": 57,
+      "cost": 0.0001107,
+      "raw_error": null,
+      "wall_s_outer": 2.38,
+      "parsed": {
+        "field_1": "MICHAEL WRIGHT",
+        "field_2": "1-11-94",
+        "field_3": "JOE'S PLACE EXHIBITS",
+        "field_4": "January 11,1994"
+      }
+    },
+    "0060077689": {
+      "exec_id": "12982",
+      "wall_s": 2.26,
+      "node_ms": 1220,
+      "content": "{\n  \"field_1\": \"Mr.Steven Katz\",\n  \"field_2\": \"January 3.1995\",\n  \"field_3\": \"Mr.Steven Katz\",\n  \"field_4\": \"January 3,1995\"\n}",
+      "prompt_tokens": 647,
+      "completion_tokens": 56,
+      "cost": 0.00013065,
+      "raw_error": null,
+      "wall_s_outer": 2.26,
+      "parsed": {
+        "field_1": "Mr.Steven Katz",
+        "field_2": "January 3.1995",
+        "field_3": "Mr.Steven Katz",
+        "field_4": "January 3,1995"
+      }
+    },
+    "0060165115": {
+      "exec_id": "12983",
+      "wall_s": 2.34,
+      "node_ms": 1959,
+      "content": "{\n  \"field_1\": \"Dr.Wolf Reininghaus\",\n  \"field_2\": \"(0 22 03) 303-1\",\n  \"field_3\": \"28.Apr.98\",\n  \"field_4\": \"21\",\n  \"field_5\": \"Dr.Don Leyden,\",\n  \"field_6\": \"(0 22 03) 303-362\"\n}",
+      "prompt_tokens": 474,
+      "completion_tokens": 88,
+      "cost": 0.0001239,
+      "raw_error": null,
+      "wall_s_outer": 2.34,
+      "parsed": {
+        "field_1": "Dr.Wolf Reininghaus",
+        "field_2": "(0 22 03) 303-1",
+        "field_3": "28.Apr.98",
+        "field_4": "21",
+        "field_5": "Dr.Don Leyden,",
+        "field_6": "(0 22 03) 303-362"
+      }
+    },
+    "0060207528": {
+      "exec_id": "12984",
+      "wall_s": 2.23,
+      "node_ms": 1425,
+      "content": "{\n  \"field_1\": null,\n  \"field_2\": \"POSTERS RECEIVED FROM LITHOGRAPHER:\",\n  \"field_3\": \"DATE POSTING COMPLETED:_\"\n}",
+      "prompt_tokens": 556,
+      "completion_tokens": 41,
+      "cost": 0.000108,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": null,
+        "field_2": "POSTERS RECEIVED FROM LITHOGRAPHER:",
+        "field_3": "DATE POSTING COMPLETED:_"
+      }
+    },
+    "0060214859": {
+      "exec_id": "12985",
+      "wall_s": 2.19,
+      "node_ms": 1172,
+      "content": "{\n  \"field_1\": \"Telephone6926\",\n  \"field_2\": \"10-N0V-1986\",\n  \"field_3\": \"11-6-86\"\n}",
+      "prompt_tokens": 504,
+      "completion_tokens": 41,
+      "cost": 0.0001002,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "Telephone6926",
+        "field_2": "10-N0V-1986",
+        "field_3": "11-6-86"
+      }
+    },
+    "0060255888": {
+      "exec_id": "12986",
+      "wall_s": 2.18,
+      "node_ms": 1468,
+      "content": "{\n  \"field_1\": \"LT 1-7777\",\n  \"field_2\": \"Ocotber 9,1968\",\n  \"field_3\": \"Phone Booth\",\n  \"field_4\": \"Phone Booth\"\n}",
+      "prompt_tokens": 509,
+      "completion_tokens": 52,
+      "cost": 0.00010755,
+      "raw_error": null,
+      "wall_s_outer": 2.18,
+      "parsed": {
+        "field_1": "LT 1-7777",
+        "field_2": "Ocotber 9,1968",
+        "field_3": "Phone Booth",
+        "field_4": "Phone Booth"
+      }
+    },
+    "0060262650": {
+      "exec_id": "12987",
+      "wall_s": 2.31,
+      "node_ms": 1054,
+      "content": "{\n  \"field_1\": \"(202)842-9530\",\n  \"field_2\": \"202/457-4850\"\n}",
+      "prompt_tokens": 700,
+      "completion_tokens": 30,
+      "cost": 0.000123,
+      "raw_error": null,
+      "wall_s_outer": 2.31,
+      "parsed": {
+        "field_1": "(202)842-9530",
+        "field_2": "202/457-4850"
+      }
+    },
+    "0071032790": {
+      "exec_id": "12988",
+      "wall_s": 2.19,
+      "node_ms": 948,
+      "content": "{\n  \"field_1\": \"Files\",\n  \"field_2\": \"September 16，1980\"\n}",
+      "prompt_tokens": 396,
+      "completion_tokens": 25,
+      "cost": 7.44e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "Files",
+        "field_2": "September 16，1980"
+      }
+    },
+    "00851772_1780": {
+      "exec_id": "12990",
+      "wall_s": 1.21,
+      "node_ms": 931,
+      "content": "{\n  \"field_1\": \"Jimmy Be11\",\n  \"field_2\": \"May 27,1982\"\n}",
+      "prompt_tokens": 463,
+      "completion_tokens": 27,
+      "cost": 8.565e-05,
+      "raw_error": null,
+      "wall_s_outer": 1.21,
+      "parsed": {
+        "field_1": "Jimmy Be11",
+        "field_2": "May 27,1982"
+      }
+    },
+    "00838511_00838525": {
+      "exec_id": "12989",
+      "wall_s": 2.25,
+      "node_ms": 1060,
+      "content": "{\n  \"field_1\": \"2-Hydroxycyclododecanone\",\n  \"field_2\": \"12-480\"\n}",
+      "prompt_tokens": 338,
+      "completion_tokens": 30,
+      "cost": 6.87e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.25,
+      "parsed": {
+        "field_1": "2-Hydroxycyclododecanone",
+        "field_2": "12-480"
+      }
+    },
+    "00851879": {
+      "exec_id": "12991",
+      "wall_s": 1.14,
+      "node_ms": 841,
+      "content": "{\n  \"field_1\": \"5-13-81\"\n}",
+      "prompt_tokens": 424,
+      "completion_tokens": 15,
+      "cost": 7.26e-05,
+      "raw_error": null,
+      "wall_s_outer": 1.14,
+      "parsed": {
+        "field_1": "5-13-81"
+      }
+    },
+    "00920222": {
+      "exec_id": "12992",
+      "wall_s": 2.19,
+      "node_ms": 1286,
+      "content": "{\n  \"field_1\": \"Dr.Connie Stone\",\n  \"field_2\": \"LT-10-79\",\n  \"field_3\": \"As required\"\n}",
+      "prompt_tokens": 581,
+      "completion_tokens": 37,
+      "cost": 0.00010935,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "Dr.Connie Stone",
+        "field_2": "LT-10-79",
+        "field_3": "As required"
+      }
+    },
+    "00920294": {
+      "exec_id": "12993",
+      "wall_s": 2.19,
+      "node_ms": 1220,
+      "content": "{\n  \"field_1\": \"RJRIR-Suzi/Art\",\n  \"field_2\": \"3/7/97\",\n  \"field_3\": \"Drew Huyett\"\n}",
+      "prompt_tokens": 410,
+      "completion_tokens": 43,
+      "cost": 8.73e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "RJRIR-Suzi/Art",
+        "field_2": "3/7/97",
+        "field_3": "Drew Huyett"
+      }
+    },
+    "00922237": {
+      "exec_id": "12994",
+      "wall_s": 2.24,
+      "node_ms": 1095,
+      "content": "{\n  \"field_1\": \"Dr.Harry Minnemeyer\",\n  \"field_2\": null\n}",
+      "prompt_tokens": 578,
+      "completion_tokens": 24,
+      "cost": 0.0001011,
+      "raw_error": null,
+      "wall_s_outer": 2.24,
+      "parsed": {
+        "field_1": "Dr.Harry Minnemeyer",
+        "field_2": null
+      }
+    },
+    "01122115": {
+      "exec_id": "12996",
+      "wall_s": 2.41,
+      "node_ms": 1088,
+      "content": "{\n  \"field_1\": \"11/2/61\",\n  \"field_2\": \"11/3/61\"\n}",
+      "prompt_tokens": 722,
+      "completion_tokens": 28,
+      "cost": 0.0001251,
+      "raw_error": null,
+      "wall_s_outer": 2.41,
+      "parsed": {
+        "field_1": "11/2/61",
+        "field_2": "11/3/61"
+      }
+    },
+    "01150773_01150774": {
+      "exec_id": "12995",
+      "wall_s": 2.33,
+      "node_ms": 1721,
+      "content": "{\n  \"field_1\": \"Mark Berlind\",\n  \"field_2\": \"71495-5655\",\n  \"field_3\": \"January 15,1997\",\n  \"field_4\": \"David H.Remes\",\n  \"field_5\": null,\n  \"field_6\": \"32-2512-7890\"\n}",
+      "prompt_tokens": 624,
+      "completion_tokens": 75,
+      "cost": 0.0001386,
+      "raw_error": null,
+      "wall_s_outer": 2.33,
+      "parsed": {
+        "field_1": "Mark Berlind",
+        "field_2": "71495-5655",
+        "field_3": "January 15,1997",
+        "field_4": "David H.Remes",
+        "field_5": null,
+        "field_6": "32-2512-7890"
+      }
+    },
+    "01191071_1072": {
+      "exec_id": "12997",
+      "wall_s": 2.27,
+      "node_ms": 1319,
+      "content": "{\n  \"field_1\": \"2074222272\",\n  \"field_2\": \"11/12/96\",\n  \"field_3\": \"816/545-7473\"\n}",
+      "prompt_tokens": 350,
+      "completion_tokens": 41,
+      "cost": 7.71e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.27,
+      "parsed": {
+        "field_1": "2074222272",
+        "field_2": "11/12/96",
+        "field_3": "816/545-7473"
+      }
+    },
+    "11508234": {
+      "exec_id": "12998",
+      "wall_s": 2.22,
+      "node_ms": 1178,
+      "content": "{\n  \"field_1\": \"March 3,1995\",\n  \"field_2\": null,\n  \"field_3\": null\n}",
+      "prompt_tokens": 664,
+      "completion_tokens": 32,
+      "cost": 0.0001188,
+      "raw_error": null,
+      "wall_s_outer": 2.22,
+      "parsed": {
+        "field_1": "March 3,1995",
+        "field_2": null,
+        "field_3": null
+      }
+    },
+    "11875011": {
+      "exec_id": "12999",
+      "wall_s": 2.22,
+      "node_ms": 1038,
+      "content": "{\n  \"field_1\": \"Goldfarb Consultants\",\n  \"field_2\": \"1-23-95\"\n}",
+      "prompt_tokens": 578,
+      "completion_tokens": 27,
+      "cost": 0.0001029,
+      "raw_error": null,
+      "wall_s_outer": 2.22,
+      "parsed": {
+        "field_1": "Goldfarb Consultants",
+        "field_2": "1-23-95"
+      }
+    },
+    "660978": {
+      "exec_id": "13000",
+      "wall_s": 2.17,
+      "node_ms": 957,
+      "content": "{\n  \"field_1\": \"1/19/82\",\n  \"field_2\": \"2/17/82\"\n}",
+      "prompt_tokens": 410,
+      "completion_tokens": 28,
+      "cost": 7.83e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.17,
+      "parsed": {
+        "field_1": "1/19/82",
+        "field_2": "2/17/82"
+      }
+    },
+    "71108371": {
+      "exec_id": "13001",
+      "wall_s": 2.2,
+      "node_ms": 1202,
+      "content": "{\n  \"field_1\": \"7970\",\n  \"field_2\": \"4/17/98\",\n  \"field_3\": \"4/20/98\"\n}",
+      "prompt_tokens": 671,
+      "completion_tokens": 38,
+      "cost": 0.00012345,
+      "raw_error": null,
+      "wall_s_outer": 2.2,
+      "parsed": {
+        "field_1": "7970",
+        "field_2": "4/17/98",
+        "field_3": "4/20/98"
+      }
+    },
+    "71190280": {
+      "exec_id": "13002",
+      "wall_s": 2.38,
+      "node_ms": 997,
+      "content": "{\n  \"field_1\": \"10/22/98\",\n  \"field_2\": null\n}",
+      "prompt_tokens": 381,
+      "completion_tokens": 23,
+      "cost": 7.095e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.38,
+      "parsed": {
+        "field_1": "10/22/98",
+        "field_2": null
+      }
+    },
+    "71202511": {
+      "exec_id": "13003",
+      "wall_s": 2.28,
+      "node_ms": 1176,
+      "content": "{\n  \"field_1\": \"ToBe DeductedFrom1998Budget\",\n  \"field_2\": \"Date:\",\n  \"field_3\": \"Date:\",\n  \"field_4\": \"ToBeDeductedFrom1999Budget\"\n}",
+      "prompt_tokens": 629,
+      "completion_tokens": 54,
+      "cost": 0.00012675,
+      "raw_error": null,
+      "wall_s_outer": 2.28,
+      "parsed": {
+        "field_1": "ToBe DeductedFrom1998Budget",
+        "field_2": "Date:",
+        "field_3": "Date:",
+        "field_4": "ToBeDeductedFrom1999Budget"
+      }
+    },
+    "71341634": {
+      "exec_id": "13004",
+      "wall_s": 2.25,
+      "node_ms": 1107,
+      "content": "{\n  \"field_1\": \"MAR-24-1999\",\n  \"field_2\": \"MAR 24 :999\"\n}",
+      "prompt_tokens": 705,
+      "completion_tokens": 29,
+      "cost": 0.00012315,
+      "raw_error": null,
+      "wall_s_outer": 2.25,
+      "parsed": {
+        "field_1": "MAR-24-1999",
+        "field_2": "MAR 24 :999"
+      }
+    },
+    "80718412_8413": {
+      "exec_id": "13005",
+      "wall_s": 2.25,
+      "node_ms": 1163,
+      "content": "{\n  \"field_1\": \"October 3through October 5\",\n  \"field_2\": \"24 per day\",\n  \"field_3\": null\n}",
+      "prompt_tokens": 416,
+      "completion_tokens": 36,
+      "cost": 8.4e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.25,
+      "parsed": {
+        "field_1": "October 3through October 5",
+        "field_2": "24 per day",
+        "field_3": null
+      }
+    },
+    "80728670": {
+      "exec_id": "13006",
+      "wall_s": 2.23,
+      "node_ms": 1517,
+      "content": "{\n  \"field_1\": \"J.R.Mueller\",\n  \"field_2\": \"Hotel/Motelreservations needed\",\n  \"field_3\": \"2/28/84\",\n  \"field_4\": \"Tedvande Kamp\"\n}",
+      "prompt_tokens": 421,
+      "completion_tokens": 54,
+      "cost": 9.555e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": "J.R.Mueller",
+        "field_2": "Hotel/Motelreservations needed",
+        "field_3": "2/28/84",
+        "field_4": "Tedvande Kamp"
+      }
+    },
+    "81619486_9488": {
+      "exec_id": "13007",
+      "wall_s": 2.18,
+      "node_ms": 1381,
+      "content": "{\n  \"field_1\": \"S. P. ZOLOT\",\n  \"field_2\": \"12\",\n  \"field_3\": \"R. W. Richardson\",\n  \"field_4\": \"13\",\n  \"field_5\": \"7\",\n  \"field_6\": null\n}",
+      "prompt_tokens": 578,
+      "completion_tokens": 65,
+      "cost": 0.0001257,
+      "raw_error": null,
+      "wall_s_outer": 2.18,
+      "parsed": {
+        "field_1": "S. P. ZOLOT",
+        "field_2": "12",
+        "field_3": "R. W. Richardson",
+        "field_4": "13",
+        "field_5": "7",
+        "field_6": null
+      }
+    },
+    "81619511_9513": {
+      "exec_id": "13008",
+      "wall_s": 2.25,
+      "node_ms": 1293,
+      "content": "{\n  \"field_1\": \"C.J. Leiker\",\n  \"field_2\": null,\n  \"field_3\": null,\n  \"field_4\": null,\n  \"field_5\": null,\n  \"field_6\": null\n}",
+      "prompt_tokens": 724,
+      "completion_tokens": 55,
+      "cost": 0.0001416,
+      "raw_error": null,
+      "wall_s_outer": 2.25,
+      "parsed": {
+        "field_1": "C.J. Leiker",
+        "field_2": null,
+        "field_3": null,
+        "field_4": null,
+        "field_5": null,
+        "field_6": null
+      }
+    },
+    "81749056_9057": {
+      "exec_id": "13009",
+      "wall_s": 2.6,
+      "node_ms": 1086,
+      "content": "{\n  \"field_1\": \"S.P.ZOLOT\",\n  \"field_2\": \"AREA/RECION:\",\n  \"field_3\": null\n}",
+      "prompt_tokens": 621,
+      "completion_tokens": 35,
+      "cost": 0.00011415,
+      "raw_error": null,
+      "wall_s_outer": 2.6,
+      "parsed": {
+        "field_1": "S.P.ZOLOT",
+        "field_2": "AREA/RECION:",
+        "field_3": null
+      }
+    },
+    "82092117": {
+      "exec_id": "13010",
+      "wall_s": 2.18,
+      "node_ms": 1915,
+      "content": "{\n  \"field_1\": \"George Baroody\",\n  \"field_2\": \"614-466-5087\",\n  \"field_3\": \"12/10/98\",\n  \"field_4\": \"3\",\n  \"field_5\": \"(614) 466-5087\",\n  \"field_6\": \"(336)335-7392\"\n}",
+      "prompt_tokens": 659,
+      "completion_tokens": 79,
+      "cost": 0.00014625,
+      "raw_error": null,
+      "wall_s_outer": 2.18,
+      "parsed": {
+        "field_1": "George Baroody",
+        "field_2": "614-466-5087",
+        "field_3": "12/10/98",
+        "field_4": "3",
+        "field_5": "(614) 466-5087",
+        "field_6": "(336)335-7392"
+      }
+    },
+    "82200067_0069": {
+      "exec_id": "13011",
+      "wall_s": 2.3,
+      "node_ms": 1283,
+      "content": "{\n  \"field_1\": \"K. A. Sparraw\",\n  \"field_2\": null,\n  \"field_3\": \"T. D. Blachly\",\n  \"field_4\": null,\n  \"field_5\": null,\n  \"field_6\": null\n}",
+      "prompt_tokens": 616,
+      "completion_tokens": 63,
+      "cost": 0.0001302,
+      "raw_error": null,
+      "wall_s_outer": 2.3,
+      "parsed": {
+        "field_1": "K. A. Sparraw",
+        "field_2": null,
+        "field_3": "T. D. Blachly",
+        "field_4": null,
+        "field_5": null,
+        "field_6": null
+      }
+    },
+    "82250337_0338": {
+      "exec_id": "13012",
+      "wall_s": 2.25,
+      "node_ms": 1097,
+      "content": "{\n  \"field_1\": null,\n  \"field_2\": \"2-Dec-97\",\n  \"field_3\": \"D.J. Landro\"\n}",
+      "prompt_tokens": 597,
+      "completion_tokens": 35,
+      "cost": 0.00011055,
+      "raw_error": null,
+      "wall_s_outer": 2.25,
+      "parsed": {
+        "field_1": null,
+        "field_2": "2-Dec-97",
+        "field_3": "D.J. Landro"
+      }
+    },
+    "82252956_2958": {
+      "exec_id": "13013",
+      "wall_s": 2.21,
+      "node_ms": 1368,
+      "content": "{\n  \"field_1\": \"K. A. Sparrow\",\n  \"field_2\": \"#REP\",\n  \"field_3\": \"D. J. Landro\",\n  \"field_4\": null,\n  \"field_5\": null\n}",
+      "prompt_tokens": 505,
+      "completion_tokens": 54,
+      "cost": 0.00010815,
+      "raw_error": null,
+      "wall_s_outer": 2.21,
+      "parsed": {
+        "field_1": "K. A. Sparrow",
+        "field_2": "#REP",
+        "field_3": "D. J. Landro",
+        "field_4": null,
+        "field_5": null
+      }
+    },
+    "82253058_3059": {
+      "exec_id": "13014",
+      "wall_s": 2.17,
+      "node_ms": 1124,
+      "content": "{\n  \"field_1\": \"MRS. K.A. SPARROW\",\n  \"field_2\": \"12/10/96\",\n  \"field_3\": \"R.G.Ryan\"\n}",
+      "prompt_tokens": 570,
+      "completion_tokens": 44,
+      "cost": 0.0001119,
+      "raw_error": null,
+      "wall_s_outer": 2.17,
+      "parsed": {
+        "field_1": "MRS. K.A. SPARROW",
+        "field_2": "12/10/96",
+        "field_3": "R.G.Ryan"
+      }
+    },
+    "82253245_3247": {
+      "exec_id": "13015",
+      "wall_s": 2.21,
+      "node_ms": 1231,
+      "content": "{\n  \"field_1\": \"K. A. Sparrow\",\n  \"field_2\": null,\n  \"field_3\": \"R. E. Lane\",\n  \"field_4\": null,\n  \"field_5\": null,\n  \"field_6\": null\n}",
+      "prompt_tokens": 702,
+      "completion_tokens": 60,
+      "cost": 0.0001413,
+      "raw_error": null,
+      "wall_s_outer": 2.21,
+      "parsed": {
+        "field_1": "K. A. Sparrow",
+        "field_2": null,
+        "field_3": "R. E. Lane",
+        "field_4": null,
+        "field_5": null,
+        "field_6": null
+      }
+    },
+    "82253362_3364": {
+      "exec_id": "13016",
+      "wall_s": 2.19,
+      "node_ms": 1667,
+      "content": "{\n  \"field_1\": \"K. A. Sparrow\",\n  \"field_2\": null,\n  \"field_3\": \"J. L. MeGinris\",\n  \"field_4\": \"Don & Bens\",\n  \"field_5\": \"Sac NPao\",\n  \"field_6\": \"Western Beverage\"\n}",
+      "prompt_tokens": 742,
+      "completion_tokens": 71,
+      "cost": 0.0001539,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "K. A. Sparrow",
+        "field_2": null,
+        "field_3": "J. L. MeGinris",
+        "field_4": "Don & Bens",
+        "field_5": "Sac NPao",
+        "field_6": "Western Beverage"
+      }
+    },
+    "82254638": {
+      "exec_id": "13017",
+      "wall_s": 2.21,
+      "node_ms": 1561,
+      "content": "{\n  \"field_1\": \"SAM ZOLOT\",\n  \"field_2\": \"7/11/97\",\n  \"field_3\": \"W.R.KNIGHT -MCA\",\n  \"field_4\": \"LorillardMetroGolfOuting1997\",\n  \"field_5\": \"7/11/97\"\n}",
+      "prompt_tokens": 590,
+      "completion_tokens": 72,
+      "cost": 0.0001317,
+      "raw_error": null,
+      "wall_s_outer": 2.21,
+      "parsed": {
+        "field_1": "SAM ZOLOT",
+        "field_2": "7/11/97",
+        "field_3": "W.R.KNIGHT -MCA",
+        "field_4": "LorillardMetroGolfOuting1997",
+        "field_5": "7/11/97"
+      }
+    },
+    "82254765": {
+      "exec_id": "13018",
+      "wall_s": 2.23,
+      "node_ms": 1443,
+      "content": "{\n  \"field_1\": \"K.ASPARROW\",\n  \"field_2\": \"1/24/97\",\n  \"field_3\": \"S.Reindel\",\n  \"field_4\": \"H.Levinson Tradeshow\",\n  \"field_5\": \"9\"\n}",
+      "prompt_tokens": 500,
+      "completion_tokens": 63,
+      "cost": 0.0001128,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": "K.ASPARROW",
+        "field_2": "1/24/97",
+        "field_3": "S.Reindel",
+        "field_4": "H.Levinson Tradeshow",
+        "field_5": "9"
+      }
+    },
+    "82491256": {
+      "exec_id": "13019",
+      "wall_s": 2.18,
+      "node_ms": 1295,
+      "content": "{\n  \"field_1\": \"Wanda G. Robinson and Carroll Robinson v. Raybestos-Manhattan, et al.\",\n  \"field_2\": \"July 23, 1998\",\n  \"field_3\": \"August 3, 1998\"\n}",
+      "prompt_tokens": 398,
+      "completion_tokens": 57,
+      "cost": 9.39e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.18,
+      "parsed": {
+        "field_1": "Wanda G. Robinson and Carroll Robinson v. Raybestos-Manhattan, et al.",
+        "field_2": "July 23, 1998",
+        "field_3": "August 3, 1998"
+      }
+    },
+    "82504862": {
+      "exec_id": "13020",
+      "wall_s": 2.17,
+      "node_ms": 1155,
+      "content": "{\n  \"field_1\": \"Donald D. Sellers and Robin J . Sellers v. Raybestos-Manhattan, et al.\",\n  \"field_2\": \"August 3, 1998\"\n}",
+      "prompt_tokens": 376,
+      "completion_tokens": 43,
+      "cost": 8.22e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.17,
+      "parsed": {
+        "field_1": "Donald D. Sellers and Robin J . Sellers v. Raybestos-Manhattan, et al.",
+        "field_2": "August 3, 1998"
+      }
+    },
+    "82562350": {
+      "exec_id": "13021",
+      "wall_s": 2.22,
+      "node_ms": 1359,
+      "content": "{\n    \"field_1\": \"Mr.Randy Spell\",\n    \"field_2\": null,\n    \"field_3\": \"May1,2000\",\n    \"field_4\": \"4\",\n    \"field_5\": \"RickRedfield\",\n    \"field_6\": \"(952) 894-2238\"\n}",
+      "prompt_tokens": 542,
+      "completion_tokens": 70,
+      "cost": 0.0001233,
+      "raw_error": null,
+      "wall_s_outer": 2.22,
+      "parsed": {
+        "field_1": "Mr.Randy Spell",
+        "field_2": null,
+        "field_3": "May1,2000",
+        "field_4": "4",
+        "field_5": "RickRedfield",
+        "field_6": "(952) 894-2238"
+      }
+    },
+    "82573104": {
+      "exec_id": "13022",
+      "wall_s": 2.19,
+      "node_ms": 1099,
+      "content": "{\n  \"field_1\": \"Haney H. Bell, Esq.\",\n  \"field_2\": \"December9,1999\",\n  \"field_3\": \"David H.Remes\"\n}",
+      "prompt_tokens": 497,
+      "completion_tokens": 42,
+      "cost": 9.975e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "Haney H. Bell, Esq.",
+        "field_2": "December9,1999",
+        "field_3": "David H.Remes"
+      }
+    },
+    "83443897": {
+      "exec_id": "13023",
+      "wall_s": 2.28,
+      "node_ms": 1646,
+      "content": "{\n  \"field_1\": \"Andy Zausner and RobMangas\",\n  \"field_2\": \"336/373-6750\",\n  \"field_3\": \"January 11,1999\",\n  \"field_4\": \"2\",\n  \"field_5\": \"202/828-2259and202/828-2241\",\n  \"field_6\": \"Dewey Tedder\"\n}",
+      "prompt_tokens": 608,
+      "completion_tokens": 89,
+      "cost": 0.0001446,
+      "raw_error": null,
+      "wall_s_outer": 2.28,
+      "parsed": {
+        "field_1": "Andy Zausner and RobMangas",
+        "field_2": "336/373-6750",
+        "field_3": "January 11,1999",
+        "field_4": "2",
+        "field_5": "202/828-2259and202/828-2241",
+        "field_6": "Dewey Tedder"
+      }
+    },
+    "83553333_3334": {
+      "exec_id": "13024",
+      "wall_s": 2.31,
+      "node_ms": 1364,
+      "content": "{\n  \"field_1\": \"Sender\",\n  \"field_2\": \"Fax Transmittal\",\n  \"field_3\": \"November12,1999\",\n  \"field_4\": \"6\",\n  \"field_5\": null,\n  \"field_6\": \"To\"\n}",
+      "prompt_tokens": 630,
+      "completion_tokens": 62,
+      "cost": 0.0001317,
+      "raw_error": null,
+      "wall_s_outer": 2.31,
+      "parsed": {
+        "field_1": "Sender",
+        "field_2": "Fax Transmittal",
+        "field_3": "November12,1999",
+        "field_4": "6",
+        "field_5": null,
+        "field_6": "To"
+      }
+    },
+    "83573282": {
+      "exec_id": "13025",
+      "wall_s": 2.33,
+      "node_ms": 1614,
+      "content": "{\n  \"field_1\": \"SteveW.Berman\",\n  \"field_2\": \"(206) 623-7292\",\n  \"field_3\": \"January 14, 1999\",\n  \"field_4\": null,\n  \"field_5\": \"(206) 623-7292\",\n  \"field_6\": null\n}",
+      "prompt_tokens": 717,
+      "completion_tokens": 75,
+      "cost": 0.00015255,
+      "raw_error": null,
+      "wall_s_outer": 2.33,
+      "parsed": {
+        "field_1": "SteveW.Berman",
+        "field_2": "(206) 623-7292",
+        "field_3": "January 14, 1999",
+        "field_4": null,
+        "field_5": "(206) 623-7292",
+        "field_6": null
+      }
+    },
+    "83594639": {
+      "exec_id": "13026",
+      "wall_s": 2.3,
+      "node_ms": 1592,
+      "content": "{\n  \"field_1\": \"Ron Milstein\",\n  \"field_2\": \"(910) 335-7707\",\n  \"field_3\": \"September 22,1997\",\n  \"field_4\": \"8\",\n  \"field_5\": \"“JJ\\\"Klen\"\n}",
+      "prompt_tokens": 446,
+      "completion_tokens": 64,
+      "cost": 0.0001053,
+      "raw_error": null,
+      "wall_s_outer": 2.3,
+      "parsed": {
+        "field_1": "Ron Milstein",
+        "field_2": "(910) 335-7707",
+        "field_3": "September 22,1997",
+        "field_4": "8",
+        "field_5": "“JJ\"Klen"
+      }
+    },
+    "83624198": {
+      "exec_id": "13027",
+      "wall_s": 2.21,
+      "node_ms": 1802,
+      "content": "{\n  \"field_1\": \"Andy Zausner\",\n  \"field_2\": \"910/335-7718\",\n  \"field_3\": \"Fcbruary 25,1998\",\n  \"field_4\": \"12_HARD COPYTO FOLLOW:\",\n  \"field_5\": \"202/828-2259\",\n  \"field_6\": \"202-785-9700\"\n}",
+      "prompt_tokens": 601,
+      "completion_tokens": 86,
+      "cost": 0.00014175,
+      "raw_error": null,
+      "wall_s_outer": 2.21,
+      "parsed": {
+        "field_1": "Andy Zausner",
+        "field_2": "910/335-7718",
+        "field_3": "Fcbruary 25,1998",
+        "field_4": "12_HARD COPYTO FOLLOW:",
+        "field_5": "202/828-2259",
+        "field_6": "202-785-9700"
+      }
+    },
+    "83635935": {
+      "exec_id": "13028",
+      "wall_s": 2.2,
+      "node_ms": 1437,
+      "content": "{\n  \"field_1\": \"Dr. Spears/A.J. Stevens/R. Milstein\",\n  \"field_2\": \"(212) 935-6801.\",\n  \"field_3\": \"June 4,1997\",\n  \"field_4\": \"Barry Hirsch\"\n}",
+      "prompt_tokens": 599,
+      "completion_tokens": 60,
+      "cost": 0.00012585,
+      "raw_error": null,
+      "wall_s_outer": 2.2,
+      "parsed": {
+        "field_1": "Dr. Spears/A.J. Stevens/R. Milstein",
+        "field_2": "(212) 935-6801.",
+        "field_3": "June 4,1997",
+        "field_4": "Barry Hirsch"
+      }
+    },
+    "83772145": {
+      "exec_id": "13030",
+      "wall_s": 2.23,
+      "node_ms": 1241,
+      "content": "{\n  \"field_1\": \"JACK REILLY\",\n  \"field_2\": \"JANUARY31,1997\",\n  \"field_3\": \"JIM DALEY\"\n}",
+      "prompt_tokens": 525,
+      "completion_tokens": 42,
+      "cost": 0.00010395,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": "JACK REILLY",
+        "field_2": "JANUARY31,1997",
+        "field_3": "JIM DALEY"
+      }
+    },
+    "83823750": {
+      "exec_id": "13031",
+      "wall_s": 2.2,
+      "node_ms": 1784,
+      "content": "{\n  \"field_1\": \"To\",\n  \"field_2\": \"Fax Number\",\n  \"field_3\": \"November11,1997\",\n  \"field_4\": \"2\",\n  \"field_5\": \"ChariesDuggan\",\n  \"field_6\": \"910-335-7720\"\n}",
+      "prompt_tokens": 447,
+      "completion_tokens": 70,
+      "cost": 0.00010905,
+      "raw_error": null,
+      "wall_s_outer": 2.2,
+      "parsed": {
+        "field_1": "To",
+        "field_2": "Fax Number",
+        "field_3": "November11,1997",
+        "field_4": "2",
+        "field_5": "ChariesDuggan",
+        "field_6": "910-335-7720"
+      }
+    },
+    "83996357": {
+      "exec_id": "13032",
+      "wall_s": 2.26,
+      "node_ms": 1090,
+      "content": "{\n  \"field_1\": \"KELLI SCRUGGS\",\n  \"field_2\": \"LEONARD JONES\"\n}",
+      "prompt_tokens": 477,
+      "completion_tokens": 29,
+      "cost": 8.895e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.26,
+      "parsed": {
+        "field_1": "KELLI SCRUGGS",
+        "field_2": "LEONARD JONES"
+      }
+    },
+    "83641919_1921": {
+      "exec_id": "13029",
+      "wall_s": 3.27,
+      "node_ms": 2066,
+      "content": "{\n  \"field_1\": \"S.P.ZOLOT\",\n  \"field_2\": \"13\",\n  \"field_3\": \"R. W.RICHARDSON\",\n  \"field_4\": \"12\",\n  \"field_5\": null,\n  \"field_6\": null\n}",
+      "prompt_tokens": 688,
+      "completion_tokens": 64,
+      "cost": 0.0001416,
+      "raw_error": null,
+      "wall_s_outer": 3.27,
+      "parsed": {
+        "field_1": "S.P.ZOLOT",
+        "field_2": "13",
+        "field_3": "R. W.RICHARDSON",
+        "field_4": "12",
+        "field_5": null,
+        "field_6": null
+      }
+    },
+    "85240939": {
+      "exec_id": "13033",
+      "wall_s": 2.28,
+      "node_ms": 1081,
+      "content": "{\n  \"field_1\": \"GEORGB R:TELFORD\",\n  \"field_2\": \"(212) 841-8787\"\n}",
+      "prompt_tokens": 448,
+      "completion_tokens": 32,
+      "cost": 8.64e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.28,
+      "parsed": {
+        "field_1": "GEORGB R:TELFORD",
+        "field_2": "(212) 841-8787"
+      }
+    },
+    "86220490": {
+      "exec_id": "13034",
+      "wall_s": 2.22,
+      "node_ms": 1563,
+      "content": "{\n  \"field_1\": \"MikeMozina\",\n  \"field_2\": null,\n  \"field_3\": \"8/31/98\",\n  \"field_4\": \"3(includingthiscoverpage)\",\n  \"field_5\": \"SusanSmith\",\n  \"field_6\": \"335-7733\"\n}",
+      "prompt_tokens": 375,
+      "completion_tokens": 70,
+      "cost": 9.825e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.22,
+      "parsed": {
+        "field_1": "MikeMozina",
+        "field_2": null,
+        "field_3": "8/31/98",
+        "field_4": "3(includingthiscoverpage)",
+        "field_5": "SusanSmith",
+        "field_6": "335-7733"
+      }
+    },
+    "86230203_0206": {
+      "exec_id": "13035",
+      "wall_s": 2.23,
+      "node_ms": 1460,
+      "content": "{\n  \"field_1\": \"DEC 13×\",\n  \"field_2\": null,\n  \"field_3\": \"FROM:\",\n  \"field_4\": \"K. A. Sperrow\",\n  \"field_5\": null,\n  \"field_6\": null\n}",
+      "prompt_tokens": 605,
+      "completion_tokens": 61,
+      "cost": 0.00012735,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": "DEC 13×",
+        "field_2": null,
+        "field_3": "FROM:",
+        "field_4": "K. A. Sperrow",
+        "field_5": null,
+        "field_6": null
+      }
+    },
+    "86263525": {
+      "exec_id": "13036",
+      "wall_s": 2.19,
+      "node_ms": 1255,
+      "content": "{\n  \"field_1\": null,\n  \"field_2\": \"2/15/90\",\n  \"field_3\": \"4/18/90\"\n}",
+      "prompt_tokens": 383,
+      "completion_tokens": 36,
+      "cost": 7.905e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": null,
+        "field_2": "2/15/90",
+        "field_3": "4/18/90"
+      }
+    },
+    "86328049_8050": {
+      "exec_id": "13037",
+      "wall_s": 2.25,
+      "node_ms": 1638,
+      "content": "{\n  \"field_1\": \"Ken Forrest\",\n  \"field_2\": \"212-403-2211\",\n  \"field_3\": \"8\",\n  \"field_4\": \"Tom Frederick\",\n  \"field_5\": \"Tom Grifin\",\n  \"field_6\": \"Even Hurwitz\"\n}",
+      "prompt_tokens": 707,
+      "completion_tokens": 68,
+      "cost": 0.00014685,
+      "raw_error": null,
+      "wall_s_outer": 2.25,
+      "parsed": {
+        "field_1": "Ken Forrest",
+        "field_2": "212-403-2211",
+        "field_3": "8",
+        "field_4": "Tom Frederick",
+        "field_5": "Tom Grifin",
+        "field_6": "Even Hurwitz"
+      }
+    },
+    "87125460": {
+      "exec_id": "13038",
+      "wall_s": 2.22,
+      "node_ms": 1165,
+      "content": "{\n  \"field_1\": \"October 27,1986\",\n  \"field_2\": null,\n  \"field_3\": \"February 26,1987\"\n}",
+      "prompt_tokens": 365,
+      "completion_tokens": 38,
+      "cost": 7.755e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.22,
+      "parsed": {
+        "field_1": "October 27,1986",
+        "field_2": null,
+        "field_3": "February 26,1987"
+      }
+    },
+    "87137840": {
+      "exec_id": "13039",
+      "wall_s": 2.41,
+      "node_ms": 1109,
+      "content": "{\n  \"field_1\": \"3/01/90\",\n  \"field_2\": null\n}",
+      "prompt_tokens": 371,
+      "completion_tokens": 23,
+      "cost": 6.945e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.41,
+      "parsed": {
+        "field_1": "3/01/90",
+        "field_2": null
+      }
+    },
+    "87528321": {
+      "exec_id": "13040",
+      "wall_s": 2.25,
+      "node_ms": 1179,
+      "content": "{\n  \"field_1\": \"8-17-88\",\n  \"field_2\": \"DATE\",\n  \"field_3\": \"8-17-88\"\n}",
+      "prompt_tokens": 568,
+      "completion_tokens": 37,
+      "cost": 0.0001074,
+      "raw_error": null,
+      "wall_s_outer": 2.25,
+      "parsed": {
+        "field_1": "8-17-88",
+        "field_2": "DATE",
+        "field_3": "8-17-88"
+      }
+    },
+    "87528380": {
+      "exec_id": "13041",
+      "wall_s": 2.32,
+      "node_ms": 1709,
+      "content": "{\n  \"field_1\": \"TO\",\n  \"field_2\": \"October 16,1987\",\n  \"field_3\": null,\n  \"field_4\": \"Attn:Mr.Robert Kennedy\"\n}",
+      "prompt_tokens": 904,
+      "completion_tokens": 49,
+      "cost": 0.000165,
+      "raw_error": null,
+      "wall_s_outer": 2.32,
+      "parsed": {
+        "field_1": "TO",
+        "field_2": "October 16,1987",
+        "field_3": null,
+        "field_4": "Attn:Mr.Robert Kennedy"
+      }
+    },
+    "87533049": {
+      "exec_id": "13042",
+      "wall_s": 2.3,
+      "node_ms": 1251,
+      "content": "{\n  \"field_1\": \"J. La Valle\",\n  \"field_2\": \"May 3 1990\",\n  \"field_3\": \"7s.A.Rapisarldi\"\n}",
+      "prompt_tokens": 439,
+      "completion_tokens": 43,
+      "cost": 9.165e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.3,
+      "parsed": {
+        "field_1": "J. La Valle",
+        "field_2": "May 3 1990",
+        "field_3": "7s.A.Rapisarldi"
+      }
+    },
+    "87594142_87594144": {
+      "exec_id": "13043",
+      "wall_s": 2.23,
+      "node_ms": 1524,
+      "content": "{\n  \"field_1\": \"Steven R. Kleeberger,Ph.D. (410) 955-3515/955-0299\",\n  \"field_2\": \"(410) 955-3515/955-0299\",\n  \"field_3\": null\n}",
+      "prompt_tokens": 1004,
+      "completion_tokens": 61,
+      "cost": 0.0001872,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": "Steven R. Kleeberger,Ph.D. (410) 955-3515/955-0299",
+        "field_2": "(410) 955-3515/955-0299",
+        "field_3": null
+      }
+    },
+    "88547278_88547279": {
+      "exec_id": "13044",
+      "wall_s": 2.16,
+      "node_ms": 1315,
+      "content": "{\n  \"field_1\": \"(212) 627-4111\",\n  \"field_2\": \"July 7,1993\",\n  \"field_3\": \"(212) 627-8602\"\n}",
+      "prompt_tokens": 505,
+      "completion_tokens": 46,
+      "cost": 0.00010335,
+      "raw_error": null,
+      "wall_s_outer": 2.16,
+      "parsed": {
+        "field_1": "(212) 627-4111",
+        "field_2": "July 7,1993",
+        "field_3": "(212) 627-8602"
+      }
+    },
+    "89856243": {
+      "exec_id": "13045",
+      "wall_s": 2.18,
+      "node_ms": 949,
+      "content": "{\n  \"field_1\": \"October 17,1979\",\n  \"field_2\": null\n}",
+      "prompt_tokens": 679,
+      "completion_tokens": 24,
+      "cost": 0.00011625,
+      "raw_error": null,
+      "wall_s_outer": 2.18,
+      "parsed": {
+        "field_1": "October 17,1979",
+        "field_2": null
+      }
+    },
+    "91161344_91161347": {
+      "exec_id": "13046",
+      "wall_s": 2.19,
+      "node_ms": 1679,
+      "content": "{\n  \"field_1\": \"Mr. F1inn\",\n  \"field_2\": \"Mr.Donhuc\",\n  \"field_3\": \"Mr.ldson\",\n  \"field_4\": \"Nr.Gastman\",\n  \"field_5\": \"Mr. Dufry\",\n  \"field_6\": \"Dr.fchultz\"\n}",
+      "prompt_tokens": 788,
+      "completion_tokens": 76,
+      "cost": 0.0001638,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "Mr. F1inn",
+        "field_2": "Mr.Donhuc",
+        "field_3": "Mr.ldson",
+        "field_4": "Nr.Gastman",
+        "field_5": "Mr. Dufry",
+        "field_6": "Dr.fchultz"
+      }
+    },
+    "91372360": {
+      "exec_id": "13047",
+      "wall_s": 2.18,
+      "node_ms": 1569,
+      "content": "{\n  \"field_1\": \"Mr.A.J.Giacoio\",\n  \"field_2\": \"212_545-3299\",\n  \"field_3\": \"11/4/93\",\n  \"field_4\": \"REWll\",\n  \"field_5\": \"(405)840-0639\"\n}",
+      "prompt_tokens": 511,
+      "completion_tokens": 69,
+      "cost": 0.00011805,
+      "raw_error": null,
+      "wall_s_outer": 2.18,
+      "parsed": {
+        "field_1": "Mr.A.J.Giacoio",
+        "field_2": "212_545-3299",
+        "field_3": "11/4/93",
+        "field_4": "REWll",
+        "field_5": "(405)840-0639"
+      }
+    },
+    "91391286": {
+      "exec_id": "13048",
+      "wall_s": 2.28,
+      "node_ms": 1163,
+      "content": "{\n  \"field_1\": \"THOM SMITH\",\n  \"field_2\": null,\n  \"field_3\": \"VINCE LOSITO\"\n}",
+      "prompt_tokens": 461,
+      "completion_tokens": 34,
+      "cost": 8.955e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.28,
+      "parsed": {
+        "field_1": "THOM SMITH",
+        "field_2": null,
+        "field_3": "VINCE LOSITO"
+      }
+    },
+    "91391310": {
+      "exec_id": "13049",
+      "wall_s": 2.3,
+      "node_ms": 1224,
+      "content": "{\n  \"field_1\": \"M.BORSINI\",\n  \"field_2\": \"8/06/93\",\n  \"field_3\": null\n}",
+      "prompt_tokens": 479,
+      "completion_tokens": 35,
+      "cost": 9.285e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.3,
+      "parsed": {
+        "field_1": "M.BORSINI",
+        "field_2": "8/06/93",
+        "field_3": null
+      }
+    },
+    "91581919": {
+      "exec_id": "13050",
+      "wall_s": 2.23,
+      "node_ms": 1047,
+      "content": "{\n  \"field_1\": \"From NewspaperNew Albany Tribune\",\n  \"field_2\": \"Date\"\n}",
+      "prompt_tokens": 454,
+      "completion_tokens": 24,
+      "cost": 8.25e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": "From NewspaperNew Albany Tribune",
+        "field_2": "Date"
+      }
+    },
+    "91814768_91814769": {
+      "exec_id": "13051",
+      "wall_s": 2.19,
+      "node_ms": 1629,
+      "content": "{\n  \"field_1\": \"To Whom Paid (Alphabetical Listing Mandatory)\",\n  \"field_2\": \"March 30.1993\",\n  \"field_3\": \"10/26/92\",\n  \"field_4\": \"10/30/92\"\n}",
+      "prompt_tokens": 810,
+      "completion_tokens": 59,
+      "cost": 0.0001569,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "To Whom Paid (Alphabetical Listing Mandatory)",
+        "field_2": "March 30.1993",
+        "field_3": "10/26/92",
+        "field_4": "10/30/92"
+      }
+    },
+    "91856041_6049": {
+      "exec_id": "13052",
+      "wall_s": 2.25,
+      "node_ms": 1170,
+      "content": "{\n  \"field_1\": \"Jerome Curry\",\n  \"field_2\": \"(201)923-9208\"\n}",
+      "prompt_tokens": 383,
+      "completion_tokens": 27,
+      "cost": 7.365e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.25,
+      "parsed": {
+        "field_1": "Jerome Curry",
+        "field_2": "(201)923-9208"
+      }
+    },
+    "91974562": {
+      "exec_id": "13054",
+      "wall_s": 2.19,
+      "node_ms": 1785,
+      "content": "{\n  \"field_1\": \"THOM SMITH\",\n  \"field_2\": \"6/8/95\",\n  \"field_3\": \"VINCELOSITO\"\n}",
+      "prompt_tokens": 483,
+      "completion_tokens": 39,
+      "cost": 9.585e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "THOM SMITH",
+        "field_2": "6/8/95",
+        "field_3": "VINCELOSITO"
+      }
+    },
+    "92091873": {
+      "exec_id": "13055",
+      "wall_s": 2.2,
+      "node_ms": 1872,
+      "content": "{\n  \"field_1\": \"September 10,1995\",\n  \"field_2\": null,\n  \"field_3\": null,\n  \"field_4\": \"September 10,1995\",\n  \"field_5\": \"September 26,1995\",\n  \"field_6\": null\n}",
+      "prompt_tokens": 638,
+      "completion_tokens": 68,
+      "cost": 0.0001365,
+      "raw_error": null,
+      "wall_s_outer": 2.2,
+      "parsed": {
+        "field_1": "September 10,1995",
+        "field_2": null,
+        "field_3": null,
+        "field_4": "September 10,1995",
+        "field_5": "September 26,1995",
+        "field_6": null
+      }
+    },
+    "92298125": {
+      "exec_id": "13056",
+      "wall_s": 2.2,
+      "node_ms": 1328,
+      "content": "{\n  \"field_1\": \"MARYMAZZA\",\n  \"field_2\": \"JAN.19.1995\",\n  \"field_3\": \"Pam Churchil.\"\n}",
+      "prompt_tokens": 442,
+      "completion_tokens": 39,
+      "cost": 8.97e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.2,
+      "parsed": {
+        "field_1": "MARYMAZZA",
+        "field_2": "JAN.19.1995",
+        "field_3": "Pam Churchil."
+      }
+    },
+    "92327794": {
+      "exec_id": "13057",
+      "wall_s": 2.17,
+      "node_ms": 1700,
+      "content": "{\n  \"field_1\": \"Ron Goldbrenner\",\n  \"field_2\": \"(919)373-6917\",\n  \"field_3\": \"July 22,1993\",\n  \"field_4\": null,\n  \"field_5\": \"Becky Hayden\"\n}",
+      "prompt_tokens": 429,
+      "completion_tokens": 62,
+      "cost": 0.00010155,
+      "raw_error": null,
+      "wall_s_outer": 2.17,
+      "parsed": {
+        "field_1": "Ron Goldbrenner",
+        "field_2": "(919)373-6917",
+        "field_3": "July 22,1993",
+        "field_4": null,
+        "field_5": "Becky Hayden"
+      }
+    },
+    "91914407": {
+      "exec_id": "13053",
+      "wall_s": 3.29,
+      "node_ms": 3031,
+      "content": "{\n  \"field_1\": \"Mr.Al Giacoio\",\n  \"field_2\": \"(904)464-0744\",\n  \"field_3\": \"6-29-94\",\n  \"field_4\": \"14\",\n  \"field_5\": \"FredPaternostro\"\n}",
+      "prompt_tokens": 484,
+      "completion_tokens": 64,
+      "cost": 0.000111,
+      "raw_error": null,
+      "wall_s_outer": 3.29,
+      "parsed": {
+        "field_1": "Mr.Al Giacoio",
+        "field_2": "(904)464-0744",
+        "field_3": "6-29-94",
+        "field_4": "14",
+        "field_5": "FredPaternostro"
+      }
+    },
+    "92380595": {
+      "exec_id": "13058",
+      "wall_s": 2.23,
+      "node_ms": 1937,
+      "content": "{\n  \"field_1\": \"LORILDARD,INC.\",\n  \"field_2\": \"(212) 373-7500\",\n  \"field_3\": \"12-13-89\",\n  \"field_4\": \"MR. ARTHUR STEVENS, ESQ.A.J. STEVENS\",\n  \"field_5\": null,\n  \"field_6\": \"2\"\n}",
+      "prompt_tokens": 755,
+      "completion_tokens": 86,
+      "cost": 0.00016485,
+      "raw_error": null,
+      "wall_s_outer": 2.23,
+      "parsed": {
+        "field_1": "LORILDARD,INC.",
+        "field_2": "(212) 373-7500",
+        "field_3": "12-13-89",
+        "field_4": "MR. ARTHUR STEVENS, ESQ.A.J. STEVENS",
+        "field_5": null,
+        "field_6": "2"
+      }
+    },
+    "92433599_92433601": {
+      "exec_id": "13059",
+      "wall_s": 2.19,
+      "node_ms": 1119,
+      "content": "{\n  \"field_1\": \"BRAYTON,GISVOLD&HARLEY\",\n  \"field_2\": \"(415) 898-1555\"\n}",
+      "prompt_tokens": 494,
+      "completion_tokens": 35,
+      "cost": 9.51e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "BRAYTON,GISVOLD&HARLEY",
+        "field_2": "(415) 898-1555"
+      }
+    },
+    "92586242": {
+      "exec_id": "13060",
+      "wall_s": 2.26,
+      "node_ms": 1139,
+      "content": "{\n  \"field_1\": \"NAME OF ALLWAYS SUPERVISOR:\",\n  \"field_2\": \"(201)923-9208\"\n}",
+      "prompt_tokens": 375,
+      "completion_tokens": 32,
+      "cost": 7.545e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.26,
+      "parsed": {
+        "field_1": "NAME OF ALLWAYS SUPERVISOR:",
+        "field_2": "(201)923-9208"
+      }
+    },
+    "92657391": {
+      "exec_id": "13061",
+      "wall_s": 2.22,
+      "node_ms": 1553,
+      "content": "{\n  \"field_1\": \"R.H.Orcutt\",\n  \"field_2\": \"(212)545-3299\",\n  \"field_3\": \"12/28/94\",\n  \"field_4\": \"J.L.McGinnis-·Region:9\",\n  \"field_5\": \"(713)591-0204\"\n}",
+      "prompt_tokens": 504,
+      "completion_tokens": 76,
+      "cost": 0.0001212,
+      "raw_error": null,
+      "wall_s_outer": 2.22,
+      "parsed": {
+        "field_1": "R.H.Orcutt",
+        "field_2": "(212)545-3299",
+        "field_3": "12/28/94",
+        "field_4": "J.L.McGinnis-·Region:9",
+        "field_5": "(713)591-0204"
+      }
+    },
+    "93213298": {
+      "exec_id": "13063",
+      "wall_s": 2.19,
+      "node_ms": 1421,
+      "content": "{\n  \"field_1\": \"June 11，1995\",\n  \"field_2\": \"July6，1995\",\n  \"field_3\": \"05/01/95\"\n}",
+      "prompt_tokens": 544,
+      "completion_tokens": 42,
+      "cost": 0.0001068,
+      "raw_error": null,
+      "wall_s_outer": 2.19,
+      "parsed": {
+        "field_1": "June 11，1995",
+        "field_2": "July6，1995",
+        "field_3": "05/01/95"
+      }
+    },
+    "93351929_93351931": {
+      "exec_id": "13064",
+      "wall_s": 2.21,
+      "node_ms": 1214,
+      "content": "{\n  \"field_1\": \"JESSICAARATO\",\n  \"field_2\": \"May 14,1992\",\n  \"field_3\": \"VINCELOSITO\"\n}",
+      "prompt_tokens": 480,
+      "completion_tokens": 41,
+      "cost": 9.66e-05,
+      "raw_error": null,
+      "wall_s_outer": 2.21,
+      "parsed": {
+        "field_1": "JESSICAARATO",
+        "field_2": "May 14,1992",
+        "field_3": "VINCELOSITO"
+      }
+    },
+    "93106788": {
+      "exec_id": "13062",
+      "wall_s": 3.23,
+      "node_ms": 2152,
+      "content": "{\n  \"field_1\": \"ESSENCE\",\n  \"field_2\": \"MARCH 17, 1995\",\n  \"field_3\": \"JOYCE WINSTON\",\n  \"field_4\": null\n}",
+      "prompt_tokens": 806,
+      "completion_tokens": 48,
+      "cost": 0.0001497,
+      "raw_error": null,
+      "wall_s_outer": 3.23,
+      "parsed": {
+        "field_1": "ESSENCE",
+        "field_2": "MARCH 17, 1995",
+        "field_3": "JOYCE WINSTON",
+        "field_4": null
+      }
+    }
+  }
+}

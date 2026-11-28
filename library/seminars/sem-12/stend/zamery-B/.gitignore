@@ -1,0 +1,6 @@
+corpus-cache/
+.venv/
+__pycache__/
+*.log
+*.badsha
+*.pt

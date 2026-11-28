@@ -1,0 +1,3418 @@
+{
+  "models": [
+    "openai/clip-vit-base-patch32 (локально)",
+    "google/siglip-base-patch16-224 (локально)",
+    "mongodb/voyage-multimodal-3.5 (платно, кросс-проверка)"
+  ],
+  "variants": [
+    "downscale_60pct",
+    "recompress_q30",
+    "rotate_1deg",
+    "crop_5pct",
+    "composite_rotate_crop"
+  ],
+  "per_model": {
+    "openai/clip-vit-base-patch32": {
+      "n_originals_ok": 30,
+      "originals_fail": [],
+      "originals_cost_usd": 0.0,
+      "avg_local_forward_pass_s": 0.1258,
+      "checkpoint_load_s": 1.66,
+      "variants": {
+        "downscale_60pct": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 1.0,
+            "n_nn_switched": 0,
+            "mean_cosine_to_own_original": 0.9747,
+            "min_cosine_to_own_original": 0.9273,
+            "max_cosine_to_own_original": 0.9958,
+            "cost_usd": 0.0
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9845,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9845,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9958,
+              "nearest_original": "receipt_01",
+              "nearest_cosine": 0.9958,
+              "self_match": true
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9811,
+              "nearest_original": "receipt_02",
+              "nearest_cosine": 0.9811,
+              "self_match": true
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9726,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9726,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.99,
+              "nearest_original": "receipt_04",
+              "nearest_cosine": 0.99,
+              "self_match": true
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.973,
+              "nearest_original": "receipt_05",
+              "nearest_cosine": 0.973,
+              "self_match": true
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9726,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9726,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9842,
+              "nearest_original": "receipt_07",
+              "nearest_cosine": 0.9842,
+              "self_match": true
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9638,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9638,
+              "self_match": true
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9616,
+              "nearest_original": "receipt_09",
+              "nearest_cosine": 0.9616,
+              "self_match": true
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.978,
+              "nearest_original": "receipt_10",
+              "nearest_cosine": 0.978,
+              "self_match": true
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9817,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.9817,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9862,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9862,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9773,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9773,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9848,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.9848,
+              "self_match": true
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9859,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9859,
+              "self_match": true
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.962,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.962,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9891,
+              "nearest_original": "receipt_17",
+              "nearest_cosine": 0.9891,
+              "self_match": true
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.9623,
+              "nearest_original": "receipt_18",
+              "nearest_cosine": 0.9623,
+              "self_match": true
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.9789,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.9789,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9855,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9855,
+              "self_match": true
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9645,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9645,
+              "self_match": true
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.9787,
+              "nearest_original": "receipt_22",
+              "nearest_cosine": 0.9787,
+              "self_match": true
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.982,
+              "nearest_original": "receipt_23",
+              "nearest_cosine": 0.982,
+              "self_match": true
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.9273,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.9273,
+              "self_match": true
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9716,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9716,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9759,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9759,
+              "self_match": true
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9672,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9672,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9628,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.9628,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9594,
+              "nearest_original": "receipt_29",
+              "nearest_cosine": 0.9594,
+              "self_match": true
+            }
+          ],
+          "fail_log": []
+        },
+        "recompress_q30": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 0.9333,
+            "n_nn_switched": 2,
+            "mean_cosine_to_own_original": 0.9218,
+            "min_cosine_to_own_original": 0.8624,
+            "max_cosine_to_own_original": 0.9663,
+            "cost_usd": 0.0
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.887,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.887,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9049,
+              "nearest_original": "receipt_01",
+              "nearest_cosine": 0.9049,
+              "self_match": true
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9292,
+              "nearest_original": "receipt_02",
+              "nearest_cosine": 0.9292,
+              "self_match": true
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.961,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.961,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9453,
+              "nearest_original": "receipt_04",
+              "nearest_cosine": 0.9453,
+              "self_match": true
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.8707,
+              "nearest_original": "receipt_07",
+              "nearest_cosine": 0.8921,
+              "self_match": false
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9582,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9582,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9143,
+              "nearest_original": "receipt_07",
+              "nearest_cosine": 0.9143,
+              "self_match": true
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.8967,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.8967,
+              "self_match": true
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9468,
+              "nearest_original": "receipt_09",
+              "nearest_cosine": 0.9468,
+              "self_match": true
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9575,
+              "nearest_original": "receipt_10",
+              "nearest_cosine": 0.9575,
+              "self_match": true
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.8951,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.8951,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.923,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.923,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9027,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9027,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.963,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.963,
+              "self_match": true
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9663,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9663,
+              "self_match": true
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.8624,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.8624,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9476,
+              "nearest_original": "receipt_17",
+              "nearest_cosine": 0.9476,
+              "self_match": true
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.949,
+              "nearest_original": "receipt_18",
+              "nearest_cosine": 0.949,
+              "self_match": true
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.896,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.896,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9297,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9297,
+              "self_match": true
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9451,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9451,
+              "self_match": true
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.8835,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9028,
+              "self_match": false
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9479,
+              "nearest_original": "receipt_23",
+              "nearest_cosine": 0.9479,
+              "self_match": true
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.9063,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.9063,
+              "self_match": true
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9203,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9203,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9452,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9452,
+              "self_match": true
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.8972,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.8972,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.8851,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.8851,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9162,
+              "nearest_original": "receipt_29",
+              "nearest_cosine": 0.9162,
+              "self_match": true
+            }
+          ],
+          "fail_log": []
+        },
+        "rotate_1deg": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 1.0,
+            "n_nn_switched": 0,
+            "mean_cosine_to_own_original": 0.9729,
+            "min_cosine_to_own_original": 0.9531,
+            "max_cosine_to_own_original": 0.9882,
+            "cost_usd": 0.0
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9553,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9553,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9882,
+              "nearest_original": "receipt_01",
+              "nearest_cosine": 0.9882,
+              "self_match": true
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9771,
+              "nearest_original": "receipt_02",
+              "nearest_cosine": 0.9771,
+              "self_match": true
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9539,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9539,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9727,
+              "nearest_original": "receipt_04",
+              "nearest_cosine": 0.9727,
+              "self_match": true
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.9741,
+              "nearest_original": "receipt_05",
+              "nearest_cosine": 0.9741,
+              "self_match": true
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9726,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9726,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9654,
+              "nearest_original": "receipt_07",
+              "nearest_cosine": 0.9654,
+              "self_match": true
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9795,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9795,
+              "self_match": true
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9531,
+              "nearest_original": "receipt_09",
+              "nearest_cosine": 0.9531,
+              "self_match": true
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9717,
+              "nearest_original": "receipt_10",
+              "nearest_cosine": 0.9717,
+              "self_match": true
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9845,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.9845,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9681,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9681,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9696,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9696,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9855,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.9855,
+              "self_match": true
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9796,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9796,
+              "self_match": true
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.9704,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9704,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9873,
+              "nearest_original": "receipt_17",
+              "nearest_cosine": 0.9873,
+              "self_match": true
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.9606,
+              "nearest_original": "receipt_18",
+              "nearest_cosine": 0.9606,
+              "self_match": true
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.9781,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.9781,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9804,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9804,
+              "self_match": true
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9744,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9744,
+              "self_match": true
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.9874,
+              "nearest_original": "receipt_22",
+              "nearest_cosine": 0.9874,
+              "self_match": true
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9722,
+              "nearest_original": "receipt_23",
+              "nearest_cosine": 0.9722,
+              "self_match": true
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.9712,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.9712,
+              "self_match": true
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9851,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9851,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9766,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9766,
+              "self_match": true
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.962,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.962,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9701,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.9701,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9611,
+              "nearest_original": "receipt_29",
+              "nearest_cosine": 0.9611,
+              "self_match": true
+            }
+          ],
+          "fail_log": []
+        },
+        "crop_5pct": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 1.0,
+            "n_nn_switched": 0,
+            "mean_cosine_to_own_original": 0.9383,
+            "min_cosine_to_own_original": 0.8905,
+            "max_cosine_to_own_original": 0.9785,
+            "cost_usd": 0.0
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9284,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9284,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9505,
+              "nearest_original": "receipt_01",
+              "nearest_cosine": 0.9505,
+              "self_match": true
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9463,
+              "nearest_original": "receipt_02",
+              "nearest_cosine": 0.9463,
+              "self_match": true
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9199,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9199,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9526,
+              "nearest_original": "receipt_04",
+              "nearest_cosine": 0.9526,
+              "self_match": true
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.945,
+              "nearest_original": "receipt_05",
+              "nearest_cosine": 0.945,
+              "self_match": true
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9582,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9582,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9236,
+              "nearest_original": "receipt_07",
+              "nearest_cosine": 0.9236,
+              "self_match": true
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9161,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9161,
+              "self_match": true
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.946,
+              "nearest_original": "receipt_09",
+              "nearest_cosine": 0.946,
+              "self_match": true
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9312,
+              "nearest_original": "receipt_10",
+              "nearest_cosine": 0.9312,
+              "self_match": true
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9702,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.9702,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9468,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9468,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9276,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9276,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9785,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.9785,
+              "self_match": true
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9402,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9402,
+              "self_match": true
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.9337,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9337,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9664,
+              "nearest_original": "receipt_17",
+              "nearest_cosine": 0.9664,
+              "self_match": true
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.9144,
+              "nearest_original": "receipt_18",
+              "nearest_cosine": 0.9144,
+              "self_match": true
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.9335,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.9335,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9475,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9475,
+              "self_match": true
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9742,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9742,
+              "self_match": true
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.9739,
+              "nearest_original": "receipt_22",
+              "nearest_cosine": 0.9739,
+              "self_match": true
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.8905,
+              "nearest_original": "receipt_23",
+              "nearest_cosine": 0.8905,
+              "self_match": true
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.9028,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.9028,
+              "self_match": true
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9494,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9494,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9521,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9521,
+              "self_match": true
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9125,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9125,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9117,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.9117,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9046,
+              "nearest_original": "receipt_29",
+              "nearest_cosine": 0.9046,
+              "self_match": true
+            }
+          ],
+          "fail_log": []
+        },
+        "composite_rotate_crop": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 1.0,
+            "n_nn_switched": 0,
+            "mean_cosine_to_own_original": 0.9354,
+            "min_cosine_to_own_original": 0.8886,
+            "max_cosine_to_own_original": 0.9791,
+            "cost_usd": 0.0
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9179,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9179,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9519,
+              "nearest_original": "receipt_01",
+              "nearest_cosine": 0.9519,
+              "self_match": true
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.949,
+              "nearest_original": "receipt_02",
+              "nearest_cosine": 0.949,
+              "self_match": true
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9383,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9383,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9577,
+              "nearest_original": "receipt_04",
+              "nearest_cosine": 0.9577,
+              "self_match": true
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.9089,
+              "nearest_original": "receipt_05",
+              "nearest_cosine": 0.9089,
+              "self_match": true
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9452,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9452,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.8886,
+              "nearest_original": "receipt_07",
+              "nearest_cosine": 0.8886,
+              "self_match": true
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9074,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9074,
+              "self_match": true
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9233,
+              "nearest_original": "receipt_09",
+              "nearest_cosine": 0.9233,
+              "self_match": true
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9289,
+              "nearest_original": "receipt_10",
+              "nearest_cosine": 0.9289,
+              "self_match": true
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9579,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.9579,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9384,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9384,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9424,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9424,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9791,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.9791,
+              "self_match": true
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9328,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9328,
+              "self_match": true
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.9353,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9353,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9453,
+              "nearest_original": "receipt_17",
+              "nearest_cosine": 0.9453,
+              "self_match": true
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.9085,
+              "nearest_original": "receipt_18",
+              "nearest_cosine": 0.9085,
+              "self_match": true
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.9527,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.9527,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9598,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9598,
+              "self_match": true
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9577,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9577,
+              "self_match": true
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.9602,
+              "nearest_original": "receipt_22",
+              "nearest_cosine": 0.9602,
+              "self_match": true
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9255,
+              "nearest_original": "receipt_23",
+              "nearest_cosine": 0.9255,
+              "self_match": true
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.8997,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.8997,
+              "self_match": true
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.963,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.963,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9521,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9521,
+              "self_match": true
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9119,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9119,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.916,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.916,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9065,
+              "nearest_original": "receipt_29",
+              "nearest_cosine": 0.9065,
+              "self_match": true
+            }
+          ],
+          "fail_log": []
+        }
+      }
+    },
+    "google/siglip-base-patch16-224": {
+      "n_originals_ok": 30,
+      "originals_fail": [],
+      "originals_cost_usd": 0.0,
+      "avg_local_forward_pass_s": 0.2972,
+      "checkpoint_load_s": 25.47,
+      "variants": {
+        "downscale_60pct": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 1.0,
+            "n_nn_switched": 0,
+            "mean_cosine_to_own_original": 0.9596,
+            "min_cosine_to_own_original": 0.9337,
+            "max_cosine_to_own_original": 0.9843,
+            "cost_usd": 0.0
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9468,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9468,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9843,
+              "nearest_original": "receipt_01",
+              "nearest_cosine": 0.9843,
+              "self_match": true
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9758,
+              "nearest_original": "receipt_02",
+              "nearest_cosine": 0.9758,
+              "self_match": true
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9599,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9599,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9643,
+              "nearest_original": "receipt_04",
+              "nearest_cosine": 0.9643,
+              "self_match": true
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.9386,
+              "nearest_original": "receipt_05",
+              "nearest_cosine": 0.9386,
+              "self_match": true
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9671,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9671,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9371,
+              "nearest_original": "receipt_07",
+              "nearest_cosine": 0.9371,
+              "self_match": true
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9823,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9823,
+              "self_match": true
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9472,
+              "nearest_original": "receipt_09",
+              "nearest_cosine": 0.9472,
+              "self_match": true
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.948,
+              "nearest_original": "receipt_10",
+              "nearest_cosine": 0.948,
+              "self_match": true
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9542,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.9542,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9686,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9686,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9624,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9624,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9726,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.9726,
+              "self_match": true
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9337,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9337,
+              "self_match": true
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.952,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.952,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.974,
+              "nearest_original": "receipt_17",
+              "nearest_cosine": 0.974,
+              "self_match": true
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.9529,
+              "nearest_original": "receipt_18",
+              "nearest_cosine": 0.9529,
+              "self_match": true
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.9397,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.9397,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9652,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9652,
+              "self_match": true
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9778,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9778,
+              "self_match": true
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.9656,
+              "nearest_original": "receipt_22",
+              "nearest_cosine": 0.9656,
+              "self_match": true
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9737,
+              "nearest_original": "receipt_23",
+              "nearest_cosine": 0.9737,
+              "self_match": true
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.943,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.943,
+              "self_match": true
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9498,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9498,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9601,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9601,
+              "self_match": true
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9717,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9717,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9514,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.9514,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9684,
+              "nearest_original": "receipt_29",
+              "nearest_cosine": 0.9684,
+              "self_match": true
+            }
+          ],
+          "fail_log": []
+        },
+        "recompress_q30": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 1.0,
+            "n_nn_switched": 0,
+            "mean_cosine_to_own_original": 0.9166,
+            "min_cosine_to_own_original": 0.8327,
+            "max_cosine_to_own_original": 0.9522,
+            "cost_usd": 0.0
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9261,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9261,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.894,
+              "nearest_original": "receipt_01",
+              "nearest_cosine": 0.894,
+              "self_match": true
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9396,
+              "nearest_original": "receipt_02",
+              "nearest_cosine": 0.9396,
+              "self_match": true
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9391,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9391,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9008,
+              "nearest_original": "receipt_04",
+              "nearest_cosine": 0.9008,
+              "self_match": true
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.9142,
+              "nearest_original": "receipt_05",
+              "nearest_cosine": 0.9142,
+              "self_match": true
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9384,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9384,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9297,
+              "nearest_original": "receipt_07",
+              "nearest_cosine": 0.9297,
+              "self_match": true
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9522,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9522,
+              "self_match": true
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9234,
+              "nearest_original": "receipt_09",
+              "nearest_cosine": 0.9234,
+              "self_match": true
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9518,
+              "nearest_original": "receipt_10",
+              "nearest_cosine": 0.9518,
+              "self_match": true
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9008,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.9008,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9102,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9102,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9169,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9169,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9138,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.9138,
+              "self_match": true
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9051,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9051,
+              "self_match": true
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.9216,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9216,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9486,
+              "nearest_original": "receipt_17",
+              "nearest_cosine": 0.9486,
+              "self_match": true
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.8722,
+              "nearest_original": "receipt_18",
+              "nearest_cosine": 0.8722,
+              "self_match": true
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.8327,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.8327,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9241,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9241,
+              "self_match": true
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9489,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9489,
+              "self_match": true
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.9018,
+              "nearest_original": "receipt_22",
+              "nearest_cosine": 0.9018,
+              "self_match": true
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9119,
+              "nearest_original": "receipt_23",
+              "nearest_cosine": 0.9119,
+              "self_match": true
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.8651,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.8651,
+              "self_match": true
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9259,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9259,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9098,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9098,
+              "self_match": true
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9122,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9122,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9253,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.9253,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9407,
+              "nearest_original": "receipt_29",
+              "nearest_cosine": 0.9407,
+              "self_match": true
+            }
+          ],
+          "fail_log": []
+        },
+        "rotate_1deg": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 1.0,
+            "n_nn_switched": 0,
+            "mean_cosine_to_own_original": 0.9536,
+            "min_cosine_to_own_original": 0.9105,
+            "max_cosine_to_own_original": 0.9775,
+            "cost_usd": 0.0
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9344,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9344,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9572,
+              "nearest_original": "receipt_01",
+              "nearest_cosine": 0.9572,
+              "self_match": true
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9775,
+              "nearest_original": "receipt_02",
+              "nearest_cosine": 0.9775,
+              "self_match": true
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9626,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9626,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9498,
+              "nearest_original": "receipt_04",
+              "nearest_cosine": 0.9498,
+              "self_match": true
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.9612,
+              "nearest_original": "receipt_05",
+              "nearest_cosine": 0.9612,
+              "self_match": true
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9591,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9591,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9623,
+              "nearest_original": "receipt_07",
+              "nearest_cosine": 0.9623,
+              "self_match": true
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9637,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9637,
+              "self_match": true
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.946,
+              "nearest_original": "receipt_09",
+              "nearest_cosine": 0.946,
+              "self_match": true
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9743,
+              "nearest_original": "receipt_10",
+              "nearest_cosine": 0.9743,
+              "self_match": true
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9343,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.9343,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9632,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9632,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9559,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9559,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9569,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.9569,
+              "self_match": true
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9635,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9635,
+              "self_match": true
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.958,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.958,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9554,
+              "nearest_original": "receipt_17",
+              "nearest_cosine": 0.9554,
+              "self_match": true
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.9522,
+              "nearest_original": "receipt_18",
+              "nearest_cosine": 0.9522,
+              "self_match": true
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.9436,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.9436,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9657,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9657,
+              "self_match": true
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9667,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9667,
+              "self_match": true
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.9233,
+              "nearest_original": "receipt_22",
+              "nearest_cosine": 0.9233,
+              "self_match": true
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9615,
+              "nearest_original": "receipt_23",
+              "nearest_cosine": 0.9615,
+              "self_match": true
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.9105,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.9105,
+              "self_match": true
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9255,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9255,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9332,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9332,
+              "self_match": true
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9648,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9648,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9635,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.9635,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9635,
+              "nearest_original": "receipt_29",
+              "nearest_cosine": 0.9635,
+              "self_match": true
+            }
+          ],
+          "fail_log": []
+        },
+        "crop_5pct": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 1.0,
+            "n_nn_switched": 0,
+            "mean_cosine_to_own_original": 0.9242,
+            "min_cosine_to_own_original": 0.8786,
+            "max_cosine_to_own_original": 0.9676,
+            "cost_usd": 0.0
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9262,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9262,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9474,
+              "nearest_original": "receipt_01",
+              "nearest_cosine": 0.9474,
+              "self_match": true
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.948,
+              "nearest_original": "receipt_02",
+              "nearest_cosine": 0.948,
+              "self_match": true
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9035,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9035,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9337,
+              "nearest_original": "receipt_04",
+              "nearest_cosine": 0.9337,
+              "self_match": true
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.8786,
+              "nearest_original": "receipt_05",
+              "nearest_cosine": 0.8786,
+              "self_match": true
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.935,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.935,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9506,
+              "nearest_original": "receipt_07",
+              "nearest_cosine": 0.9506,
+              "self_match": true
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9282,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9282,
+              "self_match": true
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9338,
+              "nearest_original": "receipt_09",
+              "nearest_cosine": 0.9338,
+              "self_match": true
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9399,
+              "nearest_original": "receipt_10",
+              "nearest_cosine": 0.9399,
+              "self_match": true
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.927,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.927,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9276,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9276,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9408,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9408,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9676,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.9676,
+              "self_match": true
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9062,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9062,
+              "self_match": true
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.9242,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9242,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9554,
+              "nearest_original": "receipt_17",
+              "nearest_cosine": 0.9554,
+              "self_match": true
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.8828,
+              "nearest_original": "receipt_18",
+              "nearest_cosine": 0.8828,
+              "self_match": true
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.8962,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.8962,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9242,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9242,
+              "self_match": true
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9547,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9547,
+              "self_match": true
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.882,
+              "nearest_original": "receipt_22",
+              "nearest_cosine": 0.882,
+              "self_match": true
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9099,
+              "nearest_original": "receipt_23",
+              "nearest_cosine": 0.9099,
+              "self_match": true
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.902,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.902,
+              "self_match": true
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9093,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9093,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9078,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9078,
+              "self_match": true
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.8973,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.8973,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9492,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.9492,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9357,
+              "nearest_original": "receipt_29",
+              "nearest_cosine": 0.9357,
+              "self_match": true
+            }
+          ],
+          "fail_log": []
+        },
+        "composite_rotate_crop": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 1.0,
+            "n_nn_switched": 0,
+            "mean_cosine_to_own_original": 0.9241,
+            "min_cosine_to_own_original": 0.8629,
+            "max_cosine_to_own_original": 0.966,
+            "cost_usd": 0.0
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9305,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9305,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9528,
+              "nearest_original": "receipt_01",
+              "nearest_cosine": 0.9528,
+              "self_match": true
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9412,
+              "nearest_original": "receipt_02",
+              "nearest_cosine": 0.9412,
+              "self_match": true
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9029,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9029,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9077,
+              "nearest_original": "receipt_04",
+              "nearest_cosine": 0.9077,
+              "self_match": true
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.9105,
+              "nearest_original": "receipt_05",
+              "nearest_cosine": 0.9105,
+              "self_match": true
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9424,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9424,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9545,
+              "nearest_original": "receipt_07",
+              "nearest_cosine": 0.9545,
+              "self_match": true
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9357,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9357,
+              "self_match": true
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9051,
+              "nearest_original": "receipt_09",
+              "nearest_cosine": 0.9051,
+              "self_match": true
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9336,
+              "nearest_original": "receipt_10",
+              "nearest_cosine": 0.9336,
+              "self_match": true
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9382,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.9382,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9515,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9515,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9276,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9276,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9355,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.9355,
+              "self_match": true
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9137,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9137,
+              "self_match": true
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.9363,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9363,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.966,
+              "nearest_original": "receipt_17",
+              "nearest_cosine": 0.966,
+              "self_match": true
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.8839,
+              "nearest_original": "receipt_18",
+              "nearest_cosine": 0.8839,
+              "self_match": true
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.8854,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.8854,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9643,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9643,
+              "self_match": true
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9628,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9628,
+              "self_match": true
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.8696,
+              "nearest_original": "receipt_22",
+              "nearest_cosine": 0.8696,
+              "self_match": true
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9148,
+              "nearest_original": "receipt_23",
+              "nearest_cosine": 0.9148,
+              "self_match": true
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.8918,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.8918,
+              "self_match": true
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.8629,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.8629,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9245,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9245,
+              "self_match": true
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9022,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9022,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9379,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.9379,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.936,
+              "nearest_original": "receipt_29",
+              "nearest_cosine": 0.936,
+              "self_match": true
+            }
+          ],
+          "fail_log": []
+        }
+      }
+    },
+    "mongodb/voyage-multimodal-3.5": {
+      "n_originals_ok": 30,
+      "originals_fail": [],
+      "originals_cost_usd": 0.054306,
+      "new_distortion_cost_usd": 0.241209,
+      "variants": {
+        "downscale_60pct": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 0.4333,
+            "n_nn_switched": 17,
+            "mean_cosine_to_own_original": 0.9945,
+            "min_cosine_to_own_original": 0.9889,
+            "max_cosine_to_own_original": 0.9979,
+            "cost_usd": 0.048219
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.997,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.997,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9894,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9927,
+              "self_match": false
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9955,
+              "nearest_original": "receipt_02",
+              "nearest_cosine": 0.9955,
+              "self_match": true
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9948,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9948,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9909,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9917,
+              "self_match": false
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.9944,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9947,
+              "self_match": false
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9979,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9979,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9924,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.995,
+              "self_match": false
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9971,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9975,
+              "self_match": false
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9958,
+              "nearest_original": "receipt_09",
+              "nearest_cosine": 0.9958,
+              "self_match": true
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9953,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9956,
+              "self_match": false
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9952,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.9952,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9967,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9967,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9964,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9964,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9951,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9959,
+              "self_match": false
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9951,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9957,
+              "self_match": false
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.9938,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9943,
+              "self_match": false
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9897,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.9898,
+              "self_match": false
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.9938,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9969,
+              "self_match": false
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.9961,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.9961,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9964,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9964,
+              "self_match": true
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9959,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9968,
+              "self_match": false
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.9889,
+              "nearest_original": "receipt_14",
+              "nearest_cosine": 0.994,
+              "self_match": false
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9929,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9942,
+              "self_match": false
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.9941,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9956,
+              "self_match": false
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9976,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9976,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9896,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9913,
+              "self_match": false
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9972,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9972,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9965,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.9965,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.994,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.995,
+              "self_match": false
+            }
+          ],
+          "fail_log": []
+        },
+        "recompress_q30": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 0.0333,
+            "n_nn_switched": 29,
+            "mean_cosine_to_own_original": 0.9642,
+            "min_cosine_to_own_original": 0.944,
+            "max_cosine_to_own_original": 0.9806,
+            "cost_usd": 0.071333
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9736,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9815,
+              "self_match": false
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9616,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9777,
+              "self_match": false
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9751,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.982,
+              "self_match": false
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9764,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9764,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9806,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.986,
+              "self_match": false
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.9607,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9817,
+              "self_match": false
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9656,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9813,
+              "self_match": false
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.944,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.976,
+              "self_match": false
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9625,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9844,
+              "self_match": false
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9548,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9751,
+              "self_match": false
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9682,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9794,
+              "self_match": false
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9587,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9794,
+              "self_match": false
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9687,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9786,
+              "self_match": false
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9702,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9815,
+              "self_match": false
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9655,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9788,
+              "self_match": false
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9642,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9753,
+              "self_match": false
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.9549,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9827,
+              "self_match": false
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.961,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.975,
+              "self_match": false
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.9672,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9804,
+              "self_match": false
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.9573,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.968,
+              "self_match": false
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9674,
+              "nearest_original": "receipt_26",
+              "nearest_cosine": 0.9787,
+              "self_match": false
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9687,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9801,
+              "self_match": false
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.96,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9807,
+              "self_match": false
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.954,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9751,
+              "self_match": false
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.9561,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9757,
+              "self_match": false
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9513,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9747,
+              "self_match": false
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9687,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9736,
+              "self_match": false
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9708,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9798,
+              "self_match": false
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9781,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9896,
+              "self_match": false
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9595,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.981,
+              "self_match": false
+            }
+          ],
+          "fail_log": []
+        },
+        "rotate_1deg": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 0.3,
+            "n_nn_switched": 21,
+            "mean_cosine_to_own_original": 0.9938,
+            "min_cosine_to_own_original": 0.9876,
+            "max_cosine_to_own_original": 0.9975,
+            "cost_usd": 0.129882
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.995,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.995,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9902,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9956,
+              "self_match": false
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9904,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9949,
+              "self_match": false
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9924,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9924,
+              "self_match": true
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9945,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9962,
+              "self_match": false
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.9919,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.996,
+              "self_match": false
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9956,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.996,
+              "self_match": false
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9886,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9946,
+              "self_match": false
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9953,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9958,
+              "self_match": false
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9936,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9949,
+              "self_match": false
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9941,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9967,
+              "self_match": false
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9951,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9963,
+              "self_match": false
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.996,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9961,
+              "self_match": false
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9938,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9953,
+              "self_match": false
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9953,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9969,
+              "self_match": false
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9963,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9971,
+              "self_match": false
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.9931,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9931,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9919,
+              "nearest_original": "receipt_20",
+              "nearest_cosine": 0.9955,
+              "self_match": false
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.9943,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9962,
+              "self_match": false
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.9963,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.9963,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.994,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9955,
+              "self_match": false
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9946,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9952,
+              "self_match": false
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.9924,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9934,
+              "self_match": false
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9901,
+              "nearest_original": "receipt_23",
+              "nearest_cosine": 0.9901,
+              "self_match": true
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.9966,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.9966,
+              "self_match": true
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9961,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9961,
+              "self_match": true
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9876,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9912,
+              "self_match": false
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9975,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9975,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9964,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.9964,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9954,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9966,
+              "self_match": false
+            }
+          ],
+          "fail_log": []
+        },
+        "crop_5pct": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 0.3667,
+            "n_nn_switched": 19,
+            "mean_cosine_to_own_original": 0.9932,
+            "min_cosine_to_own_original": 0.9827,
+            "max_cosine_to_own_original": 0.9974,
+            "cost_usd": 0.185122
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9959,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9959,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.986,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.9896,
+              "self_match": false
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9875,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9879,
+              "self_match": false
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9827,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9859,
+              "self_match": false
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9936,
+              "nearest_original": "receipt_04",
+              "nearest_cosine": 0.9936,
+              "self_match": true
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.9914,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9956,
+              "self_match": false
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9967,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9967,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9903,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9958,
+              "self_match": false
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9942,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9942,
+              "self_match": false
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9937,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9948,
+              "self_match": false
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.9938,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9964,
+              "self_match": false
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9946,
+              "nearest_original": "receipt_11",
+              "nearest_cosine": 0.9946,
+              "self_match": true
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9963,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9963,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9936,
+              "nearest_original": "receipt_13",
+              "nearest_cosine": 0.9936,
+              "self_match": true
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9917,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9936,
+              "self_match": false
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9941,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9948,
+              "self_match": false
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.9974,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9974,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9921,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.995,
+              "self_match": false
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.9953,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9971,
+              "self_match": false
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.9964,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.9964,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9913,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9934,
+              "self_match": false
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.9964,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9964,
+              "self_match": true
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.9919,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9948,
+              "self_match": false
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9948,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.9959,
+              "self_match": false
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.9955,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9958,
+              "self_match": false
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.996,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.997,
+              "self_match": false
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9882,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9931,
+              "self_match": false
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9927,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9927,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.9965,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.9965,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9944,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.996,
+              "self_match": false
+            }
+          ],
+          "fail_log": []
+        },
+        "composite_rotate_crop": {
+          "summary": {
+            "n_ok": 30,
+            "n_fail": 0,
+            "recall_at_1_self_match": 0.2667,
+            "n_nn_switched": 22,
+            "mean_cosine_to_own_original": 0.9932,
+            "min_cosine_to_own_original": 0.9826,
+            "max_cosine_to_own_original": 0.9975,
+            "cost_usd": 0.241209
+          },
+          "details": [
+            {
+              "id": "receipt_00",
+              "cosine_to_own_original": 0.9965,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9965,
+              "self_match": true
+            },
+            {
+              "id": "receipt_01",
+              "cosine_to_own_original": 0.9906,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9951,
+              "self_match": false
+            },
+            {
+              "id": "receipt_02",
+              "cosine_to_own_original": 0.9925,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9955,
+              "self_match": false
+            },
+            {
+              "id": "receipt_03",
+              "cosine_to_own_original": 0.9883,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9922,
+              "self_match": false
+            },
+            {
+              "id": "receipt_04",
+              "cosine_to_own_original": 0.9956,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9967,
+              "self_match": false
+            },
+            {
+              "id": "receipt_05",
+              "cosine_to_own_original": 0.9911,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.9955,
+              "self_match": false
+            },
+            {
+              "id": "receipt_06",
+              "cosine_to_own_original": 0.9975,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9975,
+              "self_match": true
+            },
+            {
+              "id": "receipt_07",
+              "cosine_to_own_original": 0.9914,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9955,
+              "self_match": false
+            },
+            {
+              "id": "receipt_08",
+              "cosine_to_own_original": 0.9957,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9957,
+              "self_match": true
+            },
+            {
+              "id": "receipt_09",
+              "cosine_to_own_original": 0.9962,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.9969,
+              "self_match": false
+            },
+            {
+              "id": "receipt_10",
+              "cosine_to_own_original": 0.991,
+              "nearest_original": "receipt_25",
+              "nearest_cosine": 0.993,
+              "self_match": false
+            },
+            {
+              "id": "receipt_11",
+              "cosine_to_own_original": 0.9933,
+              "nearest_original": "receipt_08",
+              "nearest_cosine": 0.9948,
+              "self_match": false
+            },
+            {
+              "id": "receipt_12",
+              "cosine_to_own_original": 0.9948,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.9948,
+              "self_match": true
+            },
+            {
+              "id": "receipt_13",
+              "cosine_to_own_original": 0.9921,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9929,
+              "self_match": false
+            },
+            {
+              "id": "receipt_14",
+              "cosine_to_own_original": 0.9952,
+              "nearest_original": "receipt_12",
+              "nearest_cosine": 0.997,
+              "self_match": false
+            },
+            {
+              "id": "receipt_15",
+              "cosine_to_own_original": 0.9954,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9958,
+              "self_match": false
+            },
+            {
+              "id": "receipt_16",
+              "cosine_to_own_original": 0.997,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.997,
+              "self_match": true
+            },
+            {
+              "id": "receipt_17",
+              "cosine_to_own_original": 0.9905,
+              "nearest_original": "receipt_15",
+              "nearest_cosine": 0.9938,
+              "self_match": false
+            },
+            {
+              "id": "receipt_18",
+              "cosine_to_own_original": 0.991,
+              "nearest_original": "receipt_21",
+              "nearest_cosine": 0.9933,
+              "self_match": false
+            },
+            {
+              "id": "receipt_19",
+              "cosine_to_own_original": 0.9951,
+              "nearest_original": "receipt_19",
+              "nearest_cosine": 0.9951,
+              "self_match": true
+            },
+            {
+              "id": "receipt_20",
+              "cosine_to_own_original": 0.9937,
+              "nearest_original": "receipt_24",
+              "nearest_cosine": 0.9953,
+              "self_match": false
+            },
+            {
+              "id": "receipt_21",
+              "cosine_to_own_original": 0.992,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9932,
+              "self_match": false
+            },
+            {
+              "id": "receipt_22",
+              "cosine_to_own_original": 0.9935,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9968,
+              "self_match": false
+            },
+            {
+              "id": "receipt_23",
+              "cosine_to_own_original": 0.9826,
+              "nearest_original": "receipt_00",
+              "nearest_cosine": 0.9837,
+              "self_match": false
+            },
+            {
+              "id": "receipt_24",
+              "cosine_to_own_original": 0.9943,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9948,
+              "self_match": false
+            },
+            {
+              "id": "receipt_25",
+              "cosine_to_own_original": 0.9961,
+              "nearest_original": "receipt_06",
+              "nearest_cosine": 0.9963,
+              "self_match": false
+            },
+            {
+              "id": "receipt_26",
+              "cosine_to_own_original": 0.9896,
+              "nearest_original": "receipt_03",
+              "nearest_cosine": 0.9919,
+              "self_match": false
+            },
+            {
+              "id": "receipt_27",
+              "cosine_to_own_original": 0.9954,
+              "nearest_original": "receipt_27",
+              "nearest_cosine": 0.9954,
+              "self_match": true
+            },
+            {
+              "id": "receipt_28",
+              "cosine_to_own_original": 0.996,
+              "nearest_original": "receipt_28",
+              "nearest_cosine": 0.996,
+              "self_match": true
+            },
+            {
+              "id": "receipt_29",
+              "cosine_to_own_original": 0.9923,
+              "nearest_original": "receipt_16",
+              "nearest_cosine": 0.9934,
+              "self_match": false
+            }
+          ],
+          "fail_log": []
+        }
+      }
+    }
+  },
+  "elapsed_s": 399.1
+}

@@ -1,0 +1,19 @@
+{
+  "описание": "Контроль D12: тот же опыт, другой материал — FUNSD, 50 отсканированных форм (testing_data). 14 запросов, единственность проверена механически (buквальная строка — грепом по полному OCR-тексту всех 50 форм, см. check_funsd_uniqueness.py), половина буквальная, половина смысловая (пересказ содержания, не буквальная строка).",
+  "queries": [
+    {"num": "L1", "type": "буквальная", "text": "Sam Zolot", "answer": "82250337_0338"},
+    {"num": "L2", "type": "буквальная", "text": "Camel Menthol", "answer": "82253058_3059"},
+    {"num": "L3", "type": "буквальная", "text": "Bobby Mills", "answer": "82837252"},
+    {"num": "L4", "type": "буквальная", "text": "Dickstein Shapiro", "answer": "83443897"},
+    {"num": "L5", "type": "буквальная", "text": "Hagens Berman", "answer": "83573282"},
+    {"num": "L6", "type": "буквальная", "text": "Roper Starch", "answer": "83594639"},
+    {"num": "L7", "type": "буквальная", "text": "Betty D. Montgomery", "answer": "82092117"},
+    {"num": "S1", "type": "смысловая", "text": "an update on how a tobacco brand changed its packaging and point-of-sale displays, and how retailers reacted", "answer": "82250337_0338"},
+    {"num": "S2", "type": "смысловая", "text": "a field report naming a competitor's new cigarette packaging spotted by a regional sales manager", "answer": "82837252"},
+    {"num": "S3", "type": "смысловая", "text": "an urgent fax from a law firm about a fee payment agreement that needs to be returned", "answer": "83573282"},
+    {"num": "S4", "type": "смысловая", "text": "a fax from a market research firm about turning survey data into business intelligence", "answer": "83594639"},
+    {"num": "S5", "type": "смысловая", "text": "a confidential cover sheet for a fax sent from a state attorney general's office", "answer": "82092117"},
+    {"num": "S6", "type": "смысловая", "text": "a confidential fax from a corporation's senior vice president and general counsel", "answer": "83635935"},
+    {"num": "S7", "type": "смысловая", "text": "a request form asking for budget approval and dates for a planned company event", "answer": "82254765"}
+  ]
+}

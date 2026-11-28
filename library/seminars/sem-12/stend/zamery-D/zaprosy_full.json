@@ -1,0 +1,419 @@
+{
+  "date": "2026-11-24",
+  "sources": {
+    "класс 1 (RU/ответ)": "zamery-B/zaprosy-klass1-finalizirovano.md @ 9aa911a1ef (hc/s12-keys-b-fotografii-406f51fe)",
+    "класс 1 (EN)": "zamery-B/zaprosy-klass1-finalizirovano.md §3 @ 9aa911a1ef (та же ветка)",
+    "классы 2-3": "plan-peredelki/zaprosy-B.md @ 1dc6d8044f (issue-351-seminars-12-13-kartinki)"
+  },
+  "total": 38,
+  "queries": [
+    {
+      "num": "1.1",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "мужчина маркером записывает идеи на флипчарте",
+      "en": "a man with a marker writing ideas on a flipchart",
+      "answer": "e9114065de005073"
+    },
+    {
+      "num": "1.2",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "женщина указывает на доску с планом «Перед», «Во время», «После»",
+      "en": "a woman pointing at a board with \"Before\", \"During\", \"After\" stages",
+      "answer": "ea8304d584aaa1ae"
+    },
+    {
+      "num": "1.3",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "мужчина с бородой говорит в микрофон за длинным столом",
+      "en": "a bearded man speaking into a microphone at a long table",
+      "answer": "b53d36ec5de1bf52"
+    },
+    {
+      "num": "1.4",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "белая кружка с узором про кофе рядом с тарелкой и ложкой",
+      "en": "a white mug with a coffee-themed pattern next to a saucer and spoon",
+      "answer": "0fb3b09b91685b46"
+    },
+    {
+      "num": "1.5",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "чашка горячего шоколада с логотипом кафе",
+      "en": "a cup of hot chocolate with a cafe logo",
+      "answer": "84810eb298f1d8f8"
+    },
+    {
+      "num": "1.6",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "чашка кофе с пенкой на жёлтой подложке",
+      "en": "a cup of coffee with foam on a yellow mat",
+      "answer": "5b9193e5398fd5e5"
+    },
+    {
+      "num": "1.7",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "подносы с чашками кофе и сладостями",
+      "en": "trays with cups of coffee and sweets",
+      "answer": "8cb7d659e2d0a541"
+    },
+    {
+      "num": "1.8",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "дети сидят на ковре в классной комнате с учителем в костюме",
+      "en": "children sitting on a rug in a classroom with a suited teacher",
+      "answer": "b755be9b601382d3"
+    },
+    {
+      "num": "1.9",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "девочка с двумя пучками волос держит пластиковую игрушку за столом",
+      "en": "a girl with two pigtails holding a plastic toy at a table",
+      "answer": "f24b6d2e4a6e3467"
+    },
+    {
+      "num": "1.10",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "женщина в яркой жилетке объясняет чертежи и планы",
+      "en": "a woman in a bright vest explaining blueprints and plans",
+      "answer": "5e9c983ecbe4af71"
+    },
+    {
+      "num": "1.11",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "военный у карты с проектором перед слушателями",
+      "en": "a soldier by a map with a projector in front of listeners",
+      "answer": "e4c90e496724afe1"
+    },
+    {
+      "num": "1.12",
+      "class": 1,
+      "class_name": "К-слово",
+      "ru": "пустой театр с рядами красных кресел и люстрой",
+      "en": "an empty theatre with rows of red seats and a chandelier",
+      "answer": "71681aa82b7ef15f"
+    },
+    {
+      "num": "2.1",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "человек конспектирует приёмы групповой работы на доске",
+      "en": "someone outlining group-work techniques on a board",
+      "answer": "e9114065de005073",
+      "hard_negatives": [
+        "ea8304d584aaa1ae",
+        "124d86a6d3953a13"
+      ]
+    },
+    {
+      "num": "2.2",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "выступающая разбирает событие по стадиям «до, во время, после»",
+      "en": "a speaker breaking an event into before, during and after stages",
+      "answer": "ea8304d584aaa1ae",
+      "hard_negatives": [
+        "e9114065de005073",
+        "59f89863852379cf"
+      ]
+    },
+    {
+      "num": "2.3",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "напиток, поданный по-восточному со сладостями",
+      "en": "a hot drink served oriental-style with sweets",
+      "answer": "8cb7d659e2d0a541",
+      "hard_negatives": [
+        "84810eb298f1d8f8",
+        "0fb3b09b91685b46"
+      ]
+    },
+    {
+      "num": "2.4",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "самая маленькая кофейная чашка, подписанная по-итальянски",
+      "en": "the smallest coffee cup with Italian writing",
+      "answer": "1d33f79971824c1c",
+      "hard_negatives": [
+        "0fb3b09b91685b46",
+        "5b9193e5398fd5e5"
+      ]
+    },
+    {
+      "num": "2.5",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "класс, где машины для расчётов стоят вдоль стен",
+      "en": "a room with computing machines lined up along the walls",
+      "answer": "d50064dfabf0fbd5",
+      "hard_negatives": [
+        "e4c90e496724afe1",
+        "59f89863852379cf"
+      ]
+    },
+    {
+      "num": "2.6",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "занятие, где будущих строителей учат читать планы зданий",
+      "en": "a class teaching construction workers to read building plans",
+      "answer": "5e9c983ecbe4af71",
+      "hard_negatives": [
+        "2ebe189cf7049839",
+        "00372528d0ae529e"
+      ]
+    },
+    {
+      "num": "2.7",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "пустой зал, где у каждого места буквенно-числовой номер",
+      "en": "an empty hall where every seat has a letter-number label",
+      "answer": "c53e9e5ce002345f",
+      "hard_negatives": [
+        "71681aa82b7ef15f",
+        "a173420cfdc0bc21"
+      ]
+    },
+    {
+      "num": "2.8",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "совещание, где записи ведут на больших бумажных листах на стойках",
+      "en": "a meeting where notes are kept on large paper pads on stands",
+      "answer": "511a66ac77d12201",
+      "hard_negatives": [
+        "59f89863852379cf",
+        "17f40b08e494565d"
+      ]
+    },
+    {
+      "num": "2.9",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "гость в костюме выступает перед младшими школьниками",
+      "en": "a suited guest speaking to young schoolchildren",
+      "answer": "b755be9b601382d3",
+      "hard_negatives": [
+        "00372528d0ae529e",
+        "f24b6d2e4a6e3467"
+      ]
+    },
+    {
+      "num": "2.10",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "зал всемирной организации с эмблемой земного шара",
+      "en": "the assembly hall of a world organisation with a globe emblem",
+      "answer": "c1334a6df9636a45",
+      "hard_negatives": [
+        "dfc78e19d1ba6658",
+        "71681aa82b7ef15f"
+      ]
+    },
+    {
+      "num": "2.11",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "доклад на фоне сплошной ярко-зелёной стены",
+      "en": "a talk in front of a solid bright green backdrop",
+      "answer": "87eb5a45f2b87933",
+      "hard_negatives": [
+        "0536436b72e5fefc",
+        "c51d831708b6ded1"
+      ]
+    },
+    {
+      "num": "2.12",
+      "class": 2,
+      "class_name": "К-пересказ",
+      "ru": "ряды мест с табличками имён и гнутыми микрофонами",
+      "en": "rows of desks with name plates and gooseneck microphones",
+      "answer": "dfc78e19d1ba6658",
+      "hard_negatives": [
+        "c1334a6df9636a45",
+        "b53d36ec5de1bf52"
+      ]
+    },
+    {
+      "num": "3.1",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "плакат про солнечную систему на мольберте",
+      "en": "a solar system poster on an easel",
+      "answer": "b755be9b601382d3",
+      "hard_negatives": [
+        "00372528d0ae529e",
+        "f24b6d2e4a6e3467"
+      ]
+    },
+    {
+      "num": "3.2",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "настенные часы над шторами",
+      "en": "a wall clock above the curtains",
+      "answer": "31e0383b18a48a63",
+      "hard_negatives": [
+        "17f40b08e494565d",
+        "59f89863852379cf"
+      ]
+    },
+    {
+      "num": "3.3",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "жёлтый светоотражающий жилет",
+      "en": "a yellow hi-vis safety vest",
+      "answer": "5e9c983ecbe4af71",
+      "hard_negatives": [
+        "2ebe189cf7049839",
+        "511a66ac77d12201"
+      ]
+    },
+    {
+      "num": "3.4",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "надувной помидор с глазами на слайде",
+      "en": "an inflatable tomato with eyes on a slide",
+      "answer": "1e7cc92a68af4ace",
+      "hard_negatives": [
+        "a2adb6250fbb4f8c",
+        "94043f06b44df043"
+      ]
+    },
+    {
+      "num": "3.5",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "роллап с пирамидой из цветных иконок",
+      "en": "a roll-up banner with a pyramid of colourful icons",
+      "answer": "01ada3c0d980be5e",
+      "hard_negatives": [
+        "1e7cc92a68af4ace",
+        "bdd7fd3ffee39259"
+      ]
+    },
+    {
+      "num": "3.6",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "кружки с одинаковым фирменным логотипом на столах",
+      "en": "mugs with the same corporate logo on the desks",
+      "answer": "01ada3c0d980be5e",
+      "hard_negatives": [
+        "17f40b08e494565d",
+        "59f89863852379cf"
+      ]
+    },
+    {
+      "num": "3.7",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "электрическая принципиальная схема на проекции",
+      "en": "an electronic circuit diagram on a projection",
+      "answer": "bdd7fd3ffee39259",
+      "hard_negatives": [
+        "50d1a495e942b809",
+        "e4c90e496724afe1"
+      ]
+    },
+    {
+      "num": "3.8",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "карта с красными пятнами на проекции",
+      "en": "a map with red patches on a projection",
+      "answer": "50d1a495e942b809",
+      "hard_negatives": [
+        "e4c90e496724afe1",
+        "bdd7fd3ffee39259"
+      ]
+    },
+    {
+      "num": "3.9",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "надписи корейскими буквами над сценой",
+      "en": "Korean lettering above the stage",
+      "answer": "a2adb6250fbb4f8c",
+      "hard_negatives": [
+        "1e7cc92a68af4ace",
+        "9cfa372f80c96bb4"
+      ]
+    },
+    {
+      "num": "3.10",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "флаги многих стран на стене зала",
+      "en": "flags of many countries on the hall wall",
+      "answer": "dfc78e19d1ba6658",
+      "hard_negatives": [
+        "c1334a6df9636a45",
+        "9cfa372f80c96bb4"
+      ]
+    },
+    {
+      "num": "3.11",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "тарелка с десертом позади чашки",
+      "en": "a dessert plate behind the cup",
+      "answer": "84810eb298f1d8f8",
+      "hard_negatives": [
+        "8cb7d659e2d0a541",
+        "5b9193e5398fd5e5"
+      ]
+    },
+    {
+      "num": "3.12",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "металлическая коробочка-портсигар на столе",
+      "en": "a small metal tin box on the table",
+      "answer": "8cb7d659e2d0a541",
+      "hard_negatives": [
+        "84810eb298f1d8f8",
+        "31e0383b18a48a63"
+      ]
+    },
+    {
+      "num": "3.13",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "значок на лацкане выступающего",
+      "en": "a pin badge on the speaker's lapel",
+      "answer": "94043f06b44df043",
+      "hard_negatives": [
+        "c7735280a73d65e1",
+        "360fc1faeddf8ea1"
+      ]
+    },
+    {
+      "num": "3.14",
+      "class": 3,
+      "class_name": "К-деталь",
+      "ru": "жёлтые клейкие стикеры на столе",
+      "en": "yellow sticky notes on the table",
+      "answer": "59f89863852379cf",
+      "hard_negatives": [
+        "d50064dfabf0fbd5",
+        "511a66ac77d12201"
+      ]
+    }
+  ]
+}
